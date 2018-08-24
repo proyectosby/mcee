@@ -1,9 +1,9 @@
 <?php
 /**********
 Versión: 001
-Fecha: 2018-08-21
+Fecha: 2018-08-23
 Desarrollador: Edwin Molina Grisales
-Descripción: Formulario EJECUCION FASE I
+Descripción: Formulario EJECUCION FASE I ESTUDIANTES
 ---------------------------------------
 **********/
 
