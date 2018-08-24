@@ -320,10 +320,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	<br />
 	<div id=nivelesAvance>
 	";
+	$contador= 0;
 	foreach ($titulos as $titulo)
 	{
+		
 		// $content.= $form->field( $model7 , 'actividad_planeada' )->radioList( $parametro,array( 'separator' => "<br />") )->label(  $titulo );
-		$content.=$titulo."<br>" .Html::activeRadioList($model7,'actividad_planeada',$parametro2,['separator' => '<br>','labelOptions'=>['style'=>'display: inline-block'],]);
+		$content.=$titulo."<br>" .Html::activeRadioList($model7,"actividad_planeada[$contador]",$parametro2,['separator' => '<br>','labelOptions'=>['style'=>'display: inline-block'],]);
+		$contador++;
 	}
 	$content.="</div>";
 	$content.= $form->field($model8, 'descripcion_respuesta')->textarea()
