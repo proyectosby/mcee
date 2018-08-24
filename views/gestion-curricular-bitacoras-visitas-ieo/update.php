@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = "Actualizar";
 		'datosCiclos'=> $datosCiclos,
 		'datosSemanas'=> $datosSemanas,
 		'parametro'	=> $parametro,
+		'parametro2'	=> $parametro2,
 		'jornadas'	=> $jornadas,
 		'estados'	=> $estados,
 		'docentes'	=> $docentes,

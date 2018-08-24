@@ -153,7 +153,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	 "</h6>
 	 
 	 
-		<div class='field_wrapper'>
+		<div>
 			<label>
 				Actividades Semana No. 1
 			</label>
@@ -163,15 +163,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 				Describa las actividades que llevará a cabo durante la Semana No. 1, para el avance de los objetivos de la semana.
 			</h6>
 			</label>".
-			$form->field($model3, 'titulo')->textInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->label("Actividad Planeada").
-			$form->field($model3, 'descripcion')->textarea(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->Label("Descripción Actividad Planeada").
+			$form->field($model3, 'titulo')->textInput()->label("Actividad Planeada").
+			$form->field($model3, 'descripcion')->textarea()->Label("Descripción Actividad Planeada").
 			"Agregar<a href='javascript:void(0);'name ='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>
 			
 		</div>
 		
-		
-
-		<div class='field_wrapper1'>
+		<div>
 			<label id='semanaNo>
 				Resultados esperados semana No. 1
 			</label>
@@ -186,10 +184,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 				"Agregar<a href='javascript:void(0);' name ='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>
 			
 		</div>
-		
-		
 
-		<div class='field_wrapper2'>
+		<div>
 			<label id='semanaNo>
 				Productos esperados semana No. 1
 			</label>
@@ -218,8 +214,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 			Visita de acompañamiento día 1 (asistió a la IEO)
 	</label>
 	<br />".	
-	$form->field($model6, 'asistio')->radio(['label' => 'Sí', 'uncheck' => null, 'onclick'=>'radioSeleccionado(this);']).
-	$form->field($model6, 'asistio')->radio(['label' => 'No', 'uncheck' => null, 'onclick'=>'radioSeleccionado(this);']).
+	$form->field($model6, 'id_dia')->radio(['label' => 'Sí', 'uncheck' => null, 'onclick'=>'radioSeleccionado1(-1);','value'=>"Sí"]).
+	$form->field($model6, 'id_dia')->radio(['label' => 'No', 'uncheck' => null, 'onclick'=>'radioSeleccionado1(1);','value'=>"No"]).
 	$form->field($model6, 'ruta_archivo')->FileInput()
 	->label("Fotografía (evidencia) de la visita semana 1 día 1").
 	
@@ -228,8 +224,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	</label>
 	<br />".
 	
-	$form->field($model6, 'id')->radio(['label' => 'Sí', 'uncheck' => null]).
-	$form->field($model6, 'id')->radio(['label' => 'No','uncheck' => null, 'onclick'=>'radioSeleccionado(this);']).
+	$form->field($model6, 'id')->radio(['label' => 'Sí', 'uncheck' => null, 'onclick'=>'radioSeleccionado2(-2);','value'=>"Sí"]).
+	$form->field($model6, 'id')->radio(['label' => 'No', 'uncheck' => null, 'onclick'=>'radioSeleccionado2(1);','value'=>"No"]).
 	$form->field($model6, 'ruta_archivo')->FileInput()
 	->label("Fotografía (evidencia) de la visita semana 1 día 2").
 	
@@ -238,11 +234,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	</label>
 	<br />".
 	
-	$form->field($model6, 'descripcion')->radio(['label' => 'Sí', 'uncheck' => null]).
-	$form->field($model6, 'descripcion')->radio(['label' => 'No',  'uncheck' => null]).
+	$form->field($model6, 'descripcion')->radio(['label' => 'Sí', 'uncheck' => null, 'onclick'=>'radioSeleccionado3(-3);','value'=>"Sí"]).
+	$form->field($model6, 'descripcion')->radio(['label' => 'No',  'uncheck' => null, 'onclick'=>'radioSeleccionado3(1);','value'=>"No"]).
 	$form->field($model6, 'ruta_archivo')->FileInput()
 	->label("Fotografía (evidencia) de la visita semana 1 día 3").
-	$form->field($model6, 'no_visita')->textarea()->label("En caso de que no haya podido cumplir una o más visitas exponga las razones.").
+	$form->field($model6, 'estado')->textarea(['disabled' => 'disabled'])->label("En caso de que no haya podido cumplir una o más visitas exponga las razones.").
 	
 	
 
@@ -250,18 +246,17 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	<br />
 	<h6>Describa el desarrollo de cada una de las actividades adelantadas para el cumplimiento del objetivo, según lo planeado en el momento 1.</h6>".
 	$form->field($model7, 'descripcion_respuesta')->textInput()->label(false).
-	"<div class='field_wrapper3'>
+	"<div>
 	<br />".
 		$form->field($model7, 'actividad_planeada')->textInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]']).
-		$form->field($model7, 'se_realizo')->dropDownList($parametro,['name'=>'gestioncurricularactividadesplaneadas-descripcion[]']).
+		$form->field($model7, 'se_realizo')->dropDownList($parametro,["onchange"=>'activarJustificacion(this);']).
 		$form->field($model7, 'descripcion_actividad')->textInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->
 		label("Descripción de la actividad ejecutada").
-		$form->field($model7, 'justificacion')->textarea(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->label("Justificación en el cumplimiento de las actividades (Diligencie sólo en caso de haber respondido no o parcialmente)").
+		$form->field($model7, 'justificacion')->textarea(['disabled'=>'disabled'])->label("Justificación en el cumplimiento de las actividades (Diligencie sólo en caso de haber respondido no o parcialmente)").
 		$form->field($model7, 'id_momento')->hiddenInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->label(false).
 	"</div>
 	<br />
-	Agregar
-	<a href='javascript:void(0);' name ='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>";
+	Agregar<a href='javascript:void(0);' name='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>";
 		
 	$items[] = 
 				[
@@ -277,37 +272,35 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	
 	
 	$momento3.=$form->field($model7, 'descripcion_respuesta')->textInput()->label(false)."
-	<div class='field_wrapper4'>
+	<div>
 		
 		<br />".
-		$form->field($model7, 'actividad_planeada')->textInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->Label("Resultado esperado").
-		$form->field($model7, 'se_realizo')->dropDownList($parametro,['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->Label("¿Se lograron?").
-		$form->field($model7, 'descripcion_actividad')->textInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->Label("Descripción del resultado obtenido").
-		$form->field($model7, 'justificacion')->textarea(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])
+		$form->field($model7, 'actividad_planeada')->textInput()->Label("Resultado esperado").
+		$form->field($model7, 'se_realizo')->dropDownList($parametro,["onchange"=>'activarJustificacion(this);'])->Label("¿Se lograron?").
+		$form->field($model7, 'descripcion_actividad')->textInput()->Label("Descripción del resultado obtenido").
+		$form->field($model7, 'justificacion')->textarea(['disabled'=>'disabled'])
 		->Label("Justificación en el cumplimiento del resultado obtenido (Diligencie sólo en caso de haber respondido no o parcialmente)").
-		$form->field($model7, 'id_momento')->hiddenInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->label(false).
+		$form->field($model7, 'id_momento')->hiddenInput()->label(false).
 	"</div>
 	<br />
-	Agregar
-	<a href='javascript:void(0);' name='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>
+	Agregar<a href='javascript:void(0);' name ='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>
 	
 	<br />
 	<br />
 	<label>Productos obtenidos semana 1</label>
 	<br />".
 	$form->field($model7, 'descripcion_respuesta')->textInput()->label(false).
-	"<div class='field_wrapper5'>
+	"<div>
 		<br />".
 		$form->field($model7, 'actividad_planeada')->textInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->Label("Producto esperado").
-		$form->field($model7, 'se_realizo')->dropDownList($parametro,['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->Label("¿Se logragon?").
+		$form->field($model7, 'se_realizo')->dropDownList($parametro,["onchange"=>'activarJustificacion(this);'])->Label("¿Se logragon?").
 		$form->field($model7, 'descripcion_actividad')->textInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->Label("Descripción del producto obtenido").
-		$form->field($model7, 'justificacion')->textarea(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])
+		$form->field($model7, 'justificacion')->textarea(['disabled'=>'disabled'])
 		->Label("Justificación en el cumplimiento del producto (Diligencie sólo en caso de haber respondido no o parcialmente)").
 		$form->field($model7, 'id_momento')->hiddenInput(['name'=>'gestioncurricularactividadesplaneadas-descripcion[]'])->label(false).
 	"</div>
 	<br />
-	Agregar
-	<a href='javascript:void(0);' name='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>
+	Agregar<a href='javascript:void(0);' name ='agregarCampos' title='Agregar Campos'><img src='../web/images/agregar.png' height='30' width='30' /></a>
 	";
 	
 	
@@ -325,11 +318,14 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	<br />
 	<br />
 	<br />
+	<div id=nivelesAvance>
 	";
 	foreach ($titulos as $titulo)
 	{
-		$content.= $form->field( $model7 , 'actividad_planeada' )->radioList( $parametro,array( 'separator' => "<br />") )->label(  $titulo );
+		// $content.= $form->field( $model7 , 'actividad_planeada' )->radioList( $parametro,array( 'separator' => "<br />") )->label(  $titulo );
+		$content.=$titulo."<br>" .Html::activeRadioList($model7,'actividad_planeada',$parametro2,['separator' => '<br>','labelOptions'=>['style'=>'display: inline-block'],]);
 	}
+	$content.="</div>";
 	$content.= $form->field($model8, 'descripcion_respuesta')->textarea()
 				->label("El espacio siguiente tiene como propósito el que usted pueda ampliar, justificar, argumentar o explicar su nivel de avance en la consecución de cada uno de los objetivos seleccionados durante este ciclo.");
 	$content.= $form->field($model8, 'id_momento')->hiddenInput()->label(false);
