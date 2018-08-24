@@ -187,17 +187,21 @@ function Semaforizacion()
 }
 
 
-//si seleccionan no o parcialmente se abilita la text area de la justificacion
-$("#gestioncurricularactividadesejecutadas-se_realizo").change(function()
+function activarJustificacion(obj)
 {
+	
 	// si el valor es 1 = si entonces se desabilita la caja de texto
-	if($(this).val() == 1)
+	if($(obj).val() == 1)
 	{
-		$("#gestioncurricularactividadesejecutadas-justificacion").attr("disabled","disabled");
+		
+		$(obj).parent().parent().children().children("textarea").attr("disabled","disabled");
 	}
 	else
 	{
-		$("#gestioncurricularactividadesejecutadas-justificacion").attr("disabled",false);
+		
+		$(obj).parent().parent().children().children("textarea").attr("disabled",false);
+		$(obj).parent().parent().children().children("textarea").attr("required",true);
+		
 	}
 	  
-});
+};

@@ -170,6 +170,14 @@ class GestionCurricularBitacorasVisitasIeoController extends Controller
 						
 		$parametro	= ArrayHelper::map( $dataParametros, 'id', 'descripcion' );
 		
+		$dataParametros2 = Parametro::find()
+						->where( 'id_tipo_parametro=2' )
+						->andWhere( 'estado=2' )
+						->orderby( 'id' )
+						->all();
+						
+		$parametro2	= ArrayHelper::map( $dataParametros2, 'id', 'descripcion' );
+		
 		$titulos = gestionCurricularOpcionesNivelesAvanceMomento4::find()
 						->where( 'id_tipo_opciones=5' )
 						->andWhere( 'estado=1' )
@@ -197,6 +205,7 @@ class GestionCurricularBitacorasVisitasIeoController extends Controller
 			'datosCiclos'=> $datosCiclos,
 			'datosSemanas'=> $datosSemanas,
 			'parametro'	=> $parametro,
+			'parametro2'	=> $parametro2,
 			'jornadas' 	=>$this->obtenerJornadas(),
 			'estados' 	=>$this->obtenerEstados(),
 			'docentes' 	=>$this->obtenerDocentes(),
@@ -239,6 +248,14 @@ class GestionCurricularBitacorasVisitasIeoController extends Controller
 						
 		$parametro	= ArrayHelper::map( $dataParametros, 'id', 'descripcion' );
 		
+		$dataParametros2 = Parametro::find()
+						->where( 'id_tipo_parametro=2' )
+						->andWhere( 'estado=1' )
+						->orderby( 'id' )
+						->all();
+						
+		$parametro2	= ArrayHelper::map( $dataParametros2, 'id', 'descripcion' );
+		
 		$titulos = gestionCurricularOpcionesNivelesAvanceMomento4::find()
 						->where( 'id_tipo_opciones=5' )
 						->andWhere( 'estado=1' )
@@ -267,6 +284,7 @@ class GestionCurricularBitacorasVisitasIeoController extends Controller
 			'datosCiclos'=> $datosCiclos,
 			'datosSemanas'=> $datosSemanas,
 			'parametro'	=> $parametro,
+			'parametro2'	=> $parametro2,
 			'jornadas' =>$this->obtenerJornadas(),
 			'estados' =>$this->obtenerEstados(),
 			'docentes' =>$this->obtenerDocentes(),
