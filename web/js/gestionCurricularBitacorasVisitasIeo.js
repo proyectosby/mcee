@@ -5,8 +5,12 @@ $(document).ready(function(){
 	{
 		$(this).parent().parent().parent().remove();
     });
-	
+	 
+	$("#checkboxMomento1Semana1").children("label").append("<div class='cuadrado'></div>");
+	$(".cuadrado").css({"width":"8px","height":"0","padding-top":"8px","position":"relative","background":"gray"});
 });
+
+
 
 eliminarAcordeones();
 //para eliminar los acordeones que no se debe llenar
@@ -177,16 +181,59 @@ $("#checkboxMomento1Semana1, #nivelesAvance").click(function()
 	
 function Semaforizacion()
 {
-	$("#checkboxMomento1Semana1 input[type='checkbox']:checked").each(function() {
-             // alert($(this).val());
-        });
+	var arrayPreguntasRadioValor = [];
+	
+	//opciones seleccionadas en el momento 4 solo los radios
+	$("#nivelesAvance input[type='radio']:checked").each(function() 
+	{
 		
-	$("#nivelesAvance input[type='radio']:checked").each(function() {
              // alert($(this).val());
-        });	
+             // alert($(this).parent().parent().siblings("#titulo").append("estoy aqui"));
+             // alert($(this).parent().parent().siblings("#titulo").text());
+            titulo =$(this).parent().parent().prevUntil("#titulo").prev().text();
+			numeroPregunta= titulo.substr(0, titulo.indexOf("."));
+			//que valor del radio selecciono
+			arrayPreguntasRadioValor[numeroPregunta] = $(this).val();
+		
+		   
+    });
+	//opciones seleccionadas en el momento 1 solo los checkbox
+	$("#checkboxMomento1Semana1 input[type='checkbox']:checked").each(function() {
+		// alert(2);
+		//que checkbox esta seleccionado
+		preguntaSelccionada = $(this).val()*1;
+		//que opcion de los radios esta seleccionada
+		opcionEscojidaRadio =arrayPreguntasRadioValor[preguntaSelccionada];
+		//poner el color en el checkbox deacuerdo con la opcion seleccionada
+		// $("#nivelesAvance input[type='radio']:checked:value=1").css({"background":"red"})
+		
+		//que cuadrado debe ser seleccionado
+			valor = preguntaSelccionada-1;
+		switch (opcionEscojidaRadio)
+		{
+			case "4":
+				$(".cuadrado:eq("+valor+")").css({"background":"red"});
+			break;
+			case "5":
+				$(".cuadrado:eq("+valor+")").css({"background":"yellow"});
+			break;
+			
+			case "6": 
+				$(".cuadrado:eq("+valor+")").css({"background":"orange"});
+			break;
+			
+			case "7":
+				$(".cuadrado:eq("+valor+")").css({"background":"green"});
+			default: 
+				
+		}
+		
+
+		
+	});
 }
 
-
+//si se escoje no o parcialmente se activa la justificacion 
 function activarJustificacion(obj)
 {
 	
@@ -195,6 +242,7 @@ function activarJustificacion(obj)
 	{
 		
 		$(obj).parent().parent().children().children("textarea").attr("disabled","disabled");
+		$(obj).parent().parent().children().children("textarea").attr("required",false)
 	}
 	else
 	{

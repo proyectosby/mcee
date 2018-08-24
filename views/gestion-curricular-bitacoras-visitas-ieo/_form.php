@@ -149,11 +149,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	$momento1="<label>Objetivos a trabajar *</label>
 	<br />
 	<label><h6>Seleccione los objetivos que se trabajarán a través de las actividades planteadas para esta semana</h6></label>
-	 <h6>". Html::checkboxList('list', '', $momento1Sem1,['separator' => "<br /><br/><br/>",'id' =>'checkboxMomento1Semana1' ]).
+	 <h6>". Html::checkboxList('list', '', $momento1Sem1,['separator' => "<br /><br/><br/>",'id' =>'checkboxMomento1Semana1']).
 	 "</h6>
-	 
-	 
-		<div>
+	 	<div>
 			<label>
 				Actividades Semana No. 1
 			</label>
@@ -320,12 +318,14 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/gestionCurricularBitacora
 	<br />
 	<div id=nivelesAvance>
 	";
+	//genera los radio de forma automatica tomando valores de la base de datos
 	$contador= 0;
 	foreach ($titulos as $titulo)
 	{
 		
 		// $content.= $form->field( $model7 , 'actividad_planeada' )->radioList( $parametro,array( 'separator' => "<br />") )->label(  $titulo );
-		$content.=$titulo."<br>" .Html::activeRadioList($model7,"actividad_planeada[$contador]",$parametro2,['separator' => '<br>','labelOptions'=>['style'=>'display: inline-block'],]);
+		//crea los radios con un nombre diferente actividad_planeada[$contador] el contador sirve para darle el nombre diferente a cada grupo de radioslist
+		$content.="<label id='titulo'>$titulo</label>"."<br>" .Html::activeRadioList($model7,"actividad_planeada[$contador]",$parametro2,['separator' => '<br>','labelOptions'=>['style'=>'display: inline-block'],]);
 		$contador++;
 	}
 	$content.="</div>";
