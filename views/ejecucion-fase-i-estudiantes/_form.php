@@ -12,6 +12,11 @@ Descripción: Formulario EJECUCION FASE I ESTUDIANTES
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+$this->registerJsFile(
+    '@web/js/ejecucionFaseIEstudiantes.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 /* @var $form yii\widgets\ActiveForm */

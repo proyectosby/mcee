@@ -59,19 +59,25 @@ use dosamigos\datepicker\DatePicker;
 	
 	<!-- <?= $form->field($model, 'docente')->textInput()->label('Curso de los participantes') ?> -->
 	
-	<div class='container-fluid'>
+	<?= $form->field($model, '['.$index.']numero_apps')->widget(
+		DatePicker::className(), [
+			
+			 // modify template for custom rendering
+			'template' => '{addon}{input}',
+			'language' => 'es',
+			'clientOptions' => [
+				'autoclose' => true,
+				'format' => 'dd-mm-yyyy'
+			]
+	])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
 	
-		<?= $form->field($model, '['.$index.']numero_apps')->widget(
-			DatePicker::className(), [
-				
-				 // modify template for custom rendering
-				'template' => '{addon}{input}',
-				'language' => 'es',
-				'clientOptions' => [
-					'autoclose' => true,
-					'format' => 'dd-mm-yyyy'
-				]
-		])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
+	<div class="form-group">
+		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$sesion->id ]) ?>
+		<?= Html::button('Eliminar fila', ['class' => 'btn btn-success', 'id' => 'btnRemoveFila'.$sesion->id, "style" => "display:none" ]) ?>
+	</div>
+	
+	<div class='container-fluid' id='dvSesion<?= $sesion->id ?>'>
+	
 		
 		<div class='row text-center'>
 			
@@ -121,167 +127,7 @@ use dosamigos\datepicker\DatePicker;
 			
 		</div>
 		
-		<div class='row text-center'>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-4'>
-				<?= Html::activeTextInput($model, '[$index]estado', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-		</div>
-	
-		<div class='row text-center'>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-4'>
-				<?= Html::activeTextInput($model, '[$index]estado', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-		</div>
-	
-		<div class='row text-center'>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-4'>
-				<?= Html::activeTextInput($model, '[$index]estado', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-		</div>
-	
-		<div class='row text-center'>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-			<div class='col-sm-4'>
-				<?= Html::activeTextInput($model, '[$index]estado', [ 'class' => 'form-control' ]) ?>
-			</div>
-			
-		</div>
-	
-		<div class='row text-center'>
+		<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>'>
 			
 			<div class='col-sm-1'>
 				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>

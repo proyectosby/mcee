@@ -47,13 +47,14 @@ foreach( $sesiones as $keySesion => $sesion ){
 														'institucion'	=> $institucion,
 														'sede'			=> $sede,
 														'docentes'		=> $docentes,
-														'fase'		=> $fase,
+														'fase'			=> $fase,
 													] 
 										),
 					'contentOptions'=> []
 				];
 				
 	$index += count($sesiones);
+	break;
 }
 
 use yii\bootstrap\Collapse;
