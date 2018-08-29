@@ -96,7 +96,7 @@ abstract class Application extends Module
     /**
      * @var string the application name.
      */
-    public $name = 'Sistema MCEE';
+    public $name = '<div class="fa fa-home"> Sistema MCEE</div>';
     /**
      * @var string the charset currently used for the application.
      */
