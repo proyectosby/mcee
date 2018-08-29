@@ -2,7 +2,7 @@
 
 /**********
 Versión: 001
-Fecha: 2018-08-23
+Fecha: 2018-08-28
 Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseIEstudiantesController
 ---------------------------------------
@@ -39,7 +39,7 @@ use yii\helpers\ArrayHelper;
 /**
  * EjecucionFaseIController implements the CRUD actions for EjecucionFase model.
  */
-class EjecucionFaseIiEstudiantesController extends Controller
+class EjecucionFaseIiiEstudiantesController extends Controller
 {
     /**
      * @inheritdoc
@@ -99,7 +99,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 		$institucion = Instituciones::findOne($id_institucion);
 		$sede 		 = Sedes::findOne($id_sede);
 		
-		$fase  = Fases::findOne( 2 );
+		$fase  = Fases::findOne( 3 );
 		
 		$datosIeoProfesional  = new DatosIeoProfesional();
 
