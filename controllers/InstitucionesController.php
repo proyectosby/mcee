@@ -36,9 +36,6 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
-
-
 use app\models\Estados;
 use app\models\Sectores;
 use app\models\TiposInstituciones;
@@ -93,7 +90,7 @@ class InstitucionesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -135,7 +132,7 @@ class InstitucionesController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 			=> $model,
             'estados' 			=> $estados,
             'sectores' 			=> $sectores,
@@ -171,7 +168,7 @@ class InstitucionesController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
             'estados' 			=> $estados,
             'sectores' 			=> $sectores,

@@ -26,31 +26,51 @@ Persona encargada: Viviana Rodas
 Cambios realizados: Se agregan los datatabes
 ---------------------------------------
 **********/
-
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
 
 use app\models\Estados;
 use app\models\Sectores;
 use app\models\TiposInstituciones;
 use yii\helpers\ArrayHelper;
 use fedemotta\datatables\DataTables;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Instituciones';
 $this->params['breadcrumbs'][] = $this->title;
+
+
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/instituciones.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
 ?>
 <div class="instituciones-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Agregar',['value'=>Url::to(['instituciones/create','#'=>'formname']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+									
     </p>
 
+	<?php 
+	
+		Modal::Begin([
+			'header'=>'',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+		
+		
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel'  => $searchModel,
@@ -116,7 +136,30 @@ $this->params['breadcrumbs'][] = $this->title;
             //'pagina_web',
             //'codigo_dane',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				},
+				// 'delete' => function ($url, $model) {
+					// return Html::a('<span class="glyphicon glyphicon-trash value = "'.$url.'" "></span>', $url, [
+								// 'title' => Yii::t('app', 'lead-delete'),
+					// ]);
+				// }
+
+			  ],
+			
+			],
         ],
     ]); ?>
 </div>
