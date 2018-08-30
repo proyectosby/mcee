@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
 use yii\validators\FileValidator;
 
-// $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/poblarTablas.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 
