@@ -228,6 +228,7 @@
 													'icon' => 'arrow-right', 
 													'url' => '#',
 													'items' => [
+														['label' => 'Planeación', 'icon' => 'circle-o','url' => ['ec-datos-basicos/create'],],
 														['label' => 'Articulación Familiar', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'ASSC', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'Semilleros para Paz', 'icon' => 'circle-o','url' => '#',],
