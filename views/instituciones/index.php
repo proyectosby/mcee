@@ -44,9 +44,13 @@ $this->title = 'Instituciones';
 $this->params['breadcrumbs'][] = $this->title;
 
 
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/instituciones.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
 ?>
+<style>
+.modal-content
+{
+	border-radius: 20px;
+}
+</style>
 <div class="instituciones-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -161,5 +165,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/instituciones.js',['depen
 			
 			],
         ],
-    ]); ?>
+    ]); 
+	
+	
+	$this->registerCssFile("mcee/web/css/modal.css", [
+    'depends' => [\yii\bootstrap\BootstrapAsset::className()],] );
+?>
 </div>
