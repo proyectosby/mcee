@@ -44,7 +44,7 @@ $this->title = 'Instituciones';
 $this->params['breadcrumbs'][] = $this->title;
 
 
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/instituciones.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/instituciones.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 ?>
 <div class="instituciones-index">

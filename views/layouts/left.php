@@ -189,6 +189,7 @@
 																['label' => 'Ejecución fase I', 'icon' => 'long-arrow-right', 'url' => ['ejecucion-fase-i-estudiantes/create'],],
 																['label' => 'Ejecución fase II', 'icon' => 'long-arrow-right', 'url' => ['ejecucion-fase-ii-estudiantes/create'],],
 																['label' => 'Ejecución fase III', 'icon' => 'long-arrow-right', 'url' => ['ejecucion-fase-iii-estudiantes/create'],],
+																['label' => 'Diario de campo', 'icon' => 'long-arrow-right', 'url' => ['semilleros-tic-diario-de-campo-estudiantes/index'],],
 														
 														],
 													],
