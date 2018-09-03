@@ -173,21 +173,37 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
      * @return la lista de los campos
      * @throws no tiene excepciones
      */	
-	public function actionOpcionesEjecucionDiarioCampo($idFase)
+	public function actionOpcionesEjecucionDiarioCampo($idFase,$descripcion,$hallazgo)
     {
-       $data = array('mensaje'=>'','html'=>'','contenido'=>'');
+       $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgo'=>'');
 	   
 	   //se crea una instancia del modelo parametro
 		$parametroTable 		 	= new Parametro();
 		//se traen los datos de paramero								  
-		$dataParametro		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$idFase)->all();										  
+		$dataParametroFase		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$idFase)->all();										  
 		//se guardan los datos en un array
-		$opcionesEjecucion	 	 	 = ArrayHelper::map( $dataParametro, 'id', 'descripcion' );
+		$opcionesEjecucionFase	 	 	 = ArrayHelper::map( $dataParametroFase, 'id', 'descripcion' );
+
+		
+		
+		//se traen los datos de paramero para descripcion							  
+		$dataParametroDescripcion		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$descripcion)->all();										  
+		//se guardan los datos en un array
+		$opcionesEjecucionDescripcion	 	 	 = ArrayHelper::map( $dataParametroDescripcion, 'id', 'descripcion' );
+
+		
+		//se traen los datos de paramero para hallazgo							  
+		$dataParametroHallazgo		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$hallazgo)->all();										  
+		//se guardan los datos en un array
+		$opcionesEjecucionHallazgo	 	 = ArrayHelper::map( $dataParametroHallazgo, 'id', 'descripcion' );
 
         
 		$data['html']="";
 		$data['contenido']="";
-		foreach ($opcionesEjecucion as $key => $value)
+		$data['descripcion']=$opcionesEjecucionDescripcion;
+		$data['hallazgo']=$opcionesEjecucionHallazgo;
+		
+		foreach ($opcionesEjecucionFase as $key => $value)
 		{
 			// print_r($key."-".$value);
 			

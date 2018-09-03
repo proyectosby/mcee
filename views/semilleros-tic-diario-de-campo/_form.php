@@ -106,9 +106,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/diarioCampo.js',['depends
 			Espacio de escritura para el profesional
 		</div>
 	
-    <?= $form->field($model, 'descripcion')->textArea(['maxlength' => true])->label("1. Descripción del cómo se lleva a cabo la fase de creación y qué observaciones relevantes pueden anotarse de las acciones y los procesos llevados") ?>
+    <?= $form->field($model, 'descripcion')->textArea(['maxlength' => true])->label() ?>
 
-    <?= $form->field($model, 'hallazgos')->textArea(['maxlength' => true])->label("HALLAZGOS 1) sobre las condiciones institucionales que favorecen la creación de aplicaciones 0.0; 2) sobre las estrategias empleadas con los participantes para crear en cada IEO; 3) sobre las dificultades o facilidad de usar la infraestructura tecnológica (condiciones para usar la tecnología) 4) sobre las condiciones para facilitar el uso de espacios y el trabajo con los estudiantes") ?>
+    <?= $form->field($model, 'hallazgos')->textArea(['maxlength' => true])->label() ?>
 
     <!-- <?= $form->field($model, 'estado')->textInput() ?>-->
 
