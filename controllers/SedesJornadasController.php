@@ -111,7 +111,7 @@ class SedesJornadasController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -121,9 +121,10 @@ class SedesJornadasController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
-		
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
 		//Busco todas las jornadas disponibles
 		$jornadasTable 	= new Jornadas();
 		$dataJornadas	= $jornadasTable->find()->all();
@@ -137,10 +138,10 @@ class SedesJornadasController extends Controller
         $model = new SedesJornadas();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model'			=> $model,
             'jornadas' 		=> $jornadas,
             'sedes' 		=> $sedes,
@@ -173,10 +174,10 @@ class SedesJornadasController extends Controller
 		
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 	=> $model,
             'jornadas' 	=> $jornadas,
             'sedes' 	=> $sedes,

@@ -46,7 +46,7 @@ class JornadasController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Jornadas::find(),
+            'query' => Jornadas::find()->andWhere('estado=1'),
         ]);
 
         return $this->render('index', [
@@ -62,7 +62,7 @@ class JornadasController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -77,10 +77,10 @@ class JornadasController extends Controller
         $model = new Jornadas();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -97,10 +97,10 @@ class JornadasController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
@@ -112,11 +112,16 @@ class JornadasController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+   public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+       
+		$model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
+		
+		
+		return $this->redirect(['index']);
+		
     }
 
     /**

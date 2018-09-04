@@ -32,7 +32,8 @@ Cambios realizados: Se agregan los datatables
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use app\models\Jornadas;
 use app\models\Sedes;
 use app\models\Instituciones;
@@ -42,25 +43,34 @@ use fedemotta\datatables\DataTables;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Jornadas';
+$this->title = '';
 $this->params['breadcrumbs'][] = $this->title;
 
 $modelInstitucion 	= Instituciones::findOne( $idInstitucion );
 $modelSedes 		= Sedes::findOne( $idSedes );
 ?>
+
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Sedes - Jornadas</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="sedes-jornadas-index">
     
-    <h1><?= Html::encode($modelInstitucion->descripcion) ?></h1>
-	<h3><?= Html::encode( "SEDE: ".$modelSedes->descripcion) ?></h3>
+  
+	<h3><?= Html::encode( "Sedes - Jornadas") ?></h3>
 
     <p>
-        <?= Html::a('Agregar', [
-									'create',
-									'idSedes' 		=> $idSedes,
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -118,7 +128,27 @@ $modelSedes 		= Sedes::findOne( $idSedes );
 				'filter' => ArrayHelper::map(Jornadas::find()->all(), 'id', 'descripcion' ),
 			],
 
-            ['class' => 'yii\grid\ActionColumn'],
+           [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
+
         ],
     ]); ?>
 </div>
