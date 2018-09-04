@@ -25,7 +25,7 @@ Cambios realizados: Se cambia boton Save por Guardar
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 /* @var $this yii\web\View */
 /* @var $model app\models\Aulas */
 /* @var $form yii\widgets\ActiveForm */

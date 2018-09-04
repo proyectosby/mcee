@@ -66,7 +66,7 @@ class AulasController extends Controller
 			
 			$aulasSearchModel= new AulasBuscar();
 			$dataProvider 	 = $aulasSearchModel->search(Yii::$app->request->queryParams);
-			$dataProvider->query->andWhere( 'id_sedes='.$idSedes ); 
+			$dataProvider->query->andWhere( "id_sedes=$idSedes and estado=1" ); 
 			
 			// $dataProvider = new ActiveDataProvider([
 				// 'query' => Aulas::find()->where( 'id_sedes='.$idSedes ),
@@ -95,7 +95,7 @@ class AulasController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -105,8 +105,10 @@ class AulasController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate( $idSedes = 0 )
+    public function actionCreate( )
     {
+		
+		$idSedes 		= $_SESSION['sede'][0];
 		
 		$sedesTable 		= new Sedes();
 		$dataSedes	 		= $sedesTable->find()->where( 'id='.$idSedes )->andWhere( 'estado=1' )->all();
@@ -119,14 +121,13 @@ class AulasController extends Controller
         $model = new Aulas();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           echo "<script> history.back();</script>";
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 	 => $model,
             'sedes' 	 => $sedes,
             'tiposAulas' => $tiposAulas,
-            'idSedes' 	 => $idSedes,
         ]);
     }
 
@@ -151,10 +152,10 @@ class AulasController extends Controller
 		
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            echo "<script> history.back();</script>";
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 	 => $model,
 			'sedes' 	 => $sedes,
             'tiposAulas' => $tiposAulas,
@@ -170,16 +171,14 @@ class AulasController extends Controller
      */
     public function actionDelete($id)
     {
-		$model 			= $this->findModel($id);
+       
+		$model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
 		
-		$modelSedes 	= Sedes::findOne( $model->id_sedes );
 		
-		$idInstitucion  = $modelSedes->id_instituciones;
-		$idSedes 		= $modelSedes->id;
+		return $this->redirect(['index']);
 		
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index', 'idInstitucion' => $idInstitucion, 'idSedes' => $idSedes ]);
     }
 
     /**
