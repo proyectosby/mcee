@@ -100,7 +100,7 @@ class SedesAreasEnsenanzaController extends Controller
 		$modelSedes 		= Sedes::findOne($model->id_sedes);
 		$modelInstitucion 	= Instituciones::findOne($modelSedes->id_instituciones);
 		
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' 			=> $model,
             'modelSedes' 		=> $modelSedes,
             'modelInstitucion'	=> $modelInstitucion,
@@ -112,8 +112,12 @@ class SedesAreasEnsenanzaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate( $idSedes )
+    
+	public function actionCreate(  )
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
 		$modelSedes 	 = Sedes::findOne( $idSedes );
 		$modelInstitucion= Instituciones::findOne( $modelSedes->id_instituciones );
 		
@@ -126,10 +130,10 @@ class SedesAreasEnsenanzaController extends Controller
         $model = new SedesAreasEnsenanza();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 			=> $model,
             'modelSedes' 		=> $modelSedes,
             'modelInstitucion' 	=> $modelInstitucion,
@@ -159,10 +163,10 @@ class SedesAreasEnsenanzaController extends Controller
 		$areas			= ArrayHelper::map( $dataAreas, 'id', 'descripcion' );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 			=> $model,
             'modelSedes' 		=> $modelSedes,
             'modelInstitucion' 	=> $modelInstitucion,

@@ -23,29 +23,26 @@ use app\models\Bloques;
 
 
 
-$sedes = new Sedes();
-$sedes = $sedes->find()->where('id='.$model->id_sedes)->all();
-$sedes = ArrayHelper::map($sedes,'descripcion','id_instituciones');
-$nombreSede = key($sedes);
-$idInstitucion = $sedes[$nombreSede];
 
-$this->title = $nombreSede;
+
+$this->title = '';
+$nombre="Sedes por Bloque";
 $this->params['breadcrumbs'][] = [
 									'label' => 'Sedes por Bloques', 
 									'url' => [
 												'index',
-												'idInstitucion' => $idInstitucion, 
-												'idSedes' 		=> $model->id_sedes,
+												
 											 ]
 								 ];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $nombre;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="sedes-bloques-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($nombre) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+      
         <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

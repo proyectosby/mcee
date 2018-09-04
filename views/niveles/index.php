@@ -21,7 +21,8 @@ Cambios realizados: Se agregan los datatabes
 use yii\helpers\Html;
 use yii\grid\GridView;
 use	yii\helpers\ArrayHelper;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use app\models\NivelesAcademicos;
 use app\models\Niveles;
 use fedemotta\datatables\DataTables;
@@ -30,15 +31,29 @@ use fedemotta\datatables\DataTables;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Niveles';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$this->params['breadcrumbs'][] ='Niveles';
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Niveles</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="niveles-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Niveles') ?></h1>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+       <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -92,7 +107,26 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 			],            
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

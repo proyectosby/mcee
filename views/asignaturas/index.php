@@ -13,7 +13,8 @@ else
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use app\models\Sedes;
 use app\models\Instituciones;
 use app\models\AreasEnsenanza;
@@ -41,32 +42,33 @@ Cambios realizados: Se agrega data tables
 ---------------------------------------
 **********/
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
-$nombreInstitucion = new Instituciones();
-$nombreInstitucion = $nombreInstitucion->find()->where('id='.$idInstitucion)->all();
-$nombreInstitucion = ArrayHelper::map($nombreInstitucion,'id','descripcion');
-$nombreInstitucion = $nombreInstitucion[$idInstitucion];
 
-$this->title = $nombreInstitucion;
+$this->title = '';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Asignaturas</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="asignaturas-index">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode('Asignaturas') ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-                <?= Html::a('Agregar', [
-									'create',
-									'idSedes' 		=> $idSedes,
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+                <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -117,7 +119,26 @@ $this->params['breadcrumbs'][] = $this->title;
 							   },
 			],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

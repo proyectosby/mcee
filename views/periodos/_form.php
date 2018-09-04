@@ -33,6 +33,7 @@ $this->registerJsFile(
 /* @var $this yii\web\View */
 /* @var $model app\models\Periodos */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="periodos-form">

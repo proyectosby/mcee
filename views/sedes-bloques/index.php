@@ -20,7 +20,8 @@ Cambios realizados: Se agregan los datatables
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use app\models\Bloques;
 use app\models\Sedes;
 use app\models\Instituciones;
@@ -31,32 +32,35 @@ use fedemotta\datatables\DataTables;
 /* @var $searchModel app\models\SedesBloquesBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
-$nombreInstitucion = new Instituciones();
-$nombreInstitucion = $nombreInstitucion->find()->where('id='.$idInstitucion)->all();
-$nombreInstitucion = ArrayHelper::map($nombreInstitucion,'id','descripcion');
-$nombreInstitucion = $nombreInstitucion[$idInstitucion];
 
-$this->title = $nombreInstitucion;
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre="Sedes por Bloque";
+$this->params['breadcrumbs'][] = $nombre;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>"<h3>$nombre</h3>",
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="sedes-bloques-index">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($nombre) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-       <?= Html::a('Agregar', [
-									'create',
-									'idSedes' 		=> $idSedes,
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+ 
+		<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+
     </p>
 
     <?= DataTables::widget([
@@ -110,7 +114,27 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 			],
 
-            ['class' => 'yii\grid\ActionColumn'],
+           [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
+
         ],
     ]); ?>
 </div>
