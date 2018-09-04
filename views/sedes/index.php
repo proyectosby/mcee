@@ -39,7 +39,7 @@ use yii\helpers\Html;
 use yii\helpers\URL;
 use yii\grid\GridView;
 use fedemotta\datatables\DataTables;
-
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -64,8 +64,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Agregar', ['create', 'idInstitucion'=>$idInstitucion ], ['class' => 'btn btn-success']) ?>
+       <?= Html::button('Agregar',['value'=>Url::to(['sedes/create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
+<?php 
+	
+Modal::Begin([
+	'header'=>'<h3>Sedes</h3>',
+	'id'=>'modal',
+	'size'=>'modal-lg',
+
+]);
+echo "<div id='modalContent'></div>";
+
+Modal::end();
+
+?>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
@@ -127,7 +140,26 @@ $this->params['breadcrumbs'][] = $this->title;
             //'comuna',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

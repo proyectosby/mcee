@@ -129,7 +129,8 @@ class InstitucionesController extends Controller
 			$modelPPI->estado = 1;
 			$modelPPI->save(false);
 			
-            return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['view', 'id' => $model->id]);
+            echo "<script> history.back();</script>";
         }
 
         return $this->renderAjax('create', [
@@ -165,7 +166,8 @@ class InstitucionesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['view', 'id' => $model->id]);
+			echo "<script> history.back();</script>";
         }
 
         return $this->renderAjax('update', [

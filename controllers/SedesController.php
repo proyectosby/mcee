@@ -173,9 +173,6 @@ class SedesController extends Controller
 		}
     }
 	
-	
-	
-	
 
     /**
      * Displays a single Sedes model.
@@ -185,7 +182,7 @@ class SedesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -256,10 +253,11 @@ class SedesController extends Controller
 		$model = new Sedes();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['view', 'id' => $model->id]);
+            echo "<script> history.back();</script>";
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 		 => $model,
             'barriosVeredas' => $barriosVeredas,
             'calendarios' 	 => $calendarios,
@@ -342,10 +340,11 @@ class SedesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            // return $this->redirect(['view', 'id' => $model->id]);
+			echo "<script> history.back();</script>";
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
             'barriosVeredas' => $barriosVeredas,
             'calendarios' 	 => $calendarios,

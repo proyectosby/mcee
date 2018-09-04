@@ -52,14 +52,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::button('Agregar',['value'=>Url::to(['instituciones/create','#'=>'formname']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+        <?= Html::button('Agregar',['value'=>Url::to(['instituciones/create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
 									
     </p>
 
 	<?php 
 	
 		Modal::Begin([
-			'header'=>'',
+			'header'=>'<h3>Instituciones</h3>',
 			'id'=>'modal',
 			'size'=>'modal-lg',
 		
@@ -150,12 +150,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
 								'title' => Yii::t('app', 'lead-update'),
 					]);
-				},
-				// 'delete' => function ($url, $model) {
-					// return Html::a('<span class="glyphicon glyphicon-trash value = "'.$url.'" "></span>', $url, [
-								// 'title' => Yii::t('app', 'lead-delete'),
-					// ]);
-				// }
+				}
 
 			  ],
 			

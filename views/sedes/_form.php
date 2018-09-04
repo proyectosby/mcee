@@ -35,6 +35,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/sedes.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Sedes */
