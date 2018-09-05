@@ -1,4 +1,5 @@
 <?php
+
 /**********
 Versión: 001
 Fecha: 2018-09-03
@@ -6,7 +7,6 @@ Desarrollador: Edwin Molina Grisales
 Descripción: RESUMEN OPERATIVO FASES ESTUDIANTES
 ---------------------------------------
 **********/
-
 
 namespace app\controllers;
 
@@ -36,7 +36,7 @@ use yii\helpers\ArrayHelper;
 /**
  * EcDatosBasicosController implements the CRUD actions for EcDatosBasicos model.
  */
-class EcResumenOperativoFasesEstudiantesController extends Controller
+class ResumenOperativoFasesDocentesController extends Controller
 {
     /**
      * @inheritdoc
