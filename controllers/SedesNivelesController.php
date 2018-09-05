@@ -101,7 +101,7 @@ class SedesNivelesController extends Controller
 		$modelSedes 	  = Sedes::findOne( $model->id_sedes );
 		$modelInstitucion = Instituciones::findOne( $modelSedes->id_instituciones );
 		
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' 			=> $model,
             'modelSedes' 		=> $modelSedes,
             'modelInstitucion' 	=> $modelInstitucion,
@@ -113,8 +113,11 @@ class SedesNivelesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate( $idSedes = 0 )
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
 		$modelSedes 	  = Sedes::findOne( $idSedes );
 		$modelInstitucion = Instituciones::findOne( $modelSedes->id_instituciones );
 		
@@ -127,10 +130,10 @@ class SedesNivelesController extends Controller
         $model = new SedesNiveles();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 			=> $model,
             'modelSedes' 		=> $modelSedes,
             'modelInstitucion' 	=> $modelInstitucion,
@@ -163,7 +166,7 @@ class SedesNivelesController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 			=> $model,
 			'modelSedes' 		=> $modelSedes,
             'modelInstitucion' 	=> $modelInstitucion,
@@ -187,7 +190,7 @@ class SedesNivelesController extends Controller
 		$modelSedes 	  = Sedes::findOne( $model->id_sedes );
 		$modelInstitucion = Instituciones::findOne( $modelSedes->id_instituciones );
 		
-        $this->findModel($id)->delete();
+        $this->renderAjax($id)->delete();
 
 		//envio al index el id de la institucion y la sedes
         return $this->redirect(['index', 'idSedes' => $modelSedes->id, 'idInstitucion' => $modelInstitucion->id ]);

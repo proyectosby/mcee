@@ -20,6 +20,8 @@ Cambios realizados: Se agregan los datatables
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 use yii\helpers\ArrayHelper;
 
@@ -31,19 +33,29 @@ use fedemotta\datatables\DataTables;
 /* @var $searchModel app\models\SedesNivelesBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Niveles';
+$this->title = '';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Sedes - Niveles</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="sedes-niveles-index">
 
-    <h1><?= Html::encode($modelInstitucion->descripcion) ?></h1>
-    <h3><?= Html::encode( "SEDE ". $modelSedes->descripcion) ?></h1>
-	
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Sedes - Niveles') ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create', 'idSedes' => $modelSedes->id ], ['class' => 'btn btn-success']) ?>
+       <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -102,7 +114,26 @@ $this->params['breadcrumbs'][] = $this->title;
 				// 'filter' => ArrayHelper::map(Sedes::find()->all(), 'id', 'descripcion' ),
 			// ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

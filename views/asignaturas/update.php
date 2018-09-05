@@ -33,34 +33,26 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignaturas */
 
-$this->title = 'Update Asignaturas: ';
+$this->title = 'Actualizar ';
 use app\models\Estados;
 use app\models\Sedes;
 
-//datos para la miga de pan
-$sede = new Sedes();
-$sede = $sede->find()->where('id='.$model->id_sedes)->all();
-$sede = ArrayHelper::map($sede,'descripcion','id_instituciones');
-$nombreSede = key($sede);
 
-$idInstitucion = $sede[$nombreSede];
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignaturas */
 
-$this->title = $nombreSede;
+
 $this->params['breadcrumbs'][] = [
 									'label' => 'Asignaturas', 
 									'url' => [
 												'index',
-												'idInstitucion' => $idInstitucion, 
-												'idSedes' 		=> $model->id_sedes,
 											 ]
 								 ];
 $this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="asignaturas-update">
 <!--muestra como titulo la descripcion de la asignatura -->
-    <h1><?= Html::encode("Asignaturas") ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' 	=> $model,

@@ -113,7 +113,7 @@ class PeriodosController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -123,8 +123,11 @@ class PeriodosController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
 		//se muestra el valor del estado siempre activo
 		$estados = new Estados();
 		$estados = $estados->find()->where('id=1')->all();
@@ -134,10 +137,10 @@ class PeriodosController extends Controller
 
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'idSedes'=>$idSedes,
 			'idInstitucion'=>$idInstitucion,
@@ -174,10 +177,10 @@ class PeriodosController extends Controller
 				
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'estados'=>$estados,
 			'idSedes'=>$idSedes,

@@ -203,7 +203,7 @@ class ParalelosController extends Controller
 		$niveles = $result[0]['descripcion'];
 		
 
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
 			'jornadas' => $jornadas,
 			'niveles' => $niveles,
@@ -219,9 +219,11 @@ class ParalelosController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
-		
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
 		
 		$estados = new Estados();
 		$estados = $estados->find()->where('id=1')->all();
@@ -269,10 +271,10 @@ class ParalelosController extends Controller
         $model = new Paralelos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'jornadas'=> $jornadas,
 			'niveles'=>$niveles,
@@ -361,11 +363,11 @@ class ParalelosController extends Controller
 				
 			
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 		
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'jornadas'=> $jornadas,
 			'niveles'=> $niveles,

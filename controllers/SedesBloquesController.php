@@ -123,7 +123,7 @@ class SedesBloquesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -137,8 +137,11 @@ class SedesBloquesController extends Controller
 	//recibe 2 parametros que sirve para la miga de pan
 	//se consultan los bloques ya que se sabe cual es la sede para su asociacion
 	//los bloques se muestran en lista (select)
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
 		$bloques = new Bloques(); 
 		$bloques = $bloques->find()->all();
 		$bloques = ArrayHelper::map($bloques, 'id','descripcion');
@@ -162,7 +165,7 @@ class SedesBloquesController extends Controller
 			if(count($sedesbloques)==0)
 			{
 				$model->save();
-				return $this->redirect(['view', 'id' => $model->id]);
+				return $this->redirect(['index']);
 			}
 			else
 			{
@@ -171,7 +174,7 @@ class SedesBloquesController extends Controller
 			   
         }
 		
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'bloques'=>$bloques,
 			'idSedes'=>$idSedes, 
@@ -216,7 +219,7 @@ class SedesBloquesController extends Controller
 			if(count($sedesbloques)==0)
 			{
 				$model->save();
-				return $this->redirect(['view', 'id' => $model->id]);
+				return $this->redirect(['index']);
 			}
 			else
 			{
@@ -225,7 +228,7 @@ class SedesBloquesController extends Controller
 			   
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'bloques'=>$bloques,
 			'idSedes'=>$model->id_sedes,

@@ -17,7 +17,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Aulas */
 
 use app\models\Sedes;
-
+$idSedes 		= $_SESSION['sede'][0];
 $modelSedes = Sedes::findOne( $idSedes );
 
 $this->title = 'Agregar Aula';

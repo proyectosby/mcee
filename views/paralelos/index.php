@@ -13,7 +13,8 @@ else
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use app\models\SedesJornadas;
 use app\models\SedesNiveles;
 use yii\helpers\ArrayHelper;
@@ -45,26 +46,32 @@ Cambios realizados: Se agregan los datatables
 **********/
 
 
-$this->title = 'Grupos por nivel';
-$this->params['breadcrumbs'][] = $this->title;
-
-$modelInstitucion 	= Instituciones::findOne( $idInstitucion );
-$modelSedes 		= Sedes::findOne( $idSedes );
+$this->title = '';
+$nombre = 'Grupos por nivel';
+$this->params['breadcrumbs'][] = $nombre;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Grupos por nivel</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+?>
+
 <div class="paralelos-index">
 
-<h1><?= Html::encode($modelInstitucion->descripcion) ?></h1>
+
   <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
-	<h3><?= Html::encode( "SEDE: ".$modelSedes->descripcion) ?></h3>
+	<h3><?= Html::encode( $nombre ) ?></h3>
 
     <p>
-        <?= Html::a('Agregar', [
-									'create',
-									'idSedes' 		=> $idSedes,
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+       <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
 
@@ -178,7 +185,26 @@ $modelSedes 		= Sedes::findOne( $idSedes );
             //'fecha_ingreso',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

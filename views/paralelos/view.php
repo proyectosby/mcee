@@ -35,7 +35,7 @@ Cambios realizados: modificacion de los datos en DetailView para mostrar los dat
 
 -------------
 **********/
-$this->title = $model->descripcion;
+$this->title = "Detalle";
 $this->params['breadcrumbs'][] = [
 									'label' => 'Grupos por nivel', 
 									'url' => [
@@ -46,14 +46,14 @@ $this->params['breadcrumbs'][] = [
 								 ];
 								 
 $this->params['breadcrumbs'][] = $this->title;
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="paralelos-view">
 
-    <h1><?= Html::encode('Ver') ?></h1>
+    <h1><?= Html::encode($this->title ) ?></h1>
 
     <p>
-        <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+       
         <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

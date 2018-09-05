@@ -93,7 +93,7 @@ class DistribucionesAcademicasController extends Controller
 		$idInstitucion = $_SESSION['instituciones'][0];
 		$idSedes = $_SESSION['sede'][0];
 		
-		return $this->render('view', [
+		return $this->renderAjax('view', [
             'model' => $this->findModel($id),
 			'idSedes' 		=> $idSedes,
 			'idInstitucion' => $idInstitucion,
@@ -388,9 +388,10 @@ class DistribucionesAcademicasController extends Controller
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             // return $this->redirect(['view', 'id' => $model->id]);
+			return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
             'idSedes' => $idSedes,
 			'estados'=>$estados,
@@ -549,10 +550,10 @@ class DistribucionesAcademicasController extends Controller
 		$modificar = true;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
 			
             'model' => $model,
 			'estados'=>$estados,

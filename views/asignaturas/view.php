@@ -43,30 +43,26 @@ use app\models\Sedes;
 use app\models\AreasEnsenanza;
 
 //datos para la miga de pan
-$sedes = new Sedes();
-$sedes = $sedes->find()->where('id='.$model->id_sedes)->all();
-$sedes = ArrayHelper::map($sedes,'descripcion','id_instituciones');
-$nombreSede = key($sedes);
 
-$idInstitucion = $sedes[$nombreSede];
+
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignaturas */
 
-$this->title = $nombreSede;
+$this->title = 'Detalle';
 $this->params['breadcrumbs'][] = [
 									'label' => 'Asignaturas', 
 									'url' => [
 												'index',
-												'idInstitucion' => $idInstitucion, 
 												'idSedes' 		=> $model->id_sedes,
 											 ]
 								 ];
 $this->params['breadcrumbs'][] = $this->title;
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="asignaturas-view">
 
-    <h1><?= Html::encode('Asignaturas')?></h1>
+    <h1><?= Html::encode( $this->title)?></h1>
 
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>

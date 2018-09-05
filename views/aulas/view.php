@@ -34,7 +34,7 @@ $modelSedes = Sedes::findOne($model->id_sedes);
 /* @var $this yii\web\View */
 /* @var $model app\models\Aulas */
 
-$this->title = $model->id;
+$this->title = 'Detalle';
 $this->params['breadcrumbs'][] = [
 									'label' => 'Aulas', 
 									'url' => [
@@ -44,17 +44,17 @@ $this->params['breadcrumbs'][] = [
 											 ]
 								 ];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="aulas-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Está seguro de eliminar este elemento?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -63,7 +63,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'descripcion',
             'capacidad',
 			[

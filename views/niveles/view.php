@@ -35,16 +35,16 @@ Cambios realizados: Se asocia el id_niveles_academicos con la tabla niveles_acad
 **********/
 
 // $this->title = $model->id;
-$this->title = "Ver";
+$this->title = "Detalle";
 $this->params['breadcrumbs'][] = ['label' => 'Niveles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="niveles-view">
 
-    <!--h1>< ?= Html::encode($this->title) ?></h1 -->
+    <?= Html::encode($this->title) ?>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

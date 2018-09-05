@@ -22,6 +22,8 @@ use yii\grid\GridView;
 use app\models\Sedes;
 use	yii\helpers\ArrayHelper;
 use fedemotta\datatables\DataTables; 
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PeridosBuscar */
@@ -34,22 +36,30 @@ $nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
 $nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
 $nombreSede = $nombreSede[$idSedes];
 
-$this->title = 'Peridos';
+$this->title = 'Periodos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Periodos</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="periodos-index">
 
     <h1><?= Html::encode($nombreSede) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-       <?= Html::a('Agregar', [
-									'create',
-									'idSedes' 		=> $idSedes,
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+      <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
 
 
     </p>
@@ -95,7 +105,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'descripcion',
             'fecha_inicio',
             'fecha_fin',
-            ['class' => 'yii\grid\ActionColumn'],
+           [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

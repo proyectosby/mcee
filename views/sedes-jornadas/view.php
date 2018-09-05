@@ -39,7 +39,7 @@ use yii\helpers\ArrayHelper;
 //Busco el modelo sedes para poder encontrar el id de la institución
 $modelSedes = Sedes::findOne($model->id_sedes);
 
-$this->title = $model->id;
+$this->title = 'Detalle';
 $this->params['breadcrumbs'][] = [
 									'label' => 'Sedes Jornadas', 
 									'url' => [
@@ -50,13 +50,15 @@ $this->params['breadcrumbs'][] = [
 								 ];
 								 
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="sedes-jornadas-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -69,7 +71,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
 			[
 				'attribute' => 'id_jornadas',
 				'value' => function( $model ){

@@ -38,6 +38,7 @@ Cambios realizados: - Cambio a dropDownList en id_sedes_jornadas y en id_sedes_n
 reciben como parametro las jornadas y los niveles que estan disponibles para la sede seleccionada.
 ---------------------------------------
 **********/
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="paralelos-form">
