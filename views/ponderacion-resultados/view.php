@@ -21,11 +21,7 @@ use app\models\PonderacionResultados;
 
 use app\models\Sedes;
 
-$idSedes = $model->id_sede;
 
-$nombreSede = Sedes::find()->where('id='.$idSedes)->one();
-$idInstitucion = $nombreSede->id_instituciones;
-$nombreSede = $nombreSede->descripcion;
  
 
 /* @var $this yii\web\View */
@@ -37,19 +33,19 @@ $this->params['breadcrumbs'][] =
 		'label' => 'Ponderación de resultados', 
 		'url' => [
 					'index',
-					'idInstitucion' => $idInstitucion, 
-					'idSedes' 		=> $idSedes,
+					
 				 ]
 	];
 
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="ponderacion-resultados-view">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
         <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

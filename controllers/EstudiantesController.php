@@ -155,7 +155,7 @@ class EstudiantesController extends Controller
 		$idSedes = $result[0]['id_sedes'];
         
 		
-		return $this->render('view', [
+		return $this->renderAjax('view', [
             'model' => $model,
 			'idSedes' =>$idSedes,
         ]);
@@ -166,8 +166,10 @@ class EstudiantesController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
         $model = new Estudiantes();		
 		
 		$connection = Yii::$app->getDb();
@@ -202,10 +204,10 @@ class EstudiantesController extends Controller
 			$model->update(false);
 		
 			
-            return $this->redirect(['view', 'id' => $model->id_perfiles_x_personas]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'estudiantes'=>$estudiantes,
 			'idSedes'=>$idSedes,
@@ -262,10 +264,10 @@ class EstudiantesController extends Controller
 		
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_perfiles_x_personas]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'estados'=>$estados,
 			'paralelos'=>$paralelos,

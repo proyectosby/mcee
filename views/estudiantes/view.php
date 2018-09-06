@@ -40,13 +40,14 @@ $this->params['breadcrumbs'][] = [
 											 ]
 								 ];	
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="estudiantes-view">
 
     <h1><?= Html::encode($nombreSede) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id_perfiles_x_personas], ['class' => 'btn btn-primary']) ?>
+
         <?= Html::a('Borrar', ['delete', 'id' => $model->id_perfiles_x_personas], [
             'class' => 'btn btn-danger',
             'data' => [

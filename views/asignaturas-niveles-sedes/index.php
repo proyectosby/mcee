@@ -30,7 +30,8 @@ Cambios realizados: Se agrega data tables
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 use app\models\Asignaturas;
 use app\models\SedesNiveles;
@@ -48,13 +49,29 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Asignaturas Niveles Sedes</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="asignaturas-niveles-sedes-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+       <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+
+
     </p>
 
     <?= DataTables::widget([
@@ -100,7 +117,26 @@ $this->params['breadcrumbs'][] = $this->title;
 			'asignaturas',
             'intensidad',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

@@ -116,7 +116,7 @@ class RangosCalificacionController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -128,8 +128,11 @@ class RangosCalificacionController extends Controller
      */
 	 
 	//parametro que sirve para asociar los datos que se ingresan con la institucion 
-    public function actionCreate($idInstitucion)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+
+
 		//se consulta el nombre de la institucion para se insertada simpre es la institucion actual
 		$institucionNombre = new Instituciones();
 		$institucionNombre = $institucionNombre->find()->where('id='.$idInstitucion)->all();
@@ -174,7 +177,7 @@ class RangosCalificacionController extends Controller
 			if (count($result) == 0)
 			{
 				$model->save();	
-				return $this->redirect(['view', 'id' => $model->id]);
+				return $this->redirect(['index']);
 			}
 			else
 			{				
@@ -186,7 +189,7 @@ class RangosCalificacionController extends Controller
             
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'idInstitucion'=>$idInstitucion,
 			'institucionNombre'=>$institucionNombre,
@@ -225,10 +228,10 @@ class RangosCalificacionController extends Controller
        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+			return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'idInstitucion'=>$idInstitucion,
 			'institucionNombre'=>$institucionNombre,

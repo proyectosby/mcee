@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
 	echo "<input type='hidden' id='hidPerfilSelected' name='hidPerfilSelected' value='".$perfilesSelected[0]['id']."'>";
 	echo "<input type='hidden' id='hidPerfilesPersonasSelected' name='hidPerfilesPersonasSelected' value='".$PerfilesXPersonas[0]['id']."'>";
 	echo "<input type='hidden' id='hidModificar' name='hidModificar' value='".$modificar."'>";
-			
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);			
 ?>
 
 <div class="perfiles-personas-institucion-form">

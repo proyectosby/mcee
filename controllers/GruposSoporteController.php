@@ -121,7 +121,7 @@ class GruposSoporteController extends Controller
 		$idInstitucion = ArrayHelper::map($datasedes,'id','id_instituciones');
 		$idInstitucion = $idInstitucion[$idSedes];
 		
-		return $this->render('view', [
+		return $this->renderAjax('view', [
             'model' => $this->findModel($id),
 			'idInstitucion'=>$idInstitucion,
 			'idSedes'=>$idSedes,
@@ -134,8 +134,11 @@ class GruposSoporteController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idInstitucion, $idSedes)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
 		$model = new GruposSoporte();
 		
 		//se crea una instancia del modelo tipos
@@ -204,10 +207,10 @@ class GruposSoporteController extends Controller
 			$tiposGruposSoporte = TiposGruposSoporte::findOne($model->id_tipo_grupos);
 		    $tiposGruposSoporte = $tiposGruposSoporte ? $tiposGruposSoporte->descripcion:'';
 		
-            return $this->redirect(['view', 'id' => $model->id,'save'=>true,'descripcion'=>$model->descripcion,'tipoGrupo'=>$tiposGruposSoporte]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'tipoGruposSoporte' => $tipoGruposSoporte,
 			'estados' => $estados,
@@ -303,10 +306,10 @@ class GruposSoporteController extends Controller
 				$tiposGruposSoporte = TiposGruposSoporte::findOne($model->id_tipo_grupos);
 				$tiposGruposSoporte = $tiposGruposSoporte ? $tiposGruposSoporte->descripcion:'';
 				
-            return $this->redirect(['view', 'id' => $model->id,'save'=>true,'descripcion'=>$model->descripcion,'tipoGrupo'=>$tiposGruposSoporte]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'tipoGruposSoporte' => $tipoGruposSoporte,
 			'estados' => $estados,

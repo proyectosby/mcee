@@ -36,6 +36,7 @@ use	yii\helpers\ArrayHelper;
 $estados = new Estados();
 $estados = $estados->find()->orderby('id')->all();
 $estados = ArrayHelper::map($estados,'id','descripcion');
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="director-paralelo-form">

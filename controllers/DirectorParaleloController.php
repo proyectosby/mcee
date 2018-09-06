@@ -106,7 +106,7 @@ class DirectorParaleloController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -116,8 +116,10 @@ class DirectorParaleloController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
 		$connection = Yii::$app->getDb();
 		
 		
@@ -166,10 +168,10 @@ class DirectorParaleloController extends Controller
         $model = new DirectorParalelo();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 	=> $model,
 			'idSedes'	=> $idSedes,
 			'idInstitucion'=>$idInstitucion,
@@ -251,10 +253,10 @@ class DirectorParaleloController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 	=> $model,
 			'idSedes'	=> $idSedes,
 			'idInstitucion'=>$idInstitucion,
@@ -272,21 +274,7 @@ class DirectorParaleloController extends Controller
      */
     public function actionDelete($id)
     {
-		// $connection = Yii::$app->getDb();
-		// //la sede y la institucion para la miga de pan
-		// $command = $connection->createCommand("
-		// SELECT sj.id_sedes as idsedes, s.id_instituciones as institucion
-		// FROM director_paralelo  as dp, paralelos as p, sedes_jornadas as sj, sedes as s
-		// where dp.id_paralelo = p.id
-		// and p.id_sedes_jornadas = sj.id
-		// and sj.id_sedes = s.id
-		// and dp.id = $id
-		// group by sj.id_sedes, s.id_instituciones
-		// ");
-		// $result = $command->queryAll();
-
-		// $idSedes = $result[0]['idsedes'];
-		// $idInstitucion = $result[0]['institucion'];
+		
 		
 		$model = $this->findModel($id);
 		$model->estado = 2;

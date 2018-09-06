@@ -29,7 +29,8 @@ Cambios realizados: Se agregan los datatables
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use app\models\Instituciones;
 use app\models\TiposCalificacion;
 use yii\helpers\ArrayHelper;
@@ -44,21 +45,31 @@ $institucionNombre = $institucionNombre[$idInstitucion];
 /* @var $searchModel app\models\RangosCalificacionBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $institucionNombre;
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre ="Rangos Calificaciones";
+$this->params['breadcrumbs'][] = $nombre;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Rangos Calificaciones</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="rangos-calificacion-index">
 
-    <h1><?= Html::encode('Rangos Calificaciones') ?></h1>
+    <h1><?= Html::encode($nombre) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-       <?= Html::a('Agregar', [
-									'create',
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+     <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
 
     </p>
 
@@ -115,7 +126,27 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_instituciones',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+           
+[
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>
