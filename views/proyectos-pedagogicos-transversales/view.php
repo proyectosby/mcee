@@ -11,20 +11,21 @@ use app\models\AreasTrabajos;
 /* @var $this yii\web\View */
 /* @var $model app\models\ProyectosPedagogicosTransversales */
 
-$this->title = $model->id;
+$this->title = "Detalle";
 $this->params['breadcrumbs'][] = ['label' => 'Proyectos Pedagogicos Transversales', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="proyectos-pedagogicos-transversales-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Está seguro de eliminar este elemento?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -33,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            
             'codigo_grupo',
             'nombre_grupo',
             [

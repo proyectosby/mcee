@@ -59,7 +59,7 @@ class ProyectosPedagogicosTransversalesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -107,10 +107,10 @@ class ProyectosPedagogicosTransversalesController extends Controller
 		
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 	=> $model,
             'sede'  	=> $sede,
             'personas'  => $personas,
@@ -163,10 +163,10 @@ class ProyectosPedagogicosTransversalesController extends Controller
 		$areas			= ArrayHelper::map( $areasData, 'id', 'descripcion' );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
             'sede'  	=> $sede,
             'personas'  => $personas,
