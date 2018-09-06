@@ -20,7 +20,7 @@ $this->registerJsFile(
     '@web/js/pmi.js',
     ['depends' => [\yii\web\JqueryAsset::className()]]
 );
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 $valueArea = '';
 $valueProcesoEvaluacion = '';
 

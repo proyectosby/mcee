@@ -4,20 +4,37 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use fedemotta\datatables\DataTables;
 use app\models\Instituciones;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ResultadosEvaluacionDocenteBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Resultados Evaluación Docentes';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = "";
+$nombres ='Resultados Evaluación Docentes';
+$this->params['breadcrumbs'][] = $nombres;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>'.$nombres.'</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="resultados-evaluacion-docente-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($nombres) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     
@@ -71,7 +88,26 @@ $this->params['breadcrumbs'][] = $this->title;
 				}, //para buscar por el nombre
 			],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>
