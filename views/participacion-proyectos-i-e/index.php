@@ -12,7 +12,8 @@ else
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use fedemotta\datatables\DataTables;
 
 use app\models\NombresProyectosParticipacion;
@@ -22,19 +23,35 @@ use app\models\Instituciones;
 /* @var $searchModel app\models\ParticipacionProyectosIEBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Participacion Proyectos IE';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre = "Participacion Proyectos IE";
+$this->params['breadcrumbs'][] = $nombre;
 
 $institucion = Instituciones::findOne( $idInstitucion );
 ?>
+
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>'.$nombre.'</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="participacion-proyectos-ie-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <h3><?= Html::encode($institucion->descripcion) ?></h3>
+    <h1><?= Html::encode($nombre) ?></h1>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create', 'idInstitucion' => $idInstitucion ], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -105,7 +122,26 @@ $institucion = Instituciones::findOne( $idInstitucion );
             //'id_institucion',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+           [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

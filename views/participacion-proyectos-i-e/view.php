@@ -20,20 +20,21 @@ use app\models\NombresProyectosParticipacion;
 /* @var $this yii\web\View */
 /* @var $model app\models\ParticipacionProyectosIE */
 
-$this->title = $model->id;
+$this->title = "Detalle";
 $this->params['breadcrumbs'][] = ['label' => 'Participacion Proyectos Ies', 'url' => ['index', 'idInstitucion' => $model->id_institucion ]];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="participacion-proyectos-ie-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Esta seguro que desea eliminar este registro?',
+                'confirm' => '¿Esta seguro que desea eliminar este registro?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -42,7 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             [ 
 				'attribute' => 'programa_proyecto', 
 				'value' => function( $model ){
