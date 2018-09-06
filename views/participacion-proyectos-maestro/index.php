@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $nombre;
 
     
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <h1><?= Html::encode($nombre) ?></h1>
     <p>
         <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>

@@ -29,6 +29,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/participacion-proyectos-jornada.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 /* @var $this yii\web\View */
 /* @var $model app\models\ParticipacionProyectosJornada */
 /* @var $form yii\widgets\ActiveForm */
