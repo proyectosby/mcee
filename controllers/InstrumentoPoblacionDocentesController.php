@@ -37,6 +37,11 @@ use yii\db\Query;
 
 use yii\data\ActiveDataProvider;
 
+use app\models\Paralelos;
+use app\models\Generos;
+use app\models\TiposIdentificaciones;
+use app\models\Jornadas;
+
 /**
  * InstrumentoPoblacionDocentesController implements the CRUD actions for InstrumentoPoblacionDocentes model.
  */
@@ -339,10 +344,110 @@ class InstrumentoPoblacionDocentesController extends Controller
     {
         $searchModel = new InstrumentoPoblacionDocentesBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		
+		$datos = [];
+		
+		foreach( $dataProvider->query->where('estado=1')->all() as $datap ){
+			
+			$persona = Personas::findOne( $datap->id_persona );
+		
+			$paralelos = Paralelos::find()
+								->innerJoin( 'estudiantes e', 'e.id_paralelos=paralelos.id' )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id=e.id_perfiles_x_personas' )
+								->innerJoin( 'personas p', 'p.id=pp.id_personas' )
+								->innerJoin( 'sedes_niveles sn', 'sn.id=paralelos.id_sedes_niveles' )
+								->where( 'p.id='.$persona->id )
+								->andWhere( 'pp.estado=1' )
+								->andWhere( 'e.estado=1' )
+								->andWhere( 'paralelos.estado=1' )
+								->andWhere( 'p.estado=1' )
+								->one();
+								
+
+			$query = new Query;
+								
+			$data = $query
+						->select( 'da.id, da.id_asignaturas_x_niveles_sedes as ida, a.descripcion as asignatura, n.id as idn, n.descripcion as nivel, e.descripcion as escalafon, j.descripcion as jornada' )
+						->from( 'distribuciones_academicas da' )
+						->innerJoin( 'asignaturas_x_niveles_sedes ans', 'ans.id=da.id_asignaturas_x_niveles_sedes' )
+						->innerJoin( 'asignaturas a' , 'a.id=ans.id_asignaturas' )
+						->innerJoin( 'perfiles_x_personas pp' , 'pp.id=da.id_perfiles_x_personas_docentes' )
+						->innerJoin( 'personas p' , 'p.id=pp.id_personas' )
+						->innerJoin( 'sedes_niveles sn' , 'sn.id=ans.id_sedes_niveles' )
+						->innerJoin( 'niveles n' , 'n.id=sn.id_niveles' )
+						->innerJoin( 'docentes d' , 'd.id_perfiles_x_personas=pp.id' )
+						->innerJoin( 'escalafones e' , 'e.id=d.id_escalafones' )
+						->innerJoin( 'paralelos pa' , 'pa.id=da.id_paralelo_sede' )
+						->innerJoin( 'sedes_jornadas sj' , 'sj.id=pa.id_sedes_jornadas' )
+						->innerJoin( 'jornadas j' , 'j.id=sj.id_jornadas' )
+						->where( 'p.id='.$persona->id )
+						->andWhere( 'da.estado=1' )
+						->andWhere( 'a.estado=1' )
+						->andWhere( 'pp.estado=1' )
+						->andWhere( 'p.estado=1' )
+						->andWhere( 'n.estado=1' )
+						->all();
+						
+			foreach( $data as $key => $value ){
+				$asignaturas[ $value['ida'] ] 	= $value['asignatura'];
+				$niveles[ $value['nivel'] ] 	= $value['nivel'];
+				$jornadas[ $value['jornada'] ]	= $value['jornada'];
+				$escalafon 						= $value['escalafon'];
+			}
+			// var_dump( $niveles )					;
+			// $jornada = Jornadas::find()
+							// ->innerJoin( 'sedes_jornadas sj', 'sj.id_jornadas=jornadas.id' )
+							// ->innerJoin( 'paralelos p', 'p.id_sedes_jornadas=sj.id' )
+							// ->where( 'p.id='.$paralelos->id )
+							// ->one();
+
+			$edad = "Sin fecha de nacimiento";
+			if( $persona->fecha_nacimiento && $persona->fecha_nacimiento!= NULL && !empty( $persona->fecha_nacimiento ) ){
+				$cumpleanos = new \DateTime( $persona->fecha_nacimiento );
+				$hoy 		= new \DateTime();
+				$edad 		= $hoy->diff($cumpleanos)->y;
+				// $edad 	   .= " años";
+			}
+
+			$genero = "Género no registrado";
+			if( $persona->id_generos && $persona->id_generos!= NULL && !empty( $persona->id_generos ) ){
+				
+				$g = Generos::findOne( $persona->id_generos);
+				$genero = $g->descripcion;
+			}
+
+			$tipoId = "Tipo de identifiación no registrado";
+			if( $persona->id_tipos_identificaciones && $persona->id_tipos_identificaciones!= NULL && !empty( $persona->id_tipos_identificaciones ) ){
+				
+				$ti = TiposIdentificaciones::findOne( $persona->id_tipos_identificaciones );
+				$tipoId = $ti->descripcion;
+			}
+			
+			$datos[ $datap->id_institucion.'-'.$datap->id_sede ][] = [
+				'institucion' => Instituciones::findOne( $datap->id_institucion ),
+				'sede' 		  => Sedes::findOne( $datap->id_sede ),
+				'docente' 	  => $persona,
+				'profesion'   => $datap->profesion,
+				'formacion'	  => $datap->ultimo_nivel,
+				'escalafon'   => $escalafon,
+				'asignaturas' => $asignaturas,
+				'grados'	  => $niveles,
+				'jornadas' 	  => $jornadas,
+				'genero' 	  => $genero,
+				'edad' 	  	  => $edad,
+			];
+		
+		}
+		
+		
+		
+		
+		
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'searchModel'	=> $searchModel,
+            'dataProvider' 	=> $dataProvider,
+            'datos' 		=> $datos,
         ]);
     }
 
