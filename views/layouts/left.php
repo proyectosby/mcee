@@ -133,7 +133,7 @@
 													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => ['instituciones/index'],],
 													['label' => 'Jornada Escolar','icon' => 'circle-o','url' => ['documentos-instancias-institucionales/index'],],
 													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => ['documentos-oficiales/index'],],
-													['label' => 'Seguimiento Egresados','icon' => 'circle-o','url' => ['sedes/index'],],
+													['label' => 'Seguimiento Egresados','icon' => 'circle-o','url' => '#'],
 														
 														
 												],//
@@ -289,8 +289,8 @@
 						'icon' => 'line-chart',
 						'url' => '#',
 						'items' => [
-										['label' => 'Clima Escolar', 'icon' => 'thermometer-0', 'url' => ['instrumento-poblacion-estudiantes/create'],],
-										['label' => 'Sistema de Monitoreo', 'icon' => 'desktop', 'url' => ['instrumento-poblacion-estudiantes/create'],],
+										['label' => 'Clima Escolar', 'icon' => 'thermometer-0', 'url' => '#',],
+										['label' => 'Sistema de Monitoreo', 'icon' => 'desktop', 'url' => '#',],
 									],
 					],
 									
