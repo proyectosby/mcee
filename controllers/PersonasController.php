@@ -141,7 +141,7 @@ class PersonasController extends Controller
     public function actionView($id)
     {
        		
-		return $this->render('view', [
+		return $this->renderAjax('view', [
             'model' => $this->findModel($id),
 			
         ]);
@@ -447,7 +447,7 @@ class PersonasController extends Controller
 		
 		
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'identificaciones'=>$identificaciones,
 			'estadosCiviles'=>$estadosCiviles,

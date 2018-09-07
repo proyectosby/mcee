@@ -67,7 +67,7 @@ class PersonasDiscapacidadesController extends Controller
      */
     public function actionView($id_personas, $id_tipos_discapacidades)
     {
-        return $this->render('view', [
+        return $this->renderAjaxss('view', [
             'model' => $this->findModel($id_personas, $id_tipos_discapacidades),
         ]);
     }
@@ -141,7 +141,7 @@ class PersonasDiscapacidadesController extends Controller
             return $this->redirect(['view', 'id_personas' => $model->id_personas, 'id_tipos_discapacidades' => $model->id_tipos_discapacidades]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'personas' => $personas,
             'discapacidades' => $discapacidades,
