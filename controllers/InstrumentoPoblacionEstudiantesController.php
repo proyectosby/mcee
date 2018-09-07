@@ -1,5 +1,13 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 2018-09-06
+Desarrollador: Edwin Molina Grisales
+Descripción: Controlador InstrumentoPoblacionEstudiantesController
+---------------------------------------
+*/
+
 namespace app\controllers;
 
 use Yii;
@@ -22,6 +30,12 @@ use yii\helpers\Json;
 use yii\db\Query;
 
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
+
+use app\models\Paralelos;
+use app\models\Generos;
+use app\models\TiposIdentificaciones;
+use app\models\Jornadas;
 
 
 /**
@@ -146,38 +160,106 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 			$headersFases[ $value['fdesc'] ]++;
 		}
 		
-		$query = new Query();
-		// compose the query
-		$query->select('*')
-			  ->from( 'semilleros_tic.instrumento_poblacion_estudiantes	ipe' )
-			  ->innerJoin( 'semilleros_tic.poblacion_estudiantes_sesion pes', 'pes.id_poblacion_estudiantes=ipe.id' )
-			  ->innerJoin( 'semilleros_tic.sesiones s', 's.id=pes.id_sesiones' )
-			  ->innerJoin( 'semilleros_tic.fases f', 'f.id=s.id_fase' )
-			  ->innerJoin( 'personas pe', 'pe.id=ipe.id_persona_estudiante' )
-			  ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=pe.id' )
-			  ->innerJoin( 'estudiantes e', 'e.id_perfiles_x_personas=pp.id' )
-			  ->innerJoin( 'paralelos p', 'p.id=e.id_paralelos' )
-			  ->innerJoin( 'sedes_niveles sn', 'sn.id=p.id_sedes_niveles' )
-			  ->where( 'sn.id_sedes='.$sede )
-			  ->andWhere( 'ipe.id_institucion='.$institucion )
-			  ->andWhere( 'ipe.id_sede='.$sede )
-			  ->andWhere( 'pp.estado=1' )
-			  ->andWhere( 'e.estado=1' )
-			  ->andWhere( 'p.estado=1' )
-			  ->andWhere( 'pe.estado=1' )
-			  ->andWhere( 'ipe.estado=1' )
-			  ->all();
+		// $query = new Query();
+		// // compose the query
+		// $query->select('*')
+			  // ->from( 'semilleros_tic.instrumento_poblacion_estudiantes	ipe' )
+			  // ->innerJoin( 'semilleros_tic.poblacion_estudiantes_sesion pes', 'pes.id_poblacion_estudiantes=ipe.id' )
+			  // ->innerJoin( 'semilleros_tic.sesiones s', 's.id=pes.id_sesiones' )
+			  // ->innerJoin( 'semilleros_tic.fases f', 'f.id=s.id_fase' )
+			  // ->innerJoin( 'personas pe', 'pe.id=ipe.id_persona_estudiante' )
+			  // ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=pe.id' )
+			  // ->innerJoin( 'estudiantes e', 'e.id_perfiles_x_personas=pp.id' )
+			  // ->innerJoin( 'paralelos p', 'p.id=e.id_paralelos' )
+			  // ->innerJoin( 'sedes_niveles sn', 'sn.id=p.id_sedes_niveles' )
+			  // ->where( 'sn.id_sedes='.$sede )
+			  // ->andWhere( 'ipe.id_institucion='.$institucion )
+			  // ->andWhere( 'ipe.id_sede='.$sede )
+			  // ->andWhere( 'pp.estado=1' )
+			  // ->andWhere( 'e.estado=1' )
+			  // ->andWhere( 'p.estado=1' )
+			  // ->andWhere( 'pe.estado=1' )
+			  // ->andWhere( 'ipe.estado=1' )
+			  // ->all();
 		
 		// echo "<pre>".$query->createCommand()->sql."</pre>";
 		
         $searchModel = new InstrumentoPoblacionEstudiantesBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		
+		$data = [];
+		$i = 0;
+		foreach( $dataProvider->query->all() as $datap ){
+			
+			$persona = Personas::findOne( $datap->id_persona_estudiante ); 
+			$sexo	 = Generos::findOne( $persona->id_generos );
+						
+			$paralelos = Paralelos::find()
+							->innerJoin( 'estudiantes e', 'e.id_paralelos=paralelos.id' )
+							->innerJoin( 'perfiles_x_personas pp', 'pp.id=e.id_perfiles_x_personas' )
+							->innerJoin( 'personas p', 'p.id=pp.id_personas' )
+							->innerJoin( 'sedes_niveles sn', 'sn.id=paralelos.id_sedes_niveles' )
+							->where( 'p.id='.$persona->id )
+							->andWhere( 'pp.estado=1' )
+							->andWhere( 'e.estado=1' )
+							->andWhere( 'paralelos.estado=1' )
+							->andWhere( 'p.estado=1' )
+							->one();
+		
+			$jornada = Jornadas::find()
+							->innerJoin( 'sedes_jornadas sj', 'sj.id_jornadas=jornadas.id' )
+							->innerJoin( 'paralelos p', 'p.id_sedes_jornadas=sj.id' )
+							->where( 'p.id='.$paralelos->id )
+							->one();
+
+			$edad = "Sin fecha de nacimiento";
+			if( $persona->fecha_nacimiento && $persona->fecha_nacimiento!= NULL && !empty( $persona->fecha_nacimiento ) ){
+				$cumpleanos = new \DateTime( $persona->fecha_nacimiento );
+				$hoy 		= new \DateTime();
+				$edad 		= $hoy->diff($cumpleanos)->y;
+				// $edad 	   .= " años";
+			}
+
+			$genero = "Género no registrado";
+			if( $persona->id_generos && $persona->id_generos!= NULL && !empty( $persona->id_generos ) ){
+				
+				$g = Generos::findOne( $persona->id_generos);
+				$genero = $g->descripcion;
+			}
+			
+			// $data[$i]['institucion'] 	= Instituciones::findOne( $institucion );
+			// $data[$i]['sede'] 			= Sedes::findOne( $sede );
+			// $data[$i]['nombres'] 		= $persona->nombres." ".$persona->apellidos;
+			// $data[$i]['genero'] 		= $genero;
+			// $data[$i]['identificacion'] = $persona->identificacion;
+			// $data[$i]['edad'] 			= $edad;
+			// $data[$i]['grupo'] 			= explode( "-", $paralelos->descripcion )[0];
+			// $data[$i]['curso'] 			= $paralelos->descripcion;
+			// $data[$i]['jornada'] 		= $jornada ? $jornada->descripcion : ' no registrada';
+			
+			
+			
+			$data[ $datap->id_institucion.'-'.$datap->id_sede ][] = [
+				'institucion' 	=> Instituciones::findOne( $datap->id_institucion ),
+				'sede' 			=> Sedes::findOne( $datap->id_sede ),
+				'nombres' 		=> $persona->nombres." ".$persona->apellidos,
+				'genero' 		=> $genero,
+				'identificacion'=> $persona->identificacion,
+				'edad' 			=> $edad,
+				'grupo'			=> explode( "-", $paralelos->descripcion )[0],
+				'curso'			=> $paralelos->descripcion,
+				'jornada' 		=> $jornada ? $jornada->descripcion : ' no registrada',
+			];
+			
+			$i++;
+		}
 
         return $this->render('index', [
             'searchModel' 	=> $searchModel,
             'dataProvider' 	=> $dataProvider,
-            'institucion' 	=> $institucion,
-            'sede' 			=> $sede,
+            'datos'			=> $data,
+            'institucion' 	=> Instituciones::findOne( $institucion ),
+            'sede' 			=> Sedes::findOne( $sede ),
         ]);
     }
 
