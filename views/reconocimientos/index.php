@@ -31,6 +31,9 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use fedemotta\datatables\DataTables;
 
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ReconocimientosBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -44,8 +47,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::button('Agregar',['value'=>Url::to(['reconocimientos/create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
+
+	<?php 
+		
+		Modal::Begin([
+			'header'=>'<h3>Reconocimientos</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+
+	?>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,

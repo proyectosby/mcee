@@ -101,7 +101,7 @@ class PersonasDiscapacidadesController extends Controller
             return $this->redirect(['view', 'id_personas' => $model->id_personas, 'id_tipos_discapacidades' => $model->id_tipos_discapacidades]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
             'personas' => $personas,
             'discapacidades' => $discapacidades,

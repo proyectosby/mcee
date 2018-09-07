@@ -1,10 +1,10 @@
 <?php
 
 /**********
-Versión: 001
+Versiï¿½n: 001
 Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
-Descripción: Formulario EJECUCION FASE I
+Descripciï¿½n: Formulario EJECUCION FASE I
 ---------------------------------------
 **********/
 
@@ -20,10 +20,10 @@ else
 }
 
 /**********
-Versión: 001
+Versiï¿½n: 001
 Fecha: Fecha en formato (08-03-2018)
 Desarrollador: Viviana Rodas
-Descripción: Formulario de personas
+Descripciï¿½n: Formulario de personas
 ---------------------------------------
 Modificaciones:
 Fecha: Fecha en formato(08-03-2018)
@@ -61,6 +61,7 @@ use yii\helpers\ArrayHelper;
 		
 
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/personas.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
 ?>
 <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
@@ -82,10 +83,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/personas.js',['depends' =
 			/**
  * Metodo para codificar en utf8.
  * 
- * param Parámetro: Recibe la cadena que se va a codificar
+ * param Parï¿½metro: Recibe la cadena que se va a codificar
  * return Tipo de retorno: Retorna la cadena codificada
  * author : Viviana Rodas
- * exception : No tiene ninguna excepción
+ * exception : No tiene ninguna excepciï¿½n
  */
 
 	function codificarEnUtf8($fila) {
@@ -96,11 +97,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/personas.js',['depends' =
         return $aux;
     }
 	
-	$Identificacion = utf8_encode('Identificación');
-	$telefono = utf8_encode('teléfono');
-	$ubicacion = utf8_encode('Ubicación');
-	$descripcion = utf8_encode('Descripción');
-	$grupo_sanguineo = utf8_encode('Grupo Sanguíneo');
+	$Identificacion = utf8_encode('Identificaciï¿½n');
+	$telefono = utf8_encode('telï¿½fono');
+	$ubicacion = utf8_encode('Ubicaciï¿½n');
+	$descripcion = utf8_encode('Descripciï¿½n');
+	$grupo_sanguineo = utf8_encode('Grupo Sanguï¿½neo');
 	
 	?>
 
@@ -110,7 +111,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/personas.js',['depends' =
   <li class="nav-item">
     <a class="nav-link" id="datosGenerales-tab" data-toggle="tab" href="#datosGenerales" role="tab" aria-controls="datosGenerales" aria-selected="true" onclick="">Datos generales</a>
  </li>
-  <li class="nav-item">
+  <li class="nav-item">	
     <a class="nav-link" id="ubicacion-tab" data-toggle="tab" href="#ubicacion" role="tab" aria-controls="ubicacion" aria-selected="false" onclick=""><?php echo $ubicacion ?></a>
   </li>
    <li class="nav-item">
