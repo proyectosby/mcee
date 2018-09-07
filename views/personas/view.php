@@ -10,10 +10,10 @@ else
 	die;
 }
 /**********
-Versión: 001
+Versiï¿½n: 001
 Fecha: (06-03-2018)
 Desarrollador: Viviana Rodas
-Descripción: Vista de personas
+Descripciï¿½n: Vista de personas
 ---------------------------------------
 Modificaciones:
 Fecha: Fecha en formato(08-03-2018)
@@ -45,8 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    <p>	
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
