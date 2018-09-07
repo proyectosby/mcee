@@ -125,7 +125,7 @@ class AsignaturasNivelesSedesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -140,10 +140,10 @@ class AsignaturasNivelesSedesController extends Controller
         $model = new AsignaturasNivelesSedes();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -265,10 +265,10 @@ class AsignaturasNivelesSedesController extends Controller
 		$idAsignaturas = $model->id_asignaturas;
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'idSedes' =>$idSedes,
 			'idNiveles'=>$idNiveles,

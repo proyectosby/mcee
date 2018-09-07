@@ -23,7 +23,7 @@ use app\models\Perfiles;
 /* @var $this yii\web\View */
 /* @var $model app\models\ParticipacionProyectosMaestro */
 
-$this->title = $model->id;
+$this->title = "Detalle";
 $this->params['breadcrumbs'][] = [
 									'label'	=> 'Participacion en proyectos de maestros', 
 									'url'	=> [
@@ -33,24 +33,18 @@ $this->params['breadcrumbs'][] = [
 												],
 								];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="participacion-proyectos-maestro-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Mofificar', [
-									'update', 
-									'id' 			=> $model->id,
-									'idSedes' 		=> $idSedes,
-									'idInstitucion'	=> $idInstitucion, 
-								], 
-								['class' => 'btn btn-primary']) 
-		?>
+        
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Está seguro que desea eliminar este registro?',
+                'confirm' => '¿Está seguro que desea eliminar este registro?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -59,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            
             [ 
 				'attribute' => 'programa_proyecto',
 				'value' 	=> function( $model ){

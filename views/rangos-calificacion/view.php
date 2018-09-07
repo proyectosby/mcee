@@ -31,10 +31,6 @@ use app\models\Instituciones;
 use app\models\TiposCalificacion;
 use yii\helpers\ArrayHelper;
 
-$institucionNombre = new Instituciones();
-$institucionNombre = $institucionNombre->find()->where('id='.$model->id_instituciones)->all();
-$institucionNombre = ArrayHelper::map($institucionNombre,'id','descripcion');
-$institucionNombre = $institucionNombre[$model->id_instituciones];
 
 /* @var $this yii\web\View */
 /* @var $model app\models\RangosCalificacion */
@@ -48,13 +44,14 @@ $this->params['breadcrumbs'][] = [
 											 ]
 								 ];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="rangos-calificacion-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
         <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

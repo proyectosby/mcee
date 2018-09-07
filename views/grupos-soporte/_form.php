@@ -24,7 +24,7 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\GruposSoporte */
 /* @var $form yii\widgets\ActiveForm */
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="grupos-soporte-form"> 

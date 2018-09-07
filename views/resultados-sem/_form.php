@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\ResultadosSem */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="resultados-sem-form">

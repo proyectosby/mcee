@@ -10,10 +10,10 @@ else
 	die;
 }
 /**********
-Versión: 001
+Versiï¿½n: 001
 Fecha: (06-03-2018)
 Desarrollador: Viviana Rodas
-Descripción: Vista de personas
+Descripciï¿½n: Vista de personas
 ---------------------------------------
 Modificaciones:
 Fecha: 05-04-2018
@@ -26,6 +26,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Generos;
 use fedemotta\datatables\DataTables;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PersonasBuscar */
@@ -40,8 +42,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::button('Agregar',['value'=>Url::to(['personas/create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
+	<?php 
+	
+		Modal::Begin([
+			'header'=>'<h3>Personas</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+	
+	?>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,

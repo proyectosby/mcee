@@ -99,7 +99,7 @@ class ParticipacionProyectosIEController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -109,12 +109,13 @@ class ParticipacionProyectosIEController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate( $idInstitucion = 0 )
+    public function actionCreate( )
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
         $model = new ParticipacionProyectosIE();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 		
 		$dataEstados  = Estados::find()->where( 'id=1' )->all();
@@ -131,7 +132,7 @@ class ParticipacionProyectosIEController extends Controller
 		$dataInstitucion  = Instituciones::find()->where( 'id='.$idInstitucion )->all();
 		$institucion 	  = ArrayHelper::map( $dataInstitucion, 'id', 'descripcion' );
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 			=> $model,
             'idInstitucion' 	=> $idInstitucion,
             'estados' 			=> $estados,
@@ -152,7 +153,7 @@ class ParticipacionProyectosIEController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 		
 		$dataEstados  = Estados::find()->where( 'id=1' )->all();
@@ -169,7 +170,7 @@ class ParticipacionProyectosIEController extends Controller
 		$dataInstitucion  = Instituciones::find()->where( 'id='.$model->id_institucion )->all();
 		$institucion 	  = ArrayHelper::map( $dataInstitucion, 'id', 'descripcion' );
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'idInstitucion' 	=> $model->id_institucion,
             'estados' 			=> $estados,

@@ -16,7 +16,8 @@ use app\models\RecursosInfraestructuraFisica;
 use fedemotta\datatables\DataTables;
 use app\models\Sedes;
 use	yii\helpers\ArrayHelper;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RecursosInfraestructuraFisicaBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -31,22 +32,31 @@ $nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
 $nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
 $nombreSede = $nombreSede[$idSedes];
 
-$this->title = 'Recursos Infraestructuras Físicas';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre = 'Recursos Infraestructuras Físicas';
+$this->params['breadcrumbs'][] = $nombre;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>'.$nombre .'</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="recursos-infraestructura-fisica-index">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($nombre) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-       <?= Html::a('Agregar', [
-									'create',
-									'idSedes' 		=> $idSedes,
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+       <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
 
     </p>
 
@@ -101,7 +111,26 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'cantidad_bibliotecas_salas_lectura',
             // 'programas_informaticos_admin',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

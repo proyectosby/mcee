@@ -33,26 +33,39 @@ use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Personas;
 use app\models\Perfiles;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParticipacionProyectosMaestroBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Participacion en proyectos de maestros';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre = "Participacion en proyectos de maestros";
+$this->params['breadcrumbs'][] = $nombre;
 
-$institucion = Instituciones::findOne($idInstitucion);
-$sedes 		 = Sedes::findOne($idSedes);
 
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>'.$nombre.'</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="participacion-proyectos-maestro-index">
 
-    <h1><?= Html::encode($institucion->descripcion) ?></h1>
-    <h3><?= Html::encode($sedes->descripcion) ?></h3>
+    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <h1><?= Html::encode($nombre) ?></h1>
     <p>
-        <?= Html::a('Agregar', ['create','idSedes' => $idSedes, 'idInstitucion' => $idInstitucion ], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -131,37 +144,23 @@ $sedes 		 = Sedes::findOne($idSedes);
             //'estado',
 
             [
-				'class' => 'yii\grid\ActionColumn',
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
 				'buttons' => [
-						'view' => function ($url,$model) {
-							
-								return Html::a(
-												'<span class="glyphicon glyphicon-eye-open"></span>', 
-												$url."&idSedes=".$_SESSION['sede'][0]."&idInstitucion=".$_SESSION['instituciones'][0]
-											);
-						},
-						'update' => function ($url,$model) {
-							
-								return Html::a(
-												'<span class="glyphicon glyphicon-pencil"></span>', 
-												$url."&idSedes=".$_SESSION['sede'][0]."&idInstitucion=".$_SESSION['instituciones'][0]
-											);
-						},
-						'delete' => function ($url,$model) {
-							
-								return Html::a(
-												'<span class="glyphicon glyphicon-trash"></span>', 
-												$url."&idSedes=".$_SESSION['sede'][0]."&idInstitucion=".$_SESSION['instituciones'][0],
-												[
-													'data-confirm'  => "¿Está seguro de eliminar este elemento?",
-													'title' 		=> "Eliminar",
-													'aria-label'	=> "Eliminar",
-													'data-pjax'		=> "0",
-													'data-method'	=> "post",
-												]
-											);
-						},
-				],
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
 			],
         ],
     ]); ?>

@@ -114,7 +114,7 @@ class ParticipacionProyectosMaestroController extends Controller
      */
     public function actionView( $id, $idInstitucion = 0, $idSedes = 0 )
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' 		=> $this->findModel($id),
 			'idSedes' 		=> $idSedes,
 			'idInstitucion'	=> $idInstitucion,
@@ -126,8 +126,9 @@ class ParticipacionProyectosMaestroController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate( $idSedes = 0 )
+    public function actionCreate()
     {
+		$idSedes 		= $_SESSION['sede'][0];
         $model = new ParticipacionProyectosMaestro();
 		
 		$sedesTable 		= new Sedes();
@@ -163,15 +164,10 @@ class ParticipacionProyectosMaestroController extends Controller
 		$nombresProyectos 	  	= ArrayHelper::map( $dataNombresProyectos, 'id', 'descripcion' );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect([
-										'view', 
-										'id' 			=> $model->id,
-										'idSedes' 		=> $idSedes,
-										'idInstitucion'	=> $dataSedes->id_instituciones,
-									]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 			=> $model,
             'idSedes' 			=> $idSedes,
             'idInstitucion'		=> $dataSedes->id_instituciones,
@@ -235,14 +231,10 @@ class ParticipacionProyectosMaestroController extends Controller
 		$nombresProyectos 	  	= ArrayHelper::map( $dataNombresProyectos, 'id', 'descripcion' );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect([
-										'view', 
-										'id' 			=> $model->id,
-										'idSedes' 		=> $idSedes,
-										'idInstitucion'	=> $dataSedes->id_instituciones,]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 			=> $model,
 			'idSedes' 			=> $idSedes,
             'idInstitucion'		=> $idInstitucion,

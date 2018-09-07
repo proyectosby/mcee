@@ -119,7 +119,7 @@ class InfraestructuraEducativaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -135,13 +135,13 @@ class InfraestructuraEducativaController extends Controller
         $model = new InfraestructuraEducativa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 	
 		$sedes = $this->obtenerSedes($idInstitucion);
 		$estados = $this->obtenerEstados();
 		
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'sedes'=> $sedes,
 			'estados'=>$estados,
@@ -161,7 +161,7 @@ class InfraestructuraEducativaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 		
 		$idInstitucion = $_SESSION['instituciones'][0]; 
@@ -172,7 +172,7 @@ class InfraestructuraEducativaController extends Controller
 		
 		
 		
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'sedes'=> $sedes,
 			'estados'=>$estados,

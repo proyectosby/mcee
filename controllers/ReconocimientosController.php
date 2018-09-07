@@ -110,7 +110,7 @@ class ReconocimientosController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'personas' => $personas,
             'estados' => $estados,

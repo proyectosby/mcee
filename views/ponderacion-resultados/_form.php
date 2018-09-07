@@ -29,6 +29,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\PonderacionResultados */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ponderacionResultados.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <script>

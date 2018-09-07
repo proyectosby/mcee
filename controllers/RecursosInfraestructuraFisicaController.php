@@ -107,7 +107,7 @@ class RecursosInfraestructuraFisicaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -117,15 +117,18 @@ class RecursosInfraestructuraFisicaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
         $model = new RecursosInfraestructuraFisica();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'idSedes'=>$idSedes,
 			'idInstitucion'=>$idInstitucion,
@@ -144,10 +147,10 @@ class RecursosInfraestructuraFisicaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }

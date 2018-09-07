@@ -77,13 +77,13 @@ $this->params['breadcrumbs'][] =
 				 ]
 	];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="director-paralelo-view">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

@@ -178,7 +178,7 @@ class ParticipacionProyectosJornadaController extends Controller
 		$idInstitucion 		= $model->id_institucion;
 		$nombreInstitucion 	= $this->obtenerNombreInstitucion($idInstitucion);
 		
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $model,
 			'idInstitucion'		=> $idInstitucion,
 			'nombreInstitucion'	=> $nombreInstitucion,
@@ -191,12 +191,15 @@ class ParticipacionProyectosJornadaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idInstitucion)
+    public function actionCreate()
     {
+		
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+
         $model = new ParticipacionProyectosJornada();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
 		$nombrePrograma 	= $this->obtenerNombrePrograma();
@@ -204,7 +207,7 @@ class ParticipacionProyectosJornadaController extends Controller
 		$nombreInstitucion 	= $this->obtenerNombreInstitucion($idInstitucion);
 		$estado 			= $this->obtenerEstados();
 		
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 		=> $model,
 			'nombrePrograma'=> $nombrePrograma,
 			'tipo'			=> $tipo,
@@ -236,10 +239,10 @@ class ParticipacionProyectosJornadaController extends Controller
 		echo "<script>idParticipante = $idParticipante ;</script>";
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 		=> $model,
 			'nombrePrograma'=> $nombrePrograma,
 			'tipo'			=> $tipo,

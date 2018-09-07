@@ -28,26 +28,38 @@ use yii\grid\GridView;
 use fedemotta\datatables\DataTables;
 use app\models\Sedes;
 use app\models\Instituciones;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $nombreInstitucion = Instituciones::find()->where(['id' => $idInstitucion])->one();
 $nombreInstitucion = $nombreInstitucion->descripcion;
 
-$this->title = $nombreInstitucion;
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre = "Infraestructura Educativa";
+$this->params['breadcrumbs'][] = $nombre;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>Infraestructura Educativa</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="infraestructura-educativa-index">
 
-    <h1><?= Html::encode('Infraestructura Educativa') ?></h1>
+    <h1><?= Html::encode($nombre) ?></h1>
 
     <p>
-	<?= Html::a('Agregar', [
-									'create',
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
-
+	<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
 
     </p>
 
@@ -106,7 +118,27 @@ $this->params['breadcrumbs'][] = $this->title;
             //'cumplimiento_pedido',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+          
+[
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

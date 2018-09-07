@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
 
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/sweetalert2.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/rangosCalificacion.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="rangos-calificacion-form">

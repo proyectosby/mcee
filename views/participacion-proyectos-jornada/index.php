@@ -31,26 +31,39 @@ use fedemotta\datatables\DataTables;
 use app\models\NombresProyectosParticipacion;
 use app\models\Personas;
 use app\models\Perfiles;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ParticipacionProyectosJornadaBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $nombreInstitucion;
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre = 'Participacion Proyectos Jornadas';
+$this->params['breadcrumbs'][] = $nombre;
+
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>'.$nombre.'</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="participacion-proyectos-jornada-index">
 
-    <h1><?= Html::encode('Participacion Proyectos Jornadas') ?></h1>
+    <h1><?= Html::encode($nombre) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', [
-									'create',
-									'idInstitucion' => $idInstitucion, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
 
     </p>
 
@@ -134,7 +147,26 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_institucion',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

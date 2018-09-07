@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 use app\models\SedesNiveles;
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/matriculasEstudiantes.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 

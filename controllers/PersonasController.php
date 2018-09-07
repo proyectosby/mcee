@@ -242,7 +242,7 @@ class PersonasController extends Controller
 		}
 		
 		
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'identificaciones'=>$identificaciones,
 			'estadosCiviles'=>$estadosCiviles,

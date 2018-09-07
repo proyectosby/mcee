@@ -30,7 +30,7 @@ use	yii\helpers\ArrayHelper;
 /* @var $model app\models\AsignaturasNivelesSedes */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/asignaturasNivelesSedes.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 

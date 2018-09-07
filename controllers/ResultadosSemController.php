@@ -77,7 +77,7 @@ class ResultadosSemController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -92,10 +92,10 @@ class ResultadosSemController extends Controller
         $model = new ResultadosSem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'estados'	=> $this->estados(),
 			'institucion'	=> $this->institucion(),
@@ -114,10 +114,10 @@ class ResultadosSemController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'estados'	=> $this->estados(),
 			'institucion'	=> $this->institucion(),

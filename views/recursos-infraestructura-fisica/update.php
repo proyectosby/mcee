@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="recursos-infraestructura-fisica-update">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

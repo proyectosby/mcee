@@ -90,7 +90,7 @@ class RecursoInfraestructuraPedagogicaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -100,9 +100,9 @@ class RecursoInfraestructuraPedagogicaController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate( $idSedes = 0 )
+    public function actionCreate( )
     {
-		
+		$idSedes 		= $_SESSION['sede'][0];
 		$sedesTable 		= new Sedes();
 		$dataSedes	 		= $sedesTable->find()->where( 'id='.$idSedes )->andWhere( 'estado=1' )->all();
 		$sedes				= ArrayHelper::map( $dataSedes, 'id', 'descripcion' );
@@ -113,10 +113,10 @@ class RecursoInfraestructuraPedagogicaController extends Controller
         $model = new RecursoInfraestructuraPedagogica();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+           return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 	=> $model,
 			'sedes' 	=> $sedes,
 			'estados'	=> $estados,
@@ -143,10 +143,10 @@ class RecursoInfraestructuraPedagogicaController extends Controller
 		$estados			= ArrayHelper::map( $dataEstados, 'id', 'descripcion' );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 	=> $model,
 			'sedes' 	=> $sedes,
 			'estados'	=> $estados,

@@ -163,7 +163,7 @@ class PonderacionResultadosController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -173,8 +173,11 @@ class PonderacionResultadosController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($idSedes, $idInstitucion)
+    public function actionCreate()
     {
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+
 		//se envia la variable periodos con los valores de la tabla periodos
 		$periodos = new Periodos();
 		$periodos = $periodos->find()->where("id_sedes=".$idSedes)->all();
@@ -189,10 +192,10 @@ class PonderacionResultadosController extends Controller
         $model = new PonderacionResultados();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'periodos'=>$periodos,
 			'estados'=>$estados,
@@ -226,10 +229,10 @@ class PonderacionResultadosController extends Controller
         
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+			return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'periodos'=>$periodos,
 			'estados'=>$estados,

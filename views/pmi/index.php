@@ -10,7 +10,8 @@ Descripción: CRUD PMI
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use app\models\SubProcesoEvaluacion;
 use app\models\ProcesoEspecifico;
 use app\models\AreaGestion;
@@ -28,13 +29,27 @@ use fedemotta\datatables\DataTables;
 $this->title = 'PMI';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>'<h3>'.$this->title.'</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="pmi-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+       <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -99,7 +114,26 @@ $this->params['breadcrumbs'][] = $this->title;
             //'id_institucion',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+           [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>
