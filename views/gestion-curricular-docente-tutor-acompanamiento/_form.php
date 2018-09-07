@@ -20,6 +20,7 @@ Cambios realizados: - creacion del formulario
 /* @var $this yii\web\View */
 /* @var $model app\models\GestionCurricularDocenteTutorAcompanamiento */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="gestion-curricular-docente-tutor-acompanamiento-form">

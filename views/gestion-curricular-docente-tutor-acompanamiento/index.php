@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
@@ -9,16 +10,31 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\GestionCurricularDocenteTutorAcompanamientoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Instrumento de autoevaluación al Docente-Tutor en el proceso de acompañamiento';
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = '';
+$nombre = 'Instrumento de autoevaluación';
+$this->params['breadcrumbs'][] = $nombre;
 ?>
+
+<?php
+		Modal::Begin([
+			'header'=>"<h3>$nombre</h3>",
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+		?>
+
 <div class="gestion-curricular-docente-tutor-acompanamiento-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode('Instrumento de autoevaluación al Docente-Tutor en el proceso de acompañamiento') ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
 
     <?= DataTables::widget([
@@ -65,7 +81,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_institucion',
             'id_sede',
 
-            ['class' => 'yii\grid\ActionColumn'],
+           [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
+
         ],
     ]); ?>
 </div>

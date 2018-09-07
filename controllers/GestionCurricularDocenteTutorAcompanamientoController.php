@@ -114,7 +114,7 @@ public function obtenerDocentes()
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -129,7 +129,7 @@ public function obtenerDocentes()
         $model = new GestionCurricularDocenteTutorAcompanamiento();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 		
 		$dataParametros1 = Parametro::find()
@@ -166,7 +166,7 @@ public function obtenerDocentes()
 						
 		$titulos3	= ArrayHelper::map( $titulos3, 'id', 'descripcion' );
 		
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 	=> $model,
 			'docentes'	=> $this->obtenerDocentes(),
 			'sedes'		=> $this->obtenerSedes(),
@@ -190,10 +190,10 @@ public function obtenerDocentes()
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }

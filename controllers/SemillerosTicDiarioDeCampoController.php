@@ -74,7 +74,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -97,10 +97,10 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
             'fases' => $fases,
             'fasesModel' => $fasesModel,
@@ -127,10 +127,10 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
             'fases' => $fases,
             'fasesModel' => $fasesModel,

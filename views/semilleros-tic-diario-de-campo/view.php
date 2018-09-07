@@ -8,6 +8,7 @@ use yii\widgets\DetailView;
 
 $this->title = "Detalles";
 $this->params['breadcrumbs'][] = ['label' => 'Semilleros Tic Diario De Campos', 'url' => ['index']];
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="semilleros-tic-diario-de-campo-view">
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
         <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -28,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'id_ejecucion_fase',
             'descripcion',
             'hallazgos',
