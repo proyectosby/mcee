@@ -22,6 +22,7 @@ use yii\widgets\DetailView;
 
 use app\models\Personas;
 use app\models\TiposFormaciones;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PersonasFormaciones */
@@ -32,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="personas-formaciones-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode("Detalle") ?></h1>
 
     <p>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [

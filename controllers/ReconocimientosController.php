@@ -107,7 +107,7 @@ class ReconocimientosController extends Controller
 		$model = new Reconocimientos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('create', [
@@ -146,7 +146,7 @@ class ReconocimientosController extends Controller
 		$model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('update', [

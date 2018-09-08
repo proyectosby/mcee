@@ -89,19 +89,19 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
  * exception : No tiene ninguna excepci�n
  */
 
-	function codificarEnUtf8($fila) {
+	/*function codificarEnUtf8($fila) {
         $aux;
         foreach ($fila as $value) {
             $aux[] = utf8_encode($value);
         }
         return $aux;
-    }
+    }*/
 	
 	$Identificacion = utf8_encode('Identificaci�n');
 	$telefono = utf8_encode('tel�fono');
-	$ubicacion = utf8_encode('Ubicaci�n');
+	$ubicacion = utf8_encode('Ubicaci&oacuten');
 	$descripcion = utf8_encode('Descripci�n');
-	$grupo_sanguineo = utf8_encode('Grupo Sangu�neo');
+	$grupo_sanguineo = utf8_encode('Grupo Sangu&iacute;neo');
 	
 	?>
 
@@ -125,7 +125,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade" id="datosGenerales" role="tabpanel" aria-labelledby="datosGenerales-tab">
 		<br>
-		<?= $form->field($model, 'identificacion')->textInput(['maxlength' => true,'placeholder'=> 'Digite la '.$Identificacion.'', 'id' =>'txtIdent']) ?>
+		<?= $form->field($model, 'identificacion')->textInput(['maxlength' => true,'placeholder'=> 'Digite la Identificación', 'id' =>'txtIdent']) ?>
 		
 		<?= $form->field($model, 'id_tipos_identificaciones')->dropDownList($identificaciones, ['prompt'=>'Seleccione...']) ?>
 
@@ -156,7 +156,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
 		<?= $form->field($model, 'id_generos')->dropDownList($generos, ['prompt'=>'Seleccione...']) ?>
 		
-		<?= $form->field($model, 'telefonos')->textInput(['maxlength' => true,'placeholder'=> 'Digite el '.$telefono.'', 'id' =>'txtTele']) ?>
+		<?= $form->field($model, 'telefonos')->textInput(['maxlength' => true,'placeholder'=> 'Digite el teléfono', 'id' =>'txtTele']) ?>
 		
 		<?= $form->field($model, 'envio_correo')->checkbox() ?>
 		
@@ -189,7 +189,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
   </div>
   <div class="tab-pane fade" id="perfiles" role="tabpanel" aria-labelledby="perfiles-tab">
 	<br>
-	<?= $form->field($perfilesTable, 'id')->dropDownList($perfiles, ['multiple'=>'multiple','size'=>'10'])->label($descripcion) ?>
+	<?= $form->field($perfilesTable, 'id')->dropDownList($perfiles, ['multiple'=>'multiple','size'=>'10'])->label('Descripción') ?>
   </div>
   
   <div class="tab-pane fade" id="hobbies" role="tabpanel" aria-labelledby="hobbies-tab">

@@ -237,8 +237,7 @@ class PersonasController extends Controller
 					$result = $command->queryAll();
 		
 			
-		
-				return $this->redirect(['view', 'id' => $model->id]);
+				return $this->redirect(['index']);
 		}
 		
 		
@@ -442,7 +441,7 @@ class PersonasController extends Controller
 							
 					
 			}
-			return $this->redirect(['view', 'id' => $model->id]);
+			return $this->redirect(['index']);
         }
 		
 		
