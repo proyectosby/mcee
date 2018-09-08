@@ -98,7 +98,7 @@ class PersonasDiscapacidadesController extends Controller
 		$model = new PersonasDiscapacidades();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_personas' => $model->id_personas, 'id_tipos_discapacidades' => $model->id_tipos_discapacidades]);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('create', [
@@ -138,7 +138,7 @@ class PersonasDiscapacidadesController extends Controller
 		$model = $this->findModel($id_personas, $id_tipos_discapacidades);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_personas' => $model->id_personas, 'id_tipos_discapacidades' => $model->id_tipos_discapacidades]);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('update', [

@@ -15,6 +15,7 @@ use yii\widgets\DetailView;
 
 use app\models\Personas;
 use app\models\TiposDiscapacidades;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PersonasDiscapacidades */
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="personas-discapacidades-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode("Detalle") ?></h1>
 
     <p>
         <?= Html::a('Eliminar', ['delete', 'id_personas' => $model->id_personas, 'id_tipos_discapacidades' => $model->id_tipos_discapacidades], [

@@ -23,6 +23,9 @@ use yii\widgets\DetailView;
 use app\models\Personas;
 use app\models\Estados;
 
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Reconocimientos */
 
@@ -32,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reconocimientos-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode("Datalle") ?></h1>
 
     <p>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
