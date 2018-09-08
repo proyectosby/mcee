@@ -1,5 +1,10 @@
 <?php
-
+/**********
+Fecha modificacion: 07-09-2018
+Desarrollador: Andrés Felipe Giraldo
+Descripción: Se cambian los render de view, create y update. Se cambia el redirect en las actions create y update.
+---------------------------------------
+*/
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -83,7 +88,7 @@ class VinculacionDocentesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -113,10 +118,10 @@ class VinculacionDocentesController extends Controller
         $model = new VinculacionDocentes();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 			=> $model,
             'estados' 			=> $estados,
             'personas' 			=> $personas,
@@ -152,10 +157,10 @@ class VinculacionDocentesController extends Controller
 		
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 			=> $model,
 			'estados' 			=> $estados,
             'personas' 			=> $personas,

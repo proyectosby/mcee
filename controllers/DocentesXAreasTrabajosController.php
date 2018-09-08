@@ -12,6 +12,9 @@ Persona encargada: Edwin Molina Grisales
 Se hacen cambios para que no se muestren docentes inactivos se corrige los queries respectivos,
 ya que se repetía varias veces los metodos ->where() en una sola consulta
 ---------------------------------------
+Fecha modificacion: 06-09-2018
+Desarrollador: Andrés Felipe Giraldo
+Descripción: Se cambian los render de view, create y update. Se cambia el redirect en las actions create y update.
 **********/
 
 namespace app\controllers;
@@ -90,7 +93,7 @@ class DocentesXAreasTrabajosController extends Controller
      */
     public function actionView($id_perfiles_x_personas_docentes, $id_areas_trabajos)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id_perfiles_x_personas_docentes, $id_areas_trabajos),
         ]);
     }
@@ -117,10 +120,9 @@ class DocentesXAreasTrabajosController extends Controller
         $model = new DocentesXAreasTrabajos();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_perfiles_x_personas_docentes' => $model->id_perfiles_x_personas_docentes, 'id_areas_trabajos' => $model->id_areas_trabajos]);
-        }
+                return $this->redirect(['index']);        }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 		=> $model,
             'personas' 		=> $personas,
             'areasTrabajo' 	=> $areasTrabajo,
@@ -152,10 +154,9 @@ class DocentesXAreasTrabajosController extends Controller
         $model = $this->findModel($id_perfiles_x_personas_docentes, $id_areas_trabajos);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_perfiles_x_personas_docentes' => $model->id_perfiles_x_personas_docentes, 'id_areas_trabajos' => $model->id_areas_trabajos]);
-        }
+                return $this->redirect(['index']);        }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 		=> $model,
 			'personas' 		=> $personas,
             'areasTrabajo' 	=> $areasTrabajo,

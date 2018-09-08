@@ -1,5 +1,10 @@
 <?php
-
+/**********
+Fecha modificacion: 06-09-2018
+Desarrollador: Andrés Felipe Giraldo
+Descripción: Se cambian los render de view, create y update. Se cambia el redirect en las actions create y update.
+---------------------------------------
+*/
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -12,6 +17,7 @@ else
 	header('Location: index.php?r=site%2Flogin');
 	die;
 }
+
 use Yii;
 use app\models\EvaluacionDocentes;
 use app\models\EvaluacionDocentesBuscar;
@@ -68,7 +74,7 @@ class EvaluacionDocentesController extends Controller
      */
     public function actionView($id)
     {		
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' 		=> $this->findModel($id),
         ]);
     }
@@ -95,10 +101,10 @@ class EvaluacionDocentesController extends Controller
         $model = new EvaluacionDocentes();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
 			'personas' 		=> $personas,
             'estados' 		=> $estados,
@@ -129,10 +135,10 @@ class EvaluacionDocentesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                 return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'personas' 		=> $personas,
             'estados' 		=> $estados,

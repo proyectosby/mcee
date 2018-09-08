@@ -1,4 +1,9 @@
 <?php
+/**********
+Fecha: 07-09-2018
+Persona encargada: Andrés Felipe Giraldo
+Cambios realizados: Se agregan librerias de modales, se agrega funcion de modal y se cambia el enlace por un botón. Se incluye js que muestra el modal.
+*/
 if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
@@ -16,14 +21,14 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use app\models\Personas;
 use app\models\TiposDocumentos;
-
+use yii\bootstrap\Modal;
 use fedemotta\datatables\DataTables;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentosBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
@@ -40,9 +45,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+	<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>  
+	</p>
+    <?php
+		Modal::Begin([
+			'header'=>'<h3>Documentos</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+	?>
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -80,9 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			 ],
 		],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            // 'id',
+           // 'id',
             [ 
 				'attribute' => 'ruta' ,
 				'format' 	=> 'raw' ,
@@ -107,9 +121,25 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
 
             [
-				'class' => 'yii\grid\ActionColumn',
-				'template' => '{delete}',
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
 			],
+
         ],
     ]); ?>
 </div>

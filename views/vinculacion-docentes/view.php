@@ -1,4 +1,12 @@
 <?php
+/**********
+Modificaciones:
+Fecha: 07-09-2018
+Persona encargada: Andrés Felipe Giraldo
+Cambios realizados: Se incluye CSS de modal de bootstrap. Se borra el enlace modificar.
+---------------------------------------
+*/
+
 if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
@@ -17,10 +25,12 @@ use app\models\Personas;
 use app\models\Estados;
 use app\models\TiposContratos;
 
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+
 /* @var $this yii\web\View */
 /* @var $model app\models\VinculacionDocentes */
 
-$this->title = $model->id;
+$this->title = 'Detalle';
 $this->params['breadcrumbs'][] = ['label' => 'Vinculacion Docentes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,7 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Modificar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
