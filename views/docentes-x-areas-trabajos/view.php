@@ -1,4 +1,11 @@
 <?php
+/**********
+Modificaciones:
+Fecha: 06-09-2018
+Persona encargada: Andrés Felipe Giraldo
+Cambios realizados: Se incluye CSS de modal de bootstrap. Se borra el enlace modificar.
+---------------------------------------
+*/
 if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
@@ -19,8 +26,9 @@ use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DocentesXAreasTrabajos */
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
-$this->title = $model->id_perfiles_x_personas_docentes;
+$this->title = 'Detalle';
 $this->params['breadcrumbs'][] = ['label' => 'Docentes Xareas Trabajos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,7 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Modificar', ['update', 'id_perfiles_x_personas_docentes' => $model->id_perfiles_x_personas_docentes, 'id_areas_trabajos' => $model->id_areas_trabajos], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Eliminar', ['delete', 'id_perfiles_x_personas_docentes' => $model->id_perfiles_x_personas_docentes, 'id_areas_trabajos' => $model->id_areas_trabajos], [
             'class' => 'btn btn-danger',
             'data' => [

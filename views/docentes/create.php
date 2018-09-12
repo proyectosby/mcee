@@ -1,4 +1,11 @@
 <?php
+/**********
+Versión: 001
+Fecha: Fecha modificacion (24-04-2018)
+Desarrollador: Viviana Rodas
+Descripción: Se modifica para llenar los docentes
+---------------------------------------
+*/
 if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
@@ -9,14 +16,7 @@ else
 	echo "<script> window.location=\"index.php?r=site%2Flogin\";</script>";
 	die;
 }
-/**********
-Versión: 001
-Fecha: Fecha modificacion (24-04-2018)
-Desarrollador: Viviana Rodas
-Descripción: Se modifica para llenar los docentes
----------------------------------------
 
-*/
 
 use yii\helpers\Html;
 

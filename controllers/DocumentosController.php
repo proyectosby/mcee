@@ -1,5 +1,10 @@
 <?php
-
+/**********
+Fecha modificacion: 07-09-2018
+Desarrollador: Andrés Felipe Giraldo
+Descripción: Se cambian los render de view, create y update. Se cambia el redirect en las actions create y update.
+---------------------------------------
+*/
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -121,7 +126,7 @@ class DocumentosController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -152,6 +157,7 @@ class DocumentosController extends Controller
 							->where( 'personas.estado=1' )
 							->andWhere( 'id_perfiles=10' )
 							->all();
+							
 		$personas 	  = ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		
 		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->all();
@@ -217,12 +223,12 @@ class DocumentosController extends Controller
 				$model->save();
 			}
 			
-			return $this->redirect(['index', 'guardado' => true ]);
+			return $this->redirect(['index']);
         }
 		
 		$model = new Documentos();
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 		 => $model,
             'tiposDocumento' => $tiposDocumento,
             'personas' 		 => $personas,
@@ -300,7 +306,7 @@ class DocumentosController extends Controller
 								->where( 'id='.$model->id_persona )
 								->all();
 		$personas 	  = ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
+
 		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->all();
 		$tiposDocumento 	 = ArrayHelper::map( $dataTiposDocumento, 'id', 'descripcion' );
 		
@@ -329,13 +335,13 @@ class DocumentosController extends Controller
 				$file->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
 				
 				$model->ruta = $rutaFisicaDirectoriaUploads;
-		
+
 				if( $model->save() )
-					return $this->redirect(['view', 'id' => $model->id]);
+					return $this->redirect(['index']);
 			}
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
 			'tiposDocumento' => $tiposDocumento,
             'personas' 		 => $personas,

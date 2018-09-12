@@ -96,7 +96,7 @@ class RepresentantesLegalesController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
 			
         ]);
@@ -170,11 +170,11 @@ class RepresentantesLegalesController extends Controller
 			$modelEstudiantes->id_perfiles_x_personas = $model->id_perfiles_x_personas;
 			$modelEstudiantes->estado = 1;
 			$modelEstudiantes->save();
-			return $this->redirect(['view', 'id' => $model->id]);
+			return $this->redirect(['index']);
 			
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 					=> $model,
 			'estudiantes'				=> $estudiantes,
 			'representantesLegales'		=> $representantesLegales,
@@ -251,10 +251,10 @@ class RepresentantesLegalesController extends Controller
 		
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' 					=> $model,
 			'estudiantes'				=> $estudiantes,
 			'representantesLegales'		=> $representantesLegales,

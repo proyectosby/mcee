@@ -33,6 +33,7 @@ use app\models\EstadosCiviles;
 use app\models\BarriosVeredas;
 use app\models\Municipios;
 use app\models\TiposIdentificaciones;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Personas */
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="personas-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode("Detalle") ?></h1>
 
     <p>	
         <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [

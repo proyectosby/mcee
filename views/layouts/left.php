@@ -192,6 +192,7 @@
 																['label' => 'Ejecución fase III', 'icon' => 'long-arrow-right', 'url' => ['ejecucion-fase-iii-estudiantes/create'],],
 																['label' => 'Diario de campo', 'icon' => 'long-arrow-right', 'url' => ['semilleros-tic-diario-de-campo-estudiantes/index'],],
 																['label' => 'Resumen operativo', 'icon' => 'long-arrow-right', 'url' => ['resumen-operativo-fases-estudiantes/index'],],
+																['label' => 'Población', 'icon' => 'long-arrow-right', 'url' => ['instrumento-poblacion-estudiantes/create'],],
 														
 														],
 													],

@@ -1,4 +1,16 @@
 <?php
+/**********
+---------------------------------------
+Modificaciones:
+Fecha: 05-04-2018
+Persona encargada: Viviana Rodas
+Cambios realizados: Se agregan los datatables
+---------------------------------------
+Fecha: 07-09-2018
+Persona encargada: Andrés Felipe Giraldo
+Cambios realizados: Se agregan librerias de modales, se agrega funcion de modal y se cambia el enlace por un botón. Se incluye js que muestra el modal.
+
+*/
 if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
@@ -9,14 +21,7 @@ else
 	echo "<script> window.location=\"index.php?r=site%2Flogin\";</script>";
 	die;
 }
-/**********
----------------------------------------
-Modificaciones:
-Fecha: 05-04-2018
-Persona encargada: Viviana Rodas
-Cambios realizados: Se agregan los datatables
----------------------------------------
-*/
+
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -24,11 +29,14 @@ use yii\grid\GridView;
 use app\models\Personas;
 use app\models\TiposContratos;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 use fedemotta\datatables\DataTables;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\VinculacionDocentesBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 $this->title = 'Vinculación Docentes';
 $this->params['breadcrumbs'][] = $this->title;
@@ -39,8 +47,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+	<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>    
+	</p>
+    <?php
+		Modal::Begin([
+			'header'=>'<h3>VinculacionDocentes</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+		
+	?>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
@@ -115,7 +135,25 @@ $this->params['breadcrumbs'][] = $this->title;
 				'filter' 	=> ArrayHelper::map( TiposContratos::find()->all(), 'id', 'descripcion' ),
 			],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
+			],
         ],
     ]); ?>
 </div>
