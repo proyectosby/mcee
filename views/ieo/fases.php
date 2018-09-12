@@ -1,8 +1,5 @@
 <?php
 
-//use app\models\PoblacionDocentesSesion;
-//use app\models\Sesiones;
-
 $items = [];
 $index = 0;
 
@@ -26,7 +23,10 @@ foreach( $fases as $keyFase => $fase ){
 														'index' 	=> $index,
 														'sesiones' 	=> $index,
                                                         'fase' 		=> $fase,
-                                                        'model'     => $model
+														'documentosReconocimiento' => $documentosReconocimiento,
+														'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
+														'evidencias' => $evidencias,
+														'producto' => $producto,
 													] 
 										),
 					'contentOptions'=> []
