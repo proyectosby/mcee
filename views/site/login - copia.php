@@ -11,7 +11,7 @@ use	yii\helpers\ArrayHelper;
 
 use nex\chosen\Chosen;
 
-$this->title = 'SIMCEE';
+$this->title = 'Sistema de información Mi Comunidad es Escuela- SIMCEE';
 $this->params['breadcrumbs'][] = $this->title;
 
 if(isset($_SESSION)) 
@@ -35,34 +35,20 @@ EOT_JS_CODE
 );	
 }
 ?>
-
-<div class="row">
-	<div class="col-12 col-md-3"></div>
-	<div class="col-12 col-md-6">
-		<div class="nombre_simcee" style="text-align: center; font-size: 30px; margin: 50px 0 20px 0; font-weight: bold; line-height: 30px;">
-    		Bienvenido al Sistema de Información de Mi Comunidad es Escuela
-    	</div>
-    	<div class="nombre_sigla" style="text-align: center; //border: 1px #f0f solid; font-size: 33px; margin: 20px 0 20px 0; font-weight: bold;">
-    		SIMCEE
-    	</div>
-	</div>
-	<div class="col-12 col-md-3"></div>
-</div>
+<div class="col-md-18 col-md-offset-4">
+    <h1><?= Html::encode($this->title) ?></h1>
 
 
-<div  style="position: relative; width: 100%; left:25%;">
-	
     <?php $form = ActiveForm::begin([
-        'id' => 'login-form vivi',
+        'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-sm-10 col-md-3 col-lg-3\">{input}</div>\n<div class=\"col-sm-10 col-md-2 col-lg-2\">{error}</div><br/>",
-            'labelOptions' => ['class' => 'col-md-1 col-lg-1 control-label'],
+            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
 
         <?= $form->field($model, 'username')->textInput(['autofocus' => true])->Label("Usuario") ?>
-
 
         <?= $form->field($model, 'password')->passwordInput()->Label("Contraseña") ?>
 
@@ -105,9 +91,8 @@ EOT_JS_CODE
         To modify the username/password, please check out the code <code>app\models\User::$users</code>.
 		</div>-->
 		
-	</div>
 </div>
-<div class="col-md-10 col-md-offset-2">
+<div class="col-md-18 col-md-offset-2">
 
 </div>
 
