@@ -15,6 +15,11 @@ else
 
 use Yii;
 use app\models\Ieo;
+use app\models\DocumentosReconocimiento;
+use app\models\TiposCantidadPoblacion;
+use app\models\Evidencias;
+use app\models\TipoDocumentos;
+use app\models\Producto;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -41,7 +46,12 @@ class IeoController extends Controller
     }
 
     function actionViewFases($model){
-		
+        
+        $model = new Ieo();
+        $documentosReconocimiento = new DocumentosReconocimiento();
+        $tiposCantidadPoblacion = new TiposCantidadPoblacion();
+        $evidencias = new Evidencias();
+        $producto = new Producto();
 				
 		/*$fases	= Fases::find()
 					->where('estado=1')
@@ -51,7 +61,11 @@ class IeoController extends Controller
 		return $this->renderPartial('fases', [
 			'idPE' 	=> null,
 			'fases' => ["Proyectos Pedagógicos Transversales", "Proyectos de Servicio Social Estudiantil", "Articulación Familiar"],
-            "model" => $model
+            "model" => $model,
+            "documentosReconocimiento" =>  $documentosReconocimiento,
+            "tiposCantidadPoblacion" => $tiposCantidadPoblacion,
+            "evidencias" => $evidencias,
+            "producto" => $producto,
         ]);
 		
 	}
