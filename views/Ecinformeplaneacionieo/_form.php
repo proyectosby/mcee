@@ -24,7 +24,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php 
     	$form = ActiveForm::begin();
-
      ?>
 
     <?= $form->field($model, 'zona_educativa')->textInput() ?>
@@ -56,7 +55,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
 		<?= $form->field($model, 'fecha_reporte')->widget(
 			DatePicker::className(), [
-				
 				 // modify template for custom rendering
 				'template' => '{addon}{input}',
 				'language' => 'es',

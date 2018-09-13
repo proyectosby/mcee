@@ -58,7 +58,6 @@ $index = 0;
     $index ++;
     }
 
-    
     $contenedores[] =  [
                     'label'         =>  "Productos",
                     'content'       =>  $this->render( 'contenedorItem2', 

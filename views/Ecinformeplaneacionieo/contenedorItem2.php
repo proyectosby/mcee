@@ -12,6 +12,7 @@ use nex\chosen\Chosen;
 
 use app\models\Personas;
 use app\models\EcEstrategias;
+use app\models\EcProductos;
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,6 +24,15 @@ use yii\db\Query;
 
 
 $estrategias = new EcEstrategias();
+
+if($index == 3){
+$index2 = $index -2;
+$productos = EcProductos::find()->where( 'estado=true' )->andWhere('id_proyecto='.$index2)->all();
+}
+else
+{
+    $productos = EcProductos::find()->where( 'estado=true' )->andWhere('id_proyecto='.($index+1))->all();
+}
 ?>
 
 
@@ -34,9 +44,13 @@ $estrategias = new EcEstrategias();
             <div class="ieo-form">
 
                 <?php $form = ActiveForm::begin(); ?>
+                <?php 
+                    foreach( $productos as $keyProducto => $producto ){?>
+                    <?= "Año ".$producto->anio ?>
                     <?= $form->field($estrategias, 'descripcion')->textInput()
-                    ->label('Descripcion') ?>
-
+                    ->label($producto->descripcion)?>
+                <?php }?>
+                    
                 <?php ActiveForm::end(); ?>
 
             </div>
