@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 				'filter' => ArrayHelper::map(Sectores::find()->all(), 'id', 'descripcion' ),
 			],
-            'nit',
+            // 'nit',
             //'estado',
             //'caracter',
             //'especialidad',
@@ -134,7 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'contacto_rector',
             //'correo_electronico_institucional',
             //'pagina_web',
-            //'codigo_dane',
+            'codigo_dane',
 
             [
 			'class' => 'yii\grid\ActionColumn',

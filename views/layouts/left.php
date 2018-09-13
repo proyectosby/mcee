@@ -30,7 +30,7 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-					['label' => 'Inicio', 'options' => ['class' => 'header']],
+					['label' => 'Inicio', 'url' => Yii::$app->homeUrl,'icon' => 'home',],
 					//menu mcee
 					[
                                 
@@ -119,7 +119,7 @@
 															['label' => 'Por institución', 'icon' => 'circle-o', 'url' => ['participacion-proyectos-i-e/index'],],
 															['label' => 'Por maestro o directivo', 'icon' => 'circle-o', 'url' => ['participacion-proyectos-maestro/index'],],
 															['label' => 'Proyectos jornada complementaria', 'icon' => 'circle-o', 'url' => ['participacion-proyectos-jornada/index'],],
-															['label' => 'Proyectos-pedagagógicos', 'icon' => '', 'url' =>  ['proyectos-pedagogicos-transversales/index'],],
+															// ['label' => 'Proyectos-pedagagógicos', 'icon' => '', 'url' =>  ['proyectos-pedagogicos-transversales/index'],],
 															],
 													],
 												],
@@ -130,9 +130,9 @@
 												'url' => '#',
 												 'items' => [
 													
-													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => ['instituciones/index'],],
-													['label' => 'Jornada Escolar','icon' => 'circle-o','url' => ['documentos-instancias-institucionales/index'],],
-													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => ['documentos-oficiales/index'],],
+													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => '#'],
+													['label' => 'Jornada Escolar','icon' => 'circle-o','url' => '#'],
+													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => '#'],
 													['label' => 'Seguimiento Egresados','icon' => 'circle-o','url' => '#'],
 														
 														
@@ -232,6 +232,8 @@
 													'url' => '#',
 													'items' => [
 														['label' => 'Planeación', 'icon' => 'circle-o','url' => ['ec-datos-basicos/create'],],
+														['label' => 'Levantamiento', 'icon' => 'circle-o','url' => ['ec-levantamiento-orientacion/index'],],
+														// ['label' => 'Planeación', 'icon' => 'circle-o','url' => ['ec-datos-basicos/create'],],
 														['label' => 'Articulación Familiar', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'ASSC', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'Semilleros para Paz', 'icon' => 'circle-o','url' => '#',],
