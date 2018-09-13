@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcLevantamientoOrientacion */
 /* @var $form yii\widgets\ActiveForm */
@@ -17,7 +17,18 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?= $form->field($model, 'id_sede')->DropDownList($sedes) ?>
 
-    <?= $form->field($model, 'visita_realizada')->TextArea() ?>
+	<?= $form->field($model, 'visita_realizada')->widget(
+			DatePicker::className(), [
+				
+			 // modify template for custom rendering
+			'template' 		=> '{addon}{input}',
+			'language' 		=> 'es',
+			'clientOptions' => [
+				'autoclose' 	=> true,
+				'format' 		=> 'yyyy-mm-dd'
+			],
+		]);  
+	?>
 
     <?= $form->field($model, 'actividad_seguimiento')->TextArea() ?>
 
