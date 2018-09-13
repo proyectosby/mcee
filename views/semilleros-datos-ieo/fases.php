@@ -7,7 +7,7 @@ $items = [];
 $index = 0;
 
 foreach( $fases as $keyFase => $fase ){
-	
+							
 	$sesiones = Sesiones::find()
 					->andWhere( 'id_fase='.$fase->id )
 					->all();
