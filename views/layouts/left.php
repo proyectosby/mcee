@@ -30,7 +30,7 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
-					['label' => 'Inicio', 'options' => ['class' => 'header']],
+					['label' => 'Inicio', 'url' => Yii::$app->homeUrl,'icon' => 'home',],
 					//menu mcee
 					[
                                 
