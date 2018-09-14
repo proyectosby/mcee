@@ -69,7 +69,7 @@ class EcinformeplaneacionieoController extends Controller
         return $this->renderPartial('fases', [
             'idPE'  => null,
             'fases' => $proyectos,
-            'procesos' => $procesos,
+            //'procesos' => $procesos,
             'numProyectos' => $numProyectos,
             "model" => $model
         ]);

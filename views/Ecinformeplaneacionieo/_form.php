@@ -51,8 +51,17 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 			])->label('Barrios');
 		?>		
 
-	    <?= $form->field($model, 'fase')->textInput() ?>
-
+        <div class=cell>
+            <label for="exampleFormControlSelect1">Seleccione la Fase</label>
+                <select class="form-control">
+                  <option>...</option>
+                  <option>Fase 1</option>
+                  <option>Fase 2</option>
+                  <option>Fase 3</option>
+                  <option>Fase 4</option>
+                </select>
+        </div>
+        </br>
 		<?= $form->field($model, 'fecha_reporte')->widget(
 			DatePicker::className(), [
 				 // modify template for custom rendering

@@ -28,6 +28,7 @@ use app\models\Docentes;
 use app\models\DistribucionesAcademicas;
 use app\models\Parametro;
 use app\models\Jornadas;
+use app\models\EcAcciones;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
@@ -37,25 +38,38 @@ $id_sede 		= $_SESSION['sede'][0];
 $id_institucion	= $_SESSION['instituciones'][0];
 $contenedores = [];
 $index = 0;
+$i = 1;
 ?>
 
 <?php
+
+
     foreach( $items as $keyFase => $item ){ 
+        
+        $accionesall = EcAcciones::find()->where( 'estado=true' )->andWhere( 'id_proceso='.$i )->all();
+        $acciones = array();
+
+        foreach ($accionesall as $r)
+        {
+            $acciones[$r['id']]= $r['descripcion'];
+        }
         
                 $contenedores[] = 	[
 					'label' 		=>  $item,
-					'content' 		=>  $this->render( 'contenedorItem', 
+					'content' 		=>  $this->render( 'fases3', 
 													[  
                                                         'idPE' 		=> "", 
 														'index' 	=> $index,
                                                         'item' 		=> $item,
                                                         'model'     => $model,
+                                                        'acciones'  => $acciones,
 													] 
 										),
 					'contentOptions'=> []
 				];
 
     $index ++;
+    $i ++;
     }
 
     $contenedores[] =  [
