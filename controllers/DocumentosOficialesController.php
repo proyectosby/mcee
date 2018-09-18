@@ -200,7 +200,7 @@ class DocumentosOficialesController extends Controller
 					
 					//Siempre activo
 					$model->estado = 1;
-					
+
 					$save = $file->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
 					
 					if( $save )

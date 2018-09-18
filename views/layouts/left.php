@@ -145,7 +145,7 @@
 												'items' => [
 													['label' => 'Matrícula', 'icon' => 'circle-o', 'url' => '#'],
 													['label' => 'Talento Humano', 'icon' => 'circle-o', 'url' => '#'],
-													['label' => 'Presupuesto', 'icon' => 'circle-o', 'url' => '#'],
+													['label' => 'Presupuesto', 'icon' => 'circle-o', 'url' => ['documentos-presupuesto/index']],
 													['label' => 'Infraestructra', 'icon' => 'circle-o', 'url' => '#'],
 													['label' => 'Estrategia Adecuación', 'icon' => 'circle-o', 'url' => '#'],
 													['label' => 'Seguimiento', 'icon' => 'circle-o', 'url' => '#'],
