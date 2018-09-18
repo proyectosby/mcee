@@ -31,14 +31,10 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
 							$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['instituciones'][0]])->one();
 							$nombreInstitucion = $nombreInstitucion->descripcion;
 							
-							
-							$nombreSede1 = Sedes::find()->where(['id' => @$_SESSION['sede'][0]])->one();
-							$nombreSede = @$nombreSede1->descripcion;
+							$nombreSede = Sedes::find()->where(['id' => @$_SESSION['sede'][0]])->one();
+							$nombreSede = @$nombreSede->descripcion;
 							if($nombreSede == null && $nombreSede = "SEDE NO ASIGNADA" )
-							{
-								
-								
-							}
+							{	}
 							if($nombreInstitucion)
 								echo "&nbsp;&nbsp;&nbsp;$nombreInstitucion - $nombreSede";
 								

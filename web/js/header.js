@@ -47,7 +47,13 @@ $( "#cambiarSede" ).click(function()
 			  }
 			  else 
 			  {
-				resolve('Debe seleccionar una institucion')
+				   var sede = $.get( "index.php?sede=-1", function() 
+					{
+						
+					})
+					resolve(window.location.reload(true));
+					
+
 			  }
 			})
 		  }
