@@ -10,11 +10,12 @@ else
 	die;
 }
 
-//con que id institucion y que id sede se debe trabajar 
+//con que institucion y que sede se debe trabajar
 if (@$_GET['instituciones'])
 {
 	$_SESSION['instituciones'][0]=$_GET['instituciones'];
 }
+
 if (@$_GET['sede'])
 {
 	$_SESSION['sede'][0]=$_GET['sede'];
@@ -66,14 +67,59 @@ const {value: institucion} = swal({
     return new Promise((resolve) => {
       if (value !== '') 
 	  {  
-   
+  
+  
+		  //-----se usa para saber que sede selecciono-------
 		  //crear variable de session que tenga la institucion que seleciono
 		 var Institucion = $.get( "index.php?instituciones="+value, function() 
 			{
 				
 			})
 			  
-			resolve();
+			return fetch('index.php?r=sedes/sedes&idInstitucion='+value)
+			  .then(response => {
+				if (!response.ok) {
+				  throw new Error(response.statusText)
+				}
+				(prueba) =   response.json()
+				
+				
+				
+				const {valor: sede} = swal({
+			title: 'Seleccione una sede',
+			input: 'select',
+			inputOptions: (prueba),
+				inputPlaceholder: 'Seleccione...',
+				
+				inputValidator: (valor) => 
+				{
+					return new Promise((resolve) => 
+					{
+						if (valor !== '') 
+						  {
+							  //variable de sesion con la sede que selecciono
+							 var Sedesasda = $.get( "index.php?sede="+valor, function() 
+								{
+									
+								})
+								
+								
+								
+									
+									
+									
+							resolve()
+						  }
+						  else 
+						  {
+							resolve('Debe seleccionar una sede')
+						  }
+					})
+				}
+			})
+				
+				
+      })
 
       }
 	  else 

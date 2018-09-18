@@ -56,7 +56,7 @@ class DocumentosInstanciasInstitucionales extends \yii\db\ActiveRecord
             'id' 				=> 'ID',
             'ruta'				=> 'Ruta',
             'id_tipo_documentos'=> 'Tipo de Documento',
-            'id_instituciones' 	=> 'Institucion',
+            'id_instituciones' 	=> 'Institución',
             'estado' 			=> 'Estado',
         ];
     }

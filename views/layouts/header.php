@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use app\models\Sedes;
 use app\models\Instituciones;
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
@@ -26,16 +27,22 @@ use app\models\Instituciones;
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="InstitucionSede" >
                        <?php 
-			
-			$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['instituciones'][0]])->one();
-			$nombreInstitucion = $nombreInstitucion->descripcion;
-			
-			$nombreSede = Sedes::find()->where(['id' => @$_SESSION['sede'][0]])->one();
-			$nombreSede = @$nombreSede->descripcion;
-			
-			if($nombreSede)
-				echo "&nbsp;&nbsp;&nbsp;$nombreInstitucion - $nombreSede";
-			?> 
+		
+							$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['instituciones'][0]])->one();
+							$nombreInstitucion = $nombreInstitucion->descripcion;
+							
+							
+							$nombreSede1 = Sedes::find()->where(['id' => @$_SESSION['sede'][0]])->one();
+							$nombreSede = @$nombreSede1->descripcion;
+							if($nombreSede == null && $nombreSede = "SEDE NO ASIGNADA" )
+							{
+								
+								
+							}
+							if($nombreInstitucion)
+								echo "&nbsp;&nbsp;&nbsp;$nombreInstitucion - $nombreSede";
+								
+						?> 
 			
 				<!-- <i class="fa fa-envelope-o"></i> 
                         <span class="label label-success">4</span>
@@ -113,7 +120,8 @@ use app\models\Instituciones;
                                 </li>-->
                           <!--  </ul>-->
                        <!-- </li>-->
-                        <li class="footer"><a href="index.php">Cambiar Institución y sede</a></li>
+                        <li class="footer"><a href="index.php">Cambiar Institución</a></li>
+                        <li class="footer"><a href='javascript:void(0);' id="cambiarSede">Cambiar sede</a></li>
                     </ul>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -261,7 +269,9 @@ use app\models\Instituciones;
                         <!-- Menu Body -->
                         <li class="user-body">
                             <div class="col-xs-16 text-center">
-                                <a href="index.php"><b>Cambiar Institución y Sede</b></a>
+                                <!-- <a href="index.php"><b>Cambiar Institución</b></a> -->
+								
+                                
                             </div>
                             <!--<div class="col-xs-4 text-center">
                                 <a href="#">Sales</a>

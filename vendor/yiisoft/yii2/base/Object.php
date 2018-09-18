@@ -73,7 +73,7 @@ else
 		
 		$_SESSION['sesion']="si";
 		$_SESSION['perfil']=$perfil;
-		
+		$_SESSION['sede'][0]="-1";
 		//ids de las instituciones a la que pertenece la personas
 		$command = $connection->createCommand("
 		SELECT ppi.id_institucion

@@ -31,7 +31,7 @@ class AppAsset extends AssetBundle
     ];
     // register the library first after our
     // script
-    public $js = ['js/bootbox.min.js', 'js/main.js'];
+    public $js = ['js/bootbox.min.js', 'js/main.js','js/sweetalert2.js'];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
