@@ -22,7 +22,7 @@ class PlanAccion extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'plan_accion';
+        return 'ec.plan_accion';
     }
 
     /**

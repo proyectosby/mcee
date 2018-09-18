@@ -31,7 +31,7 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'tipos_cantidad_poblacion';
+        return 'ec.tipos_cantidad_poblacion';
     }
 
     /**

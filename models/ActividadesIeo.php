@@ -22,7 +22,7 @@ class ActividadesIeo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'actividades_ieo';
+        return 'ec.actividades_ieo';
     }
 
     /**
