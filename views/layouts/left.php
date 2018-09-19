@@ -233,7 +233,8 @@
 													'items' => [
 														['label' => 'Planeación', 'icon' => 'circle-o','url' => ['ec-datos-basicos/create'],],
 														['label' => 'Levantamiento', 'icon' => 'circle-o','url' => ['ec-levantamiento-orientacion/index'],],
-														// ['label' => 'Planeación', 'icon' => 'circle-o','url' => ['ec-datos-basicos/create'],],
+														['label' => 'Informe avance mensual Ejecución', 'icon' => 'circle-o','url' => ['ieo/index'],],
+														['label' => 'Informe avance mensual Misional', 'icon' => 'circle-o','url' => ['ecinformeplaneacionieo/index'],],
 														['label' => 'Articulación Familiar', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'ASSC', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'Semilleros para Paz', 'icon' => 'circle-o','url' => '#',],
