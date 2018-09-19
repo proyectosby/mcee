@@ -14,6 +14,18 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 
 $( document ).ready(function(){
 	
+	//Se agrega editables para los campos textarea de condiciones institucionales
+	$( "#condiciones-institucionales textarea" ).each(function(){
+	
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				rows: 10,
+			});
+	});
+	
 	$( "[id^=btnAddFila]" ).each(function(){
 		
 		$( this ).click(function(){

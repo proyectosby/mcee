@@ -1,15 +1,15 @@
 $( document ).ready(function(){
 	
-	// $( "[id^=dvSesion] textarea" ).each(function(){
+	$( "#condiciones-institucionales textarea" ).each(function(){
 	
-		// $( this )
-			// .attr({readOnly: true })
-			// .css({resize: 'none' })
-			// .editable({
-				// title: 'Ingrese la informoción',
-				// rows: 10,
-			// });
-	// });
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				rows: 10,
+			});
+	});
 	
 	$( "[id^=btnAddFila]" ).each(function(){
 		

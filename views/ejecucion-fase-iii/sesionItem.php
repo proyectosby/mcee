@@ -111,31 +111,31 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center'>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
+				<?= Html::activeTextarea($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
 			</div>
 			
 		</div>
@@ -192,31 +192,31 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center'>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 		</div>
@@ -278,27 +278,27 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center'>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
 			</div>
 			
 		</div>

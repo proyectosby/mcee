@@ -97,34 +97,34 @@ echo Collapse::widget([
 			
 		</div>
 		
-		<div class='row text-center'>
+		<div class='row text-center' id='condiciones-institucionales'>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_ieo", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_univalle", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_univalle", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_sem", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_sem", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($condiciones, "[$index]total_sesiones_ieo", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]total_sesiones_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($condiciones, "[$index]total_docentes_ieo", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]total_docentes_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 
 		</div>
