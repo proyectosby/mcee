@@ -1,9 +1,15 @@
 <?php
+
 /**********
 Versión: 001
 Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE III
+---------------------------------------
+Modificaciones:
+Fecha: 2018-09-18
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
 ---------------------------------------
 **********/
 
@@ -95,22 +101,22 @@ echo Collapse::widget([
 			
 		</div>
 		
-		<div class='row text-center'>
+		<div class='row text-center' id='condiciones-institucionales'>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_ieo", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_univalle", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_univalle", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_sem", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_sem", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 
 		</div>
