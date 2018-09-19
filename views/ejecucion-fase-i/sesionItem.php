@@ -135,7 +135,7 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>' style='display:none;'>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, "[$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea', 'value' => '']) ?>
+				<?= Html::activeTextarea($model, "[$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>

@@ -1,3 +1,17 @@
+/**********
+Versión: 001
+Fecha: 2018-08-21
+Desarrollador: Edwin Molina Grisales
+Descripción: Formulario EJECUCION FASE II
+---------------------------------------
+Modificaciones:
+Fecha: 2018-09-18
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
+---------------------------------------
+**********/
+
+
 $( document ).ready(function(){
 	
 	$( "[id^=btnAddFila]" ).each(function(){
@@ -5,7 +19,26 @@ $( document ).ready(function(){
 		$( this ).click(function(){
 			
 			var id = this.id.substr( "btnAddFila".length );
-			$( "#dvSesion"+id ).append( $( "#dvFilaSesion"+id ).clone() );
+			
+			
+			var filaNueva = $( "#dvFilaSesion"+id ).clone();
+			$( "#dvSesion"+id ).append( filaNueva );
+			
+			
+			filaNueva.css({ display: '' });
+			$( "textarea", filaNueva ).each(function(){
+		
+				$( this )
+					.attr({
+						readOnly: true,
+						class: 'form-control',
+					})
+					.css({ resize: 'none' })
+					.editable({
+						title: 'Ingrese la informoción',
+						rows: 10,
+					});
+			});
 			
 			$( "#btnRemoveFila"+id ).css({ display: "" });
 		});
