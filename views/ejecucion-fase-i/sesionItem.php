@@ -132,50 +132,50 @@ use dosamigos\datepicker\DatePicker;
 			
 		</div>
 		
-		<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>'>
+		<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>' style='display:none;'>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, "[$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea', 'value' => '']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control' ]) ?>
+				<?= Html::activeTextarea($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]estado', [ 'class' => 'form-control' ]) ?>
+				<?= Html::activeTextarea($model, '[$index]estado', [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 		</div>

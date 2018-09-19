@@ -120,4 +120,13 @@ return array (
       '@nex/chosen' => $vendorDir . '/nex/yii2-chosen',
     ),
   ),
+  '2amigos/yii2-editable-widget' => 
+  array (
+    'name' => '2amigos/yii2-editable-widget',
+    'version' => '1.1.1.0',
+    'alias' => 
+    array (
+      '@dosamigos/editable' => $vendorDir . '/2amigos/yii2-editable-widget/src',
+    ),
+  ),
 );

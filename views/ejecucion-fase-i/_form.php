@@ -12,10 +12,18 @@ Descripción: Formulario EJECUCION FASE I
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use dosamigos\editable\Editable;
+
 $this->registerJsFile(
     '@web/js/ejecucionFaseI.js',
-    ['depends' => [\yii\web\JqueryAsset::className()]]
+    [
+		'depends' => [
+						\yii\web\JqueryAsset::className(),
+						\dosamigos\editable\EditableBootstrapAsset::className(),
+					]
+	]
 );
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
