@@ -23,7 +23,7 @@ else
 }
 use Yii;
 use app\models\Estados;
-use yii\data\ActiveDataProvider;
+use yii\data\ActiveDataProvider;                                        
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
