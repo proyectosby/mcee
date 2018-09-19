@@ -52,8 +52,8 @@ class DocumentosPresupuesto extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ruta' => 'Ruta',
-            'id_tipo_documento' => 'Id Tipo Documento',
-            'id_instituciones' => 'Id Instituciones',
+            'id_tipo_documento' => 'Tipo Documento',
+            'id_instituciones' => 'Instituciones',
             'estado' => 'Estado',
         ];
     }
