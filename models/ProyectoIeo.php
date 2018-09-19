@@ -20,7 +20,7 @@ class ProyectoIeo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'proyecto_ieo';
+        return 'ec.proyecto_ieo';
     }
 
     /**

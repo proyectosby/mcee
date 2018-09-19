@@ -1,11 +1,40 @@
 $( document ).ready(function(){
 	
+	$( "#condiciones-institucionales textarea" ).each(function(){
+	
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				rows: 10,
+			});
+	});
+	
 	$( "[id^=btnAddFila]" ).each(function(){
 		
 		$( this ).click(function(){
 			
 			var id = this.id.substr( "btnAddFila".length );
-			$( "#dvSesion"+id ).append( $( "#dvFilaSesion"+id ).clone() );
+			
+			var filaNueva = $( "#dvFilaSesion"+id ).clone();
+			
+			$( "#dvSesion"+id ).append( filaNueva );
+			
+			filaNueva.css({ display: '' });
+			$( "textarea", filaNueva ).each(function(){
+		
+				$( this )
+					.attr({
+						readOnly: true,
+						class: 'form-control',
+					})
+					.css({ resize: 'none' })
+					.editable({
+						title: 'Ingrese la informoción',
+						rows: 10,
+					});
+			});
 			
 			$( "#btnRemoveFila"+id ).css({ display: "" });
 		});

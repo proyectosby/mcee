@@ -49,6 +49,7 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         ),
         'd' => 
         array (
+            'dosamigos\\editable\\' => 19,
             'dosamigos\\datepicker\\' => 21,
             'dmstr\\' => 6,
         ),
@@ -150,6 +151,10 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         'fedemotta\\datatables\\' => 
         array (
             0 => __DIR__ . '/..' . '/fedemotta/yii2-widget-datatables',
+        ),
+        'dosamigos\\editable\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/2amigos/yii2-editable-widget/src',
         ),
         'dosamigos\\datepicker\\' => 
         array (

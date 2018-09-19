@@ -19,6 +19,7 @@ return array(
     'kartik\\time\\' => array($vendorDir . '/kartik-v/yii2-widget-timepicker'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base'),
     'fedemotta\\datatables\\' => array($vendorDir . '/fedemotta/yii2-widget-datatables'),
+    'dosamigos\\editable\\' => array($vendorDir . '/2amigos/yii2-editable-widget/src'),
     'dosamigos\\datepicker\\' => array($vendorDir . '/2amigos/yii2-date-picker-widget/src'),
     'dmstr\\' => array($vendorDir . '/dmstr/yii2-adminlte-asset'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),

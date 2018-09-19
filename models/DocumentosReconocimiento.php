@@ -31,7 +31,7 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'documentos_reconocimiento';
+        return 'ec.documentos_reconocimiento';
     }
 
     /**

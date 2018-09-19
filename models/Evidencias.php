@@ -25,7 +25,7 @@ class Evidencias extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'evidencias';
+        return 'ec.evidencias';
     }
 
     /**

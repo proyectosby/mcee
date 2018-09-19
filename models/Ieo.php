@@ -31,7 +31,7 @@ class Ieo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'ieo';
+        return 'ec.ieo';
     }
 
     /**
