@@ -59,6 +59,7 @@ class ResumenOperativoFasesDocentesController extends Controller
      */
     public function actionIndex()
     {
+        
         $searchModel = new EcDatosBasicosBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
