@@ -6,6 +6,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario CONFORMACION SEMILLEROS TIC ESTUDIANTES
 				Muestrea el contenido de cada acordeon de las fases
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-09-19
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
+---------------------------------------
 **********/
 
 use yii\helpers\Html;
@@ -122,128 +127,128 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 <div class="container-fluid">
 
 	<div class=row style='text-align:center;'>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px;'>Curso</span>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Cantidad inscritos convocatoria</span>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Frecuencia sesiones</span>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Jornada</span>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Recursos requeridos</span>
 		</div>
-		<div class="col-sm-4" style='padding:0px;'>
+		<div class="col-sm-3" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>OBSERVACIONES</span>
 		</div>
 	</div>
 	
 	<div class=row>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]curso', [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeTextInput($acuerdos, '[$index]cantidad_inscritos', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencia_sesiones', $frecuencias, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]jornada', $jornadas, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]recursos_requeridos', $recursos, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ]) ?>
 		</div>
-		<div class="col-sm-4" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
 	<div class=row>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]curso', [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeTextInput($acuerdos, '[$index]cantidad_inscritos', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencia_sesiones', $frecuencias, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]jornada', $jornadas, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]recursos_requeridos', $recursos, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ]) ?>
 		</div>
-		<div class="col-sm-4" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
 	<div class=row>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]curso', [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeTextInput($acuerdos, '[$index]cantidad_inscritos', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencia_sesiones', $frecuencias, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]jornada', $jornadas, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]recursos_requeridos', $recursos, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ]) ?>
 		</div>
-		<div class="col-sm-4" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
 	<div class=row>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]curso', [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeTextInput($acuerdos, '[$index]cantidad_inscritos', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencia_sesiones', $frecuencias, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]jornada', $jornadas, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]recursos_requeridos', $recursos, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ]) ?>
 		</div>
-		<div class="col-sm-4" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
 	<div class=row>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]curso', [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeTextInput($acuerdos, '[$index]cantidad_inscritos', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencia_sesiones', $frecuencias, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]jornada', $jornadas, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]recursos_requeridos', $recursos, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ]) ?>
 		</div>
-		<div class="col-sm-4" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	

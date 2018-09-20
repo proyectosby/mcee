@@ -1,5 +1,18 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 2018-08-28
+Desarrollador: Edwin Molina Grisales
+Descripción: Formulario SEMILLEROS DATOS IEO
+---------------------------------------
+Modificaciones:
+Fecha: 2018-09-19
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
+---------------------------------------
+**********/
+
 use app\models\PoblacionDocentesSesion;
 use app\models\Sesiones;
 

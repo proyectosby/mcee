@@ -1,5 +1,18 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 2018-08-28
+Desarrollador: Edwin Molina Grisales
+Descripción: Formulario SEMILLEROS DATOS IEO
+---------------------------------------
+Modificaciones:
+Fecha: 2018-09-19
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
+---------------------------------------
+**********/
+
 use yii\helpers\Html;
 // use yii\widgets\ActiveForm;
 use yii\bootstrap\ActiveForm;
@@ -117,10 +130,10 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px;'>Nombre del docente</span>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Nombre de las asignaturas asignadas</span>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Especialidad de la Media Técnica o Técnica</span>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
@@ -135,7 +148,7 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Total Docentes</span>
 		</div>
-		<div class="col-sm-2" style='padding:0px;'>
+		<div class="col-sm-3" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>OBSERVACIONES</span>
 		</div>
 	</div>
@@ -144,11 +157,11 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]id_docente', $docentes, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencias_sesiones', $parametros, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
@@ -162,8 +175,8 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]total_docentes', [ 'class' => 'form-control']) ?>
 		</div>
-		<div class="col-sm-2" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
@@ -171,11 +184,11 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]id_docente', $docentes, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencias_sesiones', $parametros, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
@@ -189,8 +202,8 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]total_docentes', [ 'class' => 'form-control']) ?>
 		</div>
-		<div class="col-sm-2" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
@@ -198,11 +211,11 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]id_docente', $docentes, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencias_sesiones', $parametros, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
@@ -216,8 +229,8 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]total_docentes', [ 'class' => 'form-control']) ?>
 		</div>
-		<div class="col-sm-2" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
@@ -225,11 +238,11 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]id_docente', $docentes, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencias_sesiones', $parametros, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
@@ -243,8 +256,8 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]total_docentes', [ 'class' => 'form-control']) ?>
 		</div>
-		<div class="col-sm-2" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
@@ -252,11 +265,11 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeDropDownList($acuerdos, '[$index]id_docente', $docentes, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]asignatura', [ 'class' => 'form-control'] ) ?>
 		</div>
-		<div class="col-sm-1" style='padding:0px;'>
-			<?=  Html::activeTextInput($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
+		<div class="col-sm-2" style='padding:0px;'>
+			<?=  Html::activeTextarea($acuerdos, '[$index]especialidad', [ 'class' => 'form-control'] ) ?>
 		</div>
 		<div class="col-sm-1" style='padding:0px;'>
 			<?=  Html::activeDropDownList($acuerdos, '[$index]frecuencias_sesiones', $parametros, [ 'class' => 'form-control', 'prompt' => 'Seleccione...' ] ) ?>
@@ -270,8 +283,8 @@ $recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
 		<div class="col-sm-1" style='padding:0px;'>
 			<?= Html::activeTextInput($acuerdos, '[$index]total_docentes', [ 'class' => 'form-control']) ?>
 		</div>
-		<div class="col-sm-2" style='padding:0px;'>
-			<?= Html::activeTextInput($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
+		<div class="col-sm-3" style='padding:0px;'>
+			<?= Html::activeTextarea($acuerdos, '[$index]observaciones', [ 'class' => 'form-control']) ?>
 		</div>
 	</div>
 	
