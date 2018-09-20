@@ -24,7 +24,7 @@ use fedemotta\datatables\DataTables;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 if( isset($guardado) && $guardado == 1 ){

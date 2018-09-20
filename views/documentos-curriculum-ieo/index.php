@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-
+use app\models\Instituciones;
+use app\models\TiposDocumentos;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
@@ -11,7 +12,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DocumentosCurriculumIeoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->title = 'Documentos Curriculum Ieo';
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -83,27 +84,33 @@ if( isset($guardado) && $guardado == 1 ){
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'ruta', 
-			'id_instituciones',
-            'id_tipo_documento',
+			[ 
+				'attribute' => 'ruta' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					return Html::a( "Ver archivo", Url::to( "@web/".$model->ruta , true), [ "target"=>"_blank" ] );
+				},
+			],
+			[
+				'attribute' => 'id_instituciones',
+				'value' => function( $model ){
+					$institucion = Instituciones::findOne( $model->id_instituciones );
+					return $institucion ? $institucion->descripcion: '' ;
+				},
+			],
+            [
+				'attribute' => 'id_tipo_documento',
+				'value' 	=> function( $model ){
+					
+					$tipoDocumento = TiposDocumentos::findOne( $model->id_tipo_documento );
+					return $tipoDocumento ? $tipoDocumento->descripcion : '' ;
+				},
+			],
            
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
-				'buttons' => [
-				'view' => function ($url, $model) {
-					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
-								'title' => Yii::t('app', 'lead-view'),
-					]);
-				},
-
-				'update' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
-								'title' => Yii::t('app', 'lead-update'),
-					]);
-				}
-
-			  ],
+			'template'=>'{delete}',
+				
 			
 			],
 

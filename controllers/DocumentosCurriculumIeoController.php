@@ -180,7 +180,7 @@ class DocumentosCurriculumIeoController extends Controller
 			foreach( $models as $key => $model) {
 				
 				//getInstances devuelve un array, por tanto siemppre se pone la posición 0
-				$file = UploadedFile::getInstance( $model, "[$key]file" );
+				$file = UploadedFile::getInstance( $model, "[$key]ruta" );
 				
 				if( $file ){
 					
