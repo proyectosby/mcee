@@ -6,6 +6,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario CONFORMACION SEMILLEROS TIC ESTUDIANTES
 				Muestrea la vista del acordeon de fases
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-09-19
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
+---------------------------------------
 **********/
 
 use app\models\PoblacionDocentesSesion;

@@ -5,6 +5,11 @@ Fecha: 2018-08-23
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I ESTUDIANTES
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-09-19
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
+---------------------------------------
 **********/
 
 use yii\helpers\Html;
@@ -95,38 +100,38 @@ foreach( $sesiones as $keySesion => $sesion ){
 			
 		</div>
 		
-		<div class='row text-center'>
+		<div class='row text-center' id='condiciones-institucionales'>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_ieo", [ 'class' => 'form-control', 'maxlength' => true]) ?>
-			</div>
-			
-			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_univalle", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]parte_sem", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_univalle", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]parte_sem", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+			</div>
+			
+			<div class='col-sm-2'>
+				<?= Html::activeTextarea($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($condiciones, "[$index]total_sesiones_ieo", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]total_sesiones_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($condiciones, "[$index]total_docentes_ieo", [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($condiciones, "[$index]total_docentes_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 
 		</div>

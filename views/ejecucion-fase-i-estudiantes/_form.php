@@ -6,6 +6,11 @@ Fecha: 2018-08-23
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I ESTUDIANTES
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-09-19
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
+---------------------------------------
 **********/
 
 
@@ -14,7 +19,12 @@ use yii\widgets\ActiveForm;
 
 $this->registerJsFile(
     '@web/js/ejecucionFaseIEstudiantes.js',
-    ['depends' => [\yii\web\JqueryAsset::className()]]
+    [
+		'depends' => [
+						\yii\web\JqueryAsset::className(),
+						\dosamigos\editable\EditableBootstrapAsset::className(),
+					]
+	]
 );
 
 /* @var $this yii\web\View */
