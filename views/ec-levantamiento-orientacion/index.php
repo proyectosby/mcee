@@ -19,19 +19,20 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1></h1>
 	
 <div id="modal" class="fade modal" role="dialog" tabindex="-1">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>E+C Levantamiento Orientacion</h3>
-</div>
-<div class="modal-body">
-<div id='modalContent'></div>
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>E+C Levantamiento Orientacion</h3>
+				</div>
+				<div class="modal-body">
+				<div id='modalContent'></div>
+			</div>
+
+		</div>
+	</div>
 </div>
 
-</div>
-</div>
-</div>
 <div class="ec-levantamiento-orientacion-index">
 
    

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Ieo */
 
-$this->title = 'Agregar Ieo';
+$this->title = 'Informe de avance mensual IEO fase plan de acción';
 $this->params['breadcrumbs'][] = ['label' => 'Ieos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>

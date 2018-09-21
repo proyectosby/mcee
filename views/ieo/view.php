@@ -9,6 +9,7 @@ use yii\widgets\DetailView;
 $this->title = "Detalles";
 $this->params['breadcrumbs'][] = ['label' => 'Ieos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <div class="ieo-view">
 

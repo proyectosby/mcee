@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Ieo */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 <div class="ieo-form">
@@ -18,8 +19,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'sede_id')->textInput() ?>
 
-    <?= $form->field($model, 'proyecto_id')->textInput() ?>
+    <?= $form->field($model, 'codigo_dane')->textInput() ?>
 
+    <?= $form->field($model, 'zona_educativa')->textInput() ?>
+
+    <?= $form->field($model, 'comuna')->textInput() ?>
+
+    <?= $form->field($model, 'barrio')->textInput() ?>
 
     
     
