@@ -40,9 +40,9 @@ $( "#cambiarSede" ).click(function()
 				 var Institucion = $.get( "index.php?sede="+value, function() 
 					{
 						
+					resolve(window.location.reload(true));
 					})
 					  
-					resolve(window.location.reload(true));
 
 			  }
 			  else 

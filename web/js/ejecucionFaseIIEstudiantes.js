@@ -9,6 +9,7 @@ $( document ).ready(function(){
 			.editable({
 				title: 'Ingrese la informoción',
 				rows: 10,
+				emptytext: '',
 			});
 	});
 	
@@ -39,6 +40,7 @@ $( document ).ready(function(){
 					.editable({
 						title: 'Ingrese la informoción',
 						rows: 10,
+						emptytext: '',
 					});
 			});
 		});
