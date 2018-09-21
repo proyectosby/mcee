@@ -81,7 +81,7 @@ $( document ).ready(function(){
 	setTimeout( function(){
 		if( $( "[name=guardado]" ).length > 0 ){
 			swal({
-				text: "Archivos guardadas exitosamente",
+				text: "Archivos guardados exitosamente",
 				icon: "success",
 				button: "Cerrar",
 			});
