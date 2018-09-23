@@ -161,7 +161,7 @@
 														['label' => 'PGIR', 'icon' => 'circle-o', 'url' => '#'],
 														['label' => 'Aliados', 'icon' => 'circle-o', 'url' => '#'],
 														['label' => 'Actividades Vinulación', 'icon' => 'circle-o', 'url' => ['documentos-actividades-vinculacion/index']],
-														['label' => 'Relaciones Sector', 'icon' => 'circle-o', 'url' => '#'],
+														['label' => 'Relaciones Sector', 'icon' => 'circle-o', 'url' => ['documentos-relaciones-sector/index']],
 														
 														],
 											],

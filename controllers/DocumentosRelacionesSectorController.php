@@ -14,11 +14,11 @@ else
 }
 
 use Yii;
-use app\models\DocumentosActividadesVinculacion;
+use app\models\DocumentosRelacionesSector;
 use app\models\Instituciones;
 use app\models\Estados;
 use app\models\TiposDocumentos;
-use app\models\DocumentosActividadesVinculacionBuscar;
+use app\models\DocumentosRelacionesSectorBuscar;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
@@ -28,9 +28,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DocumentosActividadesVinculacionController implements the CRUD actions for DocumentosActividadesVinculacion model.
+ * DocumentosRelacionesSectorController implements the CRUD actions for DocumentosRelacionesSector model.
  */
-class DocumentosActividadesVinculacionController extends Controller
+class DocumentosRelacionesSectorController extends Controller
 {
     /**
      * @inheritdoc
@@ -48,19 +48,15 @@ class DocumentosActividadesVinculacionController extends Controller
     }
 
     /**
-     * Lists all DocumentosActividadesVinculacion models.
+     * Lists all DocumentosRelacionesSector models.
      * @return mixed
      */
     public function actionIndex($idInstitucion = 0, $guardado = 0)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => DocumentosActividadesVinculacionBuscar::find(),
-        ]);
-        
         $idInstitucion = $_SESSION['instituciones'][0];
 		if( $idInstitucion > 0 )
 		{
-			$searchModel = new DocumentosActividadesVinculacionBuscar();
+			$searchModel = new DocumentosRelacionesSectorBuscar();
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 			$dataProvider->query->andWhere( 'id_estado=1' )->andWhere( 'id_instituciones='.$idInstitucion );
 
@@ -71,12 +67,10 @@ class DocumentosActividadesVinculacionController extends Controller
 				'idInstitucion'	=> $idInstitucion,
 			]);
 		}
-
-
     }
 
     /**
-     * Displays a single DocumentosActividadesVinculacion model.
+     * Displays a single DocumentosRelacionesSector model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -89,42 +83,40 @@ class DocumentosActividadesVinculacionController extends Controller
     }
 
     /**
-     * Creates a new DocumentosActividadesVinculacion model.
+     * Creates a new DocumentosRelacionesSector model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-
+        
         $data = [];
-        $idInstitucion = $_SESSION['instituciones'][0];
-		if( Yii::$app->request->post('DocumentosActividadesVinculacion') )
-			$data = Yii::$app->request->post('DocumentosActividadesVinculacion');
+		$idInstitucion = $_SESSION['instituciones'][0];
+		if( Yii::$app->request->post('DocumentosRelacionesSector') )
+			$data = Yii::$app->request->post('DocumentosRelacionesSector');
 		
         $count 	= count( $data );
         
         $models = [];
 		for( $i = 0; $i < $count; $i++ )
 		{
-			$models[] = new DocumentosActividadesVinculacion();
-        }
-        
-        $dataInstituciones = Instituciones::find()
+			$models[] = new DocumentosRelacionesSector();
+		}
+							
+		$dataInstituciones = Instituciones::find()
 							->where( 'estado=1' )
 							->andWhere( 'id='.$idInstitucion )
 							->all();
         $instituciones 	  = ArrayHelper::map( $dataInstituciones, 'id', 'descripcion' );
-
         
-
-        $dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Actividades Vinculacion'")->all();
+        $dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Relaciones Sector'")->all();
 		$tiposDocumento 	 = ArrayHelper::map( $dataTiposDocumento, 'id', 'descripcion' );
-
+		
 		$dataEstados  = Estados::find()->where( 'id=1' )->all();
 		$estados 	  = ArrayHelper::map( $dataEstados, 'id', 'descripcion' );
         
-
-        if (DocumentosActividadesVinculacion::loadMultiple($models, Yii::$app->request->post() )) {			
+        
+        if (DocumentosRelacionesSector::loadMultiple($models, Yii::$app->request->post() )) {			
 			
 			foreach( $models as $key => $model) {
 				
@@ -133,26 +125,25 @@ class DocumentosActividadesVinculacionController extends Controller
 				$file = UploadedFile::getInstance( $model, "[$key]file" );
                 
 				if( $file ){
-	
+					
 					// $persona = Personas::findOne( $model->id_persona );
-					$institucion = Instituciones::findOne( $idInstitucion );
+					$institucion = Instituciones::findOne( $model->id_instituciones );
 					
 					//Si no existe la carpeta se crea
-					$carpeta = "../documentos/documentosActividadesVinculacion/".$institucion->codigo_dane;
+					$carpeta = "../documentos/documentosRelacionesSector/".$institucion->codigo_dane;
 					if (!file_exists($carpeta)) {
 						mkdir($carpeta, 0777, true);
 					}
 					
 					//Construyo la ruta completa del archivo a guardar
-					$rutaFisicaDirectoriaUploads  = "../documentos/documentosActividadesVinculacion/".$institucion->codigo_dane."/";
+					$rutaFisicaDirectoriaUploads  = "../documentos/documentosRelacionesSector/".$institucion->codigo_dane."/";
 					$rutaFisicaDirectoriaUploads .= $file->baseName;
 					$rutaFisicaDirectoriaUploads .= date( "_Y_m_d_His" ) . '.' . $file->extension;
                     
                     
                     
 					//Siempre activo
-                    $model->id_estado = 1;
-                    $model->id_instituciones = $idInstitucion;
+					$model->id_estado = 1;
                     
 					$save = $file->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
 					
@@ -170,11 +161,13 @@ class DocumentosActividadesVinculacionController extends Controller
 						exit("finnn....");
 					}
 				}
-                
+				else{
+					exit( "No hay archivo cargado" );
+				}
 			}
 			
 			//Se valida que todos los campos de todos los modelos sean correctos
-			if (!DocumentosActividadesVinculacion::validateMultiple($models)) {
+			if (!DocumentosRelacionesSector::validateMultiple($models)) {
 				Yii::$app->response->format = 'json';
 				 return \yii\widgets\ActiveForm::validateMultiple($models);
 			}
@@ -186,8 +179,9 @@ class DocumentosActividadesVinculacionController extends Controller
 			
 			return $this->redirect(['index', 'guardado' => true ]);
         }
-
-        $model = new DocumentosActividadesVinculacion();
+        
+        
+        $model = new DocumentosRelacionesSector();
 
         return $this->render('create', [
             'model' => $model,
@@ -199,7 +193,7 @@ class DocumentosActividadesVinculacionController extends Controller
     }
 
     /**
-     * Updates an existing DocumentosActividadesVinculacion model.
+     * Updates an existing DocumentosRelacionesSector model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -219,7 +213,7 @@ class DocumentosActividadesVinculacionController extends Controller
     }
 
     /**
-     * Deletes an existing DocumentosActividadesVinculacion model.
+     * Deletes an existing DocumentosRelacionesSector model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -233,15 +227,15 @@ class DocumentosActividadesVinculacionController extends Controller
     }
 
     /**
-     * Finds the DocumentosActividadesVinculacion model based on its primary key value.
+     * Finds the DocumentosRelacionesSector model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return DocumentosActividadesVinculacion the loaded model
+     * @return DocumentosRelacionesSector the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = DocumentosActividadesVinculacion::findOne($id)) !== null) {
+        if (($model = DocumentosRelacionesSector::findOne($id)) !== null) {
             return $model;
         }
 
