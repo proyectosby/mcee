@@ -14,20 +14,7 @@ $this->title = 'Ieos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div id="modal" class="fade modal" role="dialog" tabindex="-1">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3>Modal</h3>
-				</div>
-				<div class="modal-body">
-				<div id='modalContent'></div>
-			</div>
 
-		</div>
-	</div>
-</div>
 
 <div class="ieo-index">
 
@@ -36,6 +23,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
 		<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
+
+	<?php 
+		
+		Modal::Begin([
+			'header'=>'<h3>I.E.O Avance Ejecución</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+
+	?>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,

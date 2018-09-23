@@ -1,4 +1,14 @@
 <?php
+if(@$_SESSION['sesion']=="si")
+{ 
+	// echo $_SESSION['nombre'];
+} 
+//si no tiene sesion se redirecciona al login
+else
+{
+	echo "<script> window.location=\"index.php?r=site%2Flogin\";</script>";
+	die;
+}
 /* @var $this yii\web\View */
 /* @var $model app\models\Ieo */
 /* @var $form yii\widgets\ActiveForm */
@@ -10,34 +20,26 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 ?>
 
 
-
+    
    <?php
-        
+         $form = ActiveForm::begin();
         if($index == 0){
         ?> 
-             <div class="ieo-form">
 
-                <?php $form = ActiveForm::begin(); ?>
-                    <div class=cell>
-                        <?= $form->field($requerimientoExtra, '[0]socializacion')->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                    </div>
-                    <div class=cell>
-                        <?= $form->field($requerimientoExtra, '[0]soporte_socializacion')->label('ANEXO SOPORTE DE NECESIDAD DE HACER SOCIALIZACIÓN SI APLICA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                    </div>
-                    <div class=cell>
-                    <?php ActiveForm::end(); ?>
-
+            <div class=cell>
+                <?= $form->field($requerimientoExtra, '[0]socializacion')->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
             </div>
-        
+            <div class=cell>
+                <?= $form->field($requerimientoExtra, '[0]soporte_socializacion')->label('ANEXO SOPORTE DE NECESIDAD DE HACER SOCIALIZACIÓN SI APLICA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            </div>
+            <div class=cell>
+
         <?php
         }
         
         if($index == 1){
         ?>    
             
-            <div class="ieo-form">
-
-                <?php $form = ActiveForm::begin(); ?>
                     <div class=cell>
                         <?= $form->field($documentosReconocimiento, '[0]informe_caracterizacion')->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                     </div>
@@ -71,19 +73,12 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                         'format' 	=> 'yyyy-mm-dd',
                     ],
                 ]);  ?>
-
-                
-                <?php ActiveForm::end(); ?>
-
-            </div>
             
         <?php
         }
         if($index == 2 || $index == 3 || $index == 4){
         ?>        
-            <div class="ieo-form">
-
-                <?php $form = ActiveForm::begin(); ?>
+           
                 <h3 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h3>
                 <?= $form->field($tiposCantidadPoblacion, 'tiempo_libre')->textInput() ?>
                 <?= $form->field($tiposCantidadPoblacion, 'edu_derechos')->textInput() ?>
@@ -199,29 +194,18 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                 </div>
                 <?= $form->field($evidencias, 'observaciones')->textInput() ?>
 
-
-                <?php ActiveForm::end(); ?>
-
-            </div>
-
         <?php
         }if($index == 5){
             ?>    
-                
-                <div class="ieo-form">
-    
-                    <?php $form = ActiveForm::begin(); ?>
 
-                        <div class=cell>
-                            <?= $form->field($evidencias, '[0]tipo_documento_id')->label('Informe Ruta Cualificación')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                        </div>
-                        <div class=cell>
-                            <?= $form->field($evidencias, '[0]tipo_documento_id')->label('Presentacion Plan Accion Ieo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                        </div>                    
-                    <?php ActiveForm::end(); ?>
-    
-                </div>
-                
+                    <div class=cell>
+                        <?= $form->field($evidencias, '[0]tipo_documento_id')->label('Informe Ruta Cualificación')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($evidencias, '[0]tipo_documento_id')->label('Presentacion Plan Accion Ieo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>                    
             <?php
             }
+            ActiveForm::end();            
         ?>
+    
