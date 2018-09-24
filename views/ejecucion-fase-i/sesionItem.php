@@ -42,6 +42,7 @@ use dosamigos\datepicker\DatePicker;
 	
 	.title{
 		height: 150px;
+		background-color: #ccc;
 	}
 	
 	.title > div > span{

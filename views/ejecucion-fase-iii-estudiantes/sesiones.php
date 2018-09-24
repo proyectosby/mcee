@@ -60,11 +60,14 @@ foreach( $sesiones as $keySesion => $sesion ){
 
 ?>
 
-<?= Collapse::widget(['items' => $items]); ?>
+<?= Collapse::widget([
+	'items' => $items,
+    'options' => [ "id" => "collapseOne" ],
+]); ?>
 
 <div class='container-fluid' style='margin:10px 0;'>
 	
-		<div class='row text-center'>
+		<div class='row text-center' style='width:100%;'>
 			
 			<div class='col-sm-12'>
 				<span total class='form-control' style='background-color:#ccc;'>CONDICIONES INSTITUCIONALES</span>
@@ -72,7 +75,7 @@ foreach( $sesiones as $keySesion => $sesion ){
 		
 		</div>
 		
-		<div class='row text-center title'>
+		<div class='row text-center title' style='width:100%;'>
 			<div class='col-sm-2'>
 				<span total class='form-control' style='background-color:#ccc;'>Por parte de la IEO</span>
 			</div>
@@ -100,7 +103,7 @@ foreach( $sesiones as $keySesion => $sesion ){
 			
 		</div>
 		
-		<div class='row text-center' id='condiciones-institucionales'>
+		<div class='row text-center' id='condiciones-institucionales' style='width:100%;'>
 			
 			<div class='col-sm-2'>
 				<?= Html::activeTextarea($condiciones, "[$index]parte_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>

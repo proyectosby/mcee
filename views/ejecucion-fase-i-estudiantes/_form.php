@@ -17,6 +17,12 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+if( !$sede ){
+	$this->registerJs( "$( cambiarSede ).click()" );
+	return;
+}
+
+
 $this->registerJsFile(
     '@web/js/ejecucionFaseIEstudiantes.js',
     [

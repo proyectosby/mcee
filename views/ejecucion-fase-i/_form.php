@@ -14,6 +14,12 @@ use yii\widgets\ActiveForm;
 
 use dosamigos\editable\Editable;
 
+if( !$sede ){
+	$this->registerJs( "$( cambiarSede ).click()" );
+	return;
+}
+
+	
 $this->registerJsFile(
     '@web/js/ejecucionFaseI.js',
     [
@@ -28,6 +34,7 @@ $this->registerJsFile(
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="ejecucion-fase-form">

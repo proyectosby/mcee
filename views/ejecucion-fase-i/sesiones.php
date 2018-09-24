@@ -53,6 +53,7 @@ use yii\bootstrap\Collapse;
 
 echo Collapse::widget([
     'items' => $items,
+    'options' => [ "id" => "collapseOne" ],
 ]);
 
 ?>

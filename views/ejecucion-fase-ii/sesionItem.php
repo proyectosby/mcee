@@ -47,6 +47,7 @@ use dosamigos\datepicker\DatePicker;
 	
 	.title{
 		height: 150px;
+		background-color: #ccc;
 	}
 	
 	.title > div > span{
@@ -228,7 +229,7 @@ use dosamigos\datepicker\DatePicker;
 			
 		</div>
 		
-		<div class='row text-center'>
+		<div class='row text-center title3'>
 			
 			<div class='col-sm-3'>
 				<span total class='form-control' style='background-color:#ccc;'>Tipo de Acción </span>
@@ -248,22 +249,22 @@ use dosamigos\datepicker\DatePicker;
 			
 		</div>
 		
-		<div class='row text-center'>
+		<div class='row text-center row-data-2'>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 		</div>
@@ -318,34 +319,34 @@ use dosamigos\datepicker\DatePicker;
 			
 		</div>
 		
-		<div class='row text-center'>
+		<div class='row text-center row-data-3'>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextInput($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true]) ?>
+				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 		</div>
