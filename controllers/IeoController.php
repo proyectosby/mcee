@@ -20,6 +20,7 @@ use app\models\TiposCantidadPoblacion;
 use app\models\Evidencias;
 use app\models\TipoDocumentos;
 use app\models\Producto;
+use app\models\RequerimientoExtraIeo;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -50,6 +51,7 @@ class IeoController extends Controller
         $model = new Ieo();
         $documentosReconocimiento = new DocumentosReconocimiento();
         $tiposCantidadPoblacion = new TiposCantidadPoblacion();
+        $requerimientoExtra = new RequerimientoExtraIeo();
         $evidencias = new Evidencias();
         $producto = new Producto();
 				
@@ -58,7 +60,7 @@ class IeoController extends Controller
 					->orderby( 'descripcion' )
 					->all();*/
 		
-		return $this->renderPartial('fases', [
+		return $this->renderAjax('fases', [
 			'idPE' 	=> null,
 			'fases' => ["Proyectos Pedagógicos Transversales", "Proyectos de Servicio Social Estudiantil", "Articulación Familiar"],
             "model" => $model,
@@ -66,6 +68,7 @@ class IeoController extends Controller
             "tiposCantidadPoblacion" => $tiposCantidadPoblacion,
             "evidencias" => $evidencias,
             "producto" => $producto,
+            "requerimientoExtra" => $requerimientoExtra
         ]);
 		
 	}
@@ -111,7 +114,7 @@ class IeoController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

@@ -1,6 +1,7 @@
 <?php
-
-$id_sede 		= $_SESSION['sede'][0];
+use yii\helpers\Html;
+//$id_sede 		= $_SESSION['sede'][0];
+$id_sede 		= 1;
 $id_institucion	= $_SESSION['instituciones'][0];
 $contenedores = [];
 $index = 0;
@@ -20,6 +21,7 @@ $index = 0;
                                                         'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
                                                         'evidencias' => $evidencias,
                                                         'producto' => $producto,
+                                                        'requerimientoExtra' => $requerimientoExtra
 													] 
 										),
 					'contentOptions'=> []

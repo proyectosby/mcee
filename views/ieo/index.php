@@ -1,9 +1,11 @@
 <?php
 
 use yii\helpers\Html;
-
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
+
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -11,13 +13,30 @@ use yii\grid\GridView;
 $this->title = 'Ieos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+
 <div class="ieo-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+		<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
     </p>
+
+	<?php 
+		
+		Modal::Begin([
+			'header'=>'<h3>I.E.O Avance Ejecución</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+
+	?>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
@@ -57,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'persona_id',
             'institucion_id',
             'sede_id',

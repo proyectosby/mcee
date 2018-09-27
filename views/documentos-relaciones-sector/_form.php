@@ -14,14 +14,12 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Documentos */
+/* @var $model app\models\DocumentosRelacionesSector */
 /* @var $form yii\widgets\ActiveForm */
-
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentosOficiales.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 ?>
-
 <style>
 	.table{
 		display: table;
@@ -35,8 +33,7 @@ echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 		display: table-cell;
 	}
 </style>
-
-<div class="documentos-form">
+<div class="documentos-relaciones-sector-form">
 
     <?php $form = ActiveForm::begin([
 		// 'id' => 'contact-form',
@@ -69,6 +66,10 @@ echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 
 			<div class=cell>
 				<?= $form->field($model, '[0]id_tipo_documento')->dropDownList( $tiposDocumento, [ 'prompt' => 'Seleccione...' ] ) ?>
+			</div>
+
+            <div class=cell>
+                <?= $form->field($model, '[0]descripcion')->textInput() ?>
 			</div>
 				
 			<div class=cell>

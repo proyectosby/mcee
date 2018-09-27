@@ -1,4 +1,14 @@
 <?php
+if(@$_SESSION['sesion']=="si")
+{ 
+	// echo $_SESSION['nombre'];
+} 
+//si no tiene sesion se redirecciona al login
+else
+{
+	echo "<script> window.location=\"index.php?r=site%2Flogin\";</script>";
+	die;
+}
 /* @var $this yii\web\View */
 /* @var $model app\models\Ieo */
 /* @var $form yii\widgets\ActiveForm */
@@ -6,25 +16,52 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 
 
-<div class="container-fluid">
+    
    <?php
+         $form = ActiveForm::begin();
         if($index == 0){
+        ?> 
+
+            <div class=cell>
+                <?= $form->field($requerimientoExtra, '[0]socializacion')->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            </div>
+            <div class=cell>
+                <?= $form->field($requerimientoExtra, '[0]soporte_socializacion')->label('ANEXO SOPORTE DE NECESIDAD DE HACER SOCIALIZACIÓN SI APLICA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            </div>
+            <div class=cell>
+
+        <?php
+        }
+        
+        if($index == 1){
         ?>    
             
-            <div class="ieo-form">
-
-                <?php $form = ActiveForm::begin(); ?>
-
-                <?= $form->field($documentosReconocimiento, 'informe_caracterizacion')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'matriz_caracterizacion')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'revision_pei')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'revision_autoevaluacion')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'revision_pmi')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'resultados_caracterizacion')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'horario_trabajo')->textInput() ?>
+                    <div class=cell>
+                        <?= $form->field($documentosReconocimiento, '[0]informe_caracterizacion')->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($documentosReconocimiento, '[0]matriz_caracterizacion')->label('Matriz Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($documentosReconocimiento, '[0]revision_pei')->label('Revisión Pei')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($documentosReconocimiento, '[0]revision_autoevaluacion')->label('Revisión Autoevaluación')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($documentosReconocimiento, '[0]revision_pmi')->label('Revisión Pmi')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($documentosReconocimiento, '[0]resultados_caracterizacion')->label('Resultados Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($documentosReconocimiento, '[0]horario_trabajo')->label('Horario Trabajo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>               
+                
                 <?= $form->field($documentosReconocimiento, 'tipo_actiividad')->textInput() ?>
                 <?= $form->field($documentosReconocimiento, 'fecha_creacion')->widget(
                 DatePicker::className(), [
@@ -36,19 +73,12 @@ use dosamigos\datepicker\DatePicker;
                         'format' 	=> 'yyyy-mm-dd',
                     ],
                 ]);  ?>
-
-                
-                <?php ActiveForm::end(); ?>
-
-            </div>
             
         <?php
         }
-        if($index == 1 || $index == 2 || $index == 3){
+        if($index == 2 || $index == 3 || $index == 4){
         ?>        
-            <div class="ieo-form">
-
-                <?php $form = ActiveForm::begin(); ?>
+           
                 <h3 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h3>
                 <?= $form->field($tiposCantidadPoblacion, 'tiempo_libre')->textInput() ?>
                 <?= $form->field($tiposCantidadPoblacion, 'edu_derechos')->textInput() ?>
@@ -57,6 +87,17 @@ use dosamigos\datepicker\DatePicker;
                 <?= $form->field($tiposCantidadPoblacion, 'medio_ambiente')->textInput() ?>
                 <?= $form->field($tiposCantidadPoblacion, 'familia')->textInput() ?>
                 <?= $form->field($tiposCantidadPoblacion, 'directivos')->textInput() ?>
+                <?= $form->field($documentosReconocimiento, 'tipo_actiividad')->textInput() ?>
+                <?= $form->field($documentosReconocimiento, 'fecha_creacion')->widget(
+                DatePicker::className(), [
+                    // modify template for custom rendering
+                    'template' => '{addon}{input}',
+                    'language' => 'es',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' 	=> 'yyyy-mm-dd',
+                    ],
+                ]);  ?>
                 
                 <div class=row style='text-align:center;'>
                     <div class="col-sm-1" style='padding:0px;'>
@@ -153,27 +194,18 @@ use dosamigos\datepicker\DatePicker;
                 </div>
                 <?= $form->field($evidencias, 'observaciones')->textInput() ?>
 
-
-                <?php ActiveForm::end(); ?>
-
-            </div>
-
         <?php
-        }if($index == 4){
+        }if($index == 5){
             ?>    
-                
-                <div class="ieo-form">
-    
-                    <?php $form = ActiveForm::begin(); ?>
 
-                    <?= $form->field($producto, 'informe_ruta_cualificacion')->textInput() ?>
-                    <?= $form->field($producto, 'presentacion_plan_accion_ieo')->textInput() ?>
-                    
-                    <?php ActiveForm::end(); ?>
-    
-                </div>
-                
+                    <div class=cell>
+                        <?= $form->field($evidencias, '[0]tipo_documento_id')->label('Informe Ruta Cualificación')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>
+                    <div class=cell>
+                        <?= $form->field($evidencias, '[0]tipo_documento_id')->label('Presentacion Plan Accion Ieo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                    </div>                    
             <?php
             }
+            ActiveForm::end();            
         ?>
-</div>
+    

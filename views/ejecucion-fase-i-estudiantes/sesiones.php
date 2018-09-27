@@ -60,7 +60,10 @@ foreach( $sesiones as $keySesion => $sesion ){
 
 ?>
 
-<?= Collapse::widget(['items' => $items]); ?>
+<?= Collapse::widget([
+	'items' => $items,
+    'options' => [ "id" => "collapseOne" ],
+]); ?>
 
 <div class='container-fluid' style='margin:10px 0;'>
 	

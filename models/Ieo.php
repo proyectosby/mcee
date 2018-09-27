@@ -26,6 +26,12 @@ use Yii;
  */
 class Ieo extends \yii\db\ActiveRecord
 {
+
+    public $codigo_dane;
+    public $zona_educativa;
+    public $comuna;
+    public $barrio;
+
     /**
      * @inheritdoc
      */
@@ -59,7 +65,7 @@ class Ieo extends \yii\db\ActiveRecord
             'persona_id' => 'Profesional encargado',
             'institucion_id' => 'Institución',
             'sede_id' => 'Sede',
-            'proyecto_id' => 'Proyecto'
+            'proyecto_id' => 'Proyecto',
         ];
     }
 

@@ -65,7 +65,7 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
             'resultados_caracterizacion' => 'Resultados Caracterizacion',
             'horario_trabajo' => 'Horario Trabajo',
             'tipo_actiividad' => 'Tipo Actiividad',
-            'fecha_creacion' => 'Fecha Creacion',
+            'fecha_creacion' => 'Fecha',
             'estado' => 'Estado',
         ];
     }
