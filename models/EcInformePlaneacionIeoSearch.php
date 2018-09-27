@@ -18,7 +18,7 @@ class EcInformePlaneacionIeoSearch extends EcInformePlaneacionIeo
     public function rules()
     {
         return [
-            [['id', 'id_institucion', 'id_sede', 'codigo_dane', 'id_comuna', 'id_barrio'], 'integer'],
+            [['id', 'id_institucion', 'id_sede', 'codigo_dane'], 'integer'],
             [['zona_educativa', 'fase', 'fecha_reporte'], 'safe'],
         ];
     }
@@ -63,8 +63,6 @@ class EcInformePlaneacionIeoSearch extends EcInformePlaneacionIeo
             'id_institucion' => $this->id_institucion,
             'id_sede' => $this->id_sede,
             'codigo_dane' => $this->codigo_dane,
-            'id_comuna' => $this->id_comuna,
-            'id_barrio' => $this->id_barrio,
             'fecha_reporte' => $this->fecha_reporte,
         ]);
 

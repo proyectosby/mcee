@@ -14,24 +14,20 @@ else
 }
 
 use Yii;
-use app\models\EcInformePlaneacionIeo;
-use app\models\EcInformePlaneacionIeoSearch;
-use app\models\EcProyectos;
-use app\models\EcProcesos;
+use app\models\EcAvanceMisionalPpt;
+use app\models\EcAvanceMisionalPptBuscar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\ComunasCorregimientos;
-use app\models\BarriosVeredas;
+use app\models\Estados;
 use yii\helpers\ArrayHelper;
 use app\models\Instituciones;
 use app\models\Sedes;
-use app\models\Parametro;
 
 /**
- * EcinformeplaneacionieoController implements the CRUD actions for EcInformePlaneacionIeo model.
+ * EcAvanceMisionalPptController implements the CRUD actions for EcAvanceMisionalPpt model.
  */
-class EcinformeplaneacionieoController extends Controller
+class EcAvanceMisionalPptController extends Controller
 {
     /**
      * @inheritdoc
@@ -48,59 +44,13 @@ class EcinformeplaneacionieoController extends Controller
         ];
     }
 
-    function actionViewfases($model){
-        
-       $EcProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
-       $numProyectos = count($EcProyectos);
-
-       $proyectos = array();
-        foreach ($EcProyectos as $r)
-         {
-             $proyectos[$r['id']]= $r['descripcion'];
-
-         }
-
-       $EcProcesos = EcProcesos::find()->where( 'estado=1' )->all();
-
-       $procesos = array();
-        foreach ($EcProcesos as $r)
-         {
-             $procesos[$r['id']]= $r['descripcion'];
-
-         }
-
-        return $this->renderPartial('fases', [
-            'idPE'  => null,
-            'fases' => $proyectos,
-            //'procesos' => $procesos,
-            'numProyectos' => $numProyectos,
-            "model" => $model
-        ]);
-        
-    }
-
-	public function obtenerParametros()
-	{
-		//parametros de Fases informe planeación IEO
-		$dataParametros = Parametro::find()
-						->where( 'id_tipo_parametro=24' )
-						->andWhere( 'estado=1' )
-						->orderby( 'id' )
-						->all();
-						
-		$parametros		= ArrayHelper::map( $dataParametros, 'id', 'descripcion' );
-		
-		return $parametros;
-	
-	}
-
     /**
-     * Lists all EcInformePlaneacionIeo models.
+     * Lists all EcAvanceMisionalPpt models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EcInformePlaneacionIeoSearch();
+        $searchModel = new EcAvanceMisionalPptBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -108,7 +58,7 @@ class EcinformeplaneacionieoController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+	
 	public function obtenerSedes()
 	{
 		$idInstitucion = $_SESSION['instituciones'][0];
@@ -128,10 +78,9 @@ class EcinformeplaneacionieoController extends Controller
 		
 		return $instituciones;
 	}
-	
-	
+
     /**
-     * Displays a single EcInformePlaneacionIeo model.
+     * Displays a single EcAvanceMisionalPpt model.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -144,53 +93,27 @@ class EcinformeplaneacionieoController extends Controller
     }
 
     /**
-     * Creates a new EcInformePlaneacionIeo model.
+     * Creates a new EcAvanceMisionalPpt model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new EcInformePlaneacionIeo();
+        $model = new EcAvanceMisionalPpt();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
-		$idSedes 		= $_SESSION['sede'][0];
-		
-		$sedes = Sedes::findOne($idSedes );
-		$idSedesComunas = $sedes->comuna; 
-		$idSedesBarrios = $sedes->id_barrios_veredas;
-		$codigoDane = $sedes->codigo_dane;
-		$comunas = @ComunasCorregimientos::findOne($idSedesComunas);
-		if ( @$comunas->descripcion != null)
-			$comunas = $comunas->descripcion;
-		else
-			$comunas ="No asignada";
-		
-		
-		
-		$barrios = @BarriosVeredas::findOne($idSedesBarrios);
-		if ( @$barrios->descripcion != null)
-			$barrios = $barrios->descripcion;
-		else
-			$barrios ="No asignado";
-		
-		
         return $this->renderAjax('create', [
-            'comunas' => $comunas,
-            'barrios' => $barrios,
             'model' => $model,
-			'sedes'=> $this->obtenerSedes(),
-			'instituciones' => $this->obtenerInstituciones(),
-			'fases' =>$this->obtenerParametros(),
-			'codigoDane' => $codigoDane,
-			
+			'sedes' => $this->obtenerSedes(),
+			'instituciones'=>$this->obtenerInstituciones(),
         ]);
     }
 
     /**
-     * Updates an existing EcInformePlaneacionIeo model.
+     * Updates an existing EcAvanceMisionalPpt model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -206,14 +129,13 @@ class EcinformeplaneacionieoController extends Controller
 
         return $this->renderAjax('update', [
             'model' => $model,
-			'sedes'=> $this->obtenerSedes(),
-			'instituciones' => $this->obtenerInstituciones(),
-			'fases' =>$this->obtenerParametros(),
+			'sedes' => $this->obtenerSedes(),
+			'instituciones'=> $this->obtenerInstituciones(),
         ]);
     }
 
     /**
-     * Deletes an existing EcInformePlaneacionIeo model.
+     * Deletes an existing EcAvanceMisionalPpt model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -227,15 +149,15 @@ class EcinformeplaneacionieoController extends Controller
     }
 
     /**
-     * Finds the EcInformePlaneacionIeo model based on its primary key value.
+     * Finds the EcAvanceMisionalPpt model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return EcInformePlaneacionIeo the loaded model
+     * @return EcAvanceMisionalPpt the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EcInformePlaneacionIeo::findOne($id)) !== null) {
+        if (($model = EcAvanceMisionalPpt::findOne($id)) !== null) {
             return $model;
         }
 

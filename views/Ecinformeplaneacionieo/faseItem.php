@@ -46,7 +46,7 @@ $i = 1;
 
     foreach( $items as $keyFase => $item ){ 
         
-        $accionesall = EcAcciones::find()->where( 'estado=true' )->andWhere( 'id_proceso='.$i )->all();
+        $accionesall = EcAcciones::find()->where( 'estado=1' )->andWhere( 'id_proceso='.$i )->all();
         $acciones = array();
 
         foreach ($accionesall as $r)
@@ -72,18 +72,7 @@ $i = 1;
     $i ++;
     }
 
-    $contenedores[] =  [
-                    'label'         =>  "Productos",
-                    'content'       =>  $this->render( 'contenedorItem2', 
-                                                    [  
-                                                        'idPE'      => "", 
-                                                        'index'     => $index,
-                                                        'item'      => $item,
-                                                        'model'     => $model,
-                                                    ] 
-                                        ),
-                    'contentOptions'=> []
-                ];
+
     
     use yii\bootstrap\Collapse;
     echo Collapse::widget([

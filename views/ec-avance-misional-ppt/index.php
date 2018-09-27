@@ -9,10 +9,10 @@ use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EcInformePlaneacionIeoSearch */
+/* @var $searchModel app\models\EcAvanceMisionalPptBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Informe Planeacion Ieo';
+$this->title = 'Informe de avance misional del proyecto';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3><?php echo $this->title ?></h3>
+<h3>Informe de avance misional del proyecto</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="ec-informe-planeacion-ieo-index">
+<div class="ec-avance-misional-ppt-index">
 
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -79,14 +79,24 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id_institucion',
-            'id_sede',
-            'codigo_dane',
-            'zona_educativa',
-            //'id_comuna',
-            //'id_barrio',
-            //'fase',
-            //'fecha_reporte',
+
+     
+         
+            'fecha_inicio',
+            'fecha_fin',
+            //'responsable_sem',
+            //'operador',
+            //'acciones_realizadas',
+            //'procesos_gestion_avances',
+            //'procesos_gestion_dificultades',
+            //'estrategias_tranversalizacion_avances',
+            //'estrategias_tranversalizacion_difcultades',
+            //'orientacion_conceptuales_avances',
+            //'orientacion_conceptuales_dificultades',
+            //'fuente_informacion',
+            //'avances_acompanamiento',
+            //'dificultades_acompanamiento',
+            //'alarmas_importantes',
 
             [
 			'class' => 'yii\grid\ActionColumn',

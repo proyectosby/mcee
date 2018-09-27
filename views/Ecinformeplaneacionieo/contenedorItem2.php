@@ -27,7 +27,7 @@ $estrategias = new EcEstrategias();
 $model = new EcProductos();
 $respuestas = new EcRespuestas();
 
-$productos = EcProductos::find()->where( 'estado=true' )->all();
+$productos = EcProductos::find()->where( 'estado=1' )->all();
 ?>
 
 

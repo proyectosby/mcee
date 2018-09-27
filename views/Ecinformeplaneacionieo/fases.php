@@ -12,7 +12,7 @@ $i = 1;
 
 foreach( $fases as $keyFase => $fase ){
 
-		$proyectosall = EcProcesos::find()->where( 'estado=true' )->andWhere( 'id_proyecto='.$i )->all();
+		$proyectosall = EcProcesos::find()->where( 'estado=1' )->andWhere( 'id_proyecto='.$i )->all();
 		$procesos = array();
 
 		foreach ($proyectosall as $r)

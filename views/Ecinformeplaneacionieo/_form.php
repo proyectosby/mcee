@@ -25,43 +25,29 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?php 
     	$form = ActiveForm::begin();
      ?>
+	 
+	 <?= $form->field($model, 'id_sede')->dropDownList($sedes) ?>
+	 
+	 <label> Código Dane </label>
+
+	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$codigoDane?></h6>
+	 
+	 <?= $form->field($model, 'id_institucion')->dropDownList($instituciones) ?>
 
     <?= $form->field($model, 'zona_educativa')->textInput() ?>
-		
-		<?= $form->field($modelComunas, 'descripcion')->widget(
-			Chosen::className(), [
-				'items' => $comunas,
-				'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-				'placeholder' => 'Seleccione...',
-				'clientOptions' => [
-					'search_contains' => true,
-					'single_backstroke_delete' => false,
-				],
-			])->label('Comunas');
-		?>
-		<?= $form->field($modelBarrios, 'descripcion')->widget(
-			Chosen::className(), [
-				'items' => $barrios,
-				'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-				'placeholder' => 'Seleccione...',
-				'clientOptions' => [
-					'search_contains' => true,
-					'single_backstroke_delete' => false,
-				],
-			])->label('Barrios');
-		?>		
+	
+	<label> Comuna </label>
 
-        <div class=cell>
-            <label for="exampleFormControlSelect1">Seleccione la Fase</label>
-                <select class="form-control">
-                  <option>...</option>
-                  <option>Fase 1</option>
-                  <option>Fase 2</option>
-                  <option>Fase 3</option>
-                  <option>Fase 4</option>
-                </select>
-        </div>
-        </br>
+	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$comunas?></h6>
+
+	<label> Barrio</label>
+	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$barrios?></h6>
+
+ 
+	<?= $form->field($model, 'zona_educativa')->DropDownList($fases,['prompt'=>'Seleccione...']) ?>
+		
+        
+        
 		<?= $form->field($model, 'fecha_reporte')->widget(
 			DatePicker::className(), [
 				 // modify template for custom rendering
