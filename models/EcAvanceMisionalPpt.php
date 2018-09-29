@@ -44,7 +44,7 @@ class EcAvanceMisionalPpt extends \yii\db\ActiveRecord
         return [
             [['id_institucion', 'id_sede', 'fecha_inicio', 'fecha_fin', 'responsable_sem', 'operador', 'acciones_realizadas', 'procesos_gestion_avances', 'procesos_gestion_dificultades', 'estrategias_tranversalizacion_avances', 'estrategias_tranversalizacion_difcultades', 'orientacion_conceptuales_avances', 'orientacion_conceptuales_dificultades', 'fuente_informacion', 'avances_acompanamiento', 'dificultades_acompanamiento', 'alarmas_importantes'], 'required'],
             [['id_institucion', 'id_sede'], 'default', 'value' => null],
-            [['id_institucion', 'id_sede'], 'integer'],
+            [['id_institucion', 'id_sede','estado'], 'integer'],
             [['fecha_inicio', 'fecha_fin'], 'safe'],
             [['responsable_sem', 'operador', 'acciones_realizadas', 'procesos_gestion_avances', 'procesos_gestion_dificultades', 'estrategias_tranversalizacion_avances', 'estrategias_tranversalizacion_difcultades', 'orientacion_conceptuales_avances', 'orientacion_conceptuales_dificultades', 'fuente_informacion', 'avances_acompanamiento', 'dificultades_acompanamiento', 'alarmas_importantes'], 'string'],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
@@ -76,6 +76,7 @@ class EcAvanceMisionalPpt extends \yii\db\ActiveRecord
             'avances_acompanamiento' => 'Avances Mas Importantes del Acompañamiento',
             'dificultades_acompanamiento' => 'Dificultades Mas Importantes del Acompañamiento',
             'alarmas_importantes' => 'Alarmas Importantes',
+            'estado' => 'Estado',
         ];
     }
 }

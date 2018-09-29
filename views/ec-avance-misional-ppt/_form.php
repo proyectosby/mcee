@@ -71,6 +71,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= $form->field($model, 'dificultades_acompanamiento')->textArea() ?>
 
     <?= $form->field($model, 'alarmas_importantes')->textArea() ?>
+	
+    <?= $form->field($model, 'estado')->DropDownList($estados) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

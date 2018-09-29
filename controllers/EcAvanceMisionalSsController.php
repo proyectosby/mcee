@@ -14,20 +14,21 @@ else
 }
 
 use Yii;
-use app\models\EcAvanceMisionalPpt;
-use app\models\EcAvanceMisionalPptBuscar;
+use app\models\EcAvanceMisionalSs;
+use app\models\EcAvanceMisionalSsBuscar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Estados;
-use yii\helpers\ArrayHelper;
 use app\models\Instituciones;
 use app\models\Sedes;
+use app\models\Estados;
+use yii\helpers\ArrayHelper;
+
 
 /**
- * EcAvanceMisionalPptController implements the CRUD actions for EcAvanceMisionalPpt model.
+ * EcAvanceMisionalSsController implements the CRUD actions for EcAvanceMisionalSs model.
  */
-class EcAvanceMisionalPptController extends Controller
+class EcAvanceMisionalSsController extends Controller
 {
     /**
      * @inheritdoc
@@ -45,15 +46,14 @@ class EcAvanceMisionalPptController extends Controller
     }
 
     /**
-     * Lists all EcAvanceMisionalPpt models.
+     * Lists all EcAvanceMisionalSs models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EcAvanceMisionalPptBuscar();
+        $searchModel = new EcAvanceMisionalSsBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1" ); 
-
+	  	$dataProvider->query->andWhere( "estado=1" ); 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -79,6 +79,7 @@ class EcAvanceMisionalPptController extends Controller
 		
 		return $instituciones;
 	}
+
 	
 	public function obtenerEstados()
 	{
@@ -90,7 +91,7 @@ class EcAvanceMisionalPptController extends Controller
 	}
 
     /**
-     * Displays a single EcAvanceMisionalPpt model.
+     * Displays a single EcAvanceMisionalSs model.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -103,13 +104,13 @@ class EcAvanceMisionalPptController extends Controller
     }
 
     /**
-     * Creates a new EcAvanceMisionalPpt model.
+     * Creates a new EcAvanceMisionalSs model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new EcAvanceMisionalPpt();
+        $model = new EcAvanceMisionalSs();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -118,12 +119,13 @@ class EcAvanceMisionalPptController extends Controller
         return $this->renderAjax('create', [
             'model' => $model,
 			'sedes' => $this->obtenerSedes(),
-			'instituciones'=>$this->obtenerInstituciones(),
+			'instituciones'=> $this->obtenerInstituciones(),
+			'estados' => $this->obtenerEstados(),
         ]);
     }
 
     /**
-     * Updates an existing EcAvanceMisionalPpt model.
+     * Updates an existing EcAvanceMisionalSs model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -141,17 +143,18 @@ class EcAvanceMisionalPptController extends Controller
             'model' => $model,
 			'sedes' => $this->obtenerSedes(),
 			'instituciones'=> $this->obtenerInstituciones(),
+			'estados' => $this->obtenerEstados(),
         ]);
     }
 
     /**
-     * Deletes an existing EcAvanceMisionalPpt model.
+     * Deletes an existing EcAvanceMisionalSs model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-	public function actionDelete($id)
+   public function actionDelete($id)
     {
         $model = $this->findModel($id);
 		$model->estado = 2;
@@ -161,15 +164,15 @@ class EcAvanceMisionalPptController extends Controller
     }
 
     /**
-     * Finds the EcAvanceMisionalPpt model based on its primary key value.
+     * Finds the EcAvanceMisionalSs model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return EcAvanceMisionalPpt the loaded model
+     * @return EcAvanceMisionalSs the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EcAvanceMisionalPpt::findOne($id)) !== null) {
+        if (($model = EcAvanceMisionalSs::findOne($id)) !== null) {
             return $model;
         }
 
