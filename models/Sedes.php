@@ -99,6 +99,7 @@ class Sedes extends \yii\db\ActiveRecord
             [['estado'], 'required'],
             [['id_municipios'], 'required'],
             [['codigo_dane'], 'required'],
+            [['jornada_escolar'], 'required'],
             [['codigo_dane'], 'unique'],
             // [['comuna'], 'required'],
         ];
@@ -130,6 +131,7 @@ class Sedes extends \yii\db\ActiveRecord
             'sede_principal' 	=> 'Sede Principal',
             'comuna' 			=> 'Comuna',
             'estado' 			=> 'Estado',
+            'jornada_escolar' 	=> 'Jornada Escolar',
         ];
 
     }

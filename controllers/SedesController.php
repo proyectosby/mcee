@@ -32,6 +32,10 @@ Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se muestra un select con las instituciones, y una vez seleccionada se muestra las
 					sedes correspondientes a la institución seleccionada
 ---------------------------------------
+Fecha: 02-03-2018
+Persona encargada: Oscar David Lopez 
+Cambios realizados: Se agrega el campo jornada_escolar y se ponen las opciones del tipo_parametro 25
+---------------------------------------
 **********/
 
 
@@ -68,6 +72,7 @@ use app\models\Tenencias;
 use app\models\Zonificaciones;
 use app\models\Municipios;
 use app\models\ComunasCorregimientos;
+use app\models\Parametro;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
@@ -154,6 +159,20 @@ class SedesController extends Controller
 		}
     }
 	
+	public function obtenerParametros()
+	{
+		//parametros de Fases informe planeación IEO
+		$dataParametros = Parametro::find()
+						->where( 'id_tipo_parametro=25' )
+						->andWhere( 'estado=1' )
+						->orderby( 'id' )
+						->all();
+						
+		$parametros		= ArrayHelper::map( $dataParametros, 'id', 'descripcion' );
+		
+		return $parametros;
+	
+	}
 	
 	//retorna las sede para el swal del index
 	public function actionSedes($idInstitucion)
@@ -271,6 +290,7 @@ class SedesController extends Controller
             'municipios'	 => $municipios,
             'comunas'	 	 => $comunas,
             'idInstitucion'	 => $idInstitucion,
+			'jornadas'	 => $this->obtenerParametros(),
         ]);
     }
 
@@ -358,6 +378,7 @@ class SedesController extends Controller
             'municipios' 	 => $municipios,
             'comunas' 	 	 => $comunas,
             'idInstitucion'	 => $model->id_instituciones,
+            'jornadas'		 => $this->obtenerParametros(),
         ]);
     }
 

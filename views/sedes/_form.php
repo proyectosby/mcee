@@ -81,6 +81,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= $form->field($model, 'sede_principal')->checkbox() ?>
 
     <?= $form->field($model, 'comuna')->dropDownList( $comunas, [ 'prompt' => 'Seleccione...' ] ) ?>
+	
+    <?= $form->field($model, 'jornada_escolar')->dropDownList( $jornadas, [ 'prompt' => 'Seleccione...' ] ) ?>
 
 	<?= $form->field($model, 'estado' )->dropDownList( $estados ) ?>
 
