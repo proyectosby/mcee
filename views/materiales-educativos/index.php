@@ -7,6 +7,8 @@ use yii\helpers\Url;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
+use app\models\Parametro;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MaterialesEducativosBuscar */
@@ -79,9 +81,37 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'tipo',
-            'autor',
-            'nivel',
+			
+			[
+				'attribute' => 'tipo',
+				'value' => function( $model ){
+					$parametro = Parametro::findOne($model->tipo);
+					return $parametro ? $parametro->descripcion : '';
+					return $parametro;
+					
+				},
+
+			],
+			[
+				'attribute' => 'autor',
+				'value' => function( $model ){
+					$parametro = Parametro::findOne($model->autor);
+					return $parametro ? $parametro->descripcion : '';
+					return $parametro;
+					
+				},
+
+			],
+			[
+				'attribute' => 'nivel',
+				'value' => function( $model ){
+					$parametro = Parametro::findOne($model->nivel);
+					return $parametro ? $parametro->descripcion : '';
+					return $parametro;
+					
+				},
+
+			],
             'otro_cual',
             'nombre_apellidos',
             'reseña',
