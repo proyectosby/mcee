@@ -1,4 +1,14 @@
 <?php
+
+/**********
+Versión: 001
+Fecha: 2018-10-01
+Desarrollador: Edwin MG
+Descripción: 	Indice Documentos Gestion Comunitaria
+				Muestra los archivos guardados con su respectivo tipo en la tabla Gestion Comunitaria
+---------------------------------------
+*/
+
 if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
@@ -31,7 +41,7 @@ if( isset($guardado) && $guardado == 1 ){
 	echo Html::hiddenInput( 'guardado', '1' );
 }
 
-$this->title = 'Instancias';
+$this->title = 'Documentos Gestión Comunitaria';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="documentos-index">

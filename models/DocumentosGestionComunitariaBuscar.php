@@ -1,5 +1,13 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 2018-10-01
+Desarrollador: Edwin MG
+Descripción: Modelo Documentos Gestion Comunitaria Buscar
+---------------------------------------
+*/
+
 namespace app\models;
 
 use Yii;
