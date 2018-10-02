@@ -1,3 +1,11 @@
+/**********
+Versión: 001
+Fecha: 2018-10-01
+Desarrollador: Edwin MG
+Descripción: Modelo Documentos Gestion Comunitaria
+---------------------------------------
+*/
+
 var consecutivo = 1;
 
 function agregarCampos(){
@@ -24,6 +32,16 @@ function agregarCampos(){
 				"validate":function (attribute, value, messages, deferred, $form) {
 					yii.validation.required(value, messages, {"message":"Institución no puede estar vacío."});
 					yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Institución debe ser un número entero.","skipOnEmpty":1});
+				}
+			});
+			
+			$( "#w0" ).yiiActiveForm( 'add', {
+				"id":"documentosgestioncomunitaria-"+consecutivo.toString()+"-descripcion",
+				"name":"["+consecutivo.toString()+"]descripcion",
+				"container":".field-documentosgestioncomunitaria-"+consecutivo.toString()+"-descripcion",
+				"input":"#documentosgestioncomunitaria-"+consecutivo.toString()+"-descripcion",
+				"validate":function (attribute, value, messages, deferred, $form) {
+					yii.validation.string(value, messages, {"message":"Descripción debe ser una cadena de caracteres.","skipOnEmpty":1});
 				}
 			});
 			
