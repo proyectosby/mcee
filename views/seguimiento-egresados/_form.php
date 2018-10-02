@@ -19,8 +19,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?= $form->field($model, 'cantidad_alumnos_egresados')->textInput() ?>
 
-    
-
     <?= $form->field($model, 'cantidad_egresados_estudiso')->dropDownList($parametros) ?>
 
     <div class="form-group">
