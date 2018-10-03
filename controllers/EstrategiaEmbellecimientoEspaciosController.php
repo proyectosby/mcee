@@ -177,7 +177,7 @@ class EstrategiaEmbellecimientoEspaciosController extends Controller
         $model = new EstrategiaEmbellecimientoEspacios();
 
         $dataParametrosUsos = Parametro::find()
-						->where( 'id_tipo_parametro=26' )
+						->where( 'id_tipo_parametro=30' )
 						->andWhere( 'estado=1' )
 						->orderby( 'id' )
 						->all();
@@ -185,7 +185,7 @@ class EstrategiaEmbellecimientoEspaciosController extends Controller
         $parametrosUsos		= ArrayHelper::map( $dataParametrosUsos, 'id', 'descripcion' );
         
         $dataParametrosEmbellecimiento = Parametro::find()
-						->where( 'id_tipo_parametro=27' )
+						->where( 'id_tipo_parametro=31' )
 						->andWhere( 'estado=1' )
 						->orderby( 'id' )
 						->all();

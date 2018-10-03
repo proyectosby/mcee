@@ -177,7 +177,7 @@ class SeguimientoEgresadosController extends Controller
         $model = new SeguimientoEgresados();
 
         $dataParametros = Parametro::find()
-						->where( 'id_tipo_parametro=25' )
+						->where( 'id_tipo_parametro=29' )
 						->andWhere( 'estado=1' )
 						->orderby( 'id' )
 						->all();
@@ -185,7 +185,7 @@ class SeguimientoEgresadosController extends Controller
         $parametros		= ArrayHelper::map( $dataParametros, 'id', 'descripcion' );
         
         $dataParametrosSeguimiento = Parametro::find()
-						->where( 'id_tipo_parametro=28' )
+						->where( 'id_tipo_parametro=32' )
 						->andWhere( 'estado=1' )
 						->orderby( 'id' )
 						->all();
