@@ -41,7 +41,7 @@ $( "#cambiarSede" ).click(function()
 		  title: 'Seleccione una Sede',
 		  input: 'select',
 		  inputOptions: (prueba),
-		  inputPlaceholder: 'Seleccione...',
+		  inputPlaceholder: 'Ninguna Sede',
 		  inputValidator: (value) => {
 			return new Promise((resolve) => {
 			  if (value !== '') 

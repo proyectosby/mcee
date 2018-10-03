@@ -17,6 +17,7 @@ use Yii;
  */
 class EstrategiaEmbellecimientoEspacios extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * @inheritdoc
      */
@@ -49,6 +50,9 @@ class EstrategiaEmbellecimientoEspacios extends \yii\db\ActiveRecord
             'seguimiento_uso_espacios' => 'Seguimiento Uso Espacios',
             'plan_enlucimiento' => 'Plan Enlucimiento',
             'estrateguia_enbellecimiento' => 'Estrateguia Enbellecimiento',
+            'id_instituciones' => 'Institución',
+            'id_tipo_documento' => 'Tipo Documento',
+            
         ];
     }
 
