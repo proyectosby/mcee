@@ -1,4 +1,14 @@
 <?php
+
+/**********
+Versión: 001
+Fecha: 2018-10-01
+Desarrollador: Edwin MG
+Descripción: Formularo de Documentos Gestion Comunitaria
+			 Permite al usuario agregar uno o más archivos de Gestión Comunitaria	
+---------------------------------------
+*/
+
 if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
@@ -79,7 +89,7 @@ echo Html::hiddenInput( 'idInstitucion', $idInstitucion );
 			</div>
 
 			<div class=cell>
-				<?= $form->field($model, '[0]id_tipo_documento')->dropDownList( $tiposDocumento ) ?>
+				<?= $form->field($model, '[0]id_tipo_documento')->dropDownList( $tiposDocumento, [ 'prompt' => 'Seleccione...'] ) ?>
 			</div>
 				
 			<div class=cell>

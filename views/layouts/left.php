@@ -153,17 +153,17 @@
 											],
 											['label' => 'Gestión Comunitaria',
 											'icon' => 'users',
-											'url' => '#',
-											'items' => [
-														['label' => 'Servicio Social', 'icon' => 'circle-o', 'url' => '#'],
-														['label' => 'Escuela Familias', 'icon' => 'circle-o', 'url' => '#'],
-														['label' => 'Comité Gestión Riesgo', 'icon' => 'circle-o', 'url' => '#'],
-														['label' => 'PGIR', 'icon' => 'circle-o', 'url' => '#'],
-														['label' => 'Aliados', 'icon' => 'circle-o', 'url' => '#'],
-														['label' => 'Actividades Vinulación', 'icon' => 'circle-o', 'url' => ['documentos-actividades-vinculacion/index']],
-														['label' => 'Relaciones Sector', 'icon' => 'circle-o', 'url' => ['documentos-relaciones-sector/index']],
+											'url' => ['documentos-gestion-comunitaria/index', 'tipo_documento'=>'Gestion Comunitaria'],
+											// 'items' => [
+														// ['label' => 'Servicio Social', 'icon' => 'circle-o', 'url' => '#'],
+														// ['label' => 'Escuela Familias', 'icon' => 'circle-o', 'url' => '#'],
+														// ['label' => 'Comité Gestión Riesgo', 'icon' => 'circle-o', 'url' => '#'],
+														// ['label' => 'PGIR', 'icon' => 'circle-o', 'url' => '#'],
+														// ['label' => 'Aliados', 'icon' => 'circle-o', 'url' => '#'],
+														// ['label' => 'Actividades Vinulación', 'icon' => 'circle-o', 'url' => ['documentos-actividades-vinculacion/index']],
+														// ['label' => 'Relaciones Sector', 'icon' => 'circle-o', 'url' => ['documentos-relaciones-sector/index']],
 														
-														],
+														// ],
 											],
                                         ],// Hoja de vida
                                    

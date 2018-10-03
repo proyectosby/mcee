@@ -1,5 +1,14 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 2018-10-01
+Desarrollador: Edwin MG
+Descripción: Controlador de Documentos Gestion Comunitaria. 
+			 Permite guardar archivos en la a carpeta documentos/GestionComunitaria con una descripción y un tipo específico
+---------------------------------------
+*/
+
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -90,7 +99,7 @@ class DocumentosGestionComunitariaController extends Controller
 				</div>
 
 				<div class=cell>
-					<?= $form->field($model, '['.$consecutivo.']id_tipo_documento')->dropDownList( $tiposDocumento ) ?>
+					<?= $form->field($model, '['.$consecutivo.']id_tipo_documento')->dropDownList( $tiposDocumento, [ 'prompt' => 'Seleccione...'] ) ?>
 				</div>
 					
 				<div class=cell>
@@ -116,16 +125,18 @@ class DocumentosGestionComunitariaController extends Controller
 		$idInstitucion = $_SESSION['instituciones'][0];
 		if( $idInstitucion > 0 )
 		{
-			$dataTiposDocumento  = TiposDocumentos::findOne([ 'categoria' => $tipo_documento ]);
+			// $dataTiposDocumento  = TiposDocumentos::findOne([ 'categoria' => $tipo_documento ]);
 			
 			$searchModel = new DocumentosGestionComunitariaBuscar();
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 			$dataProvider->query
-					->andWhere( 'estado=1' )
-					->andWhere( 'id_instituciones='.$idInstitucion );
+					->innerJoin( 'tipos_documentos tp', 'tp.id=documentos_gestion_comunitaria.id_tipo_documento' )
+					->andWhere( 'documentos_gestion_comunitaria.estado=1' )
+					->andWhere( 'documentos_gestion_comunitaria.id_instituciones='.$idInstitucion )
+					->andWhere( "tp.categoria='".$tipo_documento."'" );
 			
-			if( $dataTiposDocumento && !empty($dataTiposDocumento->id) )
-				$dataProvider->query->andWhere( 'id_tipo_documento='.$dataTiposDocumento->id );
+			// if( $dataTiposDocumento && !empty($dataTiposDocumento->id) )
+				// $dataProvider->query->andWhere( 'id_tipo_documento='.$dataTiposDocumento->id );
 
 			return $this->render('index', [
 				'searchModel'	=> $searchModel,
@@ -334,7 +345,7 @@ class DocumentosGestionComunitariaController extends Controller
 		
 		$tiposDocumento  = TiposDocumentos::findOne($model->id_tipo_documento);
 
-        return $this->redirect(['index', 'guardado'=> 0, 'tipo_documento' => $tiposDocumento->descripcion ]);
+        return $this->redirect(['index', 'guardado'=> 0, 'tipo_documento' => $tiposDocumento->categoria ]);
     }
 
     /**

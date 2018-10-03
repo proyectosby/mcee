@@ -1,4 +1,12 @@
-<?php	
+<?php
+
+/**********
+Versión: 001
+Fecha: 2018-10-01
+Desarrollador: Edwin MG
+Descripción: Modelo Documentos Gestion Comunitaria
+---------------------------------------
+*/
 
 namespace app\models;
 
@@ -40,6 +48,7 @@ class DocumentosGestionComunitaria extends \yii\db\ActiveRecord
             [['descripcion'], 'string'],
             [['id_tipo_documento', 'id_instituciones', 'estado'], 'default', 'value' => null],
             [['id_tipo_documento', 'id_instituciones', 'estado'], 'integer'],
+            [['id_tipo_documento'], 'required'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_instituciones'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_instituciones' => 'id']],
             [['id_tipo_documento'], 'exist', 'skipOnError' => true, 'targetClass' => TiposDocumentos::className(), 'targetAttribute' => ['id_tipo_documento' => 'id']],
@@ -54,7 +63,7 @@ class DocumentosGestionComunitaria extends \yii\db\ActiveRecord
         return [
             'id' 				=> 'ID',
             'ruta' 				=> 'Ruta',
-            'id_tipo_documento' => 'Tipo Documento',
+            'id_tipo_documento' => 'Tipo de Documento',
             'id_instituciones' 	=> 'Institución',
             'estado' 			=> 'Estado',
             'descripcion' 		=> 'Descripción',
