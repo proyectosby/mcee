@@ -130,10 +130,10 @@
 												'url' => '#',
 												 'items' => [
 													
-													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => '#'],
-													['label' => 'Jornada Escolar','icon' => 'circle-o','url' => '#'],
+													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => ['documentos-curriculum-ieo/index']],
+													// ['label' => 'Jornada Escolar','icon' => 'circle-o','url' => '#'],
 													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => '#'],
-													['label' => 'Seguimiento Egresados','icon' => 'circle-o','url' => '#'],
+													['label' => 'Seguimiento Egresados','icon' => 'circle-o','url' => ['seguimiento-egresados/index']],
 														
 														
 												],//
@@ -148,7 +148,7 @@
 													['label' => 'Presupuesto', 'icon' => 'circle-o', 'url' => ['documentos-presupuesto/index']],
 													['label' => 'Infraestructra', 'icon' => 'circle-o', 'url' => '#'],
 													['label' => 'Estrategia Adecuación', 'icon' => 'circle-o', 'url' => '#'],
-													['label' => 'Seguimiento', 'icon' => 'circle-o', 'url' => '#'],
+													['label' => 'Seguimiento', 'icon' => 'circle-o', 'url' => ['estrategia-embellecimiento-espacios/index']],
 												],
 											],
 											['label' => 'Gestión Comunitaria',
