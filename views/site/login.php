@@ -14,6 +14,7 @@ use nex\chosen\Chosen;
 $this->title = 'SIMCEE';
 $this->params['breadcrumbs'][] = $this->title;
 
+
 if(isset($_SESSION)) 
 { 
     session_destroy(); 

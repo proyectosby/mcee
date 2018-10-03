@@ -15,9 +15,20 @@ $( document ).ready(function()
 });
 
 
+//extraer el valor de institucion seleccionada de las cookies
+function readCookie(name) {
+
+  return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + name.replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+
+}
+
+
+
 $( "#cambiarSede" ).click(function() 
 {
-		return fetch('index.php?r=sedes/sedes&idInstitucion=55')
+	
+	institucionJS = readCookie( "institucionJs" );
+		return fetch('index.php?r=sedes/sedes&idInstitucion='+institucionJS)
 			  .then(response => {
 				if (!response.ok) {
 				  throw new Error(response.statusText)

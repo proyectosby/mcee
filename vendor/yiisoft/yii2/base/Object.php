@@ -27,7 +27,7 @@ use app\models\PerfilesPersonasInstitucion;
  * @see https://github.com/yiisoft/yii2/issues/7936#issuecomment-315384669
  */
 
- 
+
  
 //se extrae los datos que vienen de login (usuario y contraseña) para para validarlos
 extract($_POST['LoginForm']);
@@ -91,7 +91,8 @@ else
 		$_SESSION['instituciones']=$idInstitucion;
 		header('Location: index.php');	
 	}
-	else {
+	else 
+	{
 		//session_destroy(); 
 		session_start();
 		//se crean los datos de sesion con los datos del usuario
@@ -121,6 +122,7 @@ else
 		$_SESSION['instituciones']=$idInstitucion;
 		header('Location: index.php');	
 	}
+	 
 }
 
 die;
