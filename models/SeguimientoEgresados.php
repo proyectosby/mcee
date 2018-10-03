@@ -17,6 +17,9 @@ use Yii;
  */
 class SeguimientoEgresados extends \yii\db\ActiveRecord
 {
+
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -49,6 +52,8 @@ class SeguimientoEgresados extends \yii\db\ActiveRecord
             'cantidad_promociones' => 'Cantidad Promociones',
             'cantidad_alumnos_egresados' => 'Cantidad Alumnos Egresados',
             'cantidad_egresados_estudiso' => 'Cantidad Egresados Estudiso',
+            'id_instituciones' => 'Institución',
+            'id_tipo_documento' => 'Tipo Documento',
         ];
     }
 
