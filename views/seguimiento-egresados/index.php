@@ -7,6 +7,8 @@ use yii\helpers\Url;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
+use app\models\Parametro;
+
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -78,29 +80,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            'estrategia_seguimiento',
-            'cantidad_promociones',
-            'cantidad_alumnos_egresados',
-            'cantidad_egresados_estudiso',
+			//'id',
+			[ 
+				'attribute' => 'estrategia_seguimiento' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					$estrategiaSeguimiento = Parametro::findOne( $model->estrategia_seguimiento );
+					return $estrategiaSeguimiento ? $estrategiaSeguimiento->descripcion : '' ;
+				},
+			],
+			'cantidad_promociones',
+			'cantidad_alumnos_egresados',
+			[ 
+				'attribute' => 'cantidad_egresados_estudiso',
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					$estrategiaParametro = Parametro::findOne( $model->cantidad_egresados_estudiso );
+					return $estrategiaParametro ? $estrategiaParametro->descripcion : '' ;
+				},
+			],
+			[ 
+				'attribute' => 'ruta' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					return Html::a( "Ver archivo", Url::to( "@web/".$model->ruta , true), [ "target"=>"_blank" ] );
+				},
+			],
 
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
-				'buttons' => [
-				'view' => function ($url, $model) {
-					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
-								'title' => Yii::t('app', 'lead-view'),
-					]);
-				},
-
-				'update' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
-								'title' => Yii::t('app', 'lead-update'),
-					]);
-				}
-
-			  ],
+			'template'=>'{delete}'
 			
 			],
 

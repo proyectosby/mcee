@@ -7,6 +7,7 @@ use yii\helpers\Url;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
+use app\models\Parametro;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -79,27 +80,34 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'seguimiento_uso_espacios',
-            'plan_enlucimiento',
-            'estrateguia_enbellecimiento',
+			[ 
+				'attribute' => 'seguimiento_uso_espacios' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					$usoEspacios = Parametro::findOne( $model->seguimiento_uso_espacios );
+					return $usoEspacios ? $usoEspacios->descripcion : '' ;
+				},
+			],
 
+            'plan_enlucimiento',
+			[ 
+				'attribute' => 'estrateguia_enbellecimiento' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					$estrategiaEmbellecimiento = Parametro::findOne( $model->estrateguia_enbellecimiento );
+					return $estrategiaEmbellecimiento ? $estrategiaEmbellecimiento->descripcion : '' ;
+				},
+			],
+			[ 
+				'attribute' => 'ruta' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					return Html::a( "Ver archivo", Url::to( "@web/".$model->ruta , true), [ "target"=>"_blank" ] );
+				},
+			],
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
-				'buttons' => [
-				'view' => function ($url, $model) {
-					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
-								'title' => Yii::t('app', 'lead-view'),
-					]);
-				},
-
-				'update' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
-								'title' => Yii::t('app', 'lead-update'),
-					]);
-				}
-
-			  ],
+			'template'=>'{delete}'
 			
 			],
 
