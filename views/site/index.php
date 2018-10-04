@@ -8,12 +8,25 @@ else
 {
 	echo "<script> window.location=\"index.php?r=site%2Flogin\";</script>";
 	die;
-}
+}	
+
+use app\models\Instituciones;
 
 //con que id institucion y que id sede se debe trabajar 
 if (@$_GET['instituciones'])
 {
-	$_SESSION['instituciones'][0]=$_GET['instituciones'];
+	$idInstitucion = $_GET['instituciones'];
+	$_SESSION['institucionSeleccionada'][0]=$idInstitucion;
+	$_SESSION['instituciones'][0]=$idInstitucion;
+	?>
+	<script>  document.cookie = 'institucionJs=" <?php echo $idInstitucion; ?>"'; </script>
+	
+	<?php
+	
+	$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['institucionSeleccionada']])->one();
+	$nombreInstitucion = @$nombreInstitucion->descripcion;
+	$_SESSION['sede'][0]=-1;
+	die("$nombreInstitucion - SEDE NO ASIGNADA");
 }
 if (@$_GET['sede'])
 {
@@ -52,6 +65,8 @@ foreach($result as $r)
 	$datos.= "'$id':'$descripcion',";
 }
 
+
+
 $this->registerJs( <<< EOT_JS_CODE
 	
 	//que institucion selecciono
@@ -68,10 +83,16 @@ const {value: institucion} = swal({
 	  {  
    
 		  //crear variable de session que tenga la institucion que seleciono
-		 var Institucion = $.get( "index.php?instituciones="+value, function() 
+		 var Institucion = $.get( "index.php?instituciones="+value, function(data) 
 			{
-				
+				$("#InstitucionSede").html(" ");
+			
+				$("#InstitucionSede").append(data.replace('"', ' ').replace('"', ' '));
+				console.log(data.charAt(0));
 			})
+			  
+								 
+			  
 			  
 			resolve();
 
@@ -89,6 +110,8 @@ const {value: institucion} = swal({
 
 EOT_JS_CODE
 );
+
+
 ?>
 
 <?php

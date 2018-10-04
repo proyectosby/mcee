@@ -27,15 +27,20 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="InstitucionSede" >
                        <?php 
-		
-							$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['instituciones'][0]])->one();
-							$nombreInstitucion = $nombreInstitucion->descripcion;
+							
+							$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['institucionSeleccionada']])->one();
+							$nombreInstitucion = @$nombreInstitucion->descripcion;
 							
 							$nombreSede = Sedes::find()->where(['id' => @$_SESSION['sede'][0]])->one();
 							$nombreSede = @$nombreSede->descripcion;
-							if($nombreSede == null && $nombreSede = "SEDE NO ASIGNADA" )
-							{	}
-							if($nombreInstitucion)
+							if($nombreSede == null)
+								$nombreSede = "SEDE NO ASIGNADA";
+							
+							
+							if($nombreInstitucion == null)
+								$nombreInstitucion = "INSTITUCIÓN NO ASIGNADA";
+								
+							// if($nombreInstitucion)
 								echo "&nbsp;&nbsp;&nbsp;$nombreInstitucion - $nombreSede";
 								
 						?> 

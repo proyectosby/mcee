@@ -169,7 +169,7 @@ class DocumentosCurriculumIeoController extends Controller
 							->all();
 		$instituciones 	  = ArrayHelper::map( $dataInstituciones, 'id', 'descripcion' );
 		
-		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Documentos oficiales'")->all();
+		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Curriculum de la IEO'")->all();
 		$tiposDocumento 	 = ArrayHelper::map( $dataTiposDocumento, 'id', 'descripcion' );
 		
 		$dataEstados  = Estados::find()->where( 'id=1' )->all();

@@ -35,7 +35,7 @@ class MaterialesEducativos extends \yii\db\ActiveRecord
             [['tipo', 'autor', 'nivel', 'estado'], 'required'],
             [['tipo', 'autor', 'nivel', 'estado'], 'default', 'value' => null],
             [['tipo', 'autor', 'nivel', 'estado'], 'integer'],
-            [['otro_cual', 'nombre_apellidos', 'reseña'], 'string'],
+            [['otro_cual', 'nombre_apellidos', 'reseña','ruta'], 'string'],
         ];
     }
 
@@ -53,6 +53,7 @@ class MaterialesEducativos extends \yii\db\ActiveRecord
             'otro_cual' => 'Otro Cual',
             'nombre_apellidos' => 'Nombre y Apellidos',
             'reseña' => 'Breve Reseña',
+            'ruta' => 'Ruta',
         ];
     }
 }

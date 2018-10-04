@@ -13,7 +13,12 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MaterialesEducativosBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
+if( isset($guardado) && $guardado == 1 )
+{
+	echo Html::hiddenInput( 'guardado', '1' );
+}
 $this->title = 'MATERIALES EDUCATIVOS PRODUCIDOS POR LA IEO';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
@@ -39,10 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
+        <p>
+        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
@@ -81,7 +86,13 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			
+			 [ 
+				'attribute' => 'ruta' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					return Html::a( "Ver archivo", Url::to( "@web/".$model->ruta , true), [ "target"=>"_blank" ] );
+				},
+			],
 			[
 				'attribute' => 'tipo',
 				'value' => function( $model ){
@@ -117,23 +128,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'reseña',
 
             [
-			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
-				'buttons' => [
-				'view' => function ($url, $model) {
-					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
-								'title' => Yii::t('app', 'lead-view'),
-					]);
-				},
-
-				'update' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
-								'title' => Yii::t('app', 'lead-update'),
-					]);
-				}
-
-			  ],
-			
+				'class' => 'yii\grid\ActionColumn',
+				'template' => '{delete}',
 			],
 
         ],
