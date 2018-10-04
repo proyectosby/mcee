@@ -14,8 +14,8 @@ else
 }
 
 use Yii;
-use app\models\EcAvanceMisionalPpt;
-use app\models\EcAvanceMisionalPptBuscar;
+use app\models\EcAvanceMisionalAf;
+use app\models\EcAvanceMisionalAfBuscar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,9 +25,9 @@ use app\models\Instituciones;
 use app\models\Sedes;
 
 /**
- * EcAvanceMisionalPptController implements the CRUD actions for EcAvanceMisionalPpt model.
+ * EcAvanceMisionalController implements the CRUD actions for EcAvanceMisionalAf model.
  */
-class EcAvanceMisionalPptController extends Controller
+class EcAvanceMisionalController extends Controller
 {
     /**
      * @inheritdoc
@@ -45,12 +45,12 @@ class EcAvanceMisionalPptController extends Controller
     }
 
     /**
-     * Lists all EcAvanceMisionalPpt models.
+     * Lists all EcAvanceMisionalAf models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EcAvanceMisionalPptBuscar();
+        $searchModel = new EcAvanceMisionalAfBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere( "estado=1" ); 
 
@@ -59,7 +59,7 @@ class EcAvanceMisionalPptController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-	
+
 	public function obtenerSedes()
 	{
 		$idInstitucion = $_SESSION['instituciones'][0];
@@ -88,9 +88,8 @@ class EcAvanceMisionalPptController extends Controller
 		
 		return $estados;
 	}
-
     /**
-     * Displays a single EcAvanceMisionalPpt model.
+     * Displays a single EcAvanceMisionalAf model.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -103,13 +102,13 @@ class EcAvanceMisionalPptController extends Controller
     }
 
     /**
-     * Creates a new EcAvanceMisionalPpt model.
+     * Creates a new EcAvanceMisionalAf model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new EcAvanceMisionalPpt();
+        $model = new EcAvanceMisionalAf();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -124,7 +123,7 @@ class EcAvanceMisionalPptController extends Controller
     }
 
     /**
-     * Updates an existing EcAvanceMisionalPpt model.
+     * Updates an existing EcAvanceMisionalAf model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -141,19 +140,19 @@ class EcAvanceMisionalPptController extends Controller
         return $this->renderAjax('update', [
             'model' => $model,
 			'sedes' => $this->obtenerSedes(),
-			'instituciones'=> $this->obtenerInstituciones(),
+			'instituciones'=>$this->obtenerInstituciones(),
 			'estados'=>$this->obtenerEstados(),
         ]);
     }
 
     /**
-     * Deletes an existing EcAvanceMisionalPpt model.
+     * Deletes an existing EcAvanceMisionalAf model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-	public function actionDelete($id)
+    public function actionDelete($id)
     {
         $model = $this->findModel($id);
 		$model->estado = 2;
@@ -163,15 +162,15 @@ class EcAvanceMisionalPptController extends Controller
     }
 
     /**
-     * Finds the EcAvanceMisionalPpt model based on its primary key value.
+     * Finds the EcAvanceMisionalAf model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return EcAvanceMisionalPpt the loaded model
+     * @return EcAvanceMisionalAf the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EcAvanceMisionalPpt::findOne($id)) !== null) {
+        if (($model = EcAvanceMisionalAf::findOne($id)) !== null) {
             return $model;
         }
 

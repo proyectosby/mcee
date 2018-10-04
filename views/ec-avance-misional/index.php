@@ -7,19 +7,12 @@ use yii\helpers\Url;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
-use app\models\Parametro;
-use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\MaterialesEducativosBuscar */
+/* @var $searchModel app\models\EcAvanceMisionalAfBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
-if( isset($guardado) && $guardado == 1 )
-{
-	echo Html::hiddenInput( 'guardado', '1' );
-}
-$this->title = 'MATERIALES EDUCATIVOS PRODUCIDOS POR LA IEO';
+$this->title = 'Informe de avance misional del proyecto X IEO AF';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -30,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3><?php echo $this->title; ?> </h3>
+<h3>Informe de avance misional del proyecto X IEO AF</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -39,15 +32,15 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="materiales-educativos-index">
+<div class="ec-avance-misional-af-index">
 
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-        <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+    <p>
+        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
+		
     </p>
-
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
@@ -86,50 +79,45 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			 [ 
-				'attribute' => 'ruta' ,
-				'format' 	=> 'raw' ,
-				'value'		=> function( $model ){
-					return Html::a( "Ver archivo", Url::to( "@web/".$model->ruta , true), [ "target"=>"_blank" ] );
-				},
-			],
-			[
-				'attribute' => 'tipo',
-				'value' => function( $model ){
-					$parametro = Parametro::findOne($model->tipo);
-					return $parametro ? $parametro->descripcion : '';
-					return $parametro;
-					
-				},
 
-			],
-			[
-				'attribute' => 'autor',
-				'value' => function( $model ){
-					$parametro = Parametro::findOne($model->autor);
-					return $parametro ? $parametro->descripcion : '';
-					return $parametro;
-					
-				},
-
-			],
-			[
-				'attribute' => 'nivel',
-				'value' => function( $model ){
-					$parametro = Parametro::findOne($model->nivel);
-					return $parametro ? $parametro->descripcion : '';
-					return $parametro;
-					
-				},
-
-			],
-            'otro_cual',
-            'nombre_apellidos',
-            'reseña',
+            
+            // 'id_institucion',
+            // 'id_sede',
+            'fecha_inicio',
+            'fecha_fin',
+            //'responsable_sem',
+            //'operador',
+            //'acciones_realizadas',
+            //'acompanamiento_pedagogico_avances',
+            //'acompanamiento_pedagogico_dificultades',
+            //'comunicacion_pedagogica_avances',
+            //'comunicacion_pedagogica_difcultades',
+            //'organismos_mecanismos_avances',
+            //'organismos_mecanismos_dificultades',
+            //'fuente_informacion',
+            //'avances_acompanamiento',
+            //'dificultades_acompanamiento',
+            //'alarmas_importantes',
+            //'estado',
 
             [
-				'class' => 'yii\grid\ActionColumn',
-				'template' => '{delete}',
+			'class' => 'yii\grid\ActionColumn',
+			'template'=>'{view}{update}{delete}',
+				'buttons' => [
+				'view' => function ($url, $model) {
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+								'title' => Yii::t('app', 'lead-view'),
+					]);
+				},
+
+				'update' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'lead-update'),
+					]);
+				}
+
+			  ],
+			
 			],
 
         ],

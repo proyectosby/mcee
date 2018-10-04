@@ -119,8 +119,9 @@ class SeguimientoEgresadosController extends Controller
 				if( $file ){
 					
 					// $persona = Personas::findOne( $model->id_persona );
-					$institucion = Instituciones::findOne( $model->id_instituciones );
-					
+					$institucion = Instituciones::findOne( $idInstitucion );
+                    
+                    
 					//Si no existe la carpeta se crea
 					$carpeta = "../documentos/documentosSeguimientoEgresados/".$institucion->codigo_dane;
 					if (!file_exists($carpeta)) {
@@ -153,9 +154,7 @@ class SeguimientoEgresadosController extends Controller
 						exit("finnn....");
 					}
 				}
-				else{
-					exit( "No hay archivo cargado" );
-				}
+				
 			}
 			
 			//Se valida que todos los campos de todos los modelos sean correctos
@@ -166,7 +165,9 @@ class SeguimientoEgresadosController extends Controller
 			
 			//Guardo todos los modelos
 			foreach( $models as $key => $model) {
-				$model->save();
+                //var_dump($model->cantidad_egresados_estudiso);
+                //die();
+                $model->save();
 			}
 			
 			return $this->redirect(['index', 'guardado' => true ]);

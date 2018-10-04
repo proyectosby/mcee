@@ -17,13 +17,13 @@ echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'estrategia_seguimiento')->dropDownList($parametrosSeguimiento, [ 'prompt' => 'Seleccione...' ]) ?>
+    <?= $form->field($model, '[0]estrategia_seguimiento')->dropDownList($parametrosSeguimiento, [ 'prompt' => 'Seleccione...' ]) ?>
 
-    <?= $form->field($model, 'cantidad_promociones')->textInput() ?>
+    <?= $form->field($model, '[0]cantidad_promociones')->textInput() ?>
 
-    <?= $form->field($model, 'cantidad_alumnos_egresados')->textInput() ?>
+    <?= $form->field($model, '[0]cantidad_alumnos_egresados')->textInput() ?>
 
-    <?= $form->field($model, 'cantidad_egresados_estudiso')->dropDownList($parametros, [ 'prompt' => 'Seleccione...' ]) ?>
+    <?= $form->field($model, '[0]cantidad_egresados_estudiso')->dropDownList($parametros, [ 'prompt' => 'Seleccione...' ]) ?>
 
     <?= $form->field($model, '[0]id_instituciones')->dropDownList( $instituciones ) ?>
 

@@ -37,7 +37,7 @@ class SeguimientoEgresados extends \yii\db\ActiveRecord
             [['estrategia_seguimiento'], 'string'],
             [['cantidad_promociones', 'cantidad_alumnos_egresados', 'cantidad_egresados_estudiso'], 'default', 'value' => null],
             [['cantidad_promociones', 'cantidad_alumnos_egresados', 'cantidad_egresados_estudiso'], 'integer'],
-            [['cantidad_egresados_estudiso'], 'exist', 'skipOnError' => true, 'targetClass' => TipoParametro::className(), 'targetAttribute' => ['cantidad_egresados_estudiso' => 'id']],
+            //[['cantidad_egresados_estudiso'], 'exist', 'skipOnError' => true, 'targetClass' => TipoParametro::className(), 'targetAttribute' => ['cantidad_egresados_estudiso' => 'id']],
         ];
     }
 

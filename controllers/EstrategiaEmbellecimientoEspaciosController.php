@@ -119,7 +119,7 @@ class EstrategiaEmbellecimientoEspaciosController extends Controller
 				if( $file ){
 					
 					// $persona = Personas::findOne( $model->id_persona );
-					$institucion = Instituciones::findOne( $model->id_instituciones );
+					$institucion = Instituciones::findOne( $idInstitucion );
 					
 					//Si no existe la carpeta se crea
 					$carpeta = "../documentos/documentosEstrategiaEmbellecimientoEspacios/".$institucion->codigo_dane;
@@ -152,9 +152,6 @@ class EstrategiaEmbellecimientoEspaciosController extends Controller
 						echo $file->error;
 						exit("finnn....");
 					}
-				}
-				else{
-					exit( "No hay archivo cargado" );
 				}
 			}
 			

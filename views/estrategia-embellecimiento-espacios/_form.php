@@ -17,11 +17,11 @@ echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'seguimiento_uso_espacios')->dropDownList($parametrosUsos, [ 'prompt' => 'Seleccione...' ]) ?>
+    <?= $form->field($model, '[0]seguimiento_uso_espacios')->dropDownList($parametrosUsos, [ 'prompt' => 'Seleccione...' ]) ?>
 
-    <?= $form->field($model, 'plan_enlucimiento')->textInput() ?>
+    <?= $form->field($model, '[0]plan_enlucimiento')->textInput() ?>
 
-    <?= $form->field($model, 'estrateguia_enbellecimiento')->dropDownList($parametrosEmbellecimiento, [ 'prompt' => 'Seleccione...' ]) ?>
+    <?= $form->field($model, '[0]estrateguia_enbellecimiento')->dropDownList($parametrosEmbellecimiento, [ 'prompt' => 'Seleccione...' ]) ?>
     
     <?= $form->field($model, '[0]id_instituciones')->dropDownList( $instituciones ) ?>
 
