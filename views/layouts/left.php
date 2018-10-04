@@ -243,6 +243,9 @@
 														['label' => 'Semilleros para Paz', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'Vinculo C+E', 'icon' => 'circle-o','url' => '#',],
 														['label' => 'Competencias Lúdicas', 'icon' => 'circle-o','url' => '#',],
+														['label' => 'Avance Misional X IEO PPT', 'icon' => 'circle-o','url' => ['ec-avance-misional-ppt/index'],],
+														['label' => 'Avance Misional X IEO SS', 'icon' => 'circle-o','url' => ['ec-avance-misional-ss-ejecucion/index'],],
+														['label' => 'Avance Misional X IEO AF', 'icon' => 'circle-o','url' => ['ec-avance-misional/index'],],
 														
 														],
 													],
