@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EcAvanceMisionalPpt */
+/* @var $model app\models\EcAvanceMisionalAf */
 
-$this->title = 'Actualizar Informe de avance misional del proyecto';
-$this->params['breadcrumbs'][] = ['label' => 'Informe de avance misional del proyecto', 'url' => ['index']];
+$this->title = 'Actualizar Informe de avance misional';
+$this->params['breadcrumbs'][] = ['label' => 'Actualizar Informe de avance misional', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = "Actualizar";
 ?>
-<div class="ec-avance-misional-ppt-update">
+<div class="ec-avance-misional-af-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

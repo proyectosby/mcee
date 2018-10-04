@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EcAvanceMisionalPpt */
+/* @var $model app\models\EcAvanceMisionalAf */
 
-$this->title = 'Agregar Informe de avance misional del proyecto';
-$this->params['breadcrumbs'][] = ['label' => 'Informe de avance misional del proyecto', 'url' => ['index']];
+$this->title = 'Agregar Informe de avance misional';
+$this->params['breadcrumbs'][] = ['label' => 'Ec Avance Misional Afs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
-<div class="ec-avance-misional-ppt-create">
+<div class="ec-avance-misional-af-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

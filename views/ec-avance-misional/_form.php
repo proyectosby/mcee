@@ -50,20 +50,30 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?= $form->field($model, 'acciones_realizadas')->textArea() ?>
 	
-	<h3 style="background-color:#ccc;padding:5px;">	Procesos de gestión institucional de los proyectos pedagógicos transversales fortalecidos</h3>
-		<?=  $form->field($model, 'procesos_gestion_avances')->textArea()->label("Avances") ?>
-        <?= $form->field($model, 'procesos_gestion_dificultades')->textArea()->label("Dificultades") ?>
-		
-	<h3 style="background-color:#ccc;padding:5px;">	Estrategias de Transversalización y vinculación en el PEI instaladas </h3>
-		
-		<?= $form->field($model, 'estrategias_tranversalizacion_avances')->textArea()->label("Avances")?>
-		<?= $form->field($model, 'estrategias_tranversalizacion_difcultades')->textArea()->label("Dificultades") ?>
-		 
-	<h3 style="background-color:#ccc;padding:5px;">	Orientaciones conceptuales y metodológicas para el fortalecimiento de las competencias básicas y habilidades para la vida en los estudiantes a través de los ppt </h3>
-	
-	    <?= $form->field($model, 'orientacion_conceptuales_avances')->textArea()->label("Avances")?>
-		<?= $form->field($model, 'orientacion_conceptuales_dificultades')->textArea()->label("Dificultades")?>
+	<h3 style="background-color:#ccc;padding:5px;">Acompañamiento pedagógico que realizan las familias para el desarrollo de Competencias Básicas y Habilidades para la Vida en los estudiantes fortalecido</h3>
+		 <?= $form->field($model, 'acompanamiento_pedagogico_avances')->textArea()->label("Avances") ?>
 
+    <?= $form->field($model, 'acompanamiento_pedagogico_dificultades')->textArea()->label("Dificultades") ?>
+
+
+		
+	<h3 style="background-color:#ccc;padding:5px;">	Comunicación pedagógica entre familia y escuela fortalecida </h3>
+		
+		
+    <?= $form->field($model, 'comunicacion_pedagogica_avances')->textArea()->label("Avances") ?>
+
+    <?= $form->field($model, 'comunicacion_pedagogica_difcultades')->textArea()->label("Dificultades") ?>
+
+  
+		 
+	<h3 style="background-color:#ccc;padding:5px;">	Organismos y mecanismos de participación de las familias en las escuelas articulados</h3>
+	
+	     <?= $form->field($model, 'organismos_mecanismos_avances')->textArea()->label("Avances") ?>
+
+    <?= $form->field($model, 'organismos_mecanismos_dificultades')->textArea()->label("Dificultades") ?>
+	
+	
+	
     <?= $form->field($model, 'fuente_informacion')->textArea() ?>
 
     <?= $form->field($model, 'avances_acompanamiento')->textArea() ?>
