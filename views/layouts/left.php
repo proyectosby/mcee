@@ -303,6 +303,7 @@
 												'items' => [
 																	['label' => 'Sencibilización artistica', 'icon' => 'circle-o','url' => '#',],
 																	['label' => 'Competencias lúdicas', 'icon' => 'circle-o','url' => '#',],
+																	['label' => 'Primera infancia', 'icon' => 'circle-o','url' => '#',],
 															],
 												],
 					],
