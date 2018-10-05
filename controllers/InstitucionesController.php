@@ -42,6 +42,8 @@ use app\models\TiposInstituciones;
 use app\models\PerfilesPersonasInstitucion;
 use yii\helpers\ArrayHelper;
 
+use app\models\Sedes;
+
 /**
  * InstitucionesController implements the CRUD actions for Instituciones model.
  */
@@ -63,6 +65,28 @@ class InstitucionesController extends Controller
     }
 
     /**
+     * Muestra el un reporte con el resumen de la institución
+     * @return mixed
+     */
+    public function actionResumen()
+    {
+		$id_institucion = $_SESSION['instituciones'][0];
+
+		//Busco la insitución según los datos de la sesión
+		$institucion = Instituciones::findOne($id_institucion);
+		
+		//Busco las sedes pertenecientes a la insitución seleccionada
+		$sedes	= Sedes::find()
+					->where('sedes.estado=1')
+					->andWhere('sedes.id_instituciones='.$id_institucion );
+
+        return $this->render('resumen', [
+            'institucion' => $institucion,
+            'sedes' 	  => $sedes,
+        ]);
+    }
+	
+	/**
      * Lists all Instituciones models.
      * @return mixed
      */

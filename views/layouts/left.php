@@ -39,6 +39,11 @@
                                         'url' => '#',
                                         'items' => 
 										[
+											[
+												'label' => 'Resumen IEO',
+												'icon' => 'folder',
+												'url' => ['instituciones/resumen'],
+											],
                                             [
 												'label' => 'Información General',
 												'icon' => 'folder',
