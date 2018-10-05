@@ -23,10 +23,15 @@ else
 }
 use Yii;
 use app\models\Estados;
+use app\models\Sedes;
+use app\models\SubcategoriaCobertura;
+
+
 use yii\data\ActiveDataProvider;                                        
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * CoberturaController implements the CRUD actions for Estados model.
@@ -54,12 +59,24 @@ class CoberturaController extends Controller
      */
     public function actionIndex()
     {
+        $idInstitucion = $_SESSION['instituciones'][0];
         $dataProvider = new ActiveDataProvider([
             'query' => Estados::find(),
         ]);
+        $cobertura = new SubcategoriaCobertura();
 
+        $dataSedes = Sedes::find()
+						->where('id_instituciones = '.$idInstitucion)
+						->andWhere( 'estado=1' )
+						->orderby( 'id' )
+						->all();
+						
+        $listaSedes		= ArrayHelper::map( $dataSedes, 'id', 'descripcion' );
+        
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'sedes' => $listaSedes,
+            'cobertura' => $cobertura,
         ]);
     }
 
