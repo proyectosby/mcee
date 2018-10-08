@@ -142,6 +142,8 @@ foreach( $coordinadores->all() as $key => $coordinador ){
 
 $rector = $institucion->rector;
 
+$this->title = "";
+
 ?>
 <style>
 .title{
@@ -154,8 +156,12 @@ $rector = $institucion->rector;
 	font-size: 14pt;
 }
 
-div.title, div.subtitle{
+table, tr, td{
 	border: 1px solid black;
+}
+
+table{
+	margin: 20px 5px;
 }
 
 </style>
@@ -173,98 +179,113 @@ div.title, div.subtitle{
 		<!-- IDENTIFICACION IEO -->
 		<div class="col-sm-6">
 		
-			<div class="row">
-				<div class="col-sm-4 subtitle">Nombre</div>
-				<div class="col-sm-8 "><?=$institucion->descripcion ?></div>
-			</div>
+			<table>
 			
-			<div class="row">
-				<div class="col-sm-4 subtitle">Caractaerísticas</div>
-				<div class="col-sm-8 "><?=$caracteriticas ?></div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-4 subtitle">Sedes</div>
-				<div class="col-sm-8 "><?=$info_sedes ?></div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Planta docente</div>
-				<div class="col-sm-4 subtitle text-center">Directivos</div>
-				<div class="col-sm-4 subtitle text-center">Administrativos</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-4  text-center">
-					<?= $docentes->count() ?>
-				</div>
-				<div class="col-sm-4  text-center">
-					<?= $directivos->count() ?>
-				</div>
-				<div class="col-sm-4 ">
-					12 nombrados
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-12 subtitle text-center">ESTUDIANTES</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Educación Regular</div>
-				<div class="col-sm-8  text-center">2.164( 49 % H - 51 % M)</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Jovenes Adultos</div>
-				<div class="col-sm-8  text-center">193 (30.5 % H - 69.5 M)</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Total</div>
-				<div class="col-sm-8  text-center"><?= $estudiantes->count() ?></div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Afro</div>
-				<div class="col-sm-8  text-center">El 55_%</div>
-			</div>
+				<tbody>
+					<tr>
+						<td class="4 subtitle">Nombre</td>
+						<td colspan=2 ><?=$institucion->descripcion ?></td>
+					</tr>
+					
+					<tr >
+						<td class="4 subtitle">Caractaerísticas</td>
+						<td colspan=2 ><?=$caracteriticas ?></td>
+					</tr>
+					
+					<tr >
+						<td class="4 subtitle">Sedes</td>
+						<td colspan=2 ><?=$info_sedes ?></td>
+					</tr>
+					
+					<tr >
+						<td class="4 subtitle text-center">Planta docente</td>
+						<td class="4 subtitle text-center">Directivos</td>
+						<td class="4 subtitle text-center">Administrativos</td>
+					</tr>
+					
+					<tr >
+						<td class="4  text-center">
+							<?= $docentes->count() ?>
+						</td>
+						<td class="4  text-center">
+							<?= $directivos->count() ?>
+						</td>
+						<td class="text-center">
+							12 nombrados
+						</td>
+					</tr>
+				
+					<tr>
+						<td class="12 subtitle text-center" colspan='3'>ESTUDIANTES</td>
+					</tr>
+				
+					
+					<tr >
+						<td class="subtitle text-center">Educación Regular</td>
+						<td colspan=2 class="text-center">2.164( 49 % H - 51 % M)</td>
+					</tr>
+					<tr >
+						<td class="subtitle text-center">Jovenes Adultos</td>
+						<td colspan=2 class="text-center">193 (30.5 % H - 69.5 M)</td>
+					</tr>
+					<tr >
+						<td class="subtitle text-center">Total</td>
+						<td colspan=2 class="text-center"><?= $estudiantes->count() ?></td>
+					</tr>
+					<tr >
+						<td class="subtitle text-center">Afro</td>
+						<td colspan=2 class="text-center">El 55_%</td>
+					</tr>
+				</tbody>
+				
+			</table>
 			
 		</div>
 		
 		<!-- EQUIPO DE TRABAJO -->
 		<div class="col-sm-6">
 			
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Recotor(a)</div>
-				<div class="col-sm-8 text-center"><?= $rector ?></div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Coordinadores</div>
-				<div class="col-sm-8 text-center"><?= $info_coordinadores ?></div>
-			</div>
-			
-			<div class="row ">
-				<div class="col-sm-4 subtitle text-center clearfix">Instancias activas</div>
-				<div class="col-sm-8 text-center">
-					Consejo Directivo<br>
-					Consejo Académico<br>
-					Comité Escolar de Convicencia - CECO<br>
-					Consejo de Padres<br>
-					Consejo Estudiantil<br>
-					Comisión de Evaluación y Promoción<br>
-					Comité de Alimentación Escolar - CAE<br>
-					Comité de Calidad<br>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Personero(a)</div>
-				<div class="col-sm-8 text-center">Stephanie Restrepo( Grado 11-1 )</div>
-			</div>
-			
-			<div class="row">
-				<div class="col-sm-4 subtitle text-center">Contralor</div>
-				<div class="col-sm-8 text-center">Deina Michel Cera Murillo</div>
-			</div>
+			<table>
+				
+				<tbody>
+				
+					<tr class="row">
+						<td class="col-sm-4 subtitle text-center">Recotor(a)</td>
+						<td class="col-sm-8 text-center"><?= $rector ?></td>
+					</tr>
+					
+					<tr class="row">
+						<td class="col-sm-4 subtitle text-center">Coordinadores</td>
+						<td class="col-sm-8 text-center"><?= $info_coordinadores ?></td>
+					</tr>
+					
+					<tr class="row ">
+						<td class="col-sm-4 subtitle text-center clearfix">Instancias activas</td>
+						<td class="col-sm-8 text-center">
+							Consejo Directivo<br>
+							Consejo Académico<br>
+							Comité Escolar de Convicencia - CECO<br>
+							Consejo de Padres<br>
+							Consejo Estudiantil<br>
+							Comisión de Evaluación y Promoción<br>
+							Comité de Alimentación Escolar - CAE<br>
+							Comité de Calidad<br>
+						</td>
+					</tr>
+					
+					<tr class="row">
+						<td class="col-sm-4 subtitle text-center">Personero(a)</td>
+						<td class="col-sm-8 text-center">Stephanie Restrepo( Grado 11-1 )</td>
+					</tr>
+					
+					<tr class="row">
+						<td class="col-sm-4 subtitle text-center">Contralor</td>
+						<td class="col-sm-8 text-center">Deina Michel Cera Murillo</td>
+					</tr>
+					
+				</tbody>
+				
+			</table>
 		
 		</div>
 		
