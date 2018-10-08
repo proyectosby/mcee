@@ -138,7 +138,7 @@
 													
 													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => ['documentos-curriculum-ieo/index']],
 													// ['label' => 'Jornada Escolar','icon' => 'circle-o','url' => '#'],
-													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => '#'],
+													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => ['materiales-educativos/index']],
 													['label' => 'Seguimiento Egresados','icon' => 'circle-o','url' => ['seguimiento-egresados/index']],
 														
 														

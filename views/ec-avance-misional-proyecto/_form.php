@@ -45,7 +45,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= $form->field($model, 'dificultades_importantes')->textArea() 
 	->label("Dificultades Mas Importantes del Acompañamiento") ?>   
 
-	
 
     <?= $form->field($model, 'alarmas_importantes')->textArea()  ?>
 
