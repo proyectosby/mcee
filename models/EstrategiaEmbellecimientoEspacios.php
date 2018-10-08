@@ -47,11 +47,11 @@ class EstrategiaEmbellecimientoEspacios extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'seguimiento_uso_espacios' => 'Seguimiento Uso Espacios',
-            'plan_enlucimiento' => 'Plan Enlucimiento',
-            'estrateguia_enbellecimiento' => 'Estrateguia Enbellecimiento',
+            'seguimiento_uso_espacios' => 'Seguimiento uso de espacios',
+            'plan_enlucimiento' => 'Plan embellecimiento',
+            'estrateguia_enbellecimiento' => 'Estrateguia embellecimiento',
             'id_instituciones' => 'Institución',
-            'id_tipo_documento' => 'Tipo Documento',
+            'id_tipo_documento' => 'Tipo documento',
             
         ];
     }

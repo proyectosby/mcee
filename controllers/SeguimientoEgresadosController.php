@@ -102,7 +102,7 @@ class SeguimientoEgresadosController extends Controller
 							->all();
         $instituciones 	  = ArrayHelper::map( $dataInstituciones, 'id', 'descripcion' );
         
-        $dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Estrategia Embellecimiento'")->all();
+        $dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Seguimiento Egresados'")->all();
 		$tiposDocumento 	 = ArrayHelper::map( $dataTiposDocumento, 'id', 'descripcion' );
 		
 		$dataEstados  = Estados::find()->where( 'id=1' )->all();
