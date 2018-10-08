@@ -39,11 +39,7 @@
                                         'url' => '#',
                                         'items' => 
 										[
-											[
-												'label' => 'Resumen IEO',
-												'icon' => 'folder',
-												'url' => ['instituciones/resumen'],
-											],
+											
                                             [
 												'label' => 'Información General',
 												'icon' => 'folder',
@@ -51,7 +47,7 @@
 												'items' => 
 												[
 														
-														['label' => 'Resumen IEO','icon' => 'circle-o','url' => '#'],
+														['label' => 'Resumen IEO','icon' => 'circle-o', 'url' => ['instituciones/resumen'],],
 														['label' => 'Instituciones','icon' => 'circle-o','url' => ['instituciones/index'],],
 														// ['label' => 'Documentos Institucionales','icon' => 'circle-o','url' => ['documentos-oficiales/index'],],
 														// ['label' => 'Instancias','icon' => 'circle-o','url' => ['documentos-instancias-institucionales/index'],],
