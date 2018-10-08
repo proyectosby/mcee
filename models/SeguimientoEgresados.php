@@ -48,12 +48,12 @@ class SeguimientoEgresados extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'estrategia_seguimiento' => 'Estrategia Seguimiento',
-            'cantidad_promociones' => 'Cantidad Promociones',
-            'cantidad_alumnos_egresados' => 'Cantidad Alumnos Egresados',
-            'cantidad_egresados_estudiso' => 'Cantidad Egresados Estudiso',
+            'estrategia_seguimiento' => 'Estrategia de seguimiento a egresados',
+            'cantidad_promociones' => 'Cantidad de promociones',
+            'cantidad_alumnos_egresados' => 'Cantidad de alumnos egresados',
+            'cantidad_egresados_estudiso' => 'Cantidad de egresados con estudios',
             'id_instituciones' => 'Institución',
-            'id_tipo_documento' => 'Tipo Documento',
+            'id_tipo_documento' => 'Tipo seguimiento a egresados',
         ];
     }
 
