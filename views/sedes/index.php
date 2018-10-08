@@ -36,7 +36,7 @@ Cambios realizados: Se agregan los datatables
 **********/
 
 use yii\helpers\Html;
-use yii\helpers\URL;
+use yii\helpers\Url;
 use yii\grid\GridView;
 use fedemotta\datatables\DataTables;
 use yii\bootstrap\Modal;
