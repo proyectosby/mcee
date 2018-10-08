@@ -102,6 +102,7 @@ class EcinformeplaneacionieoController extends Controller
     {
         $searchModel = new EcInformePlaneacionIeoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere( "estado=1" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -111,9 +112,9 @@ class EcinformeplaneacionieoController extends Controller
 
 	public function obtenerSedes()
 	{
-		$idInstitucion = $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
 		$sedes = new Sedes();
-		$sedes = $sedes->find()->where("id_instituciones=$idInstitucion")->all();
+		$sedes = $sedes->find()->where("id =  $idSedes")->all();
 		$sedes = ArrayHelper::map($sedes,'id','descripcion');
 		
 		return $sedes;
@@ -159,9 +160,9 @@ class EcinformeplaneacionieoController extends Controller
 		$idSedes 		= $_SESSION['sede'][0];
 		
 		$sedes = Sedes::findOne($idSedes );
-		$idSedesComunas = $sedes->comuna; 
-		$idSedesBarrios = $sedes->id_barrios_veredas;
-		$codigoDane = $sedes->codigo_dane;
+		$idSedesComunas = @$sedes->comuna; 
+		$idSedesBarrios = @$sedes->id_barrios_veredas;
+		$codigoDane = @$sedes->codigo_dane;
 		$comunas = @ComunasCorregimientos::findOne($idSedesComunas);
 		if ( @$comunas->descripcion != null)
 			$comunas = $comunas->descripcion;
@@ -221,7 +222,9 @@ class EcinformeplaneacionieoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
 
         return $this->redirect(['index']);
     }
