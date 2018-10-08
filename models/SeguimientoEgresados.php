@@ -19,7 +19,7 @@ class SeguimientoEgresados extends \yii\db\ActiveRecord
 {
 
     public $file;
-
+    public $otro;
     /**
      * @inheritdoc
      */
@@ -54,6 +54,7 @@ class SeguimientoEgresados extends \yii\db\ActiveRecord
             'cantidad_egresados_estudiso' => 'Cantidad de egresados con estudios',
             'id_instituciones' => 'Institución',
             'id_tipo_documento' => 'Tipo seguimiento a egresados',
+            'otro' => 'Otro? Cual? '
         ];
     }
 

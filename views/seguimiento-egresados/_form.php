@@ -19,7 +19,11 @@ echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 
     <?= $form->field($model, '[0]estrategia_seguimiento')->dropDownList($parametrosSeguimiento, [ 'prompt' => 'Seleccione...' ]) ?>
 
+     <?= $form->field($model, '[0]otro')->textInput() ?>
+
     <?= $form->field($model, '[0]cantidad_promociones')->textInput() ?>
+
+    <?= $form->field($model, '[0]cantidad_alumnos_egresados')->textInput() ?>
 
    <div style="margin-left: 13px;margin-right: -400px; margin-bottom: 5px;">
         <div class=row style='text-align:center; margin'>
