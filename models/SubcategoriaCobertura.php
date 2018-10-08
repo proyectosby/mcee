@@ -42,10 +42,10 @@ class SubcategoriaCobertura extends \yii\db\ActiveRecord
             [['categoria_cobertura_id', 'tema_id', 'institucion_id', 'cantidad_niños_institucion', 'cantidad_niñas_institucion', 'sede_id', 'cantidad_niños_sede', 'cantidad_niñas_sede'], 'default', 'value' => null],
             [['categoria_cobertura_id', 'tema_id', 'institucion_id', 'cantidad_niños_institucion', 'cantidad_niñas_institucion', 'sede_id', 'cantidad_niños_sede', 'cantidad_niñas_sede'], 'integer'],
             [['subcategoria'], 'string'],
-            [['categoria_cobertura_id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaCobertura::className(), 'targetAttribute' => ['categoria_cobertura_id' => 'id']],
-            [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
-            [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['sede_id' => 'id']],
-            [['tema_id'], 'exist', 'skipOnError' => true, 'targetClass' => TemaCobertura::className(), 'targetAttribute' => ['tema_id' => 'id']],
+            //[['categoria_cobertura_id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriaCobertura::className(), 'targetAttribute' => ['categoria_cobertura_id' => 'id']],
+            //[['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
+            //[['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['sede_id' => 'id']],
+            //[['tema_id'], 'exist', 'skipOnError' => true, 'targetClass' => TemaCobertura::className(), 'targetAttribute' => ['tema_id' => 'id']],
         ];
     }
 
@@ -60,11 +60,11 @@ class SubcategoriaCobertura extends \yii\db\ActiveRecord
             'subcategoria' => 'Subcategoria',
             'tema_id' => 'Tema ID',
             'institucion_id' => 'Institucion ID',
-            'cantidad_niños_institucion' => 'Cantidad Niños Institucion',
-            'cantidad_niñas_institucion' => 'Cantidad Niñas Institucion',
+            'cantidad_niños_institucion' => '',
+            'cantidad_niñas_institucion' => '',
             'sede_id' => 'Sede ID',
-            'cantidad_niños_sede' => 'Cantidad Niños Sede',
-            'cantidad_niñas_sede' => 'Cantidad Niñas Sede',
+            'cantidad_niños_sede' => '',
+            'cantidad_niñas_sede' => '',
         ];
     }
 

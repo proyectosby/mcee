@@ -59,12 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 
 
-<div class="estados-index">
+<div class="cobertura-form">
 	
 	<?php $form = ActiveForm::begin([
 		// 'id' => 'contact-form',
-		// 'enableAjaxValidation' => true,
-		'action' => array('actionCreate'),
+        // 'enableAjaxValidation' => true,
+        'action' => array('create'),
 		'method' 				=> 'post',
 		'enableClientValidation'=> true,		
 		'options' 				=> [ 'enctype' => 'multipart/form-data' ],

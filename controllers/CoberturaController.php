@@ -73,25 +73,15 @@ class CoberturaController extends Controller
 						
         $listaSedes		= ArrayHelper::map( $dataSedes, 'id', 'descripcion' );
         
-        return $this->render('index', [
+
+        return $this->render('create', [
             'dataProvider' => $dataProvider,
             'sedes' => $listaSedes,
             'cobertura' => $cobertura,
         ]);
     }
 
-    /**
-     * Displays a single Estados model.
-     * @param string $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+  
 
     /**
      * Creates a new Estados model.
@@ -100,6 +90,9 @@ class CoberturaController extends Controller
      */
     public function actionCreate()
     {
+        var_dump("Hola");
+        die();
+
         $model = new Estados();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

@@ -21,9 +21,33 @@ echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 
     <?= $form->field($model, '[0]cantidad_promociones')->textInput() ?>
 
-    <?= $form->field($model, '[0]cantidad_alumnos_egresados')->textInput() ?>
+   <div style="margin-left: 13px;margin-right: -400px; margin-bottom: 5px;">
+        <div class=row style='text-align:center; margin'>
+            <div class="col-sm-1" style='padding:0px;'>
+                <span total class='form-control' style='background-color:#ccc;height:70px;'>Estudios</span>
+            </div>
+            <div class="col-sm-1" style='padding:0px;'>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Cantidad</span>
+            </div>
+        </div>
+   
+        <?php
+            foreach($parametros as $parametro){
+                ?>
+                    <div class=row>
+                        <div class="col-sm-1" style='padding:0px;'>
+                            <span><?= $parametro?></span>
+                        </div>
+                        <div class="col-sm-1" style='padding:0px;'>
+                            <?=  Html::activeTextInput($model, '[0]cantidad_egresados_estudiso', [ 'class' => 'form-control'] ) ?>
+                        </div>
+                    </div>
+                <?php
+                
+            }
+        ?>
+    </div>
 
-    <?= $form->field($model, '[0]cantidad_egresados_estudiso')->dropDownList($parametros, [ 'prompt' => 'Seleccione...' ]) ?>
 
     <?= $form->field($model, '[0]id_instituciones')->dropDownList( $instituciones ) ?>
 

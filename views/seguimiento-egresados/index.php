@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 			],
 			'cantidad_promociones',
-			'cantidad_alumnos_egresados',
+			/*'cantidad_alumnos_egresados',
 			[ 
 				'attribute' => 'cantidad_egresados_estudiso',
 				'format' 	=> 'raw' ,
@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					$estrategiaParametro = Parametro::findOne( $model->cantidad_egresados_estudiso );
 					return $estrategiaParametro ? $estrategiaParametro->descripcion : '' ;
 				},
-			],
+			],*/
 			[ 
 				'attribute' => 'ruta' ,
 				'format' 	=> 'raw' ,
