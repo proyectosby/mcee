@@ -94,7 +94,11 @@ class DocumentosCurriculumIeoController extends Controller
 				</div>
 					
 				<div class=cell>
-					<?= $form->field($model,  '['.$consecutivo.']file')->label('Archivo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+					<?= $form->field($model,  '['.$consecutivo.']descripcion')->textArea()-label("Descripción") ?>
+				</div>
+				
+				<div class=cell>
+					<?= $form->field($model,  '['.$consecutivo.']ruta')->label('Archivo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 				</div>
 
 				<div class=cell style='display:none'>
@@ -202,7 +206,6 @@ class DocumentosCurriculumIeoController extends Controller
 					$model->estado = 1;
 
 					$save = $file->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-					
 					if( $save )
 					{
 						//Le asigno la ruta al arhvio

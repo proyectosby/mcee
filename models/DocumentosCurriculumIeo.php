@@ -36,10 +36,9 @@ class DocumentosCurriculumIeo extends \yii\db\ActiveRecord
             [['ruta', 'id_tipo_documento', 'id_instituciones', 'estado'], 'required'],
             [['id_tipo_documento', 'id_instituciones', 'estado'], 'default', 'value' => null],
             [['id_tipo_documento', 'id_instituciones', 'estado'], 'integer'],
-            [['ruta'], 'string', 'max' => 100],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_instituciones'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_instituciones' => 'id']],
-            [['id_tipo_documento'], 'exist', 'skipOnError' => true, 'targetClass' => TipoDocumentos::className(), 'targetAttribute' => ['id_tipo_documento' => 'id']],
+            [['id_tipo_documento'], 'exist', 'skipOnError' => true, 'targetClass' => TiposDocumentos::className(), 'targetAttribute' => ['id_tipo_documento' => 'id']],
         ];
     }
 
