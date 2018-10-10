@@ -1,14 +1,5 @@
 <?php
 
-/**********
-Versión: 001
-Fecha: 10-04-2018
-Edwin Molina Grisales
-COBERTURA
----------------------------------------
-**********/
-
-
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -18,23 +9,21 @@ if(@$_SESSION['sesion']=="si")
 //si no tiene sesion se redirecciona al login
 else
 {
-	header('Location: index.php?r=site%2Flogin');
+	echo "<script> window.location=\"index.php?r=site%2Flogin\";</script>";
 	die;
 }
+
 use Yii;
-use app\models\Estados;
-use app\models\Sedes;
-use app\models\SubcategoriaCobertura;
-
-
-use yii\data\ActiveDataProvider;                                        
+use app\models\Cobertura;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Sedes;
 use yii\helpers\ArrayHelper;
 
 /**
- * CoberturaController implements the CRUD actions for Estados model.
+ * CoberturaController implements the CRUD actions for Cobertura model.
  */
 class CoberturaController extends Controller
 {
@@ -54,60 +43,110 @@ class CoberturaController extends Controller
     }
 
     /**
-     * Lists all Estados models.
+     * Lists all Cobertura models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $idInstitucion = $_SESSION['instituciones'][0];
         $dataProvider = new ActiveDataProvider([
-            'query' => Estados::find(),
+            'query' => Cobertura::find(),
         ]);
-        $cobertura = new SubcategoriaCobertura();
 
-        $dataSedes = Sedes::find()
-						->where('id_instituciones = '.$idInstitucion)
-						->andWhere( 'estado=1' )
-						->orderby( 'id' )
-						->all();
-						
-        $listaSedes		= ArrayHelper::map( $dataSedes, 'id', 'descripcion' );
-        
+        return $this->redirect(['create', 'guardado' => 0 ]);
 
-        return $this->render('create', [
+        /*return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'sedes' => $listaSedes,
-            'cobertura' => $cobertura,
+        ]);*/
+    }
+
+    /**
+     * Displays a single Cobertura model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
         ]);
     }
 
-  
-
     /**
-     * Creates a new Estados model.
+     * Creates a new Cobertura model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        var_dump("Hola");
-        die();
 
-        $model = new Estados();
+        $data = [];
+        $idInstitucion = $_SESSION['instituciones'][0];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $dataSedes = Sedes::find()
+						->where('id_instituciones = '.$idInstitucion)
+						->andWhere( 'estado=1' )
+						->orderby( 'id' )
+                        ->all();
+        $listaSedes		= ArrayHelper::map( $dataSedes, 'id', 'descripcion' ); 
+        $staus = false;
+        if( Yii::$app->request->post('Cobertura') )
+			$data = Yii::$app->request->post('Cobertura');
+
+        $count 	= count( $data );
+        $models = [];
+		for( $i = 0; $i < $count; $i++ )
+		{
+			$models[] = new Cobertura();
+		}
+
+        if (Cobertura::loadMultiple($models, Yii::$app->request->post() )) {
+            $i = 1;
+            foreach( $models as $key => $model) {
+                
+                $model->tema_id = $i;
+                $model->institucion_id = $idInstitucion;               
+                $i++;
+            }
+
+                       
+            foreach( $models as $key => $model) {
+				$model->save();
+			}
+
+            return $this->redirect(['create', 'guardado' => $staus ]);
+           
         }
+       
+       
+       
+        $model = new Cobertura();
+            
+        /*if ($model->load(Yii::$app->request->post()) /*&& $model->save()) {
+            
+            
+            foreach ($model as $data) {
+                var_dump($data);
+            }
+            
+            var_dump($model->cantidad_niños_sede);
+            die();
+            return $this->redirect(['index']);
+        }*/
 
+                       
+        
         return $this->render('create', [
             'model' => $model,
+            'sedes' => $listaSedes,
+            'guardado' => 0,
         ]);
     }
 
     /**
-     * Updates an existing Estados model.
+     * Updates an existing Cobertura model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -115,19 +154,20 @@ class CoberturaController extends Controller
     {
         $model = $this->findModel($id);
 
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing Estados model.
+     * Deletes an existing Cobertura model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -139,15 +179,15 @@ class CoberturaController extends Controller
     }
 
     /**
-     * Finds the Estados model based on its primary key value.
+     * Finds the Cobertura model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Estados the loaded model
+     * @param integer $id
+     * @return Cobertura the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Estados::findOne($id)) !== null) {
+        if (($model = Cobertura::findOne($id)) !== null) {
             return $model;
         }
 

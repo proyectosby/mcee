@@ -191,7 +191,7 @@ class DocumentosPresupuestoController extends Controller
             'tiposDocumento' => $tiposDocumento,
             'instituciones'	 => $instituciones,
             'estados' 		 => $estados,
-			'idInstitucion'	 => $idInstitucion,
+            'idInstitucion'	 => $idInstitucion,
         ]);
     }
 
