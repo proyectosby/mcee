@@ -93,6 +93,55 @@ class DocumentosActividadesVinculacionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+	 
+	function actionAgregarCampos(){
+		
+		
+		$consecutivo = Yii::$app->request->post('consecutivo');
+		
+		$model = new DocumentosOficiales();
+		
+		
+							
+		$instituciones 	  = $this->obtenerInstituciones();
+		
+		
+		$tiposDocumento 	 = $this->obtenerTiposDocumento();
+		
+		$dataEstados  = Estados::find()->where( 'id=1' )->all();
+		$estados 	  = ArrayHelper::map( $dataEstados, 'id', 'descripcion' );
+		
+		$form = ActiveForm::begin();
+		
+		?> 
+			<div class=row>
+	
+				<div class=cell>
+					<?= $form->field($model, '['.$consecutivo.']id_instituciones')->dropDownList( $instituciones ) ?>
+				</div>
+
+				<div class=cell>
+					<?= $form->field($model,  '['.$consecutivo.']id_tipo_documentos')->dropDownList( $tiposDocumento, [ 'prompt' => 'Seleccione...' ] ) ?>
+				</div>
+					
+				<div class=cell>
+					<?= $form->field($model,  '['.$consecutivo.']descripcion')->textArea()-label("Descripción") ?>
+				</div>
+				
+				<div class=cell>
+					<?= $form->field($model,  '['.$consecutivo.']ruta')->label('Archivo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+				</div>
+
+				<div class=cell style='display:none'>
+					<?= $form->field($model,  '['.$consecutivo.']estado')->hiddenInput( [ 'value' => '1' ] )->label( '' ) ?>
+				</div>
+					
+			</div>
+		
+		<?php
+		
+	} 
+	 
     public function actionCreate()
     {
 

@@ -152,7 +152,7 @@ class DocumentosCurriculumIeoController extends Controller
      */
 	 
 	 
-     public function actionCreate()
+    public function actionCreate()
     {
 		$data = [];
 		$idInstitucion = $_SESSION['instituciones'][0];
@@ -257,7 +257,7 @@ class DocumentosCurriculumIeoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-     public function actionUpdate($id)
+    public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 		
