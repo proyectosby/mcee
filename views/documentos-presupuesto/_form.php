@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentosOficiales.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 
 echo Html::hiddenInput( 'idInstitucion', '$idInstitucion' );
 ?>
