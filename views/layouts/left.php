@@ -278,6 +278,8 @@
 																		['label' => 'Avance Misional X IEO PPT', 'icon' => 'circle-o','url' => ['ec-avance-misional-ppt/index'],],
 																		['label' => 'Avance Misional X IEO SS', 'icon' => 'circle-o','url' => ['ec-avance-misional-ss/index'],],
 																		['label' => 'Avance Misional X IEO AF', 'icon' => 'circle-o','url' => ['ec-avance-misional/index'],],
+																		['label' => 'Avance Misional X EJE PPT', 'icon' => 'circle-o','url' => ['ec-avance-misional-ppt/index'],],
+																		['label' => 'Avance Misional X PROYECTO', 'icon' => 'circle-o','url' => ['ec-avance-misional-proyecto/index'],],
 																
 																	],
 																],

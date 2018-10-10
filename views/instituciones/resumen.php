@@ -250,7 +250,7 @@ table{
 				<tbody>
 				
 					<tr class="row">
-						<td class="col-sm-4 subtitle text-center">Recotor(a)</td>
+						<td class="col-sm-4 subtitle text-center">Rector(a)</td>
 						<td class="col-sm-8 text-center"><?= $rector ?></td>
 					</tr>
 					

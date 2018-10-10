@@ -53,9 +53,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos-curriculum-ieo
 			</div>
 				
 			<div class=cell>
+				<?= $form->field($model, '[0]descripcion')->textArea()->label("Descripción") ?>
+			</div>	
+				
+			<div class=cell>
 				<?= $form->field($model, '[0]ruta')->label('Archivo')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 			</div>
-
+			
 			<div class=cell style='display:none'>
 				<?= $form->field($model, '[0]estado')->hiddenInput( [ 'value' => '1' ] )->label( '' ) ?>
 			</div>
