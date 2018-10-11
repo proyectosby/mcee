@@ -19,6 +19,7 @@ use Yii;
  */
 class Municipios extends \yii\db\ActiveRecord
 {
+    
     /**
      * @inheritdoc
      */
