@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\DocumentosPresupuesto */
 
-$this->title = 'Agregar Documentos Presupuesto';
-$this->params['breadcrumbs'][] = ['label' => 'Documentos Presupuestos', 'url' => ['index']];
+$this->title = 'Agregar Cobertura';
+$this->params['breadcrumbs'][] = ['label' => 'Cobertura', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="documentos-presupuesto-create">
