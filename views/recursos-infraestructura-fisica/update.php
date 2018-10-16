@@ -30,23 +30,13 @@ use	yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\RecursosInfraestructuraFisica */
 
-$idSedes = $model->id_sede;
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$idInstitucion = ArrayHelper::map($nombreSede,'id','id_instituciones');
-$idInstitucion = $idInstitucion[$idSedes];
-
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
 
-$this->title = "Actualizar";
+$this->title = "Actualiza 'Recursos Infraestructura Física";
 $this->params['breadcrumbs'][] = [
-								'label' => 'Recursos Infraestructuras Físicas', 
+								'label' => 'Recursos Infraestructura Física', 
 								'url' => [
 											'index',
-											'idInstitucion' => $idInstitucion, 
-											'idSedes' 		=> $model->id_sede,
 										 ]
 							 ];
 $this->params['breadcrumbs'][] = $this->title;
@@ -57,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-		'idSedes'=>$idSedes,
+		'sedes'=>$sedes,
     ]) ?>
 
 </div>
