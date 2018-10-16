@@ -6,13 +6,22 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
+---------------------------------------
 **********/
-
+// use app\models\EjecucionFase;
+// $model = new EjecucionFase();
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 use dosamigos\datepicker\DatePicker;
 
+// foreach( $models as $key => $ejecucionFase ){
+	// echo "<pre>"; var_dump($ejecucionFase); echo "</pre>";
+// }
+// exit();
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 /* @var $form yii\widgets\ActiveForm */
@@ -56,9 +65,17 @@ use dosamigos\datepicker\DatePicker;
 
 <div class="ejecucion-fase-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php // $form = ActiveForm::begin(); ?>
 	
-	<?= $form->field($model, '['.$index.']numero_apps')->widget(
+	<!-- Creo campo oculta para saber el id de la sesion -->
+	<?= Html::activeHiddenInput($datosSesion, "[$indexEf]id_sesion", [ 'value' => $sesion->id ]) ?>
+	
+	<!-- Creo campo oculto para saber el id de la los datos de la sesion -->
+	<?= Html::activeHiddenInput($datosSesion, "[$indexEf]id") ?>
+	
+	<?= Html::activeHiddenInput($datosSesion, "[$indexEf]estado", [ 'value' => 1 ]) ?>
+	
+	<?= $form->field($datosSesion, '['.$indexEf.']fecha_sesion')->widget(
 		DatePicker::className(), [
 			
 			 // modify template for custom rendering
@@ -69,6 +86,7 @@ use dosamigos\datepicker\DatePicker;
 				'format' => 'dd-mm-yyyy'
 			]
 	])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
+	
 	
 	<div class="form-group">
 		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$sesion->id ]) ?>
@@ -133,59 +151,68 @@ use dosamigos\datepicker\DatePicker;
 			
 		</div>
 		
-		<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>' style='display:none;'>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, "[$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+		<?php foreach( $models as $key => $ejecucionFase ) :  ?>
+		
+			<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>'>
+				
+				<div class='col-sm-1' style='display:none'>
+					<?= Html::activeHiddenInput($ejecucionFase, "[$indexEf][$index]id") ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]docente", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]asignaturas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]especiaidad", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_creadas",[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]seiones_empleadas", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]acciones_realiadas", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]temas_problama", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]tipo_conpetencias", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-2'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]observaciones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
 			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]estado', [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-		</div>
+		
+		<?php $index++; 
+		endforeach; ?>
 	
 	</div>
 	
 	
 
 
-	<?php ActiveForm::end(); ?>
+	<?php // ActiveForm::end(); ?>
 
 </div>

@@ -1,3 +1,10 @@
+/**
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
+---------------------------------------
+*/
+
 $( document ).ready(function(){
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
@@ -45,7 +52,56 @@ $( document ).ready(function(){
 		
 	});
 	
-	$( "#condiciones-institucionales textarea" ).each(function(x){
+	//Creo un array con las primeras posiciones de cada sesion
+	//Esto se hace para que al hacer submit no aparezcan los datos vacios
+	dvsFilas = [];
+	$(".panel-body").each(function(x){
+		
+		dvsFilas[x] = $( "[id^=dvFilaSesion]", this ).eq(0);
+		$( "[id^=dvFilaSesion]", this ).eq(0).remove();
+	});
+	
+	
+	
+	/************************************************************************************************************************************************
+	 * 
+	 ************************************************************************************************************************************************/
+	 setTimeout(function(){
+		 
+		$( "input:text[id^=datossesiones]" ).each(function(x){
+			
+			$('#w0').yiiActiveForm('find', this.id ).validate = function (attribute, value, messages, deferred, $form) {
+				
+				var cmp = $( "#"+this.id ).val();
+				
+				//Si no se ha ingresado fecha y mas de una fila (ejecucion de fase)
+				if( cmp == "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length == 0 ){
+					// alert(1);
+					return true;
+				}
+				else if( cmp != "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length > 0 ){
+					// alert(1);
+					return true;
+				}
+				else{
+					// alert(2);
+					if( cmp == "" )
+						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede esar vacíoooo"});
+					else
+						yii.validation.addMessage(messages,"Esta vacio", cmp );
+					 //yii.validation.isEmpty(this.value);
+					//yii.validation.required(this.value, messages, {"message":"Fecha de la Sesión no puede esar vacíoooo"});
+					 
+					return false;
+				}
+			}
+		});
+	 }, 500 );
+	
+	
+	
+	
+	$( "#condiciones-institucionales textarea, #collapseOne textarea" ).each(function(x){
 	
 		$( this )
 			.attr({readOnly: true })
@@ -58,15 +114,37 @@ $( document ).ready(function(){
 			});
 	});
 	
+	consecutivos = [];
+	$( '[id^=dvSesion]' ).each(function(x){
+		
+		var pos = this.id.substr( "dvSesion".length );
+		
+		consecutivos[pos] = {
+			inicial : $( "[id^=dvFilaSesion]", this ).length+1,
+			actual  : $( "[id^=dvFilaSesion]", this ).length+1,
+		} 
+	});
+	
 	$( "[id^=btnAddFila]" ).each(function(){
 		
 		$( this ).click(function(){
 			
 			var id = this.id.substr( "btnAddFila".length );
 			
-			var filaNueva = $( "#dvFilaSesion"+id ).clone();
+			var consecutivo = consecutivos[id].actual;
+			
+			// var filaNueva = $( "#dvFilaSesion"+id ).clone();
+			var filaNueva = dvsFilas[id-1].clone();
 			
 			$( "#dvSesion"+id ).append( filaNueva );
+			
+			//Cambiando los id de los textarea con el consecutivo correspondiente
+			$( "textarea,input:hidden", filaNueva ).each(function(x){
+				$( this ).prop({
+					id	: this.id.substr( 0, this.id.indexOf( '-', "ejecucionfase-".length )+1 )+consecutivo+this.id.substr( this.id.lastIndexOf( "-" ) ),
+					name: this.name.substr( 0, this.name.indexOf( '[', "ejecucionfase-".length )+1 )+consecutivo+this.name.substr( this.name.lastIndexOf( "[" )-1 ),
+				})
+			})
 			
 			filaNueva.css({ display: '' });
 			$( "textarea", filaNueva ).each(function(x){
@@ -85,6 +163,9 @@ $( document ).ready(function(){
 					});
 			});
 			
+			// consecutivo++;
+			consecutivos[id].actual++;
+			
 			$( "#btnRemoveFila"+id ).css({ display: "" });
 		});
 		
@@ -95,16 +176,17 @@ $( document ).ready(function(){
 		$( this ).click(function(){
 			
 			var id = this.id.substr( "btnRemoveFila".length );
-			var total = $( "[id^=dvFilaSesion"+id+"]"  ).length;
+			var total = $( "[id^=dvFilaSesion]", $( this ).parent().parent() ).length;
 			
-			if( total > 1 ){
+			var consecutivo = consecutivos[id].inicial;
+			
+			if( total > 0 ){
 				
-				if( total == 2 ){
+				if( total == consecutivo ){
 					$( this ).css({ display: "none" });
 				}
 				
-				$( "[id=dvFilaSesion"+id+"]" ).last().remove()
-				
+				$( "[id^=dvFilaSesion]", $( this ).parent().parent() ).last().remove();
 			}
 		});
 	});

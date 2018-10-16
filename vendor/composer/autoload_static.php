@@ -26,6 +26,10 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
             'yii\\bootstrap\\' => 14,
             'yii\\' => 4,
         ),
+        's' => 
+        array (
+            'sasha\\phpword\\' => 14,
+        ),
         'r' => 
         array (
             'rmrevin\\yii\\fontawesome\\' => 24,
@@ -57,6 +61,11 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         array (
             'cebe\\markdown\\' => 14,
         ),
+        'Z' => 
+        array (
+            'Zend\\Stdlib\\' => 12,
+            'Zend\\Escaper\\' => 13,
+        ),
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
@@ -75,6 +84,8 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
+            'PhpOffice\\PhpWord\\' => 18,
+            'PhpOffice\\Common\\' => 17,
         ),
         'G' => 
         array (
@@ -126,6 +137,10 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2',
         ),
+        'sasha\\phpword\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sasha6806/yii2-phpword/src',
+        ),
         'rmrevin\\yii\\fontawesome\\' => 
         array (
             0 => __DIR__ . '/..' . '/rmrevin/yii2-fontawesome',
@@ -168,6 +183,14 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         array (
             0 => __DIR__ . '/..' . '/cebe/markdown',
         ),
+        'Zend\\Stdlib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-stdlib/src',
+        ),
+        'Zend\\Escaper\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-escaper/src',
+        ),
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
@@ -207,6 +230,14 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'PhpOffice\\PhpWord\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/phpword/src/PhpWord',
+        ),
+        'PhpOffice\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/common/src/Common',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -660,6 +691,7 @@ class ComposerStaticInitdd46850290ae5f30421d2b6d36d9715d
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PclZip' => __DIR__ . '/..' . '/pclzip/pclzip/pclzip.lib.php',
         'PharIo\\Manifest\\Application' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Application.php',
         'PharIo\\Manifest\\ApplicationName' => __DIR__ . '/..' . '/phar-io/manifest/src/values/ApplicationName.php',
         'PharIo\\Manifest\\Author' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Author.php',

@@ -218,9 +218,7 @@ class IntensidadHorariaSemanalController extends Controller
         return $this->renderAjax('create', [
             'model' 		 => $model,
             'tiposDocumento' => $tiposDocumento,
-            'instituciones'	 => $instituciones,
-            'estados' 		 => $estados,
-			'idInstitucion'	 => $idInstitucion,
+
         ]);
     }
 	

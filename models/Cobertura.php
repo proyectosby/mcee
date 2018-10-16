@@ -15,6 +15,7 @@ use Yii;
  * @property int $sede_id
  * @property int $cantidad_niños_sede
  * @property int $cantidad_niñas_sede
+ * @property string $observaciones
  *
  * @property Instituciones $institucion
  * @property Sedes $sede
@@ -22,8 +23,6 @@ use Yii;
  */
 class Cobertura extends \yii\db\ActiveRecord
 {
-    public $categoria_cobertura_id;
-    public $subcategoria;
     /**
      * @inheritdoc
      */
@@ -40,6 +39,7 @@ class Cobertura extends \yii\db\ActiveRecord
         return [
             [['tema_id', 'institucion_id', 'cantidad_niños_institucion', 'cantidad_niñas_institucion', 'sede_id', 'cantidad_niños_sede', 'cantidad_niñas_sede'], 'default', 'value' => null],
             [['tema_id', 'institucion_id', 'cantidad_niños_institucion', 'cantidad_niñas_institucion', 'sede_id', 'cantidad_niños_sede', 'cantidad_niñas_sede'], 'integer'],
+            [['observaciones'], 'string'],
             [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
             [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['sede_id' => 'id']],
             [['tema_id'], 'exist', 'skipOnError' => true, 'targetClass' => TemaCobertura::className(), 'targetAttribute' => ['tema_id' => 'id']],
@@ -60,6 +60,7 @@ class Cobertura extends \yii\db\ActiveRecord
             'sede_id' => 'Sede ID',
             'cantidad_niños_sede' => '',
             'cantidad_niñas_sede' => '',
+            'observaciones' => 'Observaciones',
         ];
     }
 

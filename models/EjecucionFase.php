@@ -6,6 +6,10 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Modelo EjecucionFase
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se agrega campo sesiones_por_docente
+---------------------------------------
 **********/
 
 
@@ -49,11 +53,12 @@ class EjecucionFase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'id_datos_sesiones', 'docente', 'asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'id_datos_ieo_profesional', 'estado', 'numero_sesiones_docente'], 'required'],
+            // [['id_fase', 'id_datos_sesiones', 'docente', 'asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'id_datos_ieo_profesional', 'estado', 'numero_sesiones_docente'], 'required'],
+            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'required'],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'integer'],
             [['docente'], 'string', 'max' => 200],
-            [['asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'numero_sesiones_docente'], 'string', 'max' => 500],
+            [['asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'numero_sesiones_docente','nombre_aplicaciones_creadas'], 'string', 'max' => 500],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => DatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_datos_sesiones'], 'exist', 'skipOnError' => true, 'targetClass' => DatosSesiones::className(), 'targetAttribute' => ['id_datos_sesiones' => 'id']],
@@ -83,6 +88,7 @@ class EjecucionFase extends \yii\db\ActiveRecord
             'id_datos_ieo_profesional' => 'Id Datos Ieo Profesional',
             'estado' => 'Estado',
             'numero_sesiones_docente' => 'Numero Sesiones Docente',
+            'nombre_aplicaciones_creadas' => 'Nombre de las aplicaciones creadas',
         ];
     }
 }
