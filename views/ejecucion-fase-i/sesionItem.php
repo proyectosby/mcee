@@ -6,6 +6,10 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
+---------------------------------------
 **********/
 // use app\models\EjecucionFase;
 // $model = new EjecucionFase();
@@ -176,7 +180,7 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]observaciones",[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_creadas",[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				</div>
 				
 				<div class='col-sm-1'>

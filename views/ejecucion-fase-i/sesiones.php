@@ -5,6 +5,10 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
+---------------------------------------
 **********/
 
 use yii\helpers\Html;

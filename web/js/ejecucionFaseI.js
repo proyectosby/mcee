@@ -1,3 +1,10 @@
+/**
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
+---------------------------------------
+*/
+
 $( document ).ready(function(){
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups

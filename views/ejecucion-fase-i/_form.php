@@ -6,6 +6,10 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
+---------------------------------------
 **********/
 
 
@@ -117,8 +121,8 @@ $this->registerJsFile(
 			</div>
 			
 			<div class='col-sm-2'>
-				<?php Html::activeTextarea($condiciones, "otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-				<?= $form->field($condiciones, "otro")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?php Html::activeTextarea($condiciones, "sesiones_por_docente", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($condiciones, "sesiones_por_docente")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1'>

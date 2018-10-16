@@ -6,6 +6,10 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseController
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
+---------------------------------------
 **********/
 
 
@@ -143,6 +147,7 @@ class EjecucionFaseIController extends Controller
 			{
 				if( $datosIeoProfesional->id )
 				{
+					//Buscando los datos de Sesion de ejecucion de fase para el profesional
 					$ejecucionesFases = EjecucionFase::find()
 											->select( 'id_datos_sesiones' )
 											->where( 'id_fase='.$this->id_fase )
@@ -251,7 +256,12 @@ class EjecucionFaseIController extends Controller
 				
 				
 				/************************************************************************************
-				 *
+				 * Si va a empezar el proceso de guardar
+				 * Llenos todos los campos de acuerdo a los datos del POST
+				 * La estructura es un array
+				 * Donde la primera posicion corresponde a los datos de la sesion correspondiente al primer foreach
+				 * La segunda posición corresponde a los datos de la sesión correspondiente al foreach interno
+				 * Esto debido a que por un datos de sesión puede haber más de una ejecución de fase
 				 ************************************************************************************/
 				if( $guardar && Yii::$app->request->post('DatosSesiones') && Yii::$app->request->post('EjecucionFase') ){
 					
@@ -330,54 +340,6 @@ class EjecucionFaseIController extends Controller
 				}
 				/************************************************************************************/
 				
-				
-				
-				
-				/************************************************************************************
-				 * Cargando los datos del modelo DatosSesiones
-				 ************************************************************************************/
-				if( false && $guardar && is_array( Yii::$app->request->post('DatosSesiones') ) && count( Yii::$app->request->post('DatosSesiones') ) > 0 )
-				{
-					$datosSesiones = [];
-					
-					foreach( Yii::$app->request->post('DatosSesiones') as $key => $value )
-					{
-						if( !empty( trim( $value['fecha_sesion'] ) ) ){
-							
-							if( !empty( $value['id'] ) )
-							{
-								$ds = DatosSesiones::findOne( $value['id'] );
-								$ds->fecha_sesion = Yii::$app->formatter->asDate($ds->fecha_sesion, "php:d-m-Y");
-							}
-							else{
-								$ds = new DatosSesiones();
-							}
-							
-							$datosSesiones[] = $ds;
-							
-							if( $guardar )
-							{
-								$ds->load( $value, '' );
-								$ds->fecha_sesion = Yii::$app->formatter->asDate($ds->fecha_sesion, "php:d-m-Y");
-							}
-						}
-					}
-				}
-
-				// // Cargando todos los datos para los modelos según el POST
-				// if( $guardar )
-				// {
-					// DatosSesiones::loadMultiple( $datosSesiones, Yii::$app->request->post() );
-				// }
-				/************************************************************************************/
-				
-				
-				
-				//Cargando los modelos para ejecucion Fase
-				// if( $guardar )
-					// EjecucionFase::loadMultiple( $ejecucionFase, Yii::$app->request->post() );
-				/**************************************************************************************************/
-				
 				/********************************************************************
 				 * Cargando datos de ejecucion de fase
 				 ********************************************************************/
@@ -395,14 +357,13 @@ class EjecucionFaseIController extends Controller
 						'id_profesional_a',
 						'estado',
 					]);
-				// echo "<br>valido dp prof: ".( $valido ? 'true': 'false' );			
+
 				//Validando todos los campos necesarios para datos sesiones
 				$valido = DatosSesiones::validateMultiple( $datosSesiones, [
 								'id_sesion',
 								'fecha_sesion',
 								'estado',
 							] ) && $valido;
-				// echo "<br>valido ds prof: ".( $valido ? 'true': 'false' );	
 
 				//Validando todos los campos necesarios para datos sesiones
 				$valido = EjecucionFase::validateMultiple( $ejecucionFase, [
@@ -419,19 +380,18 @@ class EjecucionFaseIController extends Controller
 								'observaciones',
 								'estado',
 								'numero_sesiones_docente',
+								'nombre_aplicaciones_creadas',
 							] ) && $valido;
-				// echo "<br>valido ef prof: ".( $valido ? 'true': 'false' );			
+
 				$valido = $condicionesInstitucionales->validate( [
-								// 'parte_ieo',
-								// 'parte_univalle',
-								// 'parte_sem',
-								// 'otro',
-								// 'total_sesiones_ieo',
+								'parte_ieo',
+								'parte_univalle',
+								'parte_sem',
+								'otro',
+								'total_sesiones_ieo',
 								'total_docentes_ieo',
+								'sesiones_por_docente',
 							] ) && $valido;
-							
-				// echo "<br>valido co prof: ".( $valido ? 'true': 'false' );
-				// echo "<br>valido gd prof: ".( $guardar ? 'true': 'false' );
 				/**************************************************************/
 				
 				//Si todo está correcto se proceda guardar los datos, sin validar ya que fue todo validado con anterioridad
