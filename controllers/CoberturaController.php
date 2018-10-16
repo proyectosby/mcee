@@ -46,16 +46,17 @@ class CoberturaController extends Controller
      * Lists all Cobertura models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Cobertura::find(),
         ]);
+        
+        return $this->redirect(['create', 'guardado' => $guardado ]);
 
-        return $this->redirect(['create', 'guardado' => 0 ]);
-
-        /*return $this->render('index', [
+        /*return $this->render('create', [
             'dataProvider' => $dataProvider,
+            'guardado' => $guardado
         ]);*/
     }
 
@@ -102,44 +103,49 @@ class CoberturaController extends Controller
 
         if (Cobertura::loadMultiple($models, Yii::$app->request->post() )) {
             $i = 1;
+            Cobertura::deleteAll('institucion_id = '. $idInstitucion);
+            $observaciones = '';
+           
             foreach( $models as $key => $model) {
                 
+                if($model->observaciones != NULL){
+                    $observaciones = $model->observaciones;
+                };
+                $model->observaciones = $observaciones;
                 $model->tema_id = $i;
                 $model->institucion_id = $idInstitucion;               
                 $i++;
             }
-
-                       
+                                 
             foreach( $models as $key => $model) {
 				$model->save();
 			}
 
-            return $this->redirect(['create', 'guardado' => $staus ]);
+            return $this->redirect(['index', 'guardado' => 1 ]);
            
         }
        
-       
+        $data = Cobertura::find()
+            ->where('institucion_id = '.$idInstitucion)
+            ->orderby( 'id' )
+            ->all();
+        $niñosInstitucion = ArrayHelper::map( $data, 'tema_id', 'cantidad_niños_institucion' );
+        $niñasInstitucion = ArrayHelper::map( $data, 'tema_id', 'cantidad_niñas_institucion' );
+        $niñosSede = ArrayHelper::map( $data, 'tema_id', 'cantidad_niños_sede' );
+        $niñasSede = ArrayHelper::map( $data, 'tema_id', 'cantidad_niñas_sede' ); 
+        
        
         $model = new Cobertura();
-            
-        /*if ($model->load(Yii::$app->request->post()) /*&& $model->save()) {
-            
-            
-            foreach ($model as $data) {
-                var_dump($data);
-            }
-            
-            var_dump($model->cantidad_niños_sede);
-            die();
-            return $this->redirect(['index']);
-        }*/
-
-                       
-        
+                  
         return $this->render('create', [
             'model' => $model,
             'sedes' => $listaSedes,
             'guardado' => 0,
+            'niñosInstitucion' =>  $niñosInstitucion,
+            'niñasInstitucion' =>  $niñasInstitucion,
+            'niñosSede' =>  $niñosSede,
+            'niñasSede' =>  $niñasSede,
+
         ]);
     }
 
