@@ -827,13 +827,13 @@ if( isset($_GET['guardado']) && $_GET['guardado'] == 1 ){
             <!-- 39 -->	
             <tr>
                 <td rowspan='1' colspan='1'>Otros</td>
-                <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niños_institucion', [ 'class' => 'form-control', 'value' => $niñosInstitucion[39]] ) ?></td>
-                <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niñas_institucion', [ 'class' => 'form-control', 'value' => $niñasInstitucion[39]] ) ?></td>
+                <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niños_institucion', [ 'class' => 'form-control', 'value' => $niñosInstitucion[38]] ) ?></td>
+                <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niñas_institucion', [ 'class' => 'form-control', 'value' => $niñasInstitucion[38]] ) ?></td>
                 <?php
                     foreach($sedes as $key => $sede){
                         ?>
-                            <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niños_sede', [ 'class' => 'form-control', 'value' => $niñosSede[39]] ) ?></td>
-                            <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niñas_sede', [ 'class' => 'form-control', 'value' => $niñasSede[39]] ) ?></td>
+                            <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niños_sede', [ 'class' => 'form-control', 'value' => $niñosSede[38]] ) ?></td>
+                            <td rowspan='1' colspan='1'><?=  Html::activeTextInput($model, '[38]cantidad_niñas_sede', [ 'class' => 'form-control', 'value' => $niñasSede[38]] ) ?></td>
                             <div class=cell style='display:none'>
                                 <?= $form->field($model, '[38]sede_id')->hiddenInput( [ 'value' => $key ] )->label( '' ) ?>
                                 
@@ -844,7 +844,7 @@ if( isset($_GET['guardado']) && $_GET['guardado'] == 1 ){
                  
             </tr>
             <tr>				
-                <td rowspan='1' colspan='9'><?= $form->field($model, '[0]observaciones')->textInput() ?></td>
+                 <td rowspan='1' colspan='9'><?=  Html::activeTextInput($model, '[0]observaciones', [ 'class' => 'form-control', 'value' => $observaciones[1]] ) ?></td>
             </tr>    
             
             <tfoot>

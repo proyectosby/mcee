@@ -133,7 +133,7 @@ class CoberturaController extends Controller
         $niñasInstitucion = ArrayHelper::map( $data, 'tema_id', 'cantidad_niñas_institucion' );
         $niñosSede = ArrayHelper::map( $data, 'tema_id', 'cantidad_niños_sede' );
         $niñasSede = ArrayHelper::map( $data, 'tema_id', 'cantidad_niñas_sede' ); 
-        
+        $observaciones =  ArrayHelper::map( $data, 'tema_id', 'observaciones' ); 
        
         $model = new Cobertura();
                   
@@ -145,6 +145,7 @@ class CoberturaController extends Controller
             'niñasInstitucion' =>  $niñasInstitucion,
             'niñosSede' =>  $niñosSede,
             'niñasSede' =>  $niñasSede,
+            'observaciones' => $observaciones,
 
         ]);
     }
