@@ -90,18 +90,15 @@ class CoberturaController extends Controller
      */
     public function actionCreate()
     {
-        var_dump("Hola");
-        die();
-
         $model = new Estados();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        var_dump("hola");
+        if ($model->load(Yii::$app->request->post())) {
+            var_dump("entro");
+            die();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        
     }
 
     /**

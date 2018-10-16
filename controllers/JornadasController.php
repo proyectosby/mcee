@@ -77,7 +77,7 @@ class JornadasController extends Controller
         $model = new Jornadas();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           return $this->redirect(['index']);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('create', [
