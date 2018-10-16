@@ -14,8 +14,8 @@ else
 }
 
 use Yii;
-use app\models\IntensidadHorariaSemanal;
-use app\models\IntensidadHorariaSemanalBuscar;
+use app\models\PlanDeArea;
+use app\models\PlanDeAreaBuscar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -29,9 +29,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
- * IntensidadHorariaSemanalController implements the CRUD actions for IntensidadHorariaSemanal model.
+ * PlanDeAreaController implements the CRUD actions for PlanDeArea model.
  */
-class IntensidadHorariaSemanalController extends Controller
+class PlanDeAreaController extends Controller
 {
     /**
      * @inheritdoc
@@ -49,12 +49,12 @@ class IntensidadHorariaSemanalController extends Controller
     }
 
     /**
-     * Lists all IntensidadHorariaSemanal models.
+     * Lists all PlanDeArea models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new IntensidadHorariaSemanalBuscar();
+        $searchModel = new PlanDeAreaBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere( "estado=1" ); 
 
@@ -63,36 +63,16 @@ class IntensidadHorariaSemanalController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
-    /**
-     * Displays a single IntensidadHorariaSemanal model.
-     * @param string $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new IntensidadHorariaSemanal model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-
-	 
+	
 	function actionAgregarCampos()
 	{
 	
 		$idInstitucion = $_SESSION['instituciones'][0];
 		$consecutivo = Yii::$app->request->post('consecutivo');
 		
-		$model = new IntensidadHorariaSemanal();
+		$model = new PlanDeArea();
 		
-		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Intensidad horario'")->all();
+		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Plan de area'")->all();
 		$tiposDocumento 	 = ArrayHelper::map( $dataTiposDocumento, 'id', 'descripcion' );
 		
 		
@@ -122,36 +102,48 @@ class IntensidadHorariaSemanalController extends Controller
 		<?php
 		
 	}
+    /**
+     * Displays a single PlanDeArea model.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView($id)
+    {
+        return $this->renderAjax('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
-	 
+    /**
+     * Creates a new PlanDeArea model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+ 
+ 
 	public function actionCreate()
     {
 		$data = [];
 		$idInstitucion = $_SESSION['instituciones'][0];
-		if( Yii::$app->request->post('IntensidadHorariaSemanal') )
-			$data = Yii::$app->request->post('IntensidadHorariaSemanal');
+		if( Yii::$app->request->post('PlanDeArea') )
+			$data = Yii::$app->request->post('PlanDeArea');
 		
 		$count 	= count( $data );
 		
 		$models = [];
 		for( $i = 0; $i < $count; $i++ )
 		{
-			$models[] = new IntensidadHorariaSemanal();
+			$models[] = new PlanDeArea();
 		}
 							
-		$dataInstituciones = Instituciones::find()
-							->where( 'estado=1' )
-							->andWhere( 'id='.$idInstitucion )
-							->all();
-		$instituciones 	  = ArrayHelper::map( $dataInstituciones, 'id', 'descripcion' );
 		
-		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Intensidad horaria'")->all();
+		$dataTiposDocumento  = TiposDocumentos::find()->where( 'estado=1' )->andWhere( "categoria='Plan de area'")->all();
 		$tiposDocumento 	 = ArrayHelper::map( $dataTiposDocumento, 'id', 'descripcion' );
 		
-		$dataEstados  = Estados::find()->where( 'id=1' )->all();
-		$estados 	  = ArrayHelper::map( $dataEstados, 'id', 'descripcion' );
+	
 		
-		if (IntensidadHorariaSemanal::loadMultiple($models, Yii::$app->request->post() )) {			
+		if (PlanDeArea::loadMultiple($models, Yii::$app->request->post() )) {			
 			
 			foreach( $models as $key => $model) {
 				
@@ -165,13 +157,13 @@ class IntensidadHorariaSemanalController extends Controller
 					$institucion = Instituciones::findOne( $idInstitucion );
 					
 					//Si no existe la carpeta se crea
-					$carpeta = "../documentos/IntensidadHorariaSemanal/".$institucion->codigo_dane;
+					$carpeta = "../documentos/PlanDeArea/".$institucion->codigo_dane;
 					if (!file_exists($carpeta)) {
 						mkdir($carpeta, 0777, true);
 					}
 					
 					//Construyo la ruta completa del archivo a guardar
-					$rutaFisicaDirectoriaUploads  = "../documentos/IntensidadHorariaSemanal/".$institucion->codigo_dane."/";
+					$rutaFisicaDirectoriaUploads  = "../documentos/PlanDeArea/".$institucion->codigo_dane."/";
 					$rutaFisicaDirectoriaUploads .= $file->baseName;
 					$rutaFisicaDirectoriaUploads .= date( "_Y_m_d_His" ) . '.' . $file->extension;
 					
@@ -200,7 +192,7 @@ class IntensidadHorariaSemanalController extends Controller
 			}
 			
 			//Se valida que todos los campos de todos los modelos sean correctos
-			if (!IntensidadHorariaSemanal::validateMultiple($models)) {
+			if (!PlanDeArea::validateMultiple($models)) {
 				Yii::$app->response->format = 'json';
 				 return \yii\widgets\ActiveForm::validateMultiple($models);
 			}
@@ -213,18 +205,17 @@ class IntensidadHorariaSemanalController extends Controller
 			return $this->redirect(['index', 'guardado' => true ]);
         }
 		
-		$model = new IntensidadHorariaSemanal();
+		$model = new PlanDeArea();
 
         return $this->renderAjax('create', [
             'model' 		 => $model,
             'tiposDocumento' => $tiposDocumento,
-
         ]);
     }
 	
-	
+
     /**
-     * Updates an existing IntensidadHorariaSemanal model.
+     * Updates an existing PlanDeArea model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -244,7 +235,7 @@ class IntensidadHorariaSemanalController extends Controller
     }
 
     /**
-     * Deletes an existing IntensidadHorariaSemanal model.
+     * Deletes an existing PlanDeArea model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -252,25 +243,24 @@ class IntensidadHorariaSemanalController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
+         $model = $this->findModel($id);
 		$model->estado = 2;
 		$model->update(false);
 		
 		
 		return $this->redirect(['index']);
-		
     }
 
     /**
-     * Finds the IntensidadHorariaSemanal model based on its primary key value.
+     * Finds the PlanDeArea model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return IntensidadHorariaSemanal the loaded model
+     * @return PlanDeArea the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = IntensidadHorariaSemanal::findOne($id)) !== null) {
+        if (($model = PlanDeArea::findOne($id)) !== null) {
             return $model;
         }
 

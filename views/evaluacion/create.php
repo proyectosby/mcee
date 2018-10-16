@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\IntensidadHorariaSemanal */
+/* @var $model app\models\Evaluacion */
 
-$this->title = 'Agregar Intensidad Horaria Semanal';
-$this->params['breadcrumbs'][] = ['label' => 'Intensidad Horaria Semanales', 'url' => ['index']];
+$this->title = 'Agregar Evaluacion';
+$this->params['breadcrumbs'][] = ['label' => 'Evaluacions', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
-<div class="intensidad-horaria-semanal-create">
+<div class="evaluacion-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
