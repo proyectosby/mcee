@@ -133,7 +133,11 @@
 												 'items' => [
 													
 													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => ['documentos-curriculum-ieo/index']],
-													// ['label' => 'Jornada Escolar','icon' => 'circle-o','url' => '#'],
+													['label' => 'Modelo Pegagógico','icon' => 'circle-o','url' => ['modelo-pedagofico/index']],
+													['label' => 'Plan de estudios','icon' => 'circle-o','url' => '#'],
+													['label' => 'Plan area','icon' => 'circle-o','url' => '#'],
+													['label' => 'Intensidad horaria','icon' => 'circle-o','url' => ['intensidad-horaria-semanal/index']],
+													['label' => 'Prueba Evaluación','icon' => 'circle-o','url' => ['plan-evaluacion/index']],
 													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => ['materiales-educativos/index']],
 													['label' => 'Seguimiento Egresados','icon' => 'circle-o','url' => ['seguimiento-egresados/index']],
 														
