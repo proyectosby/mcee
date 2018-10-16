@@ -49,7 +49,8 @@ class EjecucionFase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'id_datos_sesiones', 'docente', 'asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'id_datos_ieo_profesional', 'estado', 'numero_sesiones_docente'], 'required'],
+            // [['id_fase', 'id_datos_sesiones', 'docente', 'asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'id_datos_ieo_profesional', 'estado', 'numero_sesiones_docente'], 'required'],
+            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'required'],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'integer'],
             [['docente'], 'string', 'max' => 200],
