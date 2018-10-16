@@ -58,22 +58,22 @@ class SemillerosTicEjecucionFase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'id_fase' => 'Id Fase',
-            'id_datos_sesiones' => 'Id Datos Sesiones',
-            'docente' => 'Docente',
-            'asignaturas' => 'Asignaturas',
-            'especiaidad' => 'Especiaidad',
-            'paricipacion_sesiones' => 'Paricipacion Sesiones',
-            'numero_apps' => 'Numero Apps',
-            'seiones_empleadas' => 'Seiones Empleadas',
-            'acciones_realiadas' => 'Acciones Realiadas',
-            'temas_problama' => 'Temas Problama',
-            'tipo_conpetencias' => 'Tipo Conpetencias',
-            'observaciones' => 'Observaciones',
-            'id_datos_ieo_profesional' => 'Id Datos Ieo Profesional',
-            'estado' => 'Estado',
-            'numero_sesiones_docente' => 'Numero Sesiones Docente',
+            'id' 						=> 'ID',
+            'id_fase' 					=> 'Id Fase',
+            'id_datos_sesiones' 		=> 'Id Datos Sesiones',
+            'docente' 					=> 'Docente',
+            'asignaturas' 				=> 'Asignaturas',
+            'especiaidad' 				=> 'Especiaidad',
+            'paricipacion_sesiones' 	=> 'Paricipacion Sesiones',
+            'numero_apps' 				=> 'Numero Apps',
+            'seiones_empleadas' 		=> 'Seiones Empleadas',
+            'acciones_realiadas'		=> 'Acciones Realiadas',
+            'temas_problama' 			=> 'Temas Problama',
+            'tipo_conpetencias' 		=> 'Tipo Conpetencias',
+            'observaciones' 			=> 'Observaciones',
+            'id_datos_ieo_profesional' 	=> 'Id Datos Ieo Profesional',
+            'estado' 					=> 'Estado',
+            'numero_sesiones_docente' 	=> 'Numero Sesiones Docente',
         ];
     }
 }
