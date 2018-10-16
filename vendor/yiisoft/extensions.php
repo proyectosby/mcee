@@ -129,4 +129,13 @@ return array (
       '@dosamigos/editable' => $vendorDir . '/2amigos/yii2-editable-widget/src',
     ),
   ),
+  'sasha6806/yii2-phpword' => 
+  array (
+    'name' => 'sasha6806/yii2-phpword',
+    'version' => '0.0.2.0',
+    'alias' => 
+    array (
+      '@sasha/phpword' => $vendorDir . '/sasha6806/yii2-phpword/src',
+    ),
+  ),
 );

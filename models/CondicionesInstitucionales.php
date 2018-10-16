@@ -1,5 +1,12 @@
 <?php
 
+/**
+Modificaciones:
+Fecha: 2018-10-16
+Descripción: Se agrega campo sesiones_por_docente
+---------------------------------------
+ */
+
 namespace app\models;
 
 use Yii;
@@ -33,7 +40,7 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'id_datos_ieo_profesional', 'estado', 'total_sesiones_ieo', 'total_docentes_ieo'], 'required'],
+            [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'id_datos_ieo_profesional', 'estado', 'total_sesiones_ieo', 'total_docentes_ieo','sesiones_por_docente'], 'required'],
             [['id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['id_datos_ieo_profesional', 'estado'], 'integer'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'total_sesiones_ieo', 'total_docentes_ieo'], 'string', 'max' => 500],
@@ -48,15 +55,16 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'parte_ieo' => 'Parte Ieo',
-            'parte_univalle' => 'Parte Univalle',
-            'parte_sem' => 'Parte Sem',
-            'otro' => 'Otro',
-            'id_datos_ieo_profesional' => 'Id Datos Ieo Profesional',
-            'estado' => 'Estado',
-            'total_sesiones_ieo' => 'Total Sesiones Ieo',
-            'total_docentes_ieo' => 'Total Docentes Ieo',
+            'id' 						=> 'ID',
+            'parte_ieo' 				=> 'Parte Ieo',
+            'parte_univalle' 			=> 'Parte Univalle',
+            'parte_sem' 				=> 'Parte Sem',
+            'otro' 						=> 'Otro',
+            'id_datos_ieo_profesional' 	=> 'Id Datos Ieo Profesional',
+            'estado' 					=> 'Estado',
+            'total_sesiones_ieo' 		=> 'Total Sesiones Ieo',
+            'total_docentes_ieo' 		=> 'Total Docentes Ieo',
+            'sesiones_por_docente' 		=> 'Sesiones por Docente',
         ];
     }
 }

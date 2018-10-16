@@ -23,7 +23,8 @@
         "fedemotta/yii2-widget-datatables": "*",
         "kartik-v/yii2-widget-timepicker": "*",
         "nex/yii2-chosen": "*",
-        "2amigos/yii2-editable-widget": "~1.0"
+        "2amigos/yii2-editable-widget": "~1.0",
+        "sasha6806/yii2-phpword": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
