@@ -155,6 +155,8 @@
 													'url' => '#',
 													'items' => [
 															['label' => 'Evaluación', 'icon' => 'circle-o', 'url' => ['evaluacion/index']],
+															['label' => 'Programas', 'icon' => 'circle-o', 'url' => ['programas/index']],
+															['label' => 'Estimulos', 'icon' => 'circle-o', 'url' => ['estimulos/index']],
 														],
 													],
 													['label' => 'Presupuesto', 'icon' => 'circle-o', 'url' => ['documentos-presupuesto/index']],
@@ -169,13 +171,11 @@
 											'items' => [
 														['label' => 'Documentos', 'icon' => 'circle-o', 'url' => ['documentos-gestion-comunitaria/index', 'tipo_documento'=>'Gestion Comunitaria']],
 														['label' => 'Aliados', 'icon' => 'circle-o', 'url' => ['documentos-aliados/index']],
-														['label' => 'Actividades Vinculación', 'icon' => 'circle-o', 'url' => '#'],
-														['label' => 'Sector productivo', 'icon' => 'circle-o', 'url' => '#'],
 														// ['label' => 'Comité Gestión Riesgo', 'icon' => 'circle-o', 'url' => '#'],
 														// ['label' => 'PGIR', 'icon' => 'circle-o', 'url' => '#'],
 														// ['label' => 'Aliados', 'icon' => 'circle-o', 'url' => '#'],
-														// ['label' => 'Actividades Vinulación', 'icon' => 'circle-o', 'url' => ['documentos-actividades-vinculacion/index']],
-														// ['label' => 'Relaciones Sector', 'icon' => 'circle-o', 'url' => ['documentos-relaciones-sector/index']],
+														['label' => 'Actividades Vinulación', 'icon' => 'circle-o', 'url' => ['documentos-actividades-vinculacion/index']],
+														['label' => 'Relaciones Sector', 'icon' => 'circle-o', 'url' => ['documentos-relaciones-sector/index']],
 														
 														],
 											],
@@ -279,7 +279,7 @@
 																		['label' => 'Levantamiento', 'icon' => 'circle-o','url' => ['ec-levantamiento-orientacion/index'],],
 																		['label' => 'Informe avance mensual Ejecución', 'icon' => 'circle-o','url' => ['ieo/index'],],
 																		['label' => 'Informe avance mensual Misional', 'icon' => 'circle-o','url' => ['ecinformeplaneacionieo/index'],],
-																		['label' => 'Informe semanal ejecutivo', 'icon' => 'circle-o','url' => ['informe-semanal-ejecucion/index'],],
+																		['label' => 'Informe semanal ejecución', 'icon' => 'circle-o','url' => ['informe-semanal-ejecucion/index'],],
 																		['label' => 'Articulación Familiar', 'icon' => 'circle-o','url' => '#',],
 																		['label' => 'ASSC', 'icon' => 'circle-o','url' => '#',],
 																		['label' => 'Semilleros para Paz', 'icon' => 'circle-o','url' => '#',],
@@ -314,7 +314,7 @@
 												'icon' => 'circle-o',
 												'url' => '#',
 												'items' => [
-																	['label' => 'Sencibilización artistica', 'icon' => 'circle-o','url' => '#',],
+																	['label' => 'Sensibilización artistica', 'icon' => 'circle-o','url' => '#',],
 																	['label' => 'Competencias lúdicas', 'icon' => 'circle-o','url' => '#',],
 																	['label' => 'Primera infancia', 'icon' => 'circle-o','url' => '#',],
 															],
