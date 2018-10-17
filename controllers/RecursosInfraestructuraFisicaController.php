@@ -15,6 +15,8 @@ Desactiva los registro en lugar de borrarlos
 **********/
 
 namespace app\controllers;
+use app\models\Sedes;
+use	yii\helpers\ArrayHelper;
 
 if(@$_SESSION['sesion']=="si")
 { 
@@ -111,6 +113,16 @@ class RecursosInfraestructuraFisicaController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+	
+	public function obtenerSedes()
+	{
+		$idSedes 		= $_SESSION['sede'][0];
+		$sedes = new Sedes();
+		$sedes = $sedes->find()->where("id =  $idSedes")->all();
+		$sedes = ArrayHelper::map($sedes,'id','descripcion');
+		
+		return $sedes;
+	}
 
     /**
      * Creates a new RecursosInfraestructuraFisica model.
@@ -120,7 +132,7 @@ class RecursosInfraestructuraFisicaController extends Controller
     public function actionCreate()
     {
 		$idInstitucion 	= $_SESSION['instituciones'][0];
-		$idSedes 		= $_SESSION['sede'][0];
+		
 
         $model = new RecursosInfraestructuraFisica();
 
@@ -130,7 +142,7 @@ class RecursosInfraestructuraFisicaController extends Controller
 
         return $this->renderAjax('create', [
             'model' => $model,
-			'idSedes'=>$idSedes,
+			'sedes'=>$this->obtenerSedes(),
 			'idInstitucion'=>$idInstitucion,
         ]);
     }
@@ -152,6 +164,7 @@ class RecursosInfraestructuraFisicaController extends Controller
 
         return $this->renderAjax('update', [
             'model' => $model,
+			'sedes'=>$this->obtenerSedes(),
         ]);
     }
 

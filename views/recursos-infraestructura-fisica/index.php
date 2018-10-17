@@ -23,16 +23,9 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $model = new RecursosInfraestructuraFisica();
-// $idSedes = $model->id_sede;
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-// $idInstitucion = ArrayHelper::map($nombreSede,'id','id_instituciones');
-// $idInstitucion = $idInstitucion[$idSedes];
 
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
-$this->title = '';
+$this->title = 'Recursos Infraestructuras Físicas';
 $nombre = 'Recursos Infraestructuras Físicas';
 $this->params['breadcrumbs'][] = $nombre;
 ?>
@@ -52,7 +45,7 @@ $this->params['breadcrumbs'][] = $nombre;
 
 <div class="recursos-infraestructura-fisica-index">
 
-    <h1><?= Html::encode($nombre) ?></h1>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>

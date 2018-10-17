@@ -4,20 +4,26 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\DocumentosPresupuesto */
+/* @var $model app\models\Cobertura */
 
 $this->title = 'Agregar Cobertura';
-$this->params['breadcrumbs'][] = ['label' => 'Cobertura', 'url' => ['index']];
+
+$this->params['breadcrumbs'][] = ['label' => 'Coberturas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
-<div class="documentos-presupuesto-create">
+<div class="cobertura-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'dataProvider' => $dataProvider,
+        'model' => $model,
         'sedes' => $sedes,
-        'cobertura' => $cobertura,
+        'guardado', $guardado,
+        'niñosInstitucion' =>  $niñosInstitucion,
+        'niñasInstitucion' =>  $niñasInstitucion,
+        'niñosSede' =>  $niñosSede,
+        'niñasSede' =>  $niñasSede,
+        'observaciones' => $observaciones,
     ]) ?>
 
 </div>

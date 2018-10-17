@@ -41,6 +41,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
+	<?= $form->field($model, 'id_sede')->dropDownList($sedes) ?>
+	
     <?= $form->field($model, 'cantidad_aulas_regulares')->textInput() ?>
 
     <?= $form->field($model, 'cantidad_aulas_multiples')->textInput() ?>
@@ -66,8 +68,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= $form->field($model, 'programas_informaticos_admin')->textInput(['maxlength' => true]) ?>
 	
     <?= $form->field($model, 'observaciones')->textarea(['rows' => '6']) ?>
-
-    <?= $form->field($model, 'id_sede')->hiddenInput(['value'=>$idSedes])->label(false); ?>
+	
+    <?= $form->field($model, 'restaurante_escolar')->textarea(['rows' => '6']) ?>
 
     <?= $form->field($model, 'estado')->dropDownList($estado,['options' => [1 => ['selected' => 'selected']]]) ?>
 

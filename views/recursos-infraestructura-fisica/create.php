@@ -29,20 +29,14 @@ use	yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\RecursosInfraestructuraFisica */
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
 
-$this->title = "Agregar";
+
+$this->title = "Agregar Recursos Infraestructura Física";
 $this->params['breadcrumbs'][] = [
 								'label' => 'Asignaturas', 
 								'url' => [
 											'index',
-											'idInstitucion' => $idInstitucion, 
-											'idSedes' 		=> $idSedes,
 										 ]
 							 ];
 $this->params['breadcrumbs'][] = $this->title;
@@ -53,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-		'idSedes'=>$idSedes,
+		'sedes'=>$sedes,
     ]) ?>
 
 </div>

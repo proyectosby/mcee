@@ -1,0 +1,23 @@
+{
+    "name": "sasha6806/yii2-phpword",
+    "description": "Yii2 extension of PHPOffice/PHPWord",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","widget","php","word"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LIU Wenlong",
+            "email": "liuwld@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "~2.0.0",
+        "PHPOffice/PHPWord": "~0.14.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "sasha\\phpword\\": "src"
+        }
+    }
+}
