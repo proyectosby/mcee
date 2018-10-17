@@ -133,9 +133,9 @@
 												 'items' => [
 													
 													['label' => 'Curriculum de la IEO','icon' => 'circle-o','url' => ['documentos-curriculum-ieo/index']],
-													['label' => 'Modelo Pegagógico','icon' => 'circle-o','url' => ['modelo-pedagofico/index']],
-													['label' => 'Plan de estudios','icon' => 'circle-o','url' => '#'],
-													['label' => 'Plan area','icon' => 'circle-o','url' => '#'],
+													['label' => 'Modelo Pegagógico','icon' => 'circle-o','url' => ['modelo-pedagogico/index']],
+													['label' => 'Plan de estudios','icon' => 'circle-o','url' => ['plan-estudios/index']],
+													['label' => 'Plan de área','icon' => 'circle-o','url' => ['plan-de-area/index']],
 													['label' => 'Intensidad horaria','icon' => 'circle-o','url' => ['intensidad-horaria-semanal/index']],
 													['label' => 'Prueba Evaluación','icon' => 'circle-o','url' => ['plan-evaluacion/index']],
 													['label' => 'Materiales Educativos','icon' => 'circle-o','url' => ['materiales-educativos/index']],
@@ -150,7 +150,13 @@
 												'url' => '#',
 												'items' => [
 													['label' => 'Matrícula', 'icon' => 'circle-o', 'url' => '#'],
-													['label' => 'Talento Humano', 'icon' => 'circle-o', 'url' => '#'],
+													['label' => 'Talento Humano',
+													'icon' => 'circle-o',
+													'url' => '#',
+													'items' => [
+															['label' => 'Evaluación', 'icon' => 'circle-o', 'url' => ['evaluacion/index']],
+														],
+													],
 													['label' => 'Presupuesto', 'icon' => 'circle-o', 'url' => ['documentos-presupuesto/index']],
 													['label' => 'Infraestructra', 'icon' => 'circle-o', 'url' => '#'],
 													['label' => 'Estrategia Adecuación', 'icon' => 'circle-o', 'url' => '#'],
@@ -163,8 +169,8 @@
 											'items' => [
 														['label' => 'Documentos', 'icon' => 'circle-o', 'url' => ['documentos-gestion-comunitaria/index', 'tipo_documento'=>'Gestion Comunitaria']],
 														['label' => 'Aliados', 'icon' => 'circle-o', 'url' => ['documentos-aliados/index']],
-														// ['label' => 'Servicio Social', 'icon' => 'circle-o', 'url' => '#'],
-														// ['label' => 'Escuela Familias', 'icon' => 'circle-o', 'url' => '#'],
+														['label' => 'Actividades Vinculación', 'icon' => 'circle-o', 'url' => '#'],
+														['label' => 'Sector productivo', 'icon' => 'circle-o', 'url' => '#'],
 														// ['label' => 'Comité Gestión Riesgo', 'icon' => 'circle-o', 'url' => '#'],
 														// ['label' => 'PGIR', 'icon' => 'circle-o', 'url' => '#'],
 														// ['label' => 'Aliados', 'icon' => 'circle-o', 'url' => '#'],
