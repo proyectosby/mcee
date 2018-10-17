@@ -18,6 +18,7 @@ use Yii;
  */
 class Estimulos extends \yii\db\ActiveRecord
 {
+    public $file;
     /**
      * @inheritdoc
      */
@@ -48,7 +49,7 @@ class Estimulos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'descripcion' => 'Descripcion',
-            'tipo_documento_id' => 'Tipo Documento ID',
+            'tipo_documento_id' => 'Tipo Documento',
             'ruta' => 'Ruta',
             'estado' => 'Estado',
         ];

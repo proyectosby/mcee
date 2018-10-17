@@ -7,37 +7,27 @@ use yii\helpers\Url;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
+use app\models\TiposDocumentos;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardado', '1' );
+}
+
 
 $this->title = 'Estimulos';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
-<h1></h1>
-	
-<div id="modal" class="fade modal" role="dialog" tabindex="-1">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>NombreCrud</h3>
-</div>
-<div class="modal-body">
-<div id='modalContent'></div>
-</div>
-
-</div>
-</div>
-</div>
 <div class="estimulos-index">
 
-   
-
+    <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
+		<?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DataTables::widget([
@@ -78,29 +68,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'descripcion',
-            'tipo_documento_id',
-            'ruta',
-            'estado',
+            [
+				'attribute' => 'tipo_documento_id',
+				'value' 	=> function( $model ){
+					
+					$tipoDocumento = TiposDocumentos::findOne( $model->tipo_documento_id );
+					return $tipoDocumento ? $tipoDocumento->descripcion : '' ;
+				},
+			],
+            [ 
+				'attribute' => 'ruta' ,
+				'format' 	=> 'raw' ,
+				'value'		=> function( $model ){
+					return Html::a( "Ver archivo", Url::to( "@web/".$model->ruta , true), [ "target"=>"_blank" ] );
+				},
+			],
+            //'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
-				'buttons' => [
-				'view' => function ($url, $model) {
-					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
-								'title' => Yii::t('app', 'lead-view'),
-					]);
-				},
-
-				'update' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
-								'title' => Yii::t('app', 'lead-update'),
-					]);
-				}
-
-			  ],
+			'template'=>'{delete}'
 			
 			],
 

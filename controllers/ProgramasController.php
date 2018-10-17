@@ -50,7 +50,7 @@ class ProgramasController extends Controller
      * Lists all Programas models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Programas::find(),
@@ -58,6 +58,7 @@ class ProgramasController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'guardado' => $guardado,
         ]);
     }
 
