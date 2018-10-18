@@ -12,7 +12,7 @@ use app\models\TiposDocumentos;
 /* @var $searchModel app\models\PlanDeAreaBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Plan De Area';
+$this->title = 'Plan de área';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Plan De Area</h3>
+<h3>Plan de área</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
