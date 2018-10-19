@@ -280,6 +280,7 @@
 																		['label' => 'Informe avance mensual Ejecución', 'icon' => 'circle-o','url' => ['ieo/index'],],
 																		['label' => 'Informe avance mensual Misional', 'icon' => 'circle-o','url' => ['ecinformeplaneacionieo/index'],],
 																		['label' => 'Informe semanal ejecución', 'icon' => 'circle-o','url' => ['informe-semanal-ejecucion-ise/index'],],
+																		['label' => 'Informe semanal total ejecutivo', 'icon' => 'circle-o','url' => ['ec-informe-semanal-total-ejecutivo/index'],],
 																		['label' => 'Articulación Familiar', 'icon' => 'circle-o','url' => '#',],
 																		['label' => 'ASSC', 'icon' => 'circle-o','url' => '#',],
 																		['label' => 'Semilleros para Paz', 'icon' => 'circle-o','url' => '#',],
