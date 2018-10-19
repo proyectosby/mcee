@@ -1,6 +1,7 @@
 <?php
 
 use app\models\EcProcesos;
+use app\models\EcProductos;
 use nex\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Collapse;
@@ -28,7 +29,24 @@ foreach( $ecProcesos as $idProceso => $v )
 	
 }
 
+$ecProductos = EcProductos::find()->where( "estado=1 and id_proyecto=$idProyecto" )->all();
+$ecProductos = ArrayHelper::map($ecProductos,'id','descripcion');
 
+foreach( $ecProductos as $idProductos => $v )
+{
+ 
+	$items[] = 	[
+					'label' 		=>  $v,
+					'content' 		=>  $this->render( 'estrategias', 
+													[ 
+                                                        'idProductos' => $idProductos
+														
+													] 
+										),
+					'contentOptions'=> []
+				];			
+	
+}
 
 
 echo Collapse::widget([

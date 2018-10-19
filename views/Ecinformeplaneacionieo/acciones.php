@@ -14,25 +14,12 @@ $ecAcciones = ArrayHelper::map($ecAcciones,'id','descripcion');
 
 foreach( $ecAcciones as $a => $v )
 {
-
-	// if (strpos($v,"Productos del eje") > 0)
-	// {
+	
 		$items[] = 	[
 					'label' 		=>  $v,
 					'content' 		=>  $this->render( 'avances',[] ),
 					'contentOptions'=> []
 				];	
-	// }
-	// else
-	// {
-		
-	
-		// $items[] = 	[
-					// 'label' 		=>  $v,
-					// 'content' 		=>  $this->render( 'avances',[] ),
-					// 'contentOptions'=> []
-				// ];			
-	// }
 }
 
 
