@@ -66,6 +66,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 	    <?= $this->context->actionViewFases($model);   ?>
 
 
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+    </div>
     <?php ActiveForm::end(); ?>
 
 </div>
