@@ -12,12 +12,17 @@ $ecAcciones = ArrayHelper::map($ecAcciones,'id','descripcion');
        
 
 
-foreach( $ecAcciones as $a => $v )
+foreach( $ecAcciones as $idAcciones => $v )
 {
 	
 		$items[] = 	[
 					'label' 		=>  $v,
-					'content' 		=>  $this->render( 'avances',[] ),
+					'content' 		=>  $this->render( 'avances',
+																[
+																	'form' => $form,
+																	'contador' => $idAcciones,
+																	'estadoActual' => $estadoActual,
+																] ),
 					'contentOptions'=> []
 				];	
 }

@@ -15,14 +15,8 @@ $model = new EcRespuestas();
 <div class="container-fluid">
 
             <div class="ieo-form">
-
-                <?php $form = ActiveForm::begin(); ?>
-
-                    <?= $form->field($model, 'respuesta')->textInput()->label('respuesta') ?>
-                    <?= $form->field($model, 'id_estrategia')->textInput()->label('id_estrategia') ?>
-                    <?= $form->field($model, 'estado')->textInput()->label('estado') ?>
-
-                <?php ActiveForm::end(); ?>
-
+                    <?= $form->field($model, "[$contador]respuesta")->textInput()->label('Descripción') ?>
+                    <?= $form->field($model, "[$contador]id_estrategia")->hiddenInput( [ 'value' => $contador ] )->label( '' ) ?>
+                    <?= $form->field($model, "[$contador]estado")->hiddenInput( [ 'value' => '1' ] )->label( '' ) ?>
             </div>
 </div>
