@@ -40,34 +40,17 @@ use dosamigos\datepicker\DatePicker;
 	// );
 ?>
 
-<style>
-	.col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1{
-		padding: 0px;
-	}
-	
-	.title{
-		height: 150px;
-		background-color: #ccc;
-	}
-	
-	.title > div > span{
-		height: 150px;
-	}
-	
-	.title2 > div > span{
-		height: 70px;
-	}
-	
-	.title3 > div > span{
-		height: 120px;
-	}
-</style>
+
 
 <div class="ejecucion-fase-form">
-
-    <?php $form = ActiveForm::begin(); ?>
 	
-	<?= $form->field($model, '['.$index.']numero_apps')->widget(
+	<?= Html::activeHiddenInput($dataSesion, "[$indexEf]id_sesion", [ 'value' => $sesion->id ]) ?>
+	
+	<?= Html::activeHiddenInput($dataSesion, "[$indexEf]id") ?>
+	
+	<?= Html::activeHiddenInput($dataSesion, "[$indexEf]estado", [ 'value' => 1 ]) ?>
+	
+	<?= $form->field($dataSesion, '['.$indexEf.']fecha_sesion')->widget(
 		DatePicker::className(), [
 			
 			 // modify template for custom rendering
@@ -80,11 +63,11 @@ use dosamigos\datepicker\DatePicker;
 	])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
 	
 	<div class="form-group">
-		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$sesion->id ]) ?>
-		<?= Html::button('Eliminar fila', ['class' => 'btn btn-success', 'id' => 'btnRemoveFila'.$sesion->id, "style" => "display:none" ]) ?>
+		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$indexEf ]) ?>
+		<?= Html::button('Eliminar fila', ['class' => 'btn btn-success', 'id' => 'btnRemoveFila'.$indexEf, "style" => "display:none" ]) ?>
 	</div>
 	
-	<div class='container-fluid' id='dvSesion<?= $sesion->id ?>'>
+	<div class='container-fluid' id='dvSesion<?= $indexEf ?>'>
 	
 		
 		<div class='row text-center title2'>
@@ -161,57 +144,68 @@ use dosamigos\datepicker\DatePicker;
 			
 		</div>
 		
-		<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>' style='display:none;'>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+		<?php foreach( $ejecucionesFase as $key => $ejecucionFase ) :  ?>
+		
+			<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>'>
+				
+				<div class='col-sm-1' style='display:none;'>
+					<?= Html::activeHiddenInput($ejecucionFase, "[$indexEf][$index]id") ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]docentes", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]asignaturas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]especialidad", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_apps_desarrolladas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_desarrolladas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_creadas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]tipo_obra", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]temas_abordados", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_pruebas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_disecciones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]observaciones_generales", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				</div>
+				
 			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]estado', [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_sesiones_docente', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-			</div>
-			
-		</div>
+		
+		<?php 
+			$index++; 
+			endforeach; 
+		?>
 	
 	</div>
 		
@@ -252,19 +246,19 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center row-data-2'>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_accion", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]descripcion_accion", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]responsable_accion", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tiempo_desarrollo", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 		</div>
@@ -322,31 +316,31 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center row-data-3'>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tic", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_recurso_tic", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]digitales", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_recurso_digitales", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]escolares", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_recurso_no_tic", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tiempo_uso_recurso", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
 			</div>
 			
 		</div>
@@ -354,10 +348,5 @@ use dosamigos\datepicker\DatePicker;
 	
 		
 	</div>
-	
-	
-
-
-	<?php ActiveForm::end(); ?>
 
 </div>

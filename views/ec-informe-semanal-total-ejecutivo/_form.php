@@ -13,9 +13,24 @@ if( isset($_GET['guardado']) && $_GET['guardado'] == 1 ){
     echo Html::hiddenInput( 'guardado', '1' );
 }
 
-?>
+$this->registerJsFile(
+	"@web/js/jQuery-TableToExcel-master/jquery.tableToExcel.js", 
+	['depends' => [\yii\web\JqueryAsset::className()]]
+);
 
-<div class="ec-informe-semanal-total-ejecutivo-form">
+
+$this->registerJsFile(
+	"@web/js/ecresumensemanalEjecutivo.js", 
+	[
+		'depends' => [
+						\yii\web\JqueryAsset::className(),
+						\fedemotta\datatables\DataTablesAsset::className(),
+						\fedemotta\datatables\DataTablesTableToolsAsset::className(),
+					],
+	]
+);
+
+?>
 <style>
     
     table {
@@ -48,9 +63,21 @@ if( isset($_GET['guardado']) && $_GET['guardado'] == 1 ){
 
 </style>
 
+<div class="ec-informe-semanal-total-ejecutivo-form">
+
     <?php $form = ActiveForm::begin(); ?>
 
-    <table>
+    <table id='tb'>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?php //echo Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+	<p>
+        <?php //echo Html::button('Excel', ['class' => 'btn btn-success', 'onclick' => 'exportar()' ]) ?>
+    </p>
+
     <thead>
             <tr>
                 <th rowspan='3' colspan='1'>EJE</th>

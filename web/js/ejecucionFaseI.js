@@ -74,23 +74,29 @@ $( document ).ready(function(){
 				
 				var cmp = $( "#"+this.id ).val();
 				
+				var hayCamposVacios = false;
+				$( "textarea[id^=ejecucionfase]", $( this.container ).parent() ).each(function(){
+					if( $( this ).val() == '' ){
+						hayCamposVacios = true;
+					}
+				});
+				
+				
 				//Si no se ha ingresado fecha y mas de una fila (ejecucion de fase)
 				if( cmp == "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length == 0 ){
 					// alert(1);
 					return true;
 				}
-				else if( cmp != "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length > 0 ){
+				else if( cmp != "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length > 0 && !hayCamposVacios ){
 					// alert(1);
 					return true;
 				}
 				else{
 					// alert(2);
 					if( cmp == "" )
-						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede esar vacíoooo"});
+						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede estar vacío"});
 					else
-						yii.validation.addMessage(messages,"Esta vacio", cmp );
-					 //yii.validation.isEmpty(this.value);
-					//yii.validation.required(this.value, messages, {"message":"Fecha de la Sesión no puede esar vacíoooo"});
+						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y llenar todos los campos", cmp );
 					 
 					return false;
 				}
@@ -101,7 +107,7 @@ $( document ).ready(function(){
 	
 	
 	
-	$( "#condiciones-institucionales textarea, #collapseOne textarea" ).each(function(x){
+	$( "#condiciones-institucionales textarea" ).each(function(x){
 	
 		$( this )
 			.attr({readOnly: true })
@@ -109,6 +115,19 @@ $( document ).ready(function(){
 			.editable({
 				title: 'Ingrese la informoción',
 				title: arrayTitlesCondicionesInstitucionales[x],
+				rows: 10,
+				emptytext: '',
+			});
+	});
+	
+	$( "#collapseOne textarea" ).each(function(x){
+	
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				title: arrayTitles[x%arrayTitles.length],
 				rows: 10,
 				emptytext: '',
 			});

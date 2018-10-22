@@ -95,7 +95,10 @@ class EjecucionFaseIController extends Controller
         ]);
     }
 
-	public function actionCreateAll(){
+	public function actionCreateAll()
+	{	
+		//Indica si se guarda la fase
+		$guardado = false;
 		
 		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
 		
@@ -170,7 +173,10 @@ class EjecucionFaseIController extends Controller
 						}
 					}
 					
-					$condicionesInstitucionales = CondicionesInstitucionales::findOne([ 'id_datos_ieo_profesional' => $datosIeoProfesional->id ]);
+					$condicionesInstitucionales = CondicionesInstitucionales::findOne([ 
+														'id_datos_ieo_profesional'	=> $datosIeoProfesional->id,
+														'id_fase'					=> $this->id_fase,
+													]);
 					
 					if( !$condicionesInstitucionales )
 					{
@@ -432,9 +438,12 @@ class EjecucionFaseIController extends Controller
 					}
 					
 					$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
+					$condicionesInstitucionales->id_fase = $this->id_fase;
 					$condicionesInstitucionales->estado = 1;
 					
 					$condicionesInstitucionales->save(false);
+					
+					$guardado = true;
 				}
 				else
 				{
@@ -484,6 +493,7 @@ class EjecucionFaseIController extends Controller
             'datosIeoProfesional'	=> $datosIeoProfesional,
 			'condiciones'			=> $condicionesInstitucionales,
 			'datosModelos'			=> $datosModelos,
+			'guardado'				=> $guardado,
         ]);
 	
 	}

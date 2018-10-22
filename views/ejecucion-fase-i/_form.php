@@ -22,6 +22,19 @@ if( !$sede ){
 	$this->registerJs( "$( cambiarSede ).click()" );
 	return;
 }
+
+if( $guardado ){
+	
+	$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
+}
 	
 $this->registerJsFile(
     '@web/js/ejecucionFaseI.js',
