@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 		'datosIeoProfesional'	=> $datosIeoProfesional,
 		'condiciones'			=> $condiciones,
 		'datosModelos'			=> $datosModelos,
+		'guardado'				=> $guardado,
     ]) ?>
 
 </div>

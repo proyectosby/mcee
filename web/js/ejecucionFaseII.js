@@ -61,6 +61,108 @@ $( document ).ready(function(){
 		"Total Docentes participantes por IEO",
 	];
 	
+	$( "#collapseOne textarea" ).each(function(x){
+	
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				title: arrayTitles[x%arrayTitles.length],
+				rows: 10,
+				emptytext: '',
+			});
+	});
+	
+	$( "#condiciones-institucionales textarea" ).each(function(x){
+	
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				title: arrayTitlesCondicionesInstitucionales[x],
+				rows: 10,
+				emptytext: '',
+			});
+	});
+	
+	//Creo un array con las primeras posiciones de cada sesion
+	//Esto se hace para que al hacer submit no aparezcan los datos vacios
+	//Y se pueda clonar más fácil las filas
+	dvsFilas = [];
+	$(".panel-body").each(function(x){
+		
+		var id = $( "[id^=dvFilaSesion]", this ).eq(0)[0].id.substr( "dvFilaSesion".length );
+		
+		dvsFilas[id] = $( "[id^=dvFilaSesion]", this ).eq(0);
+		$( "[id^=dvFilaSesion]", this ).eq(0).remove();
+	});
+	
+	
+	consecutivos = [];
+	$( '[id^=dvSesion]' ).each(function(x){
+		
+		var pos = this.id.substr( "dvSesion".length );
+		
+		consecutivos[pos] = {
+			inicial : $( "[id^=dvFilaSesion]", this ).length+1,
+			actual  : $( "[id^=dvFilaSesion]", this ).length+1,
+		} 
+	});
+	
+	/************************************************************************************************************************************************
+	 * Validando datos extras
+	 ************************************************************************************************************************************************/
+	 setTimeout(function(){
+		 
+		$( "input:text[id^=datossesiones]" ).each(function(x){
+			
+			$('#w0').yiiActiveForm('find', this.id ).validate = function (attribute, value, messages, deferred, $form) {
+				
+				var cmp = $( "#"+this.id ).val();
+				
+				//Valido que todos los campos esten llenos
+				var sinCampoVacios = true;
+				var hayCamposDiligenciados = false;
+				$( "textarea[id^=semillerosticaccionesrecursosfaseii]", $( this.container ).parent() ).each(function(){
+					if( $( this ).val() == '' ){
+						sinCampoVacios = false;
+					}
+					else{
+						hayCamposDiligenciados = true;
+					}
+				})
+				
+				$( "textarea[id^=semillerosticejecucionfaseii]", $( this.container ).parent() ).each(function(){
+					if( $( this ).val() == '' ){
+						sinCampoVacios = false;
+					}
+					else{
+						hayCamposDiligenciados = true;
+					}
+				});
+				
+				//Si no se ha ingresado fecha y mas de una fila (ejecucion de fase)
+				if( cmp == "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length == 0 && !hayCamposDiligenciados ){
+					return true;
+				}
+				else if( cmp != "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length > 0 && sinCampoVacios ){
+					return true;
+				}
+				else{
+					if( cmp == "" )
+						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede ser vacío"});
+					else if( hayCamposDiligenciados )
+						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y diligenciar todos los campos", cmp );
+					else
+						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y diligenciar todos los campos", cmp );
+					 
+					return false;
+				}
+			}
+		});
+	 }, 500 );
 	
 	//Cuando se abre un acordeon se ponen todos los elementos del encabezado del mismo tamaño
 	$('#collapseOne').on('shown.bs.collapse', function(){
@@ -134,8 +236,20 @@ $( document ).ready(function(){
 			var id = this.id.substr( "btnAddFila".length );
 			
 			
-			var filaNueva = $( "#dvFilaSesion"+id ).clone();
+			// var filaNueva = $( "#dvFilaSesion"+id ).clone();
+			var filaNueva = dvsFilas[id].clone();
 			$( "#dvSesion"+id ).append( filaNueva );
+			
+			
+			var consecutivo = consecutivos[id].actual;
+			
+			//Cambiando los id de los textarea con el consecutivo correspondiente
+			$( "textarea,input:hidden", filaNueva ).each(function(x){
+				$( this ).prop({
+					id	: this.id.substr( 0, this.id.indexOf( '-', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+this.id.substr( this.id.lastIndexOf( "-" ) ),
+					name: this.name.substr( 0, this.name.indexOf( '[', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+this.name.substr( this.name.lastIndexOf( "[" )-1 ),
+				})
+			})
 			
 			
 			filaNueva.css({ display: '' });
@@ -156,6 +270,8 @@ $( document ).ready(function(){
 			});
 			
 			$( "#btnRemoveFila"+id ).css({ display: "" });
+			
+			consecutivos[id].actual++;
 		});
 		
 	});
@@ -165,15 +281,15 @@ $( document ).ready(function(){
 		$( this ).click(function(){
 			
 			var id = this.id.substr( "btnRemoveFila".length );
-			var total = $( "[id^=dvFilaSesion"+id+"]"  ).length;
-			
-			if( total > 1 ){
+			var total = $( "[id^=dvFilaSesion]", $( this ).parent().parent() ).length;
+
+			if( total > 0 ){
 				
-				if( total == 2 ){
+				if( total == 1 ){
 					$( this ).css({ display: "none" });
 				}
 				
-				$( "[id=dvFilaSesion"+id+"]" ).last().remove()
+				$( "[id^=dvFilaSesion]", $( this ).parent().parent() ).last().remove()
 				
 			}
 		});

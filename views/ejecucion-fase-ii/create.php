@@ -24,11 +24,16 @@ $this->params['breadcrumbs'][] = "Agregar";
     <h1><?= Html::encode($fase->descripcion) ?></h1>
 
     <?= $this->render('_form', [
-        'model' 		=> $model,
-		'fase'  		=> $fase,
-		'institucion'	=> $institucion,
-		'sede' 		 	=> $sede,
-		'docentes' 		=> $docentes,
+		'fase'  				=> $fase,
+		'institucion'			=> $institucion,
+		'sede' 		 			=> $sede,
+		'docentes' 				=> $docentes,
+		'sesiones' 				=> $sesiones,
+        'datosModelos'			=> $datosModelos,
+        'condiciones'			=> $condiciones,
+        'datosIeoProfesional'	=> $datosIeoProfesional,
+        'datosModelos'			=> $datosModelos,
+		'guardado'				=> $guardado,
     ]) ?>
 
 </div>

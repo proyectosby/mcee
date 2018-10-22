@@ -40,7 +40,7 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'id_datos_ieo_profesional', 'estado', 'total_sesiones_ieo', 'total_docentes_ieo','sesiones_por_docente'], 'required'],
+            [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'id_datos_ieo_profesional', 'estado', 'total_sesiones_ieo', 'total_docentes_ieo','sesiones_por_docente','id_fase'], 'required'],
             [['id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['id_datos_ieo_profesional', 'estado'], 'integer'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'total_sesiones_ieo', 'total_docentes_ieo'], 'string', 'max' => 500],
@@ -65,6 +65,7 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
             'total_sesiones_ieo' 		=> 'Total Sesiones Ieo',
             'total_docentes_ieo' 		=> 'Total Docentes Ieo',
             'sesiones_por_docente' 		=> 'Sesiones por Docente',
+            'id_fase' 					=> 'ID Fase',
         ];
     }
 }
