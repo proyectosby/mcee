@@ -13,6 +13,21 @@ else
 	die;
 }
 
+/**********
+Versión: 002
+Fecha: 16-04-2018
+Desarrollador: Oscar David Lopez
+Descripción: Forulario informe planeacion IEO
+---------------------------------------
+Modificaciones:
+Fecha: 16-04-2018
+Persona encargada: Oscar David Lopez
+Cambios realizados: Se reestructua el formulario, reduccion de codigo y correcion de errores
+
+---------------------------------------
+**********/
+
+
 use Yii;
 use app\models\EcInformePlaneacionIeo;
 use app\models\EcInformePlaneacionIeoSearch;
@@ -27,6 +42,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Parametro;
+use yii\bootstrap\Collapse;
 
 /**
  * EcinformeplaneacionieoController implements the CRUD actions for EcInformePlaneacionIeo model.
@@ -50,32 +66,80 @@ class EcinformeplaneacionieoController extends Controller
 
     function actionViewfases($model){
         
-       $EcProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
-       $numProyectos = count($EcProyectos);
+       $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
+       $numProyectos = count($ecProyectos);
 
-       $proyectos = array();
-        foreach ($EcProyectos as $r)
-         {
-             $proyectos[$r['id']]= $r['descripcion'];
+       // $proyectos = array();
+        // foreach ($ecProyectos as $r)
+		// {
+			// $proyectos[$r['id']]= $r['descripcion'];
 
-         }
+		// }
+		 
+		$ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
+		foreach ($ecProyectos as $idProyecto => $v)
+		{
+			
+			 $contenedores[] = 	
+				[
+					'label' 		=>  $v,
+					'content' 		=>  $this->renderPartial( 'procesos', 
+													[  
+                                                        'idProyecto' => $idProyecto, 
+													] 
+										),
+					'contentOptions'=> []
+				];
+		}
+		 
+		 echo Collapse::widget([
+			'items' => $contenedores,
+		]);
+		 
+		 
+		 
+		// foreach( $items as $keyFase => $item )
+		// { 
+        
+        // $accionesall = EcAcciones::find()->where( 'estado=1' )->andWhere( 'id_proceso='.$i )->all();
+        // $acciones = array();
 
-       $EcProcesos = EcProcesos::find()->where( 'estado=1' )->all();
+        // foreach ($accionesall as $r)
+        // {
+            // $acciones[$r['id']]= $r['descripcion'];
+        // }
+        
+                // $contenedores[] = 	[
+					// 'label' 		=>  $item,
+					// 'content' 		=>  $this->render( 'fases3', 
+													// [  
+                                                        // 'idPE' 		=> "", 
+														// 'index' 	=> $index,
+                                                        // 'item' 		=> $item,
+                                                        // 'model'     => $model,
+                                                        // 'acciones'  => $acciones,
+													// ] 
+										// ),
+					// 'contentOptions'=> []
+				// ];
 
-       $procesos = array();
-        foreach ($EcProcesos as $r)
-         {
-             $procesos[$r['id']]= $r['descripcion'];
+		// $index ++;
+		// $i ++;
+		// } 
+			 
+		 
+		 
+		
 
-         }
+		
 
-        return $this->renderPartial('fases', [
-            'idPE'  => null,
-            'fases' => $proyectos,
-            //'procesos' => $procesos,
-            'numProyectos' => $numProyectos,
-            "model" => $model
-        ]);
+        // return $this->renderPartial('fases', [
+            // 'idPE'  => null,
+            // 'fases' => $proyectos,
+            // //'procesos' => $procesos,
+            // 'numProyectos' => $numProyectos,
+            // "model" => $model
+        // ]);
         
     }
 

@@ -26,15 +26,16 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     	$form = ActiveForm::begin();
      ?>
 	 
+	 <?= $form->field($model, 'id_institucion')->dropDownList($instituciones) ?>
+	 
 	 <?= $form->field($model, 'id_sede')->dropDownList($sedes) ?>
 	 
 	 <label> Código Dane </label>
 
 	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$codigoDane?></h6>
 	 
-	 <?= $form->field($model, 'id_institucion')->dropDownList($instituciones) ?>
+	<?= $form->field($model, 'zona_educativa')->textInput() ?>
 
-    <?= $form->field($model, 'zona_educativa')->textInput() ?>
 	
 	<label> Comuna </label>
 
@@ -42,9 +43,10 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
 	<label> Barrio</label>
 	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$barrios?></h6>
+	
+	<?= $form->field($model, 'fase')->DropDownList($fases,['prompt'=>'Seleccione...']) ?>
+	
 
- 
-	<?= $form->field($model, 'zona_educativa')->DropDownList($fases,['prompt'=>'Seleccione...']) ?>
 		
         
         
@@ -64,6 +66,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 	    <?= $this->context->actionViewFases($model);   ?>
 
 
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+    </div>
     <?php ActiveForm::end(); ?>
 
 </div>
