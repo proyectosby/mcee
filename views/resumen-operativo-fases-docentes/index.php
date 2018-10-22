@@ -6,6 +6,10 @@ Fecha: 2018-09-03
 Desarrollador: Edwin Molina Grisales
 Descripción: RESUMEN OPERATIVO FASES ESTUDIANTES
 ---------------------------------------
+Modificación: 
+Fecha: 22-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver a la vista de botones
 **********/
 
 use yii\helpers\Html;
@@ -18,8 +22,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'RESUMEN OPERATIVO FASES DOCENTES';
-$this->params['breadcrumbs'][] = $this->title;
-
+$this->params['breadcrumbs'][] = $this->title; 
 $this->registerJsFile(
 	"@web/js/jQuery-TableToExcel-master/jquery.tableToExcel.js", 
 	['depends' => [\yii\web\JqueryAsset::className()]]
@@ -71,6 +74,19 @@ section.content {
 <div class="ec-datos-basicos-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+	
+	
+	<div class="form-group">
+			
+			<?= Html::a('Volver', 
+										[
+											'semilleros/index',
+										], 
+										['class' => 'btn btn-info']) ?>
+					
+	</div>
+
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>

@@ -1,5 +1,17 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 18-08-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Formulario diario de campo
+---------------------------------------
+Modificación: 
+Fecha: 22-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver a la vista de botones
+**********/
+
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
@@ -14,6 +26,8 @@ $this->title = '';
 $nombre = 'Semilleros Tic Diario De Campos';
 $this->params['breadcrumbs'][] =$nombre;
 ?>
+
+
 
 <?php
 		Modal::Begin([
@@ -35,7 +49,18 @@ $this->params['breadcrumbs'][] =$nombre;
 
     <p>
         <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+		
+		
+		<?= Html::a('Volver', 
+									[
+										'semilleros/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+
     </p>
+	
+	
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,

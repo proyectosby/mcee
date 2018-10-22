@@ -56,151 +56,153 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="semilleros-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <div class="form-group">
-       <?= Html::a('Creación Semilleros Tic docentes', 
-								[
-									'semilleros',
-									'idReporte'	=> 1,
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
+	
+	<div class="panel panel-info">
 		
-		 <?= Html::a('Ejecución fase I', 
-								[
-									'semilleros',
-									'idReporte'		=> 2,
-								], 
-								['class' => 'btn btn-success'
-		]) ?> 
-		
-		<?= Html::a('Ejecución Fase II', 
-								[
-									
-									'semilleros',
-									'idReporte'		=> 3, 
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
-		
-		<?= Html::a('Ejecución fase III', 
-								[
-									'semilleros',
-									'idReporte'		=> 4,
-								], 
-								['class' => 'btn btn-success'
-		]) ?>
-		
-		
-    </div>
-
-    <div class="form-group">
-		<?= Html::a('Diario de campo', 
+		<div class="panel-heading">
+			<h3 class="panel-title">Docentes</h3>
+		</div>
+		<div class="panel-body">
+			
+			<div class="form-group">
+		   <?= Html::a('Creación Semilleros Tic docentes', 
 									[
-										'semilleros',
-										'idReporte'		=> 5,
+										'semilleros-datos-ieo/create',
+										// 'idReporte'	=> 1,
 									], 
-									['class' => 'btn btn-success']) ?>
-									
-									
-		<?= Html::a('Resumen Operativo', 
+									['class' => 'btn btn-success'
+			]) ?>
+			
+			 <?= Html::a('Ejecución fase I', 
 									[
-										'semilleros',
-										'idReporte'		=> 6,
+										'ejecucion-fase-i/create',
+										// 'idReporte'		=> 2,
 									], 
-									['class' => 'btn btn-success']) ?>
-									
-		<?= Html::a('Población', 
+									['class' => 'btn btn-success'
+			]) ?> 
+			
+			<?= Html::a('Ejecución Fase II', 
 									[
-										'semilleros',
-										'idReporte'		=> 16,
+										
+										'ejecucion-fase-ii/create',
+										// 'idReporte'		=> 3, 
 									], 
-									['class' => 'btn btn-success']) ?>
-									
+									['class' => 'btn btn-success'
+			]) ?>
+			
+			<?= Html::a('Ejecución fase III', 
+									[
+										'ejecucion-fase-iii/create',
+										// 'idReporte'		=> 4,
+									], 
+									['class' => 'btn btn-success'
+			]) ?>
+			
+			
+		</div>
+
+		<div class="form-group">
+			<?= Html::a('Diario de campo', 
+										[
+											'semilleros-tic-diario-de-campo/index',
+											// 'idReporte'		=> 5,
+										], 
+										['class' => 'btn btn-success']) ?>
+										
+										
+			<?= Html::a('Resumen Operativo', 
+										[
+											'resumen-operativo-fases-docentes/index',
+											// 'idReporte'		=> 6,
+										], 
+										['class' => 'btn btn-success']) ?>
+										
+			<?= Html::a('Población', 
+										[
+											'instrumento-poblacion-docentes/create',
+											// 'idReporte'		=> 16,
+										], 
+										['class' => 'btn btn-success']) ?>
+										
 
 
-</div>
-<div class="form-group">
+		</div>
+			
+		</div>
+	
+	</div>
+	
+	<div class="panel panel-info">
+		
+		<div class="panel-heading">
+			<h3 class="panel-title">Estudiantes</h3>
+		</div>
+		<div class="panel-body">
+		
+		<div class="form-group">
 		
 		<?= Html::a('Creación semilleros tic estudiantes', 
 									[
-										'semilleros',
-										'idReporte'		=> 7,
+										'semilleros-datos-ieo-estudiantes/create',
+										// 'idReporte'		=> 7,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
 		 <?= Html::a('Ejecución fase I', 
 								[
-									'semilleros',
-									'idReporte'		=> 8,
+									'ejecucion-fase-i-estudiantes/create',
+									// 'idReporte'		=> 8,
 								], 
 								['class' => 'btn btn-success'
 		]) ?> 
 		<?= Html::a('Ejecución fase II', 
 										[
-											'semilleros',
-											'idReporte'		=> 9,
+											'ejecucion-fase-ii-estudiantes/create',
+											// 'idReporte'		=> 9,
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
 		<?= Html::a('Ejecución fase III', 
 										[
-											'semilleros',
-											'idReporte'		=> 10,
+											'ejecucion-fase-iii-estudiantes/create',
+											// 'idReporte'		=> 10,
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
 
-</div>
+		</div>
 
- <div class="form-group">
+		<div class="form-group">
 		<?= Html::a('Diario de campo', 
 									[
-										'semilleros',
-										'idReporte'		=> 11,
+										'semilleros-tic-diario-de-campo-estudiantes/index',
+										// 'idReporte'		=> 11,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
 									
 		<?= Html::a('Resumen Operativo', 
 									[
-										'semilleros',
-										'idReporte'		=> 12,
+										'resumen-operativo-fases-estudiantes/index',
+										// 'idReporte'		=> 12,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
-
-
-</div>
-
- <div class="form-group">
 		<?= Html::a('Población', 
 									[
-										'semilleros',
-										'idReporte'		=> 13,
+										'instrumento-poblacion-estudiantes/create',
+										// 'idReporte'		=> 13,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
-									
-		
-									
 
 
-</div>
+		</div>
 
-<div class="form-group">
-		<?= Html::a('Volver', 
-									[
-										'semilleros',
-										'idReporte'		=> 14,
-									], 
-									['class' => 'btn btn-success']) ?>
-									
-									
-		
-									
+	</div>
+	
+	</div>
 
 
-</div>
 </div>
 <?php ActiveForm::end(); ?>

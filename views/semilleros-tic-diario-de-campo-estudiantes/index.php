@@ -1,5 +1,18 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 2018-08-10
+Desarrollador: Maria Viviana Rodas
+Descripción: Formulario diario de campo estudiantes
+---------------------------------------
+Modificaciones:
+Fecha: 22-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver a la vista de botones
+---------------------------------------
+**********/
+
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
@@ -35,6 +48,15 @@ $this->params['breadcrumbs'][] = $nombre ;
 
     <p>
         <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+		
+		
+		<?= Html::a('Volver', 
+									[
+										'semilleros/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+
     </p>
 
     <?= DataTables::widget([

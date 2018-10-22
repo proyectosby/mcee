@@ -10,6 +10,10 @@ Fecha: 2018-09-19
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
 ---------------------------------------
+Fecha: 22-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver a la vista de botones
+---------------------------------------
 **********/
 
 use yii\helpers\Html;
@@ -30,6 +34,16 @@ $this->registerJsFile(
 /* @var $model app\models\SemillerosDatosIeoEstudiantes */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+
+<div class="form-group">
+		
+		<?= Html::a('Volver', 
+									[
+										'semilleros/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+</div>	
 
 <div class="semilleros-datos-ieo-estudiantes-form">
 
