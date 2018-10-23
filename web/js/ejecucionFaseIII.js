@@ -13,7 +13,7 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 
 $( document ).ready(function(){
 	
-	var con = 2;
+	// var con = 1;
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
@@ -85,16 +85,57 @@ $( document ).ready(function(){
 			});
 	});
 	
+	$( "#condiciones-institucionales textarea" ).each(function(x){
+	
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				title: arrayTitlesCondicionesInstitucionales[x],
+				rows: 10,
+				emptytext: '',
+			});
+	});
+	
+	$( "#collapseOne textarea" ).each(function(x){
+	
+		$( this )
+			.attr({readOnly: true })
+			.css({resize: 'none' })
+			.editable({
+				title: 'Ingrese la informoción',
+				title: arrayTitles[x%arrayTitles.length],
+				rows: 10,
+				emptytext: '',
+			});
+	});
+	
+	var panel = $( ".panel" ).first();
+	panel.remove();
+	
 	$( "[id^=btnAddFila]" ).each(function(){
 		
 		$( this ).click(function(){
 			
-			console.log( con );	
-			
 			var id = this.id.substr( "btnAddFila".length );
 			
 			//Clono sobre el primer item del acordeon, que siempre está oculto
-			var cloneCollapse = $( ".panel" ).first().clone();
+			var cloneCollapse = panel.clone();
+			
+			
+			//Busco todos los campos y se les cambia el nombre y al id
+			$( "textarea,input,select", cloneCollapse ).each(function(){
+				
+				//this es el respectivo campo (textarea,input o select )
+				$( this ).prop({
+					id		: this.id.replace( /-[0-9]+-/gi, "-"+con+"-" ),
+					name	: this.name.replace( /\[[0-9]+\]/gi, "["+con+"]" ),
+				});
+			});
+			
+			
+			$( ".panel-group" ).append( cloneCollapse );
 			
 			//Se muestra el item del acordeon
 			cloneCollapse.css({ display: "" });	
@@ -102,13 +143,102 @@ $( document ).ready(function(){
 			var anchorA = $( ".panel-title > a" , cloneCollapse );
 			
 			anchorA
-				.html( "Registro "+con )
+				.html( "Registro "+(con-1) )
 				.attr( "href", anchorA.attr("href").substr( 0 , anchorA.attr("href").length-1 )+con );
 			
 			var panelCollapse = $( ".panel-collapse" , cloneCollapse );
 			panelCollapse.attr( "id", panelCollapse.attr( "id" ).substr( 0, panelCollapse.attr( "id" ).length-1 )+con )
 			
-			$( ".panel-group" ).append( cloneCollapse );
+			//Agregando la validacion de los campos para datos ieo profesional
+			$( "#datosieoprofesional-"+con+"-id_institucion" ).parent()
+				.removeClass( "field-datosieoprofesional-0-id_institucion" )
+				.addClass( "field-datosieoprofesional-"+con+"-id_institucion" );
+				
+			$( "#datosieoprofesional-"+con+"-id_profesional_a" ).parent()
+				.removeClass( "field-datosieoprofesional-0-id_profesional_a" )
+				.addClass( "field-datosieoprofesional-"+con+"-id_profesional_a" );
+			
+			$( "#w0" ).yiiActiveForm( 'add', 
+					{
+						"id"		: "datosieoprofesional-"+con+"-id_institucion",
+						"name"		: "DatosIeoProfesional["+con+"][id_institucion]",
+						"container"	: ".field-datosieoprofesional-"+con+"-id_institucion",
+						"input"		: "#datosieoprofesional-"+con+"-id_institucion",
+						"validate"	: function (attribute, value, messages, deferred, $form) {
+										yii.validation.required(value, messages, {"message":"Institución no puede estar vacío."});
+										yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Institución debe ser un número entero.","skipOnEmpty":1});
+									}
+					},
+				);
+				
+			$( "#w0" ).yiiActiveForm( 'add', 
+					{
+						"id"		: "datosieoprofesional-"+con+"-id_profesional_a",
+						"name"		: "DatosIeoProfesional["+con+"][id_profesional_a]",
+						"container"	: ".field-datosieoprofesional-"+con+"-id_profesional_a",
+						"input"		: "#datosieoprofesional-"+con+"-id_profesional_a",
+						"validate"	: function (attribute, value, messages, deferred, $form) {
+										yii.validation.required(value, messages, {"message":"Profesional A no puede estar vacío."});
+										yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Profesional A debe ser un número entero.","skipOnEmpty":1});
+									}
+					},
+				);
+			
+			//Agregando la validacion de los campos para ejecucion de fase
+			$( "#semillerosticejecucionfaseiii-"+con+"-total_aplicaciones_usadas" ).parent()
+				.removeClass( "field-semillerosticejecucionfaseiii-0-total_aplicaciones_usadas" )
+				.addClass( "field-semillerosticejecucionfaseiii-"+con+"-total_aplicaciones_usadas" );
+				
+			$( "#w0" ).yiiActiveForm( 'add', 
+					{
+						"id"		: "semillerosticejecucionfaseiii-"+con+"-total_aplicaciones_usadas",
+						"name"		: "SemillerosTicEjecucionFaseIii["+con+"][total_aplicaciones_usadas]",
+						"container"	: ".field-semillerosticejecucionfaseiii-"+con+"-total_aplicaciones_usadas",
+						"input"		: "#semillerosticejecucionfaseiii-"+con+"-total_aplicaciones_usadas",
+						"validate"	: function (attribute, value, messages, deferred, $form) {
+										yii.validation.string(value, messages, {"message":"Total Aplicaciones Usadas debe ser una cadena de caracteres.","skipOnEmpty":1});
+										yii.validation.required(value, messages, {"message":"Total Aplicaciones Usadas no puede estar vacío.","skipOnEmpty":1});
+									}
+					},
+				);
+			
+			$( "#semillerosticejecucionfaseiii-"+con+"-estudiantes_cultivadores" ).parent()
+				.removeClass( "field-semillerosticejecucionfaseiii-0-estudiantes_cultivadores" )
+				.addClass( "field-semillerosticejecucionfaseiii-"+con+"-estudiantes_cultivadores" );
+				
+			$( "#w0" ).yiiActiveForm( 'add', 
+					{
+						"id"		: "semillerosticejecucionfaseiii-"+con+"-estudiantes_cultivadores",
+						"name"		: "SemillerosTicEjecucionFaseIii["+con+"][estudiantes_cultivadores]",
+						"container"	: ".field-semillerosticejecucionfaseiii-"+con+"-estudiantes_cultivadores",
+						"input"		: "#semillerosticejecucionfaseiii-"+con+"-estudiantes_cultivadores",
+						"validate"	: function (attribute, value, messages, deferred, $form) {
+										yii.validation.string(value, messages, {"message":"Número de estudiantes cultivadores debe ser una cadena de caracteres.","skipOnEmpty":1});
+										yii.validation.required(value, messages, {"message":"Número de estudiantes cultivadores no puede estar vacío.","skipOnEmpty":1});
+									}
+					},
+				);
+				
+			//Agregando validación a todos los campos textarea de ejecución de fase
+			$( "textarea[id^=semillerosticejecucionfaseiii]", cloneCollapse ).each(function(){
+				
+				$( "#"+this.id ).parent()
+					.removeClass( "field-"+this.id.replace( /-[0-9]+-/gi, "-0-" ) )
+					.addClass( "field-"+this.id );
+					
+				$( "#w0" ).yiiActiveForm( 'add', 
+						{
+							"id"		: "#"+this.id,
+							"name"		: this.name,
+							"container"	: ".field-"+this.id,
+							"input"		: "#"+this.id,
+							"validate"	: function (attribute, value, messages, deferred, $form) {
+											yii.validation.string(value, messages, {"message":"Debe ser una cadena de caracteres.","skipOnEmpty":1});
+											yii.validation.required(value, messages, {"message":"No puede estar vacío.","skipOnEmpty":1});
+										}
+						},
+					);
+			});
 			
 			$( "#btnRemoveFila"+id ).css({ display: "" });
 			
@@ -140,18 +270,15 @@ $( document ).ready(function(){
 			
 			var total = $( ".panel" ).length;
 			
-			if( total > 1 ){
+			if( total > min ){
 				
-				if( total == 2 ){
+				if( total == min+1 ){
 					$( this ).css({ display: "none" });
 				}
 				
 				$( ".panel" ).last().remove()
 				
-				con--;
-				
-				console.log( con );
-				
+				con--;				
 			}
 		});
 	});
