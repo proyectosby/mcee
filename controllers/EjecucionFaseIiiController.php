@@ -62,6 +62,7 @@ class EjecucionFaseIiiController extends Controller
      */
     public function actionIndex()
     {
+        
         $searchModel = new EjecucionFaseIBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

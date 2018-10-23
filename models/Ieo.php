@@ -19,6 +19,10 @@ use Yii;
  */
 class Ieo extends \yii\db\ActiveRecord
 {
+    public $file_socializacion_ruta;
+    
+    public $file_soporte_necesidad;
+
     /**
      * @inheritdoc
      */

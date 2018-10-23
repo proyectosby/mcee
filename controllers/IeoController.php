@@ -21,6 +21,8 @@ use app\models\Evidencias;
 use app\models\TipoDocumentos;
 use app\models\Producto;
 use app\models\RequerimientoExtraIeo;
+
+use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -109,29 +111,89 @@ class IeoController extends Controller
      */
     public function actionCreate()
     {
+        /**
+         * Se realiza registro del modelo base IEO
+         * Obtenemos el id de iserción para usarlo como llave foranea en los demas modelos 
+         */
         $model = new Ieo();
+        $requerimientoExtra = new RequerimientoExtraIeo();
+        $ieo_id = 0;
+        $idInstitucion = $_SESSION['instituciones'][0];
+        $data = [];
+        $institucion = Instituciones::findOne( $idInstitucion );
 
-        if ($model->load(Yii::$app->request->post())) {
-                       
-            $model->institucion_id = $_SESSION['instituciones'][0];
-            //$model->sede_id = 1;
+        if (Yii::$app->request->post('Ieo')) {
             
-            $institucion = Instituciones::findOne( $model->institucion_id );
+            $model->institucion_id = $idInstitucion;
+            $model->estado = 1;
+            $model->sede_id = 2;          
             $model->codigo_dane = $institucion->codigo_dane;
             
+            if(/*$model->save()*/true){
+                 
+                $ieo_id = $model->id;
+                $data = Yii::$app->request->post('Ieo');
+                $count 	= count( $data );
+        
+                $models = [];
+                $modelRequerimientoExtra = [];
+                for( $i = 0; $i < $count; $i++ ){
+                    $models[] = new Ieo();
+                    $modelRequerimientoExtra [] = new RequerimientoExtraIeo();
+                }
 
-            if($model->save()){
-                var_dump("guardado");
-            }else{
-                var_dump("no guardado");
+                $i = 0;
+                if (Ieo::loadMultiple($models, Yii::$app->request->post() )) {
+                    
+                    foreach( $models as $key => $model) {
+                        
+                        $file_socializacion_ruta = UploadedFile::getInstance( $model, "[$key]file_socializacion_ruta" );
+                        $file_soporte_necesidad = UploadedFile::getInstance( $model, "[$key]file_soporte_necesidad" );
+                        
+                        if( $file_socializacion_ruta ){
+                            $carpeta = "../documentos/documentosIeo/requerimientoExtra/socializacion/".$institucion->codigo_dane;
+                            if (!file_exists($carpeta)) {
+                                mkdir($carpeta, 0777, true);
+                            }
+
+                            //Construyo la ruta completa del archivo a guardar
+                            $rutaFisicaDirectoriaUploads  = "../documentos/documentosIeo/requerimientoExtra/socializacion/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploads .= $file->baseName;
+                            $rutaFisicaDirectoriaUploads .= date( "_Y_m_d_His" ) . '.' . $file->extension;
+                            $save = $file->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+					
+                            if( $save ){
+                                //Le asigno la ruta al arhvio
+                                $model->ruta = $rutaFisicaDirectoriaUploads;
+                                
+                                // if( $model->save() )
+                                    // return $this->redirect(['view', 'id' => $model->id]);
+                            }else{
+                                echo $file->error;
+                                exit("finnn....");
+                            }
+
+                        }else{
+                            exit( "No hay archivo cargado" );
+                        }
+
+                    }
+                    foreach( $models as $key => $model) {
+                        $model->save();
+                    }
+                    die();
+                }
+
             }
-
-
-            //return $this->render(['view', 'id' => $model->id]);
+                
         }
-
+        
+        $model = new Ieo();
+        $requerimientoExtra = new RequerimientoExtraIeo();
+        
         return $this->renderAjax('create', [
             'model' => $model,
+            'requerimientoExtra' => $requerimientoExtra,
         ]);
     }
 

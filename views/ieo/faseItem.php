@@ -15,13 +15,15 @@ $index = 0;
 					'content' 		=>  $this->render( 'contenedorItem', 
 													[  
                                                         'idPE' 		=> "", 
+                                                        'actividad_id' => $actividad_id,
 														'index' 	=> $index,
                                                         'item' 		=> $item,
                                                         'documentosReconocimiento' => $documentosReconocimiento,
                                                         'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
                                                         'evidencias' => $evidencias,
                                                         'producto' => $producto,
-                                                        'requerimientoExtra' => $requerimientoExtra
+                                                        'requerimientoExtra' => $requerimientoExtra,
+                                                        "model" => $model,
 													] 
 										),
 					'contentOptions'=> []
