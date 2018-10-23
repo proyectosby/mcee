@@ -40,42 +40,17 @@ use dosamigos\datepicker\DatePicker;
 	// );
 ?>
 
-<style>
-	.col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1{
-		padding: 0px;
-	}
-	
-	.title{
-		height: 150px;
-		background-color: #ccc;
-	}
-	
-	.title > div > span{
-		height: 150px;
-	}
-	
-	.title2 > div > span{
-		height: 70px;
-	}
-	
-	.title3 > div > span{
-		height: 120px;
-	}
-</style>
-
 <div class="ejecucion-fase-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-	
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
 	
-	<?= $form->field($model, 'id_fase')->dropDownList( $institucion, [ 'prompt' => 'Seleccione...' ] )->label( 'Institución educativa' )?>
+	<?= $form->field($profesional, "[$index]id_institucion")->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
 
-    <?= $form->field($model, 'id_datos_sesiones')->dropDownList( $sede, [ 'prompt' => 'Seleccione...' ] )->label( 'Sede' ) ?>
+	<?= $form->field($sede, "[$index]id")->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 	
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS PROFESIONALES' ) ?></h3>
 
-    <?= $form->field($model, 'docente')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...' ] )->label('Profesional A.') ?>
+    <?= $form->field($profesional, "[$index]id_profesional_a")->dropDownList( $docentes, [ 'prompt' => 'Seleccione...' ] )->label('Profesional A.') ?>
 	
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode($fase->descripcion) ?></h3>
 	
@@ -116,42 +91,39 @@ use dosamigos\datepicker\DatePicker;
 		
 		<div class='row text-center'>
 			
-			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+			<div class='col-sm-2' style='display:none;'>
+				<?= Html::activeHiddenInput( $model, "[$index]id" ) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]seiones_empleadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]docente_creador" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]acciones_realiadas', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]asignatura" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]temas_problama', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]docente_usuario" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+			</div>
+			
+			<div class='col-sm-2'>
+				<?= $form->field( $model, "[$index]grado" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]tipo_conpetencias', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]numero_estudiantes" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]observaciones',[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]numero_apps_usadas" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]id_datos_ieo_profesional', [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+				<?= $form->field( $model, "[$index]nombre_aplicaciones" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 		</div>
-		
-		
-		
-		
-	
-	
-	
 	
 	
 	
@@ -198,42 +170,34 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center'>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]tic" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]tipo_recurso_tic" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]digitales" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]tipo_recurso_digital" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]escolares_no_tic" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]tipo_recurso_no_tic" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]tiempo_uso_recurso_tic" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -284,27 +248,27 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center'>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]numero" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]tipo_de_produccion" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]temas_escolares" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]indice_problematicas" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]fecha_uso_aplicaciones" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($model, '[$index]numero_apps', [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field( $model, "[$index]observaciones" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 		</div>
@@ -312,17 +276,10 @@ use dosamigos\datepicker\DatePicker;
 		
 	<br>	
 		
-	<?= $form->field($model, 'id_fase')->textInput()->label( 'Total aplicaciones usadas' )?>
+	<?= $form->field( $model, "[$index]total_aplicaciones_usadas" )->textInput()->label( 'Total aplicaciones usadas' )?>
 
-    <?= $form->field($model, 'id_datos_sesiones')->textInput()->label( 'Número de estudiantes cultivadores' ) ?>
-	
-	
+    <?= $form->field( $model, "[$index]estudiantes_cultivadores" )->textInput()->label( 'Número de estudiantes cultivadores' ) ?>
 		
 	</div>
-	
-	
-
-
-	<?php ActiveForm::end(); ?>
 
 </div>
