@@ -2,9 +2,9 @@
 /**********
 ---------------------------------------
 Versión: 001
-Fecha: 18-10-2018
+Fecha: 23-10-2018
 Desarrollador: Maria Viviana Rodas
-Descripción: Controlador de la vista que contiene los botones de semilleros tic
+Descripción: Controlador de la vista que contiene los botones de competencias básicas proyectos pedagogicos transversales
 ---------------------------------------
 
 **********/
@@ -48,7 +48,7 @@ use yii\data\ArrayDataProvider;
 /**
  * AsignaturasController implements the CRUD actions for Asignaturas model.
  */
-class SemillerosController extends Controller
+class EcCompetenciasBasicasProyectosController extends Controller
 {
     /**
      * @inheritdoc
@@ -71,11 +71,10 @@ class SemillerosController extends Controller
 
 
     /**
-     * Lists all Asignaturas models.
+     * LLama a la vista de botones de competencas básicas proyectos pedagogicos transversales
      * @return mixed
      */
-	 //recibe 2 parametros con la intencion de filtrar por institucion y por sede
-    // public function actionIndex($idInstitucion = 0, $idSedes = 0)
+	 
     public function actionIndex()
     {
 		

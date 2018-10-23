@@ -12,16 +12,21 @@ use app\models\ComunasCorregimientos;
 use app\models\BarriosVeredas;
 use nex\chosen\Chosen;
 use	yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformePlaneacionIeo */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class="ec-informe-planeacion-ieo-form">
-
+	<p>
+        <?=  Html::button('Porcentajes',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'porcentajes']) ?>
+		
+    </p>
     <?php 
     	$form = ActiveForm::begin();
      ?>
@@ -35,6 +40,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$codigoDane?></h6>
 	 
 	<?= $form->field($model, 'zona_educativa')->textInput() ?>
+
+	
 
 	
 	<label> Comuna </label>
@@ -63,7 +70,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
 	    <h3 style='background-color: #ccc;padding:5px;'>I.E.O Misional</h3>
 
-	    <?= $this->context->actionViewFases($model);   ?>
+	    <?= $this->context->actionViewFases($model,$form);   ?>
 
 
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

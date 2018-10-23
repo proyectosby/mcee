@@ -8,23 +8,28 @@ use yii\bootstrap\Collapse;
 
 
 $ecEstrategias = EcEstrategias::find()->where( "estado=1 and id_producto=$idProductos" )->all();
-$ecEstrategias = ArrayHelper::map($ecEstrategias,'id','descripcion');
+$ecEstrategias = ArrayHelper::map($ecEstrategias,'id','descripcion','anio');
        
 
-
-foreach( $ecEstrategias as $a => $v )
+foreach ($ecEstrategias as $fecha => $dataEstrategia)
 {
+	
+	foreach( $dataEstrategia as $idEstrategia => $v )
+	{
+		
+			$items[] = 	[
+						'label' 		=>  "$v - $fecha",
+						'content' 		=>  $this->render( 'respuesta',
+																	[
+																		'contador'=> $idEstrategia,
+																		'form' => $form,
+																	] ),
+						'contentOptions'=> []
+					];	
 
-		$items[] = 	[
-					'label' 		=>  $v,
-					'content' 		=>  $this->render( 'respuesta',[] ),
-					'contentOptions'=> []
-				];	
+	}
 
 }
-
-
-
 
 echo Collapse::widget([
     'items' => $items, 

@@ -1,4 +1,12 @@
 <?php
+/**********
+Modificación: 
+Fecha: 22-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver a la vista de botones
+---------------------------------------
+
+**********/
 
 use yii\helpers\Html;
 
@@ -10,6 +18,9 @@ $this->title = 'Instrumento Población Docentes';
 // $this->params['breadcrumbs'][] = ['label' => 'Instrumento Población Estudiantes', 'url' => ['index']];
 // $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+
 <div class="instrumento-poblacion-docentes-create">
 
     <h1><?= Html::encode($this->title) ?></h1>

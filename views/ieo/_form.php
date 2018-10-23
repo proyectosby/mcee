@@ -13,13 +13,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'persona_id')->textInput() ?>
-
-    <?= $form->field($model, 'institucion_id')->textInput() ?>
-
-    <?= $form->field($model, 'sede_id')->textInput() ?>
-
-    <?= $form->field($model, 'codigo_dane')->textInput() ?>
+    <?= $form->field($model, 'persona_acargo')->textInput() ?>
 
     <?= $form->field($model, 'zona_educativa')->textInput() ?>
 

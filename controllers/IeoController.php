@@ -25,6 +25,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Instituciones;
 
 /**
  * IeoController implements the CRUD actions for Ieo model.
@@ -110,8 +111,23 @@ class IeoController extends Controller
     {
         $model = new Ieo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+                       
+            $model->institucion_id = $_SESSION['instituciones'][0];
+            //$model->sede_id = 1;
+            
+            $institucion = Instituciones::findOne( $model->institucion_id );
+            $model->codigo_dane = $institucion->codigo_dane;
+            
+
+            if($model->save()){
+                var_dump("guardado");
+            }else{
+                var_dump("no guardado");
+            }
+
+
+            //return $this->render(['view', 'id' => $model->id]);
         }
 
         return $this->renderAjax('create', [

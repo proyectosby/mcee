@@ -4,7 +4,7 @@
 Versión: 001
 Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
-Descripción: Formulario EJECUCION FASE III
+Descripción: Formulario EJECUCION FASE II
 ---------------------------------------
 Modificación: 
 Fecha: 22-10-2018
@@ -19,8 +19,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 
-$this->title = 'EJECUCION DE FASE III';
-$this->params['breadcrumbs'][] = ['label' => 'Ejecución Fase III', 'url' => ['index']];
+$this->title = 'EJECUCION DE FASE II';
+$this->params['breadcrumbs'][] = ['label' => 'Ejecución Fase II', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 
@@ -40,14 +40,10 @@ $this->params['breadcrumbs'][] = "Agregar";
 
     <?= $this->render('_form', [
         'model' 		=> $model,
-        'models' 		=> $models,
 		'fase'  		=> $fase,
 		'institucion'	=> $institucion,
 		'sede' 		 	=> $sede,
 		'docentes' 		=> $docentes,
-		'profesional'	=> $profesional,
-		'condiciones'	=> $condiciones,
-		'guardado'		=> $guardado,
     ]) ?>
 
 </div>

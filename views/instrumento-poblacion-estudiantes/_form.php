@@ -1,4 +1,12 @@
 <?php
+/**
+---------------------------------------
+Modificaciones:
+Fecha: 22-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver a la vista de botones
+---------------------------------------
+*/
 
 use yii\helpers\Html;
 // use yii\widgets\ActiveForm;
@@ -25,6 +33,16 @@ $this->registerJsFile(
 
 <div class="instrumento-poblacion-estudiantes-form" style='padding:10px'>
 
+	<div class="form-group">
+		
+		<?= Html::a('Volver', 
+									[
+										'semilleros/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+</div>
+	
 	<div>
 
     <?php $form = ActiveForm::begin([

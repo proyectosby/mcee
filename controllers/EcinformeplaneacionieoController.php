@@ -64,17 +64,18 @@ class EcinformeplaneacionieoController extends Controller
         ];
     }
 
-    function actionViewfases($model){
+    function actionViewfases($model,$form)
+	{
         
        $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
        $numProyectos = count($ecProyectos);
 
-       // $proyectos = array();
-        // foreach ($ecProyectos as $r)
-		// {
-			// $proyectos[$r['id']]= $r['descripcion'];
-
-		// }
+      $estadoActual = [ 
+					1 => '1',
+					2 => '2',
+					3 => '3',
+					4 => '4'
+				];
 		 
 		$ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
 		foreach ($ecProyectos as $idProyecto => $v)
@@ -85,7 +86,9 @@ class EcinformeplaneacionieoController extends Controller
 					'label' 		=>  $v,
 					'content' 		=>  $this->renderPartial( 'procesos', 
 													[  
-                                                        'idProyecto' => $idProyecto, 
+                                                        'idProyecto' => $idProyecto,
+														'form' => $form,
+														'estadoActual' => $estadoActual,
 													] 
 										),
 					'contentOptions'=> []
@@ -97,50 +100,7 @@ class EcinformeplaneacionieoController extends Controller
 		]);
 		 
 		 
-		 
-		// foreach( $items as $keyFase => $item )
-		// { 
-        
-        // $accionesall = EcAcciones::find()->where( 'estado=1' )->andWhere( 'id_proceso='.$i )->all();
-        // $acciones = array();
-
-        // foreach ($accionesall as $r)
-        // {
-            // $acciones[$r['id']]= $r['descripcion'];
-        // }
-        
-                // $contenedores[] = 	[
-					// 'label' 		=>  $item,
-					// 'content' 		=>  $this->render( 'fases3', 
-													// [  
-                                                        // 'idPE' 		=> "", 
-														// 'index' 	=> $index,
-                                                        // 'item' 		=> $item,
-                                                        // 'model'     => $model,
-                                                        // 'acciones'  => $acciones,
-													// ] 
-										// ),
-					// 'contentOptions'=> []
-				// ];
-
-		// $index ++;
-		// $i ++;
-		// } 
-			 
-		 
-		 
 		
-
-		
-
-        // return $this->renderPartial('fases', [
-            // 'idPE'  => null,
-            // 'fases' => $proyectos,
-            // //'procesos' => $procesos,
-            // 'numProyectos' => $numProyectos,
-            // "model" => $model
-        // ]);
-        
     }
 
 	public function obtenerParametros()
@@ -217,7 +177,33 @@ class EcinformeplaneacionieoController extends Controller
     {
         $model = new EcInformePlaneacionIeo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) 
+		{
+			
+			// $model->save();
+			$post = Yii::$app->request->post();
+			
+			$arrayDatosEcAvances = $post['EcAvances'];
+			$columnNameArrayEcAvances=['estado_actual','logros','retos','argumentos','id_acciones','estado','id_informe_proyecto'];
+			
+			//inserta todos los datos que trae el array en posicon EcAvances
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'ec.avances', $columnNameArrayEcAvances, $arrayDatosEcAvances
+                     )
+					 ->execute();
+					 
+			$arrayDatosEcRespuestas = $post['EcRespuestas'];
+			
+			$columnNameArrayEcRespuestas=['respuesta','id_estrategia','estado'];
+			//inserta todos los datos que trae el array en posicon EcRespuestas
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'ec.respuestas', $columnNameArrayEcRespuestas, $arrayDatosEcRespuestas
+                     )
+					 ->execute();
+			
+			
             return $this->redirect(['index']);
         }
 
@@ -232,9 +218,7 @@ class EcinformeplaneacionieoController extends Controller
 			$comunas = $comunas->descripcion;
 		else
 			$comunas ="No asignada";
-		
-		
-		
+
 		$barrios = @BarriosVeredas::findOne($idSedesBarrios);
 		if ( @$barrios->descripcion != null)
 			$barrios = $barrios->descripcion;

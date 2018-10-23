@@ -10,6 +10,10 @@ Modificaciones:
 Fecha: 2018-10-16
 Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
 ---------------------------------------
+Modificación: 
+Fecha: 22-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver a la vista de botones
 **********/
 
 
@@ -52,7 +56,15 @@ $this->registerJsFile(
 /* @var $form yii\widgets\ActiveForm */
 
 ?>
-
+<div class="form-group">
+		
+		<?= Html::a('Volver', 
+									[
+										'semilleros/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+</div>
 <div class="ejecucion-fase-form">
 
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>

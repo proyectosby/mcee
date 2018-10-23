@@ -32,6 +32,7 @@ class EcAvances extends \yii\db\ActiveRecord
     {
         return [
             [['estado_actual', 'logros', 'retos', 'argumentos'], 'string'],
+            [['estado_actual', 'logros', 'retos', 'argumentos'], 'required'],
             [['id_acciones'], 'default', 'value' => null],
             [['id_acciones'], 'integer'],
             [['estado'], 'boolean'],
