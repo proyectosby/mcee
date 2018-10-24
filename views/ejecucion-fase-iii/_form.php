@@ -32,11 +32,54 @@ $this->registerJsFile(
 	]
 );
 
+if( $guardado ){
+	
+	$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
+	
+}
+
+$this->registerJs( 
+	"
+	con = ".( count( $models )+1 ).";
+	min = ".( count( $models )-1 ).";
+	"
+);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+
+<style>
+	.col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1{
+		padding: 0px;
+	}
+	
+	.title{
+		height: 150px;
+		background-color: #ccc;
+	}
+	
+	.title > div > span{
+		height: 150px;
+	}
+	
+	.title2 > div > span{
+		height: 70px;
+	}
+	
+	.title3 > div > span{
+		height: 120px;
+	}
+</style>
 
 <div class="ejecucion-fase-form">
 
@@ -44,19 +87,73 @@ $this->registerJsFile(
 	
 	<div class="form-group">
 		<?= Html::button('Agregar' , ['class' => 'btn btn-success', 'id' => 'btnAddFila1' ]) ?>
-		<?= Html::button('Eliminar', ['class' => 'btn btn-success', 'id' => 'btnRemoveFila1', "style" => "display:none" ]) ?>
+		<?= Html::button('Eliminar', ['class' => 'btn btn-danger', 'id' => 'btnRemoveFila1', "style" => "display:none" ]) ?>
 	</div>
     
-	<?= $this->render( 'sesiones', [ 
-										'idPE' 			=> null,
+	<?= $this->render( 'sesiones', [
 										'model' 		=> $model,
+										'models' 		=> $models,
 										'institucion' 	=> $institucion,
 										'sede' 			=> $sede,
 										'docentes' 		=> $docentes,
-										'fase' 		=> $fase,
+										'fase' 			=> $fase,
+										'form' 			=> $form,
+										'profesional' 	=> $profesional,
 									]) ?>
+									
+	<div class='container-fluid' style='margin:10px 0;'>
+	
+		<div class='row text-center'>
+			
+			<div class='col-sm-12'>
+				<span total class='form-control' style='background-color:#ccc;'>CONDICIONES INSTITUCIONALES</span>
+			</div>
+		
+		</div>
+		
+		<div class='row text-center title2'>
+		
+			<div class='col-sm-3'>
+				<span total class='form-control' style='background-color:#ccc;'>Por parte de la IEO</span>
+			</div>
+			
+			<div class='col-sm-3'>
+				<span total class='form-control' style='background-color:#ccc;'>Por parte de UNIVALLE</span>
+			</div>
+			
+			<div class='col-sm-3'>
+				<span total class='form-control' style='background-color:#ccc;'>Por parte de la SEM</span>
+			</div>
+			
+			<div class='col-sm-3'>
+				<span total class='form-control' style='background-color:#ccc;'>OTRO</span>
+			</div>
+			
+		</div>
+		
+		<div class='row text-center' id='condiciones-institucionales'>
+			
+			<div class='col-sm-3'>
+				<?= $form->field( $condiciones, "parte_ieo" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+			</div>
+			
+			<div class='col-sm-3'>
+				<?= $form->field( $condiciones, "parte_univalle" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+			</div>
+			
+			<div class='col-sm-3'>
+				<?= $form->field( $condiciones, "parte_sem" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+			</div>
+			
+			<div class='col-sm-3'>
+				<?= $form->field( $condiciones, "otro" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+			</div>
 
-    <div class="form-group">
+		</div>
+		
+	</div>
+	
+	<div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 

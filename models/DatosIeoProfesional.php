@@ -44,8 +44,8 @@ class DatosIeoProfesional extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_institucion' => 'Id Institucion',
-            'id_profesional_a' => 'Id Profesional A',
+            'id_institucion' => 'Institución',
+            'id_profesional_a' => 'Profesional A',
             'estado' => 'Estado',
         ];
     }

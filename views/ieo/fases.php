@@ -22,14 +22,15 @@ foreach( $fases as $keyFase => $fase ){
                                                                         "Actividad 3. Mesa de trabajo: contrucción del plan de acción",
                                                                         "Productos"
                                                                         ], 
-														'index' 	=> $index,
+														'actividad_id' 	=> $index,
 														'sesiones' 	=> $index,
                                                         'fase' 		=> $fase,
 														'documentosReconocimiento' => $documentosReconocimiento,
 														'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
 														'evidencias' => $evidencias,
 														'producto' => $producto,
-														'requerimientoExtra' => $requerimientoExtra
+														'requerimientoExtra' => $requerimientoExtra,
+														"model" => $model,
 													] 
 										),
 					'contentOptions'=> []
