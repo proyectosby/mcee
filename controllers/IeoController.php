@@ -136,51 +136,148 @@ class IeoController extends Controller
                 $count 	= count( $data );
         
                 $models = [];
+                $modelDocumentosReconocimiento = [];
                 $modelRequerimientoExtra = [];
                 for( $i = 0; $i < $count; $i++ ){
                     $models[] = new Ieo();
-                    $modelRequerimientoExtra [] = new RequerimientoExtraIeo();
                 }
-
+                 
                 $i = 0;
                 if (Ieo::loadMultiple($models, Yii::$app->request->post() )) {
                     
                     foreach( $models as $key => $model) {
                         
+                        // Generación de instancias de los documentos REQUERIMIENTO EXTRA IEO
                         $file_socializacion_ruta = UploadedFile::getInstance( $model, "[$key]file_socializacion_ruta" );
                         $file_soporte_necesidad = UploadedFile::getInstance( $model, "[$key]file_soporte_necesidad" );
                         
-                        if( $file_socializacion_ruta ){
-                            $carpeta = "../documentos/documentosIeo/requerimientoExtra/socializacion/".$institucion->codigo_dane;
-                            if (!file_exists($carpeta)) {
+                        // Generación de instancias de los documentos Reconocimiento previo y documentos a desarrollar por el profesional de apoyo
+                        $file_informe_caracterizacion = UploadedFile::getInstance( $model, "[$key]file_informe_caracterizacion" );
+                        $file_matriz_caracterizacion = UploadedFile::getInstance( $model, "[$key]file_matriz_caracterizacion" );
+                        $file_revision_pei = UploadedFile::getInstance( $model, "[$key]file_revision_pei" );
+                        $file_revision_autoevaluacion = UploadedFile::getInstance( $model, "[$key]file_revision_autoevaluacion" );
+                        $file_revision_pmi = UploadedFile::getInstance( $model, "[$key]file_revision_pmi" );
+                        $file_resultados_caracterizacion = UploadedFile::getInstance( $model, "[$key]file_resultados_caracterizacion" );
+                        $file_horario_trabajo = UploadedFile::getInstance( $model, "[$key]file_horario_trabajo" );
+
+
+                        //Validación para el registro de documentos requerimientos extras IEO
+                        if( $file_socializacion_ruta && $file_soporte_necesidad){
+                           
+                            $modelRequerimientoExtra [] = new RequerimientoExtraIeo();
+                            //Se crea carpeta para almecenar los documentos de Socializacion
+                            $carpetaSocializacion = "../documentos/documentosIeo/requerimientoExtra/socializacion/".$institucion->codigo_dane;
+                            if (!file_exists($carpetaSocializacion)) {
                                 mkdir($carpeta, 0777, true);
                             }
 
-                            //Construyo la ruta completa del archivo a guardar
-                            $rutaFisicaDirectoriaUploads  = "../documentos/documentosIeo/requerimientoExtra/socializacion/".$institucion->codigo_dane."/";
-                            $rutaFisicaDirectoriaUploads .= $file->baseName;
-                            $rutaFisicaDirectoriaUploads .= date( "_Y_m_d_His" ) . '.' . $file->extension;
-                            $save = $file->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-					
-                            if( $save ){
+                            //Se crea carpeta para almecenar los documentos de Soporte Necesidad
+                            $carpetaSocializacion = "../documentos/documentosIeo/requerimientoExtra/soporteNecesidad/".$institucion->codigo_dane;
+                            if (!file_exists($carpetaSocializacion)) {
+                                mkdir($carpetaSocializacion, 0777, true);
+                            }
+                            
+                            //Construyo la ruta completa del archivo IEO Socialiazacion a guardar 
+                            $rutaFisicaDirectoriaUploadSocializacion  = "../documentos/documentosIeo/requerimientoExtra/socializacion/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadSocializacion .= $file_socializacion_ruta->baseName;
+                            $rutaFisicaDirectoriaUploadSocializacion .= date( "_Y_m_d_His" ) . '.' . $file_socializacion_ruta->extension;
+                            $saveSocializacion = $file_socializacion_ruta->saveAs( $rutaFisicaDirectoriaUploadSocializacion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                            
+
+                            //Construyo la ruta completa del archivo IEO Soporte Necesidad a guardar 
+                            $rutaFisicaDirectoriaUploadSoporteNecesidad  = "../documentos/documentosIeo/requerimientoExtra/soporteNecesidad/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadSoporteNecesidad .= $file_soporte_necesidad->baseName;
+                            $rutaFisicaDirectoriaUploadSoporteNecesidad .= date( "_Y_m_d_His" ) . '.' . $file_soporte_necesidad->extension;
+                            $saveSoporteNecesidad = $file_soporte_necesidad->saveAs( $rutaFisicaDirectoriaUploadSoporteNecesidad );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+
+                            if( $saveSocializacion && $saveSoporteNecesidad){
                                 //Le asigno la ruta al arhvio
-                                $model->ruta = $rutaFisicaDirectoriaUploads;
-                                
-                                // if( $model->save() )
-                                    // return $this->redirect(['view', 'id' => $model->id]);
+                                $modelRequerimientoExtra[$i]->socializacion_ruta = $rutaFisicaDirectoriaUploadSocializacion;
+                                $modelRequerimientoExtra[$i]->soporte_necesidad = $rutaFisicaDirectoriaUploadSoporteNecesidad;
+                                $modelRequerimientoExtra[$i]->ieo_id = 5;
                             }else{
                                 echo $file->error;
                                 exit("finnn....");
                             }
 
-                        }else{
-                            exit( "No hay archivo cargado" );
                         }
 
+                        //Validación para el registro de documentos Reconocimiento previo y documentos a desarrollar por el profesional de apoyo
+                        if( $file_informe_caracterizacion && $file_matriz_caracterizacion && $file_revision_pei && $file_revision_autoevaluacion && $file_revision_pmi && $file_resultados_caracterizacion && $file_horario_trabajo){
+                           
+                            $modelDocumentosReconocimiento []= new DocumentosReconocimiento();
+                            //Se crea carpeta para almecenar los documentos de Socializacion
+                            $carpetaDocumentosReconocimiento = "../documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane;
+                            if (!file_exists($carpetaDocumentosReconocimiento)) {
+                                mkdir($carpetaDocumentosReconocimiento, 0777, true);
+                            }
+
+                            
+                            //Construyo la ruta completa del archivo IEO Documentos de reconocimiento por cada uno de los archos 
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoInformeCaracterizacion  = "../documentos/documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoInformeCaracterizacion .= $file_informe_caracterizacion->baseName;
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoInformeCaracterizacion .= date( "_Y_m_d_His" ) . '.' . $file_informe_caracterizacion->extension;
+                            $saveInformeCaracterizacion = $file_informe_caracterizacion->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoInformeCaracterizacion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                            
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoMatrizCaracterizacion  = "../documentos/documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoMatrizCaracterizacion .= $file_matriz_caracterizacion->baseName;
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoMatrizCaracterizacion .= date( "_Y_m_d_His" ) . '.' . $file_matriz_caracterizacion->extension;
+                            $saveMatrizCaracterizacion = $file_matriz_caracterizacion->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoMatrizCaracterizacion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPei  = "../documentos/documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPei .= $file_revision_pei->baseName;
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPei .= date( "_Y_m_d_His" ) . '.' . $file_revision_pei->extension;
+                            $saveRevisionPei = $file_revision_pei->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPei );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoAutoevaluacion  = "../documentos/documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoAutoevaluacion .= $file_revision_autoevaluacion->baseName;
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoAutoevaluacion .= date( "_Y_m_d_His" ) . '.' . $file_revision_autoevaluacion->extension;
+                            $saveAutoevaluacion = $file_revision_autoevaluacion->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoAutoevaluacion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPmi  = "../documentos/documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPmi .= $file_revision_pmi->baseName;
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPmi .= date( "_Y_m_d_His" ) . '.' . $file_revision_pmi->extension;
+                            $saveRevisionPmi = $file_revision_pmi->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPmi );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoResultadosCaracterizacion  = "../documentos/documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoResultadosCaracterizacion .= $file_resultados_caracterizacion->baseName;
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoResultadosCaracterizacion .= date( "_Y_m_d_His" ) . '.' . $file_resultados_caracterizacion->extension;
+                            $saveResultadosCaracterizacion = $file_resultados_caracterizacion->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoResultadosCaracterizacion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo  = "../documentos/documentos/documentosIeo/documentosReconocimiento/".$institucion->codigo_dane."/";
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo .= $file_horario_trabajo->baseName;
+                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo .= date( "_Y_m_d_His" ) . '.' . $file_horario_trabajo->extension;
+                            $saveHorarioTrabajo = $file_horario_trabajo->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                            
+
+                            if( $saveInformeCaracterizacion && $saveMatrizCaracterizacion && $saveRevisionPei && $saveAutoevaluacion && $saveRevisionPmi && $saveResultadosCaracterizacion && $saveHorarioTrabajo){
+                                //Le asigno la ruta al arhvio
+                                $modelDocumentosReconocimiento[$i]->informe_caracterizacion = $rutaFisicaDirectoriaUploadDocumentosReconocimientoInformeCaracterizacion;
+                                $modelDocumentosReconocimiento[$i]->matriz_caracterizacion = $rutaFisicaDirectoriaUploadDocumentosReconocimientoMatrizCaracterizacion;
+                                $modelDocumentosReconocimiento[$i]->revision_pei = $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPei;
+                                $modelDocumentosReconocimiento[$i]->revision_autoevaluacion = $rutaFisicaDirectoriaUploadDocumentosReconocimientoAutoevaluacion;
+                                $modelDocumentosReconocimiento[$i]->revision_pmi = $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPmi;
+                                $modelDocumentosReconocimiento[$i]->resultados_caracterizacion = $rutaFisicaDirectoriaUploadDocumentosReconocimientoResultadosCaracterizacion;
+                                $modelDocumentosReconocimiento[$i]->horario_trabajo = $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo;
+                                $modelDocumentosReconocimiento[$i]->ieo_id = 5;
+                                $modelDocumentosReconocimiento[$i]->plan_accion_id = $i+1;
+                            }else{
+                                echo $file->error;
+                                exit("finnn....");
+                            }
+
+                        }
+
+                        $i++;
                     }
-                    foreach( $models as $key => $model) {
+                    foreach( $modelRequerimientoExtra as $key => $model) {
                         $model->save();
                     }
+
+                    foreach( $modelDocumentosReconocimiento as $key => $model) {
+                        $model->save();
+                    }
+
                     die();
                 }
 
@@ -190,10 +287,12 @@ class IeoController extends Controller
         
         $model = new Ieo();
         $requerimientoExtra = new RequerimientoExtraIeo();
-        
+        $documentosReconocimiento = new DocumentosReconocimiento();
+
         return $this->renderAjax('create', [
             'model' => $model,
             'requerimientoExtra' => $requerimientoExtra,
+            "documentosReconocimiento" =>  $documentosReconocimiento,
         ]);
     }
 
