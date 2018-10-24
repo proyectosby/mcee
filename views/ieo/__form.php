@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Ieo */
 /* @var $form yii\widgets\ActiveForm */
@@ -89,6 +89,39 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                         </div>
                     </div>
 
+                     <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse2-3">Actividad 1.Mesa de trabajo para la presentación de resultados de la caracterización y mapeo (puntos de partida y llegada)</a>
+                            </h4>
+                            </div>
+                            <div id="collapse2-3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <h3 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h3>
+                                <?= $form->field($tiposCantidadPoblacion, '[0]tiempo_libre')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[0]edu_derechos')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[0]sexualidad')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[0]ciudadania')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[0]medio_ambiente')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[0]familia')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[0]directivos')->textInput() ?>
+                                <?= $form->field($documentosReconocimiento, '[0]fecha_creacion')->widget(
+                                DatePicker::className(), [
+                                    // modify template for custom rendering
+                                    'template' => '{addon}{input}',
+                                    'language' => 'es',
+                                    'clientOptions' => [
+                                        'autoclose' => true,
+                                        'format' 	=> 'yyyy-mm-dd',
+                                    ],
+                                ]);  ?>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
                 </div>
             </div>
@@ -164,6 +197,39 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                         </div>
                     </div>
 
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse2-3">Actividad 1.Mesa de trabajo para la presentación de resultados de la caracterización y mapeo (puntos de partida y llegada)</a>
+                            </h4>
+                            </div>
+                            <div id="collapse2-3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <h3 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h3>
+                                <?= $form->field($tiposCantidadPoblacion, '[1]tiempo_libre')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[1]edu_derechos')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[1]sexualidad')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[1]ciudadania')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[1]medio_ambiente')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[1]familia')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[1]directivos')->textInput() ?>
+                                <?= $form->field($documentosReconocimiento, '[1]fecha_creacion')->widget(
+                                DatePicker::className(), [
+                                    // modify template for custom rendering
+                                    'template' => '{addon}{input}',
+                                    'language' => 'es',
+                                    'clientOptions' => [
+                                        'autoclose' => true,
+                                        'format' 	=> 'yyyy-mm-dd',
+                                    ],
+                                ]);  ?>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
                 </div>
             </div>
@@ -238,6 +304,40 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" href="#collapse2-3">Actividad 1.Mesa de trabajo para la presentación de resultados de la caracterización y mapeo (puntos de partida y llegada)</a>
+                            </h4>
+                            </div>
+                            <div id="collapse2-3" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <h3 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h3>
+                                <?= $form->field($tiposCantidadPoblacion, '[2]tiempo_libre')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[2]edu_derechos')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[2]sexualidad')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[2]ciudadania')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[2]medio_ambiente')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[2]familia')->textInput() ?>
+                                <?= $form->field($tiposCantidadPoblacion, '[2]directivos')->textInput() ?>
+                                <?= $form->field($documentosReconocimiento, '[2]fecha_creacion')->widget(
+                                DatePicker::className(), [
+                                    // modify template for custom rendering
+                                    'template' => '{addon}{input}',
+                                    'language' => 'es',
+                                    'clientOptions' => [
+                                        'autoclose' => true,
+                                        'format' 	=> 'yyyy-mm-dd',
+                                    ],
+                                ]);  ?>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
                 </div>

@@ -9,7 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property int $ieo_id
- * @property int $plan_accion_id
  * @property string $informe_caracterizacion
  * @property string $matriz_caracterizacion
  * @property string $revision_pei
@@ -17,9 +16,12 @@ use Yii;
  * @property string $revision_pmi
  * @property string $resultados_caracterizacion
  * @property string $horario_trabajo
+ * @property int $proyecto_ieo_id
  */
 class DocumentosReconocimiento extends \yii\db\ActiveRecord
 {
+    public $tipo_actiividad;
+    public $fecha_creacion;
     /**
      * @inheritdoc
      */
@@ -34,11 +36,10 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ieo_id', 'plan_accion_id'], 'default', 'value' => null],
-            [['ieo_id', 'plan_accion_id'], 'integer'],
+            [['ieo_id', 'proyecto_ieo_id'], 'default', 'value' => null],
+            [['ieo_id', 'proyecto_ieo_id'], 'integer'],
             [['informe_caracterizacion', 'matriz_caracterizacion', 'revision_pei', 'revision_autoevaluacion', 'revision_pmi', 'resultados_caracterizacion', 'horario_trabajo'], 'string'],
-            [['ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcIeo::className(), 'targetAttribute' => ['ieo_id' => 'id']],
-            [['plan_accion_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcPlanAccion::className(), 'targetAttribute' => ['plan_accion_id' => 'id']],
+            [['proyecto_ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoIeo::className(), 'targetAttribute' => ['proyecto_ieo_id' => 'id']],
         ];
     }
 
@@ -50,7 +51,6 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ieo_id' => 'Ieo ID',
-            'plan_accion_id' => 'Plan Accion ID',
             'informe_caracterizacion' => 'Informe Caracterizacion',
             'matriz_caracterizacion' => 'Matriz Caracterizacion',
             'revision_pei' => 'Revision Pei',
@@ -58,6 +58,7 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
             'revision_pmi' => 'Revision Pmi',
             'resultados_caracterizacion' => 'Resultados Caracterizacion',
             'horario_trabajo' => 'Horario Trabajo',
+            'proyecto_ieo_id' => 'Proyecto Ieo ID',
         ];
     }
 }
