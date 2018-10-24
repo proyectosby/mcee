@@ -188,35 +188,35 @@
 									'items' => [
 													
 													['label' => 'Gestión Escolar', 
-													'icon' => 'arrow-right', 
+													'icon' => 'address-book', 
 													'url' => '#',
 													'items' => [
 														['label' => 'Acompañamiento in Situ', 
-														'icon' => 'circle-o', 
+														'icon' => 'arrow-right', 
 														'url' => '#',
 														],
 														
-														['label' => 'Formación en liderazgo', 'icon' => 'circle-o', 'url' => '#',],
-														['label' => 'Comunicación para la gestión', 'icon' => 'circle-o','url' => '#',],
+														['label' => 'Formación en liderazgo', 'icon' => 'arrow-right', 'url' => '#',],
+														['label' => 'Comunicación para la gestión', 'icon' => 'arrow-right','url' => '#',],
 														['label' => 'Clima escolar y convivencia', 
-														'icon' => 'circle-o', 
+														'icon' => 'arrow-right', 
 														'url' => '#',
 															'items' => [
-																['label' => 'Medición', 'icon' => 'long-arrow-right','url' => '#',],
-																['label' => 'Caja de herramientas', 'icon' => 'long-arrow-right','url' => '#',],  
+																['label' => 'Medición', 'icon' => 'circle-o','url' => '#',],
+																['label' => 'Caja de herramientas', 'icon' => 'circle-o','url' => '#',],  
 															],
 														],
-														['label' => 'Proyectos pedagogicos productivos', 'icon' => 'circle-o', 'url' => '#',],
+														['label' => 'Proyectos pedagogicos productivos', 'icon' => 'arrow-right', 'url' => '#',],
 														
 														],
 													],
 													
 													['label' => 'Mejoramiento Aprendizajes', 
-													'icon' => 'arrow-right', 
+													'icon' => 'american-sign-language-interpreting', 
 													'url' => '#',
 													'items' => [
 													     ['label' => 'Gestión Curricular',
-														'icon' => 'circle-o',
+														'icon' => 'arrow-right',
 														'url' => '#',
 														'items' => [
 															['label' => 'Acompañamiento docentes tutores',
@@ -238,7 +238,7 @@
 														],
 													],
 														['label' => 'Semilleros tic', 
-														'icon' => 'circle-o', 
+														'icon' => 'arrow-right', 
 														'url' => ['semilleros/index'],
 														// 'items' => [
 																// ['label' => 'Docentes', 'icon' => 'long-arrow-right', 'url' => ['semilleros-datos-ieo/create'],], 
@@ -261,7 +261,7 @@
 														],
 													],
 													['label' => 'Pedagogías para la Vida', 
-													'icon' => 'arrow-right', 
+													'icon' => 'edit', 
 													'url' => '#',
 													'items' => [
 													
@@ -300,7 +300,7 @@
 																],
 															],
 															['label' => 'Competencias ciudadanas',
-															'icon' => 'circle-o',
+															'icon' => 'arrow-right',
 															'url' => '#',
 															'items' => [
 																		['label' => 'Paz y cultura ciudadana', 'icon' => 'circle-o','url' => '#',],
@@ -308,20 +308,72 @@
 																		['label' => 'Formación a formadores deportivos', 'icon' => 'circle-o','url' => '#',],
 																],		
 															],
-															['label' => 'Competencias básicas arte y cultura', 'icon' => 'circle-o','url' => '#',],
-															['label' => 'Iniciación y formación deportiva', 'icon' => 'circle-o','url' => '#',],
+															['label' => 'Competencias básicas arte y cultura', 'icon' => 'arrow-right','url' => '#',],
+															['label' => 'Iniciación y formación deportiva', 'icon' => 'arrow-right','url' => '#',],
 														],
 													],
 												['label' => 'Escuela + ciudad', 
-												'icon' => 'arrow-right',
+												'icon' => 'university',
 												'url' => '#',
 												'items' => [
-																	['label' => 'Sensibilización artistica', 'icon' => 'circle-o','url' => '#',],
-																	['label' => 'Competencias lúdicas', 'icon' => 'circle-o','url' => '#',],
-																	['label' => 'Primera infancia', 'icon' => 'circle-o','url' => '#',],
+																	['label' => 'Sensibilización artistica', 'icon' => 'arrow-right','url' => '#',],
+																	['label' => 'Competencias lúdicas', 'icon' => 'arrow-right','url' => '#',],
+																	['label' => 'Primera infancia', 'icon' => 'arrow-right','url' => '#',],
 															],
 												],
+					
+					['label' => 'Poblaciones',
+						'icon' => 'user-circle',
+						'url' => '#',
+						'items' => [
+										[
+											'label' => 'Personas',
+											'icon' => 'user-circle-o',
+											'url' => '#',
+											'items' => [
+												['label' => 'Datos generales', 'icon' => 'circle-o', 'url' => ['personas/index'],],
+												['label' => 'Formaciones', 'icon' => 'circle-o', 'url' => ['personas-formaciones/index'],],
+												['label' => 'Discapacidades', 'icon' => 'circle-o', 'url' => ['personas-discapacidades/index'],],
+												['label' => 'Escolaridades', 'icon' => 'circle-o', 'url' => ['personas-escolaridades/index'],],
+												['label' => 'Reconocimientos', 'icon' => 'circle-o', 'url' => ['reconocimientos/index'],],
+											],
+										],
+										['label' => 'Docentes', 
+										'icon' => 'vcard-o',
+										'url' => '#',
+										 'items' => [
+														['label' => 'Docentes', 'icon' => 'circle-o', 'url' => ['docentes/index'],],
+														['label' => 'Docentes areas trabajo', 'icon' => 'circle-o', 'url' => ['docentes-x-areas-trabajos/index'],],
+														['label' => 'Evaluación', 'icon' => 'circle-o', 'url' => ['evaluacion-docentes/index'],],
+														['label' => 'Vinculación', 'icon' => 'circle-o', 'url' => ['vinculacion-docentes/index'],],
+														['label' => 'Documentos Interés', 'icon' => 'circle-o', 'url' => ['documentos/index'],],
+														
+														
+														
+													],
+										],
+										['label' => 'Estudiantes',
+										'icon' => 'male',
+										'url' => '#',
+										 'items' => [
+														['label' => 'Estudiantes', 'icon' => 'circle-o', 'url' => ['representantes-legales/index'],],
+														['label' => 'Hoja de vida', 'icon' => 'circle-o', 'url' => ['hoja-vida-estudiante/index'],],
+													],
+										
+										],
+										
+									],
+						
 					],
+					['label' => 'Indicadores',
+						'icon' => 'line-chart',
+						'url' => '#',
+						'items' => [
+										['label' => 'Clima Escolar', 'icon' => 'thermometer-0', 'url' => '#',],
+										['label' => 'Sistema de Monitoreo', 'icon' => 'desktop', 'url' => '#',],
+									],
+					],
+					],  //mcee
 					['label' => 'Poblaciones',
 						'icon' => 'user-circle',
 						'url' => '#',
