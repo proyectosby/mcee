@@ -313,7 +313,7 @@
 														],
 													],
 												['label' => 'Escuela + ciudad', 
-												'icon' => 'circle-o',
+												'icon' => 'arrow-right',
 												'url' => '#',
 												'items' => [
 																	['label' => 'Sensibilización artistica', 'icon' => 'circle-o','url' => '#',],
