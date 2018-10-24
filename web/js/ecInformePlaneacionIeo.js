@@ -30,44 +30,67 @@ function colorBarra(valor)
 //calcula los porcentaje de avances 
 $( "#porcentajes" ).click(function() 
 {
-	estadoActual2 = $("#ecavances-2-estado_actual").val()*1;
-	estadoActual1 = $("#ecavances-1-estado_actual").val()*1;
-	estadoActual3 = $("#ecavances-3-estado_actual").val()*1;
 	
-	PorcentajeAvanceProceso = Math.trunc(((estadoActual1 + estadoActual2 + estadoActual3)/12)*100);
+	var i;
+	valor = 0;
+	for (i = 1; i <=9 ; i++) 
+	{ 
+		valor += $("#ecavances-"+i+"-estado_actual").val()*1;
+		
+		
+		switch (i) 
+		{
+			case 3:
+				PorcentajeAvanceProceso     = Math.trunc(((valor)/12)*100);
+				valor =0;
+			break;
+			
+			case 6:
+				porcentajeAvanceEstrategias = Math.trunc(((valor)/12)*100);
+				valor =0;
+			break;
+			
+			case 9:
+				porcentajeAvanceOrientaciones = Math.trunc(((valor)/12)*100);
+				valor =0;
+			break;
+			
+		}	
+	}
 	
-	$("#porcentajeAvance1").css({"width": ""+PorcentajeAvanceProceso+"%","background-color":""+colorBarra(PorcentajeAvanceProceso)}).text(PorcentajeAvanceProceso+"%");
-
-	
-	estadoActual4 = $("#ecavances-4-estado_actual").val()*1;
-	estadoActual6 = $("#ecavances-6-estado_actual").val()*1;
-	estadoActual5 = $("#ecavances-5-estado_actual").val()*1;
-
-	porcentajeAvanceEstrategias = Math.trunc(((estadoActual4 + estadoActual6 + estadoActual5)/12)*100);
-	
-	
-	$("#porcentajeAvance2").css({"width": ""+porcentajeAvanceEstrategias+"%","background-color":""+colorBarra(porcentajeAvanceEstrategias)}).text(porcentajeAvanceEstrategias+"%");
-	
-	estadoActual9 = $("#ecavances-9-estado_actual").val()*1;
-	estadoActual8 = $("#ecavances-8-estado_actual").val()*1;
-	estadoActual7 = $("#ecavances-7-estado_actual").val()*1;
-	
-	porcentajeAvanceOrientaciones = Math.trunc(((estadoActual9 + estadoActual8 + estadoActual7)/12)*100);
-	
-	
+	$("#porcentajeAvance1").css({"width": ""+PorcentajeAvanceProceso      +"%","background-color":""+colorBarra(PorcentajeAvanceProceso)}).text(PorcentajeAvanceProceso+"%");	
+	$("#porcentajeAvance2").css({"width": ""+porcentajeAvanceEstrategias  +"%","background-color":""+colorBarra(porcentajeAvanceEstrategias)}).text(porcentajeAvanceEstrategias+"%");
 	$("#porcentajeAvance3").css({"width": ""+porcentajeAvanceOrientaciones+"%","background-color":""+colorBarra(porcentajeAvanceOrientaciones)}).text(porcentajeAvanceOrientaciones+"%");
 	
-	estadoActual9 = $("#ecavances-9-estado_actual").val()*1;
-	estadoActual8 = $("#ecavances-8-estado_actual").val()*1;
-	estadoActual7 = $("#ecavances-7-estado_actual").val()*1;
-	
-	porcentajeAvanceProductos = Math.trunc(((estadoActual9 + estadoActual8 + estadoActual7)/12)*100);
-	
-	$("#porcentajeAvance3").css({"width": ""+porcentajeAvanceProductos+"%","background-color":""+colorBarra(porcentajeAvanceProductos)}).text(porcentajeAvanceProductos+"%");
 	
 	
+	for (j = 1; j <=5 ; j++) 
+	{ 
+		valor += $("#ecrespuestas-"+j+"-respuesta").val()*1;
+		switch (j) 
+		{
+			case 5:
+				porcentajeAvanceProductos     = Math.trunc(((valor)/20)*100);
+				valor =0;
+			break;
+			
+			// case 6:
+				// porcentajeAvanceEstrategias = Math.trunc(((valor)/12)*100);
+				// valor =0;
+			// break;
+			
+			// case 9:
+				// porcentajeAvanceOrientaciones = Math.trunc(((valor)/12)*100);
+				// valor =0;
+			// break;
+			
+		}	
+	}
 	
 	
+	$("#porcentajeAvance4").css({"width": ""+porcentajeAvanceProductos+"%","background-color":""+colorBarra(porcentajeAvanceProductos)}).text(porcentajeAvanceProductos+"%");
+	
+
 	
 });
 

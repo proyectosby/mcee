@@ -70,7 +70,8 @@ class EcinformeplaneacionieoController extends Controller
        $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
        $numProyectos = count($ecProyectos);
 
-      $estadoActual = [ 
+	   $modelProyectos = new EcProyectos();
+		$estadoActual = [ 
 					1 => '1',
 					2 => '2',
 					3 => '3',
@@ -89,12 +90,18 @@ class EcinformeplaneacionieoController extends Controller
                                                         'idProyecto' => $idProyecto,
 														'form' => $form,
 														'estadoActual' => $estadoActual,
+														'modelProyectos' =>  $modelProyectos,
 													] 
 										),
 					'contentOptions'=> []
 				];
+				
+				
 		}
+		
+		
 		 
+		
 		 echo Collapse::widget([
 			'items' => $contenedores,
 		]);

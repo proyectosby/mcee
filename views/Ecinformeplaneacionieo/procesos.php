@@ -11,7 +11,12 @@ use yii\bootstrap\Collapse;
 $ecProcesos = EcProcesos::find()->where( "estado=1 and id_proyecto=$idProyecto" )->all();
 $ecProcesos = ArrayHelper::map($ecProcesos,'id','descripcion','porcentaje_avance');
        
-
+$items[] = 	
+		[
+			'label' 		=>  "Horario fijo de trabajo con docentes",
+			'content' 		=>  $form->field($modelProyectos, 'horario')->textInput()->label("Horario fijo de trabajo con docentes"),
+								'contentOptions' => ['class' => 'in']
+		];
 foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 {
 	foreach( $dataProceso as $idProceso => $v )
@@ -31,7 +36,11 @@ foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 		
 	}
 	
+	
+	
 }
+
+				
 $ecProductos = EcProductos::find()->where( "estado=1 and id_proyecto=$idProyecto" )->all();
 $ecProductos = ArrayHelper::map($ecProductos,'id','descripcion');
 
@@ -44,6 +53,7 @@ foreach( $ecProductos as $idProductos => $v )
 													[ 
                                                         'idProductos' => $idProductos,
 														'form' => $form,
+														'estadoActual' => $estadoActual
 													] 
 										),
 					'contentOptions'=> []
