@@ -123,11 +123,11 @@ class DocumentosPresupuestoController extends Controller
         if (DocumentosPresupuesto::loadMultiple($models, Yii::$app->request->post() )) {			
 			
 			foreach( $models as $key => $model) {
-				
+				                
                 //getInstances devuelve un array, por tanto siemppre se pone la posición 0
                
 				$file = UploadedFile::getInstance( $model, "[$key]file" );
-                
+                                
 				if( $file ){
 					
 					// $persona = Personas::findOne( $model->id_persona );
@@ -169,7 +169,7 @@ class DocumentosPresupuestoController extends Controller
 					exit( "No hay archivo cargado" );
 				}
 			}
-			
+           
 			//Se valida que todos los campos de todos los modelos sean correctos
 			if (!DocumentosOficiales::validateMultiple($models)) {
 				Yii::$app->response->format = 'json';

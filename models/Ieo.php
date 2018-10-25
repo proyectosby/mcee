@@ -19,6 +19,16 @@ use Yii;
  */
 class Ieo extends \yii\db\ActiveRecord
 {
+    public $file_socializacion_ruta;
+    public $file_soporte_necesidad;
+    public $file_informe_caracterizacion;
+    public $file_matriz_caracterizacion;
+    public $file_revision_pei;
+    public $file_revision_autoevaluacion;
+    public $file_revision_pmi;
+    public $file_resultados_caracterizacion;
+    public $file_horario_trabajo;
+
     /**
      * @inheritdoc
      */

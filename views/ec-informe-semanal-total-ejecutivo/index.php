@@ -1,5 +1,14 @@
 <?php
 
+/**********
+Modificación: 
+Fecha: 23-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver al index donde estan los botones de competencias basicas - proyecto
+---------------------------------------
+
+**********/
+
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
@@ -11,7 +20,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Ec Informe Semanal Total Ejecutivos';
+$this->title = 'Informe Semanal Total Ejecutivo';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -37,6 +46,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
+		
+		
+		<?= Html::a('Volver', 
+									[
+										'ec-competencias-basicas-proyectos/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+
 		
     </p>
 

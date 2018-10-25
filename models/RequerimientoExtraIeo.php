@@ -8,14 +8,13 @@ use Yii;
  * This is the model class for table "ec.requerimiento_extra_ieo".
  *
  * @property int $id
- * @property string $socializacion
- * @property string $soporte_socializacion
- * @property int $tipo_documento_id
- * @property int $estado_id
- * @property string $ruta
+ * @property string $socializacion_ruta
+ * @property string $soporte_necesidad
+ * @property int $ieo_id
  */
 class RequerimientoExtraIeo extends \yii\db\ActiveRecord
 {
+    
     /**
      * @inheritdoc
      */
@@ -30,11 +29,10 @@ class RequerimientoExtraIeo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['socializacion', 'soporte_socializacion', 'ruta'], 'string'],
-            [['tipo_documento_id', 'estado_id'], 'default', 'value' => null],
-            [['tipo_documento_id', 'estado_id'], 'integer'],
-            [['estado_id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado_id' => 'id']],
-            [['tipo_documento_id'], 'exist', 'skipOnError' => true, 'targetClass' => TiposDocumentos::className(), 'targetAttribute' => ['tipo_documento_id' => 'id']],
+            [['socializacion_ruta', 'soporte_necesidad'], 'string'],
+            [['ieo_id'], 'default', 'value' => null],
+            [['ieo_id'], 'integer'],
+            [['ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ieo::className(), 'targetAttribute' => ['ieo_id' => 'id']],
         ];
     }
 
@@ -45,11 +43,9 @@ class RequerimientoExtraIeo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'socializacion' => 'Socializacion',
-            'soporte_socializacion' => 'Soporte Socializacion',
-            'tipo_documento_id' => 'Tipo Documento ID',
-            'estado_id' => 'Estado ID',
-            'ruta' => 'Ruta',
+            'socializacion_ruta' => 'Socializacion Ruta',
+            'soporte_necesidad' => 'Soporte Necesidad',
+            'ieo_id' => 'Ieo ID',
         ];
     }
 }

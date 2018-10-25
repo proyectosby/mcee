@@ -1,5 +1,14 @@
 <?php
 
+/**********
+Modificación: 
+Fecha: 23-10-2018
+Desarrollador: Maria Viviana Rodas
+Descripción: Se agrega boton de volver al index donde estan los botones de competencias basicas - proyecto
+---------------------------------------
+
+**********/
+
 use yii\helpers\Html;
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
@@ -10,7 +19,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Ieos';
+$this->title = 'Informe de avance Mensual I.E.O - Ejecución';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -22,6 +31,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
 		<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+		
+		
+		<?= Html::a('Volver', 
+									[
+										'ec-competencias-basicas-proyectos/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+
+
     </p>
 
 	<?php 
@@ -77,10 +96,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'persona_id',
+            //'persona_id',
             'institucion_id',
             'sede_id',
-            'proyecto_id',
+            //'proyecto_id',
             //'estado',
 
             ['class' => 'yii\grid\ActionColumn'],

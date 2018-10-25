@@ -21,16 +21,16 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
 
     
-   <?php
-         $form = ActiveForm::begin();
+        <?php
+            $form = ActiveForm::begin(['action' => ['ieo/create'],'options' => ['method' => 'post']]);
         if($index == 0){
         ?> 
 
             <div class=cell>
-                <?= $form->field($requerimientoExtra, '[0]socializacion')->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                <?= $form->field($requerimientoExtra, '['.$actividad_id.']socializacion_ruta')->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
             </div>
             <div class=cell>
-                <?= $form->field($requerimientoExtra, '[0]soporte_socializacion')->label('ANEXO SOPORTE DE NECESIDAD DE HACER SOCIALIZACIÓN SI APLICA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                <?= $form->field($requerimientoExtra, '['.$actividad_id.']soporte_necesidad')->label('ANEXO SOPORTE DE NECESIDAD DE HACER SOCIALIZACIÓN SI APLICA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
             </div>
             <div class=cell>
 
@@ -80,15 +80,15 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         ?>        
            
                 <h3 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h3>
-                <?= $form->field($tiposCantidadPoblacion, 'tiempo_libre')->textInput() ?>
-                <?= $form->field($tiposCantidadPoblacion, 'edu_derechos')->textInput() ?>
-                <?= $form->field($tiposCantidadPoblacion, 'sexualidad')->textInput() ?>
-                <?= $form->field($tiposCantidadPoblacion, 'ciudadania')->textInput() ?>
-                <?= $form->field($tiposCantidadPoblacion, 'medio_ambiente')->textInput() ?>
-                <?= $form->field($tiposCantidadPoblacion, 'familia')->textInput() ?>
-                <?= $form->field($tiposCantidadPoblacion, 'directivos')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'tipo_actiividad')->textInput() ?>
-                <?= $form->field($documentosReconocimiento, 'fecha_creacion')->widget(
+                <?= $form->field($tiposCantidadPoblacion, '['.$actividad_id.']tiempo_libre')->textInput() ?>
+                <?= $form->field($tiposCantidadPoblacion, '['.$actividad_id.']edu_derechos')->textInput() ?>
+                <?= $form->field($tiposCantidadPoblacion, '['.$actividad_id.']sexualidad')->textInput() ?>
+                <?= $form->field($tiposCantidadPoblacion, '['.$actividad_id.']ciudadania')->textInput() ?>
+                <?= $form->field($tiposCantidadPoblacion, '['.$actividad_id.']medio_ambiente')->textInput() ?>
+                <?= $form->field($tiposCantidadPoblacion, '['.$actividad_id.']familia')->textInput() ?>
+                <?= $form->field($tiposCantidadPoblacion, '['.$actividad_id.']directivos')->textInput() ?>
+                <?= $form->field($documentosReconocimiento, '['.$actividad_id.']tipo_actiividad')->textInput() ?>
+                <?= $form->field($documentosReconocimiento, '['.$actividad_id.']fecha_creacion')->widget(
                 DatePicker::className(), [
                     // modify template for custom rendering
                     'template' => '{addon}{input}',
