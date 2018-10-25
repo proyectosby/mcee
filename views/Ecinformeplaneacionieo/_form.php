@@ -23,7 +23,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 
 
 ?>
-  <?=  Html::button('Porcentajes',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'porcentajes']) ?>
+  <?=  Html::button('Porcentajes de avance',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'porcentajes']) ?>
 <br>
 <br>
 <br>
@@ -73,8 +73,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 			  <div id="porcentajeAvance4" class="myBar">0%</div>
 			</div>
 			<br>
-			
-			
 		</div>
 	</div>  
 	
@@ -86,20 +84,25 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 		<div class="panel-body">
  
 		Cuál es el estado de avance de la gestión de los PSSE
-		<progress value="22" max="100"></progress> 22% 
+		<div id="myProgress">
+			<div id="porcentajeAvance5" class="myBar">0%</div>
+		</div>
 		<br>
 		  
 		Cuál es el estado de avance de los procesos con la comunidad en el eje PSSE
-		<progress value="44" max="100"></progress> 44%
+		<div id="myProgress">
+			<div id="porcentajeAvance6" class="myBar">0%</div>
+		</div>
 		<br>
-	  
 		Cuál es el estado de avance de la orientación conceptual y metodológica de los Proyectos de servicio social
+		<div id="myProgress">
+			<div id="porcentajeAvance7" class="myBar">0%</div>
+		</div>
 		<br>
-		<progress value="88" max="100"></progress> 88%
-
 		Cuál es el estado de avance de los productos del eje PSSE
-		<progress value="88" max="100"></progress> 88%
-		
+		<div id="myProgress">
+			  <div id="porcentajeAvance8" class="myBar">0%</div>
+			</div>
 		</div>
 	</div> 
 	

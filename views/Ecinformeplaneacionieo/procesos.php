@@ -17,6 +17,8 @@ $items[] =
 			'content' 		=>  $form->field($modelProyectos, 'horario')->textInput()->label("Horario fijo de trabajo con docentes"),
 								'contentOptions' => ['class' => 'in']
 		];
+
+$contador=0;
 foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 {
 	foreach( $dataProceso as $idProceso => $v )
