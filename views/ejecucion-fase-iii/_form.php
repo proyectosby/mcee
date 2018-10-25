@@ -38,7 +38,7 @@ if( $guardado ){
 	
 	$this->registerJs( "
 	  swal({
-			text: 'Registro guardado',
+			text: 'Registro guardados correctamente',
 			icon: 'success',
 			button: 'Salir',
 		});" 
@@ -86,8 +86,15 @@ $this->registerJs(
     <?php $form = ActiveForm::begin(); ?>
 	
 	<div class="form-group">
+		
 		<?= Html::button('Agregar' , ['class' => 'btn btn-success', 'id' => 'btnAddFila1' ]) ?>
+		
 		<?= Html::button('Eliminar', ['class' => 'btn btn-danger', 'id' => 'btnRemoveFila1', "style" => "display:none" ]) ?>
+		
+		<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
+		
+		<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
+		
 	</div>
     
 	<?= $this->render( 'sesiones', [

@@ -42,6 +42,8 @@ use app\models\SemillerosTicEjecucionFase;
 use app\models\Sesiones;
 use app\models\CondicionesInstitucionales;
 use app\models\DatosSesiones;
+use app\models\SemillerosTicCiclos;
+use app\models\SemillerosTicAnio;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -67,6 +69,45 @@ class EjecucionFaseIController extends Controller
         ];
     }
 
+	public function actionCiclos()
+	{
+		$id_ciclo = false;
+		
+		$model = new SemillerosTicCiclos();
+		
+		$model->load( Yii::$app->request->post() );
+		
+		if( empty( $model->id ) )
+		{
+			$dataAnios 	= SemillerosTicAnio::find()
+							->where( 'estado=1' )
+							->all();
+			
+			$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+			
+			$ciclos = [];
+			
+			if( $model->id_anio ){
+				
+				$dataCiclos = SemillerosTicCiclos::find()
+								->where( 'estado=1' )
+								->where( 'id_anio='.$model->id_anio )
+								->all();
+				
+				$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
+			}
+			
+			return $this->render( 'ciclos', [
+				'model' 	=> $model,
+				'anios' 	=> $anios,
+				'ciclos'	=> $ciclos,
+			]);
+		}
+		else{
+			return $this->actionCreate();
+		}
+	}
+	
     /**
      * Lists all EjecucionFase models.
      * @return mixed
@@ -96,7 +137,16 @@ class EjecucionFaseIController extends Controller
     }
 
 	public function actionCreateAll()
-	{	
+	{
+		$ciclo = new SemillerosTicCiclos();
+		
+		$ciclo->load( Yii::$app->request->post() );
+		
+		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		if( empty( $ciclo->id ) ){
+			return $this->actionCiclos();
+		}
+	
 		//Indica si se guarda la fase
 		$guardado = false;
 		
@@ -155,6 +205,7 @@ class EjecucionFaseIController extends Controller
 											->select( 'id_datos_sesiones' )
 											->where( 'id_fase='.$this->id_fase )
 											->andWhere( 'id_datos_ieo_profesional='.$datosIeoProfesional->id )
+											->andWhere( 'id_ciclo='.$ciclo->id )
 											->groupby( 'id_datos_sesiones' )
 											->all();
 											
@@ -176,6 +227,7 @@ class EjecucionFaseIController extends Controller
 					$condicionesInstitucionales = CondicionesInstitucionales::findOne([ 
 														'id_datos_ieo_profesional'	=> $datosIeoProfesional->id,
 														'id_fase'					=> $this->id_fase,
+														'id_ciclo'					=> $ciclo->id,
 													]);
 					
 					if( !$condicionesInstitucionales )
@@ -208,6 +260,7 @@ class EjecucionFaseIController extends Controller
 														->where( 'id_datos_ieo_profesional='.$datosIeoProfesional->id )
 														->andWhere( 'id_datos_sesiones='.$datosSesion->id )
 														->andWhere( 'id_fase='.$this->id_fase )
+														->andWhere( 'id_ciclo='.$ciclo->id )
 														->all();
 
 								foreach( $ejecucionesFase as $key => $ejecFase ){
@@ -430,7 +483,8 @@ class EjecucionFaseIController extends Controller
 								{
 									$ejecFase->id_datos_ieo_profesional = $datosIeoProfesional->id;
 								}
-									
+								
+								$ejecFase->id_ciclo = $ciclo->id;
 								$ejecFase->save(false);
 							}
 							$primera = false;
@@ -439,6 +493,7 @@ class EjecucionFaseIController extends Controller
 					
 					$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
 					$condicionesInstitucionales->id_fase = $this->id_fase;
+					$condicionesInstitucionales->id_ciclo = $ciclo->id;
 					$condicionesInstitucionales->estado = 1;
 					
 					$condicionesInstitucionales->save(false);
@@ -494,6 +549,7 @@ class EjecucionFaseIController extends Controller
 			'condiciones'			=> $condicionesInstitucionales,
 			'datosModelos'			=> $datosModelos,
 			'guardado'				=> $guardado,
+			'ciclo'					=> $ciclo,
         ]);
 	
 	}

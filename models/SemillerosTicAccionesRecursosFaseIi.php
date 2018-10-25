@@ -40,10 +40,11 @@ class SemillerosTicAccionesRecursosFaseIi extends \yii\db\ActiveRecord
         return [
             [['tipo_accion', 'descripcion_accion', 'responsable_accion', 'tiempo_desarrollo', 'tic', 'tipo_recurso_tic', 'digitales', 'escolares', 'tipo_recurso_no_tic', 'tiempo_uso_recurso', 'tipo_recurso_digitales'], 'string'],
             [['id_datos_sesion', 'estado'], 'default', 'value' => null],
-            [['id_datos_sesion', 'estado'], 'integer'],
+            [['id_datos_sesion', 'estado','id_ciclo'], 'integer'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_sesion'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosSesiones::className(), 'targetAttribute' => ['id_datos_sesion' => 'id']],
+			[['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
         ];
     }
 
@@ -67,6 +68,7 @@ class SemillerosTicAccionesRecursosFaseIi extends \yii\db\ActiveRecord
             'tipo_recurso_digitales' => 'Tipo Recurso Digitales',
             'id_datos_sesion' => 'Id Datos Sesion',
             'estado' => 'Estado',
+            'id_ciclo' => 'Ciclo',
         ];
     }
 }
