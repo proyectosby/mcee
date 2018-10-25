@@ -56,6 +56,8 @@ $this->registerJsFile(
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
 
     <?php $form = ActiveForm::begin(); ?>
+	
+	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
 
     <?= $form->field($model, 'id_fase')->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
 

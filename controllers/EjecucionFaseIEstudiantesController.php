@@ -31,6 +31,8 @@ use yii\filters\VerbFilter;
 
 use app\models\Fases;
 use app\models\DatosIeoProfesional;
+use app\models\SemillerosTicAnio;
+use app\models\SemillerosTicCiclos;
 use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Personas;
@@ -55,6 +57,45 @@ class EjecucionFaseIEstudiantesController extends Controller
             ],
         ];
     }
+	
+	public function actionCiclos()
+	{
+		$id_ciclo = false;
+		
+		$model = new SemillerosTicCiclos();
+		
+		$model->load( Yii::$app->request->post() );
+		
+		if( empty( $model->id ) )
+		{
+			$dataAnios 	= SemillerosTicAnio::find()
+							->where( 'estado=1' )
+							->all();
+			
+			$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+			
+			$ciclos = [];
+			
+			if( $model->id_anio ){
+				
+				$dataCiclos = SemillerosTicCiclos::find()
+								->where( 'estado=1' )
+								->where( 'id_anio='.$model->id_anio )
+								->all();
+				
+				$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
+			}
+			
+			return $this->render( 'ciclos', [
+				'model' 	=> $model,
+				'anios' 	=> $anios,
+				'ciclos'	=> $ciclos,
+			]);
+		}
+		else{
+			return $this->actionCreate();
+		}
+	}
 
     /**
      * Lists all EjecucionFase models.
@@ -91,6 +132,15 @@ class EjecucionFaseIEstudiantesController extends Controller
      */
     public function actionCreate()
     {
+		$ciclo = new SemillerosTicCiclos();
+		
+		$ciclo->load( Yii::$app->request->post() );
+		
+		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		if( empty( $ciclo->id ) ){
+			return $this->actionCiclos();
+		}
+		
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
 		
@@ -124,6 +174,7 @@ class EjecucionFaseIEstudiantesController extends Controller
             'institucion'	=> $institucion,
             'sede' 		 	=> $sede,
             'docentes' 		=> $docentes,
+			'ciclo'			=> $ciclo,
         ]);
     }
 

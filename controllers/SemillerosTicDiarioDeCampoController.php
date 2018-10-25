@@ -28,6 +28,8 @@ use yii\filters\VerbFilter;
 
 use app\models\Fases;
 use yii\helpers\ArrayHelper;
+use app\models\SemillerosTicCiclos;
+use app\models\SemillerosTicAnio;
 use app\models\Parametro;
 
 
@@ -86,6 +88,10 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */
     public function actionCreate()
     {
+		$ciclos = new SemillerosTicCiclos();
+		
+		$ciclos->load( Yii::$app->request->post() );
+		
         $model = new SemillerosTicDiarioDeCampo();
 
 		//se crea una instancia del modelo fases
@@ -99,12 +105,33 @@ class SemillerosTicDiarioDeCampoController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
+		
+		$dataAnios 	= SemillerosTicAnio::find()
+							->where( 'estado=1' )
+							->all();
+			
+		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		
+		$cicloslist = [];
+		
+		// if( $ciclos->id_anio ){
+			
+			$dataCiclos = SemillerosTicCiclos::find()
+							->where( 'estado=1' )
+							->where( 'id_anio=1' )
+							->all();
+			
+			$cicloslist	= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
+		// }
 
 		
         return $this->renderAjax('create', [
             'model' => $model,
             'fases' => $fases,
             'fasesModel' => $fasesModel,
+            'ciclos' => $ciclos,
+            'cicloslist' => $cicloslist,
+            'anios' => $anios,
         ]);
     }
 

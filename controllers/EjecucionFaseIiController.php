@@ -39,6 +39,8 @@ use app\models\Sedes;
 use app\models\Personas;
 use app\models\Sesiones;
 use app\models\DatosSesiones;
+use app\models\SemillerosTicCiclos;
+use app\models\SemillerosTicAnio;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -63,6 +65,45 @@ class EjecucionFaseIiController extends Controller
             ],
         ];
     }
+	
+	public function actionCiclos()
+	{
+		$id_ciclo = false;
+		
+		$model = new SemillerosTicCiclos();
+		
+		$model->load( Yii::$app->request->post() );
+		
+		if( empty( $model->id ) )
+		{
+			$dataAnios 	= SemillerosTicAnio::find()
+							->where( 'estado=1' )
+							->all();
+			
+			$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+			
+			$ciclos = [];
+			
+			if( $model->id_anio ){
+				
+				$dataCiclos = SemillerosTicCiclos::find()
+								->where( 'estado=1' )
+								->where( 'id_anio='.$model->id_anio )
+								->all();
+				
+				$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
+			}
+			
+			return $this->render( 'ciclos', [
+				'model' 	=> $model,
+				'anios' 	=> $anios,
+				'ciclos'	=> $ciclos,
+			]);
+		}
+		else{
+			return $this->actionCreate();
+		}
+	}
 
     /**
      * Lists all EjecucionFase models.
@@ -99,6 +140,15 @@ class EjecucionFaseIiController extends Controller
      */
     public function actionCreate()
     {
+		$ciclo = new SemillerosTicCiclos();
+		
+		$ciclo->load( Yii::$app->request->post() );
+		
+		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		if( empty( $ciclo->id ) ){
+			return $this->actionCiclos();
+		}
+		
 		//Indica si se guarda la fase
 		$guardado = false;
 		
@@ -176,6 +226,7 @@ class EjecucionFaseIiController extends Controller
 				$ejecucionesFases = SemillerosTicEjecucionFaseIi::find()
 										->where( 'id_fase='.$this->id_fase )
 										->andWhere( 'id_datos_ieo_profesional='.$datosIeoProfesional->id )
+										->andWhere( 'id_ciclo='.$ciclo->id )
 										->orderby(['id_datos_sesiones'=>SORT_DESC])
 										->all();
 										
@@ -204,207 +255,212 @@ class EjecucionFaseIiController extends Controller
 				$condicionesInstitucionales = CondicionesInstitucionales::findOne([ 
 													'id_datos_ieo_profesional' 	=> $datosIeoProfesional->id,
 													'id_fase'					=> $this->id_fase,
+													'id_ciclo'					=> $ciclo->id,
 												]);
+			}
 					
-				if( !$condicionesInstitucionales )
+			if( !$condicionesInstitucionales )
+			{
+				$condicionesInstitucionales = new CondicionesInstitucionales();
+			}
+			
+			//si se va a guardar los datos, cargos todos los datos de los modelos y los valdido
+			if( $guardar ){
+				
+				/*****************************************************************************************************
+				 * En caso de que sea un post, cargo los datos correspondientes del post a cada modelo DatosSesiones
+				 *****************************************************************************************************/
+				if( Yii::$app->request->post('DatosSesiones') )
 				{
-					$condicionesInstitucionales = new CondicionesInstitucionales();
+					/************************************************************************
+					 * DataSesiones es un array donde el indice es el id de la sesion
+					 ************************************************************************/
+					foreach( Yii::$app->request->post('DatosSesiones') as $sesion => $dataSesion )
+					{
+						//Solo si es diferente a vacio se cargan los campos
+						//Si es vacio significa que no hay ni ejecución de fase ni acción recurso 
+						//diligenciados y por tanto no se guarda
+						if( $dataSesion['fecha_sesion'] != '' )
+						{
+							$datosModelos[$sesion]['dataSesion']->load( $dataSesion, '');
+						}
+					}
+				}
+				/************************************************************************************************/
+				
+				/*****************************************************************************************************
+				 * En caso de que sea un post, cargo los datos correspondientes del post a cada modelo EjecucionFase
+				 *****************************************************************************************************/
+				if( Yii::$app->request->post('SemillerosTicEjecucionFaseIi') )
+				{
+					/************************************************************************
+					 * EjecucionFase es un multiarray
+					 * La primera posición es el id de la sesion
+					 * La segunda posición contiene los datos de cada ejecucion de fase para dicha sesión
+					 ************************************************************************/
+					foreach( Yii::$app->request->post('SemillerosTicEjecucionFaseIi') as $sesion => $ejecucionesFase )
+					{
+						foreach( $ejecucionesFase as $key => $ejecucionFase )
+						{
+							/**
+							 * Si el id de ejecución de fase que viene en el post, significa que es nuevo y se crea 
+							 * el modelo nuevo para dicha ejecución de fase
+							 */
+							if( empty( $ejecucionFase['id'] ) )
+							{
+								$ef = new SemillerosTicEjecucionFaseIi();
+								$ef->load( $ejecucionFase, '' );
+								$datosModelos[$sesion]['ejecucionesFase'][] = $ef;
+							}
+							else{
+								//Si tiene un id está la ejecución de fase está en dataModelos
+								//La primera posicion siempre debe estar vacía
+								$esPrimera = true;
+								foreach( $datosModelos[ $sesion ]['ejecucionesFase'] as $dmEjecucionFase )
+								{
+									if( !$esPrimera )
+									{
+										if( $dmEjecucionFase->id == $ejecucionFase['id'] )
+										{
+											$dmEjecucionFase->load( $ejecucionFase, '' );
+											break;
+										}
+									}
+									$esPrimera = false;
+								}
+							}
+						}
+					}
+				}
+				/************************************************************************************************/
+				
+				/*****************************************************************************************************
+				 * En caso de que sea un post, cargo los datos correspondientes del post a cada modelo SemillerosTicAccionesRecursosFaseIi
+				 *****************************************************************************************************/
+				if( Yii::$app->request->post('SemillerosTicAccionesRecursosFaseIi') )
+				{
+					/************************************************************************
+					 * DataSesiones es un array donde el indice es el id de la sesion
+					 ************************************************************************/
+					foreach( Yii::$app->request->post('SemillerosTicAccionesRecursosFaseIi') as $sesion => $accionRecurso )
+					{
+						$datosModelos[$sesion]['accionesRecursos']->load( $accionRecurso, '');
+					}
+				}
+				/************************************************************************************************/
+				
+				//Cargando los datos de condiciones institucionales
+				$condicionesInstitucionales->load( Yii::$app->request->post() );
+				
+				foreach( $datosModelos as $key => $modelos )
+				{
+					if( $modelos['dataSesion']->fecha_sesion != '' )
+					{	
+						//if( !array_key_exists( 'dataSesion', $modelos ) ){ exit( "El key es: ".$key ); }
+						$valido = $modelos['dataSesion']->validate([
+										'id_sesion',
+										'fecha_sesion',
+									]) && $valido;
+						
+						$valido = $modelos['accionesRecursos']->validate([
+										'tipo_accion',
+										'descripcion_accion',
+										'responsable_accion',
+										'tiempo_desarrollo',
+										'tic',
+										'tipo_recurso_tic',
+										'digitales',
+										'escolares',
+										'tipo_recurso_no_tic',
+										'tiempo_uso_recurso',
+										'tipo_recurso_digitales',
+									]) && $valido;
+						
+						//La primera posición de ejcución fase siempre es vacia
+						$esPrimera = true;
+						foreach( $modelos['ejecucionesFase'] as $k => $ejecucionFase )
+						{
+							if( !$esPrimera )
+							{
+								$valido = $ejecucionFase->validate([
+												'docentes',
+												'asignaturas',
+												'especialidad',
+												'numero_apps_desarrolladas',
+												'nombre_aplicaciones_desarrolladas',
+												'nombre_aplicaciones_creadas',
+												'numero',
+												'tipo_obra',
+												'temas_abordados',
+												'numero_pruebas',
+												'numero_disecciones',
+												'observaciones_generales',
+											]) && $valido;
+							}
+							$esPrimera = false;
+						}
+					}
 				}
 				
-				//si se va a guardar los datos, cargos todos los datos de los modelos y los valdido
-				if( $guardar ){
-					
-					/*****************************************************************************************************
-					 * En caso de que sea un post, cargo los datos correspondientes del post a cada modelo DatosSesiones
-					 *****************************************************************************************************/
-					if( Yii::$app->request->post('DatosSesiones') )
-					{
-						/************************************************************************
-						 * DataSesiones es un array donde el indice es el id de la sesion
-						 ************************************************************************/
-						foreach( Yii::$app->request->post('DatosSesiones') as $sesion => $dataSesion )
-						{
-							//Solo si es diferente a vacio se cargan los campos
-							//Si es vacio significa que no hay ni ejecución de fase ni acción recurso 
-							//diligenciados y por tanto no se guarda
-							if( $dataSesion['fecha_sesion'] != '' )
-							{
-								$datosModelos[$sesion]['dataSesion']->load( $dataSesion, '');
-							}
-						}
-					}
-					/************************************************************************************************/
-					
-					/*****************************************************************************************************
-					 * En caso de que sea un post, cargo los datos correspondientes del post a cada modelo EjecucionFase
-					 *****************************************************************************************************/
-					if( Yii::$app->request->post('SemillerosTicEjecucionFaseIi') )
-					{
-						/************************************************************************
-						 * EjecucionFase es un multiarray
-						 * La primera posición es el id de la sesion
-						 * La segunda posición contiene los datos de cada ejecucion de fase para dicha sesión
-						 ************************************************************************/
-						foreach( Yii::$app->request->post('SemillerosTicEjecucionFaseIi') as $sesion => $ejecucionesFase )
-						{
-							foreach( $ejecucionesFase as $key => $ejecucionFase )
-							{
-								/**
-								 * Si el id de ejecución de fase que viene en el post, significa que es nuevo y se crea 
-								 * el modelo nuevo para dicha ejecución de fase
-								 */
-								if( empty( $ejecucionFase['id'] ) )
-								{
-									$ef = new SemillerosTicEjecucionFaseIi();
-									$ef->load( $ejecucionFase, '' );
-									$datosModelos[$sesion]['ejecucionesFase'][] = $ef;
-								}
-								else{
-									//Si tiene un id está la ejecución de fase está en dataModelos
-									//La primera posicion siempre debe estar vacía
-									$esPrimera = true;
-									foreach( $datosModelos[ $sesion ]['ejecucionesFase'] as $dmEjecucionFase )
-									{
-										if( !$esPrimera )
-										{
-											if( $dmEjecucionFase->id == $ejecucionFase['id'] )
-											{
-												$dmEjecucionFase->load( $ejecucionFase, '' );
-												break;
-											}
-										}
-										$esPrimera = false;
-									}
-								}
-							}
-						}
-					}
-					/************************************************************************************************/
-					
-					/*****************************************************************************************************
-					 * En caso de que sea un post, cargo los datos correspondientes del post a cada modelo SemillerosTicAccionesRecursosFaseIi
-					 *****************************************************************************************************/
-					if( Yii::$app->request->post('SemillerosTicAccionesRecursosFaseIi') )
-					{
-						/************************************************************************
-						 * DataSesiones es un array donde el indice es el id de la sesion
-						 ************************************************************************/
-						foreach( Yii::$app->request->post('SemillerosTicAccionesRecursosFaseIi') as $sesion => $accionRecurso )
-						{
-							$datosModelos[$sesion]['accionesRecursos']->load( $accionRecurso, '');
-						}
-					}
-					/************************************************************************************************/
-					
-					//Cargando los datos de condiciones institucionales
-					$condicionesInstitucionales->load( Yii::$app->request->post() );
-					
+				$valido = $condicionesInstitucionales->validate([
+								'parte_ieo',
+								'parte_univalle',
+								'parte_sem',
+								'otro',
+								'total_sesiones_ieo',
+								'total_docentes_ieo',
+								'sesiones_por_docente',
+							]) && $valido;
+
+				$valido = $datosIeoProfesional->validate() && $valido;
+
+				//Valido que todos los modelos sean correctos para guardar
+				if( $valido )
+				{
+					//Se guarda primero los datos de Datos Ieo Profesional
+					$datosIeoProfesional->save(false);
+			
+					//Procedo a guardar los datos
+					//La primera posición de ejcución fase siempre es vacia
 					foreach( $datosModelos as $key => $modelos )
 					{
 						if( $modelos['dataSesion']->fecha_sesion != '' )
-						{	
-							//if( !array_key_exists( 'dataSesion', $modelos ) ){ exit( "El key es: ".$key ); }
-							$valido = $modelos['dataSesion']->validate([
-											'id_sesion',
-											'fecha_sesion',
-										]) && $valido;
+						{
+							$modelos['dataSesion']->estado = 1;
+							$modelos['dataSesion']->save(false);
 							
-							$valido = $modelos['accionesRecursos']->validate([
-											'tipo_accion',
-											'descripcion_accion',
-											'responsable_accion',
-											'tiempo_desarrollo',
-											'tic',
-											'tipo_recurso_tic',
-											'digitales',
-											'escolares',
-											'tipo_recurso_no_tic',
-											'tiempo_uso_recurso',
-											'tipo_recurso_digitales',
-										]) && $valido;
+							$modelos['accionesRecursos']->estado = 1;
+							$modelos['accionesRecursos']->id_datos_sesion = $modelos['dataSesion']->id;
+							$modelos['accionesRecursos']->id_ciclo = $ciclo->id;
+							$modelos['accionesRecursos']->save(false);
 							
-							//La primera posición de ejcución fase siempre es vacia
 							$esPrimera = true;
 							foreach( $modelos['ejecucionesFase'] as $k => $ejecucionFase )
 							{
 								if( !$esPrimera )
 								{
-									$valido = $ejecucionFase->validate([
-													'docentes',
-													'asignaturas',
-													'especialidad',
-													'numero_apps_desarrolladas',
-													'nombre_aplicaciones_desarrolladas',
-													'nombre_aplicaciones_creadas',
-													'numero',
-													'tipo_obra',
-													'temas_abordados',
-													'numero_pruebas',
-													'numero_disecciones',
-													'observaciones_generales',
-												]) && $valido;
+									$ejecucionFase->id_datos_ieo_profesional= $datosIeoProfesional->id;
+									$ejecucionFase->id_datos_sesiones 		= $modelos['dataSesion']->id;
+									$ejecucionFase->id_fase 				= $this->id_fase;
+									$ejecucionFase->estado 					= 1;
+									$ejecucionFase->id_ciclo 				= $ciclo->id;
+									$ejecucionFase->save(false);
 								}
 								$esPrimera = false;
 							}
 						}
 					}
 					
-					$valido = $condicionesInstitucionales->validate([
-									'parte_ieo',
-									'parte_univalle',
-									'parte_sem',
-									'otro',
-									'total_sesiones_ieo',
-									'total_docentes_ieo',
-									'sesiones_por_docente',
-								]) && $valido;
-
-					$valido = $datosIeoProfesional->validate() && $valido;
-
-					//Valido que todos los modelos sean correctos para guardar
-					if( $valido )
-					{
-						//Se guarda primero los datos de Datos Ieo Profesional
-						$datosIeoProfesional->save(false);
-				
-						//Procedo a guardar los datos
-						//La primera posición de ejcución fase siempre es vacia
-						foreach( $datosModelos as $key => $modelos )
-						{
-							if( $modelos['dataSesion']->fecha_sesion != '' )
-							{
-								$modelos['dataSesion']->estado = 1;
-								$modelos['dataSesion']->save(false);
-								
-								$modelos['accionesRecursos']->estado = 1;
-								$modelos['accionesRecursos']->id_datos_sesion = $modelos['dataSesion']->id;
-								$modelos['accionesRecursos']->save(false);
-								
-								$esPrimera = true;
-								foreach( $modelos['ejecucionesFase'] as $k => $ejecucionFase )
-								{
-									if( !$esPrimera )
-									{
-										$ejecucionFase->id_datos_ieo_profesional= $datosIeoProfesional->id;
-										$ejecucionFase->id_datos_sesiones 		= $modelos['dataSesion']->id;
-										$ejecucionFase->id_fase 				= $this->id_fase;
-										$ejecucionFase->estado 					= 1;
-										$ejecucionFase->save(false);
-									}
-									$esPrimera = false;
-								}
-							}
-						}
-						
-						$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
-						$condicionesInstitucionales->id_fase = $this->id_fase;
-						$condicionesInstitucionales->estado = 1;
-						$condicionesInstitucionales->save( false );
-						
-						$guardado = true;
-					}
+					$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
+					$condicionesInstitucionales->id_fase = $this->id_fase;
+					$condicionesInstitucionales->estado = 1;
+					$condicionesInstitucionales->id_ciclo = $ciclo->id;
+					$condicionesInstitucionales->save( false );
+					
+					$guardado = true;
 				}
 			}
+			
 		}
 		
 		$institucion = Instituciones::findOne($id_institucion);
@@ -434,6 +490,7 @@ class EjecucionFaseIiController extends Controller
             'datosIeoProfesional'	=> $datosIeoProfesional,
             'datosModelos'			=> $datosModelos,
             'guardado'				=> $guardado,
+            'ciclo'					=> $ciclo,
         ]);
     }
 

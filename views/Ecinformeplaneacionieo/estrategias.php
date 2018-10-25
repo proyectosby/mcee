@@ -23,6 +23,8 @@ foreach ($ecEstrategias as $fecha => $dataEstrategia)
 																	[
 																		'contador'=> $idEstrategia,
 																		'form' => $form,
+																		'estadoActual' => $estadoActual,
+																		'fecha' => $fecha
 																	] ),
 						'contentOptions'=> []
 					];	

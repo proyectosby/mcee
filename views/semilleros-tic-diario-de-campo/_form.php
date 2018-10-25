@@ -21,6 +21,15 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 <!-- Se inicia el formulario-->
 <?php $form = ActiveForm::begin(); ?>
 
+	<?= $form->field( $ciclos, 'id_anio' )->dropDownList( $anios, [ 
+													'prompt' 	=> 'Seleccione...', 
+												] ) ?>
+
+	<?= $form->field( $ciclos, 'id' )->dropDownList( $cicloslist, [ 
+												'prompt' => 'Seleccione...',
+											] )->label( 'Ciclo' ); ?>
+
+
 <!-- Espacio para seleccionar la fase -->
 	<div class="col-sm-4" style='padding:0px;'>
 		<?= $form->field($fasesModel, 'id')->dropDownList($fases, ['prompt'=>'Seleccione...', 'id' =>'selFases'])->label("Fase") ?>
@@ -37,7 +46,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 			RESUMEN CUANTITATIVO DEL RESULTADO
 		</div><br><br><br><br>
 <div class="container-fluid">
-
 	
 	<div class=row style='text-align:center;' id="encabezado"'>
 		<!--<div class="col-sm-1" style='padding:0px;'>

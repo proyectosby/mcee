@@ -15,7 +15,7 @@ $model = new EcRespuestas();
 <div class="container-fluid">
 
             <div class="ieo-form">
-                    <?= $form->field($model, "[$contador]respuesta")->textInput()->label('Descripción') ?>
+                    <?= $form->field($model, "[$contador]respuesta")->DropDownList($estadoActual,['prompt' => 'Seleccione'])->label($fecha) ?>
                     <?= $form->field($model, "[$contador]id_estrategia")->hiddenInput( [ 'value' => $contador ] )->label( '' ) ?>
                     <?= $form->field($model, "[$contador]estado")->hiddenInput( [ 'value' => '1' ] )->label( '' ) ?>
             </div>

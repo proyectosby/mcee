@@ -65,6 +65,8 @@ $this->registerJsFile(
     <?= $form->field($model, 'docente')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...' ] )->label('Profesional A.') ?>
 	
 	<?= $form->field($model, 'docente')->textInput()->label('Curso de los participantes') ?>
+	
+	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
     
 	<?= $this->render( 'sesiones', [ 
 										'idPE' => null,

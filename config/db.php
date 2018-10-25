@@ -2,11 +2,11 @@
 
 
 return [
-    // 'class' 	=> 'yii\db\Connection',
-	// 'dsn' 		=> 'pgsql:host=192.168.10.7;port=5432;dbname=sga_aprender',
-	// 'username' 	=> 'usr_aprender',
-	// 'password' 	=> 'A123456a',
-	// 'charset' 	=> 'utf8',
+   /*'class' 	=> 'yii\db\Connection',
+	 'dsn' 		=> 'pgsql:host=192.168.10.7;port=5432;dbname=sga_aprender',
+	 'username' 	=> 'usr_aprender',
+	 'password' 	=> 'A123456a',
+	 'charset' 	=> 'utf8',*/
 
 
 	'class' 	=> 'yii\db\Connection',

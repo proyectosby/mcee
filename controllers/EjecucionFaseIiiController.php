@@ -36,6 +36,8 @@ use app\models\Sedes;
 use app\models\Personas;
 use app\models\SemillerosTicEjecucionFaseIii;
 use app\models\SemillerosTicCondicionesInstitucionalesFaseIii;
+use app\models\SemillerosTicCiclos;
+use app\models\SemillerosTicAnio;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -59,6 +61,45 @@ class EjecucionFaseIiiController extends Controller
             ],
         ];
     }
+	
+	public function actionCiclos()
+	{
+		$id_ciclo = false;
+		
+		$model = new SemillerosTicCiclos();
+		
+		$model->load( Yii::$app->request->post() );
+		
+		if( empty( $model->id ) )
+		{
+			$dataAnios 	= SemillerosTicAnio::find()
+							->where( 'estado=1' )
+							->all();
+			
+			$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+			
+			$ciclos = [];
+			
+			if( $model->id_anio ){
+				
+				$dataCiclos = SemillerosTicCiclos::find()
+								->where( 'estado=1' )
+								->where( 'id_anio='.$model->id_anio )
+								->all();
+				
+				$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
+			}
+			
+			return $this->render( 'ciclos', [
+				'model' 	=> $model,
+				'anios' 	=> $anios,
+				'ciclos'	=> $ciclos,
+			]);
+		}
+		else{
+			return $this->actionCreate();
+		}
+	}
 
     /**
      * Lists all SemillerosTicEjecucionFaseIii models.
@@ -96,7 +137,16 @@ class EjecucionFaseIiiController extends Controller
      */
     public function actionCreate()
     {
-		// echo "<pre>"; var_dump( Yii::$app->request->post() ); echo "</pre>"; exit();
+		$ciclo = new SemillerosTicCiclos();
+		
+		$ciclo->load( Yii::$app->request->post() );
+		
+		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		if( empty( $ciclo->id ) ){
+			return $this->actionCiclos();
+		}
+		
+		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
 		
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
@@ -104,7 +154,10 @@ class EjecucionFaseIiiController extends Controller
         $model = new SemillerosTicEjecucionFaseIii();
 		
 		//Solo hay una condicion por fase iii
-		$condiciones = SemillerosTicCondicionesInstitucionalesFaseIii::findOne([ 'id_fase' => $this->id_fase ]);
+		$condiciones = SemillerosTicCondicionesInstitucionalesFaseIii::findOne([ 
+							'id_fase'	=> $this->id_fase,
+							'id_ciclo'	=> $ciclo->id,
+						]);
 		
 		//Si no existe se crea una vacia
 		if( !$condiciones )
@@ -118,11 +171,12 @@ class EjecucionFaseIiiController extends Controller
 					];
 		
 
-		if( !Yii::$app->request->isPost )
+		if( !$guardar )
 		{
 			//Consultando las ejecuciones de fase
 			$ejecucionesFases = SemillerosTicEjecucionFaseIii::find()
 									->where( 'id_fase='.$this->id_fase )
+									->where( 'id_ciclo='.$ciclo->id )
 									->andWhere( 'estado=1' )
 									->all();
 									
@@ -177,7 +231,7 @@ class EjecucionFaseIiiController extends Controller
 		
 		$guardado = false;
 		
-		if( Yii::$app->request->isPost )
+		if( Yii::$app->request->isPost && $guardar )
 		{
 			
 			$valido = true;
@@ -242,10 +296,12 @@ class EjecucionFaseIiiController extends Controller
 						$value['ejecucionFase']->id_fase 					= $this->id_fase;
 						$value['ejecucionFase']->id_datos_ieo_profesional 	= $value['profesionales']->id;
 						$value['ejecucionFase']->estado 					= 1;
+						$value['ejecucionFase']->id_ciclo 					= $ciclo->id;
 						$value['ejecucionFase']->save( false );
 						
 						$condiciones->estado 	= 1;
 						$condiciones->id_fase 	= $this->id_fase;
+						$condiciones->id_ciclo 	= $ciclo->id;
 						$condiciones->save( false );
 						
 						$guardado = true;
@@ -285,6 +341,7 @@ class EjecucionFaseIiiController extends Controller
             'profesional'	=> $profesional,
             'condiciones'	=> $condiciones,
             'guardado'		=> $guardado,
+            'ciclo'			=> $ciclo,
         ]);
     }
 

@@ -61,7 +61,7 @@ $( document ).ready(function(){
 		"Total Docentes participantes por IEO",
 	];
 	
-	$( "#collapseOne textarea" ).each(function(x){
+	$( "#collapseOne textarea[id^=semillerosticejecucionfaseii]" ).each(function(x){
 	
 		$( this )
 			.attr({readOnly: true })

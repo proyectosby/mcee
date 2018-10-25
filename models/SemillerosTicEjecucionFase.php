@@ -42,7 +42,7 @@ class SemillerosTicEjecucionFase extends \yii\db\ActiveRecord
         return [
             [['id_fase', 'id_datos_sesiones', 'docente', 'asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'id_datos_ieo_profesional', 'estado', 'numero_sesiones_docente'], 'required'],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
-            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'integer'],
+            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado','id_ciclo'], 'integer'],
             [['docente'], 'string', 'max' => 200],
             [['asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'numero_sesiones_docente'], 'string', 'max' => 500],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
@@ -61,6 +61,7 @@ class SemillerosTicEjecucionFase extends \yii\db\ActiveRecord
             'id' 						=> 'ID',
             'id_fase' 					=> 'Id Fase',
             'id_datos_sesiones' 		=> 'Id Datos Sesiones',
+            'id_ciclo' 					=> 'Ciclo',
             'docente' 					=> 'Docente',
             'asignaturas' 				=> 'Asignaturas',
             'especiaidad' 				=> 'Especiaidad',
