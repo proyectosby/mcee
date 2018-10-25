@@ -74,7 +74,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 			</div>
 			<br>
 		</div>
-	</div>  
+
 	
 	<div class="panel panel-success">
 		
@@ -114,17 +114,28 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 		<div class="panel-body">
  
 	  Cuál es el estado de avance del acompañamiento pedagógico que realizar las familias en el desarrollo de las CB y HV de los estudiantes.
-	  <progress value="22" max="100"></progress> 22% 
-	  
+	  <div id="myProgress">
+			<div id="porcentajeAvance9" class="myBar">0%</div>
+		</div>
+		<br>
 	  Cuál es el estado de avance de los procesos de comunicación entre la familia y la escuela
-	  <progress value="44" max="100"></progress> 44%
+	  <div id="myProgress">
+			<div id="porcentajeAvance10" class="myBar">0%</div>
+		</div>
+		<br>
 	  
 	  
 	  Cuál es el estado de avance en la articulación de los organismos y mecanismos de participación de las familias en la escuela 
-	  <progress value="88" max="100"></progress> 88% 
+	  <div id="myProgress">
+			<div id="porcentajeAvance11" class="myBar">0%</div>
+		</div>
+		<br>
 
 	  Cuál es el estado de avance de los productos requeridos por el eje de Articulación Familiar
-	  <progress value="88" max="100"></progress> 88%
+	<div id="myProgress">
+			<div id="porcentajeAvance12" class="myBar">0%</div>
+		</div>
+		<br>
 
 		</div>
 	</div>  
@@ -136,22 +147,18 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 		</div>
 		<div class="panel-body">
  
-	  Cuál es el estado de avance del proceso de transversalización y vinculación al PEI de los Proyectos Pedagógicos Transversales
-	  <progress value="22" max="100"></progress> 22% 
-	  <br>
+	Estado general de avance de las transformaciones esperadas por el Proyecto Fortalecimiento de las Competencias Básicas y las Habilidades para la Vida desde la transversalidad
 	  
-	  Cuál es el estado de avance de la orientación conceptual y metodológica de los Proyectos Pedagógicos Transversales
-	  <progress value="44" max="100"></progress> 44%
-	  <br>
-	  
-	  Cuál es el estado de avance de los productos correspondientes al eje PPT 
-	  <br>
-	  <progress value="88" max="100"></progress> 88%
+		<div id="myProgress">
+			<div id="porcentajeAvance13" class="myBar">0%</div>
+		</div>
+		<br>
+	 
 
 		</div>
 	</div>  
 	
-	
+</div>  
 	
 </div>
 	
