@@ -54,7 +54,7 @@ class EjecucionFase extends \yii\db\ActiveRecord
     {
         return [
             // [['id_fase', 'id_datos_sesiones', 'docente', 'asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'id_datos_ieo_profesional', 'estado', 'numero_sesiones_docente'], 'required'],
-            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'required'],
+            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado', 'id_ciclo'], 'required'],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'integer'],
             [['docente'], 'string', 'max' => 200],
@@ -63,6 +63,7 @@ class EjecucionFase extends \yii\db\ActiveRecord
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => DatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_datos_sesiones'], 'exist', 'skipOnError' => true, 'targetClass' => DatosSesiones::className(), 'targetAttribute' => ['id_datos_sesiones' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => Fases::className(), 'targetAttribute' => ['id_fase' => 'id']],
+			[['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
         ];
     }
 
@@ -89,6 +90,7 @@ class EjecucionFase extends \yii\db\ActiveRecord
             'estado' => 'Estado',
             'numero_sesiones_docente' => 'Numero Sesiones Docente',
             'nombre_aplicaciones_creadas' => 'Nombre de las aplicaciones creadas',
+            'id_ciclo' => 'Ciclo',
         ];
     }
 }

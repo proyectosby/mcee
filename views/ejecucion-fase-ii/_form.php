@@ -87,6 +87,8 @@ if( $guardado ){
     
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
 	
+	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
+	
 	<?= $this->render( 'sesiones', [ 
 										'idPE' 			=> null,
 										'sesiones' 		=> $sesiones,
