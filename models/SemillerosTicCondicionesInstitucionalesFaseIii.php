@@ -31,13 +31,14 @@ class SemillerosTicCondicionesInstitucionalesFaseIii extends \yii\db\ActiveRecor
     public function rules()
     {
         return [
-            [['id_fase', 'estado'], 'required'],
-            [['id_fase', 'estado'], 'default', 'value' => null],
-            [['id_fase', 'estado'], 'integer'],
+            [['id_fase', 'estado','id_ciclo'], 'required'],
+            [['id_fase', 'estado','id_ciclo'], 'default', 'value' => null],
+            [['id_fase', 'estado','id_ciclo'], 'integer'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro'], 'string'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro'], 'required'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
+            [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
         ];
     }
 
@@ -54,6 +55,7 @@ class SemillerosTicCondicionesInstitucionalesFaseIii extends \yii\db\ActiveRecor
             'parte_univalle' => 'Parte Univalle',
             'parte_sem' => 'Parte Sem',
             'otro' => 'Otro',
+            'id_ciclo' => 'Ciclo',
         ];
     }
 }

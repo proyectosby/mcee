@@ -57,7 +57,7 @@ $( document ).ready(function(){
 	dvsFilas = [];
 	$(".panel-body").each(function(x){
 		
-		dvsFilas[x] = $( "[id^=dvFilaSesion]", this ).eq(0);
+		dvsFilas[ $( "[id^=dvFilaSesion]", this ).eq(0)[0].id.substr( "dvFilaSesion".length ) ] = $( "[id^=dvFilaSesion]", this ).eq(0);
 		$( "[id^=dvFilaSesion]", this ).eq(0).remove();
 	});
 	
@@ -153,7 +153,7 @@ $( document ).ready(function(){
 			var consecutivo = consecutivos[id].actual;
 			
 			// var filaNueva = $( "#dvFilaSesion"+id ).clone();
-			var filaNueva = dvsFilas[id-1].clone();
+			var filaNueva = dvsFilas[id].clone();
 			
 			$( "#dvSesion"+id ).append( filaNueva );
 			

@@ -66,6 +66,7 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
             'total_docentes_ieo' 		=> 'Total Docentes Ieo',
             'sesiones_por_docente' 		=> 'Sesiones por Docente',
             'id_fase' 					=> 'ID Fase',
+            'id_ciclo' 					=> 'Ciclo',
         ];
     }
 }

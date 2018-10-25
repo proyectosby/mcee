@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\SemillerosTicDiarioDeCampo */
 
@@ -18,6 +17,9 @@ $this->params['breadcrumbs'][] = "Agregar";
         'model' => $model,
         'fases' => $fases,
         'fasesModel' => $fasesModel,
+		'ciclos' => $ciclos,
+		'cicloslist' => $cicloslist,
+		'anios' => $anios,
     ]) ?>
 
 </div>
