@@ -115,9 +115,9 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 			Espacio de escritura para el profesional
 		</div>
 	
-    <?= $form->field($model, 'descripcion')->textArea(['maxlength' => true])->label() ?>
+    <?= $form->field($model, 'descripcion')->textArea(['maxlength' => true,'placeholder'=> 'Campo de escritura'])->label() ?>
 
-    <?= $form->field($model, 'hallazgos')->textArea(['maxlength' => true])->label() ?>
+    <?= $form->field($model, 'hallazgos')->textArea(['maxlength' => true,'placeholder'=> 'Campo de escritura'])->label() ?>
 
     <!-- <?= $form->field($model, 'estado')->textInput() ?>-->
 

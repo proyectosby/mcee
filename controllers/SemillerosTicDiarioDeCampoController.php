@@ -97,7 +97,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		//se crea una instancia del modelo fases
 		$fasesModel 		 	= new Fases();
 		//se traen los datos de fases
-		$dataFases		 	= $fasesModel->find()->all();
+		$dataFases		 	= $fasesModel->find()->orderby( 'id' )->all();
 		//se guardan los datos en un array
 		$fases	 	 	 	= ArrayHelper::map( $dataFases, 'id', 'descripcion' );
 		
@@ -124,6 +124,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			$cicloslist	= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
 		// }
 
+		
         return $this->renderAjax('create', [
             'model' => $model,
             'fases' => $fases,
