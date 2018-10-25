@@ -21,6 +21,13 @@ use yii\helpers\Url;
 
 $this->title = 'Informe de avance Mensual I.E.O - Ejecución';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
 ?>
 
 
@@ -96,9 +103,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            //'persona_id',
-            'institucion_id',
-            'sede_id',
+            'persona_acargo',
+            'zona_educativa',
+			'comuna',
+			'barrio',
             //'proyecto_id',
             //'estado',
 
