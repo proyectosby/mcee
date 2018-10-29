@@ -5,11 +5,11 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "tipos_cantidad_poblacion".
+ * This is the model class for table "ec.tipos_cantidad_poblacion".
  *
  * @property int $id
- * @property int $ieo_id
  * @property int $actividad_id
+ * @property int $ieo_id
  * @property string $tiempo_libre
  * @property string $edu_derechos
  * @property string $sexualidad
@@ -17,15 +17,12 @@ use Yii;
  * @property string $medio_ambiente
  * @property string $familia
  * @property string $directivos
- * @property string $total
- * @property string $estado
- *
- * @property EstudiantesGrado[] $estudiantesGrados
- * @property ActividadesIeo $actividad
- * @property Ieo $ieo
+ * @property string $fecha_creacion
+ * @property int $proyecto_ieo_id
  */
 class TiposCantidadPoblacion extends \yii\db\ActiveRecord
 {
+    
     /**
      * @inheritdoc
      */
@@ -40,11 +37,12 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ieo_id', 'actividad_id', 'estado'], 'default', 'value' => null],
-            [['ieo_id', 'actividad_id', 'estado'], 'integer'],
-            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos', 'total'], 'string'],
+            [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'default', 'value' => null],
+            [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'integer'],
+            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'string'],
+            [['fecha_creacion'], 'safe'],
             [['actividad_id'], 'exist', 'skipOnError' => true, 'targetClass' => ActividadesIeo::className(), 'targetAttribute' => ['actividad_id' => 'id']],
-            [['ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ieo::className(), 'targetAttribute' => ['ieo_id' => 'id']],
+            [['proyecto_ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoIeo::className(), 'targetAttribute' => ['proyecto_ieo_id' => 'id']],
         ];
     }
 
@@ -55,8 +53,8 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ieo_id' => 'Ieo ID',
             'actividad_id' => 'Actividad ID',
+            'ieo_id' => 'Ieo ID',
             'tiempo_libre' => 'Tiempo Libre',
             'edu_derechos' => 'Edu Derechos',
             'sexualidad' => 'Sexualidad',
@@ -64,32 +62,8 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
-            'total' => 'Total',
-            'estado' => 'Estado',
+            'fecha_creacion' => 'Fecha Creacion',
+            'proyecto_ieo_id' => 'Proyecto Ieo ID',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEstudiantesGrados()
-    {
-        return $this->hasMany(EstudiantesGrado::className(), ['tipo_cantidad_poblacion_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getActividad()
-    {
-        return $this->hasOne(ActividadesIeo::className(), ['id' => 'actividad_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIeo()
-    {
-        return $this->hasOne(Ieo::className(), ['id' => 'ieo_id']);
     }
 }

@@ -87,4 +87,15 @@ $( document ).ready(function(){
 			});
 		}
 	}, 1000 );
+
+	//Solo cuando se llama al index
+	setTimeout( function(){
+		if( $( "[name=guardadoFormulario]" ).length > 0 ){
+			swal({
+				text: "Formulario guardado exitosamente",
+				icon: "success",
+				button: "Cerrar",
+			});
+		}
+	}, 1000 );
 });
