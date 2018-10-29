@@ -1,5 +1,13 @@
 <?php
 
+/**********
+Modificaciones:
+Fecha: 2018-10-29
+Desarrollador: Edwin Molina Grisales
+Descripción: Se modifican el metodo actionCreate para que se guarden los datos suministrados por el usuarios o se modifiquen.
+---------------------------------------
+**********/
+
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -31,6 +39,11 @@ use app\models\EstudiantesOperativoSesion;
 use app\models\Escalafones;
 use app\models\Docentes;
 use app\models\DistribucionesAcademicas;
+use app\models\AcuerdosInstitucionales;
+use app\models\Parametro;
+use app\models\Jornadas;
+use app\models\SemillerosTicCiclos;
+use app\models\SemillerosTicAnio;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
@@ -57,33 +70,43 @@ class SemillerosDatosIeoController extends Controller
         ];
     }
 	
-	function actionViewFases(){
+	public function actionCiclos()
+	{
+		$id_ciclo = false;
 		
-		// $institucion 	= Yii::$app->request->post()['institucion'];
-		// $sede 			= Yii::$app->request->post()['sede'];
-		// $docente		= Yii::$app->request->post()['docente'];
-		// $asignatura		= Yii::$app->request->post()['asignatura'];
-		// $nivel			= Yii::$app->request->post()['nivel'];
+		$model = new SemillerosTicCiclos();
 		
-		// $idPE = InstrumentoPoblacionDocentes::findOne([
-					// 'id_institucion' 				=> $institucion,
-					// 'id_sede' 		 				=> $sede,
-					// 'id_persona' 					=> $docente,
-					// 'id_asignaturas_niveles_sedes'	=> $asignatura,
-					// 'id_niveles' 					=> $nivel,
-					// 'estado' 						=> 1,
-				// ]);
+		$model->load( Yii::$app->request->post() );
+		
+		if( empty( $model->id ) )
+		{
+			$dataAnios 	= SemillerosTicAnio::find()
+							->where( 'estado=1' )
+							->all();
+			
+			$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+			
+			$ciclos = [];
+			
+			if( $model->id_anio ){
 				
-		$fases	= Fases::find()
-					->where('estado=1')
-					->orderby( 'descripcion' )
-					->all();
-		
-		return $this->renderPartial('fases', [
-			'idPE' 	=> null,
-			'fases' => $fases,
-        ]);
-		
+				$dataCiclos = SemillerosTicCiclos::find()
+								->where( 'estado=1' )
+								->where( 'id_anio='.$model->id_anio )
+								->all();
+				
+				$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
+			}
+			
+			return $this->render( 'ciclos', [
+				'model' 	=> $model,
+				'anios' 	=> $anios,
+				'ciclos'	=> $ciclos,
+			]);
+		}
+		else{
+			return $this->actionCreate();
+		}
 	}
 
     /**
@@ -121,14 +144,144 @@ class SemillerosDatosIeoController extends Controller
      */
     public function actionCreate()
     {
-		$id_sede 		= $_SESSION['sede'][0];
-		$id_institucion	= $_SESSION['instituciones'][0];
+		$ciclo = new SemillerosTicCiclos();
 		
-        $model = new SemillerosDatosIeo();
+		$ciclo->load( Yii::$app->request->post() );
+		
+		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		if( empty( $ciclo->id ) ){
+			return $this->actionCiclos();
+		}
+		
+		$id_institucion	= $_SESSION['instituciones'][0];
+		$id_sede 		= $_SESSION['sede'][0];
+		
+        $datosIEO = SemillerosDatosIeo::findOne([
+							'id_institucion' 		=> $id_institucion,
+							'sede' 			 		=> $id_sede,
+							'lower(personal_a)'	 	=> strtolower( Yii::$app->request->post('SemillerosDatosIeo')['personal_a'] ),
+							'lower(docente_aliado)' => strtolower( Yii::$app->request->post('SemillerosDatosIeo')['docente_aliado'] ),
+						]);
+		
+		if( !$datosIEO )
+		{
+			$datosIEO = new SemillerosDatosIeo();
+			$datosIEO->load( Yii::$app->request->post() );
+		}
+		
+		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
+		$guardado = false;
+		
+		$modelos = [];
+		
+		//Busco todas las fases
+		$fases	= Fases::find()
+					->where('estado=1')
+					->orderby( 'descripcion' )
+					->all();
+		
+		//Por cada fase hay un acuerdo institucional
+		//La primera es vacia ya que se usa para crear la primera fila y con ella crear las demas dinamicamente
+		foreach( $fases as $key => $fase ){
+			$modelos[ $fase->id ][] = new AcuerdosInstitucionales();
+		}
+		
+		//Si no se va a guardar se buscan todos los datos guardados
+		if( !$guardar )
+		{	
+			if( $datosIEO->id )
+			{ 
+				$acuerdos = AcuerdosInstitucionales::find()
+								->where( 'estado=1' )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'id_semilleros_datos_ieo='.$datosIEO->id )
+								->all();
+				
+				foreach( $acuerdos as $key => $acuerdo )
+				{
+					$modelos[ $acuerdo->id_fase ][] = $acuerdo;
+				}
+			}
+		}
+		else{
+			
+			$datosIEO->load( Yii::$app->request->post() );
+			
+			if( is_array( Yii::$app->request->post('AcuerdosInstitucionales') ) )
+			{
+				foreach( Yii::$app->request->post('AcuerdosInstitucionales') as $id_fase => $acuerdos )
+				{
+					foreach( $acuerdos as $acuerdo )
+					{
+						if( !empty( $acuerdo['id'] ) )
+						{
+							$ac = AcuerdosInstitucionales::findOne( $acuerdo['id'] ); 
+						}
+						else
+						{
+							$ac = new AcuerdosInstitucionales(); 
+						}
+						
+						$ac->load( $acuerdo, '');
+							
+						$modelos[ $id_fase ][] = $ac;
+					}
+				}
+			}
+			
+			$valido = true;
+			
+			$datosIEO->validate([
+					'personal_a' 		=> 'Personal A.',
+					'docente_aliado' 	=> 'Docente aliado',
+				]) && $valido;
+			
+			foreach( $modelos as $fase_id => $modelo )
+			{
+				foreach( $modelo as $k => $value )
+				{
+					$value->validate([
+						'id_docente',
+						'asignatura',
+						'especialidad',
+						'frecuencias_sesiones',
+						'jornada',
+						'recursos_requeridos',
+						'total_docentes',
+						'observaciones',
+					]) && $valido;
+				}
+			}
+			
+			if( $valido )
+			{
+				$datosIEO->estado 	= 1;
+				$datosIEO->sede		= $id_sede;
+				$datosIEO->save( false );
+				
+				foreach( $modelos as $id_fase => $modelo )
+				{	
+					$primera = true;
+					foreach( $modelo as $k => $value )
+					{
+						if( !$primera )
+						{
+							$value->id_semilleros_datos_ieo = $datosIEO->id;
+							$value->id_fase 				= $id_fase;
+							$value->id_ciclo 				= $ciclo->id;
+							$value->estado 					= 1;
+							$value->save( false );
+						}
+						
+						$primera = false;
+					}
+				}
+				
+				$guardado = true;
+			}
+		}
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+       
 		
 		$institucion = Instituciones::findOne($id_institucion);
 		$sede 		 = Sedes::findOne($id_sede);
@@ -143,13 +296,65 @@ class SemillerosDatosIeoController extends Controller
 								->all();
 		
 		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		
+		
+		$dataJornadas 	= Parametro::find()
+						->where( 'id_tipo_parametro=7' )
+						->andWhere( 'estado=1' )
+						->all();
 
+		$jornadas		= ArrayHelper::map( $dataJornadas, 'id', 'descripcion' );
+		
+		$dataRecursos 	= Parametro::find()
+						->where( 'id_tipo_parametro=8' )
+						->andWhere( 'estado=1' )
+						->all();
+
+		$recursos		= ArrayHelper::map( $dataRecursos, 'id', 'descripcion' );
+		
+		$dataParametro 	= Parametro::find()
+						->where( 'id_tipo_parametro=6' )
+						->andWhere( 'estado=1' )
+						->orderby( 'id' )
+						->all();
+
+		$parametros		= ArrayHelper::map( $dataParametro, 'id', 'descripcion' );
+		
+		$fases	= Fases::find()
+					->where('estado=1')
+					->orderby( 'descripcion' )
+					->all();
+
+		$profesionales 	  = [];
+		$docentes_aliados = [];
+		$dataProfesionales = SemillerosDatosIeo::find()
+								->alias( 'sdi' )
+								->innerJoin( 'semilleros_tic.acuerdos_institucionales ai', 'ai.id_semilleros_datos_ieo=sdi.id' )
+								->where( 'sdi.estado=1' )
+								->where( 'ai.estado=1' )
+								->where( 'ai.id_ciclo='.$ciclo->id )
+								->all();
+		
+		foreach( $dataProfesionales as $key => $value ){
+			$profesionales[] = $value->personal_a;
+			$docentes_aliados[ $value->personal_a ] = $value->docente_aliado;
+		}
+					
         return $this->render('create', [
-            'model' 		=> $model,
-            'institucion' 	=> $institucion,
-            'sede' 			=> $sede,
-            'docentes' 		=> $docentes,
-            'controller'	=> $this,
+            'datosIEO' 			=> $datosIEO,
+            'institucion' 		=> $institucion,
+            'sede' 				=> $sede,
+            'docentes' 			=> $docentes,
+            'controller'		=> $this,
+            'jornadas'			=> $jornadas,
+            'recursos'			=> $recursos,
+            'parametros'		=> $parametros,
+            'fases'				=> $fases,
+            'modelos'			=> $modelos,
+            'profesionales'		=> $profesionales,
+            'docentes_aliados'	=> $docentes_aliados,
+            'ciclo'				=> $ciclo,
+            'guardado'			=> $guardado,
         ]);
     }
 
