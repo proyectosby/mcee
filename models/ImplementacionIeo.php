@@ -27,6 +27,7 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
     public $observaciones;
     public $tipo_actividad;
     
+    
     /**
      * @inheritdoc
      */

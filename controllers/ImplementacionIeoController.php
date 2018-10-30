@@ -18,6 +18,7 @@ use app\models\ImplementacionIeo;
 use app\models\TiposCantidadPoblacion;
 use app\models\Evidencias;
 use app\models\EstudiantesIeo;
+use app\models\ProductoImplementacionIeo;
 
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -89,12 +90,14 @@ class ImplementacionIeoController extends Controller
         $tiposCantidadPoblacion = new TiposCantidadPoblacion();
         $estudiantesGrado = new EstudiantesIeo();
         $evidencias = new Evidencias();
+        $producto = new ProductoImplementacionIeo();
 
         return $this->renderAjax('create', [
             'model' => $model,
             'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
             'estudiantesGrado' => $estudiantesGrado,
             "evidencias" => $evidencias,
+            "producto" => $producto
         ]);
     }
 
