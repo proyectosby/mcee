@@ -1023,7 +1023,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         <!--- Fin contenedor padre  Proyectos de Servicio Social Estudiantil-->
         
         <!--- Inicio contenedor padre Articulación Familiar-->
-        
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -1520,7 +1519,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                 </div>
             </div>
         </div>
-
+        <!--- Fin contenedor padre Articulación Familiar-->                            
 
 
         <div class="form-group">

@@ -22,7 +22,7 @@ use Yii;
  */
 class TiposCantidadPoblacion extends \yii\db\ActiveRecord
 {
-    
+    public $fecha_creacion;
     /**
      * @inheritdoc
      */

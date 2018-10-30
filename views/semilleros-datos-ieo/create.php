@@ -1,12 +1,16 @@
 <?php
 
 /**********
+Modificaciones:
+Fecha: 2018-10-29
+Desarrollador: Edwin Molina Grisales
+Descripción: Se modifican los datos enviados a la vista form de aucerdo a los parametros del controlador
+---------------------------------------
 Modificación: 
 Fecha: 22-10-2018
 Desarrollador: Maria Viviana Rodas
 Descripción: Se agrega boton de volver a la vista de botones
 ---------------------------------------
-
 **********/
 
 use yii\helpers\Html;
@@ -36,11 +40,20 @@ $this->params['breadcrumbs'][] = "Agregar";
     <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <?= $this->render('_form', [
-        'model' => $model,
-		'institucion' 	=> $institucion,
-		'sede' 			=> $sede,
-		'docentes' 		=> $docentes,
-		'controller' 	=> $controller,
+        'datosIEO' 			=> $datosIEO,
+		'institucion' 		=> $institucion,
+		'sede' 				=> $sede,
+		'docentes' 			=> $docentes,
+		'controller' 		=> $controller,
+		'jornadas' 			=> $jornadas,
+		'recursos' 			=> $recursos,
+		'parametros'		=> $parametros,
+		'fases'				=> $fases,
+		'modelos'			=> $modelos,
+        'profesionales'		=> $profesionales,
+        'docentes_aliados'	=> $docentes_aliados,
+        'ciclo'				=> $ciclo,
+        'guardado'			=> $guardado,
     ]) ?>
 
 </div>

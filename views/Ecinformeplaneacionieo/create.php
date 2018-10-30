@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformePlaneacionIeo */
 
-$this->title = 'Agregar Ec Informe Planeacion Ieo';
-$this->params['breadcrumbs'][] = ['label' => 'Ec Informe Planeacion Ieos', 'url' => ['index']];
+$this->title = 'Informe de avance Mensual I.E.O - Misional';
+$this->params['breadcrumbs'][] = ['label' => 'Informe de avance Mensual I.E.O - Misional', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="ec-informe-planeacion-ieo-create">
