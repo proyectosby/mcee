@@ -108,6 +108,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		
 		$dataAnios 	= SemillerosTicAnio::find()
 							->where( 'estado=1' )
+							->orderby( 'descripcion' )
 							->all();
 			
 		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
@@ -119,6 +120,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			$dataCiclos = SemillerosTicCiclos::find()
 							->where( 'estado=1' )
 							->where( 'id_anio=1' )
+							->orderby( 'descripcion' )
 							->all();
 			
 			$cicloslist	= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );

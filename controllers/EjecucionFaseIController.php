@@ -81,6 +81,7 @@ class EjecucionFaseIController extends Controller
 		{
 			$dataAnios 	= SemillerosTicAnio::find()
 							->where( 'estado=1' )
+							->orderby( 'descripcion' )
 							->all();
 			
 			$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
@@ -92,6 +93,7 @@ class EjecucionFaseIController extends Controller
 				$dataCiclos = SemillerosTicCiclos::find()
 								->where( 'estado=1' )
 								->where( 'id_anio='.$model->id_anio )
+								->orderby( 'descripcion' )
 								->all();
 				
 				$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
