@@ -209,7 +209,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 
 	    <h3 style='background-color: #ccc;padding:5px;'>I.E.O Misional</h3>
 
-	    <?= $this->context->actionViewFases($model,$form,$datos,$datoRespuesta);   ?>
+	    <?= $this->context->actionViewFases($model,$form,$datos,$datoRespuesta,$datoInformePlaneacionProyectos);   ?>
 
 
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

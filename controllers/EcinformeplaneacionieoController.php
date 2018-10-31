@@ -67,7 +67,7 @@ class EcinformeplaneacionieoController extends Controller
         ];
     }
 
-    function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0)
+    function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0,$datoInformePlaneacionProyectos=0)
 	{
         
        $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
@@ -96,6 +96,7 @@ class EcinformeplaneacionieoController extends Controller
 														'modelProyectos' =>  $modelProyectos,
 														'datos'=>$datos,
 														'datoRespuesta'=> $datoRespuesta,
+														'datoInformePlaneacionProyectos'=> $datoInformePlaneacionProyectos,
 													] 
 										),
 					'contentOptions'=> []
@@ -133,9 +134,10 @@ class EcinformeplaneacionieoController extends Controller
      */
     public function actionIndex()
     {
+		$idSedes 		= $_SESSION['sede'][0];
         $searchModel = new EcInformePlaneacionIeoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1" ); 
+		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -227,6 +229,22 @@ class EcinformeplaneacionieoController extends Controller
 					 ->execute();
 			
 			
+			$arrayDatosEcInformePlaneacionProyectos = $post['EcInformePlaneacionProyectos'];
+			
+			//se agrega el id del informe despues de haber sido creado 
+			foreach($arrayDatosEcInformePlaneacionProyectos as $datose => $valorese)
+			{
+				$arrayDatosEcInformePlaneacionProyectos[$datose]['id_informe']=$idInforme;
+			}
+
+			$columnNameArrayEcInformePlaneacionProyectos=['horario_de_trabajo_docentes','id_proyecto','estado','id_informe_planeacion'];
+			
+			// inserta todos los datos que trae el array en posicon EcInformePlaneacionProyectos
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'ec.informe_planeacion_proyectos', $columnNameArrayEcInformePlaneacionProyectos, $arrayDatosEcInformePlaneacionProyectos
+                     )
+					 ->execute();
 			
 			
             return $this->redirect(['index']);
@@ -277,8 +295,8 @@ class EcinformeplaneacionieoController extends Controller
         if ($model->load(Yii::$app->request->post())) 
 		{
 			
-			echo "<pre>"; print_r(Yii::$app->request->post()); echo "</pre>"; 
-			die;
+			// echo "<pre>"; print_r(Yii::$app->request->post()); echo "</pre>"; 
+			// die;
 			$model->save();
 			$post = Yii::$app->request->post();
 			
@@ -306,11 +324,6 @@ class EcinformeplaneacionieoController extends Controller
 					 
 			$arrayDatosEcRespuestas = $post['EcRespuestas'];
 			
-			
-			// echo "<pre>"; print_r($arrayDatosEcRespuestas); echo "</pre>"; 
-			
-		
-			// die;
 			foreach($arrayDatosEcRespuestas as $idRespuestas => $val)
 			{
 				$command = $connection->createCommand
@@ -318,6 +331,19 @@ class EcinformeplaneacionieoController extends Controller
 					UPDATE ec.respuestas set 			
 					respuesta		='". $val['respuesta']."'
 					WHERE id_estrategia = $idRespuestas and id_informe = $idInforme
+				");
+				$result = $command->queryAll();
+			}
+			
+			$arrayDatosEcInformePlaneacionProyectos = $post['EcInformePlaneacionProyectos'];
+			
+			foreach($arrayDatosEcInformePlaneacionProyectos as $idRespuestas => $val)
+			{
+				$command = $connection->createCommand
+				(" 
+					UPDATE ec.informe_planeacion_proyectos set 			
+					horario_de_trabajo_docentes		='". $val['horario_de_trabajo_docentes']."'
+					WHERE id_informe_planeacion = $idInforme and id_proyecto =  $idRespuestas
 				");
 				$result = $command->queryAll();
 			}
@@ -357,12 +383,15 @@ class EcinformeplaneacionieoController extends Controller
 		$datoRespuesta = ArrayHelper::map($ecRespuestas,'id_estrategia','respuesta');
 		
 		
+		$ecInformePlaneacionProyectos= new EcInformePlaneacionProyectos();
+		$ecInformePlaneacionProyectos = $ecInformePlaneacionProyectos->find()->orderby("id")->andWhere("id_informe_planeacion=$id")->all();
+		$datoInformePlaneacionProyectos = ArrayHelper::map($ecInformePlaneacionProyectos,'id_proyecto','horario_de_trabajo_docentes');
+		
 		
 		//se formate la informacion que deben tener los campos tabla ec.avances
 		
 		
-		// die("aqui");
-		// echo "<pre>"; print_r($datoRespuesta); echo "</pre>"; 
+		
 		$idSedesComunas = @$sedes->comuna; 
 		$idSedesBarrios = @$sedes->id_barrios_veredas;
 		$codigoDane = @$sedes->codigo_dane;
@@ -388,7 +417,8 @@ class EcinformeplaneacionieoController extends Controller
 			'fases' =>$this->obtenerParametros(),
 			'codigoDane' => $codigoDane,
 			'datos'=>$datos,
-			'datoRespuesta'=>$datoRespuesta
+			'datoRespuesta'=>$datoRespuesta,
+			'datoInformePlaneacionProyectos'=>$datoInformePlaneacionProyectos
 			
         ]);
     }
