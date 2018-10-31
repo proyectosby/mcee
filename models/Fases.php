@@ -42,7 +42,7 @@ class Fases extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'descripcion' => 'Descripcion',
+            'descripcion' => 'Fase',
             'estado' => 'Estado',
         ];
     }
