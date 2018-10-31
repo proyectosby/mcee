@@ -23,7 +23,9 @@ $this->params['breadcrumbs'][] = "Agregar";
 		'fases' => $fases, 
 		'codigoDane' => $codigoDane,
 		'datos'=>0,
-		'datoRespuesta' => 0
+		'datoRespuesta' => 0,
+		'datoInformePlaneacionProyectos' =>0,
+		
     ]) ?>
 
 </div>
