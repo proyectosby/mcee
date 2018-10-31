@@ -29,6 +29,7 @@ class EcRespuestas extends \yii\db\ActiveRecord
     {
         return [
             [['respuesta'], 'string'],
+            [['respuesta'], 'required'],
             [['id_estrategia'], 'default', 'value' => null],
             [['id_estrategia'], 'integer'],
             [['estado'], 'boolean'],
