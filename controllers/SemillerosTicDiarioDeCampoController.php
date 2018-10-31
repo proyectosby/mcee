@@ -108,6 +108,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		
 		$dataAnios 	= SemillerosTicAnio::find()
 							->where( 'estado=1' )
+							->orderby( 'descripcion' )
 							->all();
 			
 		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
@@ -119,6 +120,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			$dataCiclos = SemillerosTicCiclos::find()
 							->where( 'estado=1' )
 							->where( 'id_anio=1' )
+							->orderby( 'descripcion' )
 							->all();
 			
 			$cicloslist	= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
@@ -144,7 +146,13 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $ciclos = new SemillerosTicCiclos();
+		
+		$ciclos->load( Yii::$app->request->post() );
+		
+        $model = new SemillerosTicDiarioDeCampo();
+		
+		$model = $this->findModel($id);
 
 		//se crea una instancia del modelo fases
 		$fasesModel 		 	= new Fases();
@@ -157,11 +165,32 @@ class SemillerosTicDiarioDeCampoController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
+		
+		$dataAnios 	= SemillerosTicAnio::find()
+							->where( 'estado=1' )
+							->all();
+			
+		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		
+		$cicloslist = [];
+		
+		// if( $ciclos->id_anio ){
+			
+			$dataCiclos = SemillerosTicCiclos::find()
+							->where( 'estado=1' )
+							->where( 'id_anio=1' )
+							->all();
+			
+			$cicloslist	= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
+		// }
 
         return $this->renderAjax('update', [
             'model' => $model,
             'fases' => $fases,
             'fasesModel' => $fasesModel,
+			'ciclos' => $ciclos,
+            'cicloslist' => $cicloslist,
+            'anios' => $anios,
         ]);
     }
 
@@ -204,7 +233,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */	
 	public function actionOpcionesEjecucionDiarioCampo($idFase)
     {
-       $data = array('mensaje'=>'','html'=>'','contenido'=>'');
+       $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgos'=>'');
 	   
 	   //se crea una instancia del modelo parametro
 		$parametroTable 		 	= new Parametro();
@@ -212,23 +241,66 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		$dataParametro		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$idFase)->all();										  
 		//se guardan los datos en un array
 		$opcionesEjecucion	 	 	 = ArrayHelper::map( $dataParametro, 'id', 'descripcion' );
+		
+		
+		//Para traer las descripciones
+		if ($idFase == 14) {$idParametro = 78;}
+		elseif ($idFase == 15) {$idParametro = 79;}
+		elseif ($idFase == 16) {$idParametro = 80;}
+		
+		//se crea una instancia del modelo parametro
+		$descripcionTexto = Parametro::findOne($idParametro)->descripcion;
+		
+		
+		$data['descripcion']=$descripcionTexto;
+		
+		//Para traer los hallazgos
+		if ($idFase == 14) {$idParametro = 81;}
+		elseif ($idFase == 15) {$idParametro = 82;}
+		elseif ($idFase == 16) {$idParametro = 85;}
+		
+		//se crea una instancia del modelo parametro
+		$hallazgosTexto = Parametro::findOne($idParametro)->descripcion;
+		
+		
+		$data['hallazgos']=$hallazgosTexto;
 
         
+	 
+	
 		$data['html']="";
 		$data['contenido']="";
+		$contador =0;
 		foreach ($opcionesEjecucion as $key => $value)
 		{
+			$contador++;
+			switch ($contador) 
+			{
+			case 1:
+			case 2:
+			case 3:
+			case 5:
+				$valor =1;
+				break;
+			case 4:
+				$valor =2;
+				break;
+			case 6:
+			case 7:
+				$valor =3;
+				break;
+			}
 			// print_r($key."-".$value);
 			
-			$data['html'].="<div class='col-sm-1' style='padding:0px;'>";
-			$data['html'].="<span total class='form-control' style='background-color:#ccc;height:110px;'>".$value."</span>";
+			$data['html'].="<div class='col-xs-$valor'>";
+			$data['html'].=$value;
 			$data['html'].="</div>";
 			
-			$data['contenido'].="<div class='col-sm-1' style='padding:0px;background-color:#fff;height:100px'>";
-			$data['contenido'].="&nbsp;&nbsp;&nbsp;&nbsp;";
+			$data['contenido'].="<div class='col-xs-$valor' >";
+			$data['contenido'].="";
 			$data['contenido'].="</div>";
 		}
-        
+		
 		echo json_encode( $data );
     }
 }

@@ -7,6 +7,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE II
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-10-31
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se agrega el botón volver
+---------------------------------------
+Modificaciones:
 Fecha: 2018-09-18
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
@@ -72,7 +77,15 @@ if( $guardado ){
 		height: 120px;
 	}
 </style>
-
+<div class="form-group">
+		
+		<?= Html::a('Volver', 
+									[
+										'semilleros/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+</div>
 <div class="ejecucion-fase-form">
 
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
