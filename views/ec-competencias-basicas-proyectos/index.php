@@ -93,18 +93,25 @@ $this->params['breadcrumbs'][] = $this->title;
 										['class' => 'btn btn-success'
 				]) ?>
 				
-				<?= Html::a('3. B Informe de avance Mensual I.E.O Fase Implementación Plan de acción', 
+				<?= Html::a('3. B Informe de avance Mensual I.E.O Fase Implementación Plan de acción - Ejecución', 
 										[
-											'',
+											'implementacion-ieo/index',
 											// 'idReporte'		=> 2,
 										], 
-										['class' => 'btn btn-info'
+										['class' => 'btn btn-success'
 				]) ?> 
 			</div>
 			
 		
 
 		<div class="form-group">
+			<?= Html::a('3. B Informe de avance Mensual I.E.O Fase Implementación Plan de acción - Misional', 
+										[
+											'',
+											// 'idReporte'		=> 2,
+										], 
+										['class' => 'btn btn-info'
+				]) ?> 
 			<?= Html::a('4. Informe ejecutivo del estado del eje en la IEO', 
 										[
 											'',
@@ -113,14 +120,15 @@ $this->params['breadcrumbs'][] = $this->title;
 										['class' => 'btn btn-info']) ?>
 										
 										
+			
+		</div>
+		<div class="form-group">
 			<?= Html::a('5 y 6. Informe Semanal Ejecución - Informe de cierre de fase', 
 										[
 											'informe-semanal-ejecucion-ise/index',
 											// 'idReporte'		=> 6,
 										], 
 										['class' => 'btn btn-success']) ?>
-		</div>
-		<div class="form-group">								
 			<?= Html::a('5 y 6. Informe Semanal Ejecución - Informe de cierre de fase - Total ejecutivo', 
 										[
 											'ec-informe-semanal-total-ejecutivo/index',
@@ -128,14 +136,15 @@ $this->params['breadcrumbs'][] = $this->title;
 										], 
 										['class' => 'btn btn-success']) ?>
 										
+			
+		</div>
+        <div class="form-group">
 			<?= Html::a('7. Levantamiento de orientación misional y método', 
 										[
 											'ec-levantamiento-orientacion/index',
 											// 'idReporte'		=> 16,
 										], 
 										['class' => 'btn btn-success']) ?>
-		</div>
-        <div class="form-group">			
 			<?= Html::a('8.Informe Avance Misional Ejes - TP IEO', 
 										[
 											'',
@@ -143,14 +152,15 @@ $this->params['breadcrumbs'][] = $this->title;
 										], 
 										['class' => 'btn btn-info']) ?>
 										
+			
+		</div>	
+        <div class="form-group">
 			<?= Html::a('8.Informe Avance Misional Ejes - TP misional', 
 										[
 											'',
 											// 'idReporte'		=> 16,
 										], 
 										['class' => 'btn btn-info']) ?>
-		</div>	
-        <div class="form-group">		
 			<?= Html::a('9. Informe de avance ejecución y misional del proyecto', 
 										[
 											'',
