@@ -6,6 +6,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario CONFORMACION SEMILLEROS TIC ESTUDIANTES
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-10-31
+Persona encargada: Edwin Molina Grisales
+Descripción: Se permite guardar o modificar los registros por parte del usuario
+---------------------------------------
+Modificaciones:
 Fecha: 2018-09-19
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
@@ -30,10 +35,35 @@ $this->registerJsFile(
 	]
 );
 
+if( $guardado ){
+	
+	$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
+}
+
 /* @var $this yii\web\View */
 /* @var $model app\models\SemillerosDatosIeoEstudiantes */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+
+<datalist id='list_persona_a'>
+	<?php foreach( $profesionales as $data ) :?>
+		<option value='<?=$data?>'>
+	<?php endforeach; ?>
+</datalist>
+
+<datalist id='list_docente_aliado'>
+	<?php foreach( $docentes_aliados as $key => $data ) :?>
+		<option value='<?=$data?>' <?=$key?> >
+	<?php endforeach; ?>
+</datalist>
 
 <div class="form-group">
 		
@@ -51,24 +81,59 @@ $this->registerJsFile(
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_institucion')->dropDownList([ $institucion->codigo_dane => $institucion->codigo_dane ])->label( 'CÓDIGO DANE IEO' ) ?>
+    <?= $form->field($institucion, 'codigo_dane')->dropDownList([ $institucion->codigo_dane => $institucion->codigo_dane ])->label( 'CÓDIGO DANE IEO' ) ?>
     
-	<?= $form->field($model, 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ]) ?>
+	<?= $form->field($datosIEO, 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ]) ?>
 
-    <?= $form->field($model, 'id_sede')->textInput(['maxlength' => true])->label( 'CÓDIGO DANE SEDE' ) ?>
+    <?= $form->field($sede, 'codigo_dane')->dropDownList([ $sede->codigo_dane => $sede->codigo_dane ], ['maxlength' => true])->label( 'CÓDIGO DANE SEDE' ) ?>
 	
-    <?= $form->field($model, 'id_sede')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($datosIEO, 'id_sede')->dropDownList([ $sede->id => $sede->descripcion ], ['maxlength' => true]) ?>
+	
+	 <?= $form->field($datosIEO, 'profecional_a')->dropDownList( $docentes,[ 
+									'list' => 'list_persona_a',
+									'autocomplete' => 'off',
+									'prompt' => 'Seleccione...',
+								]) ?>
 
-    <?= $form->field($model, 'profecional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...' ]) ?>
-
-    <?= $form->field($model, 'docente_aliado')->textInput(['maxlength' => true]) ?>
-
-    <!-- <div class="form-group">
+    <?= $form->field($datosIEO, 'docente_aliado')->textInput([ 
+									'maxlength' => true, 
+									'list' => 'list_docente_aliado',
+									'autocomplete' => 'off',
+								]) ?>
+								
+	<?= $form->field($datosIEO, 'id')->hiddenInput()->label( null,[ 'style' => 'display:none' ] ) ?>
+	
+	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
+	
+	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
+	
+	<?php
+		if( !empty( $datosIEO->profecional_a ) && !empty( $datosIEO->docente_aliado ) )
+		{
+			?><h3 style='background-color: #ccc;padding:5px;'>ACUERDOS INSTITUCIONES (CONFORMACIÓN)</h3><?php
+			
+			echo $this->render( 'fases',[
+				'fases' 		=> $fases,
+				'docentes' 		=> $docentes,
+				'jornadas' 		=> $jornadas,
+				'recursos' 		=> $recursos,
+				'parametros' 	=> $parametros,
+				'modelos' 		=> $modelos,
+				'form' 			=> $form,
+			]); 
+			
+			?>
+			<div class="form-group">
+				<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+			</div>
+			<?php
+			
+		}
+	?>
+    
+	<!-- <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div> -->
-	
-	<h3 style='background-color: #ccc;padding:5px;'>ACUERDOS INSTITUCIONES (CONFORMACIÓN)</h3>
-	<?= $controller->actionViewFases(); ?>
 
     <?php ActiveForm::end(); ?>
 

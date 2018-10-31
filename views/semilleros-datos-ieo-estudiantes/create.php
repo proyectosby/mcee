@@ -5,6 +5,11 @@ Fecha: 2018-08-16
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario CONFORMACION SEMILLEROS TIC ESTUDIANTES
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-10-31
+Persona encargada: Edwin Molina Grisales
+Descripción: Se permite guardar o modificar los registros por parte del usuario
+---------------------------------------
 **********/
 
 use yii\helpers\Html;
@@ -24,11 +29,20 @@ $this->params['breadcrumbs'][] = "Agregar";
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' 		=> $model,
-		'institucion' 	=> $institucion,
-		'sede' 			=> $sede,
-		'docentes' 		=> $docentes,
-		'controller'	=> $controller,
+		'datosIEO' 			=> $datosIEO,
+		'institucion' 		=> $institucion,
+		'sede' 				=> $sede,
+		'docentes' 			=> $docentes,
+		'controller'		=> $this,
+		'jornadas'			=> $jornadas,
+		'recursos'			=> $recursos,
+		'parametros'		=> $parametros,
+		'fases'				=> $fases,
+		'modelos'			=> $modelos,
+		'profesionales'		=> $profesionales,
+		'docentes_aliados'	=> $docentes_aliados,
+		'ciclo'				=> $ciclo,
+		'guardado'			=> $guardado,
     ]) ?>
 
 </div>

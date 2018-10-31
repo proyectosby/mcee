@@ -83,6 +83,12 @@ use app\models\AcuerdosInstitucionales;
 	
 		<div class=row id='dvFilas-<?= $fase->id."-".$index ?>' fase='<?= $fase->id ?>' >
 		
+			<div class="col-sm-2" style='padding:0px;display:none;'>
+				<?= $form->field($acuerdo, "[$fase->id][$index]id" )
+						->hiddenInput()
+						->label(null,['style'=>'display:none']) ?>
+			</div>
+		
 			<div class="col-sm-1" style='padding:0px;'>
 				<?= $form->field($acuerdo, "[$fase->id][$index]id_docente" )
 						->dropDownList( $docentes, [ 'prompt' => 'Seleccione...'])

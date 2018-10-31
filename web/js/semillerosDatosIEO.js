@@ -137,18 +137,36 @@ $( document ).ready(function(){
 					$( _campo ).parent()
 						.removeClass( "field-"+this.id.replace( /-[0-9]+-[0-9]+-/gi, "-"+fase+"-0-" ) )
 						.addClass( "field-"+this.id );
-					
-					$( "#w0" ).yiiActiveForm( 'add', 
-							{
-								"id"		: _campo.id,
-								"name"		: _campo.name,
-								"container"	: ".field-"+_campo.id,
-								"input"		: "#"+_campo.id,
-								"validate"	: function (attribute, value, messages, deferred, $form) {
-												yii.validation.required(value, messages, {"message":"No puede estar vacío"});
-											}
-							},
-						);
+						
+					// Todos los campos son obligatorios menos el id, ya que este puede ser vacío si es un campo nuevo
+					if( _campo.id.substr( -2 ) != "id" )
+					{
+						$( "#w0" ).yiiActiveForm( 'add', 
+								{
+									"id"		: _campo.id,
+									"name"		: _campo.name,
+									"container"	: ".field-"+_campo.id,
+									"input"		: "#"+_campo.id,
+									"validate"	: function (attribute, value, messages, deferred, $form) {
+													yii.validation.required(value, messages, {"message":"No puede estar vacío"});
+												}
+								},
+							);
+					}
+					else
+					{
+						$( "#w0" ).yiiActiveForm( 'add', 
+								{
+									"id"		: _campo.id,
+									"name"		: _campo.name,
+									"container"	: ".field-"+_campo.id,
+									"input"		: "#"+_campo.id,
+									"validate"	: function (attribute, value, messages, deferred, $form) {
+													return true;
+												}
+								},
+							);
+					}
 				});
 				
 				consecutivo++;
