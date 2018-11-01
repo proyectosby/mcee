@@ -100,7 +100,7 @@ if( isset($guardado) && $guardado == 1 ){
 			],
 	],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             //'id',
             'persona_acargo',

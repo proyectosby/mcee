@@ -21,7 +21,9 @@ use app\models\Evidencias;
 use app\models\TipoDocumentos;
 use app\models\Producto;
 use app\models\RequerimientoExtraIeo;
+use app\models\ZonasEducativas;
 
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -482,10 +484,9 @@ class IeoController extends Controller
 
         }
         
-        
-
-       
-
+      
+        $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
+		$zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
 
         $model = new Ieo();
         $requerimientoExtra = new RequerimientoExtraIeo();
@@ -502,6 +503,7 @@ class IeoController extends Controller
             'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
             'estudiantesGrado' => $estudiantesGrado,
             "evidencias" => $evidencias,
+            'zonasEducativas' => $zonasEducativas,
         ]);
     }
 

@@ -18,6 +18,7 @@ use app\models\Paralelos;
  */
 class Estudiantes extends \yii\db\ActiveRecord
 {
+    
     /**
      * @inheritdoc
      */
