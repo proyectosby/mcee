@@ -22,6 +22,8 @@ foreach( $ecAcciones as $idAcciones => $v )
 																	'form' => $form,
 																	'contador' => $idAcciones,
 																	'estadoActual' => $estadoActual,
+																	'idProyecto' => $idProyecto,
+																	'datos'=>$datos,
 																] ),
 					'contentOptions'=> []
 				];	

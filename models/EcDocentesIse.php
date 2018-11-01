@@ -47,7 +47,7 @@ class EcDocentesIse extends \yii\db\ActiveRecord
             'id' => 'ID',
             'tipo_cantidad_poblacion_ise_id' => 'Tipo Cantidad Poblacion Ise ID',
             'edu_derechos' => 'Edu Derechos',
-            'sexualidad_ciudadania' => 'Sexualidad Ciudadania',
+            'sexualidad_ciudadania' => 'Sexualidad Ciudadanía',
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',

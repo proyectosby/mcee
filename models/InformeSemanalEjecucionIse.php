@@ -44,7 +44,7 @@ class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'institucion_id' => 'Institucion',
+            'institucion_id' => 'Institución',
             'sede_id' => 'Sede',
             'proyecto_id' => 'Proyecto',
             'estado' => 'Estado',

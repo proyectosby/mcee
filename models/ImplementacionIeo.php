@@ -16,18 +16,18 @@ use Yii;
  * @property string $profesional_cargo
  * @property string $horario_trabajo
  * @property int $estado
+ * @property string $codigo_dane
  */
 class ImplementacionIeo extends \yii\db\ActiveRecord
 {
-    public $file_producto_ruta;
-    public $file_resultados_actividad_ruta;
-    public $file_acta_ruta;
-    public $file_listado_ruta;
-    public $file_fotografias_ruta;
-    public $observaciones;
-    public $tipo_actividad;
+
+    public $producto_acuerdo;
+    public $resultado_actividad;
+    public $acta;
+    public $listado;
+    public $fotografias;
     
-    
+
     /**
      * @inheritdoc
      */
@@ -44,7 +44,7 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
         return [
             [['institucion_id', 'sede_id', 'estado'], 'default', 'value' => null],
             [['institucion_id', 'sede_id', 'estado'], 'integer'],
-            [['zona_educativa', 'comuna', 'barrio', 'profesional_cargo', 'horario_trabajo'], 'string'],
+            [['zona_educativa', 'comuna', 'barrio', 'profesional_cargo', 'horario_trabajo', 'codigo_dane'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
             [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['sede_id' => 'id']],
@@ -66,6 +66,7 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
             'profesional_cargo' => 'Profesional Cargo',
             'horario_trabajo' => 'Horario Trabajo',
             'estado' => 'Estado',
+            'codigo_dane' => 'Codigo Dane',
         ];
     }
 }

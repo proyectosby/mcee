@@ -23,6 +23,7 @@ use Yii;
 class TiposCantidadPoblacion extends \yii\db\ActiveRecord
 {
     public $fecha_creacion;
+    public $tipo_actividad;
     /**
      * @inheritdoc
      */
@@ -62,8 +63,9 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
-            'fecha_creacion' => 'Fecha Creacion',
+            'fecha_creacion' => 'Fecha',
             'proyecto_ieo_id' => 'Proyecto Ieo ID',
+            'tipo_actividad' => 'Tipo Actividad'
         ];
     }
 }

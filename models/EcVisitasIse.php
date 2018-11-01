@@ -17,6 +17,8 @@ use Yii;
  */
 class EcVisitasIse extends \yii\db\ActiveRecord
 {
+    public $logros;
+    public $dificultades;
     /**
      * @inheritdoc
      */
@@ -51,6 +53,8 @@ class EcVisitasIse extends \yii\db\ActiveRecord
             'visitas_fallidas' => 'Visitas Fallidas',
             'observaciones_evidencias' => 'Observaciones Evidencias',
             'alarmas' => 'Alarmas',
+            'logros' => 'Logros',
+            'dificultades' => 'Dificultades',
         ];
     }
 }

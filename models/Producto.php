@@ -45,7 +45,7 @@ class Producto extends \yii\db\ActiveRecord
             'id' => 'ID',
             'ieo_id' => 'Ieo ID',
             'imforme_ruta' => 'Imforme Ruta',
-            'plan_accion_ruta' => 'Plan Accion Ruta',
+            'plan_accion_ruta' => 'Plan Acción Ruta',
             'actividades_ieo_id' => 'Actividades Ieo ID',
         ];
     }

@@ -104,4 +104,5 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             <?=  Html::activeTextInput($estudiasntes, '[$index]cantidad', [ 'class' => 'form-control'] ) ?>
         </div>
     </div>
+   
     <?php ActiveForm::end(); ?>

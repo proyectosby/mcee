@@ -15,13 +15,18 @@ $this->params['breadcrumbs'][] = "Agregar";
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
+	    'model' => $model,
 		'comunas' => $comunas,
 		'barrios' => $barrios,
-        'model' => $model,
 		'sedes'=> $sedes,
 		'instituciones' => $instituciones,
 		'fases' => $fases, 
 		'codigoDane' => $codigoDane,
+		'datos'=>0,
+		'datoRespuesta' => 0,
+		'datoInformePlaneacionProyectos' =>0,
+		'zonaEducativa' => $zonaEducativa,
+		
     ]) ?>
 
 </div>

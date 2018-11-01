@@ -73,11 +73,13 @@ class Ieo extends \yii\db\ActiveRecord
             'institucion_id' => 'Institucion ID',
             'sede_id' => 'Sede ID',
             'estado' => 'Estado',
-            'persona_acargo' => 'Persona Acargo',
+            'persona_acargo' => 'Profesional encargado',
             'codigo_dane' => 'Codigo Dane',
             'zona_educativa' => 'Zona Educativa',
             'comuna' => 'Comuna',
             'barrio' => 'Barrio',
+            'file_producto_imforme_ruta' => 'Informe Ruta Cualificación',
+            'file_plan_accion' => 'Presentación Plan Acción Ieo'
         ];
     }
 }

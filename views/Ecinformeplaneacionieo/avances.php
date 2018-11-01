@@ -17,13 +17,11 @@ $avances = new EcAvances();
 <div class="container-fluid">
             <div class="ieo-form">
 
-                    <?= $form->field($avances, "[$contador]estado_actual")->DropDownList($estadoActual,['prompt' => 'Seleccione'])->label('Estado Actual') ?>
-                    <?= $form->field($avances, "[$contador]logros")->textInput()->label('Logros') ?>
-                    <?= $form->field($avances, "[$contador]retos")->textInput()->label('Retos') ?>
-                    <?= $form->field($avances, "[$contador]argumentos")->textInput()->label('Argumentos') ?>
-                    <?= $form->field($avances, "[$contador]id_acciones")->hiddenInput( [ 'value' => $contador ] )->label( '' ) ?>
-                    <?= $form->field($avances, "[$contador]estado")->hiddenInput( [ 'value' => '1' ] )->label( '' ) ?>
-                    <?= $form->field($avances, "[$contador]id_informe_proyecto")->textInput() ?>
-
+                    <?= $form->field($avances, "[$contador]estado_actual")->DropDownList($estadoActual,['prompt' => 'Seleccione','value' =>  $datos[$contador]['estado_actual']])->label('Estado Actual') ?>
+                    <?= $form->field($avances, "[$contador]logros")->textInput([ 'value' => $datos[$contador]['logros'] ])->label('Logros') ?>
+                    <?= $form->field($avances, "[$contador]retos")->textInput([ 'value' => $datos[$contador]['retos'] ])->label('Retos') ?>
+                    <?= $form->field($avances, "[$contador]argumentos")->textInput([ 'value' => $datos[$contador]['argumentos'] ])->label('Argumentos') ?>
+                    <?= $form->field($avances, "[$contador]id_acciones")->hiddenInput( [ 'value' => $contador ] )->label( false ) ?>
+                    <?= $form->field($avances, "[$contador]estado")->hiddenInput( [ 'value' => '1' ] )->label(false ) ?>
             </div>
 </div>

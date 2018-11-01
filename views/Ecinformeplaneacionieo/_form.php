@@ -176,7 +176,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 
 	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$codigoDane?></h6>
 	 
-	<?= $form->field($model, 'zona_educativa')->textInput() ?>
+	<?= $form->field($model, 'zona_educativa')->dropDownList($zonaEducativa,['prompt' => 'Seleccione...']) ?>
 
 	
 
@@ -189,6 +189,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$barrios?></h6>
 	
 	<?= $form->field($model, 'fase')->DropDownList($fases,['prompt'=>'Seleccione...']) ?>
+	
+	<?= $form->field($model, 'id_tipo_informe')->hiddenInput( [ 'value' => '2' ] )->label( false ) ?>
 	
 
 		
@@ -207,7 +209,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 
 	    <h3 style='background-color: #ccc;padding:5px;'>I.E.O Misional</h3>
 
-	    <?= $this->context->actionViewFases($model,$form);   ?>
+	    <?= $this->context->actionViewFases($model,$form,$datos,$datoRespuesta,$datoInformePlaneacionProyectos);   ?>
 
 
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
