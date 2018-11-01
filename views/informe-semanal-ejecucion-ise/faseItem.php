@@ -21,7 +21,7 @@ $index = 0;
                                                         "tipo_poblacion" => $tipo_poblacion,
                                                         "docentes" => $docentes,
                                                         "estudiasntes" => $estudiasntes,
-                                                        
+                                                        "visitas"  => $visitas,
 													] 
 										),
 					'contentOptions'=> []
@@ -31,15 +31,9 @@ $index = 0;
     }
     
     use yii\bootstrap\Collapse;
-      
-
-    echo Collapse::widget([
-        'items' => $contenedores,
-    ]);
     
-    
-?>  
-    <?php $form = ActiveForm::begin(); ?>
+    ?>
+     <?php $form = ActiveForm::begin(); ?>
             <h3 style='background-color: #ccc;padding:5px;'>Actividades</h3>
             <div class=cell>
                 <?= $form->field($actividades, 'actividad_1')->textInput() ?>
@@ -66,23 +60,40 @@ $index = 0;
                 <?= $form->field($actividades, 'avance_ieo')->textInput() ?>
             </div>
    
-            <h3 style='background-color: #ccc;padding:5px;'>Visitas</h3>
-            <div class=cell>
-                <?= $form->field($visitas, 'cantidad_visitas_realizadas')->textInput() ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($visitas, 'canceladas')->textInput() ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($visitas, 'visitas_fallidas')->textInput() ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($visitas, 'observaciones_evidencias')->textInput() ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($visitas, 'alarmas')->textInput() ?>
-            </div>
+            
     <?php ActiveForm::end(); ?>
+    <?php
+
+    echo Collapse::widget([
+        'items' => $contenedores,
+    ]);
+    ?>
+        <h3 style='background-color: #ccc;padding:5px;'>Visitas</h3>
+        <div class=cell>
+            <?= $form->field($visitas, 'cantidad_visitas_realizadas')->textInput() ?>
+        </div>
+        <div class=cell>
+            <?= $form->field($visitas, 'canceladas')->textInput() ?>
+        </div>
+        <div class=cell>
+            <?= $form->field($visitas, 'visitas_fallidas')->textInput() ?>
+        </div>
+        <div class=cell>
+            <?= $form->field($visitas, 'observaciones_evidencias')->textInput() ?>
+        </div>
+        <div class=cell>
+            <?= $form->field($visitas, 'alarmas')->textInput() ?>
+        </div>
+        <div class=cell>
+            <?= $form->field($visitas, 'logros')->textInput() ?>
+        </div>
+        <div class=cell>
+            <?= $form->field($visitas, 'dificultades')->textInput() ?>
+        </div>
+    <?php
+    
+?>  
+   
 
 
 

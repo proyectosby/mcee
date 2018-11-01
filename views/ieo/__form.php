@@ -64,7 +64,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                     <?= $form->field($model, '[0]file_informe_caracterizacion')->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                                 </div>
                                 <div class=cell>
-                                    <?= $form->field($model, '[0]file_matriz_caracterizacion')->label('Matriz Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                                    <?= $form->field($model, '[0]file_matriz_caracterizacion')->label('Matriz de Trazabilidad ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                                 </div>
                                 <div class=cell>
                                     <?= $form->field($model, '[0]file_revision_pei')->label('Revisión Pei')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
@@ -597,7 +597,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                     <?= $form->field($model, '[3]file_informe_caracterizacion')->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                                 </div>
                                 <div class=cell>
-                                    <?= $form->field($model, '[3]file_matriz_caracterizacion')->label('Matriz Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                                    <?= $form->field($model, '[3]file_matriz_caracterizacion')->label('Matriz de Trazabilidad ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                                 </div>
                                 <div class=cell>
                                     <?= $form->field($model, '[3]file_revision_pei')->label('Revisión Pei')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
@@ -978,7 +978,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                     <?= $form->field($model, '[6]file_informe_caracterizacion')->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                                 </div>
                                 <div class=cell>
-                                    <?= $form->field($model, '[6]file_matriz_caracterizacion')->label('Matriz Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                                    <?= $form->field($model, '[6]file_matriz_caracterizacion')->label('Matriz de Trazabilidad ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                                 </div>
                                 <div class=cell>
                                     <?= $form->field($model, '[6]file_revision_pei')->label('Revisión Pei')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>

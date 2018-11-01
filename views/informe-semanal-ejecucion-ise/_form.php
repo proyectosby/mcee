@@ -17,10 +17,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?= $form->field($model, 'sede_id')->textInput() ?>
 
-    <?= $form->field($model, 'proyecto_id')->textInput() ?>
-
-    <?= $form->field($model, 'estado')->textInput() ?>
-
     <?= $this->context->actionViewFases($model);   ?>
 
     <div class="form-group">
