@@ -19,7 +19,7 @@ use yii\bootstrap\Progress;
 /* @var $model app\models\EcInformePlaneacionIeo */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/informe-avance-misional-ejes-tpieo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/informe-avance-misional-ejes-modal.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 
 ?>
