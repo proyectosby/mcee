@@ -51,7 +51,7 @@ class AcuerdosInstitucionalesEstudiantes extends \yii\db\ActiveRecord
             [['jornada'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['jornada' => 'id']],
             [['recursos_requeridos'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['recursos_requeridos' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
-            [['id_semilleros_datos_estudiantes'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicSemillerosDatosIeoEstudiantes::className(), 'targetAttribute' => ['id_semilleros_datos_estudiantes' => 'id']],
+            [['id_semilleros_datos_estudiantes'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosDatosIeoEstudiantes::className(), 'targetAttribute' => ['id_semilleros_datos_estudiantes' => 'id']],
         ];
     }
 
