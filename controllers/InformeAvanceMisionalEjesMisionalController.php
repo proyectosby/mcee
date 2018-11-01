@@ -137,7 +137,7 @@ class InformeAvanceMisionalEjesMisionalController extends Controller
 		$idSedes 		= $_SESSION['sede'][0];
         $searchModel = new EcInformePlaneacionIeoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes and id_tipo_informe = 10" ); 
+		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes and id_tipo_informe = 11" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
