@@ -149,55 +149,55 @@ use dosamigos\datepicker\DatePicker;
 			<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>'>
 				
 				<div class='col-sm-1' style='display:none;'>
-					<?= Html::activeHiddenInput($ejecucionFase, "[$indexEf][$index]id") ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]id")->hiddenInput( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]docentes", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]docentes")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]asignaturas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]asignaturas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]especialidad", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]especialidad")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_apps_desarrolladas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_apps_desarrolladas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_desarrolladas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_desarrolladas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_creadas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_creadas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]tipo_obra", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]tipo_obra")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]temas_abordados", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]temas_abordados")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_pruebas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_pruebas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_disecciones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_disecciones")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]observaciones_generales", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]observaciones_generales")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 			</div>
@@ -246,19 +246,19 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center row-data-2'>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_accion", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]tipo_accion")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]descripcion_accion", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]descripcion_accion")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]responsable_accion", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]responsable_accion")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tiempo_desarrollo", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]tiempo_desarrollo")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 		</div>
@@ -316,31 +316,31 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center row-data-3'>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tic", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]tic")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_recurso_tic", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]tipo_recurso_tic")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]digitales", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]digitales")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_recurso_digitales", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]tipo_recurso_digitales")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]escolares", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]escolares")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-3'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tipo_recurso_no_tic", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]tipo_recurso_no_tic")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= Html::activeTextarea($accioneRecurso, "[$indexEf]tiempo_uso_recurso", [ 'class' => 'form-control', 'maxlength' => true, 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<?= $form->field($accioneRecurso, "[$indexEf]tiempo_uso_recurso")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
 			</div>
 			
 		</div>

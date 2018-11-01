@@ -199,9 +199,13 @@ $( document ).ready(function(){
 	//Se agrega editables para los campos textarea de condiciones institucionales
 	$( ".row-data-2" ).each(function(){
 		
+		var inputFechaDataSesion = $( "input[id^=datossesiones]:text", $( this ).parent().parent() );
+		
 		$( "textarea", this ).each(function(x){
 	
-			$( this )
+			var _campo = this;
+	
+			$( _campo )
 				.attr({readOnly: true })
 				.css({resize: 'none' })
 				.editable({
@@ -210,14 +214,36 @@ $( document ).ready(function(){
 					rows: 10,
 					emptytext: '',
 				});
+				
+			setTimeout(function(){
+				$( "#w0" ).yiiActiveForm( 'add', 
+						{
+							"id"		: _campo.id,
+							"name"		: _campo.name,
+							// "container"	: ".field-"+_campo.id,
+							"input"		: "#"+_campo.id,
+							"validate"	: function (attribute, value, messages, deferred, $form) {
+											if( inputFechaDataSesion.val() != '' )
+												yii.validation.required(value, messages, {"message":"No puede estar vacío"});
+											else
+											return true;
+										}
+						},
+					);
+			}, 500 );
 		})
 	});
 	
 	//Se agrega editables para los campos textarea de condiciones institucionales
 	$( ".row-data-3" ).each(function(){
 	
+		var inputFechaDataSesion = $( "input[id^=datossesiones]:text", $( this ).parent().parent() );
+	
 		$( "textarea", this ).each(function(x){
-			$( this )
+			
+			var _campo = this;
+			
+			$( _campo )
 				.attr({readOnly: true })
 				.css({resize: 'none' })
 				.editable({
@@ -226,6 +252,23 @@ $( document ).ready(function(){
 					rows: 10,
 					emptytext: '',
 				});
+				
+			setTimeout(function(){
+				$( "#w0" ).yiiActiveForm( 'add', 
+						{
+							"id"		: _campo.id,
+							"name"		: _campo.name,
+							// "container"	: ".field-"+_campo.id,
+							"input"		: "#"+_campo.id,
+							"validate"	: function (attribute, value, messages, deferred, $form) {
+											if( inputFechaDataSesion.val() != '' )
+												yii.validation.required(value, messages, {"message":"No puede estar vacío"});
+											else
+											return true;
+										}
+						},
+					);
+			}, 500 );
 		});
 	});
 	
@@ -245,10 +288,47 @@ $( document ).ready(function(){
 			
 			//Cambiando los id de los textarea con el consecutivo correspondiente
 			$( "textarea,input:hidden", filaNueva ).each(function(x){
-				$( this ).prop({
-					id	: this.id.substr( 0, this.id.indexOf( '-', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+this.id.substr( this.id.lastIndexOf( "-" ) ),
-					name: this.name.substr( 0, this.name.indexOf( '[', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+this.name.substr( this.name.lastIndexOf( "[" )-1 ),
-				})
+				
+				var _campo = this;
+				
+				$( _campo ).prop({
+					id	: _campo.id.substr( 0, _campo.id.indexOf( '-', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+_campo.id.substr( _campo.id.lastIndexOf( "-" ) ),
+					name: _campo.name.substr( 0, _campo.name.indexOf( '[', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+_campo.name.substr( _campo.name.lastIndexOf( "[" )-1 ),
+				});
+				
+				$( _campo ).parent()
+						// .removeClass( "field-"+this.id.replace( /-[0-9]+-[0-9]+-/gi, "-"+sesion+"-0-" ) )
+						.addClass( "field-"+this.id );
+					
+				//Si el campo es diferente a id se valida qué este lleno, caso contrario no se obliga
+				if( _campo.id.substr( -2 ) != 'id' )
+				{
+					$( "#w0" ).yiiActiveForm( 'add', 
+							{
+								"id"		: _campo.id,
+								"name"		: _campo.name,
+								"container"	: ".field-"+_campo.id,
+								"input"		: "#"+_campo.id,
+								"validate"	: function (attribute, value, messages, deferred, $form) {
+												yii.validation.required(value, messages, {"message":"No puede estar vacío"});
+											}
+							},
+						);
+				}
+				else
+				{
+					$( "#w0" ).yiiActiveForm( 'add', 
+							{
+								"id"		: _campo.id,
+								"name"		: _campo.name,
+								"container"	: ".field-"+_campo.id,
+								"input"		: "#"+_campo.id,
+								"validate"	: function (attribute, value, messages, deferred, $form) {
+												return true;
+											}
+							},
+						);
+				}
 			})
 			
 			
