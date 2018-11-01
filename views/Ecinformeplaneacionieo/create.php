@@ -25,6 +25,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 		'datos'=>0,
 		'datoRespuesta' => 0,
 		'datoInformePlaneacionProyectos' =>0,
+		'zonaEducativa' => $zonaEducativa,
 		
     ]) ?>
 

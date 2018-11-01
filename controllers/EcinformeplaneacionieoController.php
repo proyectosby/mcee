@@ -35,6 +35,7 @@ use app\models\EcProyectos;
 use app\models\EcProcesos;
 use app\models\EcAvances;
 use app\models\EcRespuestas;
+use app\models\ZonasEducativas;
 use app\models\EcInformePlaneacionProyectos;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -101,8 +102,7 @@ class EcinformeplaneacionieoController extends Controller
 										),
 					'contentOptions'=> []
 				];
-				
-				
+	
 		}
 		
 		 echo Collapse::widget([
@@ -137,7 +137,7 @@ class EcinformeplaneacionieoController extends Controller
 		$idSedes 		= $_SESSION['sede'][0];
         $searchModel = new EcInformePlaneacionIeoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes" ); 
+		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes and id_tipo_informe =2" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -165,7 +165,14 @@ class EcinformeplaneacionieoController extends Controller
 		return $instituciones;
 	}
 	
-	
+	public function obtenerZonaEducativa()
+	{
+		$zonaEducativa = new ZonasEducativas();
+		$zonaEducativa = $zonaEducativa->find()->orderby("id")->all();
+		$zonaEducativa = ArrayHelper::map($zonaEducativa,'id','descripcion');
+		
+		return $zonaEducativa;
+	}
     /**
      * Displays a single EcInformePlaneacionIeo model.
      * @param string $id
@@ -250,6 +257,8 @@ class EcinformeplaneacionieoController extends Controller
             return $this->redirect(['index']);
         }
 
+	
+		
 		$idSedes 		= $_SESSION['sede'][0];
 		
 		$sedes = Sedes::findOne($idSedes );
@@ -277,6 +286,7 @@ class EcinformeplaneacionieoController extends Controller
 			'instituciones' => $this->obtenerInstituciones(),
 			'fases' =>$this->obtenerParametros(),
 			'codigoDane' => $codigoDane,
+			'zonaEducativa' => $this->obtenerZonaEducativa(),
 			
         ]);
     }
@@ -418,7 +428,8 @@ class EcinformeplaneacionieoController extends Controller
 			'codigoDane' => $codigoDane,
 			'datos'=>$datos,
 			'datoRespuesta'=>$datoRespuesta,
-			'datoInformePlaneacionProyectos'=>$datoInformePlaneacionProyectos
+			'datoInformePlaneacionProyectos'=>$datoInformePlaneacionProyectos,
+			'zonaEducativa' => $this->obtenerZonaEducativa(),
 			
         ]);
     }

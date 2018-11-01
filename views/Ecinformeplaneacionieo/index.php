@@ -12,6 +12,10 @@ Descripción: Se agrega boton de volver al index donde estan los botones de comp
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
+use app\models\Instituciones;
+use app\models\Sedes;
+use app\models\Parametro;
 
 
 use fedemotta\datatables\DataTables;
@@ -97,13 +101,33 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id_institucion',
-            'id_sede',
-            'codigo_dane',
-            'zona_educativa',
+			[
+				'attribute'=>'id_institucion',
+				'value' => function( $model )
+				{
+					$institucion = Instituciones::findOne($model->id_institucion);
+					return $institucion ? $institucion->descripcion : '';
+				}, 
+			],
+            [
+				'attribute' => 'id_sede',
+				'value' 	=> function( $model ){
+					$sede = Sedes::findOne( $model->id_sede );
+					return $sede ? $sede->descripcion : '';
+				},
+			],
+            // 'codigo_dane',
+            // 'zona_educativa',
             //'id_comuna',
             //'id_barrio',
-            //'fase',
+            
+			[
+				'attribute' => 'fase',
+				'value' 	=> function( $model ){
+					$fase = Parametro::findOne( $model->fase );
+					return $fase ? $fase->descripcion : '';
+				},
+			],
             //'fecha_reporte',
 
             [

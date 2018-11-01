@@ -31,15 +31,15 @@ class EcAvances extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado_actual', 'logros', 'retos', 'argumentos'], 'string'],
+            [['estado_actual', 'logros', 'retos', 'argumentos'], 'string','max' => 300],
             [['estado_actual', 'logros', 'retos', 'argumentos'], 'required'],
             [['id_acciones'], 'default', 'value' => null],
             [['id_acciones'], 'integer'],
-            [['estado'], 'boolean'],
+            [['estado'], 'string'],
             [['id_acciones'], 'exist', 'skipOnError' => true, 'targetClass' => EcAcciones::className(), 'targetAttribute' => ['id_acciones' => 'id']],
         ];
     }
-
+	
     /**
      * @inheritdoc
      */
