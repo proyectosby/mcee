@@ -149,7 +149,7 @@ $this->registerJsFile(
 			
 			<div class='col-sm-2'>
 				<?php Html::activeTextarea($condiciones, "sesiones_por_docente", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-				<?= $form->field($condiciones, "sesiones_por_docente")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "sesiones_por_docente")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1'>

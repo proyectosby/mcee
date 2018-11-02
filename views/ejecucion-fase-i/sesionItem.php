@@ -172,11 +172,11 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number']) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number']) ?>
 				</div>
 				
 				<div class='col-sm-1'>
@@ -184,7 +184,7 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]seiones_empleadas", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]seiones_empleadas", [ 'class' => 'form-control', 'data-type' => 'number' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
