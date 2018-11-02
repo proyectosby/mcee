@@ -57,6 +57,14 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 		
 	</div>
 	
+	<div class="" style='padding:0px;background-color:#ccc;text-align:center;height:100px;display:none;font-weight: bold;' id="encabezado1">
+		
+	</div>
+	
+	<div class="" style='padding:0px;background-color:green;text-align:center;height:100px;display:none' id="contenido1">
+		
+	</div>
+	
 	
 	<!-- formulario -->
 	<div class="semilleros-tic-diario-de-campo-form">

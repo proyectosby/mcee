@@ -233,7 +233,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */	
 	public function actionOpcionesEjecucionDiarioCampo($idFase)
     {
-       $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgos'=>'');
+       $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgos'=>'','html1'=>'','contenido1'=>'',);
 	   
 	   //se crea una instancia del modelo parametro
 		$parametroTable 		 	= new Parametro();
@@ -276,49 +276,40 @@ class SemillerosTicDiarioDeCampoController extends Controller
 	
 		$data['html']="";
 		$data['contenido']="";
+		$data['html1']="";
+		$data['contenido1']="";
 		$contador =0;
+		// print_r($opcionesEjecucion);
 		foreach ($opcionesEjecucion as $key => $value)
 		{
+			
 			$contador++;
-			switch ($contador) 
-			{
-				case 1:	
-				case 2:
-				case 3:
-				case 4:
-				$valor =3;
-				
-				break;
-				
-				case 5:	
-				case 6:
-				case 7:
-				case 8:
-				$valor =3;
-				break;
-			// case 1:
-			// case 2:
-			// case 3:
-			// case 5:
-				// $valor =1;
-				// break;
-			// case 4:
-				// $valor =2;
-				// break;
-			// case 6:
-			// case 7:
-				// $valor =3;
-				// break;
-			}
-			
-			
-			$data['html'].="<div class='col-xs-$valor'>";
+			$data['html'].="<div class='col-xs-3'>";
 			$data['html'].=$value;
 			$data['html'].="</div>";
 			
-			$data['contenido'].="<div class='col-xs-$valor' >";
+			$data['contenido'].="<div class='col-xs-3' >";
 			$data['contenido'].="dddddd";
 			$data['contenido'].="</div>";
+			
+			// unset(current($opcionesEjecucion));
+			array_shift($opcionesEjecucion);
+			if ($contador ==4)
+				break;
+			
+		}
+		
+
+		foreach ($opcionesEjecucion as $key => $value)
+		{
+			
+			$data['html1'].="<div class='col-xs-3'>";
+			$data['html1'].=$value;
+			$data['html1'].="</div>";
+			
+			$data['contenido1'].="<div class='col-xs-3' >";
+			$data['contenido1'].="dddddd";
+			$data['contenido1'].="</div>";
 		}
 		
 		echo json_encode( $data );
