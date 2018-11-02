@@ -132,8 +132,12 @@ if( $guardado ){
 		
 			<div class='row text-center' style='width:100%;'>
 				
-				<div class='col-sm-12'>
+				<div class='col-sm-8'>
 					<span total class='form-control' style='background-color:#ccc;'>CONDICIONES INSTITUCIONALES</span>
+				</div>
+				
+				<div class='col-sm-4'>
+					<span total class='form-control' style='background-color:#ccc;'></span>
 				</div>
 			
 			</div>

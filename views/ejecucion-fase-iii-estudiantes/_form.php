@@ -39,7 +39,47 @@ $this->registerJsFile(
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 /* @var $form yii\widgets\ActiveForm */
+
+if( $guardado ){
+	
+	$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
+}
 ?>
+
+<style>
+	.col-sm-12, .col-sm-11, .col-sm-10, .col-sm-9, .col-sm-8, .col-sm-7, .col-sm-6, .col-sm-5, .col-sm-4, .col-sm-3, .col-sm-2, .col-sm-1{
+		padding: 0px;
+	}
+	
+	.title{
+		height: 100px;
+		background-color: #ccc;
+	}
+	
+	.title > div > span{
+		height: 100px;
+	}
+	
+	.title2 > div > span{
+		height: 70px;
+	}
+	
+	.panel-body{
+		overflow: auto;
+	}
+	
+	.row{
+		width: 200%;
+	}
+</style>
 
 <div class="form-group">
 		
@@ -56,25 +96,116 @@ $this->registerJsFile(
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($profesional, 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
+
+    <?= $form->field($profesional, 'id_sede')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
+
+    <?= $form->field($profesional, 'id_profesional_a')->dropDownList( $docentes, [ 
+																'prompt' => 'Seleccione...', 
+															] )->label('Profesional A.') ?>
+	
+	<?= $form->field($profesional, 'curso_participantes')->dropDownList( $cursos, ['prompt' => 'Seleccione...'] )->label('Curso de los participantes') ?>
 	
 	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
-
-    <?= $form->field($model, 'id_fase')->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
-
-    <?= $form->field($model, 'id_datos_sesiones')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
-
-    <?= $form->field($model, 'docente')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...' ] )->label('Profesional A.') ?>
 	
-	<?= $form->field($model, 'docente')->textInput()->label('Curso de los participantes') ?>
+	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
     
-	<?= $this->render( 'sesiones', [ 
-										'idPE' => null,
-										'model' => $model,
-									]) ?>
+	<?php 	
+		if( !empty( $profesional->id_profesional_a ) && !empty( $profesional->curso_participantes ) )
+		{	
+			echo $this->render( 'sesiones', [ 
+						'datosModelos' 	=> $datosModelos,
+						'form' 			=> $form,
+					]);
+	?>
+		<div class='container-fluid' style='margin:10px 0;'>
+		
+			<div class='row text-center' style='width:100%;'>
+				
+				<div class='col-sm-8'>
+					<span total class='form-control' style='background-color:#ccc;'>CONDICIONES INSTITUCIONALES</span>
+				</div>
+				
+				<div class='col-sm-4'>
+					<span total class='form-control' style='background-color:#ccc;'></span>
+				</div>
+			
+			</div>
+			
+			<div class='row text-center title2' style='width:100%;'>
+				<div class='col-sm-2'>
+					<span total class='form-control' style='background-color:#ccc;'>Por parte de la IEO</span>
+				</div>
+				<div class='col-sm-2'>
+					<span total class='form-control' style='background-color:#ccc;'>Por parte de UNIVALLE</span>
+				</div>
+				<div class='col-sm-2'>
+					<span total class='form-control' style='background-color:#ccc;'>Por parte de la SEM</span>
+				</div>
+				<div class='col-sm-2'>
+					<span total class='form-control' style='background-color:#ccc;'>OTRO</span>
+				</div>
+				<div class='col-sm-1'>
+					<span total class='form-control' style='background-color:#ccc;'>Número de Sesiones participantes por curso</span>
+				</div>
+				<div class='col-sm-1'>
+					<span total class='form-control' style='background-color:#ccc;'>Número de estudiantes participantes por curso (Promedio)</span>
+				</div>
+				<div class='col-sm-1'>
+					<span total class='form-control' style='background-color:#ccc;'>Total sesiones por IEO</span>
+				</div>
+				<div class='col-sm-1'>
+					<span total class='form-control' style='background-color:#ccc;'>Total estudiantes IEO (Promedio)</span>
+				</div>
+				
+			</div>
+			
+			<div class='row text-center' id='condiciones-institucionales' style='width:100%;'>
+				
+				<div class='col-sm-2'>
+					<?= $form->field($condiciones, "parte_ieo")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
+				
+				<div class='col-sm-2'>
+					<?= $form->field($condiciones, "parte_univalle")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
+				
+				<div class='col-sm-2'>
+					<?= $form->field($condiciones, "parte_sem")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
+				
+				<div class='col-sm-2'>
+					<?= $form->field($condiciones, "otro")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= $form->field($condiciones, "participantes_por_curso")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= $form->field($condiciones, "promedio_estudiantes_por_curso")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= $form->field($condiciones, "total_sesiones")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
+				
+				<div class='col-sm-1'>
+					<?= $form->field($condiciones, "total_estudiantes")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+				</div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
-    </div>
+			</div>
+			
+		</div>
+
+		<div class="form-group">
+			<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+		</div>
+		
+	<?php 
+		}
+	?>
 
     <?php ActiveForm::end(); ?>
 

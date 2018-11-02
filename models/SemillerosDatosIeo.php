@@ -9,10 +9,10 @@ use Yii;
  *
  * @property string $id
  * @property string $id_institucion
- * @property string $sede
  * @property string $personal_a
  * @property string $docente_aliado
  * @property string $estado
+ * @property string $sede
  */
 class SemillerosDatosIeo extends \yii\db\ActiveRecord
 {
@@ -30,13 +30,13 @@ class SemillerosDatosIeo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_institucion', 'personal_a', 'docente_aliado', 'estado'], 'required'],
-            [['id_institucion', 'estado'], 'default', 'value' => null],
-            [['id_institucion', 'estado'], 'integer'],
+            [['id_institucion', 'personal_a', 'docente_aliado', 'estado', 'sede'], 'required'],
+            [['id_institucion', 'estado', 'sede'], 'default', 'value' => null],
+            [['id_institucion', 'estado', 'sede'], 'integer'],
             [['personal_a', 'docente_aliado'], 'string'],
-            [['sede'], 'string', 'max' => 100],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
+            [['sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['sede' => 'id']],
         ];
     }
 
@@ -46,12 +46,13 @@ class SemillerosDatosIeo extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' 				=> 'ID',
+			'id' 				=> 'ID',
             'id_institucion' 	=> 'Institución educativa',
             'sede' 				=> 'Sede',
             'personal_a' 		=> 'Personal A.',
             'docente_aliado' 	=> 'Docente aliado',
             'estado' 			=> 'Estado',
         ];
+		
     }
 }

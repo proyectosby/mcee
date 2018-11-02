@@ -23,19 +23,25 @@ else
 }
 
 use Yii;
-use app\models\EjecucionFase;
+use app\models\SemillerosTicEjecucionFaseIiiEstudiantes;
 use app\models\EjecucionFaseIBuscar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use app\models\Fases;
 use app\models\DatosIeoProfesional;
+use app\models\Fases;
+use app\models\SemillerosTicDatosIeoProfesionalEstudiantes;
+use app\models\SemillerosTicAnio;
+use app\models\SemillerosTicCiclos;
 use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Personas;
-use app\models\SemillerosTicAnio;
-use app\models\SemillerosTicCiclos;
+use app\models\Sesiones;
+use app\models\DatosSesiones;
+use app\models\SemillerosTicCondicionesInstitucionalesEstudiantes;
+use app\models\Niveles;
+use app\models\SedesNiveles;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -43,6 +49,8 @@ use yii\helpers\ArrayHelper;
  */
 class EjecucionFaseIiiEstudiantesController extends Controller
 {
+	public $id_fase = 3;
+	
     /**
      * @inheritdoc
      */
@@ -132,6 +140,7 @@ class EjecucionFaseIiiEstudiantesController extends Controller
      */
     public function actionCreate()
     {
+		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
 		$ciclo = new SemillerosTicCiclos();
 		
 		$ciclo->load( Yii::$app->request->post() );
@@ -144,18 +153,265 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
 		
-        $model = new EjecucionFase();
+		$condiciones = null;
 		
+		//Indica si se guarda la fase
+		$guardado = false;
+		
+		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
+		
+		/***************************************************************************************************
+		 * datosModelos contiene todos los modelos que se van a usar
+		 * Es un array con una estructura similar a como se usa en la página de la
+		 * siguiente manera
+		 *
+		 * Por cada session hay un data sesion, varias ejecuciones de fase 
+		 * $dataModelos['id_sesion'] = [
+		 *		'datosSesion' => '',
+		 *		'EjecuionFase' => [],
+		 *		'accionesRecursos' => '',
+		 *	];
+		 ***************************************************************************************************/
+		$datosModelos = [];
+		
+		/************************************************************************
+		 * Consultando todas las sesiones para la fase i estudiantes y que esten activos
+		 * id_fase es una propiedad de este controlador
+		 * Adicionalmente creo una estructura ya formada para data Modelos
+		 ************************************************************************/
+		$sesiones = Sesiones::find()
+						->where( 'id_fase='.$this->id_fase )
+						->andWhere( 'estado=1' )
+						->all();
+		
+		//Creo 
+		foreach( $sesiones as $keySesion => $sesion )
+		{	
+			$datosModelos[ $sesion->id ][ 'datosSesion' ] 		= new DatosSesiones();
+			$datosModelos[ $sesion->id ][ 'ejecucionesFase' ][] = new SemillerosTicEjecucionFaseIiiEstudiantes();
+		}
+		
+		/************************************************************************************
+		 * Creo un modelo del profesional IEO en caso de existir
+		 * Si no existe creo modelo nuevo
+		 ************************************************************************************/
+		$postDatosProfesional = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes');
+		
+		$datosIeoProfesional = false;
+		if( $id_institucion && $postDatosProfesional['id_profesional_a'] )
+		{
+			$datosIeoProfesional 		= SemillerosTicDatosIeoProfesionalEstudiantes::findOne([
+											'id_institucion'		=> $id_institucion,
+											'id_profesional_a'		=> $postDatosProfesional['id_profesional_a'],
+											'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
+										  ]);
+		}
+		
+		if( !$datosIeoProfesional )
+		{
+			$datosIeoProfesional = new SemillerosTicDatosIeoProfesionalEstudiantes();
+			$datosIeoProfesional->load(Yii::$app->request->post());
+		}
+		
+		
+		if( $datosIeoProfesional )
+		{
+			//Si ya hay un modelo para datos profesional, procedo a consultar las ejecuciones de fase que halla por cada profesional
+			if( $datosIeoProfesional->id )
+			{
+				if( !$guardar )
+				{
+					$ejecucionesFases = SemillerosTicEjecucionFaseIiiEstudiantes::find()
+											->where( 'id_fase='.$this->id_fase )
+											->andWhere( 'id_ciclo='.$ciclo->id )
+											->andWhere( 'id_datos_ieo_profesional_estudiantes='.$datosIeoProfesional->id )
+											->andWhere( 'estado=1' )
+											->all();
+			
+					foreach( $ejecucionesFases as $key => $ejecucionFase )
+					{
+						$ds = DatosSesiones::findOne( $ejecucionFase->id_datos_sesion );
+						
+						$ds->fecha_sesion = Yii::$app->formatter->asDate($ds->fecha_sesion, "php:d-m-Y");
+						
+						$datosModelos[ $ds->id_sesion ][ 'datosSesion' ] 		= $ds;
+						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
+					}
+				}
+				
+				$condiciones = SemillerosTicCondicionesInstitucionalesEstudiantes::findOne([ 
+										'id_datos_ieo_profesional_estudiantes' 	=> $datosIeoProfesional->id,
+										'id_fase'								=> $this->id_fase,
+										'id_ciclo'								=> $ciclo->id,
+									]);
+				
+			}
+			
+			//Si no hay condiciones institucionales significa que no se encontró nada en los registros y se crea uno nuevo
+			if( !$condiciones )
+			{
+				$condiciones = new SemillerosTicCondicionesInstitucionalesEstudiantes();
+			}
+			
+			//esta variable solo es activa si el dan al boton guardar
+			if( $guardar )
+			{
+				//Si es un pos procedo a cargar todos los datos de acuerdo a lo ingresado por el usuario
+				if( Yii::$app->request->post() ){
+					
+					if( is_array( Yii::$app->request->post( 'DatosSesiones' ) ) )
+					{
+						foreach( Yii::$app->request->post( 'DatosSesiones' ) as $sesion_id => $dataSesion )
+						{
+							if( !empty( $dataSesion['fecha_sesion'] ) )
+							{
+								//Si existe id consulto los datos correspondientes y cargo los datos del post
+								//Si no, creo un nuevo modelo y cargo los datos del post
+								if( !empty( $dataSesion['id'] ) )
+								{
+									$ds = DatosSesiones::findOne( $dataSesion['id'] );
+								}
+								else{
+									$ds = new DatosSesiones();
+								}
+								
+								$ds->load( $dataSesion, '' );
+								
+								$datosModelos[ $sesion_id ][ 'datosSesion' ] 		= $ds;
+							}
+						}
+					}
+					
+					if( is_array( Yii::$app->request->post( 'SemillerosTicEjecucionFaseIiiEstudiantes' ) ) )
+					{
+						foreach( Yii::$app->request->post( 'SemillerosTicEjecucionFaseIiiEstudiantes' ) as $sesion_id => $ejecucionFases )
+						{
+							foreach( $ejecucionFases as $key => $ejecucionFase )
+							{
+								//Si existe id consulto los datos correspondientes y cargo los datos del post
+								//Si no, creo un nuevo modelo y cargo los datos del post
+								if( !empty( $ejecucionFase['id'] ) )
+								{
+									$ef = SemillerosTicEjecucionFaseIiiEstudiantes::findOne( $ejecucionFase['id'] );
+								}
+								else{
+									$ef = new SemillerosTicEjecucionFaseIiiEstudiantes();
+								}
+								
+								$ef->load( $ejecucionFase, '' );
+								
+								$datosModelos[ $sesion_id ][ 'ejecucionesFase' ][] = $ef;
+							}
+						}
+					}
+				}
+			
+				$condiciones->load( Yii::$app->request->post() );
+			
+				$valido = true;
+				
+				$valido = $datosIeoProfesional->validate([
+									'id_profesional_a',
+									'curso_participantes',
+								]) && $valido;
+				
+				foreach( $datosModelos as $key => $modelo )
+				{
+					if( !empty($modelo[ 'datosSesion' ]->fecha_sesion ) ){
+						
+						$valido = $modelo[ 'datosSesion' ]->validate([
+										'fecha_sesion',
+									]) && $valido;
+						
+						$primera = true;
+						foreach( $modelo[ 'ejecucionesFase' ] as $key => $ejecucionFase )
+						{
+							if( !$primera )
+							{
+								$valido = $ejecucionFase->validate([
+												'estudiantes_participantes',
+												'numero_apps',
+												'nombre_aplicaciones',
+												'tic',
+												'tipo_uso_tic',
+												'digitales',
+												'tipos_uso_digitales',
+												'no_tic',
+												'tipo_uso_no_tic',
+												'tiempo_uso_recursos',
+												'numero_obras',
+												'tipo_produccion',
+												'temas_abordados',
+												'problemas_abordados',
+												'fecha_aplicaciones',
+												'numero_asignaturas',
+												'asignaturas',
+												'observaciones',
+											]) && $valido;
+							}
+							$primera = false;
+						}
+					}
+				}
+				
+				$valido = $condiciones->validate([
+								'parte_ieo' 				=> 'Parte Ieo',
+								'parte_univalle' 			=> 'Parte Univalle',
+								'parte_sem' 				=> 'Parte Sem',
+								'otro' 						=> 'Otro',
+								'estado' 					=> 'Estado',
+								'total_sesiones_ieo' 		=> 'Total Sesiones Ieo',
+								'total_docentes_ieo' 		=> 'Total Docentes Ieo',
+								'sesiones_por_docente' 		=> 'Sesiones por Docente',
+							]) && $valido;
+				
+				if( $valido )
+				{
+					$datosIeoProfesional->id_institucion = $id_institucion;
+					$datosIeoProfesional->id_sede = $id_sede;
+					$datosIeoProfesional->estado = 1;
+					$datosIeoProfesional->save( false );
+					
+					foreach( $datosModelos as $sesion_id => $modelo )
+					{
+						if( !empty($modelo[ 'datosSesion' ]->fecha_sesion ) )
+						{
+							$modelo[ 'datosSesion' ]->id_sesion = $sesion_id;
+							$modelo[ 'datosSesion' ]->estado 	= 1;
+							$modelo[ 'datosSesion' ]->save(false);
+							
+							$primera = true;
+							foreach( $modelo[ 'ejecucionesFase' ] as $key => $ejecucionFase )
+							{
+								if( !$primera )
+								{
+									$ejecucionFase->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
+									$ejecucionFase->id_datos_sesion 						= $modelo[ 'datosSesion' ]->id;
+									$ejecucionFase->id_fase 								= $this->id_fase;
+									$ejecucionFase->id_ciclo 								= $ciclo->id;
+									$ejecucionFase->estado 									= 1;
+									$ejecucionFase->save(false);
+								}
+								$primera = false;
+							}
+						}
+					}
+					
+					$condiciones->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
+					$condiciones->id_fase 								= $this->id_fase;
+					$condiciones->id_ciclo 								= $ciclo->id;
+					$condiciones->estado 								= 1;
+					$condiciones->save(false);
+					
+					$guardado = true;
+				}
+			}
+		}
+
 		$institucion = Instituciones::findOne($id_institucion);
 		$sede 		 = Sedes::findOne($id_sede);
 		
-		$fase  = Fases::findOne( 3 );
-		
-		$datosIeoProfesional  = new DatosIeoProfesional();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+		$fase  = Fases::findOne( $this->id_fase );
 		
 		$dataPersonas 		= Personas::find()
 								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
@@ -167,14 +423,27 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 								->all();
 		
 		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		
+		$dataCursos = Niveles::find()
+							->alias( 'n' )
+							->innerJoin( 'sedes_niveles sn', 'sn.id_niveles=n.id' )
+							->where( 'n.estado=1' )
+							->andWhere( 'sn.id_sedes='.$id_sede )
+							->all();
+		
+		$cursos = ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
 
         return $this->render('create', [
-            'model' 		=> $model,
+            'datosModelos'	=> $datosModelos,
+            'profesional'	=> $datosIeoProfesional,
             'fase'  		=> $fase,
             'institucion'	=> $institucion,
             'sede' 		 	=> $sede,
             'docentes' 		=> $docentes,
 			'ciclo'			=> $ciclo,
+			'condiciones'	=> $condiciones,
+			'guardado'		=> $guardado,
+			'cursos'		=> $cursos,
         ]);
     }
 
