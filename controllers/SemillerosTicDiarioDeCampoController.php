@@ -233,12 +233,18 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */	
 	public function actionOpcionesEjecucionDiarioCampo($idFase)
     {
-       $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgos'=>'');
+       $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgos'=>'','html1'=>'','contenido1'=>'',);
 	   
 	   //se crea una instancia del modelo parametro
 		$parametroTable 		 	= new Parametro();
+		
+		//Para traer las descripciones
+		if ($idFase == 14) {$idParametro = 9;}
+		elseif ($idFase == 15) {$idParametro = 10;}
+		elseif ($idFase == 16) {$idParametro = 11;}
+		
 		//se traen los datos de paramero								  
-		$dataParametro		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$idFase)->all();										  
+		$dataParametro		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$idParametro)->all();										  
 		//se guardan los datos en un array
 		$opcionesEjecucion	 	 	 = ArrayHelper::map( $dataParametro, 'id', 'descripcion' );
 		
@@ -270,35 +276,40 @@ class SemillerosTicDiarioDeCampoController extends Controller
 	
 		$data['html']="";
 		$data['contenido']="";
+		$data['html1']="";
+		$data['contenido1']="";
 		$contador =0;
+		// print_r($opcionesEjecucion);
 		foreach ($opcionesEjecucion as $key => $value)
 		{
-			$contador++;
-			switch ($contador) 
-			{
-			case 1:
-			case 2:
-			case 3:
-			case 5:
-				$valor =1;
-				break;
-			case 4:
-				$valor =2;
-				break;
-			case 6:
-			case 7:
-				$valor =3;
-				break;
-			}
-			// print_r($key."-".$value);
 			
-			$data['html'].="<div class='col-xs-$valor'>";
+			$contador++;
+			$data['html'].="<div class='col-xs-3'>";
 			$data['html'].=$value;
 			$data['html'].="</div>";
 			
-			$data['contenido'].="<div class='col-xs-$valor' >";
-			$data['contenido'].="";
+			$data['contenido'].="<div class='col-xs-3' >";
+			$data['contenido'].="dddddd";
 			$data['contenido'].="</div>";
+			
+			// unset(current($opcionesEjecucion));
+			array_shift($opcionesEjecucion);
+			if ($contador ==4)
+				break;
+			
+		}
+		
+
+		foreach ($opcionesEjecucion as $key => $value)
+		{
+			
+			$data['html1'].="<div class='col-xs-3'>";
+			$data['html1'].=$value;
+			$data['html1'].="</div>";
+			
+			$data['contenido1'].="<div class='col-xs-3' >";
+			$data['contenido1'].="dddddd";
+			$data['contenido1'].="</div>";
 		}
 		
 		echo json_encode( $data );

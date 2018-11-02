@@ -28,9 +28,13 @@ $( "#selFases" ).change(function()
 							$("#titulo").html(titulo);
 							$("#encabezado").html(data.html);
 							$("#contenido").html(data.contenido);
+							$("#encabezado1").html(data.html1);
+							$("#contenido1").html(data.contenido1);
 							$("#titulo").show();
 							$("#encabezado").show();
 							$("#contenido").show();
+							$("#encabezado1").show();
+							$("#contenido1").show();
 						}
 						
 						$("#descripcion").html(data.descripcion);
@@ -44,6 +48,8 @@ $( "#selFases" ).change(function()
 		 $("#titulo").hide(titulo);
 		 $("#encabezado").hide();
 		 $("#contenido").hide();
+		 $("#encabezado1").hide();
+		 $("#contenido1").hide();
 		 }
 });
 

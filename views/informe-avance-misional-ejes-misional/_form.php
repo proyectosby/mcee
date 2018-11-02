@@ -190,7 +190,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/informe-avance-misional-e
 	
 	<?= $form->field($model, 'fase')->DropDownList($fases,['prompt'=>'Seleccione...']) ?>
 	
-	<?= $form->field($model, 'id_tipo_informe')->hiddenInput( [ 'value' => '10' ] )->label( false ) ?>
+	<?= $form->field($model, 'id_tipo_informe')->hiddenInput( [ 'value' => '11' ] )->label( false ) ?>
 	
 
 		
