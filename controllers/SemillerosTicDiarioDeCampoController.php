@@ -31,6 +31,8 @@ use yii\helpers\ArrayHelper;
 use app\models\SemillerosTicCiclos;
 use app\models\SemillerosTicAnio;
 use app\models\Parametro;
+use app\models\DatosIeoProfesional;
+use app\models\EjecucionFase;
 
 
 /**
@@ -231,14 +233,14 @@ class SemillerosTicDiarioDeCampoController extends Controller
      * @return la lista de los campos
      * @throws no tiene excepciones
      */	
-	public function actionOpcionesEjecucionDiarioCampo($idFase)
+	public function actionOpcionesEjecucionDiarioCampo($idFase, $idAnio, $idCiclo)
     {
        $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgos'=>'','html1'=>'','contenido1'=>'',);
 	   
 	   //se crea una instancia del modelo parametro
 		$parametroTable 		 	= new Parametro();
 		
-		//Para traer las descripciones
+		//Para traer las descripciones de los encabezados
 		if ($idFase == 14) {$idParametro = 9;}
 		elseif ($idFase == 15) {$idParametro = 10;}
 		elseif ($idFase == 16) {$idParametro = 11;}
@@ -249,7 +251,33 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		$opcionesEjecucion	 	 	 = ArrayHelper::map( $dataParametro, 'id', 'descripcion' );
 		
 		
-		//Para traer las descripciones
+		//se debe consultar el año, el ciclo y la fase para llegar a los datos de la fase
+		
+		//se crean las instancias de los modelos para traer los textos la base de datos
+		$datosIeoProfesional = new DatosIeoProfesional();
+		$ejecucionFase = new EjecucionFase();
+		
+		//se hacen las consultas
+		/**
+		* Concexion a la db, traer los textos segun la fase
+		*/
+		//variable con la conexion a la base de datos 
+		
+		// $connection = Yii::$app->getDb();
+		// $perfilesSelected =array();
+		// $command = $connection->createCommand("select ef.id_fase, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas
+		// from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef
+		// where a.id = 2
+		// and c.id = 4
+		// and f.id = 1
+		// and ef.id_fase = f.id;");
+		// $result = $command->queryAll();
+		
+		
+		
+		
+		
+		//Para traer las descripciones para ingresar el texto
 		if ($idFase == 14) {$idParametro = 78;}
 		elseif ($idFase == 15) {$idParametro = 79;}
 		elseif ($idFase == 16) {$idParametro = 80;}
@@ -279,7 +307,9 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		$data['html1']="";
 		$data['contenido1']="";
 		$contador =0;
-		// print_r($opcionesEjecucion);
+		
+		
+		//este foreach toma los primeros 4 resultados de la consulta y los formatea para mostrarlos
 		foreach ($opcionesEjecucion as $key => $value)
 		{
 			
@@ -299,7 +329,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			
 		}
 		
-
+		//este foreach toma los ultimos 4 resultados de la consulta y los formatea para mostrarlos
 		foreach ($opcionesEjecucion as $key => $value)
 		{
 			
