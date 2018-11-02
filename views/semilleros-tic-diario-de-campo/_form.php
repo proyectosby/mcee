@@ -25,11 +25,11 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 	<div class="" style=''>
 
 	<?= $form->field( $ciclos, 'id_anio' )->dropDownList( $anios, [ 
-													'prompt' 	=> 'Seleccione...', 
+													'prompt' 	=> 'Seleccione...', 'id' =>'selAnio'
 												] ) ?>
 
 	<?= $form->field( $ciclos, 'id' )->dropDownList( $cicloslist, [ 
-												'prompt' => 'Seleccione...',
+												'prompt' => 'Seleccione...', 'id' =>'selCiclo'
 											] )->label( 'Ciclo' ); ?>
 
 
