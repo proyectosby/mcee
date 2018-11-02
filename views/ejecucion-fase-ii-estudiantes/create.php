@@ -6,6 +6,11 @@ Fecha: 2018-08-23
 Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I ESTUDIANTES
 ---------------------------------------
+Modificaciones:
+Fecha: 2018-11-02
+Persona encargarda: Edwin Molina Grisales
+Descripción: Modificaciones varias para poder insertar o actualizar los registros del usuario
+---------------------------------------
 **********/
 
 
@@ -24,12 +29,16 @@ $this->params['breadcrumbs'][] = "Agregar";
     <h1><?= Html::encode($fase->descripcion) ?></h1>
 
     <?= $this->render('_form', [
-        'model' 		=> $model,
+        'datosModelos'	=> $datosModelos,
+        'profesional'	=> $profesional,
 		'fase'  		=> $fase,
 		'institucion'	=> $institucion,
 		'sede' 		 	=> $sede,
 		'docentes' 		=> $docentes,
 		'ciclo'			=> $ciclo,
+		'condiciones'	=> $condiciones,
+		'guardado'		=> $guardado,
+		'cursos'		=> $cursos,
     ]) ?>
 
 </div>
