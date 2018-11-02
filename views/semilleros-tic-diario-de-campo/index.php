@@ -23,7 +23,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '';
-$nombre = 'Semilleros Tic Diario De Campos';
+$nombre = 'Semilleros Tic Diario De Campo';
 $this->params['breadcrumbs'][] =$nombre;
 ?>
 

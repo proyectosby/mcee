@@ -237,8 +237,14 @@ class SemillerosTicDiarioDeCampoController extends Controller
 	   
 	   //se crea una instancia del modelo parametro
 		$parametroTable 		 	= new Parametro();
+		
+		//Para traer las descripciones
+		if ($idFase == 14) {$idParametro = 9;}
+		elseif ($idFase == 15) {$idParametro = 10;}
+		elseif ($idFase == 16) {$idParametro = 11;}
+		
 		//se traen los datos de paramero								  
-		$dataParametro		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$idFase)->all();										  
+		$dataParametro		 	= $parametroTable->find()->where('estado=1 and id_tipo_parametro ='.$idParametro)->all();										  
 		//se guardan los datos en un array
 		$opcionesEjecucion	 	 	 = ArrayHelper::map( $dataParametro, 'id', 'descripcion' );
 		
@@ -276,28 +282,42 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			$contador++;
 			switch ($contador) 
 			{
-			case 1:
-			case 2:
-			case 3:
-			case 5:
-				$valor =1;
+				case 1:	
+				case 2:
+				case 3:
+				case 4:
+				$valor =3;
+				
 				break;
-			case 4:
-				$valor =2;
-				break;
-			case 6:
-			case 7:
+				
+				case 5:	
+				case 6:
+				case 7:
+				case 8:
 				$valor =3;
 				break;
+			// case 1:
+			// case 2:
+			// case 3:
+			// case 5:
+				// $valor =1;
+				// break;
+			// case 4:
+				// $valor =2;
+				// break;
+			// case 6:
+			// case 7:
+				// $valor =3;
+				// break;
 			}
-			// print_r($key."-".$value);
+			
 			
 			$data['html'].="<div class='col-xs-$valor'>";
 			$data['html'].=$value;
 			$data['html'].="</div>";
 			
 			$data['contenido'].="<div class='col-xs-$valor' >";
-			$data['contenido'].="";
+			$data['contenido'].="dddddd";
 			$data['contenido'].="</div>";
 		}
 		
