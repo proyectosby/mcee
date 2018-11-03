@@ -32,11 +32,9 @@ class SemillerosTicDatosIeoProfesionalEstudiantes extends \yii\db\ActiveRecord
         return [
             [['estado', 'id_institucion', 'id_sede', 'id_profesional_a', 'curso_participantes'], 'required'],
             [['estado', 'id_institucion', 'id_sede', 'id_profesional_a', 'curso_participantes'], 'default', 'value' => null],
-            [['estado', 'id_institucion', 'id_sede', 'id_profesional_a', 'curso_participantes'], 'integer'],
+            [['estado', 'id_institucion', 'id_sede'], 'integer'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
-            [['curso_participantes'], 'exist', 'skipOnError' => true, 'targetClass' => Niveles::className(), 'targetAttribute' => ['curso_participantes' => 'id']],
-            [['id_profesional_a'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['id_profesional_a' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
         ];
     }

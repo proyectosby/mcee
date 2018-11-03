@@ -73,6 +73,14 @@ $( document ).ready(function(){
 	
 	//Se agrega editables para los campos textarea de condiciones institucionales
 	$( "textarea[id^=semillerosticejecucionfaseiestudiantes]" ).each(function(x){
+		
+		if( $( this ).data( "typevalidation" ) == "number" )
+		{
+			$( this ).data( 'type', 'text' );
+		}
+		else{
+			$( this ).data( 'type', 'textarea' );
+		}
 	
 		$( this )
 			.attr({readOnly: true })
@@ -135,7 +143,8 @@ $( document ).ready(function(){
 	 ********************************************************************************/
 	$( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a,#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).change(function(){
 		
-		if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
+		// if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
+		if( $( this ).val() != '' )
 		{
 			$( "#guardar" ).val(0)
 			this.form.submit();
@@ -181,7 +190,13 @@ $( document ).ready(function(){
 		
 					//Agrego data-type textarea para que el popup editable salga como textarea
 					//Sin esto mostraría un input para ingresar información
-					$( this ).data( 'type', 'textarea' );
+					if( $( this ).data( "typevalidation" ) == "number" )
+					{
+						$( this ).data( 'type', 'text' );
+					}
+					else{
+						$( this ).data( 'type', 'textarea' );
+					}
 				
 					$( this )
 						.attr({readOnly: true })
@@ -222,6 +237,11 @@ $( document ).ready(function(){
 									"container"	: ".field-"+_campo.id,
 									"input"		: "#"+_campo.id,
 									"validate"	: function (attribute, value, messages, deferred, $form) {
+										
+													if( $( this.input ).data( "typevalidation" ) == "number" ){
+														yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Debe ser un número entero.","skipOnEmpty":1});	
+													}
+													
 													yii.validation.required(value, messages, {"message":"No puede estar vacío"});
 												}
 								},

@@ -105,15 +105,39 @@ $index = 0;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$sesion->id][$index]participacion_sesiones")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($ejecucionFase, "[$sesion->id][$index]participacion_sesiones")
+									->textarea(
+										[ 
+											'class' 				=> 'form-control', 
+											'maxlength' 			=> true, 
+											'data-type' 			=> 'text',
+											'data-typevalidation' 	=> 'number',
+										])
+									->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$sesion->id][$index]numero_estudiantes")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($ejecucionFase, "[$sesion->id][$index]numero_estudiantes")
+									->textarea(
+										[ 
+											'class' 				=> 'form-control', 
+											'maxlength' 			=> true, 
+											'data-type' 			=> 'text',
+											'data-typevalidation' 	=> 'number',
+										])
+									->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$sesion->id][$index]apps_creadas")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($ejecucionFase, "[$sesion->id][$index]apps_creadas")
+									->textarea(
+										[ 
+											'class' 				=> 'form-control', 
+											'maxlength' 			=> true, 
+											'data-type' 			=> 'text',
+											'data-typevalidation' 	=> 'number',
+										])
+									->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
@@ -121,7 +145,15 @@ $index = 0;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$sesion->id][$index]sesiones_empleadas" )->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($ejecucionFase, "[$sesion->id][$index]sesiones_empleadas" )
+									->textarea(
+										[ 
+											'class' 				=> 'form-control', 
+											'maxlength' 			=> true, 
+											'data-type' 			=> 'text',
+											'data-typevalidation' 	=> 'number',
+										])
+									->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>

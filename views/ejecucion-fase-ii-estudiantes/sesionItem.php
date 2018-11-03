@@ -293,7 +293,15 @@ $index = 0;
 				<div class='col-sm-4'>
 				
 					<div class='col-sm-1'>
-						<?= $form->field($ejecucionFase, "[$sesion->id][$index]numero_obras")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+						<?= $form->field($ejecucionFase, "[$sesion->id][$index]numero_obras")
+									->textarea(
+										[ 
+											'class' 				=> 'form-control', 
+											'maxlength' 			=> true, 
+											'data-type' 			=> 'text',
+											'data-typevalidation' 	=> 'number',
+										])
+									->label( null, [ 'style' => 'display:none' ]) ?>
 					</div>
 					
 					<div class='col-sm-2'>

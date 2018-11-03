@@ -1,5 +1,4 @@
 <?php
-
 /**********
 Versión: 001
 Fecha: 2018-08-16
@@ -17,10 +16,10 @@ use Yii;
  *
  * @property string $id
  * @property string $id_institucion
- * @property string $profecional_a
  * @property string $docente_aliado
  * @property string $estado
  * @property string $id_sede
+ * @property string $profecional_a
  */
 class SemillerosDatosIeoEstudiantes extends \yii\db\ActiveRecord
 {
@@ -38,13 +37,13 @@ class SemillerosDatosIeoEstudiantes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_institucion', 'profecional_a', 'docente_aliado', 'estado'], 'required'],
-            [['id_institucion', 'profecional_a', 'estado', 'id_sede'], 'default', 'value' => null],
-            [['id_institucion', 'profecional_a', 'estado', 'id_sede'], 'integer'],
+            [['id_institucion', 'docente_aliado', 'estado', 'profecional_a'], 'required'],
+            [['id_institucion', 'estado', 'id_sede'], 'default', 'value' => null],
+            [['id_institucion', 'estado', 'id_sede'], 'integer'],
+            [['profecional_a'], 'string'],
             [['docente_aliado'], 'string', 'max' => 200],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
-            [['profecional_a'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['profecional_a' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
         ];
     }
@@ -55,12 +54,12 @@ class SemillerosDatosIeoEstudiantes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' 			=> 'ID',
-            'id_institucion'=> 'Institución educativa',
-            'profecional_a' => 'Profesional A.',
-            'docente_aliado'=> 'Docente aliado',
-            'estado' 		=> 'Estado',
-            'id_sede' 		=> 'Sede',
+            'id' 				=> 'ID',
+            'id_institucion' 	=> 'Institucion',
+            'docente_aliado' 	=> 'Docente Aliado',
+            'estado' 			=> 'Estado',
+            'id_sede' 			=> 'Sede',
+            'profecional_a' 	=> 'Profesional A',
         ];
     }
 }
