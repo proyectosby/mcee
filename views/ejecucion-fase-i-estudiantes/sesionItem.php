@@ -110,7 +110,7 @@ $index = 0;
 										[ 
 											'class' 				=> 'form-control', 
 											'maxlength' 			=> true, 
-											'data-type' 			=> 'text',
+											'data-type' 			=> 'number',
 											'data-typevalidation' 	=> 'number',
 										])
 									->label( null, [ 'style' => 'display:none' ]) ?>
@@ -122,7 +122,7 @@ $index = 0;
 										[ 
 											'class' 				=> 'form-control', 
 											'maxlength' 			=> true, 
-											'data-type' 			=> 'text',
+											'data-type' 			=> 'number',
 											'data-typevalidation' 	=> 'number',
 										])
 									->label( null, [ 'style' => 'display:none' ]) ?>
@@ -134,7 +134,7 @@ $index = 0;
 										[ 
 											'class' 				=> 'form-control', 
 											'maxlength' 			=> true, 
-											'data-type' 			=> 'text',
+											'data-type' 			=> 'number',
 											'data-typevalidation' 	=> 'number',
 										])
 									->label( null, [ 'style' => 'display:none' ]) ?>
@@ -150,7 +150,7 @@ $index = 0;
 										[ 
 											'class' 				=> 'form-control', 
 											'maxlength' 			=> true, 
-											'data-type' 			=> 'text',
+											'data-type' 			=> 'number',
 											'data-typevalidation' 	=> 'number',
 										])
 									->label( null, [ 'style' => 'display:none' ]) ?>

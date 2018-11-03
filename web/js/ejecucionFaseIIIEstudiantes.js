@@ -82,6 +82,14 @@
 	
 	//Se agrega editables para los campos textarea de condiciones institucionales
 	$( "textarea[id^=semillerosticejecucionfaseiiiestudiantes]" ).each(function(x){
+		
+		if( $( this ).data( "typevalidation" ) == "number" )
+		{
+			$( this ).data( 'type', 'number' );
+		}
+		else{
+			$( this ).data( 'type', 'textarea' );
+		}
 	
 		$( this )
 			.attr({readOnly: true })
@@ -193,7 +201,7 @@
 					//Sin esto mostraría un input para ingresar información
 					if( $( this ).data( "typevalidation" ) == "number" )
 					{
-						$( this ).data( 'type', 'text' );
+						$( this ).data( 'type', 'number' );
 					}
 					else{
 						$( this ).data( 'type', 'textarea' );

@@ -43,6 +43,8 @@ use app\models\Personas;
 use app\models\Sesiones;
 use app\models\DatosSesiones;
 use app\models\SemillerosTicCondicionesInstitucionalesEstudiantes;
+use app\models\AcuerdosInstitucionalesEstudiantes;
+use app\models\SemillerosDatosIeoEstudiantes;
 use app\models\Niveles;
 use app\models\SedesNiveles;
 use yii\helpers\ArrayHelper;
@@ -409,7 +411,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 		
 		$fase  = Fases::findOne( $this->id_fase );
 		
-		$dataPersonas 		= Personas::find()
+		$dataPersonas 	= Personas::find()
 								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
 								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
 								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
@@ -420,15 +422,67 @@ class EjecucionFaseIEstudiantesController extends Controller
 		
 		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		
-		$dataCursos = Niveles::find()
-							->alias( 'n' )
-							->innerJoin( 'sedes_niveles sn', 'sn.id_niveles=n.id' )
-							->where( 'n.estado=1' )
-							->andWhere( 'sn.id_sedes='.$id_sede )
-							->all();
+		// $dataCursos = Niveles::find()
+							// ->alias( 'n' )
+							// ->innerJoin( 'sedes_niveles sn', 'sn.id_niveles=n.id' )
+							// ->where( 'n.estado=1' )
+							// ->andWhere( 'sn.id_sedes='.$id_sede )
+							// ->all();
 		
-		$cursos = ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
-
+		// $cursos = ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
+		
+		
+		$docentes = [];
+		$dataPersonas 	= SemillerosDatosIeoEstudiantes::find()
+								->select( 'profecional_a' )
+								->alias( 'se' )
+								->where( 'se.estado=1' )
+								->andWhere( 'se.id_institucion='.$id_institucion )
+								->andWhere( 'se.id_sede='.$id_sede )
+								->groupby([ 'profecional_a' ])
+								->all();
+		
+		foreach( $dataPersonas as $key => $personas ){
+			
+			$profesionales = explode( ',', $personas->profecional_a );
+			
+			foreach( $profesionales as $profesional )
+			{
+				$persona =  Personas::findOne( $profesional );
+				
+				if( empty( $docentes[ $personas->profecional_a ] ) )
+					$docentes[ $personas->profecional_a ] = $persona->nombres." ".$persona->apellidos;
+				else
+					$docentes[ $personas->profecional_a ] .= " - ".$persona->nombres." ".$persona->apellidos;
+			}
+			
+			// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		}
+		
+		
+		$cursos = [];
+		
+		$post_profesional_a = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes')['id_profesional_a'];
+		
+		if( $post_profesional_a )
+		{
+			$dataCursos = AcuerdosInstitucionalesEstudiantes::find()
+								->alias( 'ae' )
+								->innerJoin( 'semilleros_tic.semilleros_datos_ieo_estudiantes se', 'se.id=ae.id_semilleros_datos_estudiantes' )
+								->where( 'ae.id_fase='.$this->id_fase )
+								->andWhere( 'ae.estado=1' )
+								->andWhere( 'se.estado=1' )
+								->andWhere( 'se.profecional_a='."'".$post_profesional_a."'" )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->all();
+			
+			$cursos 	= ArrayHelper::map( $dataCursos, 'curso', 'curso' );
+		}
+		
+		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
+		if( !in_array( $datosIeoProfesional->curso_participantes, $cursos ) )
+			$datosIeoProfesional->curso_participantes = '';
+		
         return $this->render('create', [
             'datosModelos'	=> $datosModelos,
             'profesional'	=> $datosIeoProfesional,
