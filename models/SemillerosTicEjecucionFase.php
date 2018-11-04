@@ -42,9 +42,9 @@ class SemillerosTicEjecucionFase extends \yii\db\ActiveRecord
         return [
             [['id_fase', 'id_datos_sesiones', 'docente', 'asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'id_datos_ieo_profesional', 'estado', 'numero_sesiones_docente'], 'required'],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
-            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado','id_ciclo'], 'integer'],
+            [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado','id_ciclo','paricipacion_sesiones', 'numero_apps', 'seiones_empleadas'], 'integer'],
             [['docente'], 'string', 'max' => 200],
-            [['asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'numero_sesiones_docente'], 'string', 'max' => 500],
+            [['asignaturas', 'especiaidad', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'numero_sesiones_docente'], 'string', 'max' => 500],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_datos_sesiones'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosSesiones::className(), 'targetAttribute' => ['id_datos_sesiones' => 'id']],

@@ -411,34 +411,16 @@ class EjecucionFaseIEstudiantesController extends Controller
 		
 		$fase  = Fases::findOne( $this->id_fase );
 		
-		$dataPersonas 	= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
-		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
-		// $dataCursos = Niveles::find()
-							// ->alias( 'n' )
-							// ->innerJoin( 'sedes_niveles sn', 'sn.id_niveles=n.id' )
-							// ->where( 'n.estado=1' )
-							// ->andWhere( 'sn.id_sedes='.$id_sede )
-							// ->all();
-		
-		// $cursos = ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
-		
-		
 		$docentes = [];
 		$dataPersonas 	= SemillerosDatosIeoEstudiantes::find()
 								->select( 'profecional_a' )
 								->alias( 'se' )
+								->innerJoin( 'semilleros_tic.acuerdos_institucionales_estudiantes ae', 'ae.id_semilleros_datos_estudiantes=se.id' )
 								->where( 'se.estado=1' )
 								->andWhere( 'se.id_institucion='.$id_institucion )
 								->andWhere( 'se.id_sede='.$id_sede )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'ae.estado=1' )
 								->groupby([ 'profecional_a' ])
 								->all();
 		
@@ -455,8 +437,6 @@ class EjecucionFaseIEstudiantesController extends Controller
 				else
 					$docentes[ $personas->profecional_a ] .= " - ".$persona->nombres." ".$persona->apellidos;
 			}
-			
-			// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		}
 		
 		

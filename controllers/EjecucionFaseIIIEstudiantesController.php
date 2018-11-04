@@ -439,9 +439,12 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 		$dataPersonas 	= SemillerosDatosIeoEstudiantes::find()
 								->select( 'profecional_a' )
 								->alias( 'se' )
+								->innerJoin( 'semilleros_tic.acuerdos_institucionales_estudiantes ae', 'ae.id_semilleros_datos_estudiantes=se.id' )
 								->where( 'se.estado=1' )
 								->andWhere( 'se.id_institucion='.$id_institucion )
 								->andWhere( 'se.id_sede='.$id_sede )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'ae.estado=1' )
 								->groupby([ 'profecional_a' ])
 								->all();
 		
