@@ -22,7 +22,7 @@ use yii\helpers\Html;
 // use yii\widgets\ActiveForm;
 use yii\bootstrap\ActiveForm;
 
-
+use nex\chosen\Chosen;
 
 ?>
 
@@ -80,14 +80,26 @@ use yii\bootstrap\ActiveForm;
 			</div>
 			
 			<div class="col-sm-2" style='padding:0px;'>
-				<?= $form->field($acuerdo, "[$fase->id][$index]curso" )
-						->textarea()
-						->label(null,['style'=>'display:none']) ?>
+
+				<?= $form->field($acuerdo, "[$fase->id][$index]curso")->widget(
+						Chosen::className(), [
+							'items' => $cursos,
+							'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+							'multiple' => true,
+							'clientOptions' => [
+								'search_contains' => true,
+								'single_backstroke_delete' => false,
+							]
+					])->label(null,['style'=>'display:none']) ?>
+
 			</div>
 			
 			<div class="col-sm-1" style='padding:0px;'>
 				<?= $form->field($acuerdo, "[$fase->id][$index]cantidad_inscritos" )
-						->textarea([ 'class' => 'form-control'])
+						->textarea([ 
+								'class' 	=> 'form-control',
+								'data-type' => 'number',
+							])
 						->label(null,['style'=>'display:none']) ?>
 			</div>
 			
@@ -111,7 +123,7 @@ use yii\bootstrap\ActiveForm;
 			
 			<div class="col-sm-3" style='padding:0px;'>
 				<?= $form->field($acuerdo, "[$fase->id][$index]observaciones" )
-						->textarea([ 'class' => 'form-control'])
+						->textarea([ 'class' => 'form-control', 'data-type' => 'textarea' ])
 						->label(null,['style'=>'display:none']) ?>
 			</div>
 			

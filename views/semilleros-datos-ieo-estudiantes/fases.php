@@ -40,6 +40,7 @@ foreach( $fases as $keyFase => $fase ){
 														'parametros'=> $parametros,
 														'acuerdos'	=> $acuerdos,
 														'form'		=> $form,
+														'cursos'	=> $cursos,
 													] 
 										),
 					'contentOptions'=> []

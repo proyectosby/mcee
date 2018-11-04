@@ -125,7 +125,7 @@ $( document ).ready(function(){
 		
 					//Agrego data-type textarea para que el popup editable salga como textarea
 					//Sin esto mostraría un input para ingresar información
-					$( this ).data( 'type', 'textarea' );
+					// $( this ).data( 'type', 'textarea' );
 				
 					$( this )
 						.attr({readOnly: true })
@@ -166,6 +166,12 @@ $( document ).ready(function(){
 									"container"	: ".field-"+_campo.id,
 									"input"		: "#"+_campo.id,
 									"validate"	: function (attribute, value, messages, deferred, $form) {
+													
+													if( $( this.input ).data( "type" ) == 'number' )
+													{
+														yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Debe ser un número entero.","skipOnEmpty":1});
+													}
+										
 													yii.validation.required(value, messages, {"message":"No puede estar vacío"});
 												}
 								},
@@ -185,6 +191,19 @@ $( document ).ready(function(){
 								},
 							);
 					}
+				});
+				
+				
+				$( "select[id$=curso]", filaClonada ).each(function(){
+					
+					$( this ).chosen({
+							"search_contains"			:true,
+							"single_backstroke_delete"	:false,
+							"disable_search_threshold"	:5,
+							"placeholder_text_single"	:"Select an option",
+							"placeholder_text_multiple"	:"Select some options",
+							"no_results_text"			:"No results match",
+						});
 				});
 				
 				consecutivo++;

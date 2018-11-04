@@ -47,6 +47,7 @@ use app\models\AcuerdosInstitucionalesEstudiantes;
 use app\models\SemillerosTicCiclos;
 use app\models\SemillerosTicAnio;
 use app\models\Parametro;
+use app\models\Paralelos;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
@@ -114,21 +115,6 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 	}
 	
 	function actionViewFases(){
-		
-		// $institucion 	= Yii::$app->request->post()['institucion'];
-		// $sede 			= Yii::$app->request->post()['sede'];
-		// $docente		= Yii::$app->request->post()['docente'];
-		// $asignatura		= Yii::$app->request->post()['asignatura'];
-		// $nivel			= Yii::$app->request->post()['nivel'];
-		
-		// $idPE = InstrumentoPoblacionDocentes::findOne([
-					// 'id_institucion' 				=> $institucion,
-					// 'id_sede' 		 				=> $sede,
-					// 'id_persona' 					=> $docente,
-					// 'id_asignaturas_niveles_sedes'	=> $asignatura,
-					// 'id_niveles' 					=> $nivel,
-					// 'estado' 						=> 1,
-				// ]);
 				
 		$fases	= Fases::find()
 					->where('estado=1')
@@ -171,7 +157,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
     }
 
 	public function actionCreate()
-    {
+    {	//echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
 		$ciclo = new SemillerosTicCiclos();
 		
 		$ciclo->load( Yii::$app->request->post() );
@@ -184,12 +170,23 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 		$id_institucion	= $_SESSION['instituciones'][0];
 		$id_sede 		= $_SESSION['sede'][0];
 		
-        $datosIEO = SemillerosDatosIeoEstudiantes::findOne([
-							'id_institucion' 		=> $id_institucion,
-							'id_sede' 		 		=> $id_sede,
-							'profecional_a' 		=> Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['profecional_a'],
-							'lower(docente_aliado)'	=> strtolower( Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['docente_aliado'] ),
-						]);
+		$datosIEO = false;
+		if( is_array( Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['profecional_a'] ) 
+			&& is_array( Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['docente_aliado'] ) )
+		{
+			$datosIEO = SemillerosDatosIeoEstudiantes::findOne([
+								'id_institucion' 		=> $id_institucion,
+								'id_sede' 		 		=> $id_sede,
+								'profecional_a' 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['profecional_a'] ),
+								'docente_aliado'		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['docente_aliado'] ),
+							]);
+							
+			if( $datosIEO )
+			{
+				$datosIEO->profecional_a 	= explode( ',', $datosIEO->profecional_a );
+				$datosIEO->docente_aliado 	= explode( ',', $datosIEO->docente_aliado );
+			}
+		}
 		
 		if( !$datosIEO )
 		{
@@ -226,7 +223,8 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 								->all();
 				
 				foreach( $acuerdos as $key => $acuerdo )
-				{ echo "...$acuerdo->id_fase...";
+				{
+					$acuerdo->curso = explode( ',', $acuerdo->curso );
 					$modelos[ $acuerdo->id_fase ][] = $acuerdo;
 				}
 			}
@@ -259,30 +257,39 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 			
 			$valido = true;
 			
-			$datosIEO->validate([
-					'personal_a' 		=> 'Personal A.',
-					'docente_aliado' 	=> 'Docente aliado',
-				]) && $valido;
+			$valido = $datosIEO->validate([
+								'profecional_a',
+								'docente_aliado',
+							]) && $valido;
 			
 			foreach( $modelos as $fase_id => $modelo )
 			{
+				$primera = true;
+				
 				foreach( $modelo as $k => $value )
 				{
-					$value->validate([
-						'curso' 				=> 'Curso',
-						'cantidad_inscritos' 	=> 'Cantidad Inscritos',
-						'frecuencia_sesiones' 	=> 'Frecuencia Sesiones',
-						'jornada'				=> 'Jornada',
-						'recursos_requeridos' 	=> 'Recursos Requeridos',
-						'observaciones' 		=> 'Observaciones',
-					]) && $valido;
+					if( !$primera )
+					{	
+						$valido = $value->validate([
+										'curso',
+										'cantidad_inscritos',
+										'frecuencia_sesiones',
+										'jornada',
+										'recursos_requeridos',
+										'observaciones',
+									]) && $valido;
+					}
+					//echo"asfadada:::$valido";
+					$primera = false;
 				}
 			}
 			
 			if( $valido )
 			{
-				$datosIEO->estado 	= 1;
-				$datosIEO->id_sede	= $id_sede;
+				$datosIEO->estado 			= 1;
+				$datosIEO->id_sede			= $id_sede;
+				$datosIEO->profecional_a	= implode( ',', $datosIEO->profecional_a );
+				$datosIEO->docente_aliado	= implode( ',', $datosIEO->docente_aliado );
 				$datosIEO->save( false );
 				
 				foreach( $modelos as $id_fase => $modelo )
@@ -296,7 +303,10 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 							$value->id_fase 				= $id_fase;
 							$value->id_ciclo 				= $ciclo->id;
 							$value->estado 					= 1;
+							$value->curso 					= implode( ',', $value->curso );
 							$value->save( false );
+							
+							$value->curso 					= explode( ',', $value->curso );
 						}
 						
 						$primera = false;
@@ -304,6 +314,9 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 				}
 				
 				$guardado = true;
+				
+				$datosIEO->profecional_a	= explode( ',', $datosIEO->profecional_a );
+				$datosIEO->docente_aliado	= explode( ',', $datosIEO->docente_aliado );
 			}
 		}
 
@@ -365,6 +378,23 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 			$profesionales[] = $value->profecional_a;
 			$docentes_aliados[ $value->profecional_a ] = $value->docente_aliado;
 		}
+		
+		$dataCursos = 	Paralelos::find()
+								->alias( 'p' )
+								->innerJoin( 'sedes_jornadas as sj', 'sj.id=p.id_sedes_jornadas' )
+								->innerJoin( 'sedes_niveles as sn', 'sn.id=p.id_sedes_niveles' )
+								->innerJoin( 'jornadas as j', 'j.id=sj.id_jornadas' )
+								->innerJoin( 'niveles as n', 'n.id=sn.id_niveles' )
+								->innerJoin( 'sedes as s', 's.id=sn.id_sedes' )
+								->where( 's.id='.$id_sede )
+								->andWhere( 'sj.id_sedes = s.id' )
+								->andWhere( 'j.estado=1' )
+								->andWhere( 'n.estado=1' )
+								->andWhere( 's.estado=1' )
+								->orderby( 'descripcion' )
+								->all();
+								
+		$cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
 					
         return $this->render('create', [
             'datosIEO' 			=> $datosIEO,
@@ -381,6 +411,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
             'docentes_aliados'	=> $docentes_aliados,
             'ciclo'				=> $ciclo,
             'guardado'			=> $guardado,
+            'cursos'			=> $cursos,
         ]);
     }
 

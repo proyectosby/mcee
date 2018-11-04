@@ -24,6 +24,8 @@ Descripción: Se agrega boton de volver a la vista de botones
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+use nex\chosen\Chosen;
+
 
 $this->registerJsFile(
     '@web/js/semillerosDatosIEOEstudiantes.js',
@@ -89,17 +91,28 @@ if( $guardado ){
 	
     <?= $form->field($datosIEO, 'id_sede')->dropDownList([ $sede->id => $sede->descripcion ], ['maxlength' => true]) ?>
 	
-	 <?= $form->field($datosIEO, 'profecional_a')->dropDownList( $docentes,[ 
-									'list' => 'list_persona_a',
-									'autocomplete' => 'off',
-									'prompt' => 'Seleccione...',
-								]) ?>
-
-    <?= $form->field($datosIEO, 'docente_aliado')->textInput([ 
-									'maxlength' => true, 
-									'list' => 'list_docente_aliado',
-									'autocomplete' => 'off',
-								]) ?>
+	<?= $form->field($datosIEO, 'profecional_a')->widget(
+			Chosen::className(), [
+				'items' => $docentes,
+				'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+				'multiple' => true,
+				'clientOptions' => [
+					'search_contains' => true,
+					'single_backstroke_delete' => false,
+				]
+		]); ?>
+		
+		
+	<?= $form->field($datosIEO, 'docente_aliado')->widget(
+			Chosen::className(), [
+				'items' => $docentes,
+				'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+				'multiple' => true,
+				'clientOptions' => [
+					'search_contains' => true,
+					'single_backstroke_delete' => false,
+				]
+		]); ?>
 								
 	<?= $form->field($datosIEO, 'id')->hiddenInput()->label( null,[ 'style' => 'display:none' ] ) ?>
 	
@@ -120,6 +133,7 @@ if( $guardado ){
 				'parametros' 	=> $parametros,
 				'modelos' 		=> $modelos,
 				'form' 			=> $form,
+				'cursos' 		=> $cursos,
 			]); 
 			
 			?>

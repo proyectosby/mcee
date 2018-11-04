@@ -43,8 +43,9 @@ class AcuerdosInstitucionalesEstudiantes extends \yii\db\ActiveRecord
         return [
             [['id_fase', 'curso', 'cantidad_inscritos', 'frecuencia_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_estudiantes', 'estado'], 'required'],
             [['id_fase', 'frecuencia_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_estudiantes', 'estado'], 'default', 'value' => null],
-            [['id_fase', 'frecuencia_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_estudiantes', 'estado'], 'integer'],
-            [['curso', 'cantidad_inscritos'], 'string', 'max' => 200],
+            [['id_fase', 'frecuencia_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_estudiantes', 'estado', 'cantidad_inscritos'], 'integer'],
+            // [['curso'], 'string', 'max' => 200],
+            ['curso', 'each', 'rule' => ['integer']],
             [['observaciones'], 'string', 'max' => 1000],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['frecuencia_sesiones'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['frecuencia_sesiones' => 'id']],
