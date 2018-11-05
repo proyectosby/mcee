@@ -160,9 +160,9 @@ $this->registerJsFile(
 				<?= $form->field($condiciones, "sesiones_por_docente")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
-			<div class='col-sm-1'>
+			<div class='col-sm-1 total-sesiones'>
 				<?php Html::activeTextarea($condiciones, "total_sesiones_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
-				<?= $form->field($condiciones, "total_sesiones_ieo")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "total_sesiones_ieo")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea', ])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
@@ -180,7 +180,27 @@ $this->registerJsFile(
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
     
-	<?php ActiveForm::end(); ?>
+	<?php ActiveForm::end(); 
+		$this->registerJs(
+			'$(document).ready(function(){
+				$(".total-sesiones").click(function(){
+					var total = 0;
+					var list = $(".sesiones > textarea");
+					for (var i=0;i<list.length;i++) {
+						total += parseInt(list[i].value);
+					}
+
+					$("#condicionesinstitucionales-total_sesiones_ieo").text(total);		
+				});
+				
+			});
+			
+			'
+		);
+	
+	?>
+
+	
 
 
 </div>

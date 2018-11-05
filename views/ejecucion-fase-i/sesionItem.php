@@ -174,7 +174,7 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1 sesiones'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number',]) ?>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number', 'onclick' => 'guardar()']) ?>
 				</div>
 				
 				<div class='col-sm-1'>
