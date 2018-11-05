@@ -57,6 +57,7 @@ foreach( $sesiones as $keySesion => $sesion ){
 														'condiciones'	=> $condiciones,
 														'form'			=> $form,
 														'datosModelos'	=> $datosModelos,
+														'docentes' 		=> $docentes,
 													] 
 										),
 					'contentOptions'=> []

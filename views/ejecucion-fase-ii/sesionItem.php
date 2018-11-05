@@ -153,7 +153,8 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$indexEf][$index]docentes")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]docentes")->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('') ?>
+					
 				</div>
 				
 				<div class='col-sm-1'>
@@ -165,7 +166,7 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_apps_desarrolladas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_apps_desarrolladas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
@@ -177,7 +178,7 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
@@ -189,11 +190,11 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_pruebas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_pruebas")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_disecciones")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null, ['style' => 'display:none' ] ) ?>
+					<?= $form->field($ejecucionFase, "[$indexEf][$index]numero_disecciones")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null, ['style' => 'display:none' ] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>

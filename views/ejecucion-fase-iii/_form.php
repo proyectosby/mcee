@@ -21,6 +21,9 @@ if( !$sede ){
 	$this->registerJs( "$( cambiarSede ).click()" );
 	return;
 }
+$this->registerCssFile(Yii::$app->request->baseUrl.'/css/bootstrap-multiselect.css');
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/bootstrap-multiselect.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/multiples.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 $this->registerJsFile(
     '@web/js/ejecucionFaseIII.js',

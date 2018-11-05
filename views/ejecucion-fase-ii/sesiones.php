@@ -43,6 +43,7 @@ foreach( $sesiones as $keySesion => $sesion ){
 														'dataSesion'		=> $dataSesion,
 														'ejecucionesFase'	=> $ejecucionesFase,
 														'accioneRecurso'	=> $accioneRecurso,
+														'docentes' 		=> $docentes,
 													] 
 										),
 					'contentOptions'=> []

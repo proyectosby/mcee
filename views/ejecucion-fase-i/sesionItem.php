@@ -15,8 +15,10 @@ Descripción: Se premite insertar y modificar registros del formulario Ejecucion
 // $model = new EjecucionFase();
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
 use dosamigos\datepicker\DatePicker;
+
+
+
 
 // foreach( $models as $key => $ejecucionFase ){
 	// echo "<pre>"; var_dump($ejecucionFase); echo "</pre>";
@@ -89,7 +91,7 @@ use dosamigos\datepicker\DatePicker;
 	
 	
 	<div class="form-group">
-		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$sesion->id ]) ?>
+		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success agregar', 'id' => 'btnAddFila'.$sesion->id ]) ?>
 		<?= Html::button('Eliminar fila', ['class' => 'btn btn-success', 'id' => 'btnRemoveFila'.$sesion->id, "style" => "display:none" ]) ?>
 	</div>
 	
@@ -105,7 +107,7 @@ use dosamigos\datepicker\DatePicker;
 		
 		<div class='row text-center title'>
 			
-			<div class='col-sm-1'>
+			<div class='col-sm-2'>
 				<span total class='form-control' style='background-color:#ccc;'>Nombre del docente</span>
 			</div>
 			
@@ -145,7 +147,7 @@ use dosamigos\datepicker\DatePicker;
 				<span total class='form-control' style='background-color:#ccc;'>Tipo de competencias inferencias y comprometidas en el proceso de creación de la App 0.0</span>
 			</div>
 			
-			<div class='col-sm-2'>
+			<div class='col-sm-1'>
 				<span total class='form-control' style='background-color:#ccc;'>Observaciones</span>
 			</div>
 			
@@ -154,25 +156,25 @@ use dosamigos\datepicker\DatePicker;
 		<?php foreach( $models as $key => $ejecucionFase ) :  ?>
 		
 			<div class='row text-center' id='dvFilaSesion<?= $sesion->id ?>'>
-				
+								
 				<div class='col-sm-1' style='display:none'>
 					<?= Html::activeHiddenInput($ejecucionFase, "[$indexEf][$index]id") ?>
 				</div>
 				
-				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]docente", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+				<div class='col-sm-2'>
+					<?= Html::activeDropDownList($ejecucionFase, "[$indexEf][$index]docente", $docentes, [ 'multiple' => 'multiple', 'class' => 'form-control multiple', 'data-type' => 'select']) ?>
 				</div>
 				
 				<div class='col-sm-1'>
 					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]asignaturas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				</div>
 				
-				<div class='col-sm-1'>
+				<div class='col-sm-1 prueba'>
 					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]especiaidad", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				</div>
 				
-				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number']) ?>
+				<div class='col-sm-1 sesiones'>
+					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number',]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
@@ -199,13 +201,20 @@ use dosamigos\datepicker\DatePicker;
 					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]tipo_conpetencias", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				</div>
 				
-				<div class='col-sm-2'>
+				<div class='col-sm-1'>
 					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]observaciones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				</div>
 				
 			</div>
+
+			
 		
-		<?php $index++; 
+		<?php 
+		
+
+
+
+		$index++; 
 		endforeach; ?>
 	
 	</div>
@@ -213,6 +222,10 @@ use dosamigos\datepicker\DatePicker;
 	
 
 
-	<?php // ActiveForm::end(); ?>
+	<?php 
+	
+	// ActiveForm::end(); ?>
 
 </div>
+
+

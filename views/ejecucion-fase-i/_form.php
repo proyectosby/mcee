@@ -18,14 +18,21 @@ Descripción: Se agrega boton de volver a la vista de botones
 
 
 use yii\helpers\Html;
+use nex\chosen\Chosen;
 use yii\widgets\ActiveForm;
-
 use dosamigos\editable\Editable;
+
+
+$this->registerCssFile(Yii::$app->request->baseUrl.'/css/bootstrap-multiselect.css');
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/bootstrap-multiselect.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/multiples.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 if( !$sede ){
 	$this->registerJs( "$( cambiarSede ).click()" );
 	return;
 }
+
+
 
 if( $guardado ){
 	
@@ -75,7 +82,7 @@ $this->registerJsFile(
 
     <?= $form->field($sede, 'id')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 
-    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; this.form.submit();' ] )->label('Profesional A.') ?>
+    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('Profesional A.') ?>
     
 	<?= $form->field($datosIeoProfesional, 'estado')->hiddenInput( [ 'value' => 1 ] )->label( null , [ 'style' => 'display:none' ] ); ?>
 	
@@ -90,6 +97,7 @@ $this->registerJsFile(
 										'form'			=> $form,
 										'condiciones'	=> $condiciones,
 										'datosModelos'	=> $datosModelos,
+										'docentes' 		=> $docentes,
 									]) ?>
 
 									

@@ -50,7 +50,8 @@ use dosamigos\datepicker\DatePicker;
 	
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS PROFESIONALES' ) ?></h3>
 
-    <?= $form->field($profesional, "[$index]id_profesional_a")->dropDownList( $docentes, [ 'prompt' => 'Seleccione...' ] )->label('Profesional A.') ?>
+	<?= $form->field($profesional, "[$index]id_profesional_a")->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('Profesional A.') ?>
+    
 	
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode($fase->descripcion) ?></h3>
 	
@@ -96,7 +97,8 @@ use dosamigos\datepicker\DatePicker;
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= $form->field( $model, "[$index]docente_creador" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+				
+				<?= $form->field($model, "[$index]docente_creador" )->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('') ?>
 			</div>
 			
 			<div class='col-sm-2'>
@@ -112,11 +114,11 @@ use dosamigos\datepicker\DatePicker;
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= $form->field( $model, "[$index]numero_estudiantes" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+				<?= $form->field( $model, "[$index]numero_estudiantes" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-1'>
-				<?= $form->field( $model, "[$index]numero_apps_usadas" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+				<?= $form->field( $model, "[$index]numero_apps_usadas" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
@@ -248,7 +250,7 @@ use dosamigos\datepicker\DatePicker;
 		<div class='row text-center'>
 			
 			<div class='col-sm-2'>
-				<?= $form->field( $model, "[$index]numero" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+				<?= $form->field( $model, "[$index]numero" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>

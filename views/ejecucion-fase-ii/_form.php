@@ -22,6 +22,10 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+$this->registerCssFile(Yii::$app->request->baseUrl.'/css/bootstrap-multiselect.css');
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/bootstrap-multiselect.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/multiples.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
 if( !$sede ){
 	$this->registerJs( "$( cambiarSede ).click()" );
 	return;
@@ -96,7 +100,7 @@ if( $guardado ){
 
     <?= $form->field($sede, 'id')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 
-    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; this.form.submit();' ] )->label('Profesional A.') ?>
+	<?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('Profesional A.') ?>
     
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
 	
@@ -107,6 +111,7 @@ if( $guardado ){
 										'sesiones' 		=> $sesiones,
 										'datosModelos' 	=> $datosModelos,
 										'form' 			=> $form,
+										'docentes' 		=> $docentes,
 									]) ?>
 	
 	<div class='container-fluid' style='margin:10px 0;'>
@@ -163,7 +168,7 @@ if( $guardado ){
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= $form->field($condiciones, "sesiones_por_docente")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "sesiones_por_docente")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1'>
