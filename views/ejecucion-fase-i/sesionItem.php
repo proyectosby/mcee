@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-06
+Descripción: Se modifica los campos para que se vea las validaciones correctas de acuerdo a los colores
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-16
 Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
 ---------------------------------------
@@ -17,33 +21,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 
-
-
-
-// foreach( $models as $key => $ejecucionFase ){
-	// echo "<pre>"; var_dump($ejecucionFase); echo "</pre>";
-// }
-// exit();
-/* @var $this yii\web\View */
-/* @var $model app\models\EjecucionFase */
-/* @var $form yii\widgets\ActiveForm */
-
-// $form1 = ActiveForm::begin(
-	// [
-		// 'layout' => 'horizontal',
-		// 'fieldConfig' => [
-			// 'template' => "{beginWrapper}\n{input}\n{endWrapper}",
-			// 'horizontalCssClasses' => [
-				// 'label' 	=> 'col-sm-0',
-				// 'offset' 	=> 'col-sm-offset-2',
-				// 'wrapper' 	=> 'col-sm-1',
-				// 'error' 	=> '',
-				// 'hint' 		=> '',
-				// 'input' 	=> 'col-sm-1',
-			// ],
-		// ],
-	// ]
-	// );
+use nex\chosen\Chosen;
 ?>
 
 <style>
@@ -67,8 +45,7 @@ use dosamigos\datepicker\DatePicker;
 
 <div class="ejecucion-fase-form">
 
-    <?php // $form = ActiveForm::begin(); ?>
-	
+
 	<!-- Creo campo oculta para saber el id de la sesion -->
 	<?= Html::activeHiddenInput($datosSesion, "[$indexEf]id_sesion", [ 'value' => $sesion->id ]) ?>
 	
@@ -78,16 +55,16 @@ use dosamigos\datepicker\DatePicker;
 	<?= Html::activeHiddenInput($datosSesion, "[$indexEf]estado", [ 'value' => 1 ]) ?>
 	
 	<?= $form->field($datosSesion, '['.$indexEf.']fecha_sesion')->widget(
-		DatePicker::className(), [
-			
-			 // modify template for custom rendering
-			'template' => '{addon}{input}',
-			'language' => 'es',
-			'clientOptions' => [
-				'autoclose' => true,
-				'format' => 'dd-mm-yyyy'
-			]
-	])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
+			DatePicker::className(), [
+				
+				 // modify template for custom rendering
+				'template' => '{addon}{input}',
+				'language' => 'es',
+				'clientOptions' => [
+					'autoclose' => true,
+					'format' => 'dd-mm-yyyy'
+				]
+		])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
 	
 	
 	<div class="form-group">
@@ -162,47 +139,77 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-2'>
-					<?= Html::activeDropDownList($ejecucionFase, "[$indexEf][$index]docente", $docentes, [ 'multiple' => 'multiple', 'class' => 'form-control multiple', 'data-type' => 'select']) ?>
+				
+					<?= $form->field( $ejecucionFase, "[".$indexEf."][".$index."]docente" )->widget(
+								Chosen::className(), [
+									'items' => $docentes,
+									'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+									'multiple' => true,
+									'clientOptions' => [
+										'search_contains' => true,
+										'single_backstroke_delete' => false,
+									]
+							])->label(null,['style'=>'display:none']) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]asignaturas", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]asignaturas" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1 prueba'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]especiaidad", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]especiaidad" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1 sesiones'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]paricipacion_sesiones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number', 'onclick' => 'guardar()']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]paricipacion_sesiones" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]numero_apps", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]numero_apps" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_creadas",[ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]nombre_aplicaciones_creadas" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]seiones_empleadas", [ 'class' => 'form-control', 'data-type' => 'number' ]) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]seiones_empleadas" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]acciones_realiadas", [ 'class' => 'form-control', 'data-type' => 'textarea' ]) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]acciones_realiadas" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]temas_problama", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]temas_problama" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]tipo_conpetencias", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]tipo_conpetencias" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= Html::activeTextarea($ejecucionFase, "[$indexEf][$index]observaciones", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+					<?= $form->field( $ejecucionFase, "[$indexEf][$index]observaciones" )
+							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'] )
+							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
 			</div>
@@ -210,21 +217,13 @@ use dosamigos\datepicker\DatePicker;
 			
 		
 		<?php 
-		
-
-
-
 		$index++; 
 		endforeach; ?>
 	
 	</div>
-	
-	
 
 
-	<?php 
-	
-	// ActiveForm::end(); ?>
+
 
 </div>
 

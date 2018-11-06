@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-06
+Descripción: Se usa en los select el plugin chosen y se modifica la función que calcula el total de sesiones
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-16
 Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
 ---------------------------------------
@@ -23,9 +27,9 @@ use yii\widgets\ActiveForm;
 use dosamigos\editable\Editable;
 
 
-$this->registerCssFile(Yii::$app->request->baseUrl.'/css/bootstrap-multiselect.css');
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/bootstrap-multiselect.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/multiples.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+// $this->registerCssFile(Yii::$app->request->baseUrl.'/css/bootstrap-multiselect.css');
+// $this->registerJsFile(Yii::$app->request->baseUrl.'/js/bootstrap-multiselect.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+// $this->registerJsFile(Yii::$app->request->baseUrl.'/js/multiples.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 if( !$sede ){
 	$this->registerJs( "$( cambiarSede ).click()" );
@@ -82,7 +86,7 @@ $this->registerJsFile(
 
     <?= $form->field($sede, 'id')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 
-    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('Profesional A.') ?>
+    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value = 0; this.form.submit();'] )->label('Profesional A.') ?>
     
 	<?= $form->field($datosIeoProfesional, 'estado')->hiddenInput( [ 'value' => 1 ] )->label( null , [ 'style' => 'display:none' ] ); ?>
 	
@@ -105,8 +109,12 @@ $this->registerJsFile(
 	
 		<div class='row text-center'>
 			
-			<div class='col-sm-12'>
+			<div class='col-sm-8'>
 				<span total class='form-control' style='background-color:#ccc;'>CONDICIONES INSTITUCIONALES</span>
+			</div>
+			
+			<div class='col-sm-4'>
+				<span total class='form-control' style='background-color:#ccc;'></span>
 			</div>
 		
 		</div>
@@ -151,22 +159,19 @@ $this->registerJsFile(
 			</div>
 			
 			<div class='col-sm-2'>
-				<?php Html::activeTextarea($condiciones, "otro", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				<?= $form->field($condiciones, "otro")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-2'>
-				<?php Html::activeTextarea($condiciones, "sesiones_por_docente", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
+
 				<?= $form->field($condiciones, "sesiones_por_docente")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1 total-sesiones'>
-				<?php Html::activeTextarea($condiciones, "total_sesiones_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				<?= $form->field($condiciones, "total_sesiones_ieo")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea', ])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1 total-docentes'>
-				<?php Html::activeTextarea($condiciones, "total_docentes_ieo", [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea']) ?>
 				<?= $form->field($condiciones, "total_docentes_ieo")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 
@@ -185,7 +190,7 @@ $this->registerJsFile(
 			'$(document).ready(function(){
 				$(".total-sesiones").click(function(){
 					var total = 0;
-					var list = $(".sesiones > textarea");
+					var list = $(".sesiones textarea");
 					for (var i=0;i<list.length;i++) {
 						if(!isNaN(parseInt(list[i].value))){
 							total += parseInt(list[i].value);
@@ -196,7 +201,7 @@ $this->registerJsFile(
 				});
 
 				$(".total-docentes").click(function(){
-					$("#condicionesinstitucionales-total_docentes_ieo").text($("input:checkbox:checked").length - 4);
+					$("#condicionesinstitucionales-total_docentes_ieo").text($( "select[id$=docente] option:selected" ).length);
 				});
 				
 			});

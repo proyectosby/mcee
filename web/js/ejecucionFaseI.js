@@ -160,15 +160,74 @@ $( document ).ready(function(){
 			$( "#dvSesion"+id ).append( filaNueva );
 			
 			//Cambiando los id de los textarea con el consecutivo correspondiente
-			$( "textarea,input:hidden", filaNueva ).each(function(x){
-				$( this ).prop({
-					id	: this.id.substr( 0, this.id.indexOf( '-', "ejecucionfase-".length )+1 )+consecutivo+this.id.substr( this.id.lastIndexOf( "-" ) ),
-					name: this.name.substr( 0, this.name.indexOf( '[', "ejecucionfase-".length )+1 )+consecutivo+this.name.substr( this.name.lastIndexOf( "[" )-1 ),
-				})
+			$( "select,textarea,input:hidden", filaNueva ).each(function(x){
+				
+				var _campo = this;
+				
+				// $( this ).prop({
+					// id	: this.id.substr( 0, this.id.indexOf( '-', "ejecucionfase-".length )+1 )+consecutivo+this.id.substr( this.id.lastIndexOf( "-" ) ),
+					// name: this.name.substr( 0, this.name.indexOf( '[', "ejecucionfase-".length )+1 )+consecutivo+this.name.substr( this.name.lastIndexOf( "[" )-1 ),
+				// });
+				
+				$( _campo ).prop({
+						id		: _campo.id.replace( /-[0-9]+-[0-9]+-/gi, "-"+id+"-"+consecutivo+"-" ),
+						name	: _campo.name.replace( /\[[0-9]+\]\[[0-9]+\]/gi, "["+id+"]["+consecutivo+"]" ),
+					});
+				
+				$( _campo ).parent()
+						.removeClass( "field-"+this.id.replace( /-[0-9]+-[0-9]+-/gi, "-"+consecutivo+"-0-" ) )
+						.addClass( "field-"+this.id );
+				
+				//Si el campo es diferente a id se valida qué este lleno, caso contrario no se obliga
+				if( _campo.id.substr( -2 ) != 'id' )
+				{
+					$( "#w0" ).yiiActiveForm( 'add', 
+							{
+								"id"		: _campo.id,
+								"name"		: _campo.name,
+								"container"	: ".field-"+_campo.id,
+								"input"		: "#"+_campo.id,
+								"validate"	: function (attribute, value, messages, deferred, $form) {
+												
+												if( $( this.input ).data( "type" ) == "number" ){
+													yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Debe ser un número entero.","skipOnEmpty":1});	
+												}
+												
+												yii.validation.required(value, messages, {"message":"No puede estar vacío"});
+											}
+							},
+						);
+				}
+				else
+				{
+					$( "#w0" ).yiiActiveForm( 'add', 
+							{
+								"id"		: _campo.id,
+								"name"		: _campo.name,
+								"container"	: ".field-"+_campo.id,
+								"input"		: "#"+_campo.id,
+								"validate"	: function (attribute, value, messages, deferred, $form) {
+												return true;
+											}
+							},
+						);
+				}
 			})
 			
+			$( "select", filaNueva ).each(function(x){
+				
+				$( this ).chosen({
+							"search_contains"			:true,
+							"single_backstroke_delete"	:false,
+							"disable_search_threshold"	:5,
+							"placeholder_text_single"	:"Select an option",
+							"placeholder_text_multiple"	:"Select some options",
+							"no_results_text"			:"No results match",
+						});
+			});
+			
 			filaNueva.css({ display: '' });
-			$( "textarea", filaNueva ).each(function(x){
+			$( "select,textarea", filaNueva ).each(function(x){
 		
 				$( this )
 					.attr({

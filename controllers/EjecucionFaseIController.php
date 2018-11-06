@@ -7,6 +7,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseController
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-06
+Descripción: Se usa en los select el plugin chosen y se modifica la función que calcula el total de sesiones
+---------------------------------------
 Fecha: 2018-10-16
 Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
 ---------------------------------------
@@ -140,6 +143,7 @@ class EjecucionFaseIController extends Controller
 
 	public function actionCreateAll()
 	{
+		// echo "<pre>"; var_dump( Yii::$app->request->post() ); echo "</pre>"; exit();
 		$ciclo = new SemillerosTicCiclos();
 		
 		$ciclo->load( Yii::$app->request->post() );
@@ -181,8 +185,9 @@ class EjecucionFaseIController extends Controller
 			$datosIeoProfesional = false;
 			if( $id_institucion && $postDatosProfesional['id_profesional_a'] )
 			{
-				$datosIeoProfesional 		= DatosIeoProfesional::findOne([
+				$datosIeoProfesional 	= DatosIeoProfesional::findOne([
 												'id_institucion'	=> $id_institucion,
+												'id_sede'			=> $id_sede,
 												'id_profesional_a'	=> $postDatosProfesional['id_profesional_a'],
 											  ]);
 			}
@@ -200,7 +205,7 @@ class EjecucionFaseIController extends Controller
 			//Si se cargo los modelos del profesional proceso a cargar los modelos guardados o crearlos
 			if( $datosIeoProfesional )
 			{
-				if( $datosIeoProfesional->id )
+				if( !$guardar && $datosIeoProfesional->id )
 				{
 					//Buscando los datos de Sesion de ejecucion de fase para el profesional
 					$ejecucionesFases = EjecucionFase::find()
@@ -271,6 +276,7 @@ class EjecucionFaseIController extends Controller
 									if( $ejecFase )
 									{
 										$ejecFase->estado = 1;
+										$ejecFase->docente = explode( ",", $ejecFase->docente );
 										// $ejecFase->id_fase = $this->id_fase;
 										$ejecucionFase[] = $ejecFase;
 									}
@@ -398,113 +404,120 @@ class EjecucionFaseIController extends Controller
 							}
 						}
 					}
-				}
-				/************************************************************************************/
 				
-				/********************************************************************
-				 * Cargando datos de ejecucion de fase
-				 ********************************************************************/
-				if( $guardar )
-					$condicionesInstitucionales->load( Yii::$app->request->post() );
-				/********************************************************************/
-				
-				/***************************************************************
-				 * Validando todos los modelos a guardar
-				 **************************************************************/
-				
-				//Validando todos los campos necesarios para guardar del modelo datos Profesional IEO
-				$valido = $datosIeoProfesional->validate([
-						'id_institucion',
-						'id_profesional_a',
-						'estado',
-					]);
-
-				//Validando todos los campos necesarios para datos sesiones
-				$valido = DatosSesiones::validateMultiple( $datosSesiones, [
-								'id_sesion',
-								'fecha_sesion',
-								'estado',
-							] ) && $valido;
-
-				//Validando todos los campos necesarios para datos sesiones
-				$valido = EjecucionFase::validateMultiple( $ejecucionFase, [
-								'id_fase',
-								'docente',
-								'asignaturas',
-								'especiaidad',
-								'paricipacion_sesiones',
-								'numero_apps',
-								'seiones_empleadas',
-								'acciones_realiadas',
-								'temas_problama',
-								'tipo_conpetencias',
-								'observaciones',
-								'estado',
-								'numero_sesiones_docente',
-								'nombre_aplicaciones_creadas',
-							] ) && $valido;
-
-				$valido = $condicionesInstitucionales->validate( [
-								'parte_ieo',
-								'parte_univalle',
-								'parte_sem',
-								'otro',
-								'total_sesiones_ieo',
-								'total_docentes_ieo',
-								'sesiones_por_docente',
-							] ) && $valido;
-				/**************************************************************/
-				
-				//Si todo está correcto se proceda guardar los datos, sin validar ya que fue todo validado con anterioridad
-				if( $guardar && $valido )
-				{
-					//Se guarda primero los datos de Datos Ieo Profesional
-					$datosIeoProfesional->save(false);
+					/********************************************************************
+					 * Cargando datos de ejecucion de fase
+					 ********************************************************************/
+					if( $guardar )
+						$condicionesInstitucionales->load( Yii::$app->request->post() );
+					/********************************************************************/
 					
-					foreach( $datosModelos as $key => $value ){
+					/***************************************************************
+					 * Validando todos los modelos a guardar
+					 **************************************************************/
+					
+					//Validando todos los campos necesarios para guardar del modelo datos Profesional IEO
+					$valido = $datosIeoProfesional->validate([
+							'id_profesional_a',
+						]);
+					
+					//Validando todos los campos necesarios para datos sesiones
+					$valido = DatosSesiones::validateMultiple( $datosSesiones, [
+									'id_sesion',
+									'fecha_sesion',
+									'estado',
+								] ) && $valido;
+
+					//Validando todos los campos necesarios para datos sesiones
+					$valido = EjecucionFase::validateMultiple( $ejecucionFase, [
+									'id_fase',
+									'docente',
+									'asignaturas',
+									'especiaidad',
+									'paricipacion_sesiones',
+									'numero_apps',
+									'seiones_empleadas',
+									'acciones_realiadas',
+									'temas_problama',
+									'tipo_conpetencias',
+									'observaciones',
+									'estado',
+									'numero_sesiones_docente',
+									'nombre_aplicaciones_creadas',
+								] ) && $valido;
+
+					$valido = $condicionesInstitucionales->validate( [
+									'parte_ieo',
+									'parte_univalle',
+									'parte_sem',
+									'otro',
+									'total_sesiones_ieo',
+									'total_docentes_ieo',
+									'sesiones_por_docente',
+								] ) && $valido;
+					/**************************************************************/
+				
+					//Si todo está correcto se proceda guardar los datos, sin validar ya que fue todo validado con anterioridad
+					if( $guardar && $valido )
+					{
+						//Se guarda primero los datos de Datos Ieo Profesional
+						$datosIeoProfesional->estado 		= 1;
+						$datosIeoProfesional->id_institucion= $id_institucion;
+						$datosIeoProfesional->id_sede 		= $id_sede;
+						$datosIeoProfesional->save(false);
 						
-						$datoSesion = $value['dataSesion'];
-						
-						//guardando los datos de Datos Sesiones
-						$datoSesion->save(false);
-						
-						//guardando los datos de Datos Sesiones
-						$primera = true;	//la primera posicion siempre es una ejecucion de fase vacia, no se ejecuta
-						foreach( $value['ejecucionesFase'] as $key => $ejecFase )
-						{
-							if( !$primera ){
+						foreach( $datosModelos as $key => $value )
+						{	
+							$datoSesion = $value['dataSesion'];
+							
+							if( !empty( $datoSesion->fecha_sesion ) )
+							{
+								//guardando los datos de Datos Sesiones
+								$datoSesion->save(false);
 								
-								//Si la fase no tiene id_dato sesion se asigna
-								if( !$ejecFase->id_datos_sesiones )
+								//guardando los datos de Datos Sesiones
+								$primera = true;	//la primera posicion siempre es una ejecucion de fase vacia, no se ejecuta
+								foreach( $value['ejecucionesFase'] as $key => $ejecFase )
 								{
-									$ejecFase->id_datos_sesiones = $datoSesion->id;
+									if( !$primera ){
+										
+										//Si la fase no tiene id_dato sesion se asigna
+										if( !$ejecFase->id_datos_sesiones )
+										{
+											$ejecFase->id_datos_sesiones = $datoSesion->id;
+										}
+										
+										//Si no tiene id_datos_ieo_profesional se asigna
+										if( !$ejecFase->id_datos_ieo_profesional )
+										{
+											$ejecFase->id_datos_ieo_profesional = $datosIeoProfesional->id;
+										}
+										
+										$ejecFase->docente = implode( ",", $ejecFase->docente );
+										
+										$ejecFase->id_ciclo = $ciclo->id;
+										$ejecFase->save(false);
+										
+										$ejecFase->docente = explode( ",", $ejecFase->docente );
+									}
+									$primera = false;
 								}
-								
-								//Si no tiene id_datos_ieo_profesional se asigna
-								if( !$ejecFase->id_datos_ieo_profesional )
-								{
-									$ejecFase->id_datos_ieo_profesional = $datosIeoProfesional->id;
-								}
-								
-								$ejecFase->id_ciclo = $ciclo->id;
-								$ejecFase->save(false);
 							}
-							$primera = false;
 						}
+						
+						$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
+						$condicionesInstitucionales->id_fase = $this->id_fase;
+						$condicionesInstitucionales->id_ciclo = $ciclo->id;
+						$condicionesInstitucionales->estado = 1;
+						
+						$condicionesInstitucionales->save(false);
+						
+						$guardado = true;
 					}
-					
-					$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
-					$condicionesInstitucionales->id_fase = $this->id_fase;
-					$condicionesInstitucionales->id_ciclo = $ciclo->id;
-					$condicionesInstitucionales->estado = 1;
-					
-					$condicionesInstitucionales->save(false);
-					
-					$guardado = true;
-				}
-				else
-				{
-					// echo "Hubo un error...";
+					else
+					{
+						// echo "Hubo un error...";
+					}
 				}
 			}
 		}

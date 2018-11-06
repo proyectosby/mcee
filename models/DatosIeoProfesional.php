@@ -30,10 +30,11 @@ class DatosIeoProfesional extends \yii\db\ActiveRecord
         return [
             [['id_institucion', 'id_profesional_a', 'estado'], 'required'],
             [['id_institucion', 'id_profesional_a', 'estado'], 'default', 'value' => null],
-            [['id_institucion', 'id_profesional_a', 'estado'], 'integer'],
+            [['id_institucion', 'estado','id_sede'], 'integer'],
+			[['id_profesional_a'], 'string', 'max' => 200],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
-            [['id_profesional_a'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['id_profesional_a' => 'id']],
+            [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
         ];
     }
 
@@ -47,6 +48,7 @@ class DatosIeoProfesional extends \yii\db\ActiveRecord
             'id_institucion' => 'Institución',
             'id_profesional_a' => 'Profesional A',
             'estado' => 'Estado',
+            'id_sede' => 'Sede',
         ];
     }
 }
