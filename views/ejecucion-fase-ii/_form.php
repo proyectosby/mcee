@@ -171,11 +171,11 @@ if( $guardado ){
 				<?= $form->field($condiciones, "sesiones_por_docente")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
-			<div class='col-sm-1'>
+			<div class='col-sm-1 total-sesiones'>
 				<?= $form->field($condiciones, "total_sesiones_ieo")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
-			<div class='col-sm-1'>
+			<div class='col-sm-1 total-docentes'>
 				<?= $form->field($condiciones, "total_docentes_ieo")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 
@@ -187,6 +187,29 @@ if( $guardado ){
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+	<?php ActiveForm::end(); 
+		$this->registerJs(
+			'$(document).ready(function(){
+				$(".total-sesiones").click(function(){
+					var total = 0;
+					var list = $(".sesiones > textarea");
+					for (var i=0;i<list.length;i++) {
+						if(!isNaN(parseInt(list[i].value))){
+							total += parseInt(list[i].value);
+						}	
+					}
+
+					$("#condicionesinstitucionales-total_sesiones_ieo").text(total);		
+				});
+
+				$(".total-docentes").click(function(){
+					$("#condicionesinstitucionales-total_docentes_ieo").text($("input:checkbox:checked").length - 4);
+				});
+				
+			});
+			
+			'
+		);
+	?>
 
 </div>

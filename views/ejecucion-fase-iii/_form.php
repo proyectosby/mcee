@@ -151,7 +151,7 @@ $this->registerJs(
 				<?= $form->field( $condiciones, "parte_univalle" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
-			<div class='col-sm-3'>
+			<div class='col-sm-3 '>
 				<?= $form->field( $condiciones, "parte_sem" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
@@ -167,6 +167,8 @@ $this->registerJs(
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+	<?php ActiveForm::end(); 
+		
+	?>
 
 </div>
