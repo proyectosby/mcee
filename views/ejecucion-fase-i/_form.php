@@ -86,8 +86,20 @@ $this->registerJsFile(
 
     <?= $form->field($sede, 'id')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 
-    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value = 0; this.form.submit();'] )->label('Profesional A.') ?>
+    <!-- <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value = 0; this.form.submit();'] )->label('Profesional A.') ?> -->
     
+	<?= $form->field($datosIeoProfesional, 'id_profesional_a')->widget(
+		Chosen::className(), [
+			'items' => $docentes,
+			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+			'multiple' => true,
+			'clientOptions' => [
+				'search_contains' => true,
+				'single_backstroke_delete' => false,
+			]
+	]); ?>
+
+
 	<?= $form->field($datosIeoProfesional, 'estado')->hiddenInput( [ 'value' => 1 ] )->label( null , [ 'style' => 'display:none' ] ); ?>
 	
 	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>

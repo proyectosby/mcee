@@ -341,6 +341,8 @@ class SemillerosDatosIeoController extends Controller
 			$profesionales[] = $value->personal_a;
 			$docentes_aliados[ $value->personal_a ] = $value->docente_aliado;
 		}
+
+		
 					
         return $this->render('create', [
             'datosIEO' 			=> $datosIEO,
