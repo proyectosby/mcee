@@ -263,15 +263,73 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		*/
 		//variable con la conexion a la base de datos 
 		
-		// $connection = Yii::$app->getDb();
-		// $perfilesSelected =array();
-		// $command = $connection->createCommand("select ef.id_fase, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas
-		// from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef
-		// where a.id = 2
-		// and c.id = 4
-		// and f.id = 1
-		// and ef.id_fase = f.id;");
-		// $result = $command->queryAll();
+		$connection = Yii::$app->getDb();
+		// $datosEjecucionFase1 =array();
+		$command = $connection->createCommand("select ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
+		 from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
+		 semilleros_tic.condiciones_institucionales as ci, semilleros_tic.datos_sesiones as ds
+		 where a.id = 2
+		 and c.id = 4
+		 and f.id = 1
+		 and ef.id_fase = f.id
+		 and dip.id = ef.id_datos_ieo_profesional
+		 and dip.id_institucion = 55
+		 group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
+		
+		 ");
+		$result = $command->queryAll();
+		
+		//se llena el resultado de a consulta en un array
+		foreach($result as $key){
+			$datosEjecucionFase1[]=$key;
+		}
+		
+		//se asignan indices numericos a los resultados
+		foreach($datosEjecucionFase1 as $d => $valor) //se saca el indice
+		{
+			foreach($valor as $v) //se recorre el array valor y se le cambian los indices
+			{
+				
+				$datosEF[$d][]=$v;
+			}
+		}
+		
+		
+		//para la fecuencia de las sesiones se trae de la conformacion de semilleros
+		
+		// print_r($datosEF);
+		
+		 
+		 //para traer la duracion de cada sesion
+		 
+		$command = $connection->createCommand("select s.descripcion, ds.fecha_sesion
+		 from semilleros_tic.sesiones as s, semilleros_tic.datos_sesiones as ds, semilleros_tic.ejecucion_fase as ef
+		 where ef.id_fase = 1
+		 and ef.estado = 1
+		 and ds.id = ef.id_datos_sesiones
+		 and s.id = ds.id_sesion
+		 and ds.estado = 1
+		 and s.estado = 1
+		 group by s.id, ds.fecha_sesion, ds.id
+		 order by ds.id");
+		$result = $command->queryAll();
+		foreach($result as $key){
+			$otrosDatosEjecucionFase1[]=$key;
+		}
+		
+		//se asignan indices numericos a los resultados
+		foreach($otrosDatosEjecucionFase1 as $d => $valor) //se saca el indice
+		{
+			foreach($valor as $v) //se recorre el array valor y se le cambian los indices
+			{
+				
+				$datosEF1[$d][]=$v;
+			}
+		}
+		
+		// echo "<pre>"; print_r($datosEF1); echo "</pre>";
+		
+		
 		
 		
 		
