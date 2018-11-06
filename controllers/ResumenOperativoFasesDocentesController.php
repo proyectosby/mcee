@@ -32,6 +32,10 @@ use app\models\EcPlaneacion;
 use app\models\EcReportes;
 use app\models\EcVerificacion;
 use app\models\Parametro;
+use app\models\Sedes;
+use app\models\Instituciones;
+use app\models\SemillerosTicDatosIeoProfesional;
+use app\models\EjecucionFase;
 use yii\helpers\ArrayHelper;
 /**
  * EcDatosBasicosController implements the CRUD actions for EcDatosBasicos model.
@@ -69,6 +73,72 @@ class ResumenOperativoFasesDocentesController extends Controller
         ]);
     }
 
+	//retorna la informacion del Resumen_Operativo_ Estudiantes_Docentes_Operativo docentes
+	public function actionObtenerInfo()
+	{
+		$arrayInfo=array();
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+		$idSedes 		= $_SESSION['sede'][0];
+		
+		$institucion = Instituciones::findOne($idInstitucion);
+		$sede = Sedes::findOne($idSedes);
+		
+		// $semillerosDatosIeo = new SemillerosTicDatosIeoProfesional();
+		// $semillerosDatosIeo = $semillerosDatosIeo->find()->orderby("id")->all();
+		// $semillerosDatosIeo = ArrayHelper::map($semillerosDatosIeo,'id_institucion','id_profesional_a','id_sede');
+		
+		//informacion de la tabla  semilleros_tic.datos_ieo_profesional
+		// variable con la conexion a la base de datos 
+		$connection = Yii::$app->getDb();
+		$command = $connection->createCommand("
+		SELECT 	i.codigo_dane, i.descripcion as institucion, s.descripcion as sede, concat(p.nombres,' ',p.apellidos) as profesional_a,
+		ds.fecha_sesion
+		FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i, public.personas as p,
+				semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_sesiones as ds, semilleros_tic.sesiones as ses
+		WHERE 	dip.id_institucion = i.id
+		AND		dip.id_sede = s.id
+		AND 	dip.id_profesional_a = p.id
+		AND		dip.id = ef.id_datos_ieo_profesional
+		AND		ef.id_datos_sesiones = ds.id
+		AND 	ds.id_sesion= 1
+		AND 	ds.id_sesion = ses.id
+		GROUP BY ds.fecha_sesion,i.codigo_dane,i.descripcion,s.descripcion,p.nombres,p.apellidos
+		");
+		$semillerosDatosIeo = $command->queryAll();
+	
+	// SELECT dip.id,i.codigo_dane, i.descripcion as institucion, s.descripcion as sede, concat(p.nombres,' ',p.apellidos) as profesional_a,
+		// ds.fecha_sesion
+// FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i, public.personas as p,
+		// semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_sesiones as ds, semilleros_tic.sesiones as ses
+// WHERE 	dip.id_institucion = i.id
+// AND		dip.id_sede = s.id
+// AND 	dip.id_profesional_a = p.id
+// AND		dip.id = ef.id_datos_ieo_profesional
+// AND		ef.id_datos_sesiones = ds.id
+// AND 	ds.id_sesion= 1
+// GROUP BY ds.fecha_sesion,i.codigo_dane,i.descripcion,s.descripcion,p.nombres,p.apellidos,ef.docente,dip.id
+
+
+
+
+echo "<pre>"; print_r($semillerosDatosIeo); echo "</pre>"; 
+		$ejecucionFase = new EjecucionFase();
+		$ejecucionFase = $ejecucionFase->find()->orderby("id")->all();	
+		$docentes = ArrayHelper::getColumn($ejecucionFase, 'docente');
+		
+	// echo "<pre>"; print_r($docentes); echo "</pre>"; 	
+		$arrayInfo[]=$institucion->codigo_dane;
+		$arrayInfo[]=$institucion->descripcion;
+		$arrayInfo[]=$sede->codigo_dane;
+		$arrayInfo[]=$sede->descripcion;
+		
+		$arrayInfo[]="";
+		$arrayInfo[]="";
+		$arrayInfo[]=$docentes;
+		
+
+		echo json_encode($arrayInfo);
+	}
     /**
      * Displays a single EcDatosBasicos model.
      * @param string $id
