@@ -44,6 +44,7 @@ use app\models\Niveles;
 use app\models\SedesNiveles;
 use app\models\AcuerdosInstitucionalesEstudiantes;
 use app\models\SemillerosDatosIeoEstudiantes;
+use app\models\Paralelos;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -482,11 +483,24 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 								->andWhere( 'id_ciclo='.$ciclo->id )
 								->all();
 			
-			$cursos 	= ArrayHelper::map( $dataCursos, 'curso', 'curso' );
+			foreach( $dataCursos as $dataCurso )
+			{
+				$dcursos = explode( ',', $dataCurso->curso );
+				
+				foreach( $dcursos as $value ){
+					if( empty( $cursos[ $dataCurso->curso ] ) )
+					{	
+						$cursos[ $dataCurso->curso ] = Paralelos::findOne( $value )->descripcion;
+					}
+					else{
+						$cursos[ $dataCurso->curso ] .= " , ".Paralelos::findOne( $value )->descripcion;
+					}
+				}
+			}
 		}
 		
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-		if( !in_array( $datosIeoProfesional->curso_participantes, $cursos ) )
+		if( !array_key_exists( $datosIeoProfesional->curso_participantes, $cursos ) )
 			$datosIeoProfesional->curso_participantes = '';
 
         return $this->render('create', [
