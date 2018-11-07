@@ -7,6 +7,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-06
+Desarrollador: Edwin Molina Grisales
+Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-29
 Persona encargada: Edwin Molina Grisales
 Descripción: Se agrega campos ocultos nuevos
@@ -25,6 +30,7 @@ if( !$sede ){
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
 use nex\chosen\Chosen;
 
 $this->registerJsFile(
@@ -82,8 +88,8 @@ if( $guardado ){
     <?= $form->field($datosIEO, 'sede')->dropDownList([ $sede->id => $sede->codigo_dane ])->label( 'CÓDIGO DANE SEDE' ) ?>
 	
     <?= $form->field($datosIEO, 'sede')->dropDownList([ $sede->id => $sede->descripcion ]) ?>
-
-    <?= $form->field($datosIEO, 'personal_a')->widget(
+								
+	<?= $form->field($datosIEO, 'personal_a')->widget(
 			Chosen::className(), [
 				'items' => $docentes,
 				'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
@@ -92,9 +98,8 @@ if( $guardado ){
 					'search_contains' => true,
 					'single_backstroke_delete' => false,
 				]
-	]); ?>
-
-
+		]); ?>
+		
 	<?= $form->field($datosIEO, 'docente_aliado')->widget(
 			Chosen::className(), [
 				'items' => $docentes,
@@ -104,7 +109,7 @@ if( $guardado ){
 					'search_contains' => true,
 					'single_backstroke_delete' => false,
 				]
-	]); ?>
+		]); ?>
     
 	<?= $form->field($datosIEO, 'id')->hiddenInput()->label( null,[ 'style' => 'display:none' ] ) ?>
 	

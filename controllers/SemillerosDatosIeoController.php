@@ -2,6 +2,11 @@
 
 /**********
 Modificaciones:
+Fecha: 2018-11-06
+Desarrollador: Edwin Molina Grisales
+Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-29
 Desarrollador: Edwin Molina Grisales
 Descripción: Se modifican el metodo actionCreate para que se guarden los datos suministrados por el usuarios o se modifiquen.
@@ -161,14 +166,18 @@ class SemillerosDatosIeoController extends Controller
         $datosIEO = SemillerosDatosIeo::findOne([
 							'id_institucion' 		=> $id_institucion,
 							'sede' 			 		=> $id_sede,
-							'lower(personal_a)'	 	=> strtolower( Yii::$app->request->post('SemillerosDatosIeo')['personal_a'] ),
-							'lower(docente_aliado)' => strtolower( Yii::$app->request->post('SemillerosDatosIeo')['docente_aliado'] ),
+							'personal_a'	 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeo')['personal_a'] ),
+							'docente_aliado' 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeo')['docente_aliado'] ),
 						]);
 		
 		if( !$datosIEO )
 		{
 			$datosIEO = new SemillerosDatosIeo();
 			$datosIEO->load( Yii::$app->request->post() );
+		}
+		else{
+			$datosIEO->personal_a		= explode( ",", $datosIEO->personal_a );
+			$datosIEO->docente_aliado	= explode( ",", $datosIEO->docente_aliado );
 		}
 		
 		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
@@ -200,7 +209,8 @@ class SemillerosDatosIeoController extends Controller
 								->all();
 				
 				foreach( $acuerdos as $key => $acuerdo )
-				{
+				{	
+					$acuerdo->id_docente = explode( ",", $acuerdo->id_docente );
 					$modelos[ $acuerdo->id_fase ][] = $acuerdo;
 				}
 			}
@@ -233,33 +243,44 @@ class SemillerosDatosIeoController extends Controller
 			
 			$valido = true;
 			
-			$datosIEO->validate([
-					'personal_a' 		=> 'Personal A.',
-					'docente_aliado' 	=> 'Docente aliado',
-				]) && $valido;
+			$valido = $datosIEO->validate([
+								'personal_a' 		=> 'Personal A.',
+								'docente_aliado' 	=> 'Docente aliado',
+							]) && $valido;
 			
 			foreach( $modelos as $fase_id => $modelo )
 			{
+				$primera = true;
 				foreach( $modelo as $k => $value )
 				{
-					$value->validate([
-						'id_docente',
-						'asignatura',
-						'especialidad',
-						'frecuencias_sesiones',
-						'jornada',
-						'recursos_requeridos',
-						'total_docentes',
-						'observaciones',
-					]) && $valido;
+					if( !$primera )
+					{	
+						$valido = $value->validate([
+										'id_docente',
+										'asignatura',
+										'especialidad',
+										'frecuencias_sesiones',
+										'jornada',
+										'recursos_requeridos',
+										'total_docentes',
+										'observaciones',
+									]) && $valido;
+					}
+					$primera = false;
 				}
 			}
 			
 			if( $valido )
 			{
-				$datosIEO->estado 	= 1;
-				$datosIEO->sede		= $id_sede;
+				$datosIEO->estado 			= 1;
+				$datosIEO->sede				= $id_sede;
+				$datosIEO->personal_a		= implode( ",", $datosIEO->personal_a );
+				$datosIEO->docente_aliado	= implode( ",", $datosIEO->docente_aliado );
+				
 				$datosIEO->save( false );
+				
+				$datosIEO->personal_a		= explode( ",", $datosIEO->personal_a );
+				$datosIEO->docente_aliado	= explode( ",", $datosIEO->docente_aliado );
 				
 				foreach( $modelos as $id_fase => $modelo )
 				{	
@@ -272,7 +293,11 @@ class SemillerosDatosIeoController extends Controller
 							$value->id_fase 				= $id_fase;
 							$value->id_ciclo 				= $ciclo->id;
 							$value->estado 					= 1;
+							$value->id_docente 				= implode( ",", $value->id_docente );
+							
 							$value->save( false );
+							
+							$value->id_docente 				= explode( ",", $value->id_docente );
 						}
 						
 						$primera = false;
@@ -341,8 +366,6 @@ class SemillerosDatosIeoController extends Controller
 			$profesionales[] = $value->personal_a;
 			$docentes_aliados[ $value->personal_a ] = $value->docente_aliado;
 		}
-
-		
 					
         return $this->render('create', [
             'datosIEO' 			=> $datosIEO,
