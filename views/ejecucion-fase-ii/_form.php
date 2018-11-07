@@ -21,6 +21,7 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use nex\chosen\Chosen;
 
 $this->registerCssFile(Yii::$app->request->baseUrl.'/css/bootstrap-multiselect.css');
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/bootstrap-multiselect.js',['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -99,9 +100,18 @@ if( $guardado ){
     <?= $form->field($datosIeoProfesional, 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
 
     <?= $form->field($sede, 'id')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
-
-	<?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('Profesional A.') ?>
     
+	<?= $form->field($datosIeoProfesional, 'id_profesional_a')->widget(
+		Chosen::className(), [
+			'items' => $docentes,
+			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+			'multiple' => true,
+			'clientOptions' => [
+				'search_contains' => true,
+				'single_backstroke_delete' => false,
+			]
+	]); ?>
+
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
 	
 	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>

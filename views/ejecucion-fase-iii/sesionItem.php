@@ -15,7 +15,7 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+use nex\chosen\Chosen;
 use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
@@ -50,9 +50,17 @@ use dosamigos\datepicker\DatePicker;
 	
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS PROFESIONALES' ) ?></h3>
 
-	<?= $form->field($profesional, "[$index]id_profesional_a")->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('Profesional A.') ?>
-    
-	
+	<?= $form->field( $profesional, "[$index]id_profesional_a" )->widget(
+		Chosen::className(), [
+			'items' => $docentes,
+			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+			'multiple' => true,
+			'clientOptions' => [
+				'search_contains' => true,
+				'single_backstroke_delete' => false,
+			]
+	])->label(null,['style'=>'display:none']) ?>
+
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode($fase->descripcion) ?></h3>
 	
 	<div class='container-fluid'>
@@ -97,8 +105,17 @@ use dosamigos\datepicker\DatePicker;
 			</div>
 			
 			<div class='col-sm-2'>
-				
-				<?= $form->field($model, "[$index]docente_creador" )->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('') ?>
+							
+				<?= $form->field( $model, "[$index]docente_creador" )->widget(
+					Chosen::className(), [
+						'items' => $docentes,
+						'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+						'multiple' => true,
+						'clientOptions' => [
+							'search_contains' => true,
+							'single_backstroke_delete' => false,
+						]
+				])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>
@@ -113,11 +130,11 @@ use dosamigos\datepicker\DatePicker;
 				<?= $form->field( $model, "[$index]grado" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
-			<div class='col-sm-1'>
+			<div class='col-sm-1 estudiantes'>
 				<?= $form->field( $model, "[$index]numero_estudiantes" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
-			<div class='col-sm-1'>
+			<div class='col-sm-1 apps'>
 				<?= $form->field( $model, "[$index]numero_apps_usadas" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			

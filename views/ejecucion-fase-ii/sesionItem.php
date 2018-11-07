@@ -15,7 +15,7 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+use nex\chosen\Chosen;
 use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
@@ -153,8 +153,17 @@ use dosamigos\datepicker\DatePicker;
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($ejecucionFase, "[$indexEf][$index]docentes")->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value=0; /*this.form.submit();*/', 'multiple' => 'multiple', 'class'=> 'multiple'] )->label('') ?>
-					
+				<?= $form->field( $ejecucionFase, "[$indexEf][$index]docentes" )->widget(
+							Chosen::className(), [
+								'items' => $docentes,
+								'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+								'multiple' => true,
+								'clientOptions' => [
+									'search_contains' => true,
+									'single_backstroke_delete' => false,
+								]
+						])->label(null,['style'=>'display:none']) ?>
+				
 				</div>
 				
 				<div class='col-sm-1'>

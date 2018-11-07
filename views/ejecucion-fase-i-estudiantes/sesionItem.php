@@ -104,7 +104,7 @@ $index = 0;
 					<?= $form->field($ejecucionFase, "[$sesion->id][$index]id")->hiddenInput([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
-				<div class='col-sm-1'>
+				<div class='col-sm-1 sesiones'>
 					<?= $form->field($ejecucionFase, "[$sesion->id][$index]participacion_sesiones")
 									->textarea(
 										[ 
@@ -116,7 +116,7 @@ $index = 0;
 									->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
-				<div class='col-sm-1'>
+				<div class='col-sm-1 estudiantes'>
 					<?= $form->field($ejecucionFase, "[$sesion->id][$index]numero_estudiantes")
 									->textarea(
 										[ 

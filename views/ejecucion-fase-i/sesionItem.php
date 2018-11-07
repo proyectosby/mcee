@@ -20,7 +20,6 @@ Descripción: Se premite insertar y modificar registros del formulario Ejecucion
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
-
 use nex\chosen\Chosen;
 ?>
 

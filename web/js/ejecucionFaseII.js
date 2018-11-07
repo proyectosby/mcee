@@ -330,6 +330,18 @@ $( document ).ready(function(){
 						);
 				}
 			})
+
+			$( "select", filaNueva ).each(function(x){
+				
+				$( this ).chosen({
+							"search_contains"			:true,
+							"single_backstroke_delete"	:false,
+							"disable_search_threshold"	:5,
+							"placeholder_text_single"	:"Select an option",
+							"placeholder_text_multiple"	:"Seleccione",
+							"no_results_text"			:"No results match",
+						});
+			});
 			
 			
 			filaNueva.css({ display: '' });

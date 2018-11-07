@@ -472,6 +472,18 @@ class EjecucionFaseIEstudiantesController extends Controller
 				}
 			}
 		}
+
+		/*Se realiza consulta provisonal para obtener listado de docentes*/
+		$dataPersonas 		= Personas::find()
+								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								->where( 'personas.estado=1' )
+								->andWhere( 'id_institucion='.$id_institucion )
+								->all();
+		
+		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
 		if( !array_key_exists( $datosIeoProfesional->curso_participantes, $cursos ) )

@@ -24,7 +24,7 @@ Descripción: Se agrega boton de volver a la vista de botones
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use nex\chosen\Chosen;
 if( !$sede ){
 	$this->registerJs( "$( cambiarSede ).click()" );
 	return;
@@ -98,9 +98,16 @@ if( $guardado ){
 
     <?= $form->field($profesional, 'id_sede')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 
-    <?= $form->field($profesional, 'id_profesional_a')->dropDownList( $docentes, [ 
-																'prompt' => 'Seleccione...', 
-															] )->label('Profesional A.') ?>
+	<?= $form->field($profesional, 'id_profesional_a')->widget(
+		Chosen::className(), [
+			'items' => $docentes,
+			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+			'multiple' => true,
+			'clientOptions' => [
+				'search_contains' => true,
+				'single_backstroke_delete' => false,
+			]
+	]); ?>														
 	
 	<?= $form->field($profesional, 'curso_participantes')->dropDownList( $cursos, ['prompt' => 'Seleccione...'] )->label('Curso de los participantes') ?>
 	
@@ -109,7 +116,7 @@ if( $guardado ){
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
     
 	<?php 	
-		if( !empty( $profesional->id_profesional_a ) && !empty( $profesional->curso_participantes ) )
+		if(!empty( $profesional->id_profesional_a ) && !empty( $profesional->curso_participantes ))
 		{	
 			echo $this->render( 'sesiones', [ 
 						'datosModelos' 	=> $datosModelos,
@@ -184,11 +191,11 @@ if( $guardado ){
 					<?= $form->field($condiciones, "promedio_estudiantes_por_curso")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
-				<div class='col-sm-1'>
+				<div class='col-sm-1 total-sesiones'>
 					<?= $form->field($condiciones, "total_sesiones")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
-				<div class='col-sm-1'>
+				<div class='col-sm-1 total-estudiantes'>
 					<?= $form->field($condiciones, "total_estudiantes")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'text'])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 
@@ -204,6 +211,35 @@ if( $guardado ){
 		}
 	?>							
 
-    <?php ActiveForm::end(); ?>
+	<?php ActiveForm::end(); 
+		$this->registerJs(
+			'$(document).ready(function(){
+				$(".total-sesiones").click(function(){
+					var total = 0;
+					var list = $(".sesiones textarea");
+					for (var i=0;i<list.length;i++) {
+						if(!isNaN(parseInt(list[i].value))){
+							total += parseInt(list[i].value);
+						}	
+					}
+					$("#semillerosticcondicionesinstitucionalesestudiantes-total_sesiones").text(total);		
+				});
+
+				$(".total-estudiantes").click(function(){
+					var totalEstudiantes = 0;
+					var list = $(".estudiantes textarea");
+					for (var i=0;i<list.length;i++) {
+						if(!isNaN(parseInt(list[i].value))){
+							totalEstudiantes += parseInt(list[i].value);
+						}	
+					}
+					$("#semillerosticcondicionesinstitucionalesestudiantes-total_estudiantes").text(totalEstudiantes);		
+				});
+				
+			});
+			
+			'
+		);
+	?>
 
 </div>
