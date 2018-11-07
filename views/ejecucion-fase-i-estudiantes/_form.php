@@ -102,7 +102,7 @@ if( $guardado ){
 		Chosen::className(), [
 			'items' => $docentes,
 			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-			'multiple' => true,
+			'multiple' => false,
 			'clientOptions' => [
 				'search_contains' => true,
 				'single_backstroke_delete' => false,

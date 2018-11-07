@@ -163,12 +163,16 @@ class SemillerosDatosIeoController extends Controller
 		$id_institucion	= $_SESSION['instituciones'][0];
 		$id_sede 		= $_SESSION['sede'][0];
 		
-        $datosIEO = SemillerosDatosIeo::findOne([
-							'id_institucion' 		=> $id_institucion,
-							'sede' 			 		=> $id_sede,
-							'personal_a'	 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeo')['personal_a'] ),
-							'docente_aliado' 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeo')['docente_aliado'] ),
-						]);
+		$datosIEO = false;
+		if( is_array( Yii::$app->request->post('SemillerosDatosIeo')['personal_a'] ) && is_array( Yii::$app->request->post('SemillerosDatosIeo')['docente_aliado'] ) )
+		{
+			$datosIEO = SemillerosDatosIeo::findOne([
+								'id_institucion' 		=> $id_institucion,
+								'sede' 			 		=> $id_sede,
+								'personal_a'	 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeo')['personal_a'] ),
+								'docente_aliado' 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeo')['docente_aliado'] ),
+							]);
+		}
 		
 		if( !$datosIEO )
 		{
