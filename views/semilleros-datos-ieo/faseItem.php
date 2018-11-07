@@ -7,6 +7,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-06
+Desarrollador: Edwin Molina Grisales
+Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-29
 Persona encargada: Edwin Molina Grisales
 Descripción: Se agregan filas dinámicas traídas de los modelos
@@ -20,6 +25,8 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
+use nex\chosen\Chosen;
 
 use app\models\AcuerdosInstitucionales;
 
@@ -45,7 +52,7 @@ use app\models\AcuerdosInstitucionales;
 
 	<div class=row style='text-align:center;'>
 		
-		<div class="col-sm-1" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px;'>Nombre del docente</span>
 		</div>
 		
@@ -73,7 +80,7 @@ use app\models\AcuerdosInstitucionales;
 			<span total class='form-control' style='background-color:#ccc;height:70px'>Total Docentes</span>
 		</div>
 		
-		<div class="col-sm-3" style='padding:0px;'>
+		<div class="col-sm-2" style='padding:0px;'>
 			<span total class='form-control' style='background-color:#ccc;height:70px'>OBSERVACIONES</span>
 		</div>
 	
@@ -88,11 +95,18 @@ use app\models\AcuerdosInstitucionales;
 						->hiddenInput()
 						->label(null,['style'=>'display:none']) ?>
 			</div>
-		
-			<div class="col-sm-1" style='padding:0px;'>
-				<?= $form->field($acuerdo, "[$fase->id][$index]id_docente" )
-						->dropDownList( $docentes, [ 'prompt' => 'Seleccione...'])
-						->label(null,['style'=>'display:none']) ?>
+			
+			<div class="col-sm-2" style='padding:0px;'>
+				<?= $form->field( $acuerdo, "[$fase->id][$index]id_docente" )->widget(
+					Chosen::className(), [
+						'items' => $docentes,
+						'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+						'multiple' => true,
+						'clientOptions' => [
+							'search_contains' => true,
+							'single_backstroke_delete' => false,
+						]
+				])->label(null,['style'=>'display:none']); ?>
 			</div>
 			
 			<div class="col-sm-2" style='padding:0px;'>
@@ -127,11 +141,11 @@ use app\models\AcuerdosInstitucionales;
 			
 			<div class="col-sm-1" style='padding:0px;'>
 				<?= $form->field($acuerdo, "[$fase->id][$index]total_docentes" )
-						->textInput()
+						->textarea( ['data-type' => 'number' ] )
 						->label(null,['style'=>'display:none']) ?>
 			</div>
 		
-			<div class="col-sm-3" style='padding:0px;'>
+			<div class="col-sm-2" style='padding:0px;'>
 				<?= $form->field($acuerdo, "[$fase->id][$index]observaciones" )
 						->textarea()
 						->label(null,['style'=>'display:none']) ?>

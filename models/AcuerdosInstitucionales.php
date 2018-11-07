@@ -38,15 +38,15 @@ class AcuerdosInstitucionales extends \yii\db\ActiveRecord
         return [
             [['id_fase', 'id_docente', 'asignatura', 'especialidad', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'total_docentes', 'id_semilleros_datos_ieo','id_ciclo'], 'required'],
             [['id_fase', 'id_docente', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_ieo', 'estado'], 'default', 'value' => null],
-            [['id_fase', 'id_docente', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_ieo', 'estado','id_ciclo'], 'integer'],
+            [['id_fase', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_ieo', 'estado','id_ciclo'], 'integer'],
             [['asignatura', 'especialidad', 'total_docentes', 'observaciones'], 'string', 'max' => 500],
             [['frecuencias_sesiones'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['frecuencias_sesiones' => 'id']],
             [['jornada'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['jornada' => 'id']],
             [['recursos_requeridos'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['recursos_requeridos' => 'id']],
-            [['id_docente'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['id_docente' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => Fases::className(), 'targetAttribute' => ['id_fase' => 'id']],
             [['id_semilleros_datos_ieo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosDatosIeo::className(), 'targetAttribute' => ['id_semilleros_datos_ieo' => 'id']],
             [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
+			['id_docente', 'each', 'rule' => ['integer']],
         ];
     }
 
