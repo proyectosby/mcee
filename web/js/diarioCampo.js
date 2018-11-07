@@ -32,6 +32,7 @@ $( "#selFases" ).change(function()
 							$("#contenido").html(data.contenido);
 							$("#encabezado1").html(data.html1);
 							$("#contenido1").html(data.contenido1);
+							
 							$("#titulo").show();
 							$("#encabezado").show();
 							$("#contenido").show();

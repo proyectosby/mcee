@@ -264,7 +264,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		//variable con la conexion a la base de datos 
 		
 		$connection = Yii::$app->getDb();
-		// $datosEjecucionFase1 =array();
+		$datosEjecucionFase1 =array();
 		$command = $connection->createCommand("select ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
 		 from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
 		 semilleros_tic.condiciones_institucionales as ci, semilleros_tic.datos_sesiones as ds
@@ -277,10 +277,11 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		 group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
 		
 		 ");
-		$result = $command->queryAll();
+		$result1 = $command->queryAll();
+		
 		
 		//se llena el resultado de a consulta en un array
-		foreach($result as $key){
+		foreach($result1 as $key){
 			$datosEjecucionFase1[]=$key;
 		}
 		
@@ -294,14 +295,106 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			}
 		}
 		
+		// se unen los resultados para mostrar
+		$asignaturas = "";
+		$especiaidad = "";
+		$seiones_empleadas = 0;
+		$numero_apps = 0;
+		$temas_problama = "";
+		$contador=0;
+		
+		foreach($datosEF as $key => $value){
+			
+			foreach($value as $val)
+			{
+				switch ($contador) 
+				{
+					case 0:
+						$total_docentes_ieo = $val;
+						break;
+					case 1:
+						$asignaturas .= $val.",";
+						break;
+					case 2:
+						$especiaidad .=$val.",";
+						break;
+					case 3:
+						$seiones_empleadas += $val;
+						break;
+					case 4:
+						$numero_apps += $val;
+						break;
+					case 5:
+						$temas_problama .= $val.",";
+						break;
+				}
+				$contador++;
+			}
+			$contador=0;
+			
+		}
+		
+		// echo $total_docentes_ieo." <br> ".$asignaturas." <br> ".$especiaidad." <br> ".$seiones_empleadas." <br> ".$numero_apps." <br> ".$temas_problama;
+		
+		// echo "<pre>"; print_r($datosEF); echo "</pre>";
 		
 		//para la fecuencia de las sesiones se trae de la conformacion de semilleros
+		$frecuenciaSesiones =array();
+		$command = $connection->createCommand("select ai.frecuencias_sesiones
+		from semilleros_tic.acuerdos_institucionales as ai, semilleros_tic.fases as f, semilleros_tic.semilleros_datos_ieo as sdi,
+			semilleros_tic.datos_ieo_profesional as dip, semilleros_tic.ejecucion_fase as ef, semilleros_tic.anio as a,
+			semilleros_tic.ciclos as c
+		where f.id = 1
+		and ai.id_fase = f.id
+		and ai.id_semilleros_datos_ieo = sdi.id
+		and sdi.id_institucion = dip.id_institucion
+        and sdi.sede = dip.id_sede
+        and dip.id_institucion = 55
+        and dip.id_sede = 49
+		and c.id = 1
+		and ai.id_ciclo = c.id 
+		and ef.id_ciclo = c.id
+		and a.id = 1
+		and c.id_anio = a.id
+		and dip.estado = 1
+		and ef.estado = 1
+		and sdi.estado = 1
+		and ai.estado = 1
+		and a.estado = 1
+		and c.estado =1
+		group by ai.frecuencias_sesiones");
+		$result2 = $command->queryAll();
 		
-		// print_r($datosEF);
 		
-		 
+		//se llena el resultado de a consulta en un array
+		foreach($result2 as $key){
+			$frecuenciaSesiones[]=$key;
+		}
+		
+		
+		//consultar la descripcion de la frecuencia sesiones
+		// $frecuenciaSesionesDescripcion =array();
+		$command = $connection->createCommand("select descripcion
+		from parametro
+		where id_tipo_parametro = 6 
+		and id = ".$frecuenciaSesiones[0]['frecuencias_sesiones']."
+		and estado = 1");
+		$result4 = $command->queryAll();
+		
+		$frecuenciaSesionesDescripcion = "";
+		foreach($result4 as $key){
+			
+			$frecuenciaSesionesDescripcion.=" ".implode(" ",$key);
+			
+		}
+		
+		// echo $frecuenciaSesionesDescripcion;
+		
+		
+		
+		
 		 //para traer la duracion de cada sesion
-		 
+		$otrosDatosEjecucionFase1 =array();
 		$command = $connection->createCommand("select s.descripcion, ds.fecha_sesion
 		 from semilleros_tic.sesiones as s, semilleros_tic.datos_sesiones as ds, semilleros_tic.ejecucion_fase as ef
 		 where ef.id_fase = 1
@@ -312,8 +405,8 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		 and s.estado = 1
 		 group by s.id, ds.fecha_sesion, ds.id
 		 order by ds.id");
-		$result = $command->queryAll();
-		foreach($result as $key){
+		$result3 = $command->queryAll();
+		foreach($result3 as $key){
 			$otrosDatosEjecucionFase1[]=$key;
 		}
 		
@@ -327,10 +420,16 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			}
 		}
 		
-		// echo "<pre>"; print_r($datosEF1); echo "</pre>";
 		
-		
-		
+		//para pasar el array a texto para mostrarlos
+		// $duracionSesiones = "";
+		foreach($datosEF1 as $key){
+			
+			$duracionSesiones[]=$key[0]." ".$key[1];
+			
+		}
+		$duracionSesiones = implode(",",$duracionSesiones);
+		// echo $duracionSesiones;
 		
 		
 		
@@ -358,8 +457,6 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		$data['hallazgos']=$hallazgosTexto;
 
         
-	 
-	
 		$data['html']="";
 		$data['contenido']="";
 		$data['html1']="";
@@ -371,15 +468,41 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		foreach ($opcionesEjecucion as $key => $value)
 		{
 			
-			$contador++;
+			
 			$data['html'].="<div class='col-xs-3'>";
 			$data['html'].=$value;
 			$data['html'].="</div>";
 			
-			$data['contenido'].="<div class='col-xs-3' >";
-			$data['contenido'].="dddddd";
-			$data['contenido'].="</div>";
-			
+				switch ($contador) 
+				{
+					case 0:
+						$data['contenido'].="<div class='col-xs-3' >";
+						$data['contenido'].=$total_docentes_ieo;
+						$data['contenido'].="</div>";
+						
+						break;
+					case 1:
+						$data['contenido'].="<div class='col-xs-3' >";
+						$data['contenido'].=$asignaturas;
+						$data['contenido'].="</div>";
+						
+						break;
+					case 2:
+						$data['contenido'].="<div class='col-xs-3' >";
+						$data['contenido'].=$especiaidad;
+						$data['contenido'].="</div>";
+						
+						break;
+					case 3:
+						$data['contenido'].="<div class='col-xs-3' >";
+						$data['contenido'].=$seiones_empleadas;
+						$data['contenido'].="</div>";
+						
+						break;
+					
+				}
+
+			$contador++;
 			// unset(current($opcionesEjecucion));
 			array_shift($opcionesEjecucion);
 			if ($contador ==4)
@@ -395,10 +518,37 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			$data['html1'].=$value;
 			$data['html1'].="</div>";
 			
-			$data['contenido1'].="<div class='col-xs-3' >";
-			$data['contenido1'].="dddddd";
-			$data['contenido1'].="</div>";
+			switch ($key) 
+				{
+					case 0:
+						$data['contenido1'].="<div class='col-xs-3' >";
+						$data['contenido1'].=$frecuenciaSesionesDescripcion;
+						$data['contenido1'].="</div>";
+						
+						break;
+					case 1:
+						$data['contenido1'].="<div class='col-xs-3' >";
+						$data['contenido1'].=$duracionSesiones;
+						$data['contenido1'].="</div>";
+						
+						break;
+					case 2:
+						$data['contenido1'].="<div class='col-xs-3' >";
+						$data['contenido1'].=$numero_apps;  
+						$data['contenido1'].="</div>";
+						
+						break;
+					case 3:
+						$data['contenido1'].="<div class='col-xs-3' >";
+						$data['contenido1'].=$temas_problama;
+						$data['contenido1'].="</div>";
+						
+						break;
+					
+				}
 		}
+		
+		 // echo "<pre>"; print_r($data); echo "</pre>";
 		
 		echo json_encode( $data );
     }

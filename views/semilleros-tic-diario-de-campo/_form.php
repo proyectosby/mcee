@@ -53,7 +53,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 		
 	</div>
 	
-	<div class="" style='padding:0px;background-color:green;text-align:center;height:100px;display:none' id="contenido">
+	<div class="" style='padding:0px;background-color:white;text-align:center;height:100px;display:none' id="contenido">
 		
 	</div>
 	
@@ -61,7 +61,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 		
 	</div>
 	
-	<div class="" style='padding:0px;background-color:green;text-align:center;height:100px;display:none' id="contenido1">
+	<div class="" style='padding:0px;background-color:white;text-align:center;height:100px;display:none' id="contenido1">
 		
 	</div>
 	

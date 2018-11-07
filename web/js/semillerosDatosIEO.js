@@ -5,6 +5,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-06
+Desarrollador: Edwin Molina Grisales
+Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-29
 Persona encargada: Edwin Molina Grisales
 Descripción: Se agrega validacion de campos dinámicos
@@ -15,6 +20,16 @@ Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin XEditable, para poderlos editar
 ---------------------------------------
 **********/
+
+
+//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
+var arrayTitles = [
+	"Nombre del docente",
+	"Nombre de las asignaturas asignadas",
+	"Especialidad de la Media Técnica o Técnica",
+	"Total Docentes",
+	"OBSERVACIONES",
+];
 
 $( document ).ready(function(){
 	
@@ -103,11 +118,14 @@ $( document ).ready(function(){
 				$( "#btnEliminar"+fase ).css({display:''});
 				
 				//A todos los texareas les pongo que sea editables
-				$( "textarea", filaClonada ).each(function(){
+				$( "textarea,input", filaClonada ).each(function(x){
 		
 					//Agrego data-type textarea para que el popup editable salga como textarea
 					//Sin esto mostraría un input para ingresar información
-					$( this ).data( 'type', 'textarea' );
+					if( $( this ).data( 'type' ) == 'number' )
+						$( this ).data( 'type', 'number' );
+					else
+						$( this ).data( 'type', 'textarea' );
 				
 					$( this )
 						.attr({readOnly: true })
@@ -116,7 +134,8 @@ $( document ).ready(function(){
 							height: '34px',
 						})
 						.editable({
-							title: 'Ingrese la informoción',
+							// title: 'Ingrese la informoción',
+							title: arrayTitles[x],
 							rows: 10,
 							emptytext: '',
 						});
@@ -148,6 +167,11 @@ $( document ).ready(function(){
 									"container"	: ".field-"+_campo.id,
 									"input"		: "#"+_campo.id,
 									"validate"	: function (attribute, value, messages, deferred, $form) {
+										
+													if( $( this.input ).data( 'type' ) == 'number' )
+													{
+														yii.validation.number(value, messages, {"pattern":/^\s*[+-]?\d+\s*$/,"message":"Debe ser un número entero.","skipOnEmpty":1});
+													}
 													yii.validation.required(value, messages, {"message":"No puede estar vacío"});
 												}
 								},
@@ -168,6 +192,18 @@ $( document ).ready(function(){
 							);
 					}
 				});
+				
+				$( "select", filaClonada ).each(function(){
+					
+					$( this ).chosen({
+							"search_contains"			:true,
+							"single_backstroke_delete"	:false,
+							"disable_search_threshold"	:5,
+							"placeholder_text_single"	:"Select an option",
+							"placeholder_text_multiple"	:"Select some options",
+							"no_results_text"			:"No results match",
+						});
+				})
 				
 				consecutivo++;
 			});

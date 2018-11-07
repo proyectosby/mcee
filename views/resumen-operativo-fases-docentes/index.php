@@ -213,6 +213,7 @@ section.content {
 		</tr>
 	</thead>
 	<tbody>
+	<div id="info">
 			<tr>
 				<td style='border: 1px solid black;'>1</td>
 				<td style='border: 1px solid black;'>2</td>
@@ -296,5 +297,6 @@ section.content {
 				<td style='border: 1px solid black;'>80</td>
 				<td style='border: 1px solid black;'>81</td>
 			</tr>
+			</div>
 	</tbody>
 </table>

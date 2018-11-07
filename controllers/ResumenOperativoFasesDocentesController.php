@@ -76,68 +76,156 @@ class ResumenOperativoFasesDocentesController extends Controller
 	//retorna la informacion del Resumen_Operativo_ Estudiantes_Docentes_Operativo docentes
 	public function actionObtenerInfo()
 	{
-		$arrayInfo=array();
-		$idInstitucion 	= $_SESSION['instituciones'][0];
-		$idSedes 		= $_SESSION['sede'][0];
-		
-		$institucion = Instituciones::findOne($idInstitucion);
-		$sede = Sedes::findOne($idSedes);
-		
-		// $semillerosDatosIeo = new SemillerosTicDatosIeoProfesional();
-		// $semillerosDatosIeo = $semillerosDatosIeo->find()->orderby("id")->all();
-		// $semillerosDatosIeo = ArrayHelper::map($semillerosDatosIeo,'id_institucion','id_profesional_a','id_sede');
-		
+
 		//informacion de la tabla  semilleros_tic.datos_ieo_profesional
 		// variable con la conexion a la base de datos 
 		$connection = Yii::$app->getDb();
 		$command = $connection->createCommand("
-		SELECT 	i.codigo_dane, i.descripcion as institucion, s.descripcion as sede, concat(p.nombres,' ',p.apellidos) as profesional_a,
-		ds.fecha_sesion
-		FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i, public.personas as p,
-				semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_sesiones as ds, semilleros_tic.sesiones as ses
+		SELECT	dip.id,i.codigo_dane as codigo_dane_institucion, i.descripcion as institucion, s.codigo_dane as codigo_dane_sede,
+				s.descripcion as sede,dip.id_profesional_a,i.id as id_institucion, s.id as id_sede
+		FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i
 		WHERE 	dip.id_institucion = i.id
-		AND		dip.id_sede = s.id
-		AND 	dip.id_profesional_a = p.id
-		AND		dip.id = ef.id_datos_ieo_profesional
-		AND		ef.id_datos_sesiones = ds.id
-		AND 	ds.id_sesion= 1
-		AND 	ds.id_sesion = ses.id
-		GROUP BY ds.fecha_sesion,i.codigo_dane,i.descripcion,s.descripcion,p.nombres,p.apellidos
-		");
-		$semillerosDatosIeo = $command->queryAll();
+		AND		dip.id_sede = s.id");
+		$datos_ieo_profesional = $command->queryAll();
 	
-	// SELECT dip.id,i.codigo_dane, i.descripcion as institucion, s.descripcion as sede, concat(p.nombres,' ',p.apellidos) as profesional_a,
-		// ds.fecha_sesion
-// FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i, public.personas as p,
-		// semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_sesiones as ds, semilleros_tic.sesiones as ses
-// WHERE 	dip.id_institucion = i.id
-// AND		dip.id_sede = s.id
-// AND 	dip.id_profesional_a = p.id
-// AND		dip.id = ef.id_datos_ieo_profesional
-// AND		ef.id_datos_sesiones = ds.id
-// AND 	ds.id_sesion= 1
-// GROUP BY ds.fecha_sesion,i.codigo_dane,i.descripcion,s.descripcion,p.nombres,p.apellidos,ef.docente,dip.id
+		$html="";
+		$contador =0;
+		foreach ($datos_ieo_profesional as $dip)
+		{
+			$html.="<tr>";	
+			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_institucion']."</td>";	
+			$html.="<td style='border: 1px solid black;'>".$dip['institucion']."</td>";	
+			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_sede']."</td>";	
+			$html.="<td style='border: 1px solid black;'>".$dip['sede']."</td>";
+			
+			$idInstitucion = $dip['id_institucion'];
+			$idSede = $dip['id_sede'];
+			
+			
+			$profesional_a = $dip['id_profesional_a'];
+				$command = $connection->createCommand
+				("
+					SELECT concat(p.nombres,' ',p.apellidos) FROM public.personas as p WHERE id in($profesional_a)
+				");
+				$nombres = $command->queryAll();
+				
+				foreach( $nombres as $nom)
+				{
+					$nombre[]= $nom['concat'];
+				}
+				$nombres = implode(",",$nombre);
+				$nombre=null;
+				
+				$html.="<td style='border: 1px solid black;'>".$nombres."</td>";	
+				
+				$command = $connection->createCommand
+				("
+					SELECT fecha_sesion FROM semilleros_tic.datos_sesiones WHERE id_sesion = 1 ORDER BY id ASC 
+				");
+				$fechas = $command->queryAll();
+				$html.="<td style='border: 1px solid black;'>".$fechas[$contador]['fecha_sesion']."</td>";	
+				
+				
+				
+				$id_datos_ieo_profesional = $dip['id'];
+				$command = $connection->createCommand
+				("
+					SELECT docente,
+					asignaturas,
+					especiaidad
+					
+					FROM semilleros_tic.ejecucion_fase 
+					WHERE id_datos_ieo_profesional = $id_datos_ieo_profesional 
+				");
+				$datoSemillerosTicEjecucionFase = $command->queryAll();
+				
+				foreach ($datoSemillerosTicEjecucionFase as $dtse)
+				{	
+					$idDocente[] = $dtse['docente'];
+				}
+				$idDocentes = implode(",",$idDocente);
+				
 
-
-
-
-echo "<pre>"; print_r($semillerosDatosIeo); echo "</pre>"; 
-		$ejecucionFase = new EjecucionFase();
-		$ejecucionFase = $ejecucionFase->find()->orderby("id")->all();	
-		$docentes = ArrayHelper::getColumn($ejecucionFase, 'docente');
+				$command = $connection->createCommand
+				("
+					SELECT concat(p.nombres,' ',p.apellidos) as nombre
+					FROM public.personas as p WHERE id in($idDocentes)
+				");
+				$nombresDocentes = $command->queryAll();
+				$nombresDocentes = $this->arrayArrayComas($nombresDocentes,"nombre");
+				$nombresAsignaturas = $this->arrayArrayComas($datoSemillerosTicEjecucionFase,"asignaturas");
+				$nombresEspeciaidad= $this->arrayArrayComas($datoSemillerosTicEjecucionFase,"especiaidad");
+				
+				$html.="<td style='border: 1px solid black;'>".$nombresDocentes ."</td>";	
+				$html.="<td style='border: 1px solid black;'>".$nombresAsignaturas ."</td>";	
+				$html.="<td style='border: 1px solid black;'>".$nombresEspeciaidad ."</td>";	
+				
+				//para la fecuencia de las sesiones se trae de la conformacion de semilleros
+			$frecuenciaSesiones =array();
+			$command = $connection->createCommand("
+			select ai.frecuencias_sesiones
+			from 	semilleros_tic.acuerdos_institucionales as ai, 
+					semilleros_tic.fases as f, 
+					semilleros_tic.semilleros_datos_ieo as sdi,
+					semilleros_tic.datos_ieo_profesional as dip, 
+					semilleros_tic.ejecucion_fase as ef, 
+					semilleros_tic.anio as a,
+					semilleros_tic.ciclos as c
+			where f.id in (1,2,3)
+			and ai.id_fase = f.id
+			and ai.id_semilleros_datos_ieo = sdi.id
+			and sdi.id_institucion = dip.id_institucion
+			and sdi.sede = dip.id_sede
+			and dip.id_institucion = 	$idInstitucion
+			and dip.id_sede = $idSede 
+			--and c.id = 1
+			and ai.id_ciclo = c.id 
+			and ef.id_ciclo = c.id
+			--and a.id = 1
+			and c.id_anio = a.id
+			and dip.estado = 1
+			and ef.estado = 1
+			and sdi.estado = 1
+			and ai.estado = 1
+			and a.estado = 1
+			and c.estado =1
+			group by ai.frecuencias_sesiones");
+			
+			
+			$frecuenciaSesiones = $command->queryAll();
+			$frecuenciaSesiones[0]['frecuencias_sesiones'] =15;
+			// print_r($result2);
+			//se llena el resultado de a consulta en un array
+			// foreach($result2 as $key)
+			// {
+				// $frecuenciaSesiones[]=$key;
+			// }
+			
+			
+			//consultar la descripcion de la frecuencia sesiones
+			// $frecuenciaSesionesDescripcion =array();
+			$command = $connection->createCommand("select descripcion
+			from parametro
+			where id_tipo_parametro = 6 
+			and id = ".@$frecuenciaSesiones[0]['frecuencias_sesiones']."
+			and estado = 1");
+			$result4 = $command->queryAll();
+			
+			$frecuenciaSesionesDescripcion = "";
+			foreach($result4 as $key)
+			{
+				$frecuenciaSesionesDescripcion.=" ".implode(" ",$key);	
+			}
 		
-	// echo "<pre>"; print_r($docentes); echo "</pre>"; 	
-		$arrayInfo[]=$institucion->codigo_dane;
-		$arrayInfo[]=$institucion->descripcion;
-		$arrayInfo[]=$sede->codigo_dane;
-		$arrayInfo[]=$sede->descripcion;
-		
-		$arrayInfo[]="";
-		$arrayInfo[]="";
-		$arrayInfo[]=$docentes;
-		
 
-		echo json_encode($arrayInfo);
+			$html.="<td style='border: 1px solid black;'>".$frecuenciaSesionesDescripcion ."</td>";	
+				
+				
+				
+			$html.="</tr>";
+			$contador++;
+		}
+		echo json_encode($html);
 	}
     /**
      * Displays a single EcDatosBasicos model.
@@ -145,6 +233,16 @@ echo "<pre>"; print_r($semillerosDatosIeo); echo "</pre>";
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+	 
+	public function arrayArrayComas($array,$nombrePos)
+	{
+		foreach ($array as $ar)
+		{		
+			$datos[] = $ar[$nombrePos];
+		}
+		return  implode(",",$datos);
+	}
+	
     public function actionView($id)
     {
         return $this->render('view', [

@@ -7,6 +7,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-06
+Desarrollador: Edwin Molina Grisales
+Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-29
 Persona encargada: Edwin Molina Grisales
 Descripción: Se modifican el contenido de acuerdo a los modelos enviados desde el controlador
