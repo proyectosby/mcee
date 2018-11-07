@@ -65,19 +65,19 @@ $( document ).ready(function(){
 		
 	});
 	
-	$( "#semillerosdatosieo-personal_a,#semillerosdatosieo-docente_aliado" ).change(function(){
+	// $( "#semillerosdatosieo-personal_a,#semillerosdatosieo-docente_aliado" ).change(function(){
 		
-		var val = true;
+		// var val = true;
 		
-		val = ( $.trim( $( "#semillerosdatosieo-personal_a" ).val() ) != '' ? true : false ) && val;
-		val = ( $.trim( $( "#semillerosdatosieo-docente_aliado" ).val() ) != '' ? true : false ) && val;
+		// val = ( $.trim( $( "#semillerosdatosieo-personal_a" ).val() ) != '' ? true : false ) && val;
+		// val = ( $.trim( $( "#semillerosdatosieo-docente_aliado" ).val() ) != '' ? true : false ) && val;
 		
-		if( val )
-		{
-			$( "#guardar" ).val( 0 )
-			this.form.submit();
-		}
-	});
+		// if( val )
+		// {
+			// $( "#guardar" ).val( 0 )
+			// this.form.submit();
+		// }
+	// });
 	
 	/****************************************************************************************
 	 * Se asigna las funcionalidades de los botones agregar y eliminar
