@@ -103,9 +103,9 @@ if( $guardado ){
     
 	<?= $form->field($datosIeoProfesional, 'id_profesional_a')->widget(
 		Chosen::className(), [
-			'items' => $docentes,
+			'items' => [ '' => 'Seleccione...' ] + $docentes,
 			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-			'multiple' => true,
+			'multiple' => false,
 			'clientOptions' => [
 				'search_contains' => true,
 				'single_backstroke_delete' => false,

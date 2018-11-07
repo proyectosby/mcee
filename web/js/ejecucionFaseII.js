@@ -16,7 +16,7 @@ $( document ).ready(function(){
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
-		"Nombre de docentes participantes",
+		// "Nombre de docentes participantes",
 		"Nombre de las asignaturas que enseña",
 		"Especialidad de la Media Técnica o Técnica",
 		"Número de Apps 0.0 desarrolladas e implementadas",
@@ -85,6 +85,12 @@ $( document ).ready(function(){
 				rows: 10,
 				emptytext: '',
 			});
+	});
+	
+	$( "#datosieoprofesional-id_profesional_a" ).change(function(){
+		
+		$( "#guardar" ).val( 0 );
+		this.form.submit();
 	});
 	
 	//Creo un array con las primeras posiciones de cada sesion
@@ -287,7 +293,7 @@ $( document ).ready(function(){
 			var consecutivo = consecutivos[id].actual;
 			
 			//Cambiando los id de los textarea con el consecutivo correspondiente
-			$( "textarea,input:hidden", filaNueva ).each(function(x){
+			$( "select,textarea,input:hidden", filaNueva ).each(function(x){
 				
 				var _campo = this;
 				

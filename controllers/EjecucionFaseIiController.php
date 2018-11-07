@@ -142,6 +142,7 @@ class EjecucionFaseIiController extends Controller
      */
     public function actionCreate()
     {
+		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>"; exit();
 		$ciclo = new SemillerosTicCiclos();
 		
 		$ciclo->load( Yii::$app->request->post() );
@@ -206,6 +207,7 @@ class EjecucionFaseIiController extends Controller
 		{
 			$datosIeoProfesional 		= DatosIeoProfesional::findOne([
 											'id_institucion'	=> $id_institucion,
+											'id_sede'			=> $id_sede,
 											'id_profesional_a'	=> $postDatosProfesional['id_profesional_a'],
 										  ]);
 		}
@@ -236,6 +238,8 @@ class EjecucionFaseIiController extends Controller
 				{
 					if( !empty( $ejecucionFase['id_datos_sesiones'] ) )
 					{
+						$ejecucionFase->docentes = explode( ",", $ejecucionFase->docentes );
+						
 						$ds = DatosSesiones::findOne( $ejecucionFase['id_datos_sesiones'] );
 						
 						//Dando el formato a la fecha yyyy-mm-dd
@@ -420,6 +424,7 @@ class EjecucionFaseIiController extends Controller
 				if( $valido )
 				{
 					//Se guarda primero los datos de Datos Ieo Profesional
+					$datosIeoProfesional->id_sede = $id_sede;
 					$datosIeoProfesional->save(false);
 			
 					//Procedo a guardar los datos
@@ -446,7 +451,10 @@ class EjecucionFaseIiController extends Controller
 									$ejecucionFase->id_fase 				= $this->id_fase;
 									$ejecucionFase->estado 					= 1;
 									$ejecucionFase->id_ciclo 				= $ciclo->id;
+									$ejecucionFase->docentes 				= implode( ",", $ejecucionFase->docentes );
 									$ejecucionFase->save(false);
+									
+									$ejecucionFase->docentes 				= explode( ",", $ejecucionFase->docentes );
 								}
 								$esPrimera = false;
 							}

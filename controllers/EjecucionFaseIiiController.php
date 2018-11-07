@@ -184,6 +184,8 @@ class EjecucionFaseIiiController extends Controller
 									
 			foreach( $ejecucionesFases as $key => $vEjecucionesFases )
 			{
+				$vEjecucionesFases->docente_creador 			= explode( ",", $vEjecucionesFases->docente_creador );
+				
 				$models[] = [
 								'profesionales' => DatosIeoProfesional::findOne( $vEjecucionesFases->id_datos_ieo_profesional ),
 								'ejecucionFase' => $vEjecucionesFases,
@@ -211,12 +213,14 @@ class EjecucionFaseIiiController extends Controller
 				
 				$dp = DatosIeoProfesional::findOne([
 										'id_institucion'	=> $id_institucion,
+										'id_sede'			=> $id_sede,
 										'id_profesional_a'	=> $datosIeoProfesional['id_profesional_a'],
 									  ]);
 				
 				if( !$dp ){
 					$dp = new DatosIeoProfesional();
 					$dp->id_institucion = $id_institucion;
+					$dp->id_sede = $id_sede;
 				}
 				
 				//Cargando los datos al modelo
@@ -292,14 +296,18 @@ class EjecucionFaseIiiController extends Controller
 				{
 					if( !$esPrimera )
 					{
-						$value['profesionales']->estado = 1;
+						$value['profesionales']->estado 	= 1;
+						$value['profesionales']->id_sede 	= $id_sede;
 						$value['profesionales']->save( false );
 						
 						$value['ejecucionFase']->id_fase 					= $this->id_fase;
 						$value['ejecucionFase']->id_datos_ieo_profesional 	= $value['profesionales']->id;
 						$value['ejecucionFase']->estado 					= 1;
 						$value['ejecucionFase']->id_ciclo 					= $ciclo->id;
+						$value['ejecucionFase']->docente_creador 			= implode( ",", $value['ejecucionFase']->docente_creador );
 						$value['ejecucionFase']->save( false );
+						
+						$value['ejecucionFase']->docente_creador 			= explode( ",", $value['ejecucionFase']->docente_creador );
 						
 						$condiciones->estado 	= 1;
 						$condiciones->id_fase 	= $this->id_fase;

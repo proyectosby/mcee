@@ -22,22 +22,7 @@ use dosamigos\datepicker\DatePicker;
 /* @var $model app\models\EjecucionFase */
 /* @var $form yii\widgets\ActiveForm */
 
-// $form1 = ActiveForm::begin(
-	// [
-		// 'layout' => 'horizontal',
-		// 'fieldConfig' => [
-			// 'template' => "{beginWrapper}\n{input}\n{endWrapper}",
-			// 'horizontalCssClasses' => [
-				// 'label' 	=> 'col-sm-0',
-				// 'offset' 	=> 'col-sm-offset-2',
-				// 'wrapper' 	=> 'col-sm-1',
-				// 'error' 	=> '',
-				// 'hint' 		=> '',
-				// 'input' 	=> 'col-sm-1',
-			// ],
-		// ],
-	// ]
-	// );
+
 ?>
 
 <div class="ejecucion-fase-form">
@@ -54,7 +39,7 @@ use dosamigos\datepicker\DatePicker;
 		Chosen::className(), [
 			'items' => $docentes,
 			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-			'multiple' => true,
+			'multiple' => false,
 			'clientOptions' => [
 				'search_contains' => true,
 				'single_backstroke_delete' => false,
@@ -116,6 +101,7 @@ use dosamigos\datepicker\DatePicker;
 							'single_backstroke_delete' => false,
 						]
 				])->label(null,['style'=>'display:none']) ?>
+				
 			</div>
 			
 			<div class='col-sm-2'>

@@ -17,7 +17,7 @@ $( document ).ready(function(){
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
-		"Nombre del docente creador",
+		// "Nombre del docente creador",
 		"Asignatura en la que se usa la aplicaión",
 		"Nombre del docente usuario de la Aplicación",
 		"Grado en el que se usa la aplicación",

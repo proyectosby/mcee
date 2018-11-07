@@ -21,23 +21,6 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 /* @var $form yii\widgets\ActiveForm */
-
-// $form1 = ActiveForm::begin(
-	// [
-		// 'layout' => 'horizontal',
-		// 'fieldConfig' => [
-			// 'template' => "{beginWrapper}\n{input}\n{endWrapper}",
-			// 'horizontalCssClasses' => [
-				// 'label' 	=> 'col-sm-0',
-				// 'offset' 	=> 'col-sm-offset-2',
-				// 'wrapper' 	=> 'col-sm-1',
-				// 'error' 	=> '',
-				// 'hint' 		=> '',
-				// 'input' 	=> 'col-sm-1',
-			// ],
-		// ],
-	// ]
-	// );
 ?>
 
 
