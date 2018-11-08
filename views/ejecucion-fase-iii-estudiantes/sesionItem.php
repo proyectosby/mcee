@@ -272,7 +272,12 @@ $index = 0;
 					</div>
 					
 					<div class='col-sm-2'>
-						<?= $form->field($ejecucionFase, "[$sesion->id][$index]fecha_aplicaciones")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+						<?= $form->field($ejecucionFase, "[$sesion->id][$index]fecha_aplicaciones")
+								->textarea([ 
+											'class' => 'form-control', 
+											'maxlength' => true, 
+											'data-type' => 'date'
+										])->label( null, [ 'style' => 'display:none' ]) ?>
 					</div>
 					
 					<div class='col-sm-1'>

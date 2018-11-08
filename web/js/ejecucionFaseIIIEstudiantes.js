@@ -83,13 +83,17 @@
 	//Se agrega editables para los campos textarea de condiciones institucionales
 	$( "textarea[id^=semillerosticejecucionfaseiiiestudiantes]" ).each(function(x){
 		
-		if( $( this ).data( "typevalidation" ) == "number" )
-		{
-			$( this ).data( 'type', 'number' );
-		}
-		else{
-			$( this ).data( 'type', 'textarea' );
-		}
+		// if( $( this ).data( "typevalidation" ) == "number" )
+		// {
+			// $( this ).data( 'type', 'number' );
+		// }
+		// else if( $( this ).data( 'type' ) == 'date' )
+		// {
+			// $( this ).data( 'type', 'date' );
+		// }
+		// else{
+			// $( this ).data( 'type', 'textarea' );
+		// }
 	
 		$( this )
 			.attr({readOnly: true })
@@ -199,13 +203,13 @@
 		
 					//Agrego data-type textarea para que el popup editable salga como textarea
 					//Sin esto mostraría un input para ingresar información
-					if( $( this ).data( "typevalidation" ) == "number" )
-					{
-						$( this ).data( 'type', 'number' );
-					}
-					else{
-						$( this ).data( 'type', 'textarea' );
-					}
+					// if( $( this ).data( "typevalidation" ) == "number" )
+					// {
+						// $( this ).data( 'type', 'number' );
+					// }
+					// else{
+						// $( this ).data( 'type', 'textarea' );
+					// }
 				
 					$( this )
 						.attr({readOnly: true })
