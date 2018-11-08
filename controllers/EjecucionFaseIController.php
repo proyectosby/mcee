@@ -47,6 +47,8 @@ use app\models\CondicionesInstitucionales;
 use app\models\DatosSesiones;
 use app\models\SemillerosTicCiclos;
 use app\models\SemillerosTicAnio;
+use app\models\SemillerosDatosIeo;
+use app\models\AcuerdosInstitucionales;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -276,7 +278,6 @@ class EjecucionFaseIController extends Controller
 									if( $ejecFase )
 									{
 										$ejecFase->estado = 1;
-										$ejecFase->docente = explode( ",", $ejecFase->docente );
 										// $ejecFase->id_fase = $this->id_fase;
 										$ejecucionFase[] = $ejecFase;
 									}
@@ -425,6 +426,7 @@ class EjecucionFaseIController extends Controller
 					$valido = DatosSesiones::validateMultiple( $datosSesiones, [
 									'id_sesion',
 									'fecha_sesion',
+									'duracion_sesion',
 									'estado',
 								] ) && $valido;
 
@@ -493,12 +495,8 @@ class EjecucionFaseIController extends Controller
 											$ejecFase->id_datos_ieo_profesional = $datosIeoProfesional->id;
 										}
 										
-										$ejecFase->docente = implode( ",", $ejecFase->docente );
-										
 										$ejecFase->id_ciclo = $ciclo->id;
 										$ejecFase->save(false);
-										
-										$ejecFase->docente = explode( ",", $ejecFase->docente );
 									}
 									$primera = false;
 								}
@@ -523,16 +521,16 @@ class EjecucionFaseIController extends Controller
 		}
 	
 		
-		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
+		// $dataPersonas 		= Personas::find()
+								// ->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								// ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								// ->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								// ->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								// ->where( 'personas.estado=1' )
+								// ->andWhere( 'id_institucion='.$id_institucion )
+								// ->all();
 		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		
 		$sesiones = Sesiones::find()
 						->where( 'id_fase=1' )
@@ -550,8 +548,48 @@ class EjecucionFaseIController extends Controller
 				$datosModelos[ $sesion->id ][ 'ejecucionesFase' ][] = new EjecucionFase();
 			}
 		}
-		// echo "<pre>"; var_dump( $datosModelos ); echo "</pre>"; exit();
-		// $condiciones = new CondicionesInstitucionales();
+		
+		$profesionales = [];
+		$dataProfesionales = SemillerosDatosIeo::find()
+								->where( 'id_institucion='.$id_institucion )
+								->andWhere( 'sede='.$id_sede )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->all();
+								
+		foreach( $dataProfesionales as $value )
+		{
+			$pros = explode( ",", $value->personal_a );
+			
+			foreach( $pros as $p )
+			{
+				$persona = Personas::findOne( $p );
+				if( empty($profesionales[ $value->id ]) )
+					$profesionales[ $value->id ] = $persona->nombres." ".$persona->apellidos;
+				else
+					$profesionales[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
+			}
+		}
+		
+		
+		$docentes = [];
+		$dataDocentes = AcuerdosInstitucionales::find()
+								->where( 'id_fase='.$this->id_fase )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->all();
+								
+		foreach( $dataDocentes as $value )
+		{
+			$doces = explode( ",", $value->id_docente );
+			
+			foreach( $doces as $d )
+			{
+				$persona = Personas::findOne( $d );
+				if( empty( $docentes[ $value->id ] ) )
+					$docentes[ $value->id ] = $persona->nombres." ".$persona->apellidos;
+				else
+					$docentes[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
+			}
+		}
 		
 		return $this->render('create', [
             'model' 				=>  [ new EjecucionFase() ]+$ejecucionFase,
@@ -565,6 +603,7 @@ class EjecucionFaseIController extends Controller
 			'datosModelos'			=> $datosModelos,
 			'guardado'				=> $guardado,
 			'ciclo'					=> $ciclo,
+            'profesionales'			=> $profesionales,
         ]);
 	
 	}

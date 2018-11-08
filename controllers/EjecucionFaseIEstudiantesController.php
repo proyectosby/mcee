@@ -416,12 +416,12 @@ class EjecucionFaseIEstudiantesController extends Controller
 		$dataPersonas 	= SemillerosDatosIeoEstudiantes::find()
 								->select( 'profecional_a' )
 								->alias( 'se' )
-								->innerJoin( 'semilleros_tic.acuerdos_institucionales_estudiantes ae', 'ae.id_semilleros_datos_estudiantes=se.id' )
+								// ->innerJoin( 'semilleros_tic.acuerdos_institucionales_estudiantes ae', 'ae.id_semilleros_datos_estudiantes=se.id' )
 								->where( 'se.estado=1' )
 								->andWhere( 'se.id_institucion='.$id_institucion )
 								->andWhere( 'se.id_sede='.$id_sede )
-								->andWhere( 'id_ciclo='.$ciclo->id )
-								->andWhere( 'ae.estado=1' )
+								->andWhere( 'se.id_ciclo='.$ciclo->id )
+								// ->andWhere( 'ae.estado=1' )
 								->groupby([ 'profecional_a' ])
 								->all();
 		
@@ -454,7 +454,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 								->andWhere( 'ae.estado=1' )
 								->andWhere( 'se.estado=1' )
 								->andWhere( 'se.profecional_a='."'".$post_profesional_a."'" )
-								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'ae.id_ciclo='.$ciclo->id )
 								->all();
 			
 			foreach( $dataCursos as $dataCurso )
@@ -474,16 +474,16 @@ class EjecucionFaseIEstudiantesController extends Controller
 		}
 
 		/*Se realiza consulta provisonal para obtener listado de docentes*/
-		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
+		// $dataPersonas 		= Personas::find()
+								// ->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								// ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								// ->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								// ->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								// ->where( 'personas.estado=1' )
+								// ->andWhere( 'id_institucion='.$id_institucion )
+								// ->all();
 		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
 		if( !array_key_exists( $datosIeoProfesional->curso_participantes, $cursos ) )

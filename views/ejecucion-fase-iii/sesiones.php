@@ -38,6 +38,7 @@ foreach( $models as $key => $model ){
 														'docentes'		=> $docentes,
 														'form'			=> $form,
 														'profesional'	=> $profesional,
+														'profesionales'	=> $profesionales,
 													] 
 										),
 					'contentOptions'=> []

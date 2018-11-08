@@ -120,11 +120,9 @@ if( $guardado ){
 	
 	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
 	
-	<?php
-		if( !empty( $datosIEO->profecional_a ) && !empty( $datosIEO->docente_aliado ) )
-		{
-			?><h3 style='background-color: #ccc;padding:5px;'>ACUERDOS INSTITUCIONES (CONFORMACIÓN)</h3><?php
-			
+	<h3 style='background-color: #ccc;padding:5px;'>ACUERDOS INSTITUCIONES (CONFORMACIÓN)</h3>
+	
+	<?php	
 			echo $this->render( 'fases',[
 				'fases' 		=> $fases,
 				'docentes' 		=> $docentes,
@@ -134,16 +132,11 @@ if( $guardado ){
 				'modelos' 		=> $modelos,
 				'form' 			=> $form,
 				'cursos' 		=> $cursos,
-			]); 
+			]); ?>
 			
-			?>
 			<div class="form-group">
 				<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
 			</div>
-			<?php
-			
-		}
-	?>
     
 	<!-- <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

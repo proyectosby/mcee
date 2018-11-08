@@ -28,9 +28,10 @@ class DatosSesiones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_sesion', 'fecha_sesion', 'estado'], 'required'],
+            [['id_sesion', 'fecha_sesion', 'estado','duracion_sesion'], 'required'],
             [['id_sesion', 'fecha_sesion', 'estado'], 'default', 'value' => null],
             [['id_sesion', 'estado'], 'integer'],
+            [['duracion_sesion'], 'string'],
             [['fecha_sesion'], 'date', 'format' => 'php:d-m-Y'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_sesion'], 'exist', 'skipOnError' => true, 'targetClass' => Sesiones::className(), 'targetAttribute' => ['id_sesion' => 'id']],
@@ -43,10 +44,11 @@ class DatosSesiones extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' 			=> 'ID',
-            'id_sesion' 	=> 'Id Sesion',
-            'fecha_sesion' 	=> 'Facha Sesion',
-            'estado' 		=> 'Estado',
+            'id' 				=> 'ID',
+            'id_sesion' 		=> 'Id Sesion',
+            'fecha_sesion' 		=> 'Facha Sesion',
+            'estado' 			=> 'Estado',
+            'duracion_sesion'	=> 'Duración de la sesión',
         ];
     }
 }

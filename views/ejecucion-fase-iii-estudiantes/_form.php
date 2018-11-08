@@ -32,6 +32,13 @@ $this->registerJsFile(
 		'depends' => [
 						\yii\web\JqueryAsset::className(),
 						\dosamigos\editable\EditableBootstrapAsset::className(),
+						\dosamigos\editable\EditableBootstrapAsset::className(),
+						\dosamigos\editable\EditableComboDateAsset::className(),
+						\dosamigos\editable\EditableDatePickerAsset::className(),
+						\dosamigos\editable\EditableDateTimePickerAsset::className(),
+						\dosamigos\editable\EditableSelect2Asset::className(),
+						\dosamigos\editable\EditableWysiHtml5Asset::className(),
+						\dosamigos\editable\Select2Asset::className(),
 					]
 	]
 );

@@ -46,6 +46,10 @@ $index = 0;
 					'format' => 'dd-mm-yyyy'
 				]
 			])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
+			
+	<?= $form->field( $datosSesion, "[$sesion->id]duracion_sesion" )
+				->textInput()
+				->label() ?>
 	
 	<div class="form-group">
 		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$sesion->id ]) ?>

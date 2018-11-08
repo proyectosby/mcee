@@ -40,6 +40,10 @@ $index = 0;
 					'format' => 'dd-mm-yyyy'
 				]
 			])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
+			
+	<?= $form->field( $datosSesion, "[$sesion->id]duracion_sesion" )
+				->textInput()
+				->label() ?>
 	
 	<div class="form-group">
 		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$sesion->id ]) ?>
@@ -268,7 +272,12 @@ $index = 0;
 					</div>
 					
 					<div class='col-sm-2'>
-						<?= $form->field($ejecucionFase, "[$sesion->id][$index]fecha_aplicaciones")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label( null, [ 'style' => 'display:none' ]) ?>
+						<?= $form->field($ejecucionFase, "[$sesion->id][$index]fecha_aplicaciones")
+								->textarea([ 
+											'class' => 'form-control', 
+											'maxlength' => true, 
+											'data-type' => 'date'
+										])->label( null, [ 'style' => 'display:none' ]) ?>
 					</div>
 					
 					<div class='col-sm-1'>

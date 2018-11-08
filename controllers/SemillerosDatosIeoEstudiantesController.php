@@ -171,21 +171,17 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 		$id_sede 		= $_SESSION['sede'][0];
 		
 		$datosIEO = false;
-		if( is_array( Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['profecional_a'] ) 
-			&& is_array( Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['docente_aliado'] ) )
+		
+		$datosIEO = SemillerosDatosIeoEstudiantes::findOne([
+							'id_institucion' 		=> $id_institucion,
+							'id_sede' 		 		=> $id_sede,
+							'id_ciclo' 		 		=> $ciclo->id,
+						]);
+						
+		if( $datosIEO )
 		{
-			$datosIEO = SemillerosDatosIeoEstudiantes::findOne([
-								'id_institucion' 		=> $id_institucion,
-								'id_sede' 		 		=> $id_sede,
-								'profecional_a' 		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['profecional_a'] ),
-								'docente_aliado'		=> implode( ",", Yii::$app->request->post('SemillerosDatosIeoEstudiantes')['docente_aliado'] ),
-							]);
-							
-			if( $datosIEO )
-			{
-				$datosIEO->profecional_a 	= explode( ',', $datosIEO->profecional_a );
-				$datosIEO->docente_aliado 	= explode( ',', $datosIEO->docente_aliado );
-			}
+			$datosIEO->profecional_a 	= explode( ',', $datosIEO->profecional_a );
+			$datosIEO->docente_aliado 	= explode( ',', $datosIEO->docente_aliado );
 		}
 		
 		if( !$datosIEO )
@@ -288,9 +284,13 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 			{
 				$datosIEO->estado 			= 1;
 				$datosIEO->id_sede			= $id_sede;
+				$datosIEO->id_ciclo			= $ciclo->id;
 				$datosIEO->profecional_a	= implode( ',', $datosIEO->profecional_a );
 				$datosIEO->docente_aliado	= implode( ',', $datosIEO->docente_aliado );
 				$datosIEO->save( false );
+				
+				$datosIEO->profecional_a	= explode( ',', $datosIEO->profecional_a );
+				$datosIEO->docente_aliado	= explode( ',', $datosIEO->docente_aliado );
 				
 				foreach( $modelos as $id_fase => $modelo )
 				{	
@@ -314,9 +314,6 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 				}
 				
 				$guardado = true;
-				
-				$datosIEO->profecional_a	= explode( ',', $datosIEO->profecional_a );
-				$datosIEO->docente_aliado	= explode( ',', $datosIEO->docente_aliado );
 			}
 		}
 

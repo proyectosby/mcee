@@ -86,7 +86,7 @@ $this->registerJsFile(
 
     <?= $form->field($sede, 'id')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 
-    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $docentes, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value = 0; this.form.submit();'] )->label('Profesional A.') ?>
+    <?= $form->field($datosIeoProfesional, 'id_profesional_a')->dropDownList( $profesionales, [ 'prompt' => 'Seleccione...', 'onchange' => 'guardar.value = 0; this.form.submit();'] )->label('Profesional A.') ?>
     
 	<?= $form->field($datosIeoProfesional, 'estado')->hiddenInput( [ 'value' => 1 ] )->label( null , [ 'style' => 'display:none' ] ); ?>
 	
@@ -164,15 +164,32 @@ $this->registerJsFile(
 			
 			<div class='col-sm-2'>
 
-				<?= $form->field($condiciones, "sesiones_por_docente")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "sesiones_por_docente")
+						->textarea( [ 
+							'class' => 'form-control', 
+							'maxlength' => true, 
+							'data-type' => 'number',
+						])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1 total-sesiones'>
-				<?= $form->field($condiciones, "total_sesiones_ieo")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea', ])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "total_sesiones_ieo")
+						->textarea( [ 
+							'class' => 'form-control', 
+							'maxlength' => true, 
+							'data-type' => 'textarea', 
+							'data-disabled' => 'true',
+						])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1 total-docentes'>
-				<?= $form->field($condiciones, "total_docentes_ieo")->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "total_docentes_ieo")
+						->textarea( [ 
+							'class' => 'form-control', 
+							'maxlength' => true, 
+							'data-type' => 'textarea', 
+							'data-disabled' => 'true',
+						])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 
 		</div>

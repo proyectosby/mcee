@@ -41,6 +41,8 @@ use app\models\Sesiones;
 use app\models\DatosSesiones;
 use app\models\SemillerosTicCiclos;
 use app\models\SemillerosTicAnio;
+use app\models\SemillerosDatosIeo;
+use app\models\AcuerdosInstitucionales;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -209,6 +211,7 @@ class EjecucionFaseIiController extends Controller
 											'id_institucion'	=> $id_institucion,
 											'id_sede'			=> $id_sede,
 											'id_profesional_a'	=> $postDatosProfesional['id_profesional_a'],
+											'estado'			=> 1,
 										  ]);
 		}
 		
@@ -238,8 +241,6 @@ class EjecucionFaseIiController extends Controller
 				{
 					if( !empty( $ejecucionFase['id_datos_sesiones'] ) )
 					{
-						$ejecucionFase->docentes = explode( ",", $ejecucionFase->docentes );
-						
 						$ds = DatosSesiones::findOne( $ejecucionFase['id_datos_sesiones'] );
 						
 						//Dando el formato a la fecha yyyy-mm-dd
@@ -451,10 +452,7 @@ class EjecucionFaseIiController extends Controller
 									$ejecucionFase->id_fase 				= $this->id_fase;
 									$ejecucionFase->estado 					= 1;
 									$ejecucionFase->id_ciclo 				= $ciclo->id;
-									$ejecucionFase->docentes 				= implode( ",", $ejecucionFase->docentes );
 									$ejecucionFase->save(false);
-									
-									$ejecucionFase->docentes 				= explode( ",", $ejecucionFase->docentes );
 								}
 								$esPrimera = false;
 							}
@@ -478,16 +476,61 @@ class EjecucionFaseIiController extends Controller
 		
 		$fase  = Fases::findOne( $this->id_fase );
 		
-		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
+		// $dataPersonas 		= Personas::find()
+								// ->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								// ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								// ->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								// ->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								// ->where( 'personas.estado=1' )
+								// ->andWhere( 'id_institucion='.$id_institucion )
+								// ->all();
 		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		
+		$profesionales = [];
+		$dataProfesionales = SemillerosDatosIeo::find()
+								->where( 'id_institucion='.$id_institucion )
+								->andWhere( 'sede='.$id_sede )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'estado=1' )
+								->all();
+								
+		foreach( $dataProfesionales as $value )
+		{
+			$pros = explode( ",", $value->personal_a );
+			
+			foreach( $pros as $p )
+			{
+				$persona = Personas::findOne( $p );
+				if( empty($profesionales[ $value->id ]) )
+					$profesionales[ $value->id ] = $persona->nombres." ".$persona->apellidos;
+				else
+					$profesionales[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
+			}
+		}
+		
+		
+		$docentes = [];
+		$dataDocentes = AcuerdosInstitucionales::find()
+								->where( 'id_fase='.$this->id_fase )
+								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'estado=1' )
+								->all();
+								
+		foreach( $dataDocentes as $value )
+		{
+			$doces = explode( ",", $value->id_docente );
+			
+			foreach( $doces as $d )
+			{
+				$persona = Personas::findOne( $d );
+				if( empty( $docentes[ $value->id ] ) )
+					$docentes[ $value->id ] = $persona->nombres." ".$persona->apellidos;
+				else
+					$docentes[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
+			}
+		}
+		
 
         return $this->render('create', [
             'fase'  				=> $fase,
@@ -501,6 +544,7 @@ class EjecucionFaseIiController extends Controller
             'datosModelos'			=> $datosModelos,
             'guardado'				=> $guardado,
             'ciclo'					=> $ciclo,
+            'profesionales'			=> $profesionales,
         ]);
     }
 
