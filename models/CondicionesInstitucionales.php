@@ -42,7 +42,8 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
         return [
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'id_datos_ieo_profesional', 'estado', 'total_sesiones_ieo', 'total_docentes_ieo','sesiones_por_docente','id_fase'], 'required'],
             [['id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
-            [['id_datos_ieo_profesional', 'estado'], 'integer'],
+            [['total_apps'], 'default', 'value' => 0 ],
+            [['id_datos_ieo_profesional', 'estado','total_apps'], 'integer'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'total_sesiones_ieo', 'total_docentes_ieo'], 'string', 'max' => 500],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
@@ -67,6 +68,7 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
             'sesiones_por_docente' 		=> 'Sesiones por Docente',
             'id_fase' 					=> 'ID Fase',
             'id_ciclo' 					=> 'Ciclo',
+            'total_apps'				=> 'Total apps desarrolladas',
         ];
     }
 }

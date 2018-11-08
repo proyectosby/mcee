@@ -40,6 +40,7 @@ use app\models\SemillerosTicCiclos;
 use app\models\SemillerosTicAnio;
 use app\models\SemillerosDatosIeo;
 use app\models\AcuerdosInstitucionales;
+use app\models\Paralelos;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -141,6 +142,7 @@ class EjecucionFaseIiiController extends Controller
      */
     public function actionCreate()
     {
+		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
 		$ciclo = new SemillerosTicCiclos();
 		
 		$ciclo->load( Yii::$app->request->post() );
@@ -382,6 +384,23 @@ class EjecucionFaseIiiController extends Controller
 					$docentes[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
 			}
 		}
+		
+		$dataCursos = 	Paralelos::find()
+								->alias( 'p' )
+								->innerJoin( 'sedes_jornadas as sj', 'sj.id=p.id_sedes_jornadas' )
+								->innerJoin( 'sedes_niveles as sn', 'sn.id=p.id_sedes_niveles' )
+								->innerJoin( 'jornadas as j', 'j.id=sj.id_jornadas' )
+								->innerJoin( 'niveles as n', 'n.id=sn.id_niveles' )
+								->innerJoin( 'sedes as s', 's.id=sn.id_sedes' )
+								->where( 's.id='.$id_sede )
+								->andWhere( 'sj.id_sedes = s.id' )
+								->andWhere( 'j.estado=1' )
+								->andWhere( 'n.estado=1' )
+								->andWhere( 's.estado=1' )
+								->orderby( 'descripcion' )
+								->all();
+								
+		$cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
 
         return $this->render('create', [
             'model' 		=> $model,
@@ -395,6 +414,7 @@ class EjecucionFaseIiiController extends Controller
             'guardado'		=> $guardado,
             'ciclo'			=> $ciclo,
 			'profesionales'	=> $profesionales,
+			'cursos'		=> $cursos,
         ]);
     }
 
