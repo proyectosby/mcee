@@ -209,7 +209,30 @@ section.content {
 		</tr>
 	</thead>
 	<tbody>
-		<tr>
+		<?php
+			foreach ($data as $key => $value) {
+				?>
+					<tr>
+						<td style='border: 1px solid black;'><?= $value[0]?></td>
+						<td style='border: 1px solid black;'><?= $value[1]?></td>
+						<td style='border: 1px solid black;'><?= $value[2]?></td>
+						<td style='border: 1px solid black;'><?= $value[3]?></td>
+						<td style='border: 1px solid black;'><?= $value[4]?></td>
+						<td style='border: 1px solid black;'><?= $value[5]?></td>
+						<td style='border: 1px solid black;'><?= $value[6]?></td>
+						<td style='border: 1px solid black;'><?= $value[7]?></td>
+						<td style='border: 1px solid black;'><?= $value[8]?></td>
+						<td style='border: 1px solid black;'><?= $value[9]?></td>
+						<td style='border: 1px solid black;'><?= $value[10]?></td>
+
+					</tr>
+				<?php
+
+
+			}
+		?>
+		
+		<!--<tr>
 			<td style='border: 1px solid black;'>1</td>
 			<td style='border: 1px solid black;'>2</td>
 			<td style='border: 1px solid black;'>3</td>
@@ -300,7 +323,6 @@ section.content {
 			<td style='border: 1px solid black;'>88</td>
 			<td style='border: 1px solid black;'>89</td>
 			<td style='border: 1px solid black;'>90</td>
-			
-		</tr>
+		</tr>-->
 	</tbody>
 </table>
