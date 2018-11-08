@@ -33,6 +33,7 @@ use app\models\AcuerdosInstitucionales;
 // $acuerdos = [new AcuerdosInstitucionales()];
 // $idPE = 0;
 
+$total_docentes = 0;
 ?>
 
 <div class="container-fluid" id='container-<?= $fase->id ?>' fase='<?= $fase->id ?>'>
@@ -141,7 +142,10 @@ use app\models\AcuerdosInstitucionales;
 			
 			<div class="col-sm-1" style='padding:0px;'>
 				<?= $form->field($acuerdo, "[$fase->id][$index]total_docentes" )
-						->textarea( ['data-type' => 'number' ] )
+						->textarea( [
+							'data-type' => 'number',
+							'data-disabled' => 'true',
+						] )
 						->label(null,['style'=>'display:none']) ?>
 			</div>
 		
@@ -155,8 +159,17 @@ use app\models\AcuerdosInstitucionales;
 	
 	<?php
 		$index++; 
+		
+		$total_docentes += $acuerdo->total_docentes;
+		
 		endforeach; 
 	?>
+	
+	<div>
+	
+		<div><label>Total docentes por fase: </label>&nbsp;<span id='total_docentes-<?= $fase->id ?>' style='text-align: center;'><?= $total_docentes ?></span></div>
+	
+	</div>
 	
 </div>
 
