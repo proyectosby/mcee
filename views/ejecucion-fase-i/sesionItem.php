@@ -168,7 +168,12 @@ use nex\chosen\Chosen;
 				
 				<div class='col-sm-1 sesiones'>
 					<?= $form->field( $ejecucionFase, "[$indexEf][$index]paricipacion_sesiones" )
-							->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'] )
+							->textarea( [ 
+								'class' => 'form-control', 
+								'maxlength' => true, 
+								'data-type' => 'select',
+								'data-source' => '[{value: 1, text: "1"}, {value: 2, text: "2"}, {value: 3, text: "3"}, {value: 4, text: "4"}, {value: 5, text: "5"}, {value: 6, text: "6"}]',
+							] )
 							->label( null, ['style' => 'display:none'] ) ?>
 				</div>
 				
