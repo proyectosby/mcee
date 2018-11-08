@@ -153,58 +153,58 @@ section.content {
 			<th colspan='2' rowspan='1' style='border: 1px solid black;'>Participantes del uso de la App</th>
 		</tr>
 		<tr style='background-color:#ccc'>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
-			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Docentes por sesión</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>N&uacute;mero de estudiantes</th>

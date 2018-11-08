@@ -93,74 +93,84 @@ class ResumenOperativoFasesDocentesController extends Controller
 		foreach ($datos_ieo_profesional as $dip)
 		{
 			$html.="<tr>";	
-			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_institucion']."</td>";	
-			$html.="<td style='border: 1px solid black;'>".$dip['institucion']."</td>";	
-			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_sede']."</td>";	
-			$html.="<td style='border: 1px solid black;'>".$dip['sede']."</td>";
 			
 			$idInstitucion = $dip['id_institucion'];
 			$idSede = $dip['id_sede'];
 			
-			
-			$profesional_a = $dip['id_profesional_a'];
-				$command = $connection->createCommand
-				("
-					SELECT concat(p.nombres,' ',p.apellidos) FROM public.personas as p WHERE id in($profesional_a)
-				");
-				$nombres = $command->queryAll();
-				
-				foreach( $nombres as $nom)
-				{
-					$nombre[]= $nom['concat'];
-				}
-				$nombres = implode(",",$nombre);
-				$nombre=null;
-				
-				$html.="<td style='border: 1px solid black;'>".$nombres."</td>";	
-				
-				$command = $connection->createCommand
-				("
-					SELECT fecha_sesion FROM semilleros_tic.datos_sesiones WHERE id_sesion = 1 ORDER BY id ASC 
-				");
-				$fechas = $command->queryAll();
-				$html.="<td style='border: 1px solid black;'>".$fechas[$contador]['fecha_sesion']."</td>";	
-				
-				
-				
-				$id_datos_ieo_profesional = $dip['id'];
-				$command = $connection->createCommand
-				("
-					SELECT docente,
-					asignaturas,
-					especiaidad
-					
-					FROM semilleros_tic.ejecucion_fase 
-					WHERE id_datos_ieo_profesional = $id_datos_ieo_profesional 
-				");
-				$datoSemillerosTicEjecucionFase = $command->queryAll();
-				
-				foreach ($datoSemillerosTicEjecucionFase as $dtse)
-				{	
-					$idDocente[] = $dtse['docente'];
-				}
-				$idDocentes = implode(",",$idDocente);
-				
+			//obtener las fecha de inicio de semillero 
+			$command = $connection->createCommand
+			("
+				SELECT fecha_sesion FROM semilleros_tic.datos_sesiones WHERE id_sesion = 1 ORDER BY id ASC 
+			");
+			$fechas = $command->queryAll();
 
-				$command = $connection->createCommand
-				("
-					SELECT concat(p.nombres,' ',p.apellidos) as nombre
-					FROM public.personas as p WHERE id in($idDocentes)
-				");
-				$nombresDocentes = $command->queryAll();
-				$nombresDocentes = $this->arrayArrayComas($nombresDocentes,"nombre");
-				$nombresAsignaturas = $this->arrayArrayComas($datoSemillerosTicEjecucionFase,"asignaturas");
-				$nombresEspeciaidad= $this->arrayArrayComas($datoSemillerosTicEjecucionFase,"especiaidad");
+			$id_datos_ieo_profesional = $dip['id'];
+			$command = $connection->createCommand
+			("
+				SELECT 
+				id_datos_sesiones,
+				docente,
+				asignaturas,
+				especiaidad,
+				seiones_empleadas,
+				numero_apps
 				
-				$html.="<td style='border: 1px solid black;'>".$nombresDocentes ."</td>";	
-				$html.="<td style='border: 1px solid black;'>".$nombresAsignaturas ."</td>";	
-				$html.="<td style='border: 1px solid black;'>".$nombresEspeciaidad ."</td>";	
+				FROM semilleros_tic.ejecucion_fase 
+				WHERE id_datos_ieo_profesional = $id_datos_ieo_profesional 
+			");
+			$datoSemillerosTicEjecucionFase = $command->queryAll();
+			
+			
+			$docente = array();
+			$asignaturas = array();
+			$especiaidad = array();
+			
+			
+			//se agrupa la informacion de todas las sesiones para luego ser concatenada
+			foreach ($datoSemillerosTicEjecucionFase as $datosSTEF => $valor)
+			{	
 				
-				//para la fecuencia de las sesiones se trae de la conformacion de semilleros
+				@$asignatura[$valor['id_datos_sesiones']][]= $valor['asignaturas'];
+				@$especiaidad[$valor['id_datos_sesiones']][]= $valor['especiaidad'];
+				@$datosSesion[$valor['id_datos_sesiones']]= $valor['id_datos_sesiones'];
+				@$seionesEmpleadas+= $valor['seiones_empleadas'];
+				@$numeroApps+= $valor['numero_apps'];
+					
+			}
+				
+			
+			$idDatosSesiones = implode(",",$datosSesion);			
+			//se pasa a por comas para mostrar todas la materias
+			//variable que guarda los datos a mostrar
+			$asignaturas="";
+			foreach ($asignatura as $asig)
+			{
+				$asignaturas .= implode(",",$asig).",";
+			}
+			
+			$especiaidades="";
+			foreach ($especiaidad as $esp)
+			{
+				$especiaidades .= implode(",",$esp).",";
+			}
+			
+			
+			$command = $connection->createCommand
+			("
+				SELECT fecha_sesion 
+				FROM semilleros_tic.datos_sesiones
+				WHERE id in($idDatosSesiones)
+				ORDER BY id ASC 
+			");
+			$datos_sesiones = $command->queryAll();
+			
+		
+			
+			
+			// $nombresAsignaturas = $this->arrayArrayComas($datoSemillerosTicEjecucionFase,"asignaturas");
+			
+			
+			//para la fecuencia de las sesiones se trae de la conformacion de semilleros
 			$frecuenciaSesiones =array();
 			$command = $connection->createCommand("
 			select ai.frecuencias_sesiones
@@ -190,20 +200,12 @@ class ResumenOperativoFasesDocentesController extends Controller
 			and a.estado = 1
 			and c.estado =1
 			group by ai.frecuencias_sesiones");
-			
-			
+
 			$frecuenciaSesiones = $command->queryAll();
 			$frecuenciaSesiones[0]['frecuencias_sesiones'] =15;
-			// print_r($result2);
-			//se llena el resultado de a consulta en un array
-			// foreach($result2 as $key)
-			// {
-				// $frecuenciaSesiones[]=$key;
-			// }
 			
 			
 			//consultar la descripcion de la frecuencia sesiones
-			// $frecuenciaSesionesDescripcion =array();
 			$command = $connection->createCommand("select descripcion
 			from parametro
 			where id_tipo_parametro = 6 
@@ -216,13 +218,67 @@ class ResumenOperativoFasesDocentesController extends Controller
 			{
 				$frecuenciaSesionesDescripcion.=" ".implode(" ",$key);	
 			}
-		
-
+			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_institucion']."</td>";	
+			$html.="<td style='border: 1px solid black;'>".$dip['institucion']."</td>";	
+			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_sede']."</td>";	
+			$html.="<td style='border: 1px solid black;'>".$dip['sede']."</td>";
+			
+			//profesional_a
+			$html.="<td style='border: 1px solid black;'>pendinente</td>";
+			
+			//Fecha de inicio del Semillero
+			$html.="<td style='border: 1px solid black;'>".$fechas[$contador]['fecha_sesion']."</td>";	
+			
+			//nombre del docente
+			$html.="<td style='border: 1px solid black;'>pendinente</td>";
+			
+			//Nombre de las asignaturas que enseña
+			$html.="<td style='border: 1px solid black;'>".$asignaturas."</td>";	
+			
+			//Especialidad de la Media Técnica o Técnica	
+			$html.="<td style='border: 1px solid black;'>".$especiaidades ."</td>";
+			
+			//Frecuencia sesiones mensual
 			$html.="<td style='border: 1px solid black;'>".$frecuenciaSesionesDescripcion ."</td>";	
-				
-				
-				
+			//Promedio de duración por cada sesión (hora reloj)
+			$html.="<td style='border: 1px solid black;'>pendinente</td>";
+			
+			//docente por sesion
+			
+			
+			// echo "<pre>"; print_r($datos_sesiones); echo "</pre>"; 
+			// echo "<pre>"; print_r($datos_sesiones[0]); echo "</pre>"; 
+			for($i=0;$i<=5;$i++)
+			{
+				$html.="<td style='border: 1px solid black;'></td>";
+				$html.="<td style='border: 1px solid black;'>".@$datos_sesiones[$i]['fecha_sesion']."</td>";
+				$html.="<td style='border: 1px solid black;'></td>";
+			}
+				// echo "<pre>"; print_r($datos_sesiones); echo "</pre>"; 
+			
+			// $html.="<td style='border: 1px solid black;'>pendinente</td>";
+			
+			//total Sesiones
+			$html.="<td style='border: 1px solid black;'>$seionesEmpleadas</td>";
+			
+			//Número de Apps 0.0 creadas
+			$html.="<td style='border: 1px solid black;'>$numeroApps</td>";
+			
+			
+			
 			$html.="</tr>";
+			
+			//se borra le variable para que quede vacia en el siguiente ciclo del foreach
+			$asignaturas	= null;
+			$especiaidades	= null;
+			$datosSesion	= null;
+			$seionesEmpleadas = null;
+			$asignatura		= null;
+			$especiaidad	= null;
+			$datosSesion	= null;
+			$seionEmpleada	= null;
+			$numeroApp		= null;
+			$numeroApps		= null;
 			$contador++;
 		}
 		echo json_encode($html);
