@@ -211,7 +211,25 @@ $( document ).ready(function(){
 							"placeholder_text_multiple"	:"Select some options",
 							"no_results_text"			:"No results match",
 						});
-				})
+				});
+				
+				//Todos los campos que terminan ralizan el calculo  del campo total docentes
+				$( "[id$=id_docente]", filaClonada ).on( "change", function() {
+					
+					var total = $( "option:selected", this ).length;
+					
+					$( "#"+this.id.substr( 0, this.id.length-"id_docente".length )+"total_docentes" ).val( total );
+					
+					var fase = this.id.split("-")[1];
+					
+					var totalDocentes = 0;
+					
+					$( "[id$=total_docentes]", $( "#container-"+fase ) ).each(function(){
+						totalDocentes += parseInt( this.value );
+					});
+					
+					$( "#total_docentes-"+fase ).html( totalDocentes );
+				});
 				
 				consecutivo++;
 			});
@@ -231,6 +249,17 @@ $( document ).ready(function(){
 				}
 				
 				$( "[id^=dvFilas]", _container ).last().remove();
+				
+				
+				//Calculo el total de docentes por fase nuevamente
+				var totalDocentes = 0;
+				
+				$( "[id$=total_docentes]", $( "#container-"+fase ) ).each(function(){
+					totalDocentes += parseInt( this.value );
+				});
+				
+				$( "#total_docentes-"+fase ).html( totalDocentes );
+				
 			});
 		});
 	});

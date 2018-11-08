@@ -165,12 +165,12 @@ $total_docentes = 0;
 		endforeach; 
 	?>
 	
-	<div>
-	
-		<div><label>Total docentes por fase: </label>&nbsp;<span id='total_docentes-<?= $fase->id ?>' style='text-align: center;'><?= $total_docentes ?></span></div>
-	
-	</div>
-	
+</div>
+
+<div>
+
+	<div><label>Total docentes por fase: </label>&nbsp;<span id='total_docentes-<?= $fase->id ?>' style='text-align: center;'><?= $total_docentes ?></span></div>
+
 </div>
 
 
