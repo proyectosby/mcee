@@ -45,6 +45,10 @@ use dosamigos\datepicker\DatePicker;
 			]
 	])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
 	
+	<?= $form->field( $dataSesion, "[$indexEf]duracion_sesion" )
+				->textInput()
+				->label() ?>
+	
 	<div class="form-group">
 		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success', 'id' => 'btnAddFila'.$indexEf ]) ?>
 		<?= Html::button('Eliminar fila', ['class' => 'btn btn-success', 'id' => 'btnRemoveFila'.$indexEf, "style" => "display:none" ]) ?>
@@ -140,7 +144,7 @@ use dosamigos\datepicker\DatePicker;
 							Chosen::className(), [
 								'items' => $docentes,
 								'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-								'multiple' => true,
+								'multiple' => false,
 								'clientOptions' => [
 									'search_contains' => true,
 									'single_backstroke_delete' => false,

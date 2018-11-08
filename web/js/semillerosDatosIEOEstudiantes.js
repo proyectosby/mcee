@@ -68,19 +68,19 @@ $( document ).ready(function(){
 		
 	});
 	
-	$( "#semillerosdatosieoestudiantes-profecional_a,#semillerosdatosieoestudiantes-docente_aliado" ).change(function(){
+	// $( "#semillerosdatosieoestudiantes-profecional_a,#semillerosdatosieoestudiantes-docente_aliado" ).change(function(){
 		
-		var val = true;
+		// var val = true;
 		
-		val = ( $.trim( $( "#semillerosdatosieoestudiantes-profecional_a" ).val() ) != '' ? true : false ) && val;
-		val = ( $.trim( $( "#semillerosdatosieoestudiantes-docente_aliado" ).val() ) != '' ? true : false ) && val;
+		// val = ( $.trim( $( "#semillerosdatosieoestudiantes-profecional_a" ).val() ) != '' ? true : false ) && val;
+		// val = ( $.trim( $( "#semillerosdatosieoestudiantes-docente_aliado" ).val() ) != '' ? true : false ) && val;
 		
-		if( val )
-		{
-			$( "#guardar" ).val( 0 )
-			this.form.submit();
-		}
-	});
+		// if( val )
+		// {
+			// $( "#guardar" ).val( 0 )
+			// this.form.submit();
+		// }
+	// });
 	
 	/****************************************************************************************
 	 * Se asigna las funcionalidades de los botones agregar y eliminar

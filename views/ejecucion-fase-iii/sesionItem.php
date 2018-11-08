@@ -37,7 +37,7 @@ use dosamigos\datepicker\DatePicker;
 
 	<?= $form->field( $profesional, "[$index]id_profesional_a" )->widget(
 		Chosen::className(), [
-			'items' => $docentes,
+			'items' => $profesionales,
 			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
 			'multiple' => false,
 			'clientOptions' => [
@@ -95,7 +95,7 @@ use dosamigos\datepicker\DatePicker;
 					Chosen::className(), [
 						'items' => $docentes,
 						'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-						'multiple' => true,
+						'multiple' => false,
 						'clientOptions' => [
 							'search_contains' => true,
 							'single_backstroke_delete' => false,
@@ -269,7 +269,7 @@ use dosamigos\datepicker\DatePicker;
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= $form->field( $model, "[$index]fecha_uso_aplicaciones" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+				<?= $form->field( $model, "[$index]fecha_uso_aplicaciones" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'date'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-2'>

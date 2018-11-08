@@ -103,7 +103,7 @@ if( $guardado ){
     
 	<?= $form->field($datosIeoProfesional, 'id_profesional_a')->widget(
 		Chosen::className(), [
-			'items' => [ '' => 'Seleccione...' ] + $docentes,
+			'items' => [ '' => 'Seleccione...' ] + $profesionales,
 			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
 			'multiple' => false,
 			'clientOptions' => [
@@ -182,11 +182,23 @@ if( $guardado ){
 			</div>
 			
 			<div class='col-sm-1 total-sesiones'>
-				<?= $form->field($condiciones, "total_sesiones_ieo")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "total_sesiones_ieo")
+						->textarea([ 
+							'class' 		=> 'form-control', 
+							'maxlength' 	=> true, 
+							'data-type' 	=> 'textarea',
+							'data-disabled' => 'true',
+						])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
 			<div class='col-sm-1 total-docentes'>
-				<?= $form->field($condiciones, "total_docentes_ieo")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
+				<?= $form->field($condiciones, "total_docentes_ieo")
+						->textarea([ 
+							'class' 		=> 'form-control', 
+							'maxlength' 	=> true, 
+							'data-type' 	=> 'textarea',
+							'data-disabled' => 'true',
+						])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 
 		</div>
@@ -213,7 +225,7 @@ if( $guardado ){
 				});
 
 				$(".total-docentes").click(function(){
-					$("#condicionesinstitucionales-total_docentes_ieo").text($("input:checkbox:checked").length - 4);
+					$("#condicionesinstitucionales-total_docentes_ieo").text($( "select[id$=docente] option:selected" ).length);
 				});
 				
 			});

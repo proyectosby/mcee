@@ -64,7 +64,10 @@ use nex\chosen\Chosen;
 					'format' => 'dd-mm-yyyy'
 				]
 		])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
-	
+		
+	<?= $form->field( $datosSesion, "[$indexEf]duracion_sesion" )
+				->textInput()
+				->label() ?>
 	
 	<div class="form-group">
 		<?= Html::button('Agregar fila' , ['class' => 'btn btn-success agregar', 'id' => 'btnAddFila'.$sesion->id ]) ?>
@@ -143,7 +146,7 @@ use nex\chosen\Chosen;
 								Chosen::className(), [
 									'items' => $docentes,
 									'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-									'multiple' => true,
+									'multiple' => false,
 									'clientOptions' => [
 										'search_contains' => true,
 										'single_backstroke_delete' => false,
