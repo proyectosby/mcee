@@ -213,17 +213,26 @@ section.content {
 			foreach ($data as $key => $value) {
 				?>
 					<tr>
-						<td style='border: 1px solid black;'><?= $value[0]?></td>
-						<td style='border: 1px solid black;'><?= $value[1]?></td>
-						<td style='border: 1px solid black;'><?= $value[2]?></td>
-						<td style='border: 1px solid black;'><?= $value[3]?></td>
-						<td style='border: 1px solid black;'><?= $value[4]?></td>
-						<td style='border: 1px solid black;'><?= $value[5]?></td>
-						<td style='border: 1px solid black;'><?= $value[6]?></td>
-						<td style='border: 1px solid black;'><?= $value[7]?></td>
-						<td style='border: 1px solid black;'><?= $value[8]?></td>
-						<td style='border: 1px solid black;'><?= $value[9]?></td>
-						<td style='border: 1px solid black;'><?= $value[10]?></td>
+						<td style='border: 1px solid black;'><?= isset($value[0]) ? $value[0] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[1]) ? $value[1] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[2]) ? $value[2] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[3]) ? $value[3] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[4]) ? $value[4] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[5]) ? $value[5] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[6]) ? $value[6] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[7]) ? $value[7] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[8]) ? $value[8] : '' ?></td>
+						
+						<?php
+							for ($i=0; $i < 25; $i++) { 
+								?>
+									<td style='border: 1px solid black;'><?= isset($datosFase1[$i]) ? $datosFase1[$i] : '' ?></td>
+								<?php
+							}
+						?>
+							<td style='border: 1px solid black;'><?= isset($value[9]) ? $value[9] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[10]) ? $value[10] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[11]) ? $value[11] : '' ?></td>
 
 					</tr>
 				<?php
