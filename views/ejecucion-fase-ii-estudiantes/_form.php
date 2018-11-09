@@ -142,7 +142,7 @@ if( $guardado ){
 			
 			</div>
 			
-			<div class='row text-center title2' style='width:100%;'>
+			<div class='row text-center title' style='width:100%;'>
 				<div class='col-sm-2'>
 					<span total class='form-control' style='background-color:#ccc;'>Por parte de la IEO</span>
 				</div>
