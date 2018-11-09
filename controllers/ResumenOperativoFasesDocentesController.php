@@ -88,7 +88,8 @@ class ResumenOperativoFasesDocentesController extends Controller
 							a.descripcion as anio, 
 							c.descripcion as ciclos,
 							fa.descripcion as fase,
-							sdi.personal_a
+							sdi.personal_a,
+							sdi.id as id_semilleros
 			FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i, semilleros_tic.anio as a, 
 					semilleros_tic.fases as fa, semilleros_tic.ciclos as c,	semilleros_tic.ejecucion_fase as ef, semilleros_tic.semilleros_datos_ieo as sdi
 			WHERE 	dip.id_institucion = i.id
@@ -101,7 +102,9 @@ class ResumenOperativoFasesDocentesController extends Controller
 			AND 	sdi.id_institucion =dip.id_institucion
 			AND 	sdi.sede = dip.id_sede 
 			AND 	sdi.id_ciclo =ef.id_ciclo
-			GROUP BY dip.id,i.codigo_dane,i.descripcion, s.codigo_dane, s.descripcion,i.id,s.id, a.descripcion, c.descripcion,fa.descripcion,sdi.personal_a
+			GROUP BY dip.id,i.codigo_dane,i.descripcion, 
+			s.codigo_dane, s.descripcion,i.id,s.id, a.descripcion,
+			c.descripcion,fa.descripcion,sdi.personal_a, sdi.id
 			ORDER BY i.id,s.id
 			");
 		$datos_ieo_profesional = $command->queryAll();
@@ -165,23 +168,24 @@ class ResumenOperativoFasesDocentesController extends Controller
 			{
 				$asignaturas .= implode(",",$asig).",";
 			}
+			$asignaturas = substr($asignaturas,0,-1);
 			
-			$especiaidades="";
-			foreach ($especiaidad as $esp)
-			{
-				$especiaidades .= implode(",",$esp).",";
-			}
-			
+		
 			
 			$command = $connection->createCommand
 			("
-				SELECT fecha_sesion 
+				SELECT 
+				fecha_sesion,
+				duracion_sesion
+				
 				FROM semilleros_tic.datos_sesiones
 				WHERE id in($idDatosSesiones)
 				ORDER BY id ASC 
 			");
 			$datos_sesiones = $command->queryAll();
 			
+			
+			// echo "<pre>"; print_r($datos_sesiones); echo "</pre>"; 
 			//cambio pendiente
 			//para la fecuencia de las sesiones se trae de la conformacion de semilleros
 			$frecuenciaSesiones =array();
@@ -244,18 +248,31 @@ class ResumenOperativoFasesDocentesController extends Controller
 			$nomresPersonalA = $this->arrayArrayComas($datoPersonalA,'nombre');
 		
 			
-			// $command = $connection->createCommand("
-			// SELECT 
-			// id_docentes,
-			// asignatura
-			
-			// FROM semilleros_tic.acuerdos_institucionales
-			// WHERE id_	
-			// ORDER BY id ASC 
-			// ");
-			// $datosEjeccionFaseii = $command->queryAll();
 			
 			
+			//nombres de los docentes 
+			$idSemilleros = $dip['id_semilleros'];
+			$command = $connection->createCommand
+			("
+				SELECT 
+				id_docente,
+				especialidad
+				FROM semilleros_tic.acuerdos_institucionales
+				WHERE id_semilleros_datos_ieo = $idSemilleros
+			");
+			$datoAcuerdosInstitucionales = $command->queryAll();	
+			$datosIdDocentes = $this->arrayArrayComas($datoAcuerdosInstitucionales,'id_docente');
+			$especialidades= $this->arrayArrayComas($datoAcuerdosInstitucionales,'especialidad');
+			
+			
+			$command = $connection->createCommand
+			("
+				SELECT concat(p.nombres,' ',p.apellidos) as nombre		
+				FROM public.personas as p
+				WHERE id in($datosIdDocentes )
+			");
+			$datosDocentes = $command->queryAll();	
+			$nombresDocentes = $this->arrayArrayComas($datosDocentes,'nombre');
 			//datos Fase II
 			$command = $connection->createCommand("
 			SELECT * 
@@ -283,13 +300,13 @@ class ResumenOperativoFasesDocentesController extends Controller
 			$html.="<td style='border: 1px solid black;'>".@$fechas[$contador]['fecha_sesion']."</td>";	
 			
 			//nombre del docente
-			$html.="<td style='border: 1px solid black;'>pendinente</td>";
+			$html.="<td style='border: 1px solid black;'>".$nombresDocentes."</td>";
 			
 			//Nombre de las asignaturas que enseña
 			$html.="<td style='border: 1px solid black;'>".$asignaturas."</td>";	
 			
 			//Especialidad de la Media Técnica o Técnica	
-			$html.="<td style='border: 1px solid black;'>".$especiaidades ."</td>";
+			$html.="<td style='border: 1px solid black;'>".$especialidades."</td>";
 			
 			//Frecuencia sesiones mensual
 			$html.="<td style='border: 1px solid black;'>".$frecuenciaSesionesDescripcion ."</td>";	
@@ -301,7 +318,8 @@ class ResumenOperativoFasesDocentesController extends Controller
 			{
 				$html.="<td style='border: 1px solid black;'></td>";
 				$html.="<td style='border: 1px solid black;'>".@$datos_sesiones[$i]['fecha_sesion']."</td>";
-				$html.="<td style='border: 1px solid black;'></td>";
+				$html.="<td style='border: 1px solid black;'>".@$datos_sesiones[$i]['duracion_sesion']."</td>";
+				
 			}
 
 			
