@@ -92,6 +92,8 @@ section.content {
 	<thead>
 		<tr style='background-color:#ccc;text-align:center;'>
 			<th colspan='4' style='border: 1px solid black;'>Datos IEO</th>
+			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Año</th>
+			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Ciclo</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Profesional A.</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Fecha de inicio del Semillero</th>
 			<th colspan='30' style='border: 1px solid black;'>Fase I Creaci&oacute;n y prueba</th>
@@ -216,6 +218,8 @@ section.content {
 						<td style='border: 1px solid black;'><?= isset($value[0]) ? $value[0] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[1]) ? $value[1] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[2]) ? $value[2] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[3]) ? $value[3] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[3]) ? $value[3] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[3]) ? $value[3] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[4]) ? $value[4] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[5]) ? $value[5] : '' ?></td>
