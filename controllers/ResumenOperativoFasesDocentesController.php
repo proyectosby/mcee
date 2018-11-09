@@ -81,11 +81,29 @@ class ResumenOperativoFasesDocentesController extends Controller
 		// variable con la conexion a la base de datos 
 		$connection = Yii::$app->getDb();
 		$command = $connection->createCommand("
-		SELECT	dip.id,i.codigo_dane as codigo_dane_institucion, i.descripcion as institucion, s.codigo_dane as codigo_dane_sede,
-				s.descripcion as sede,dip.id_profesional_a,i.id as id_institucion, s.id as id_sede
-		FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i
-		WHERE 	dip.id_institucion = i.id
-		AND		dip.id_sede = s.id");
+			SELECT	dip.id ,i.codigo_dane as codigo_dane_institucion, i.descripcion as institucion, s.codigo_dane as codigo_dane_sede,
+							s.descripcion as sede, 
+							i.id as id_institucion, 
+							s.id as id_sede, 
+							a.descripcion as anio, 
+							c.descripcion as ciclos,
+							fa.descripcion as fase,
+							sdi.personal_a
+			FROM 	semilleros_tic.datos_ieo_profesional as dip,public.sedes as s,public.instituciones as i, semilleros_tic.anio as a, 
+					semilleros_tic.fases as fa, semilleros_tic.ciclos as c,	semilleros_tic.ejecucion_fase as ef, semilleros_tic.semilleros_datos_ieo as sdi
+			WHERE 	dip.id_institucion = i.id
+			AND		dip.id_sede = s.id
+			AND 	dip.estado = 1
+			AND 	dip.id = ef.id_datos_ieo_profesional
+			AND 	ef.id_fase=fa.id 
+			AND 	ef.id_ciclo = c.id
+			AND 	c.id_anio = a.id
+			AND 	sdi.id_institucion =dip.id_institucion
+			AND 	sdi.sede = dip.id_sede 
+			AND 	sdi.id_ciclo =ef.id_ciclo
+			GROUP BY dip.id,i.codigo_dane,i.descripcion, s.codigo_dane, s.descripcion,i.id,s.id, a.descripcion, c.descripcion,fa.descripcion,sdi.personal_a
+			ORDER BY i.id,s.id
+			");
 		$datos_ieo_profesional = $command->queryAll();
 	
 		$html="";
@@ -164,12 +182,7 @@ class ResumenOperativoFasesDocentesController extends Controller
 			");
 			$datos_sesiones = $command->queryAll();
 			
-		
-			
-			
-			// $nombresAsignaturas = $this->arrayArrayComas($datoSemillerosTicEjecucionFase,"asignaturas");
-			
-			
+			//cambio pendiente
 			//para la fecuencia de las sesiones se trae de la conformacion de semilleros
 			$frecuenciaSesiones =array();
 			$command = $connection->createCommand("
@@ -218,16 +231,56 @@ class ResumenOperativoFasesDocentesController extends Controller
 			{
 				$frecuenciaSesionesDescripcion.=" ".implode(" ",$key);	
 			}
+			
+			$idProfesionalA = $dip['personal_a'];
+			//nombres de los profesional a
+			$command = $connection->createCommand
+			("
+				SELECT concat(p.nombres,' ',p.apellidos) as nombre		
+				FROM public.personas as p
+				WHERE id in($idProfesionalA )
+			");
+			$datoPersonalA = $command->queryAll();	
+			$nomresPersonalA = $this->arrayArrayComas($datoPersonalA,'nombre');
+		
+			
+			// $command = $connection->createCommand("
+			// SELECT 
+			// id_docentes,
+			// asignatura
+			
+			// FROM semilleros_tic.acuerdos_institucionales
+			// WHERE id_	
+			// ORDER BY id ASC 
+			// ");
+			// $datosEjeccionFaseii = $command->queryAll();
+			
+			
+			//datos Fase II
+			$command = $connection->createCommand("
+			SELECT * 
+			FROM semilleros_tic.ejecucion_fase_ii
+			ORDER BY id ASC ");
+			$datosEjeccionFaseii = $command->queryAll();
+			
+
 			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_institucion']."</td>";	
 			$html.="<td style='border: 1px solid black;'>".$dip['institucion']."</td>";	
 			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_sede']."</td>";	
 			$html.="<td style='border: 1px solid black;'>".$dip['sede']."</td>";
 			
+			//anio
+			$html.="<td style='border: 1px solid black;'>".$dip['anio']."</td>";	
+			
+			
+			//ciclo
+			$html.="<td style='border: 1px solid black;'>".$dip['ciclos']."</td>";	
+			
 			//profesional_a
-			$html.="<td style='border: 1px solid black;'>pendinente</td>";
+			$html.="<td style='border: 1px solid black;'>".$nomresPersonalA ."</td>";
 			
 			//Fecha de inicio del Semillero
-			$html.="<td style='border: 1px solid black;'>".$fechas[$contador]['fecha_sesion']."</td>";	
+			$html.="<td style='border: 1px solid black;'>".@$fechas[$contador]['fecha_sesion']."</td>";	
 			
 			//nombre del docente
 			$html.="<td style='border: 1px solid black;'>pendinente</td>";
@@ -244,25 +297,22 @@ class ResumenOperativoFasesDocentesController extends Controller
 			$html.="<td style='border: 1px solid black;'>pendinente</td>";
 			
 			//docente por sesion
-			
-			
-			// echo "<pre>"; print_r($datos_sesiones); echo "</pre>"; 
-			// echo "<pre>"; print_r($datos_sesiones[0]); echo "</pre>"; 
 			for($i=0;$i<=5;$i++)
 			{
 				$html.="<td style='border: 1px solid black;'></td>";
 				$html.="<td style='border: 1px solid black;'>".@$datos_sesiones[$i]['fecha_sesion']."</td>";
 				$html.="<td style='border: 1px solid black;'></td>";
 			}
-				// echo "<pre>"; print_r($datos_sesiones); echo "</pre>"; 
-			
-			// $html.="<td style='border: 1px solid black;'>pendinente</td>";
+
 			
 			//total Sesiones
 			$html.="<td style='border: 1px solid black;'>$seionesEmpleadas</td>";
 			
 			//Número de Apps 0.0 creadas
 			$html.="<td style='border: 1px solid black;'>$numeroApps</td>";
+			
+			//frecuencia sesiones mensual fase ii
+			$html.="<td style='border: 1px solid black;'>pendinente</td>";
 			
 			
 			

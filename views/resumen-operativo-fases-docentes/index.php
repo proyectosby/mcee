@@ -102,14 +102,16 @@ section.content {
 	<thead>
 		<tr style='background-color:#ccc;text-align:center;'>
 			<th colspan='4' style='border: 1px solid black;'>Datos IEO</th>
+			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Año</th>
+			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Ciclo</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Profesional A.</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Fecha de inicio del Semillero(dd/mm/aaaa)</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Nombre del Docente</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Nombre de las asignaturas que enseña</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Especialidad de la Media Técnica o Técnica</th>
-			<th colspan='20' style='border: 1px solid black;'>Fase I Creaci&oacute;n y prueba</th>
+			<th colspan='22' style='border: 1px solid black;'>Fase I Creaci&oacute;n y prueba</th>
 			<th colspan='22' style='border: 1px solid black;'>Fase II Desarrollo e implementaci&oacute;n</th>
-			<th colspan='28' style='border: 1px solid black;'>Fase III  (Uso - Aplicaci&oacute;n)</th>
+			<th colspan='26' style='border: 1px solid black;'>Fase III  (Uso - Aplicaci&oacute;n)</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>TOTAL NUMERO DE SESIONES FASES I A III </th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>TOTAL DOCENTES PARTICIPANTES DE FASE I A III</th>
 		</tr>
@@ -296,6 +298,8 @@ section.content {
 				<td style='border: 1px solid black;'>79</td>
 				<td style='border: 1px solid black;'>80</td>
 				<td style='border: 1px solid black;'>81</td>
+				<td style='border: 1px solid black;'>82</td>
+				<td style='border: 1px solid black;'>83</td>
 			</tr>
 			</div>
 	</tbody>
