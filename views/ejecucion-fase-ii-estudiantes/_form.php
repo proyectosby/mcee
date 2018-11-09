@@ -189,19 +189,43 @@ if( $guardado ){
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($condiciones, "participantes_por_curso")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "participantes_por_curso")
+							->textarea([ 
+								'class' 		=> 'form-control', 
+								'maxlength' 	=> true, 
+								'data-type' 	=> 'number',
+								'data-disabled' => 'true',
+							])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($condiciones, "promedio_estudiantes_por_curso")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "promedio_estudiantes_por_curso")
+							->textarea([ 
+								'class' 		=> 'form-control', 
+								'maxlength' 	=> true, 
+								'data-type' 	=> 'number',
+								'data-disabled' => 'true',
+							])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($condiciones, "total_sesiones")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "total_sesiones")
+							->textarea([ 
+								'class' 		=> 'form-control', 
+								'maxlength' 	=> true, 
+								'data-type' 	=> 'number',
+								'data-disabled' => 'true',
+							])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($condiciones, "total_estudiantes")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'text'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "total_estudiantes")
+							->textarea([ 
+								'class' 		=> 'form-control', 
+								'maxlength' 	=> true, 
+								'data-type' 	=> 'text',
+								'data-disabled' => 'true',
+							])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 
 			</div>
