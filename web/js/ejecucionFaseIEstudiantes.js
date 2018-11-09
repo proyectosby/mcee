@@ -1,5 +1,36 @@
-$( document ).ready(function(){
+
+	function totalSesiones( campo, inicial ){
+		
+		var total = 0;
+		
+		if( inicial )
+			total = inicial*1;
 	
+		if( campo )
+		//Si eliminan una fila calculo de nuevo el total de sesiones
+		$( "[id$=participacion_sesiones]" ).each(function(){
+			if( this != campo )
+				total += this.value*1;
+		});
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-total_sesiones" ).val( total );
+		
+		
+	}
+	
+	function promedioEstudiantes(){
+		
+		var total = 0;
+		
+		var estudiantes 	= $( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val()*1;
+		var sesiones 		= $( "[id^=dvFilaSesion]" ).length*1;
+		
+		if( sesiones > 0 )
+			total = Math.round( estudiantes/sesiones );
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-total_estudiantes" ).val( total );
+	}
+
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
 		"Participación Sesiones (1 a 6)",
@@ -23,7 +54,36 @@ $( document ).ready(function(){
 		"Número de estudiantes participantes por curso (Promedio)",
 		"Total sesiones por IEO",
 		"Total estudiantes IEO (Promedio)",
-	];
+	];	
+	
+	//Cuandon agregan una nueva fila calculo el total de sesiones
+	$( "[id$=participacion_sesiones]" ).on( 'save', function( e, params ){
+		totalSesiones( this, params.newValue );
+	});
+	
+	//Calculo el total de participacion de sesiones y se replica para cuando se agregue campo nuevo
+	$( "[id$=numero_estudiantes]" ).on( "save", function( e, params ){
+		
+		var _self = this;
+		
+		var total = params.newValue*1;
+		
+		//Total de cursos
+		var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+		
+		$( "[id$=numero_estudiantes]" ).each(function(){
+			if( this != _self )
+				total += this.value*1;
+		});
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val( total );
+		
+		if( cursos > 0 )
+			$( "#semillerosticcondicionesinstitucionalesestudiantes-promedio_estudiantes_por_curso" ).val( Math.round( total/cursos ) );
+		
+		promedioEstudiantes();
+		
+	});
 	
 	//this para este caso es el panel al que se dió click
 	$( ".title" ).each(function(x){
@@ -74,19 +134,19 @@ $( document ).ready(function(){
 	//Se agrega editables para los campos textarea de condiciones institucionales
 	$( "textarea[id^=semillerosticejecucionfaseiestudiantes]" ).each(function(x){
 		
-		if( $( this ).data( "typevalidation" ) == "number" )
-		{
-			$( this ).data( 'type', 'number' );
-		}
-		else{
-			$( this ).data( 'type', 'textarea' );
-		}
+		// if( $( this ).data( "typevalidation" ) == "number" )
+		// {
+			// $( this ).data( 'type', 'number' );
+		// }
+		// else{
+			// $( this ).data( 'type', 'textarea' );
+		// }
 	
 		$( this )
 			.attr({readOnly: true })
 			.css({resize: 'none' })
 			.editable({
-				title: 'Ingrese la informoción',
+				// title: 'Ingrese la informoción',
 				title: arrayTitles[x%arrayTitles.length],
 				rows: 10,
 				emptytext: '',
@@ -190,13 +250,13 @@ $( document ).ready(function(){
 		
 					//Agrego data-type textarea para que el popup editable salga como textarea
 					//Sin esto mostraría un input para ingresar información
-					if( $( this ).data( "typevalidation" ) == "number" )
-					{
-						$( this ).data( 'type', 'number' );
-					}
-					else{
-						$( this ).data( 'type', 'textarea' );
-					}
+					// if( $( this ).data( "typevalidation" ) == "number" )
+					// {
+						// $( this ).data( 'type', 'number' );
+					// }
+					// else{
+						// $( this ).data( 'type', 'textarea' );
+					// }
 				
 					$( this )
 						.attr({readOnly: true })
@@ -263,6 +323,34 @@ $( document ).ready(function(){
 					}		
 				});
 				
+				$( "[id$=numero_estudiantes]", filaClonada ).on( "save", function( e, params ){
+		
+					var _self = this;
+					
+					var total = params.newValue*1;
+					
+					//Total de cursos
+					var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+					
+					$( "[id$=numero_estudiantes]" ).each(function(){
+						if( this != _self )
+							total += this.value*1;
+					});
+					
+					$( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val( total );
+					
+					if( cursos > 0 )
+						$( "#semillerosticcondicionesinstitucionalesestudiantes-promedio_estudiantes_por_curso" ).val( Math.round( total/cursos ) );
+					
+					promedioEstudiantes();
+					
+				});
+				
+				//Cuandon agregan una nueva fila calculo el total de sesiones
+				$( "[id$=participacion_sesiones]", filaClonada ).on( 'save', function( e, params ){
+					totalSesiones( this, params.newValue );
+				});
+				
 				consecutivo++;
 			});
 		});
@@ -281,8 +369,27 @@ $( document ).ready(function(){
 				}
 				
 				$( "[id^=dvFilaSesion]", _container ).last().remove();
+				
+				
+				//Calculando el total de participantes por curso
+				var total = 0;
+					
+				$( "[id$=numero_estudiantes]" ).each(function(){
+					total += this.value*1;
+				});
+				
+				$( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val( total );
+				
+				//Calculando el promedio de estudiantes por curso
+				var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+				
+				if( cursos > 0 )
+					$( "#semillerosticcondicionesinstitucionalesestudiantes-promedio_estudiantes_por_curso" ).val( Math.round( total/cursos ) );
+				
+				totalSesiones( null, 0 );
+				
+				promedioEstudiantes();
+				
 			});
 		});
 	});
-	
-});
