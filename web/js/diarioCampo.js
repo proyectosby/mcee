@@ -25,13 +25,13 @@ $( "#selFases" ).change(function()
 		$.get( "index.php?r=semilleros-tic-diario-de-campo/opciones-ejecucion-diario-campo&idFase="+fase+"&descripcion="+descripcion+"&hallazgo="+hallazgo+"&idAnio="+anio+"&idCiclo="+ciclo+"&faseO="+faseO,
 				function( data )
 					{			
-						alert(data.contenido+"-"+data.contenido1);
+						// alert(data.contenido+"-"+data.contenido1);
 						
 								// if (typeof data.contenido === undefined || typeof data.contenido1 === undefined){
 								if (data.contenido =="" || data.contenido1 ==""){
 									
 									swal("Importante", data.mensaje, "info");
-									alert(0);
+									
 								}
 								else{
 									$("#contenido").html(data.contenido);
@@ -39,7 +39,7 @@ $( "#selFases" ).change(function()
 									
 									$("#contenido").show();
 									$("#contenido1").show(); 
-									 alert(1);
+									 
 								}
 							$("#encabezado").html(data.html);
 							$("#encabezado1").html(data.html1);
