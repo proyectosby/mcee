@@ -33,7 +33,7 @@ class SemillerosTicCondicionesInstitucionalesFaseIii extends \yii\db\ActiveRecor
         return [
             [['id_fase', 'estado','id_ciclo'], 'required'],
             [['id_fase', 'estado','id_ciclo'], 'default', 'value' => null],
-            [['id_fase', 'estado','id_ciclo'], 'integer'],
+            [['id_fase', 'estado','id_ciclo','total_aplicaciones_usadas'], 'integer'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro'], 'string'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro'], 'required'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
@@ -56,6 +56,7 @@ class SemillerosTicCondicionesInstitucionalesFaseIii extends \yii\db\ActiveRecor
             'parte_sem' => 'Parte Sem',
             'otro' => 'Otro',
             'id_ciclo' => 'Ciclo',
+            'total_aplicaciones_usadas' => 'Total aplicaciones usadas',
         ];
     }
 }

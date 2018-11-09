@@ -48,6 +48,35 @@ $( document ).ready(function(){
 		"OTRO",
 	];
 	
+	$( "[id$=numero_apps_usadas]" ).on( 'save', function( e, params ){
+		
+		var _self = this;
+		
+		var total = params.newValue*1;
+		
+		$( "[id$=numero_apps_usadas]" ).each(function(){
+			
+			if( this != _self )
+			{
+				total += this.value*1;
+			}
+		});
+		
+		$( "#semillerosticcondicionesinstitucionalesfaseiii-total_aplicaciones_usadas" ).val( total );
+	});
+	
+	
+	$( "[id$=numero_estudiantes]" ).on( 'save', function( e, params ){
+		
+		var _self = this;
+		
+		var total = params.newValue*1;
+		
+		var sesion = this.id.split("-")[1];
+		
+		$( "#semillerosticejecucionfaseiii-"+sesion+"-estudiantes_cultivadores" ).val( total );
+	});
+	
 	//Cuando se abre un acordeon se ponen todos los elementos del encabezado del mismo tamaño
 	$('#collapseOne').on('shown.bs.collapse', function(){
 		
@@ -268,6 +297,36 @@ $( document ).ready(function(){
 						rows: 10,
 						emptytext: '',
 					});
+			});
+			
+			//Calculo de apps usadas, esto mismo está para los campos ya registrados al inicio del script
+			$( "[id$=numero_apps_usadas]", cloneCollapse ).on( 'save', function( e, params ){
+		
+				var _self = this;
+				
+				var total = params.newValue*1;
+				
+				$( "[id$=numero_apps_usadas]" ).each(function(){
+					
+					if( this != _self )
+					{
+						total += this.value*1;
+					}
+				});
+				
+				$( "#semillerosticcondicionesinstitucionalesfaseiii-total_aplicaciones_usadas" ).val( total );
+			});
+			
+			//Calculo de estudaintes cultivadores, esto mismo está para los campos ya registrados al inicio del script
+			$( "[id$=numero_estudiantes]", cloneCollapse  ).on( 'save', function( e, params ){
+		
+				var _self = this;
+				
+				var total = params.newValue*1;
+				
+				var sesion = this.id.split("-")[1];
+				
+				$( "#semillerosticejecucionfaseiii-"+sesion+"-estudiantes_cultivadores" ).val( total );
 			});
 			
 			con++;

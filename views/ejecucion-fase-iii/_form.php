@@ -113,6 +113,7 @@ $this->registerJs(
 										'form' 			=> $form,
 										'profesional' 	=> $profesional,
 										'profesionales' => $profesionales,
+										'cursos' 		=> $cursos,
 									]) ?>
 									
 	<div class='container-fluid' style='margin:10px 0;'>
@@ -127,15 +128,15 @@ $this->registerJs(
 		
 		<div class='row text-center title2'>
 		
-			<div class='col-sm-3'>
+			<div class='col-sm-2'>
 				<span total class='form-control' style='background-color:#ccc;'>Por parte de la IEO</span>
 			</div>
 			
-			<div class='col-sm-3'>
+			<div class='col-sm-2'>
 				<span total class='form-control' style='background-color:#ccc;'>Por parte de UNIVALLE</span>
 			</div>
 			
-			<div class='col-sm-3'>
+			<div class='col-sm-2'>
 				<span total class='form-control' style='background-color:#ccc;'>Por parte de la SEM</span>
 			</div>
 			
@@ -143,24 +144,32 @@ $this->registerJs(
 				<span total class='form-control' style='background-color:#ccc;'>OTRO</span>
 			</div>
 			
+			<div class='col-sm-3'>
+				<span total class='form-control' style='background-color:#ccc;'>Total aplicaciones usadas</span>
+			</div>
+			
 		</div>
 		
 		<div class='row text-center' id='condiciones-institucionales'>
 			
-			<div class='col-sm-3'>
+			<div class='col-sm-2'>
 				<?= $form->field( $condiciones, "parte_ieo" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
-			<div class='col-sm-3'>
+			<div class='col-sm-2'>
 				<?= $form->field( $condiciones, "parte_univalle" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
-			<div class='col-sm-3 '>
+			<div class='col-sm-2 '>
 				<?= $form->field( $condiciones, "parte_sem" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-3'>
 				<?= $form->field( $condiciones, "otro" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+			</div>
+			
+			<div class='col-sm-3'>
+				<?= $form->field( $condiciones, "total_aplicaciones_usadas" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea', 'data-disabled' => 'true'])->label(null,['style'=>'display:none']) ?>
 			</div>
 
 		</div>

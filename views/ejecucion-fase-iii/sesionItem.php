@@ -113,7 +113,13 @@ use dosamigos\datepicker\DatePicker;
 			</div>
 			
 			<div class='col-sm-2'>
-				<?= $form->field( $model, "[$index]grado" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
+				<?= $form->field( $model, "[$index]grado" )
+						->textarea( [ 
+							'class' => 'form-control', 
+							'maxlength' => true, 
+							'data-type' => 'select',
+							'data-source' => json_encode($cursos),
+						])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
 			<div class='col-sm-1 estudiantes'>
@@ -281,9 +287,9 @@ use dosamigos\datepicker\DatePicker;
 		
 	<br>	
 		
-	<?= $form->field( $model, "[$index]total_aplicaciones_usadas" )->textInput()->label( 'Total aplicaciones usadas' )?>
+	<?php //echo $form->field( $model, "[$index]total_aplicaciones_usadas" )->textInput()->label( 'Total aplicaciones usadas' )?>
 
-    <?= $form->field( $model, "[$index]estudiantes_cultivadores" )->textInput()->label( 'Número de estudiantes cultivadores' ) ?>
+    <?= $form->field( $model, "[$index]estudiantes_cultivadores" )->textInput([ 'readonly' => 'readonly' ])->label( 'Número de estudiantes cultivadores' ) ?>
 		
 	</div>
 

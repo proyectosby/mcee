@@ -62,6 +62,43 @@ $( document ).ready(function(){
 	});
 	
 	
+	//Si hay un cambio en participación docentes se debe actualizar sesiones por docentes en condiciones institucionales
+	//Save es el evento que genera el plugin editable al cambiar un dato
+	$( "[id$=paricipacion_sesiones]" ).on( "save", function(e, params){
+		
+		var total = params.newValue;
+		
+		var _self = this;
+		
+		$( "[id$=paricipacion_sesiones]" ).each(function(){
+			if( _self != this )
+				total = total*1 + this.value*1;
+		});
+		
+		$( "#condicionesinstitucionales-total_sesiones_ieo" ).val( total );
+	});
+	
+	
+	// //Si hay un cambio en participación docentes se debe actualizar sesiones por docentes en condiciones institucionales
+	$( "[id$=docente]" ).on( "change", function(e, params){
+		
+		var docentes = [];
+		
+		$( "option:selected", $( "[id$=docente]" ) ).each(function(){
+			
+			var doc = $( this ).text().split( " - " );
+			
+			for( var x in doc ){
+				
+				if( $.inArray( doc[x], docentes ) === -1 ){
+					docentes.push( doc[x] );
+				}
+			}
+		});
+		
+		$( "#condicionesinstitucionales-total_docentes_ieo" ).val( docentes.length );
+	});
+	
 	
 	/************************************************************************************************************************************************
 	 * 
@@ -164,11 +201,6 @@ $( document ).ready(function(){
 				
 				var _campo = this;
 				
-				// $( this ).prop({
-					// id	: this.id.substr( 0, this.id.indexOf( '-', "ejecucionfase-".length )+1 )+consecutivo+this.id.substr( this.id.lastIndexOf( "-" ) ),
-					// name: this.name.substr( 0, this.name.indexOf( '[', "ejecucionfase-".length )+1 )+consecutivo+this.name.substr( this.name.lastIndexOf( "[" )-1 ),
-				// });
-				
 				$( _campo ).prop({
 						id		: _campo.id.replace( /-[0-9]+-[0-9]+-/gi, "-"+id+"-"+consecutivo+"-" ),
 						name	: _campo.name.replace( /\[[0-9]+\]\[[0-9]+\]/gi, "["+id+"]["+consecutivo+"]" ),
@@ -241,6 +273,41 @@ $( document ).ready(function(){
 						rows: 10,
 						emptytext: '',
 					});
+			});
+			
+			//Si hay un cambio en participación docentes se debe actualizar sesiones por docentes en condiciones institucionales
+			$( "[id$=paricipacion_sesiones]", filaNueva ).on( "save", function(e, params){
+				
+				var total = params.newValue;
+
+				var _self = this;
+				
+				$( "[id$=paricipacion_sesiones]" ).each(function(){
+					if( _self != this )
+						total = total*1 + this.value*1;
+				});
+				
+				$( "#condicionesinstitucionales-total_sesiones_ieo" ).val( total );
+			});
+			
+			// //Si hay un cambio en participación docentes se debe actualizar sesiones por docentes en condiciones institucionales
+			$( "[id$=docente]", filaNueva ).on( "change", function(e, params){
+				
+				var docentes = [];
+				
+				$( "option:selected", $( "[id$=docente]" ) ).each(function(){
+					
+					var doc = $( this ).text().split( " - " );
+					
+					for( var x in doc ){
+						
+						if( $.inArray( doc[x], docentes ) === -1 ){
+							docentes.push( doc[x] );
+						}
+					}
+				});
+				
+				$( "#condicionesinstitucionales-total_docentes_ieo" ).val( docentes.length );
 			});
 			
 			// consecutivo++;

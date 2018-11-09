@@ -147,7 +147,10 @@ if( $guardado ){
 			<div class='col-sm-2'>
 				<span total class='form-control' style='background-color:#ccc;'>OTRO</span>
 			</div>
-			<div class='col-sm-2'>
+			<div class='col-sm-1'>
+				<span total class='form-control' style='background-color:#ccc;'>Total Apps 0.0 Desarrolladas e Implementas</span>
+			</div>
+			<div class='col-sm-1'>
 				<span total class='form-control' style='background-color:#ccc;'>Número de Sesiones por docentes participante </span>
 			</div>
 			<div class='col-sm-1'>
@@ -177,7 +180,17 @@ if( $guardado ){
 				<?= $form->field($condiciones, "otro")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			
-			<div class='col-sm-2'>
+			<div class='col-sm-1'>
+				<?= $form->field($condiciones, "total_apps")
+						->textarea([ 
+							'class' => 'form-control', 
+							'maxlength' => true, 
+							'data-type' => 'number',
+							'data-disabled' => 'true',
+						])->label(null,[ 'style' => 'display:none' ]) ?>
+			</div>
+			
+			<div class='col-sm-1'>
 				<?= $form->field($condiciones, "sesiones_por_docente")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,[ 'style' => 'display:none' ]) ?>
 			</div>
 			

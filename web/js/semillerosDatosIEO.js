@@ -5,6 +5,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2018-11-08
+Desarrollador: Edwin Molina Grisales
+Descripción: Se hacen cambios para calcular el total de docentes
+---------------------------------------
 Fecha: 2018-11-06
 Desarrollador: Edwin Molina Grisales
 Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
@@ -65,19 +69,23 @@ $( document ).ready(function(){
 		
 	});
 	
-	// $( "#semillerosdatosieo-personal_a,#semillerosdatosieo-docente_aliado" ).change(function(){
+	//Todos los campos que terminan ralizan el calculo  del campo total docentes
+	$( "[id$=id_docente]" ).on( "change", function() {
 		
-		// var val = true;
+		var total = $( "option:selected", this ).length;
 		
-		// val = ( $.trim( $( "#semillerosdatosieo-personal_a" ).val() ) != '' ? true : false ) && val;
-		// val = ( $.trim( $( "#semillerosdatosieo-docente_aliado" ).val() ) != '' ? true : false ) && val;
+		$( "#"+this.id.substr( 0, this.id.length-"id_docente".length )+"total_docentes" ).val( total );
 		
-		// if( val )
-		// {
-			// $( "#guardar" ).val( 0 )
-			// this.form.submit();
-		// }
-	// });
+		var fase = this.id.split("-")[1];
+		
+		var totalDocentes = 0;
+		
+		$( "[id$=total_docentes]", $( "#container-"+fase ) ).each(function(){
+			totalDocentes += parseInt( this.value );
+		});
+		
+		$( "#total_docentes-"+fase ).html( totalDocentes );
+	});
 	
 	/****************************************************************************************
 	 * Se asigna las funcionalidades de los botones agregar y eliminar
@@ -203,7 +211,25 @@ $( document ).ready(function(){
 							"placeholder_text_multiple"	:"Select some options",
 							"no_results_text"			:"No results match",
 						});
-				})
+				});
+				
+				//Todos los campos que terminan ralizan el calculo  del campo total docentes
+				$( "[id$=id_docente]", filaClonada ).on( "change", function() {
+					
+					var total = $( "option:selected", this ).length;
+					
+					$( "#"+this.id.substr( 0, this.id.length-"id_docente".length )+"total_docentes" ).val( total );
+					
+					var fase = this.id.split("-")[1];
+					
+					var totalDocentes = 0;
+					
+					$( "[id$=total_docentes]", $( "#container-"+fase ) ).each(function(){
+						totalDocentes += parseInt( this.value );
+					});
+					
+					$( "#total_docentes-"+fase ).html( totalDocentes );
+				});
 				
 				consecutivo++;
 			});
@@ -223,6 +249,17 @@ $( document ).ready(function(){
 				}
 				
 				$( "[id^=dvFilas]", _container ).last().remove();
+				
+				
+				//Calculo el total de docentes por fase nuevamente
+				var totalDocentes = 0;
+				
+				$( "[id$=total_docentes]", $( "#container-"+fase ) ).each(function(){
+					totalDocentes += parseInt( this.value );
+				});
+				
+				$( "#total_docentes-"+fase ).html( totalDocentes );
+				
 			});
 		});
 	});
