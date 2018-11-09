@@ -60,6 +60,15 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 	];
 	
 	
+	function totalSesiones(){
+		
+		//Si hay un cambio en participación docentes se debe actualizar sesiones por docentes en condiciones institucionales
+		//Save es el evento que genera el plugin editable al cambiar un dato
+		var total = $( "[id^=dvFilaSesion]" ).length;
+		
+		$( "#condicionesinstitucionales-total_sesiones_ieo" ).val( total );
+	}
+	
 	// //Si hay un cambio en participación docentes se debe actualizar sesiones por docentes en condiciones institucionales
 	$( "[id$=docentes]" ).on( "change", function(e, params){
 		
@@ -151,12 +160,6 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 			actual  : $( "[id^=dvFilaSesion]", this ).length+1,
 		} 
 	});
-	
-	//Si hay un cambio en participación docentes se debe actualizar sesiones por docentes en condiciones institucionales
-	//Save es el evento que genera el plugin editable al cambiar un dato
-	var total = $( "[id^=dvFilaSesion]" ).length;
-	
-	$( "#condicionesinstitucionales-total_docentes_ieo" ).val( total );
 	
 	/************************************************************************************************************************************************
 	 * Validando datos extras
@@ -447,9 +450,7 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 			
 			$( "#btnRemoveFila"+id ).css({ display: "" });
 			
-			//Calculando total de sesiones
-			var total = $( "[id^=dvFilaSesion]" ).length;
-			$( "#condicionesinstitucionales-total_docentes_ieo" ).val( total );
+			totalSesiones()
 			
 			consecutivos[id].actual++;
 		});
@@ -481,9 +482,25 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 				//Calculando el total de apps
 				$( "#condicionesinstitucionales-total_apps" ).val( total );
 				
-				//Calculando total de sesiones
-				var total = $( "[id^=dvFilaSesion]" ).length;
-				$( "#condicionesinstitucionales-total_docentes_ieo" ).val( total );
+				
+				var docentes = [];
+				
+				$( "option:selected", $( "[id$=docentes]" ) ).each(function(){
+					
+					var doc = $( this ).text().split( " - " );
+					
+					for( var x in doc ){
+						
+						if( $.inArray( doc[x], docentes ) === -1 ){
+							docentes.push( doc[x] );
+						}
+					}
+				});
+				
+				$( "#condicionesinstitucionales-total_docentes_ieo" ).val( docentes.length );
+				
+				
+				totalSesiones();
 			}
 		});
 	});
