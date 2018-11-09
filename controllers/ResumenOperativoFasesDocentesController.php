@@ -180,12 +180,12 @@ class ResumenOperativoFasesDocentesController extends Controller
 				
 				FROM semilleros_tic.datos_sesiones
 				WHERE id in($idDatosSesiones)
+				GROUP BY fecha_sesion,duracion_sesion,id
 				ORDER BY id ASC 
 			");
 			$datos_sesiones = $command->queryAll();
 			
-			
-			// echo "<pre>"; print_r($datos_sesiones); echo "</pre>"; 
+		
 			//cambio pendiente
 			//para la fecuencia de las sesiones se trae de la conformacion de semilleros
 			$frecuenciaSesiones =array();
@@ -280,7 +280,15 @@ class ResumenOperativoFasesDocentesController extends Controller
 			ORDER BY id ASC ");
 			$datosEjeccionFaseii = $command->queryAll();
 			
-
+			//Promedio de duración por cada sesión (hora reloj)
+			$totalDuracionSesiones =0;
+			
+			foreach($datos_sesiones as $ds)
+			{
+				$totalDuracionSesiones += $ds['duracion_sesion'];
+			}
+			
+			
 			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_institucion']."</td>";	
 			$html.="<td style='border: 1px solid black;'>".$dip['institucion']."</td>";	
 			$html.="<td style='border: 1px solid black;'>".$dip['codigo_dane_sede']."</td>";	
@@ -310,14 +318,18 @@ class ResumenOperativoFasesDocentesController extends Controller
 			
 			//Frecuencia sesiones mensual
 			$html.="<td style='border: 1px solid black;'>".$frecuenciaSesionesDescripcion ."</td>";	
-			//Promedio de duración por cada sesión (hora reloj)
-			$html.="<td style='border: 1px solid black;'>pendinente</td>";
 			
+			//Promedio de duración por cada sesión (hora reloj)
+			$html.="<td style='border: 1px solid black;'>".$totalDuracionSesiones/count($datos_sesiones)."</td>";
+				
 			//docente por sesion
 			for($i=0;$i<=5;$i++)
 			{
+				//docentes por sesion
 				$html.="<td style='border: 1px solid black;'></td>";
+				//fecha de la sesion 
 				$html.="<td style='border: 1px solid black;'>".@$datos_sesiones[$i]['fecha_sesion']."</td>";
+				//duración de la sesion
 				$html.="<td style='border: 1px solid black;'>".@$datos_sesiones[$i]['duracion_sesion']."</td>";
 				
 			}
@@ -330,7 +342,7 @@ class ResumenOperativoFasesDocentesController extends Controller
 			$html.="<td style='border: 1px solid black;'>$numeroApps</td>";
 			
 			//frecuencia sesiones mensual fase ii
-			$html.="<td style='border: 1px solid black;'>pendinente</td>";
+			$html.="<td style='border: 1px solid black;'>pendiente</td>";
 			
 			
 			
