@@ -429,7 +429,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 		
 		$docentes = [];
 		$dataPersonas 	= SemillerosDatosIeoEstudiantes::find()
-								->select( 'profecional_a' )
+								->select( 'id, profecional_a' )
 								->alias( 'se' )
 								// ->innerJoin( 'semilleros_tic.acuerdos_institucionales_estudiantes ae', 'ae.id_semilleros_datos_estudiantes=se.id' )
 								->where( 'se.estado=1' )
@@ -437,7 +437,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 								->andWhere( 'se.id_sede='.$id_sede )
 								->andWhere( 'se.id_ciclo='.$ciclo->id )
 								// ->andWhere( 'ae.estado=1' )
-								->groupby([ 'profecional_a' ])
+								->groupby([ 'id','profecional_a' ])
 								->all();
 		
 		foreach( $dataPersonas as $key => $personas ){
@@ -448,13 +448,11 @@ class EjecucionFaseIiEstudiantesController extends Controller
 			{
 				$persona =  Personas::findOne( $profesional );
 				
-				if( empty( $docentes[ $personas->profecional_a ] ) )
-					$docentes[ $personas->profecional_a ] = $persona->nombres." ".$persona->apellidos;
+				if( empty( $docentes[ $personas->id ] ) )
+					$docentes[ $personas->id ] = $persona->nombres." ".$persona->apellidos;
 				else
-					$docentes[ $personas->profecional_a ] .= " - ".$persona->nombres." ".$persona->apellidos;
+					$docentes[ $personas->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
 			}
-			
-			// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		}
 		
 		
@@ -470,7 +468,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 								->where( 'ae.id_fase='.$this->id_fase )
 								->andWhere( 'ae.estado=1' )
 								->andWhere( 'se.estado=1' )
-								->andWhere( 'se.profecional_a='."'".$post_profesional_a."'" )
+								->andWhere( 'se.id='."'".$post_profesional_a."'" )
 								->andWhere( 'ae.id_ciclo='.$ciclo->id )
 								->all();
 			
@@ -479,12 +477,12 @@ class EjecucionFaseIiEstudiantesController extends Controller
 				$dcursos = explode( ',', $dataCurso->curso );
 				
 				foreach( $dcursos as $value ){
-					if( empty( $cursos[ $dataCurso->curso ] ) )
+					if( empty( $cursos[ $dataCurso->id ] ) )
 					{	
-						$cursos[ $dataCurso->curso ] = Paralelos::findOne( $value )->descripcion;
+						$cursos[ $dataCurso->id ] = Paralelos::findOne( $value )->descripcion;
 					}
 					else{
-						$cursos[ $dataCurso->curso ] .= " , ".Paralelos::findOne( $value )->descripcion;
+						$cursos[ $dataCurso->id ] .= " , ".Paralelos::findOne( $value )->descripcion;
 					}
 				}
 			}
