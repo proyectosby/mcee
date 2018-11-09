@@ -70,20 +70,28 @@ $( "#selFases" ).change(function()
 });
 
 //llenar los barrios segun la comuna que seleccione
-$( "#personas-comuna" ).change(function() 
+$( "#selAnio" ).change(function() 
 {
-	idComunas = $( "#personas-comuna" ).val();
-	alert
-	if(idMunicipio != "")
+	anio = $( "#selAnio" ).val();  
+	
+	if(anio != "")
 	{
-		$.get( "index.php?r=personas/barrios&idComunas="+idComunas,
+		$.get( "index.php?r=semilleros-tic-diario-de-campo/llenar-ciclos&idAnio="+anio,
 				function( data )
 					{	
 						
-						$("#personas-id_barrios_veredas").append(data);
-						$("#personas-id_barrios_veredas").val(selectIdBarrios);
+						$('#selCiclo').empty();
+						$('#selCiclo').html(data.html);
 					},
 			"json");   
+	}
+	else{
+		$('#selCiclo').empty();
+		$('#selCiclo').append(
+		$('<option />')
+			.text('Seleccione...')
+			.val('')
+		);
 	}
 });
 
