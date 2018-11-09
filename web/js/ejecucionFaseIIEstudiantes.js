@@ -1,3 +1,80 @@
+
+	function totalSesiones(){
+		
+		var total = $( "[id^=dvFilaSesion]" ).length*1;
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-total_sesiones" ).val( total );
+	}
+	
+	function promedioEstudiantes(){
+		
+		var total = 0;
+		
+		var estudiantes 	= $( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val()*1;
+		var sesiones 		= $( "[id^=dvFilaSesion]" ).length*1;
+		
+		if( sesiones > 0 )
+			total = Math.round( estudiantes/sesiones );
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-total_estudiantes" ).val( total );
+	}
+	
+	
+	//Calculo el total de participacion de sesiones y se replica para cuando se agregue campo nuevo
+	function totalEstudiantesParticipantes( campo, inicial ){
+		
+		var _self = campo;
+		
+		var total = 0;
+		
+		if( inicial ){
+			total = inicial*1;
+		}
+		
+		//Total de cursos
+		var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+		
+		$( "[id$=estudiantes_participantes]" ).each(function(){
+			if( this != _self )
+				total += this.value*1;
+		});
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val( total );
+		
+		if( cursos > 0 )
+			$( "#semillerosticcondicionesinstitucionalesestudiantes-promedio_estudiantes_por_curso" ).val( Math.round( total/cursos ) );
+		
+		promedioEstudiantes();
+		
+	}
+	
+	$( "[id$=estudiantes_participantes]" ).on( "save", function( e, params ){
+		totalEstudiantesParticipantes( this, params.newValue )
+	});
+	
+	// //Calculo el total de participacion de sesiones y se replica para cuando se agregue campo nuevo
+	// $( "[id$=estudiantes_participantes]" ).on( "save", function( e, params ){
+		
+		// var _self = this;
+		
+		// var total = params.newValue*1;
+		
+		// //Total de cursos
+		// var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+		
+		// $( "[id$=estudiantes_participantes]" ).each(function(){
+			// if( this != _self )
+				// total += this.value*1;
+		// });
+		
+		// $( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val( total );
+		
+		// if( cursos > 0 )
+			// $( "#semillerosticcondicionesinstitucionalesestudiantes-promedio_estudiantes_por_curso" ).val( Math.round( total/cursos ) );
+		
+		// promedioEstudiantes();
+		
+	// });
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
@@ -273,6 +350,15 @@
 					}		
 				});
 				
+				//Calculando eltotal de participantes
+				//save es le metodo que lanza el plugin editable antes de actualizar el campo
+				$( "[id$=estudiantes_participantes]" ).on( "save", function( e, params ){
+					totalEstudiantesParticipantes( this, params.newValue );
+				});
+				
+				//Se calcula el total de sesiones
+				totalSesiones()
+				
 				consecutivo++;
 			});
 		});
@@ -291,6 +377,12 @@
 				}
 				
 				$( "[id^=dvFilaSesion]", _container ).last().remove();
+				
+				//Se calccula el total de estudiantes participantes
+				totalEstudiantesParticipantes( null, 0 );
+				
+				//Se calcula el total de sesiones
+				totalSesiones();
 			});
 		});
 	});

@@ -184,19 +184,43 @@ if( $guardado ){
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($condiciones, "participantes_por_curso")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "participantes_por_curso")
+								->textarea([ 
+									'class' => 'form-control', 
+									'maxlength' => true, 
+									'data-type' => 'number',
+									'data-disabled' => 'disabled',
+								])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1'>
-					<?= $form->field($condiciones, "promedio_estudiantes_por_curso")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "promedio_estudiantes_por_curso")
+								->textarea([ 
+									'class' => 'form-control', 
+									'maxlength' => true, 
+									'data-type' => 'number',
+									'data-disabled' => 'disabled',
+								])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1 total-sesiones'>
-					<?= $form->field($condiciones, "total_sesiones")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "total_sesiones")
+								->textarea([ 
+									'class' => 'form-control', 
+									'maxlength' => true, 
+									'data-type' => 'number',
+									'data-disabled' => 'disabled',
+								])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 				
 				<div class='col-sm-1 total-estudiantes'>
-					<?= $form->field($condiciones, "total_estudiantes")->textarea([ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'text'])->label( null, [ 'style' => 'display:none' ]) ?>
+					<?= $form->field($condiciones, "total_estudiantes")
+								->textarea([ 
+									'class' => 'form-control', 
+									'maxlength' => true, 
+									'data-type' => 'text',
+									'data-disabled' => 'disabled',
+								])->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
 
 			</div>
@@ -211,35 +235,6 @@ if( $guardado ){
 		}
 	?>							
 
-	<?php ActiveForm::end(); 
-		$this->registerJs(
-			'$(document).ready(function(){
-				$(".total-sesiones").click(function(){
-					var total = 0;
-					var list = $(".sesiones textarea");
-					for (var i=0;i<list.length;i++) {
-						if(!isNaN(parseInt(list[i].value))){
-							total += parseInt(list[i].value);
-						}	
-					}
-					$("#semillerosticcondicionesinstitucionalesestudiantes-total_sesiones").text(total);		
-				});
-
-				$(".total-estudiantes").click(function(){
-					var totalEstudiantes = 0;
-					var list = $(".estudiantes textarea");
-					for (var i=0;i<list.length;i++) {
-						if(!isNaN(parseInt(list[i].value))){
-							totalEstudiantes += parseInt(list[i].value);
-						}	
-					}
-					$("#semillerosticcondicionesinstitucionalesestudiantes-total_estudiantes").text(totalEstudiantes);		
-				});
-				
-			});
-			
-			'
-		);
-	?>
+	<?php ActiveForm::end(); ?>
 
 </div>

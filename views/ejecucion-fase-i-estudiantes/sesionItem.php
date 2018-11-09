@@ -114,8 +114,9 @@ $index = 0;
 										[ 
 											'class' 				=> 'form-control', 
 											'maxlength' 			=> true, 
-											'data-type' 			=> 'number',
-											'data-typevalidation' 	=> 'number',
+											'data-type' 			=> 'select',
+											'data-typevalidation' 	=> 'select',
+											'data-source' 			=> '[ 1, 2, 3,4, 5,6]',
 										])
 									->label( null, [ 'style' => 'display:none' ]) ?>
 				</div>
