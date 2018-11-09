@@ -275,8 +275,8 @@ $index = 0;
 						<?= $form->field($ejecucionFase, "[$sesion->id][$index]fecha_aplicaciones")
 								->textarea([ 
 											'class' => 'form-control', 
-											'maxlength' => true, 
-											'data-type' => 'date'
+											'data-type' => 'date',
+											'data-minYear' => '2018',
 										])->label( null, [ 'style' => 'display:none' ]) ?>
 					</div>
 					

@@ -1,4 +1,59 @@
-// $( document ).ready(function(){
+
+	$.fn.combodate.defaults.minYear = new Date().getFullYear()-1;
+	$.fn.combodate.defaults.maxYear = new Date().getFullYear()+10;
+	
+	function totalSesiones(){
+		
+		var total = $( "[id^=dvFilaSesion]" ).length*1;
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-total_sesiones" ).val( total );
+	}
+	
+	function promedioEstudiantes(){
+		
+		var total = 0;
+		
+		var estudiantes 	= $( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val()*1;
+		var sesiones 		= $( "[id^=dvFilaSesion]" ).length*1;
+		
+		if( sesiones > 0 )
+			total = Math.round( estudiantes/sesiones );
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-total_estudiantes" ).val( total );
+	}
+	
+	
+	//Calculo el total de participacion de sesiones y se replica para cuando se agregue campo nuevo
+	function totalEstudiantesParticipantes( campo, inicial ){
+		
+		var _self = campo;
+		
+		var total = 0;
+		
+		if( inicial ){
+			total = inicial*1;
+		}
+		
+		//Total de cursos
+		var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+		
+		$( "[id$=estudiantes_participantes]" ).each(function(){
+			if( this != _self )
+				total += this.value*1;
+		});
+		
+		$( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val( total );
+		
+		if( cursos > 0 )
+			$( "#semillerosticcondicionesinstitucionalesestudiantes-promedio_estudiantes_por_curso" ).val( Math.round( total/cursos ) );
+		
+		promedioEstudiantes();
+		
+	}
+	
+	$( "[id$=estudiantes_participantes]" ).on( "save", function( e, params ){
+		totalEstudiantesParticipantes( this, params.newValue )
+	});
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
@@ -276,6 +331,12 @@
 					}		
 				});
 				
+				$( "[id$=estudiantes_participantes]", filaClonada ).on( "save", function( e, params ){
+					totalEstudiantesParticipantes( this, params.newValue )
+				});
+				
+				totalSesiones()
+				
 				consecutivo++;
 			});
 		});
@@ -294,8 +355,13 @@
 				}
 				
 				$( "[id^=dvFilaSesion]", _container ).last().remove();
+				
+				$( "[id$=estudiantes_participantes]" ).on( "save", function( e, params ){
+					totalEstudiantesParticipantes( null, 0 );
+				});
+				
+				totalSesiones()
 			});
 		});
 	});
 	
-// });
