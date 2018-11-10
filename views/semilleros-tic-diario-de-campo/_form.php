@@ -29,7 +29,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 													
 												] ) ?>
 
-	<?= $form->field( $ciclos, 'id' )->dropDownList( $cicloslist, [ 
+	<?= $form->field( $model, 'id_ciclo' )->dropDownList( $cicloslist, [ 
 												'prompt' => 'Seleccione...', 'id' =>'selCiclo'
 												
 											] )->label( 'Ciclo' ); ?>

@@ -63,8 +63,9 @@ class SemillerosTicDiarioDeCampoController extends Controller
     {
         $searchModel = new SemillerosTicDiarioDeCampoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
+		$dataProvider->query->andWhere('estado=1');
+        
+		return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -92,7 +93,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
     {
 		$ciclos = new SemillerosTicCiclos();
 		
-		$ciclos->load( Yii::$app->request->post() );
+		// $ciclos->load( Yii::$app->request->post() );
 		
         $model = new SemillerosTicDiarioDeCampo();
 
@@ -201,7 +202,9 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
 
         return $this->redirect(['index']);
     }
@@ -564,7 +567,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 				
 				
 				
-				//se llena el resultado de a consulta en un array
+				//se llena el resultado de la consulta en un array
 				foreach($result1 as $key){
 					$datosEjecucionFase2[]=$key;
 				}
@@ -846,6 +849,226 @@ class SemillerosTicDiarioDeCampoController extends Controller
 					
 				} //else
 		} //fase 2
+	elseif($faseO == 3){
+		
+		$datosEjecucionFase2 =array();
+				
+								
+				$command = $connection->createCommand("select ai.total_docentes, ef.asignatura, ai.especialidad, ef.numero_apps_usadas, ef.tic
+				from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, 
+				semilleros_tic.ejecucion_fase_iii as ef, semilleros_tic.datos_ieo_profesional as dip, 
+				semilleros_tic.datos_sesiones as ds, semilleros_tic.acuerdos_institucionales as ai
+				where a.id = $idAnio 
+				and c.id = $idCiclo
+				and c.id_anio = a.id
+				and f.id = $faseO 
+				and ef.id_fase = f.id 
+				and dip.id = ef.id_datos_ieo_profesional 
+				and dip.id_institucion = ".$idInstitucion." 
+				and dip.id_sede = ".$idSedes."
+				and ai.id_fase = $faseO
+				and ai.id_ciclo = $idCiclo
+				group by ef.id, ai.total_docentes, ef.asignatura, ai.especialidad, ef.numero_apps_usadas,ef.tic
+				");
+				$result1 = $command->queryAll();
+				
+				//se llena el resultado de la consulta en un array
+				foreach($result1 as $key){
+					$datosEjecucionFase2[]=$key;
+				}
+				
+				$datosEF =array();
+				//se asignan indices numericos a los resultados
+				foreach($datosEjecucionFase2 as $d => $valor) //se saca el indice
+				{
+					foreach($valor as $v) //se recorre el array valor y se le cambian los indices
+					{
+						
+						$datosEF[$d][]=$v;
+					}
+				}
+				
+				if (count($datosEF) < 1){
+					$data['mensaje']="No se encontraron datos almacenados";
+					
+				}
+				else{  //si se encontraron datos almacenados
+					// echo "si tiene";
+				
+					// se unen los resultados para mostrar
+					$total_docentes_ieo=0;
+					$asignaturas = "";
+					$especiaidad = "";
+					$numero_apps_usadas = 0;
+					$tic="";
+					
+					$contador=0;
+				
+					foreach($datosEF as $key => $value){
+						
+						foreach($value as $val)
+						{
+							switch ($contador) 
+							{
+								case 0:
+									$total_docentes_ieo = $val;
+									break;
+								case 1:
+									$asignaturas .= $val.", ";
+									break;
+								case 2:
+									$especiaidad =$val;
+									break;
+								case 3:
+									$numero_apps_usadas += $val;
+									break;
+								case 4:
+									$tic .= $val.", ";
+									break;
+								
+							}
+							$contador++;
+						}
+						$contador=0;
+						
+					}
+					
+					// //para traer la duracion de cada sesion  
+					// $otrosDatosEjecucionFase1 =array();
+					// $command = $connection->createCommand("select s.descripcion, ds.duracion_sesion
+					 // from semilleros_tic.sesiones as s, semilleros_tic.datos_sesiones as ds, semilleros_tic.ejecucion_fase_iii as ef
+					 // where ef.id_fase = ".$faseO."
+					 // and ef.id_ciclo = ".$idCiclo."
+					 // and ef.estado = 1
+					 // and ds.id = ef.id_datos_sesion
+					 // and s.id = ds.id_sesion
+					 // and ds.estado = 1
+					 // and s.estado = 1
+					 // group by s.id, ds.fecha_sesion, ds.id
+					 // order by ds.id");
+					// $result3 = $command->queryAll();
+					// foreach($result3 as $key){
+						// $otrosDatosEjecucionFase1[]=$key;
+					// }
+					
+					// //se asignan indices numericos a los resultados
+					// foreach($otrosDatosEjecucionFase1 as $d => $valor) //se saca el indice
+					// {
+						// foreach($valor as $v) //se recorre el array valor y se le cambian los indices
+						// {
+							
+							// $datosEF1[$d][]=$v;
+						// }
+					// }
+					
+					
+					// //para pasar el array a texto para mostrarlos
+					// // $duracionSesiones = "";
+					// foreach($datosEF1 as $key){
+						
+						// $duracionSesiones[]=$key[0].": ".$key[1];
+						
+					// }
+					// $duracionSesiones = implode(",",$duracionSesiones);
+					
+				$duracionSesiones ="pendiente";
+				
+				//se llena la información a mostrar en el formulario
+					
+					$data['html']="";
+					$data['contenido']="";
+					$data['html1']="";
+					$data['contenido1']="";
+					$contador =0;
+					
+					//este foreach toma los primeros 4 resultados de la consulta y los formatea para mostrarlos
+					foreach ($opcionesEjecucion as $key => $value)
+					{
+						
+						
+						$data['html'].="<div class='col-xs-3'>";
+						$data['html'].=$value;
+						$data['html'].="</div>";
+						
+							switch ($contador) 
+							{
+								case 0:
+									$data['contenido'].="<div class='col-xs-3' >";
+									$data['contenido'].=$total_docentes_ieo;
+									$data['contenido'].="</div>";
+									
+									break;
+								case 1:
+									$data['contenido'].="<div class='col-xs-3' >";
+									$data['contenido'].=$asignaturas;
+									$data['contenido'].="</div>";
+									
+									break;
+								case 2:
+									$data['contenido'].="<div class='col-xs-3' >";
+									$data['contenido'].=$especiaidad;
+									$data['contenido'].="</div>";
+									
+									break;
+								case 3:
+									$data['contenido'].="<div class='col-xs-3' >";
+									$data['contenido'].="";
+									$data['contenido'].="</div>";
+									
+									break;
+								
+							}
+
+						$contador++;
+						// unset(current($opcionesEjecucion));
+						array_shift($opcionesEjecucion);
+						if ($contador ==4)
+							break;
+						
+					}
+					
+					//este foreach toma los ultimos 4 resultados de la consulta y los formatea para mostrarlos
+					foreach ($opcionesEjecucion as $key => $value)
+					{
+						
+						$data['html1'].="<div class='col-xs-3'>";
+						$data['html1'].=$value;
+						$data['html1'].="</div>";
+						
+						switch ($key) 
+							{
+								case 0:
+									$data['contenido1'].="<div class='col-xs-3' >";
+									$data['contenido1'].=$duracionSesiones;
+									$data['contenido1'].="</div>";
+									
+									break;
+								case 1:
+									$data['contenido1'].="<div class='col-xs-3' >";
+									$data['contenido1'].=$numero_apps_usadas;
+									$data['contenido1'].="</div>";
+									
+									break;
+								case 2:
+									$data['contenido1'].="<div class='col-xs-3' >";
+									$data['contenido1'].=$tic;  
+									$data['contenido1'].="</div>";
+									
+									break;
+								// case 3:
+									// $data['contenido1'].="<div class='col-xs-3' >";
+									// $data['contenido1'].="";
+									// $data['contenido1'].="</div>";
+									
+									// break;
+								
+							}
+					}
+				
+				} //else
+				
+		
+	} //fase 3
 		
 		// echo "<pre>"; print_r($datosEF); echo "</pre>";
 		
