@@ -121,8 +121,8 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 ("
                     SELECT sum(efi.participacion_sesiones) as asistentes, 
                         sum(efi.numero_estudiantes) as numestudiantes ,
-                        sum(efi.apps_creadas) as appcreadas
-
+                        sum(efi.apps_creadas) as appcreadas,
+                        sum(ds.duracion_sesion) as duracion
                     FROM  semilleros_tic.ejecucion_fase_i_estudiantes efi
                     INNER JOIN semilleros_tic.datos_sesiones ds ON ds.id = efi.id_datos_sesion
                     INNER JOIN semilleros_tic.sesiones se on se.id = ds.id_sesion
@@ -141,7 +141,7 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 {	        
                     $totalEstudiantes += $valor['numestudiantes'];
                     $totalappcreadsa += $valor['appcreadas'];
-                    array_push($datosFase1, $contador,  $fechas[$contador]['fecha_sesion'], $valor['asistentes'], '***'  );
+                    array_push($datosFase1, $contador,  $fechas[$contador]['fecha_sesion'], $valor['asistentes'], $valor['duracion']  );
                     $contadorSesionesFase1 ++;				
                 }
             

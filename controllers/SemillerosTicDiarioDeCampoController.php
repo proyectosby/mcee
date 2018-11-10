@@ -439,7 +439,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 					// $duracionSesiones = "";
 					foreach($datosEF1 as $key){
 						
-						$duracionSesiones[]=$key[0]." ".$key[1];
+						$duracionSesiones[]=$key[0].": ".$key[1];
 						
 					}
 					$duracionSesiones = implode(",",$duracionSesiones);
@@ -682,6 +682,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 					$command = $connection->createCommand("select s.descripcion, ds.duracion_sesion
 					 from semilleros_tic.sesiones as s, semilleros_tic.datos_sesiones as ds, semilleros_tic.ejecucion_fase_ii as ef
 					 where ef.id_fase = ".$faseO."
+					 and ef.id_ciclo = ".$idCiclo."
 					 and ef.estado = 1
 					 and ds.id = ef.id_datos_sesiones
 					 and s.id = ds.id_sesion
@@ -709,7 +710,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 					// $duracionSesiones = "";
 					foreach($datosEF1 as $key){
 						
-						$duracionSesiones[]=$key[0]." ".$key[1];
+						$duracionSesiones[]=$key[0].": ".$key[1];
 						
 					}
 					$duracionSesiones = implode(",",$duracionSesiones);
