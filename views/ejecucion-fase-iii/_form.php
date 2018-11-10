@@ -32,7 +32,7 @@ $this->registerJsFile(
 						\yii\web\JqueryAsset::className(),
 						\dosamigos\editable\EditableBootstrapAsset::className(),
 						\dosamigos\editable\EditableComboDateAsset::className(),
-						\dosamigos\editable\EditableDatePickerAsset::className(),
+						// \dosamigos\editable\EditableDatePickerAsset::className(),
 						\dosamigos\editable\EditableDateTimePickerAsset::className(),
 					]
 	]
@@ -114,6 +114,7 @@ $this->registerJs(
 										'profesional' 	=> $profesional,
 										'profesionales' => $profesionales,
 										'cursos' 		=> $cursos,
+										'listaSesiones'	=> $listaSesiones,
 									]) ?>
 									
 	<div class='container-fluid' style='margin:10px 0;'>

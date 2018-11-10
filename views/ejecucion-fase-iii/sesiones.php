@@ -16,7 +16,6 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-
 $items = [];
 $index = 0;
 
@@ -24,6 +23,7 @@ $i = 0;
 foreach( $models as $key => $model ){
 	
 	$profesional = $model['profesionales'];
+	$datosSesion = $model['datosSesion'];
 	$model 		 = $model['ejecucionFase'];
 	
 	$items[] = 	[
@@ -39,7 +39,9 @@ foreach( $models as $key => $model ){
 														'form'			=> $form,
 														'profesional'	=> $profesional,
 														'profesionales'	=> $profesionales,
-														'cursos'	=> $cursos,
+														'cursos'		=> $cursos,
+														'dataSesion'	=> $datosSesion,
+														'listaSesiones'	=> $listaSesiones,
 													] 
 										),
 					'contentOptions'=> []

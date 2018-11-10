@@ -45,6 +45,31 @@ use dosamigos\datepicker\DatePicker;
 				'single_backstroke_delete' => false,
 			]
 	])->label(null,['style'=>'display:none']) ?>
+	
+	
+	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS DE LA SESION' ) ?></h3>
+	
+	<?= $form->field( $dataSesion, "[$index]id_sesion" )->dropDownList( $listaSesiones, [ 'prompt' => 'Seleccione...' ])->label( "Sesión" ) ?>
+	
+	<?= Html::activeHiddenInput($dataSesion, "[$index]id") ?>
+	
+	<?= $form->field($dataSesion, '['.$index.']fecha_sesion')->widget(
+		DatePicker::className(), [
+			
+			 // modify template for custom rendering
+			'template' => '{addon}{input}',
+			'language' => 'es',
+			'clientOptions' => [
+				'autoclose' => true,
+				'format' => 'dd-mm-yyyy'
+			]
+	])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
+	
+	<?= $form->field( $dataSesion, "[$index]duracion_sesion" )
+				->textInput()
+				->label() ?>
+	
+	
 
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode($fase->descripcion) ?></h3>
 	

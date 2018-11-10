@@ -30,6 +30,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use app\models\Fases;
+use app\models\Sesiones;
 use app\models\DatosIeoProfesional;
 use app\models\Instituciones;
 use app\models\Sedes;
@@ -41,6 +42,7 @@ use app\models\SemillerosTicAnio;
 use app\models\SemillerosDatosIeo;
 use app\models\AcuerdosInstitucionales;
 use app\models\Paralelos;
+use app\models\DatosSesiones;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -173,6 +175,7 @@ class EjecucionFaseIiiController extends Controller
 		
 		$models[] = [
 						'profesionales' => new DatosIeoProfesional([ 'id_institucion' => $id_institucion ]),
+						'datosSesion' 	=> new DatosSesiones(),
 						'ejecucionFase' => new SemillerosTicEjecucionFaseIii(),
 					];
 		
@@ -188,8 +191,12 @@ class EjecucionFaseIiiController extends Controller
 									
 			foreach( $ejecucionesFases as $key => $vEjecucionesFases )
 			{
+				$datoSesion = DatosSesiones::findOne( $vEjecucionesFases->id_datos_sesion );
+				$datoSesion->fecha_sesion = Yii::$app->formatter->asDate($datoSesion->fecha_sesion, "php:d-m-Y");
+				
 				$models[] = [
 								'profesionales' => DatosIeoProfesional::findOne( $vEjecucionesFases->id_datos_ieo_profesional ),
+								'datosSesion' 	=> $datoSesion,
 								'ejecucionFase' => $vEjecucionesFases,
 							];
 			}
@@ -226,10 +233,28 @@ class EjecucionFaseIiiController extends Controller
 					$dp->id_sede = $id_sede;
 				}
 				
-				//Cargando los datos al modelo
+				//Cargando los datos al modelo datosIeoProfesional
 				$dp->load( $datosIeoProfesional, '' );
 				
+				
+				$postDatosSesiones = Yii::$app->request->post('DatosSesiones')[$key];
+				
+				$ds = false;
+				if( !empty( $postDatosSesiones['id'] ) )
+				{
+					$ds = DatosSesiones::findOne( $postDatosSesiones['id'] );
+				}
+				
+				if( !$ds ){
+					$ds = new DatosSesiones();
+				}
+				
+				
+				//Cargando los datos al modelo Datos sesion
+				$ds->load( $postDatosSesiones, '' );
+				
 				$models[] =[
+								'datosSesion' 	=> $ds,
 								'profesionales' => $dp,
 								'ejecucionFase' => $ef,
 							];
@@ -250,6 +275,11 @@ class EjecucionFaseIiiController extends Controller
 			{
 				if( !$esPrimera )
 				{
+					$valido = $value['datosSesion']->validate([
+										'id_sesion',
+										'fecha_sesion',
+									]) && $valido;
+									
 					$valido = $value['profesionales']->validate([
 										'id_institucion' => 'Institución',
 										'id_profesional_a' => 'Profesional A',
@@ -299,6 +329,9 @@ class EjecucionFaseIiiController extends Controller
 				{
 					if( !$esPrimera )
 					{
+						$value['datosSesion']->estado 	= 1;
+						$value['datosSesion']->save(false);
+						
 						$value['profesionales']->estado 	= 1;
 						$value['profesionales']->id_sede 	= $id_sede;
 						$value['profesionales']->save( false );
@@ -307,6 +340,7 @@ class EjecucionFaseIiiController extends Controller
 						$value['ejecucionFase']->id_datos_ieo_profesional 	= $value['profesionales']->id;
 						$value['ejecucionFase']->estado 					= 1;
 						$value['ejecucionFase']->id_ciclo 					= $ciclo->id;
+						$value['ejecucionFase']->id_datos_sesion			= $value['datosSesion']->id;
 						$value['ejecucionFase']->save( false );
 												
 						$condiciones->estado 	= 1;
@@ -329,17 +363,6 @@ class EjecucionFaseIiiController extends Controller
 		$fase  = Fases::findOne( $this->id_fase );
 		
 		$profesional  = new DatosIeoProfesional();
-		
-		// $dataPersonas 		= Personas::find()
-								// ->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								// ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								// ->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								// ->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								// ->where( 'personas.estado=1' )
-								// ->andWhere( 'id_institucion='.$id_institucion )
-								// ->all();
-		
-		// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 		
 		$profesionales = [];
 		$dataProfesionales = SemillerosDatosIeo::find()
@@ -401,6 +424,17 @@ class EjecucionFaseIiiController extends Controller
 								->all();
 								
 		$cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
+		
+		$dataSesionesFases = 	Sesiones::find()
+									->alias( 's' )
+									->where( 's.id_fase='.$this->id_fase )
+									->andWhere( 's.estado=1' )
+									->all();
+								
+		$listaSesiones	= ArrayHelper::map( $dataSesionesFases, 'id', 'descripcion' );
+		
+		
+		
 
         return $this->render('create', [
             'model' 		=> $model,
@@ -415,6 +449,7 @@ class EjecucionFaseIiiController extends Controller
             'ciclo'			=> $ciclo,
 			'profesionales'	=> $profesionales,
 			'cursos'		=> $cursos,
+			'listaSesiones'	=> $listaSesiones,
         ]);
     }
 

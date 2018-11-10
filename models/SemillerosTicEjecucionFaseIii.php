@@ -57,6 +57,7 @@ class SemillerosTicEjecucionFaseIii extends \yii\db\ActiveRecord
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
+            [['id_datos_sesion'], 'exist', 'skipOnError' => true, 'targetClass' => DatosSesiones::className(), 'targetAttribute' => ['id_datos_sesion' => 'id']],
         ];
     }
 
@@ -92,6 +93,7 @@ class SemillerosTicEjecucionFaseIii extends \yii\db\ActiveRecord
             'indice_problematicas' 		=> 'Indice Problematicas',
             'fecha_uso_aplicaciones' 	=> 'Fecha Uso Aplicaciones',
             'estudiantes_cultivadores' 	=> 'Estudiantes cultivadores',
+            'id_datos_sesion' 			=> 'Datos sesion',
         ];
     }
 }

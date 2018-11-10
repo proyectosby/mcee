@@ -163,7 +163,9 @@ $( document ).ready(function(){
 				});
 			});
 			
-			$( "select", cloneCollapse ).each(function(x){
+			$( ".panel-group" ).append( cloneCollapse );
+			
+			$( "select[id^=datosieoprofesional],select[id^=semillerosticejecucionfaseiii]", cloneCollapse ).each(function(x){
 				
 				$( this ).chosen({
 							"search_contains"			:true,
@@ -174,8 +176,6 @@ $( document ).ready(function(){
 							"no_results_text"			:"No results match",
 						});
 			});
-			
-			$( ".panel-group" ).append( cloneCollapse );
 			
 			//Se muestra el item del acordeon
 			cloneCollapse.css({ display: "" });	
@@ -327,6 +327,32 @@ $( document ).ready(function(){
 				var sesion = this.id.split("-")[1];
 				
 				$( "#semillerosticejecucionfaseiii-"+sesion+"-estudiantes_cultivadores" ).val( total );
+			});
+			
+			$('[id$=fecha_sesion]', cloneCollapse ).parent().datepicker({"autoclose":true,"format":"dd-mm-yyyy","language":"es"});
+			
+			//Agregando validación a todos los campos textarea de ejecución de fase
+			$( "[id^=datossesiones]", cloneCollapse ).each(function(){
+				
+				if( this.id.substr(-2) != 'id' ){
+					
+					$( "#"+this.id ).parent()
+						.removeClass( "field-"+this.id.replace( /-[0-9]+-/gi, "-0-" ) )
+						.addClass( "field-"+this.id );
+						
+					$( "#w0" ).yiiActiveForm( 'add', 
+							{
+								"id"		: "#"+this.id,
+								"name"		: this.name,
+								"container"	: ".field-"+this.id,
+								"input"		: "#"+this.id,
+								"validate"	: function (attribute, value, messages, deferred, $form) {
+												// yii.validation.string(value, messages, {"message":"Debe ser una cadena de caracteres.","skipOnEmpty":1});
+												yii.validation.required(value, messages, {"message":"No puede estar vacío.","skipOnEmpty":1});
+											}
+							},
+						);
+				}
 			});
 			
 			con++;
