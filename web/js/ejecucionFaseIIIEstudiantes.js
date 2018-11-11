@@ -194,7 +194,7 @@
 				else{
 					// alert(2);
 					if( cmp == "" )
-						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede estar vacío"});
+						yii.validation.required(cmp, messages, {"message":"No puede estar vacío"});
 					else
 						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y llenar todos los campos", cmp );
 					 
