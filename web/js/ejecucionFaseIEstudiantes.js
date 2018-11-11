@@ -69,7 +69,7 @@
 		var total = params.newValue*1;
 		
 		//Total de cursos
-		var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+		var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes  option:selected" ).text().split(",").length;
 		
 		$( "[id$=numero_estudiantes]" ).each(function(){
 			if( this != _self )
@@ -186,7 +186,7 @@
 				else{
 					// alert(2);
 					if( cmp == "" )
-						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede estar vacío"});
+						yii.validation.required(cmp, messages, {"message":"No puede estar vacío"});
 					else
 						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y llenar todos los campos", cmp );
 					 
@@ -194,7 +194,7 @@
 				}
 			}
 		});
-	 }, 500 );
+	 }, 5000 );
 	
 	
 	/********************************************************************************
@@ -330,7 +330,7 @@
 					var total = params.newValue*1;
 					
 					//Total de cursos
-					var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+					var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes option:selected" ).text().split(",").length;
 					
 					$( "[id$=numero_estudiantes]" ).each(function(){
 						if( this != _self )
@@ -381,7 +381,7 @@
 				$( "#semillerosticcondicionesinstitucionalesestudiantes-participantes_por_curso" ).val( total );
 				
 				//Calculando el promedio de estudiantes por curso
-				var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+				var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes option:selected" ).text().split(",").length;
 				
 				if( cursos > 0 )
 					$( "#semillerosticcondicionesinstitucionalesestudiantes-promedio_estudiantes_por_curso" ).val( Math.round( total/cursos ) );
