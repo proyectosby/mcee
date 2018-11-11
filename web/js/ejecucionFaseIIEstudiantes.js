@@ -32,7 +32,7 @@
 		}
 		
 		//Total de cursos
-		var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val().split(",").length;
+		var cursos = $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes option:selected" ).text().split(",").length;
 		
 		$( "[id$=estudiantes_participantes]" ).each(function(){
 			if( this != _self )
