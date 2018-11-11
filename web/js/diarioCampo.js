@@ -9,7 +9,7 @@ $( document ).ready(function() {
 
 
 
-//llenar las comunas segun el municipio que seleccione
+//llenar las fases y el contenido
 $( "#selFases" ).change(function() 
 {
 	

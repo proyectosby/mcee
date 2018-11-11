@@ -933,45 +933,45 @@ class SemillerosTicDiarioDeCampoController extends Controller
 						
 					}
 					
-					// //para traer la duracion de cada sesion  
-					// $otrosDatosEjecucionFase1 =array();
-					// $command = $connection->createCommand("select s.descripcion, ds.duracion_sesion
-					 // from semilleros_tic.sesiones as s, semilleros_tic.datos_sesiones as ds, semilleros_tic.ejecucion_fase_iii as ef
-					 // where ef.id_fase = ".$faseO."
-					 // and ef.id_ciclo = ".$idCiclo."
-					 // and ef.estado = 1
-					 // and ds.id = ef.id_datos_sesion
-					 // and s.id = ds.id_sesion
-					 // and ds.estado = 1
-					 // and s.estado = 1
-					 // group by s.id, ds.fecha_sesion, ds.id
-					 // order by ds.id");
-					// $result3 = $command->queryAll();
-					// foreach($result3 as $key){
-						// $otrosDatosEjecucionFase1[]=$key;
-					// }
+					//para traer la duracion de cada sesion  
+					$otrosDatosEjecucionFase1 =array();
+					$command = $connection->createCommand("select s.descripcion, ds.duracion_sesion
+					 from semilleros_tic.sesiones as s, semilleros_tic.datos_sesiones as ds, semilleros_tic.ejecucion_fase_iii as ef
+					 where ef.id_fase = ".$faseO."
+					 and ef.id_ciclo = ".$idCiclo."
+					 and ef.estado = 1
+					 and ds.id = ef.id_datos_sesion
+					 and s.id = ds.id_sesion
+					 and ds.estado = 1
+					 and s.estado = 1
+					 group by s.id, ds.fecha_sesion, ds.id
+					 order by ds.id");
+					$result3 = $command->queryAll();
+					foreach($result3 as $key){
+						$otrosDatosEjecucionFase1[]=$key;
+					}
 					
-					// //se asignan indices numericos a los resultados
-					// foreach($otrosDatosEjecucionFase1 as $d => $valor) //se saca el indice
-					// {
-						// foreach($valor as $v) //se recorre el array valor y se le cambian los indices
-						// {
+					//se asignan indices numericos a los resultados
+					foreach($otrosDatosEjecucionFase1 as $d => $valor) //se saca el indice
+					{
+						foreach($valor as $v) //se recorre el array valor y se le cambian los indices
+						{
 							
-							// $datosEF1[$d][]=$v;
-						// }
-					// }
+							$datosEF1[$d][]=$v;
+						}
+					}
 					
 					
-					// //para pasar el array a texto para mostrarlos
-					// // $duracionSesiones = "";
-					// foreach($datosEF1 as $key){
+					//para pasar el array a texto para mostrarlos
+					// $duracionSesiones = "";
+					foreach($datosEF1 as $key){
 						
-						// $duracionSesiones[]=$key[0].": ".$key[1];
+						$duracionSesiones[]=$key[0].": ".$key[1];
 						
-					// }
-					// $duracionSesiones = implode(",",$duracionSesiones);
+					}
+					$duracionSesiones = implode(",",$duracionSesiones);
 					
-				$duracionSesiones ="pendiente";
+				
 				
 				//se llena la información a mostrar en el formulario
 					

@@ -9,49 +9,89 @@ $( document ).ready(function() {
 
 
 
-//llenar las comunas segun el municipio que seleccione
+//llenar las fases y el contenido
 $( "#selFases" ).change(function() 
 {
 	
-	fase = $( "#selFases" ).val();
+	faseO = $( "#selFases" ).val();
+	anio = $( "#selAnio" ).val();
+	ciclo = $( "#selCiclo" ).val();
 	
-	 if(fase != "")
+	 if(faseO != "" && anio != "" && ciclo != "" )
 	 {
-		 if(fase == 1){fase=14; titulo="BITACORA FASE I"; descripcion=17; hallazgo=20;}
-		 else if(fase == 2){fase = 15; titulo="BITACORA FASE II"; descripcion=18; hallazgo=21;}
-		 else if(fase == 3){fase = 16; titulo="BITACORA FASE III"; descripcion=19; hallazgo=22;}
-		$.get( "index.php?r=semilleros-tic-diario-de-campo-estudiantes/opciones-ejecucion-diario-campo&idFase="+fase+"&descripcion="+descripcion+"&hallazgo="+hallazgo,
+		 if(faseO == 1){fase=14; titulo="BITACORA FASE I"; descripcion=17; hallazgo=20;}
+		 else if(faseO == 2){fase = 15; titulo="BITACORA FASE II"; descripcion=18; hallazgo=21;}
+		 else if(faseO == 3){fase = 16; titulo="BITACORA FASE III"; descripcion=19; hallazgo=22;}
+		$.get( "index.php?r=semilleros-tic-diario-de-campo-estudiantes/opciones-ejecucion-diario-campo&idFase="+fase+"&descripcion="+descripcion+"&hallazgo="+hallazgo+"&idAnio="+anio+"&idCiclo="+ciclo+"&faseO="+faseO,
 				function( data )
 					{			
+						// alert(data.contenido+"-"+data.contenido1);
+						
+								// if (typeof data.contenido === undefined || typeof data.contenido1 === undefined){
+								if (data.contenido =="" || data.contenido1 ==""){
+									
+									swal("Importante", data.mensaje, "info");
+									
+								}
+								else{
+									$("#contenido").html(data.contenido);
+									$("#contenido1").html(data.contenido1);
+									
+									$("#contenido").show();
+									$("#contenido1").show(); 
+									 
+								}
+							$("#encabezado").html(data.html);
+							$("#encabezado1").html(data.html1);
+							
+							$("#titulo").show();
+							$("#encabezado").show();
+							$("#encabezado1").show();
+							
+						
+						
 						$("#titulo").html(titulo);
-						$("#encabezado").html(data.html);
-						$("#contenido").html(data.contenido);
-						$('[for="semillerosticdiariodecampoestudiantes-descripcion"]').html(data.descripcion);
-						$('[for="semillerosticdiariodecampoestudiantes-hallazgos"]').html(data.hallazgo);
+						$("#descripcion").html(data.descripcion);
+						$("#hallazgos").html(data.hallazgos);
 						
 															
 					},
 			"json");   
 	 }
+	 else{
+		 $("#titulo").hide(titulo);
+		 $("#encabezado").hide();
+		 $("#contenido").hide();
+		 $("#encabezado1").hide();
+		 $("#contenido1").hide();
+		 
+		 swal("Importante", "Debe seleccionar año, ciclo y fase", "error");
+		 }
 });
 
 //llenar los barrios segun la comuna que seleccione
-$( "#personas-comuna" ).change(function() 
-{
-	idComunas = $( "#personas-comuna" ).val();
-	alert
-	if(idMunicipio != "")
+$( "#selAnio" ).change(function() 
+{     
+	anio = $( "#selAnio" ).val();  
+	
+	if(anio != "")
 	{
-		$.get( "index.php?r=personas/barrios&idComunas="+idComunas,
+		$.get( "index.php?r=semilleros-tic-diario-de-campo-estudiantes/llenar-ciclos&idAnio="+anio,
 				function( data )
 					{	
 						
-						$("#personas-id_barrios_veredas").append(data);
-						$("#personas-id_barrios_veredas").val(selectIdBarrios);
+						$('#selCiclo').empty();
+						$('#selCiclo').html(data.html);
 					},
 			"json");   
 	}
+	else{
+		$('#selCiclo').empty();
+		$('#selCiclo').append(
+		$('<option />')
+			.text('Seleccione...')
+			.val('')
+		);
+	}
 });
-
-
 
