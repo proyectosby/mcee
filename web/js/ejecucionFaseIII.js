@@ -11,9 +11,12 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 ---------------------------------------
 **********/
 
-$( document ).ready(function(){
+// $( document ).ready(function(){
 	
 	// var con = 1;
+	
+	$.fn.combodate.defaults.minYear = new Date().getFullYear()-1;
+	$.fn.combodate.defaults.maxYear = new Date().getFullYear()+5;
 	
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
@@ -379,4 +382,4 @@ $( document ).ready(function(){
 		});
 	});
 	
-});
+// });
