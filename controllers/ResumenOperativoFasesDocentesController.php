@@ -472,7 +472,7 @@ class ResumenOperativoFasesDocentesController extends Controller
 			
 			if(isset($datosSesionFase3))
 			{
-				$idDatosSesionesFase3 = implode(",",$datosSesionFase3);	
+				$idDatosSesionesFase3 = implode(",",array_filter ( $datosSesionFase3));	
 				
 			
 				$command = $connection->createCommand
