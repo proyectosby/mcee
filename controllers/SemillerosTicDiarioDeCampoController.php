@@ -151,11 +151,11 @@ class SemillerosTicDiarioDeCampoController extends Controller
     {
         $ciclos = new SemillerosTicCiclos();
 		
-		$ciclos->load( Yii::$app->request->post() );
+		// $ciclos->load( Yii::$app->request->post() );
 		
         $model = new SemillerosTicDiarioDeCampo();
 		
-		$model = $this->findModel($id);
+		// $model = $this->findModel($id);
 
 		//se crea una instancia del modelo fases
 		$fasesModel 		 	= new Fases();
@@ -175,10 +175,11 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			
 		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
 		
+		//Se saca la el id del anio
+		$anioSelected = SemillerosTicCiclos::findOne( $model->id_ciclo )->id_anio;
+		
+		
 		$cicloslist = [];
-		
-		
-			$ciclos = new SemillerosTicCiclos();
 			
 			
 		
@@ -190,6 +191,8 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			'ciclos' => $ciclos,
             'cicloslist' => $cicloslist,
             'anios' => $anios,
+			'anioSelected' => $anioSelected,
+            'cicloSelected' => $model->id_ciclo,
         ]);
     }
 
