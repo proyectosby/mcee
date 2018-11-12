@@ -1,7 +1,7 @@
 $( document ).ready(function() {
-    var url = window.location.href; 
-	if (url.indexOf('update')!=-1) 
-	{	
+    // var url = window.location.href; 
+	// if (url.indexOf('update')!=-1) 
+	// {	
 		
 	
 		// $("#principal").hide();
@@ -10,7 +10,7 @@ $( document ).ready(function() {
 		
 		setTimeout(function(){$('#selFases').trigger('change');}, 600);
 			// llenarPerfilesSelected();
-	}
+	// }
 });
 
 

@@ -153,9 +153,9 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		
 		// $ciclos->load( Yii::$app->request->post() );
 		
-        $model = new SemillerosTicDiarioDeCampo();
+        // $model = new SemillerosTicDiarioDeCampo();
 		
-		// $model = $this->findModel($id);
+		$model = $this->findModel($id);
 
 		//se crea una instancia del modelo fases
 		$fasesModel 		 	= new Fases();
