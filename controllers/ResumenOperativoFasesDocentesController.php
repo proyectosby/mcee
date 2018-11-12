@@ -180,7 +180,6 @@ class ResumenOperativoFasesDocentesController extends Controller
 				$cantidadDocentes[] = count($value);
 			}
 			
-			
 		
 			$command = $connection->createCommand
 			("
@@ -538,13 +537,10 @@ class ResumenOperativoFasesDocentesController extends Controller
 				");
 				$docenteCreador = $command->queryAll();
 				
-				;
 				foreach($docenteCreador as $dc)
 				{
 					$iddocenteCreador[$dc['id_sesion']][] = $dc['id_docente'];
 				}
-				
-				
 				
 				foreach($iddocenteCreador as $id)
 				{
@@ -733,7 +729,7 @@ class ResumenOperativoFasesDocentesController extends Controller
 			$numeroApps= null;
 			$contador++;
 		}
-		echo json_encode($html);
+		echo $html;
 	}
     /**
      * Displays a single EcDatosBasicos model.
