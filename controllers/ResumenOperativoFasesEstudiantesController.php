@@ -105,7 +105,8 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                         SELECT concat(p.nombres,' ',p.apellidos) FROM public.personas as p WHERE id in($profesional_a)
                     ");
                 $nombres = $command->queryAll();
-                $nombre=null;
+				//se cambia de $nombre=null; a $nombre=array();
+                $nombre=array();
                 
                 foreach( $nombres as $nom)
                 {
