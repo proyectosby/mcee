@@ -18,6 +18,7 @@ use yii\bootstrap\Modal;
 use yii\helpers\Url;
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
+use app\models\Fases;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SemillerosTicDiarioDeCampoEstudiantesBuscar */
@@ -97,10 +98,22 @@ $this->params['breadcrumbs'][] = $nombre ;
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id_fase',
+            [
+				'attribute'=>'id_fase',
+				/*
+				se consulta la descripcion de la fase 
+				*/
+				'value' => function( $model ){
+					$fases = Fases::findOne($model->id_fase);
+					$fases= $fases ? $fases->descripcion : '';
+					
+					
+					return  $fases ;	
+				},	
+			],
             'descripcion',
             'hallazgos',
-            'estado',
+            // 'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',

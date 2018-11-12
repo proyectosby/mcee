@@ -107,7 +107,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 		//se guardan los datos en un array
 		$fases	 	 	 	= ArrayHelper::map( $dataFases, 'id', 'descripcion' );
 		
-		
+		// echo "<pre>"; print_r(Yii::$app->request->post()); echo "</pre>"; die();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
            return $this->redirect(['index']);
         }
@@ -153,7 +153,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
     {
         $ciclos = new SemillerosTicCiclos();
 		
-		$ciclos->load( Yii::$app->request->post() );
+		// $ciclos->load( Yii::$app->request->post() );
 		
 		$model = new SemillerosTicDiarioDeCampoEstudiantes();
 		
