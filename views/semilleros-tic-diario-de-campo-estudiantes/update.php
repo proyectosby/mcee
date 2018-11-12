@@ -21,6 +21,8 @@ $this->params['breadcrumbs'][] = "Actualizar";
 		'ciclos' => $ciclos,
 		'cicloslist' => $cicloslist,
 		'anios' => $anios,
+		'anioSelected' => $anioSelected,
+		'cicloSelected' => $cicloSelected,
     ]) ?>
 
 </div>

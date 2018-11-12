@@ -16,7 +16,9 @@ use yii\widgets\ActiveForm;
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/diarioCampo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
-
+<script>
+cicloSelected = <?php echo $cicloSelected; ?>;
+</script>
 
 <!-- Se inicia el formulario-->
 <?php $form = ActiveForm::begin(); ?>
@@ -25,7 +27,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 	<div class="" style=''>
 
 	<?= $form->field( $ciclos, 'id_anio' )->dropDownList( $anios, [ 
-													'prompt' 	=> 'Seleccione...', 'id' =>'selAnio'
+													'prompt' 	=> 'Seleccione...', 'id' =>'selAnio','value' => $anioSelected 
 													
 												] ) ?>
 
