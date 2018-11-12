@@ -21,6 +21,8 @@ $this->params['breadcrumbs'][] = "Agregar";
         'ciclos' => $ciclos,
 		'cicloslist' => $cicloslist,
         'anios' => $anios,
+		'anioSelected' => "",
+		'cicloSelected' => '',
     ]) ?>
 
 </div>

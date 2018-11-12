@@ -155,7 +155,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 		
 		// $ciclos->load( Yii::$app->request->post() );
 		
-		$model = new SemillerosTicDiarioDeCampoEstudiantes();
+		// $model = new SemillerosTicDiarioDeCampoEstudiantes();
 		
 		$model = $this->findModel($id);
 
@@ -177,10 +177,14 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 			
 		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
 		
+		//Se saca la el id del anio
+		$anioSelected = SemillerosTicCiclos::findOne( $model->id_ciclo )->id_anio;
+		
+		
 		$cicloslist = [];
 		
 		
-			$ciclos = new SemillerosTicCiclos();
+			
 
         return $this->renderAjax('update', [
             'model' => $model,
@@ -189,6 +193,9 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 			'ciclos' => $ciclos,
             'cicloslist' => $cicloslist,
             'anios' => $anios,
+            'anioSelected' => $anioSelected,
+            'cicloSelected' => $model->id_ciclo,
+			
         ]);
     }
 
@@ -299,208 +306,219 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 				 ");
 				$result1 = $command->queryAll();
 				
-				//se llena el resultado de a consulta en un array
-				foreach( $result1 as $key ){
+				
+				if (count($result1) < 1){
+					$data['mensaje']="No se encontraron datos almacenados";
 					
-					//Solo se suma el número de estudiantes
-					$nro_estudiantes += $key['numero_estudiantes'];
-					
-					//es el id de acuerdos institucionales
-					$grados[] 				= $key['curso_participantes'];
-					
-					// //Se suma las sesiones
-					// $nro_sesiones 			+= $key['participacion_sesiones'];
-					
-					// Se hace en un array todas las duraciones de las sesiones
-					$duracion_sesion[ $key['id_sesion'] ] = Sesiones::findOne( $key['id_sesion'] )->descripcion.": ".$key['duracion_sesion'];
-					
-					//Array del nombre de las aplicacioens creadas
-					$aplicaciones_creadas[] = $key['aplicaciones_creadas'];
-					
-					//Total de temas tratados
-					$temas_tratados[] 		= $key['problemas_creacion'];
 				}
-				
-				//Contiene la lista de los grados en la ejecución fase i estudiantes
-				$cursos = [];
-				
-				//Buscando frecuencias y cursos
-				if( is_array( $grados ) )
-				{
-					foreach( $grados as $grado ){
+				else{
+					
+					//se llena el resultado de a consulta en un array
+					foreach( $result1 as $key ){
 						
-						$acuerdo = AcuerdosInstitucionalesEstudiantes::findOne( $grado );
+						//Solo se suma el número de estudiantes
+						$nro_estudiantes += $key['numero_estudiantes'];
 						
-						//muestra la lista de cursos por id
-						$lista_cursos_id = explode( ",", $acuerdo->curso );
+						//es el id de acuerdos institucionales
+						$grados[] 				= $key['curso_participantes'];
 						
-						foreach( $lista_cursos_id as $id_curso )
-						{
-							//Saco la descripcion del curso
-							$des = Paralelos::findOne( $id_curso )->descripcion;
+						// //Se suma las sesiones
+						// $nro_sesiones 			+= $key['participacion_sesiones'];
+						
+						// Se hace en un array todas las duraciones de las sesiones
+						$duracion_sesion[ $key['id_sesion'] ] = Sesiones::findOne( $key['id_sesion'] )->descripcion.": ".$key['duracion_sesion'];
+						
+						//Array del nombre de las aplicacioens creadas
+						$aplicaciones_creadas[] = $key['aplicaciones_creadas'];
+						
+						//Total de temas tratados
+						$temas_tratados[] 		= $key['problemas_creacion'];
+					}
+					
+					//Contiene la lista de los grados en la ejecución fase i estudiantes
+					$cursos = [];
+					
+					//Buscando frecuencias y cursos
+					if( is_array( $grados ) )
+					{
+						foreach( $grados as $grado ){
 							
-							//Si el curso no esta en la lista la agrego
-							if( !in_array($des, $cursos) )
+							$acuerdo = AcuerdosInstitucionalesEstudiantes::findOne( $grado );
+							
+							//muestra la lista de cursos por id
+							$lista_cursos_id = explode( ",", $acuerdo->curso );
+							
+							foreach( $lista_cursos_id as $id_curso )
 							{
-								$cursos[] = Paralelos::findOne( $id_curso )->descripcion;
+								//Saco la descripcion del curso
+								$des = Paralelos::findOne( $id_curso )->descripcion;
+								
+								//Si el curso no esta en la lista la agrego
+								if( !in_array($des, $cursos) )
+								{
+									$cursos[] = Paralelos::findOne( $id_curso )->descripcion;
+								}
 							}
+							
+							
 						}
 						
+						$frecuencias[] = Parametro::findOne( $acuerdo->frecuencia_sesiones )->descripcion;
+					
+					//se formatea para mostrarlos separados por , cursos
+						foreach($cursos as $key){
+							
+							$cursosDescripcion[]=$key;
+							
+							}
+						$cursosDescripcion = implode(",",$cursosDescripcion);
 						
+						//se formatea para mostrarlos separados por , frecuencias
+						foreach($frecuencias as $key){
+							
+							$frecuenciasDescripcion[]=$key;
+							
+							}
+						$frecuenciasDescripcion = implode(",",$frecuenciasDescripcion);
+						
+						//se formatea para mostrarlos separados por , aplicaciones_creadas
+						foreach($aplicaciones_creadas as $key){
+							
+							$aplicacionesCreadasDescripcion[]=$key;
+							
+							}
+						$aplicacionesCreadasDescripcion = implode(",",$aplicacionesCreadasDescripcion);
+					
+						//se formatea para mostrarlos separados por , temas_tratados
+						foreach($temas_tratados as $key){
+							
+							$temasTratadosDescripcion[]=$key;
+							
+							}
+						$temasTratadosDescripcion = implode(",",$temasTratadosDescripcion);
+						
+						//se formatea para mostrarlos separados por , duracion_sesion
+						foreach($duracion_sesion as $key){
+							
+							$duracionSesionDescripcion[]=$key;
+							
+							}
+						$duracionSesionDescripcion = implode(",",$duracionSesionDescripcion);
+					
+					// echo "<pre>"; print_r($cursosDescripcion); echo "</pre>"; die();
 					}
 					
-					$frecuencias[] = Parametro::findOne( $acuerdo->frecuencia_sesiones )->descripcion;
-				
-				//se formatea para mostrarlos separados por , cursos
-					foreach($cursos as $key){
+					//para traer sesiones realizadas
+						$command = $connection->createCommand("select count(ds.fecha_sesion) as sesiones_realizadas
+							from semilleros_tic.datos_sesiones as ds, 
+							semilleros_tic.ejecucion_fase_i_estudiantes as ef, semilleros_tic.datos_ieo_profesional_estudiantes as dip
+							where ds.id = ef.id_datos_sesion
+							and ef.id_ciclo = ".$idCiclo."
+							and ef.id_fase = ".$faseO."
+							and ef.estado = 1
+							and ds.estado = 1
+							and ef.id_datos_ieo_profesional_estudiantes = dip.id
+							and dip.id_institucion = ".$idInstitucion."
+							and dip.id_sede = ".$idSedes."");
+						$result4 = $command->queryAll();
 						
-						$cursosDescripcion[]=$key;
-						
-						}
-					$cursosDescripcion = implode(",",$cursosDescripcion);
-					
-					//se formatea para mostrarlos separados por , frecuencias
-					foreach($frecuencias as $key){
-						
-						$frecuenciasDescripcion[]=$key;
-						
-						}
-					$frecuenciasDescripcion = implode(",",$frecuenciasDescripcion);
-					
-					//se formatea para mostrarlos separados por , aplicaciones_creadas
-					foreach($aplicaciones_creadas as $key){
-						
-						$aplicacionesCreadasDescripcion[]=$key;
-						
-						}
-					$aplicacionesCreadasDescripcion = implode(",",$aplicacionesCreadasDescripcion);
-				
-				    //se formatea para mostrarlos separados por , temas_tratados
-					foreach($temas_tratados as $key){
-						
-						$temasTratadosDescripcion[]=$key;
-						
-						}
-					$temasTratadosDescripcion = implode(",",$temasTratadosDescripcion);
-					
-					//se formatea para mostrarlos separados por , duracion_sesion
-					foreach($duracion_sesion as $key){
-						
-						$duracionSesionDescripcion[]=$key;
-						
-						}
-					$duracionSesionDescripcion = implode(",",$duracionSesionDescripcion);
-				
-				// echo "<pre>"; print_r($cursosDescripcion); echo "</pre>"; die();
-				}
-				
-				//para traer sesiones realizadas
-					$command = $connection->createCommand("select count(ds.fecha_sesion) as sesiones_realizadas
-						from semilleros_tic.datos_sesiones as ds, 
-						semilleros_tic.ejecucion_fase_i_estudiantes as ef, semilleros_tic.datos_ieo_profesional_estudiantes as dip
-						where ds.id = ef.id_datos_sesion
-						and ef.id_ciclo = ".$idCiclo."
-						and ef.id_fase = ".$faseO."
-						and ef.estado = 1
-						and ds.estado = 1
-						and ef.id_datos_ieo_profesional_estudiantes = dip.id
-						and dip.id_institucion = ".$idInstitucion."
-						and dip.id_sede = ".$idSedes."");
-					$result4 = $command->queryAll();
-					
-					$nro_sesiones = $result4[0]['sesiones_realizadas'];
-					
-					
-					//se llena la información a mostrar en el formulario
-					
-					$data['html']="";
-					$data['contenido']="";
-					$data['html1']="";
-					$data['contenido1']="";
-					$contador =0;
-					//este foreach toma los primeros 4 resultados de la consulta y los formatea para mostrarlos
-					foreach ($opcionesEjecucion as $key => $value)
-					{
+						$nro_sesiones = $result4[0]['sesiones_realizadas'];
 						
 						
-						$data['html'].="<div class='col-xs-3'>";
-						$data['html'].=$value;
-						$data['html'].="</div>";
+						//se llena la información a mostrar en el formulario
 						
-							switch ($contador) 
-							{
-								case 0:
-									$data['contenido'].="<div class='col-xs-3' >";
-									$data['contenido'].=$nro_estudiantes;
-									$data['contenido'].="</div>";
+						$data['html']="";
+						$data['contenido']="";
+						$data['html1']="";
+						$data['contenido1']="";
+						$contador =0;
+						//este foreach toma los primeros 4 resultados de la consulta y los formatea para mostrarlos
+						foreach ($opcionesEjecucion as $key => $value)
+						{
+							
+							
+							$data['html'].="<div class='col-xs-3'>";
+							$data['html'].=$value;
+							$data['html'].="</div>";
+							
+								switch ($contador) 
+								{
+									case 0:
+										$data['contenido'].="<div class='col-xs-3' >";
+										$data['contenido'].=$nro_estudiantes;
+										$data['contenido'].="</div>";
+										
+										break;
+									case 1:
+										$data['contenido'].="<div class='col-xs-3' >";
+										$data['contenido'].=$cursosDescripcion;
+										$data['contenido'].="</div>";
+										
+										break;
+									case 2:
+										$data['contenido'].="<div class='col-xs-3' >";
+										$data['contenido'].=$nro_sesiones;
+										$data['contenido'].="</div>";
+										
+										break;
+									case 3:
+										$data['contenido'].="<div class='col-xs-3' >";
+										$data['contenido'].=$frecuenciasDescripcion;
+										$data['contenido'].="</div>";
+										
+										break;
 									
-									break;
-								case 1:
-									$data['contenido'].="<div class='col-xs-3' >";
-									$data['contenido'].=$cursosDescripcion;
-									$data['contenido'].="</div>";
-									
-									break;
-								case 2:
-									$data['contenido'].="<div class='col-xs-3' >";
-									$data['contenido'].=$nro_sesiones;
-									$data['contenido'].="</div>";
-									
-									break;
-								case 3:
-									$data['contenido'].="<div class='col-xs-3' >";
-									$data['contenido'].=$frecuenciasDescripcion;
-									$data['contenido'].="</div>";
-									
-									break;
-								
-							}
+								}
 
-						$contador++;
-						// unset(current($opcionesEjecucion));
-						array_shift($opcionesEjecucion);
-						if ($contador ==4)
-							break;
+							$contador++;
+							// unset(current($opcionesEjecucion));
+							array_shift($opcionesEjecucion);
+							if ($contador ==4)
+								break;
+							
+						}
 						
-					}
+						//este foreach toma los ultimos 4 resultados de la consulta y los formatea para mostrarlos
+						foreach ($opcionesEjecucion as $key => $value)
+						{
+							
+							$data['html1'].="<div class='col-xs-3'>";
+							$data['html1'].=$value;
+							$data['html1'].="</div>";
+							
+							switch ($key) 
+								{
+									case 0:
+										$data['contenido1'].="<div class='col-xs-3' >";
+										$data['contenido1'].=$duracionSesionDescripcion;
+										$data['contenido1'].="</div>";
+										
+										break;
+									case 1:
+										$data['contenido1'].="<div class='col-xs-3' >";
+										$data['contenido1'].=$aplicacionesCreadasDescripcion;
+										$data['contenido1'].="</div>";
+										
+										break;
+									case 2:
+										$data['contenido1'].="<div class='col-xs-3' >";
+										$data['contenido1'].=$temasTratadosDescripcion;  
+										$data['contenido1'].="</div>";
+										
+										break;
+									case 3:
+										$data['contenido1'].="<div class='col-xs-3' >";
+										$data['contenido1'].="";
+										$data['contenido1'].="</div>";
+										
+										break;
+									
+								}
+						}
 					
-					//este foreach toma los ultimos 4 resultados de la consulta y los formatea para mostrarlos
-					foreach ($opcionesEjecucion as $key => $value)
-					{
-						
-						$data['html1'].="<div class='col-xs-3'>";
-						$data['html1'].=$value;
-						$data['html1'].="</div>";
-						
-						switch ($key) 
-							{
-								case 0:
-									$data['contenido1'].="<div class='col-xs-3' >";
-									$data['contenido1'].=$duracionSesionDescripcion;
-									$data['contenido1'].="</div>";
-									
-									break;
-								case 1:
-									$data['contenido1'].="<div class='col-xs-3' >";
-									$data['contenido1'].=$aplicacionesCreadasDescripcion;
-									$data['contenido1'].="</div>";
-									
-									break;
-								case 2:
-									$data['contenido1'].="<div class='col-xs-3' >";
-									$data['contenido1'].=$temasTratadosDescripcion;  
-									$data['contenido1'].="</div>";
-									
-									break;
-								case 3:
-									$data['contenido1'].="<div class='col-xs-3' >";
-									$data['contenido1'].="";
-									$data['contenido1'].="</div>";
-									
-									break;
-								
-							}
-					}
+				} //else
+				
+				
 					
 		} //if
 		else if ($faseO == 2 || $faseO == 3)
@@ -533,7 +551,13 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 				 ");
 				$result1 = $command->queryAll();
 				
-				//se llena el resultado de a consulta en un array
+				if (count($result1) < 1){
+					$data['mensaje']="No se encontraron datos almacenados";
+					
+				}
+				else{
+					
+						//se llena el resultado de a consulta en un array
 				foreach( $result1 as $key ){
 					
 					//Solo se suma el número de estudiantes
@@ -736,6 +760,10 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 								
 							}
 					}
+					
+				} //else
+				
+				
 		} //fase 2 0 fase 3
 	
 		

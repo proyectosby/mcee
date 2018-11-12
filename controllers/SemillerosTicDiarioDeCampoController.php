@@ -287,7 +287,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 				 and dip.id_sede = ".$idSedes."
 				 group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
 				 ");
-				$result1 = $command->queryAll();//falta la sede
+				$result1 = $command->queryAll();
 				;
 				//se llena el resultado de a consulta en un array
 				foreach($result1 as $key){

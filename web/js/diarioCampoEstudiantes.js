@@ -1,10 +1,16 @@
 $( document ).ready(function() {
-    
+    var url = window.location.href; 
+	if (url.indexOf('update')!=-1) 
+	{	
+		
 	
-	// $("#principal").hide();
-	
-	
-		// llenarPerfilesSelected();
+		// $("#principal").hide();
+		$('#selAnio').trigger('change');	
+		// $('#selFases').trigger('change');	
+		
+		setTimeout(function(){$('#selFases').trigger('change');}, 600);
+			// llenarPerfilesSelected();
+	}
 });
 
 
@@ -64,6 +70,7 @@ $( "#selFases" ).change(function()
 		 $("#contenido").hide();
 		 $("#encabezado1").hide();
 		 $("#contenido1").hide();
+		 $( "#selFases" ).val('');
 		 
 		 swal("Importante", "Debe seleccionar año, ciclo y fase", "error");
 		 }
@@ -71,7 +78,14 @@ $( "#selFases" ).change(function()
 
 //llenar los barrios segun la comuna que seleccione
 $( "#selAnio" ).change(function() 
-{     
+{    
+	 $( "#selFases" ).val('');
+	 $("#titulo").hide(titulo);
+	 $("#encabezado").hide();
+	 $("#contenido").hide();
+	 $("#encabezado1").hide();
+	 $("#contenido1").hide();
+		 
 	anio = $( "#selAnio" ).val();  
 	
 	if(anio != "")
@@ -82,8 +96,11 @@ $( "#selAnio" ).change(function()
 						
 						$('#selCiclo').empty();
 						$('#selCiclo').html(data.html);
+						$('#selCiclo').val(cicloSelected);
 					},
-			"json");   
+			"json"); 
+			
+			
 	}
 	else{
 		$('#selCiclo').empty();
@@ -92,6 +109,16 @@ $( "#selAnio" ).change(function()
 			.text('Seleccione...')
 			.val('')
 		);
+		
 	}
 });
 
+$( "#selCiclo" ).change(function() 
+{
+	$( "#selFases" ).val('');
+	 $("#titulo").hide(titulo);
+	 $("#encabezado").hide();
+	 $("#contenido").hide();
+	 $("#encabezado1").hide();
+	 $("#contenido1").hide();
+});
