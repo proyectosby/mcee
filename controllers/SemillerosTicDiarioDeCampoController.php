@@ -274,126 +274,132 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		if ($faseO == 1)
 		{
 			
-				$datosEjecucionFase1 =array();
-				
-				//se traen 6 datos para mostrar
-				
-				$command = $connection->createCommand("select ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
-				 from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
-				 semilleros_tic.condiciones_institucionales as ci, semilleros_tic.datos_sesiones as ds
-				 where a.id = $idAnio
-				 and c.id = $idCiclo
-				 and f.id = $faseO
-				 and ef.id_fase = f.id
-				 and dip.id = ef.id_datos_ieo_profesional
-				 and dip.id_institucion = ".$idInstitucion."
-				 and dip.id_sede = ".$idSedes."
-				 group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
-				 ");
-				$result1 = $command->queryAll();
-				;
-				//se llena el resultado de a consulta en un array
-				foreach($result1 as $key){
-					$datosEjecucionFase1[]=$key;
-				}
-				
-				$datosEF =array();
-				//se asignan indices numericos a los resultados
-				foreach($datosEjecucionFase1 as $d => $valor) //se saca el indice
+			$datosEjecucionFase1 =array();
+			
+			//se traen 6 datos para mostrar
+			
+			$command = $connection->createCommand("select ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
+			 from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
+			 semilleros_tic.condiciones_institucionales as ci, semilleros_tic.datos_sesiones as ds
+			 where a.id = $idAnio
+			 and c.id = $idCiclo
+			 and f.id = $faseO
+			 and ef.id_fase = f.id
+			 and dip.id = ef.id_datos_ieo_profesional
+			 and dip.id_institucion = ".$idInstitucion."
+			 and dip.id_sede = ".$idSedes."
+			 group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
+			 ");
+			$result1 = $command->queryAll();
+			;
+			//se llena el resultado de a consulta en un array
+			foreach($result1 as $key){
+				$datosEjecucionFase1[]=$key;
+			}
+			
+			$datosEF =array();
+			//se asignan indices numericos a los resultados
+			foreach($datosEjecucionFase1 as $d => $valor) //se saca el indice
+			{
+				foreach($valor as $v) //se recorre el array valor y se le cambian los indices
 				{
-					foreach($valor as $v) //se recorre el array valor y se le cambian los indices
-					{
-						
-						$datosEF[$d][]=$v;
-					}
-				}
-				
-				if (count($datosEF) < 1){
-					$data['mensaje']="No se encontraron datos almacenados";
 					
+					$datosEF[$d][]=$v;
 				}
-				else{  //si se encontraron datos almacenados
-					// echo "si tiene";
+			}
+				
+				
+				// echo "<pre>"; print_r($datosEF); echo "</pre>"; 
+				// echo "<pre>"; print_r("datosef"); echo "</pre>"; 
+			if (count($datosEF) < 1)
+			{
+				$data['mensaje']="No se encontraron datos almacenados";
+			}
+			else
+			{  //si se encontraron datos almacenados
+				// echo "si tiene";
 					
 					// se unen los resultados para mostrar
-					$asignaturas = "";
-					$especiaidad = "";
-					$seiones_empleadas = 0;
-					$numero_apps = 0;
-					$temas_problama = "";
-					$contador=0;
-				
-					foreach($datosEF as $key => $value){
-						
-						foreach($value as $val)
+				$asignaturas = "";
+				$especiaidad = "";
+				$seiones_empleadas = 0;
+				$numero_apps = 0;
+				$temas_problama = "";
+				$contador=0;
+			
+				foreach($datosEF as $key => $value){
+					
+					foreach($value as $val)
+					{
+						switch ($contador) 
 						{
-							switch ($contador) 
-							{
-								case 0:
-									$total_docentes_ieo = $val;
-									break;
-								case 1:
-									$asignaturas .= $val.", ";
-									break;
-								case 2:
-									$especiaidad .=$val.", ";
-									break;
-								case 3:
-									$seiones_empleadas += $val;
-									break;
-								case 4:
-									$numero_apps += $val;
-									break;
-								case 5:
-									$temas_problama .= $val.", ";
-									break;
-							}
-							$contador++;
+							case 0:
+								$total_docentes_ieo = $val;
+								break;
+							case 1:
+								$asignaturas .= $val.", ";
+								break;
+							case 2:
+								$especiaidad .=$val.", ";
+								break;
+							case 3:
+								$seiones_empleadas += $val;
+								break;
+							case 4:
+								$numero_apps += $val;
+								break;
+							case 5:
+								$temas_problama .= $val.", ";
+								break;
 						}
-						$contador=0;
-						
+						$contador++;
 					}
+					$contador=0;
+					
+				}
+			
+			
+				//para la fecuencia de las sesiones se trae de la conformacion de semilleros
+				$frecuenciaSesiones =array();
+				
+				$command = $connection->createCommand("select ai.frecuencias_sesiones
+				from semilleros_tic.acuerdos_institucionales as ai, semilleros_tic.fases as f, semilleros_tic.semilleros_datos_ieo as sdi,
+					semilleros_tic.datos_ieo_profesional as dip, semilleros_tic.ejecucion_fase as ef, semilleros_tic.anio as a,
+					semilleros_tic.ciclos as c
+				where f.id = ".$faseO."
+				and ai.id_fase = f.id
+				and ai.id_semilleros_datos_ieo = sdi.id
+				and sdi.id_institucion = dip.id_institucion
+				and sdi.sede = dip.id_sede
+				and dip.id_institucion = ".$idInstitucion."
+				and dip.id_sede = ".$idSedes."
+				and c.id = ".$idCiclo."
+				and ai.id_ciclo = c.id 
+				and ef.id_ciclo = c.id
+				and a.id = ".$idAnio." 
+				and c.id_anio = a.id
+				and dip.estado = 1
+				and ef.estado = 1
+				and sdi.estado = 1
+				and ai.estado = 1
+				and a.estado = 1
+				and c.estado =1
+				group by ai.frecuencias_sesiones");
+				$result2 = $command->queryAll();
+				
+				//se llena el resultado de a consulta en un array
+						foreach($result2 as $key){
+							$frecuenciaSesiones[]=$key;
+						}
 				
 				
-					//para la fecuencia de las sesiones se trae de la conformacion de semilleros
-					$frecuenciaSesiones =array();
+				if (count($frecuenciaSesiones) < 1){
 					
-					$command = $connection->createCommand("select ai.frecuencias_sesiones
-					from semilleros_tic.acuerdos_institucionales as ai, semilleros_tic.fases as f, semilleros_tic.semilleros_datos_ieo as sdi,
-						semilleros_tic.datos_ieo_profesional as dip, semilleros_tic.ejecucion_fase as ef, semilleros_tic.anio as a,
-						semilleros_tic.ciclos as c
-					where f.id = ".$faseO."
-					and ai.id_fase = f.id
-					and ai.id_semilleros_datos_ieo = sdi.id
-					and sdi.id_institucion = dip.id_institucion
-					and sdi.sede = dip.id_sede
-					and dip.id_institucion = ".$idInstitucion."
-					and dip.id_sede = ".$idSedes."
-					and c.id = ".$idCiclo."
-					and ai.id_ciclo = c.id 
-					and ef.id_ciclo = c.id
-					and a.id = ".$idAnio." 
-					and c.id_anio = a.id
-					and dip.estado = 1
-					and ef.estado = 1
-					and sdi.estado = 1
-					and ai.estado = 1
-					and a.estado = 1
-					and c.estado =1
-					group by ai.frecuencias_sesiones");
-					$result2 = $command->queryAll();
+					$data['mensaje']="No se encontraron datos almacenados o verifique la información";
 					
-					//se llena el resultado de a consulta en un array
-							foreach($result2 as $key){
-								$frecuenciaSesiones[]=$key;
-							}
-					
-					
-					if (count($frecuenciaSesiones) < 1){
-						
-						$data['mensaje']="No se encontraron datos almacenados o verifique la información";
-					}
-					else{	
+				}
+				else
+				{					
 							//consultar la descripcion de la frecuencia sesiones
 							// $frecuenciaSesionesDescripcion =array();
 							$command = $connection->createCommand("select descripcion
@@ -409,7 +415,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 								$frecuenciaSesionesDescripcion.=" ".implode(" ",$key);
 								
 							}
-					}
+					
 						
 					
 					
@@ -541,8 +547,8 @@ class SemillerosTicDiarioDeCampoController extends Controller
 								
 							}
 					}
-					
-				} //if
+				}	
+			} //if
 				
 		}
 		else if ($faseO == 2)
