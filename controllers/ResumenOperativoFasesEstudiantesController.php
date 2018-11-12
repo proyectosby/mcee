@@ -62,22 +62,39 @@ class ResumenOperativoFasesEstudiantesController extends Controller
         
         $connection = Yii::$app->getDb();
 		$command = $connection->createCommand("
-		SELECT	dip.id, i.codigo_dane as codigo_dane_institucion, i.descripcion as institucion, s.codigo_dane as codigo_dane_sede,
-				s.descripcion as sede,dip.id_profesional_a,i.id as id_institucion, s.id as id_sede
-		FROM 	semilleros_tic.datos_ieo_profesional_estudiantes as dip, public.sedes as s,public.instituciones as i
-		WHERE 	dip.id_institucion = i.id
-		AND		dip.id_sede = s.id");
+            SELECT	dip.id, i.codigo_dane as codigo_dane_institucion, i.descripcion as institucion, s.codigo_dane as codigo_dane_sede,
+                    s.descripcion as sede,dip.id_profesional_a,i.id as id_institucion, s.id as id_sede, a.descripcion as anio, 
+                    c.descripcion as ciclos, dip.curso_participantes
+            
+            FROM    semilleros_tic.datos_ieo_profesional_estudiantes as dip, 
+                    public.sedes as s,
+                    public.instituciones as i, 
+                    semilleros_tic.ejecucion_fase_i_estudiantes as ef, 
+                    semilleros_tic.ciclos as c, 
+                    semilleros_tic.anio as a,
+                    semilleros_tic.fases as fa
+            WHERE 	dip.id_institucion = i.id
+                    AND	dip.id_sede = s.id
+                    AND ef.id_fase=fa.id
+                    AND ef.id_ciclo = c.id
+                    AND c.id_anio = a.id
+            GROUP BY dip.id,  i.codigo_dane, i.descripcion, s.codigo_dane, s.descripcion, i.id,s.id, a.descripcion,c.descripcion
+        
+        ");
         $datos_ieo_profesional = $command->queryAll();
         
         $html="";
         $contador =0;
         $totalDatos = [];
         $datosFase1 = [];
+        $datosFase2 = [];
+        $datosFase3 = [];
 		foreach ($datos_ieo_profesional as $dip)
 		{
+            
             if($contador == 0){
                 $datos= [];
-                array_push($datos, $dip['codigo_dane_institucion'], $dip['institucion'], $dip['codigo_dane_sede'],$dip['sede']); 
+                array_push($datos, $dip['codigo_dane_institucion'], $dip['institucion'], $dip['codigo_dane_sede'],$dip['sede'],  $dip['anio'], $dip['ciclos']); 
 
                 $idInstitucion = $dip['id_institucion'];
                 $idSede = $dip['id_sede'];
@@ -106,103 +123,133 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 $fechas = $command->queryAll();
             
                 array_push($datos, $fechas[$contador]['fecha_sesion']);
+                $totalAsistentes= 0;
                 
-            
-                /**Listado de quedamos. Pendientes por validar su origen */
-                array_push($datos, 'Frecuencia '.$contador, 'Duracion '.$contador, 'Cursos participantes '.$contador);
-
                 /**Consulta datos fase 1 **/
                 
-                /* Estas consulta queda pendiente adicionar el campo 
-                duracion sesion para de esta forma poder obtener el dato por medio del inner join a la tabla datos sesion 
-                */
+                /**********************************/
+
                 $id_datos_ieo_profesional = $dip['id'];
                 $command = $connection->createCommand
                 ("
-                    SELECT sum(efi.participacion_sesiones) as asistentes, 
+                SELECT 
+                        aci.frecuencia_sesiones,
+                        sum(efi.participacion_sesiones) as asistentes, 
                         sum(efi.numero_estudiantes) as numestudiantes ,
                         sum(efi.apps_creadas) as appcreadas,
                         sum(ds.duracion_sesion) as duracion
                     FROM  semilleros_tic.ejecucion_fase_i_estudiantes efi
                     INNER JOIN semilleros_tic.datos_sesiones ds ON ds.id = efi.id_datos_sesion
                     INNER JOIN semilleros_tic.sesiones se on se.id = ds.id_sesion
-                    WHERE  id_datos_ieo_profesional_estudiantes =$id_datos_ieo_profesional AND se.id_fase = 1 
-                    GROUP BY efi.id_datos_sesion;
-                    
+                    INNER JOIN semilleros_tic.acuerdos_institucionales_estudiantes as aci ON efi.id_fase = aci.id_fase
+                    WHERE  id_datos_ieo_profesional_estudiantes =7
+                    GROUP BY efi.id_datos_sesion, aci.frecuencia_sesiones;
                 ");
                 
                 
                 $datoSemillerosTicEjecucionFase = $command->queryAll();
-                $fechaSesion1 = "";
+                $frecuenciaSesion1 = "";
+                $duracuionPromedio1 = 0;
                 $contadorSesionesFase1 = 0;
                 $totalEstudiantes = 0;
                 $totalappcreadsa = 0;
                 foreach ($datoSemillerosTicEjecucionFase as $datosSTEF => $valor)
-                {	        
+                {	
+                    $totalAsistentes +=  $valor['asistentes'];
+                    $duracuionPromedio1 += $valor['duracion'];
+                    $frecuenciaSesion1 = $valor['frecuencia_sesiones'];       
                     $totalEstudiantes += $valor['numestudiantes'];
                     $totalappcreadsa += $valor['appcreadas'];
-                    array_push($datosFase1, $contador,  $fechas[$contador]['fecha_sesion'], $valor['asistentes'], $valor['duracion']  );
+                    array_push($datosFase1, 1,  $fechas[$contador]['fecha_sesion'], $valor['asistentes'], $valor['duracion']  );
                     $contadorSesionesFase1 ++;				
                 }
             
+                array_push($datos, $frecuenciaSesion1, @($duracuionPromedio1 / $contadorSesionesFase1), $dip['curso_participantes'] );
 
                 array_push($datos, $contadorSesionesFase1, $totalEstudiantes, $totalappcreadsa);
 
-
-            
-
-                /*$idDatosSesiones = implode(",",$datosSesion);	
-                
+                 /**Consulta datos fase 2**/
                 $command = $connection->createCommand
                 ("
-                    SELECT fecha_sesion 
-                    FROM semilleros_tic.datos_sesiones
-                    WHERE id in($idDatosSesiones)
-                    ORDER BY id ASC 
+                    SELECT
+                        aci.frecuencia_sesiones,
+                        sum(efi.estudiantes_participantes) as numestudiantes ,
+                        sum(efi.apps_desarrolladas) as appcreadas,
+                        sum(ds.duracion_sesion) as duracion
+                    FROM  semilleros_tic.ejecucion_fase_ii_estudiantes efi
+                    INNER JOIN semilleros_tic.datos_sesiones ds ON ds.id = efi.id_datos_sesion
+                    INNER JOIN semilleros_tic.sesiones se on se.id = ds.id_sesion
+                    INNER JOIN semilleros_tic.acuerdos_institucionales_estudiantes as aci ON efi.id_fase = aci.id_fase
+                    WHERE efi.id_datos_ieo_profesional_estudiantes =$id_datos_ieo_profesional
+                    GROUP BY efi.id_datos_sesion, aci.frecuencia_sesiones;
+                    
                 ");
-                $datos_sesiones = $command->queryAll();
-
-
-            
-                $frecuenciaSesiones =array();
-                $command = $connection->createCommand("
-                select ai.frecuencia_sesiones
-                from 	semilleros_tic.acuerdos_institucionales_estudiantes as ai, semilleros_tic.fases as f, semilleros_tic.semilleros_datos_ieo_estudiantes as sdi, semilleros_tic.datos_ieo_profesional_estudiantes as dip, 
-                        semilleros_tic.ejecucion_fase_i_estudiantes as ef, semilleros_tic.anio as a,semilleros_tic.ciclos as c
-                where f.id in (1,2,3)
-                and ai.id_fase = f.id and ai.id_semilleros_datos_estudiantes = sdi.id and sdi.id_institucion = dip.id_institucion and sdi.id_sede = dip.id_sede
-                and dip.id_institucion = 	$idInstitucion and dip.id_sede = $idSede  --and c.id = 1 and ai.id_ciclo = c.id and ef.id_ciclo = c.id
-                --and a.id = 1 and c.id_anio = a.id and dip.estado = 1 and ef.estado = 1 and sdi.estado = 1 and ai.estado = 1 and a.estado = 1 and c.estado =1
-                group by ai.frecuencia_sesiones");
-
-                $frecuenciaSesiones = $command->queryAll();
-                $frecuenciaSesiones[0]['frecuencias_sesiones'] =15;
                 
-                $command = $connection->createCommand("select descripcion
-                from parametro
-                where id_tipo_parametro = 6 
-                and id = ".@$frecuenciaSesiones[0]['frecuencias_sesiones']."
-                and estado = 1");
-                $result4 = $command->queryAll();
                 
-                $frecuenciaSesionesDescripcion = "";
-                foreach($result4 as $key)
-                {
-                    $frecuenciaSesionesDescripcion.=" ".implode(" ",$key);	
+                $datoSemillerosTicEjecucionFase2 = $command->queryAll();
+                $frecuenciaSesion2 = "";
+                $contadorSesionesFase2 = 0;
+                $totalEstudiantesSesion2 = 0;
+                $totalappcreadsaSesion2 = 0;
+                $duracuionPromedio2 = 0;
+                foreach ($datoSemillerosTicEjecucionFase2 as $datosSTEF => $valor)
+                {	
+                    $totalAsistentes += $valor['numestudiantes'];
+                    $duracuionPromedio2 += $valor['duracion'];
+                    $frecuenciaSesion2 = $valor['frecuencia_sesiones'];
+                    $totalEstudiantesSesion2 += $valor['numestudiantes'];
+                    $totalappcreadsaSesion2 += $valor['appcreadas'];
+                    array_push($datosFase2, 1,  $fechas[$contador]['fecha_sesion'], $valor['numestudiantes'], $valor['duracion']  );
+                    $contadorSesionesFase2 ++;				
                 }
-                array_push($datos, $frecuenciaSesionesDescripcion, '*********** '.$contador, '*********'.$contador, $contador);
+               
                 
+                array_push($datos, $frecuenciaSesion2,  @($duracuionPromedio2 / $contadorSesionesFase2) , $dip['curso_participantes']);
 
-                for($i=0;$i<=5;$i++)
-                {
-                    array_push($datos,@$datos_sesiones[$i]['fecha_sesion']);
+                array_push($datos, $contadorSesionesFase2, $totalEstudiantesSesion2, $totalappcreadsaSesion2);
 
-                }*/
+                /**Consulta datos fase 3**/
+                $command3 = $connection->createCommand
+                ("
+                    SELECT
+                        aci.frecuencia_sesiones,
+                        sum(efi.estudiantes_participantes) as numestudiantes ,
+                        sum(efi.numero_apps) as appcreadas,
+                        sum(ds.duracion_sesion) as duracion
+                    FROM  semilleros_tic.ejecucion_fase_iii_estudiantes efi
+                    INNER JOIN semilleros_tic.datos_sesiones ds ON ds.id = efi.id_datos_sesion
+                    INNER JOIN semilleros_tic.sesiones se on se.id = ds.id_sesion
+                    INNER JOIN semilleros_tic.acuerdos_institucionales_estudiantes as aci ON efi.id_fase = aci.id_fase
+                    WHERE efi.id_datos_ieo_profesional_estudiantes =$id_datos_ieo_profesional
+                    GROUP BY efi.id_datos_sesion, aci.frecuencia_sesiones;
+                    
+                ");
                 
-
-
+                
+                $datoSemillerosTicEjecucionFase3 = $command3->queryAll();
+                $frecuenciaSesion3 = "";
+                $contadorSesionesFase3 = 0;
+                $totalEstudiantesSesion3 = 0;
+                $totalappcreadsaSesion3 = 0;
+                $duracuionPromedio3 = 0;
+                foreach ($datoSemillerosTicEjecucionFase3 as $datosSTEF => $valor)
+                {	        
+                    $totalAsistentes += $valor['numestudiantes'];
+                    $duracuionPromedio3+= $valor['duracion'];
+                    $frecuenciaSesion3 = $valor['frecuencia_sesiones'];
+                    $totalEstudiantesSesion3 += $valor['numestudiantes'];
+                    $totalappcreadsaSesion3 += $valor['appcreadas'];
+                    array_push($datosFase3, 1,  $fechas[$contador]['fecha_sesion'], $valor['numestudiantes'], $valor['duracion']  );
+                    $contadorSesionesFase3 ++;				
+                }
+                array_push($datos, $frecuenciaSesion3, @($duracuionPromedio3 / $contadorSesionesFase3) , $dip['curso_participantes']);
+                array_push($datos, $contadorSesionesFase3, $totalEstudiantesSesion3, $totalappcreadsaSesion3);
+                
+                array_push($datos, $totalAsistentes, $contadorSesionesFase1 + $contadorSesionesFase3 + $contadorSesionesFase2);
 
                 array_push($totalDatos, $datos);
+
+                
             }
             $contador++;
         }
@@ -216,7 +263,9 @@ class ResumenOperativoFasesEstudiantesController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'data' => $totalDatos,
-            'datosFase1' => $datosFase1
+            'datosFase1' => $datosFase1,
+            'datosFase2' => $datosFase2,
+            'datosFase3' => $datosFase3
         ]);
     }
 

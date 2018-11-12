@@ -97,8 +97,8 @@ section.content {
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Profesional A.</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Fecha de inicio del Semillero</th>
 			<th colspan='30' style='border: 1px solid black;'>Fase I Creaci&oacute;n y prueba</th>
-			<th colspan='26' style='border: 1px solid black;'>Fase II Desarrollo e implementaci&oacute;n</th>
-			<th colspan='26' style='border: 1px solid black;'>Fase III  (Uso - Aplicaci&oacute;n)</th>
+			<th colspan='30' style='border: 1px solid black;'>Fase II Desarrollo e implementaci&oacute;n</th>
+			<th colspan='30' style='border: 1px solid black;'>Fase III  (Uso - Aplicaci&oacute;n)</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>TOTAL PARTICIPANTES FASES I A III (PROMEDIO)</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>TOTAL NUMERO DE SESIONES FASES I A III</th>
 		</tr>
@@ -127,6 +127,7 @@ section.content {
 			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 3</th>
 			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 4</th>
 			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 5</th>
+			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 6</th>
 			<th colspan='1' rowspan='2' style='border: 1px solid black;'>Total Sesiones</th>
 			<th colspan='1' rowspan='2' style='border: 1px solid black;'>N&uacute;mero de estudiantes participantes (Promedio)</th>
 			<th colspan='1' rowspan='2' style='border: 1px solid black;'>N&uacute;mero de Apps 0.0 desarrolladas e implementadas</th>
@@ -138,11 +139,22 @@ section.content {
 			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 3</th>
 			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 4</th>
 			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 5</th>
+			<th colspan='4' rowspan='1' style='border: 1px solid black;'>Sesi&oacute;n 6</th>
 			<th colspan='1' rowspan='2' style='border: 1px solid black;'>Total Sesiones</th>
 			<th colspan='1' rowspan='2' style='border: 1px solid black;'>N&uacute;mero de estudiantes participantes (Promedio)</th>
 			<th colspan='1' rowspan='2' style='border: 1px solid black;'>N&uacute;mero de Apps 0.0 usadas</th>
 		</tr>
 		<tr style='background-color:#ccc'>
+			
+			
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>N° Asistentes</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>N° Asistentes</th>
+			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Duraci&oacute;n</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>&nbsp;</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>Fecha</th>
 			<th colspan='1' rowspan='1' style='border: 1px solid black;'>N° Asistentes</th>
@@ -219,25 +231,52 @@ section.content {
 						<td style='border: 1px solid black;'><?= isset($value[1]) ? $value[1] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[2]) ? $value[2] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[3]) ? $value[3] : '' ?></td>
-						<td style='border: 1px solid black;'><?= isset($value[3]) ? $value[3] : '' ?></td>
-						<td style='border: 1px solid black;'><?= isset($value[3]) ? $value[3] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[4]) ? $value[4] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[5]) ? $value[5] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[6]) ? $value[6] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[7]) ? $value[7] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[8]) ? $value[8] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[9]) ? $value[9] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[10]) ? $value[10] : '' ?></td>
 						
 						<?php
-							for ($i=0; $i < 25; $i++) { 
+							for ($i=0; $i < 24	; $i++) { 
 								?>
 									<td style='border: 1px solid black;'><?= isset($datosFase1[$i]) ? $datosFase1[$i] : '' ?></td>
 								<?php
 							}
 						?>
-							<td style='border: 1px solid black;'><?= isset($value[9]) ? $value[9] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[10]) ? $value[10] : '' ?></td>
 							<td style='border: 1px solid black;'><?= isset($value[11]) ? $value[11] : '' ?></td>
-
+							<td style='border: 1px solid black;'><?= isset($value[12]) ? $value[12] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[13]) ? $value[13] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[14]) ? $value[14] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[15]) ? $value[15] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[16]) ? $value[16] : '' ?></td>
+						<?php
+							for ($i=0; $i < 24	; $i++) { 
+								?>
+									<td style='border: 1px solid black;'><?= isset($datosFase2[$i]) ? $datosFase2[$i] : '' ?></td>
+								<?php
+							}
+						?>
+							<td style='border: 1px solid black;'><?= isset($value[17]) ? $value[17] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[18]) ? $value[18] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[19]) ? $value[19] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[20]) ? $value[20] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[21]) ? $value[21] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[22]) ? $value[22] : '' ?></td>
+						<?php
+							for ($i=0; $i < 24	; $i++) { 
+								?>
+									<td style='border: 1px solid black;'><?= isset($datosFase3[$i]) ? $datosFase3[$i] : '' ?></td>
+								<?php
+							}
+						?>
+							<td style='border: 1px solid black;'><?= isset($value[23]) ? $value[23] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[24]) ? $value[24] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[25]) ? $value[25] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[26]) ? $value[26] : '' ?></td>
+							<td style='border: 1px solid black;'><?= isset($value[27]) ? $value[27] : '' ?></td>
 					</tr>
 				<?php
 
