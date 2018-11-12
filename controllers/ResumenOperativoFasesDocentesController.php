@@ -639,20 +639,19 @@ class ResumenOperativoFasesDocentesController extends Controller
 			$html.="<td style='border: 1px solid black;'>$promedioFase3</td>";
 			// echo "<pre>"; print_r($nombreDocenteCreador); echo "</pre>"; 
 			
-			
+			// echo "<pre>"; print_r($fechasSesionesFase3); echo "</pre>"; 
 			//informacion sesiones fase 3
 			for($i=0;$i<=5;$i++)
 			{
 				//docentes por sesion fase 3
 				$html.="<td style='border: 1px solid black;'>".@$nombreDocenteCreador[$i]."</td>";
 				// fecha de la sesion fase 3
-				$html.="<td style='border: 1px solid black;'>".@$fechasSesionesFase3[$i]['fecha_sesion']."</td>";
+				$html.="<td style='border: 1px solid black;'>".@$fechasSesionesFase3[$i]."</td>";
 				//duración de la sesion fase 3
 				$html.="<td style='border: 1px solid black;'>".@$duracionesSesionesFase3[$i]."</td>";
 				
 			}
-			
-			
+				
 			//total Sesiones fase3
 			$html.="<td style='border: 1px solid black;'>".$cantidadSesionesEmpleadasFase3."</td>";
 			
