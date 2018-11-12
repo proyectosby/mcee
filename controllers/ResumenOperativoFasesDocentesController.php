@@ -331,10 +331,11 @@ class ResumenOperativoFasesDocentesController extends Controller
 					and c.estado =1
 					and  ai.frecuencias_sesiones = p.id
 					group by ai.frecuencias_sesiones,p.descripcion
-			
+
 				");
 				$frecuenciaSesiones = $command->queryAll();
 			
+			// echo "<pre>"; print_r($frecuenciaSesiones); echo "</pre>"; 
 			$frecunciaSesionesFase2 = $this->arrayArrayComas($frecuenciaSesiones,'descripcion');
 			
 			//total Sesiones
@@ -346,7 +347,6 @@ class ResumenOperativoFasesDocentesController extends Controller
 			//frecuencia sesiones mensual fase ii
 			$html.="<td style='border: 1px solid black;'>$frecunciaSesionesFase2</td>";
 			
-		
 			
 			
 			//datos de la fase 2
@@ -731,7 +731,6 @@ class ResumenOperativoFasesDocentesController extends Controller
 			$numeroEstudiantes = null;
 			$nombreGradosFase3 = null;
 			$numeroApps= null;
-			$frecunciaSesionesFase2= null;
 			$contador++;
 		}
 		echo json_encode($html);
