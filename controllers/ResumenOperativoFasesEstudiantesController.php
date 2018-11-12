@@ -164,7 +164,7 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                     array_push($datosFase1, 1,  $fechas[$contador]['fecha_sesion'], $valor['asistentes'], $valor['duracion']  );
                     $contadorSesionesFase1 ++;				
                 }
-                $duracuionPromedio1 = $duracuionPromedio1 / $contadorSesionesFase1;
+                $duracuionPromedio1 = @($duracuionPromedio1 / $contadorSesionesFase1);
                 $duracuionPromedio1 =  $this->conversionSegundosHora($duracuionPromedio1);
             
                 array_push($datos, $frecuenciaSesion1, $duracuionPromedio1, $dip['curso_participantes'] );
@@ -205,7 +205,7 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                     array_push($datosFase2, 1,  $fechas[$contador]['fecha_sesion'], $valor['numestudiantes'], $valor['duracion']  );
                     $contadorSesionesFase2 ++;				
                 }
-                $duracuionPromedio2 = $duracuionPromedio2 / $contadorSesionesFase2;
+                $duracuionPromedio2 = @($duracuionPromedio2 / $contadorSesionesFase2);
                 $duracuionPromedio2 =  $this->conversionSegundosHora($duracuionPromedio2);
                 
                 array_push($datos, $frecuenciaSesion2,  $duracuionPromedio2 , $dip['curso_participantes']);
@@ -247,7 +247,7 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                     $contadorSesionesFase3 ++;				
                 }
 
-                $duracuionPromedio3 = $duracuionPromedio3 / $contadorSesionesFase3;
+                $duracuionPromedio3 = @($duracuionPromedio3 / $contadorSesionesFase3);
                 $duracuionPromedio3 =  $this->conversionSegundosHora($duracuionPromedio3);
 
                 array_push($datos, $frecuenciaSesion3, $duracuionPromedio3 , $dip['curso_participantes']);
