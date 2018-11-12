@@ -125,6 +125,21 @@ class ResumenOperativoFasesEstudiantesController extends Controller
             
                 array_push($datos, $fechas[$contador]['fecha_sesion']);
                 $totalAsistentes= 0;
+
+                $listaCursos = [];
+                $cursos = explode(",", $dip['curso_participantes']);
+                for ($i=0; $i <count($cursos); $i++) { 
+                    $command = $connection->createCommand
+                    ("
+                        SELECT descripcion
+                        FROM public.paralelos
+                        WHERE id = $cursos[$i]
+                    ");
+                    $data = $command->queryOne();
+                    array_push($listaCursos,$data['descripcion']);
+                }
+                
+              
                 
                 /**Consulta datos fase 1 **/
                 
@@ -134,7 +149,7 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 $command = $connection->createCommand
                 ("
                 SELECT 
-                        aci.frecuencia_sesiones,
+                        pa.descripcion,
                         sum(efi.participacion_sesiones) as asistentes, 
                         sum(efi.numero_estudiantes) as numestudiantes ,
                         sum(efi.apps_creadas) as appcreadas,
@@ -143,8 +158,9 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                     INNER JOIN semilleros_tic.datos_sesiones ds ON ds.id = efi.id_datos_sesion
                     INNER JOIN semilleros_tic.sesiones se on se.id = ds.id_sesion
                     INNER JOIN semilleros_tic.acuerdos_institucionales_estudiantes as aci ON efi.id_fase = aci.id_fase
-                    WHERE  id_datos_ieo_profesional_estudiantes =7
-                    GROUP BY efi.id_datos_sesion, aci.frecuencia_sesiones, ds.duracion_sesion;
+                    INNER JOIN public.parametro pa ON pa.id =  aci.frecuencia_sesiones
+                    WHERE  id_datos_ieo_profesional_estudiantes = $id_datos_ieo_profesional
+                    GROUP BY efi.id_datos_sesion, pa.descripcion, ds.duracion_sesion;
                 ");
                 
                 
@@ -158,16 +174,16 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 {	
                     $totalAsistentes +=  $valor['asistentes'];
                     $duracuionPromedio1 +=  $this->conversionSegundos($valor['duracion']);
-                    $frecuenciaSesion1 = $valor['frecuencia_sesiones'];       
+                    $frecuenciaSesion1 = $valor['descripcion'];       
                     $totalEstudiantes += $valor['numestudiantes'];
                     $totalappcreadsa += $valor['appcreadas'];
-                    array_push($datosFase1, 1,  $fechas[$contador]['fecha_sesion'], $valor['asistentes'], $valor['duracion']  );
+                    array_push($datosFase1, "",  $fechas[$contador]['fecha_sesion'], $valor['asistentes'], $valor['duracion']  );
                     $contadorSesionesFase1 ++;				
                 }
                 $duracuionPromedio1 = @($duracuionPromedio1 / $contadorSesionesFase1);
                 $duracuionPromedio1 =  $this->conversionSegundosHora($duracuionPromedio1);
             
-                array_push($datos, $frecuenciaSesion1, $duracuionPromedio1, $dip['curso_participantes'] );
+                array_push($datos, $frecuenciaSesion1, $duracuionPromedio1, implode(", ",$listaCursos) );
 
                 array_push($datos, $contadorSesionesFase1, $totalEstudiantes, $totalappcreadsa);
 
@@ -175,7 +191,7 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 $command = $connection->createCommand
                 ("
                     SELECT
-                        aci.frecuencia_sesiones,
+                        pa.descripcion,
                         sum(efi.estudiantes_participantes) as numestudiantes ,
                         sum(efi.apps_desarrolladas) as appcreadas,
                         ds.duracion_sesion as duracion
@@ -183,8 +199,9 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                     INNER JOIN semilleros_tic.datos_sesiones ds ON ds.id = efi.id_datos_sesion
                     INNER JOIN semilleros_tic.sesiones se on se.id = ds.id_sesion
                     INNER JOIN semilleros_tic.acuerdos_institucionales_estudiantes as aci ON efi.id_fase = aci.id_fase
+                    INNER JOIN public.parametro pa ON pa.id =  aci.frecuencia_sesiones
                     WHERE efi.id_datos_ieo_profesional_estudiantes =$id_datos_ieo_profesional
-                    GROUP BY efi.id_datos_sesion, aci.frecuencia_sesiones, ds.duracion_sesion;
+                    GROUP BY efi.id_datos_sesion, pa.descripcion, ds.duracion_sesion;
                     
                 ");
                 
@@ -199,24 +216,24 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 {	
                     $totalAsistentes += $valor['numestudiantes'];
                     $duracuionPromedio2 += $this->conversionSegundos($valor['duracion']);
-                    $frecuenciaSesion2 = $valor['frecuencia_sesiones'];
+                    $frecuenciaSesion2 = $valor['descripcion'];
                     $totalEstudiantesSesion2 += $valor['numestudiantes'];
                     $totalappcreadsaSesion2 += $valor['appcreadas'];
-                    array_push($datosFase2, 1,  $fechas[$contador]['fecha_sesion'], $valor['numestudiantes'], $valor['duracion']  );
+                    array_push($datosFase2, "",  $fechas[$contador]['fecha_sesion'], $valor['numestudiantes'], $valor['duracion']  );
                     $contadorSesionesFase2 ++;				
                 }
                 $duracuionPromedio2 = @($duracuionPromedio2 / $contadorSesionesFase2);
                 $duracuionPromedio2 =  $this->conversionSegundosHora($duracuionPromedio2);
                 
-                array_push($datos, $frecuenciaSesion2,  $duracuionPromedio2 , $dip['curso_participantes']);
+                array_push($datos, $frecuenciaSesion2,  $duracuionPromedio2 , implode(", ",$listaCursos));
 
-                array_push($datos, $contadorSesionesFase2, $totalEstudiantesSesion2, $totalappcreadsaSesion2);
+                array_push($datos, "", $totalEstudiantesSesion2, $totalappcreadsaSesion2);
 
                 /**Consulta datos fase 3**/
                 $command3 = $connection->createCommand
                 ("
                     SELECT
-                        aci.frecuencia_sesiones,
+                        pa.descripcion,
                         sum(efi.estudiantes_participantes) as numestudiantes ,
                         sum(efi.numero_apps) as appcreadas,
                         ds.duracion_sesion as duracion
@@ -224,8 +241,9 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                     INNER JOIN semilleros_tic.datos_sesiones ds ON ds.id = efi.id_datos_sesion
                     INNER JOIN semilleros_tic.sesiones se on se.id = ds.id_sesion
                     INNER JOIN semilleros_tic.acuerdos_institucionales_estudiantes as aci ON efi.id_fase = aci.id_fase
+                    INNER JOIN public.parametro pa ON pa.id =  aci.frecuencia_sesiones
                     WHERE efi.id_datos_ieo_profesional_estudiantes =$id_datos_ieo_profesional
-                    GROUP BY efi.id_datos_sesion, aci.frecuencia_sesiones, ds.duracion_sesion;
+                    GROUP BY efi.id_datos_sesion, pa.descripcion, ds.duracion_sesion;
                     
                 ");
                 
@@ -240,18 +258,18 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 {	        
                     $totalAsistentes += $valor['numestudiantes'];
                     $duracuionPromedio3+= $this->conversionSegundos($valor['duracion']);
-                    $frecuenciaSesion3 = $valor['frecuencia_sesiones'];
+                    $frecuenciaSesion3 = $valor['descripcion'];
                     $totalEstudiantesSesion3 += $valor['numestudiantes'];
                     $totalappcreadsaSesion3 += $valor['appcreadas'];
-                    array_push($datosFase3, 1,  $fechas[$contador]['fecha_sesion'], $valor['numestudiantes'], $valor['duracion']  );
+                    array_push($datosFase3, "",  $fechas[$contador]['fecha_sesion'], $valor['numestudiantes'], $valor['duracion']  );
                     $contadorSesionesFase3 ++;				
                 }
 
                 $duracuionPromedio3 = @($duracuionPromedio3 / $contadorSesionesFase3);
                 $duracuionPromedio3 =  $this->conversionSegundosHora($duracuionPromedio3);
 
-                array_push($datos, $frecuenciaSesion3, $duracuionPromedio3 , $dip['curso_participantes']);
-                array_push($datos, $contadorSesionesFase3, $totalEstudiantesSesion3, $totalappcreadsaSesion3);
+                array_push($datos, $frecuenciaSesion3, $duracuionPromedio3 , implode(", ",$listaCursos));
+                array_push($datos, "", $totalEstudiantesSesion3, $totalappcreadsaSesion3);
                 
                 array_push($datos, $totalAsistentes, $contadorSesionesFase1 + $contadorSesionesFase3 + $contadorSesionesFase2);
 
