@@ -244,7 +244,7 @@ section.content {
 						<td style='border: 1px solid black;'><?= isset($value[14]) ? $value[14] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[15]) ? $value[15] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[16]) ? $value[16] : '' ?></td>
-						<td style='border: 1px solid black;'><?= isset($value[177]) ? $value[17] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[17]) ? $value[17] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[18]) ? $value[18] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[19]) ? $value[19] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[20]) ? $value[20] : '' ?></td>
