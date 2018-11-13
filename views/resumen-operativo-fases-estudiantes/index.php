@@ -238,45 +238,97 @@ section.content {
 						<td style='border: 1px solid black;'><?= isset($value[8]) ? $value[8] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[9]) ? $value[9] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[10]) ? $value[10] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[11]) ? $value[11] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[12]) ? $value[12] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[13]) ? $value[13] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[14]) ? $value[14] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[15]) ? $value[15] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[16]) ? $value[16] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[177]) ? $value[17] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[18]) ? $value[18] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[19]) ? $value[19] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[20]) ? $value[20] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[21]) ? $value[21] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[22]) ? $value[22] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[23]) ? $value[23] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[24]) ? $value[24] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[25]) ? $value[25] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[26]) ? $value[26] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[27]) ? $value[27] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[28]) ? $value[28] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[29]) ? $value[29] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[30]) ? $value[30] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[31]) ? $value[31] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[32]) ? $value[32] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[33]) ? $value[33] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[34]) ? $value[34] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[35]) ? $value[35] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[36]) ? $value[36] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[37]) ? $value[37] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[38]) ? $value[38] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[39]) ? $value[39] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[40]) ? $value[40] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[41]) ? $value[41] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[42]) ? $value[42] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[43]) ? $value[43] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[44]) ? $value[44] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[45]) ? $value[45] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[46]) ? $value[46] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[47]) ? $value[47] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[48]) ? $value[48] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[49]) ? $value[49] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[50]) ? $value[50] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[51]) ? $value[51] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[52]) ? $value[52] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[53]) ? $value[53] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[54]) ? $value[54] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[55]) ? $value[55] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[56]) ? $value[56] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[57]) ? $value[57] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[58]) ? $value[58] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[59]) ? $value[59] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[60]) ? $value[60] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[61]) ? $value[61] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[62]) ? $value[62] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[63]) ? $value[63] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[64]) ? $value[64] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[65]) ? $value[65] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[66]) ? $value[66] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[67]) ? $value[67] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[68]) ? $value[68] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[69]) ? $value[69] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[70]) ? $value[70] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[71]) ? $value[71] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[72]) ? $value[72] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[73]) ? $value[73] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[74]) ? $value[74] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[75]) ? $value[75] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[76]) ? $value[76] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[77]) ? $value[77] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[78]) ? $value[78] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[79]) ? $value[79] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[80]) ? $value[80] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[81]) ? $value[81] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[82]) ? $value[82] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[83]) ? $value[83] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[84]) ? $value[84] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[85]) ? $value[85] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[86]) ? $value[86] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[87]) ? $value[87] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[88]) ? $value[88] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[89]) ? $value[89] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[90]) ? $value[90] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[91]) ? $value[91] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[92]) ? $value[92] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[93]) ? $value[93] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[94]) ? $value[94] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[95]) ? $value[95] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[96]) ? $value[96] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[97]) ? $value[97] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[98]) ? $value[98] : '' ?></td>
+						<td style='border: 1px solid black;'><?= isset($value[99]) ? $value[99] : '' ?></td>
 						
-						<?php
-							for ($i=0; $i < 24	; $i++) { 
-								?>
-									<td style='border: 1px solid black;'><?= isset($datosFase1[$i]) ? $datosFase1[$i] : '' ?></td>
-								<?php
-							}
-						?>
-							<td style='border: 1px solid black;'><?= isset($value[11]) ? $value[11] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[12]) ? $value[12] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[13]) ? $value[13] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[14]) ? $value[14] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[15]) ? $value[15] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[16]) ? $value[16] : '' ?></td>
-						<?php
-							for ($i=0; $i < 24	; $i++) { 
-								?>
-									<td style='border: 1px solid black;'><?= isset($datosFase2[$i]) ? $datosFase2[$i] : '' ?></td>
-								<?php
-							}
-						?>
-							<td style='border: 1px solid black;'><?= isset($value[17]) ? $value[17] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[18]) ? $value[18] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[19]) ? $value[19] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[20]) ? $value[20] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[21]) ? $value[21] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[22]) ? $value[22] : '' ?></td>
-						<?php
-							for ($i=0; $i < 24	; $i++) { 
-								?>
-									<td style='border: 1px solid black;'><?= isset($datosFase3[$i]) ? $datosFase3[$i] : '' ?></td>
-								<?php
-							}
-						?>
-							<td style='border: 1px solid black;'><?= isset($value[23]) ? $value[23] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[24]) ? $value[24] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[25]) ? $value[25] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[26]) ? $value[26] : '' ?></td>
-							<td style='border: 1px solid black;'><?= isset($value[27]) ? $value[27] : '' ?></td>
+
 					</tr>
 				<?php
 
