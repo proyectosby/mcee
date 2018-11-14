@@ -30,15 +30,6 @@ $( document ).ready(function(){
 		}
 	});
 	
-	$.get( "index.php?r=resumen-operativo-fases-docentes/obtener-info",
-			function( data )
-			{
-				
-				// $("#tb tbody").append(data);
-		
-			},
-		"json");
-
 });
 
 

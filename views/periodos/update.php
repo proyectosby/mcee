@@ -29,19 +29,14 @@ use	yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Periodos */
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
-$this->title = 'Modificar periodo:';
+
+$this->title = 'Modificar periodos';
 // $this->params['breadcrumbs'][] = ['label' => 'Periodos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = [
 									'label' => 'Periodos', 
 									'url' => [
 												'index',
-												'idInstitucion' => $idInstitucion, 
-												'idSedes' 		=> $model->id_sedes,
 											 ]
 								 ];
 
@@ -49,7 +44,7 @@ $this->params['breadcrumbs'][] = 'Modificar';
 ?>
 <div class="periodos-update">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title ) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

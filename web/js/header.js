@@ -42,29 +42,25 @@ $( "#cambiarSede" ).click(function()
 		  input: 'select',
 		  inputOptions: (prueba),
 		  inputPlaceholder: 'Ninguna Sede',
+		  allowEscapeKey: false,
+		  allowOutsideClick: false,
 		  inputValidator: (value) => {
 			return new Promise((resolve) => {
 			  if (value !== '') 
 			  {  
-		   
 				  //crear variable de session que tenga la institucion que seleciono
 				 var Institucion = $.get( "index.php?sede="+value, function() 
 					{
 						
 					resolve(window.location.reload(true));
 					})
-					  
-
 			  }
 			  else 
 			  {
 				   var sede = $.get( "index.php?sede=-1", function() 
 					{
-						
 					})
 					resolve(window.location.reload(true));
-					
-
 			  }
 			})
 		  }

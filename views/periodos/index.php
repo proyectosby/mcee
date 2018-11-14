@@ -31,15 +31,14 @@ use yii\helpers\Url;
 
 
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
-
 $this->title = 'Periodos';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/periodosIndex.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
-
+<script>
+var idInstitucion = <?php echo $idInstitucion; ?>;
+var idSedes = <?php echo $idSedes; ?>;
+</script>
 <?php
 		Modal::Begin([
 			'header'=>'<h3>Periodos</h3>',
@@ -55,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="periodos-index">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>

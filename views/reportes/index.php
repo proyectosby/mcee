@@ -48,25 +48,31 @@ use yii\bootstrap\Button;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
+// $nombreSede = new Sedes();
+// $nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
+// $nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
+// $nombreSede = $nombreSede[$idSedes];
 
-$nombreInstitucion = new Instituciones();
-$nombreInstitucion = $nombreInstitucion->find()->where('id='.$idInstitucion)->all();
-$nombreInstitucion = ArrayHelper::map($nombreInstitucion,'id','descripcion');
-$nombreInstitucion = $nombreInstitucion[$idInstitucion];
+// $nombreInstitucion = new Instituciones();
+// $nombreInstitucion = $nombreInstitucion->find()->where('id='.$idInstitucion)->all();
+// $nombreInstitucion = ArrayHelper::map($nombreInstitucion,'id','descripcion');
+// $nombreInstitucion = $nombreInstitucion[$idInstitucion];
 
-$this->title = $nombreInstitucion;
+$this->title = "reportes";
 $this->params['breadcrumbs'][] = $this->title;
+
+$idInstitucion 	= $_SESSION['instituciones'][0];
+$idSedes 		= $_SESSION['sede'][0];
+
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/reportesIndex.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
-
-
-
+<script>
+var idInstitucion = <?php echo $idInstitucion; ?>;
+var idSedes = <?php echo $idSedes; ?>;
+</script>
 <div class="asignaturas-index">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>

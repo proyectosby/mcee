@@ -35,14 +35,7 @@ use	yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Periodos */
 
-
-
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
-
-$this->title = 'Agregar';
+$this->title = 'Agregar Periodos';
 $this->params['breadcrumbs'][] = [
 									'label' => 'Periodos', 
 									'url' => [
@@ -55,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="periodos-create">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
