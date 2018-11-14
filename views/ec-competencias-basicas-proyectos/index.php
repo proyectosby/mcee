@@ -150,7 +150,7 @@ $this->params['breadcrumbs'][] = $this->title;
 											'',
 											// 'idReporte'		=> 16,
 										], 
-										['class' => 'btn btn-info']) ?>
+										['class' => 'btn btn-success']) ?>
 										
 			
 		</div>	
@@ -160,7 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
 											'',
 											// 'idReporte'		=> 16,
 										], 
-										['class' => 'btn btn-info']) ?>
+										['class' => 'btn btn-success']) ?>
 			<?= Html::a('9. Informe de avance ejecución y misional del proyecto', 
 										[
 											'',
