@@ -20,14 +20,12 @@ use yii\widgets\ActiveForm;
 use app\models\Sedes;
 use fedemotta\datatables\DataTables;
 
-$nombreSede = Sedes::find()->where('id='.$idSedes)->one();
-$idInstitucion=$nombreSede->id_instituciones;
-$nombreSede = $nombreSede->descripcion;
 
 $this->title = 'Horario Docente';
 $this->params['breadcrumbs'][] = $this->title;
 
-
+$idInstitucion 	= $_SESSION['instituciones'][0];
+$idSedes 		= $_SESSION['sede'][0];
 
 
 ?>
@@ -40,7 +38,7 @@ idDocente = <?php echo $_SESSION['perfilesxpersonas'];?>;
 
 <div class="horario-docente-index">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
    
 <div class="distribuciones-academicas-form">

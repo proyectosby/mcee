@@ -31,24 +31,17 @@ Cambios realizados: - miga de pan
 use yii\helpers\Html;
 use app\models\Sedes;
 
-$idSedes = $model->id_sede;
-
-$nombreSede = Sedes::find()->where('id='.$idSedes)->one();
-$idInstitucion = $nombreSede->id_instituciones;
-$nombreSede = $nombreSede->descripcion;
 
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PonderacionResultados */
-
+$idSedes 		= $_SESSION['sede'][0];
 $this->title = 'Actualizar';
 $this->params['breadcrumbs'][] = 
 	[
 		'label' => 'Ponderación de resultados', 
 		'url' => [
 					'index',
-					'idInstitucion' => $idInstitucion, 
-					'idSedes' 		=> $idSedes,
 				 ]
 	];						 
 		

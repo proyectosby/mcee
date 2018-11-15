@@ -97,8 +97,6 @@ $this->params['breadcrumbs'][] = $nombre ;
 		],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'cantidad_computdores_portatiles',
             'cantidad_aulas_tita',
             'cantidad_bibliotecas',

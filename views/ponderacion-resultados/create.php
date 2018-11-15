@@ -29,24 +29,17 @@ Cambios realizados: - miga de pan
 ---------------------------------------
 **********/
 use yii\helpers\Html;
-
-
 use app\models\Sedes;
-
-$nombreSede = Sedes::find()->where('id='.$idSedes)->one();
-$nombreSede = $nombreSede->descripcion;
-
+// $idSedes 		= $_SESSION['sede'][0];
 /* @var $this yii\web\View */
 /* @var $model app\models\PonderacionResultados */
 
-$this->title = 'Agregar';
+$this->title = 'Agregar ponderacion-resultados';
 $this->params['breadcrumbs'][] = 
 	[
 		'label' => 'Ponderación de resultados', 
 		'url' => [
 					'index',
-					'idInstitucion' => $idInstitucion, 
-					'idSedes' 		=> $idSedes,
 				 ]
 	];						 
 		
@@ -54,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ponderacion-resultados-create">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

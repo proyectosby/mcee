@@ -23,14 +23,6 @@ use yii\helpers\Html;
 use	yii\helpers\ArrayHelper;
 use app\models\Sedes;
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$model->id_sede)->all();
-
-$idInstitucion = ArrayHelper::getColumn($nombreSede, 'id_instituciones' );
-$idInstitucion =$idInstitucion[0];
-
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$model->id_sede];
 
 /* @var $this yii\web\View */
 /* @var $model app\models\RecursoInfraestructuraPedagogica */
@@ -40,8 +32,6 @@ $this->params['breadcrumbs'][] = [
 									'label' => 'Recurso Infraestructura Pedagogicas',
 									'url' => [
 												'index',
-												'idInstitucion' => $idInstitucion, 
-												'idSedes' 		=> $model->id_sede,
 											 ],
 								 ];	
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];

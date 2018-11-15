@@ -17,18 +17,12 @@ use yii\helpers\Html;
 /* @var $model app\models\Estudiantes */
 use	yii\helpers\ArrayHelper;
 use app\models\Sedes;
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
-$this->title = 'Agregar';
+$this->title = 'Agregar estudiante';
 	$this->params['breadcrumbs'][] = [
 									'label' => 'Matricular Estudiante', 
 									'url' => [
 												'index',
-												'idInstitucion' => $idInstitucion, 
-												'idSedes' 		=> $idSedes,
 											 ]
 								 ];						 
 								 
@@ -37,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estudiantes-create">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
 	
 	

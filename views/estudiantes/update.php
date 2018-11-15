@@ -19,25 +19,15 @@ use yii\helpers\Html;
 
 use	yii\helpers\ArrayHelper;
 use app\models\Sedes;
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-
-$idInstitucion = ArrayHelper::getColumn($nombreSede, 'id_instituciones' );
-$idInstitucion =$idInstitucion[0];
-
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
 
 
 
-$this->title = 'Actualizar';
+$this->title = 'Actualizar estudiantes';
 $this->params['breadcrumbs'][] = 
 								[
 									'label' => 'Matricular Estudiante', 
 									'url' => [
 											'index',
-											'idInstitucion' => $idInstitucion, 
-											'idSedes' 		=> $idSedes,
 										 ]
 								];						 
 								 
@@ -45,7 +35,7 @@ $this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="estudiantes-update">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
