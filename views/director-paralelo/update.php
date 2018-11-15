@@ -32,27 +32,19 @@ use yii\helpers\Html;
 use app\models\Sedes;
 use	yii\helpers\ArrayHelper;
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
-
-
 $this->title = 'Actualizar Director de grupo';
 $this->params['breadcrumbs'][] = 
 	[
 		'label' => 'Director de grupo', 
 		'url' => [
 					'index',
-					'idInstitucion' => $idInstitucion, 
-					'idSedes' 		=> $idSedes,
 				 ]
 	];	
 $this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 <div class="director-paralelo-update">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title ) ?></h1>
 
     <?= $this->render('_form', [
         'model' 	=> $model,

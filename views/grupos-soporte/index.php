@@ -34,8 +34,12 @@ use app\models\Sedes;
 $this->title = '';
 $nombre = "Grupos Soportes";
 $this->params['breadcrumbs'][] = $nombre;
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/gruposSoporteIndex.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
-
+<script>
+var idInstitucion = <?php echo $idInstitucion; ?>;
+var idSedes = <?php echo $idSedes; ?>;
+</script>
 <?php
 		Modal::Begin([
 			'header'=>'<h3>'.$nombre.'</h3>',

@@ -92,14 +92,14 @@ class AsignaturasNivelesSedesController extends Controller
     {
         // $searchModel = new AsignaturasNivelesSedesBuscar();
         // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-       
+       $idSedes 		= $_SESSION['sede'][0];
 	   $sql ="
 		SELECT ans.id,s.descripcion as sede,n.descripcion as niveles, a.descripcion as asignaturas, ans.intensidad as intensidad
 		FROM asignaturas_x_niveles_sedes as ans, asignaturas as \"a\", sedes_niveles as sn, sedes as s, niveles as n 
 		WHERE ans.id_asignaturas = a.id
 		AND ans.id_sedes_niveles = sn.id
 		AND sn.id_sedes = s.id
-		AND s.id = 48
+		AND s.id =  $idSedes 	
 		AND sn.id_niveles = n.id
 		group by ans.id,s.descripcion ,n.descripcion, a.descripcion
 		order by ans.id

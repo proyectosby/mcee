@@ -33,7 +33,7 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignaturas */
 
-$this->title = 'Actualizar ';
+$this->title = 'Actualizar asignaturas';
 use app\models\Estados;
 use app\models\Sedes;
 

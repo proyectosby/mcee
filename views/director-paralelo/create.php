@@ -14,11 +14,6 @@ use yii\helpers\Html;
 use app\models\Sedes;
 use	yii\helpers\ArrayHelper;
 
-$nombreSede = new Sedes();
-$nombreSede = $nombreSede->find()->where('id='.$idSedes)->all();
-$nombreSede = ArrayHelper::map($nombreSede,'id','descripcion');
-$nombreSede = $nombreSede[$idSedes];
-
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DirectorParalelo */
@@ -28,15 +23,13 @@ $this->params['breadcrumbs'][] = [
 								'label' => 'Asignaturas', 
 								'url' => [
 											'index',
-											'idInstitucion' => $idInstitucion, 
-											'idSedes' 		=> $idSedes,
 										 ]
 							 ];		
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="director-paralelo-create">
 
-    <h1><?= Html::encode($nombreSede) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

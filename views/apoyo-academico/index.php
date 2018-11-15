@@ -54,31 +54,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/apoyoAcademico.js',['depe
 
 ?>
 <div class="apoyo-academico-index">
-<script>
-    var downloadPDF = function() {
-      DocRaptor.createAndDownloadDoc("YOUR_API_KEY_HERE", {
-        test: true, // test documents are free, but watermarked
-        type: "pdf",
-        document_content: document.querySelector('mietiqueta').innerHTML, // use this page's HTML
-        // document_content: "<h6 style='color:#FF0000;'>Hello world!</h6>",               // or supply HTML directly
-        // document_url: "http://localhost/ARE/web/index.php?r=apoyo-academico/index&idEstudiante=3",            // or use a URL
-        javascript: true,                                        // enable JavaScript processing
-        prince_options: {
-          media: "screen",                                       // use screen styles instead of print styles
-        }
-      })
-    }
-  </script>
-<mietiqueta>
- SEM <br>
-          27-07-18                                                      <br>
-                                                          Documento        No Documento           Nombre y Apellido
-                                               CC                     98022610986             JOSE MARIO VELEZ GOMEZ
-                           Institución educativa                              Sede
-                                                                  INEM JORGE ISAACS                    PRINCIPAL  
-
-<h1>Example!</h1>
-  <input id="pdf-button" type="button" value="Download PDF" onclick="downloadPDF()" />
   
     <h1><?= Html::encode($nombreSede) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

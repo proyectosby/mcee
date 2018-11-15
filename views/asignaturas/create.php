@@ -34,24 +34,15 @@ use app\models\Estados;
 use app\models\Sedes;
 
 //datos para la miga de pan
-$sede = new Sedes();
-$sede = $sede->find()->where('id='.$idSedes)->all();
-$sede = ArrayHelper::map($sede,'descripcion','id_instituciones');
-$nombreSede = key($sede);
-
-$idInstitucion = $sede[$nombreSede];
-
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Asignaturas */
 
-$this->title = 'Agregar';
+$this->title = 'Agregar asiganturas';
 $this->params['breadcrumbs'][] = [
 									'label' => 'Asignaturas', 
 									'url' => [
-												'index',
-												'idInstitucion' => $idInstitucion, 
-												'idSedes' 		=> $idSedes,
+												'index'
 											 ]
 								 ];
 $this->params['breadcrumbs'][] = $this->title;
