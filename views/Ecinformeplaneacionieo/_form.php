@@ -75,7 +75,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 			<br>
 		</div>
 
-	
+	</div>  
 	<div class="panel panel-success">
 		
 		<div class="panel-heading">
@@ -157,9 +157,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js
 
 		</div>
 	</div>  
-	
-</div>  
-	
+
 </div>
 	
   <div class="ec-informe-planeacion-ieo-form">

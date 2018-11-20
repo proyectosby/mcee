@@ -2,7 +2,9 @@ $( document ).ready(function(){
 	
 $("#divPorcentajes").hide();
 	
+	
 });
+
 
 //semaforizacion segun documento 3A
 function colorBarra(valor)
