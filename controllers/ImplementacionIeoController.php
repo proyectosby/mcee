@@ -26,6 +26,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\bootstrap\Collapse;
+
 
 /**
  * ImplementacionIeoController implements the CRUD actions for ImplementacionIeo model.
@@ -60,6 +62,56 @@ class ImplementacionIeoController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    function actionViewFases($model, $form){
+        $actividades = [ 
+            1 => 'Actividad 1. Socialización de plan de acción',
+            2 => 'Actividad general. MCEE Encuentro',
+            3 => 'Actividad 2. Mesa de trabajo',
+            4 => 'Actividad 3. Acompañamiento a la práctica',
+            5 => 'Actividad 4. Mesa de trabajo',
+            6 => 'Actividad 5. Acompañamiento a la práctica',
+            7 => 'Actividad Especial. Taller',
+            8 => 'Actividad Especial.  Salida pedagógica',
+            9 => 'Actividad 6. Mesa de Trabajo',
+            10 => 'Actividad 7. Acompañamiento a la Práctica',
+            11 => 'Actividad 8. Mesa de Trabajo',
+            12 => 'Actividad 9.  Acompañamiento a la Práctica',
+            13 => 'Actividad Especial. Taller',
+            14 => 'Actividad Especial.  Salida pedagógica',
+            15 => 'Actividad 10. Mesa de trabajo',
+            16 => 'Actividad general. MCEE Encuentro',
+            17 => 'Productos'
+        ];
+
+        $tiposCantidadPoblacion = new CantidadPoblacionImpIeo();
+        $estudiantesGrado = new EstudiantesImpIeo();
+        $evidencias = new EvidenciasImpIeo();
+        $producto = new ProductoImplementacionIeo();
+
+        foreach ($actividades as $actividad => $a)
+		{
+                
+                $contenedores[] = [
+                    'label' 	=>  $a,
+                    'content' 	=> $this->renderPartial( 'actividades', 
+                                        [  
+                                            'form' => $form,
+                                            'numActividad' => $actividad,
+                                            'model' =>$model,
+                                            'tiposCantidadPoblacion' =>  $tiposCantidadPoblacion,
+                                            'estudiantesGrado' => $estudiantesGrado,
+                                        ] 
+                                    )
+                ];
+        }
+
+        echo Collapse::widget([
+            'items' => $contenedores,
+        ]);
+
+
     }
 
     /**

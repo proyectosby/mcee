@@ -26,6 +26,8 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
     public $acta;
     public $listado;
     public $fotografias;
+    public $avance_formula;
+    public $avance_ruta_gestion;
     
 
     /**
@@ -63,8 +65,8 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
             'zona_educativa' => 'Zona Educativa',
             'comuna' => 'Comuna',
             'barrio' => 'Barrio',
-            'profesional_cargo' => 'Profesional Cargo',
-            'horario_trabajo' => 'Horario Trabajo',
+            'profesional_cargo' => 'Profesional Encargado',
+            'horario_trabajo' => 'Horario fijo de trabajo con los actores de la IEO',
             'estado' => 'Estado',
             'codigo_dane' => 'Codigo Dane',
         ];
