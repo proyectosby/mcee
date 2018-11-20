@@ -58,7 +58,7 @@ class CantidadPoblacionImpIeo extends \yii\db\ActiveRecord
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
-            'fecha_creacion' => 'Fecha Creacion',
+            'fecha_creacion' => 'Fecha',
             'tipo_actividad' => 'Tipo Actividad',
         ];
     }
