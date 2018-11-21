@@ -13,7 +13,8 @@ use Yii;
  * @property string $id_informe_planeacion
  * @property string $fecha_avance
  * @property int $estado
- * @property int $porcentaje
+ * @property string $porcentaje
+ * @property string $id_productos
  */
 class EcPorcentajeAvance extends \yii\db\ActiveRecord
 {
@@ -31,11 +32,13 @@ class EcPorcentajeAvance extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_proceso', 'id_pregunta_porcentaje_avance', 'id_informe_planeacion', 'estado', 'porcentaje'], 'default', 'value' => null],
-            [['id_proceso', 'id_pregunta_porcentaje_avance', 'id_informe_planeacion', 'estado', 'porcentaje'], 'integer'],
+            [['id_proceso', 'id_pregunta_porcentaje_avance', 'id_informe_planeacion', 'estado', 'id_productos'], 'default', 'value' => null],
+            [['id_proceso', 'id_pregunta_porcentaje_avance', 'id_informe_planeacion', 'estado', 'id_productos'], 'integer'],
             [['fecha_avance'], 'safe'],
+            [['porcentaje'], 'string'],
             [['id_informe_planeacion'], 'exist', 'skipOnError' => true, 'targetClass' => EcInformePlaneacionIeo::className(), 'targetAttribute' => ['id_informe_planeacion' => 'id']],
             [['id_proceso'], 'exist', 'skipOnError' => true, 'targetClass' => EcProcesos::className(), 'targetAttribute' => ['id_proceso' => 'id']],
+            [['id_productos'], 'exist', 'skipOnError' => true, 'targetClass' => EcProductos::className(), 'targetAttribute' => ['id_productos' => 'id']],
             [['id_pregunta_porcentaje_avance'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['id_pregunta_porcentaje_avance' => 'id']],
         ];
     }
@@ -53,6 +56,7 @@ class EcPorcentajeAvance extends \yii\db\ActiveRecord
             'fecha_avance' => 'Fecha Avance',
             'estado' => 'Estado',
             'porcentaje' => 'Porcentaje',
+            'id_productos' => 'Id Productos',
         ];
     }
 }

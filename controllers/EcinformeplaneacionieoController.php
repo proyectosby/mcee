@@ -468,8 +468,8 @@ class EcinformeplaneacionieoController extends Controller
 
         if ($model->load(Yii::$app->request->post())) 
 		{
-			$modelPorcentajes = new EcPorcentajeAvance();
-			// $model->save();
+			
+			$model->save();
 			$post = Yii::$app->request->post();
 			
 			$porcentajes = $this->obtenerPorcentajes($post);
@@ -493,7 +493,7 @@ class EcinformeplaneacionieoController extends Controller
 				138,
 				139,
 				140,
-			)
+			);
 			
 			//id de la tabla procesos y cada 3 el id de la tabla productos
 			$idProcesos = array
@@ -512,12 +512,24 @@ class EcinformeplaneacionieoController extends Controller
 				3,
 				8,
 			);
-			for($i=0;$i<= count($porcentajes);$i++)
+			for($i=0;$i<= count($porcentajes)-1;$i++)
 			{
-				
-				$modelPorcentajes->id_proceso = ;
-				$modelPorcentajes->id_pregunta_porcentaje_avance = $idsPreguntaPorcentajeAvance[$i]  ; 
-				$modelPorcentajes->id_informe_planeacion = $idInforme ;
+				$modelPorcentajes = new EcPorcentajeAvance();
+				//cada tercer id se inserta en el campo productos
+				if($i == 3 or $i == 7 or $i== 11)
+				{
+					$modelPorcentajes->id_productos = $idProcesos[$i];
+					// $modelPorcentajes->id_proceso = 0;
+				}
+				else
+				{
+					// echo $i;
+					// $modelPorcentajes->id_proceso = 0;
+					$modelPorcentajes->id_proceso = $idProcesos[$i];
+				}
+				echo $idsPreguntaPorcentajeAvance[$i];
+				$modelPorcentajes->id_pregunta_porcentaje_avance = $idsPreguntaPorcentajeAvance[$i]; 
+				$modelPorcentajes->id_informe_planeacion = $idInforme;
 				$modelPorcentajes->fecha_avance = date("Y-m-d H:i:s");
 				$modelPorcentajes->porcentaje = $porcentajes[$i];
 				$modelPorcentajes->save();
