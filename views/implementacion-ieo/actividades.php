@@ -4,7 +4,7 @@
    use yii\helpers\Html;
    use dosamigos\datepicker\DatePicker;
 
-   if($numActividad != 12){
+   if($numActividad != 17){
 ?>
 
         <h2 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h2>
@@ -121,10 +121,19 @@
                 <?php
             }?>
              <?= $form->field($model, "[$numActividad]resultado_actividad")->label('Resultados de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$numActividad]acta")->label("ACTA")->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$numActividad]listado")->label("LISTADO")->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$numActividad]fotografias")->label('FOTOGRAFÍAS')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+             <?= $form->field($model, "[$numActividad]acta")->label("ACTA")->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+             <?= $form->field($model, "[$numActividad]listado")->label("LISTADO")->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+             <?= $form->field($model, "[$numActividad]fotografias")->label('FOTOGRAFÍAS')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 
     <?php
+        }else{
+        ?>
+            <?= $form->field($model, "[$numActividad]producto_informe_acompañamiento")->label('Informe de acompañamiento')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($model, "[$numActividad]producto_trazabilidad")->label('Trazabilidad al plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($model, "[$numActividad]producto_formnulacion_sistemactizacion")->label('Formulación y sistematización de la iniciativa')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($model, "[$numActividad]producto_ruta_gestion")->label('Ruta de gestión')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($model, "[$numActividad]producto_presentacion_resultados")->label('Presentación de los resultados del proceso')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?php
+
         }
     ?>
