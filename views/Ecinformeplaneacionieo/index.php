@@ -27,6 +27,7 @@ use yii\grid\GridView;
 
 $this->title = 'Informe de avance Mensual I.E.O - Misional';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?> 
 
 <h1></h1>
