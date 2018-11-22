@@ -52,7 +52,7 @@ class IeoController extends Controller
         ];
     }
 
-    function actionViewFases($model){
+    function actionViewFases($model, $form){
         
         $model = new Ieo();
         $documentosReconocimiento = new DocumentosReconocimiento();
@@ -60,21 +60,25 @@ class IeoController extends Controller
         $requerimientoExtra = new RequerimientoExtraIeo();
         $evidencias = new Evidencias();
         $producto = new Producto();
-				
-		/*$fases	= Fases::find()
-					->where('estado=1')
-					->orderby( 'descripcion' )
-					->all();*/
+        $estudiantesGrado = new EstudiantesIeo();
+
+        $proyectos = [ 
+            1 => "Proyectos Pedagógicos Transversales",
+            2 => "Proyectos de Servicio Social Estudiantil",
+            3 => "Articulación Familiar"
+        ];
 		
 		return $this->renderAjax('fases', [
 			'idPE' 	=> null,
-			'fases' => ["Proyectos Pedagógicos Transversales", "Proyectos de Servicio Social Estudiantil", "Articulación Familiar"],
+            'fases' => $proyectos,
+            'form' => $form,
             "model" => $model,
             "documentosReconocimiento" =>  $documentosReconocimiento,
             "tiposCantidadPoblacion" => $tiposCantidadPoblacion,
             "evidencias" => $evidencias,
             "producto" => $producto,
-            "requerimientoExtra" => $requerimientoExtra
+            "requerimientoExtra" => $requerimientoExtra,
+            "estudiantesGrado" =>  $estudiantesGrado
         ]);
 		
 	}

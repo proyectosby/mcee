@@ -13,19 +13,15 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'persona_acargo')->textInput() ?>
-
     <?= $form->field($model, 'zona_educativa')->textInput() ?>
+    <?= $form->field($model, 'zona_educativa')->dropDownList( $zonasEducativas, [ 'prompt' => 'Seleccione...' ] ) ?>
+    <?= $form->field($model, 'comuna')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>
+    <?= $form->field($model, 'barrio')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>  
 
-    <?= $form->field($model, 'comuna')->textInput() ?>
-
-    <?= $form->field($model, 'barrio')->textInput() ?>
-
-    
     
     <h3 style='background-color: #ccc;padding:5px;'>I.E.O Avance Ejecución</h3>
 
-    <?= $this->context->actionViewFases($model);   ?>
+    <?= $this->context->actionViewFases($model, $form);   ?>
     
     
     <div class="form-group">

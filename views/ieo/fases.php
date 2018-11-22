@@ -13,16 +13,9 @@ foreach( $fases as $keyFase => $fase ){
 	$items[] = 	[
 					'label' 		=>  $fase,
 					'content' 		=>  $this->render( 'faseItem', 
-													[ 
-                                                        'items' 	=> [
-																		"Requerimientos extras I.E.O",
-																		"Reconocimiento previo y documentos a desarrollar por el profesional de apoyo",
-                                                                        "Actividad 1.Mesa de trabajo para la presentación de resultados de la caracterización y mapeo (puntos de partida y llegada)",
-                                                                        "Actividad 2. Acompañamiento en práctica",
-                                                                        "Actividad 3. Mesa de trabajo: contrucción del plan de acción",
-                                                                        "Productos"
-                                                                        ], 
-														'actividad_id' 	=> $index,
+													[  
+														'form' => $form,
+														'numProyecto' 	=> $keyFase,
 														'sesiones' 	=> $index,
                                                         'fase' 		=> $fase,
 														'documentosReconocimiento' => $documentosReconocimiento,
@@ -31,6 +24,7 @@ foreach( $fases as $keyFase => $fase ){
 														'producto' => $producto,
 														'requerimientoExtra' => $requerimientoExtra,
 														"model" => $model,
+														"estudiantesGrado" =>  $estudiantesGrado
 													] 
 										),
 					'contentOptions'=> []

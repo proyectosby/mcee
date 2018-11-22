@@ -56,7 +56,7 @@ class ImplementacionIeoController extends Controller
      * Lists all ImplementacionIeo models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => ImplementacionIeo::find(),
@@ -64,6 +64,7 @@ class ImplementacionIeoController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'guardado' 		=> $guardado,
         ]);
     }
 
@@ -144,13 +145,13 @@ class ImplementacionIeoController extends Controller
         $status = false;
 
         if ($ieo_model->load(Yii::$app->request->post())) {
-            
+
             $ieo_model->institucion_id = $idInstitucion;
             $ieo_model->estado = 1;
             $ieo_model->sede_id = 2;
                        
-            if(/*$ieo_model->save()*/true){
-                $ieo_id = 2;
+            if($ieo_model->save()){
+                $ieo_id = $ieo_model->id;
 
                 $data = Yii::$app->request->post('ImplementacionIeo');
                 $count 	= count( $data );
@@ -167,7 +168,6 @@ class ImplementacionIeoController extends Controller
                 if (ImplementacionIeo::loadMultiple($models, Yii::$app->request->post() )) {
 
                     foreach( $models as $key => $model) {
-
                         //Generación de instancias de los documentos Actividades Evidencias
                         $producto_acuerdo = UploadedFile::getInstance( $model, "[$key]producto_acuerdo" );
                         $resultado_actividad = UploadedFile::getInstance( $model, "[$key]resultado_actividad" );
@@ -234,7 +234,7 @@ class ImplementacionIeoController extends Controller
 
                             if( $saveProducto && $saveResultadoActividad && $saveActa && $saveListado && $saveFotografia){ 
                                 //Le asigno la ruta al arhvio
-                                $modelEvidencias[$countEvidencias]->implementacion_ieo_id = 2;
+                                $modelEvidencias[$countEvidencias]->implementacion_ieo_id = $ieo_id;
                                 $modelEvidencias[$countEvidencias]->producto_acuerdo = $rutaFisicaDirectoriaUploadProducto;
                                 $modelEvidencias[$countEvidencias]->resultado_actividad = $rutaFisicaDirectoriaUploadResultadoActividad;
                                 $modelEvidencias[$countEvidencias]->acta = $rutaFisicaDirectoriaUploadActa;
@@ -256,7 +256,7 @@ class ImplementacionIeoController extends Controller
 
                         //Validación para el registro de documentos Producto
                         if($producto_informe_acompañamiento && $producto_trazabilidad && $producto_formnulacion_sistemactizacion && $producto_ruta_gestion && $producto_presentacion_resultados){
-
+                           
                             $modelProductos [] = new ProductosImpIeo();
                             
                             $carpetaEvidencias = "../documentos/documentosIeo/actividades/productosImlementacionIeo/".$institucion->codigo_dane;
@@ -286,21 +286,20 @@ class ImplementacionIeoController extends Controller
                             $rutaFisicaDirectoriaUploadProductoPresentacionResultado .= date( "_Y_m_d_His" ) . '.' . $producto_presentacion_resultados->extension;
                             $saveProductoPresentacionResultado = $producto_presentacion_resultados->saveAs( $rutaFisicaDirectoriaUploadProductoPresentacionResultado );
 
-                            if( $saveProductoAcompañamiento && $saveProductoTrazabilidad && $saveProductoFormulacionSistematizacion && $saveProductoRutaGestion && $saveProductoPresentacionResultado){ 
-                                //Le asigno la ruta al arhvio
-                                $modelProductos[$countProductos]->implementacion_ieo_id = 2;
+                            if( $saveProductoAcompañamiento && $saveProductoTrazabilidad && $saveProductoFormulacionSistematizacion && $saveProductoRutaGestion && $saveProductoPresentacionResultado){
+
+                                $modelProductos[$countProductos]->implementacion_ieo_id = $ieo_id;
                                 $modelProductos[$countProductos]->informe_acompañamiento = $rutaFisicaDirectoriaUploadProductoAcompañamiento;
                                 $modelProductos[$countProductos]->trazabilidad = $rutaFisicaDirectoriaUploadProductoTrazabilidad;
                                 $modelProductos[$countProductos]->formnulacion_sistemactizacion = $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion;
                                 $modelProductos[$countProductos]->ruta_gestion = $rutaFisicaDirectoriaUploadProductoRutaGestion;
                                 $modelProductos[$countProductos]->presentacion_resultados = $rutaFisicaDirectoriaUploadProductoPresentacionResultado;
-                        }else{
-                            echo $file->error;
-                            exit("finnn....");
+                            }else{
+                                echo $file->error;
+                                exit("finnn....");
+                            }
+                            $countProductos++;
                         }
-                        $countProductos++;
-                        }
-
 
                     }
 
@@ -312,6 +311,7 @@ class ImplementacionIeoController extends Controller
 
                     foreach( $modelProductos as $key => $model) {
                         if(!$model->save()){
+                            
                             exit( "Error al guardar documentos Productos" );
                         }
                     }
@@ -319,7 +319,7 @@ class ImplementacionIeoController extends Controller
 
                 }
 
-                /*if (Yii::$app->request->post('CantidadPoblacionImpIeo')){
+                if (Yii::$app->request->post('CantidadPoblacionImpIeo')){
                     $data = Yii::$app->request->post('CantidadPoblacionImpIeo');
                     $count 	= count( $data );
                     $modelCantidadPoblacion = [];
@@ -330,9 +330,9 @@ class ImplementacionIeoController extends Controller
         
                     if (CantidadPoblacionImpIeo::loadMultiple($modelCantidadPoblacion, Yii::$app->request->post() )) {
                         foreach( $modelCantidadPoblacion as $key => $model) {
+                           
                             if($model->tiempo_libre){
-                                $model->implementacion_ieo_id = 2;
-                                                                               
+                                $model->implementacion_ieo_id = $ieo_id;                                                  
                                 
                                 if($model->save() && Yii::$app->request->post('EstudiantesImpIeo')){
                                     $status = true;
@@ -344,6 +344,8 @@ class ImplementacionIeoController extends Controller
                                     for( $i = 0; $i < $countEstudiantes; $i++ ){
                                         $modelEstudiantesIeo[] = new EstudiantesImpIeo();
                                     }
+
+
                                     if (EstudiantesImpIeo::loadMultiple($modelEstudiantesIeo, Yii::$app->request->post() )) {
                                         foreach( $modelEstudiantesIeo as $key => $modelEstudiantes) {
                                                 if($modelEstudiantes->grado_0){
@@ -353,7 +355,7 @@ class ImplementacionIeoController extends Controller
                                                         $status = false;
                                                     }
                                                     
-                                                    break;
+                                                    //break;
                                                 }
                                                 
                                             }
@@ -363,25 +365,18 @@ class ImplementacionIeoController extends Controller
                         }
                     }
                     
-                }*/
+                }
             }
-
+            return $this->redirect(['index', 'guardado' => true ]);
             
         }
-     
 
-        
-        $tiposCantidadPoblacion = new CantidadPoblacionImpIeo();
-        $estudiantesGrado = new EstudiantesImpIeo();
-        $evidencias = new EvidenciasImpIeo();
-        $producto = new ProductoImplementacionIeo();
+
+     
 
         return $this->renderAjax('create', [
             'model' => $ieo_model,
-            'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
-            'estudiantesGrado' => $estudiantesGrado,
-            "evidencias" => $evidencias,
-            "producto" => $producto
+            
         ]);
     }
 

@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('__form', [
+    <?= $this->render('_form', [
         'model' => $model,
         'requerimientoExtra' => $requerimientoExtra,
         "documentosReconocimiento" =>  $documentosReconocimiento,
