@@ -13,8 +13,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'zona_educativa')->textInput() ?>
-        <?= $form->field($model, 'zona_educativa')->dropDownList( $zonasEducativas, [ 'prompt' => 'Seleccione...' ] ) ?>
+       
         <?= $form->field($model, 'comuna')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>
         <?= $form->field($model, 'barrio')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>  
         

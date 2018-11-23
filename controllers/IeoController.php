@@ -123,12 +123,12 @@ class IeoController extends Controller
          * Se realiza registro del modelo base IEO
          * Obtenemos el id de iserción para usarlo como llave foranea en los demas modelos 
          */
-        $model = new Ieo();
-        $requerimientoExtra = new RequerimientoExtraIeo();
-        $documentosReconocimiento = new DocumentosReconocimiento();
-        $tiposCantidadPoblacion = new TiposCantidadPoblacion();
-        $estudiantesGrado = new EstudiantesIeo();
-        $evidencias = new Evidencias();
+        //$model = new Ieo();
+        //$requerimientoExtra = new RequerimientoExtraIeo();
+        //$documentosReconocimiento = new DocumentosReconocimiento();
+        //$tiposCantidadPoblacion = new TiposCantidadPoblacion();
+        //$estudiantesGrado = new EstudiantesIeo();
+        //$evidencias = new Evidencias();
         $ieo_id = 0;
         $idInstitucion = $_SESSION['instituciones'][0];
         $data = [];
@@ -142,11 +142,14 @@ class IeoController extends Controller
             
             $ieo_model->institucion_id = $idInstitucion;
             $ieo_model->estado = 1;
-            $ieo_model->sede_id = 2;          
+            $ieo_model->sede_id = 2;
+            $ieo_model->id_tipo_informe = 2;          
             $ieo_model->codigo_dane = $institucion->codigo_dane;
+
             
             /**Registro de Modelo Base y todos los modelos realacionados con documentación */
             if($ieo_model->save()){
+
                 $status = true;  
                 $ieo_id = $ieo_model->id;
                 $data = Yii::$app->request->post('Ieo');
@@ -157,7 +160,7 @@ class IeoController extends Controller
                 $modelRequerimientoExtra = [];
                 $modelEvidencias = [];
                 $modelProducto = [];
-                for( $i = 0; $i < $count; $i++ ){
+                for( $i = 0; $i < 63; $i++ ){
                     $models[] = new Ieo();
                 }
                  
@@ -165,9 +168,14 @@ class IeoController extends Controller
                 $countDocumentos = 0;
                 $countEvidencias = 0;
                 $countProducto = 0;
+
                 if (Ieo::loadMultiple($models, Yii::$app->request->post() )) {
-                    
+                    var_dump(count($models));
+                    var_dump("<br>");
                     foreach( $models as $key => $model) {
+                       
+                        var_dump($key);
+                        var_dump("<br>");
                                                 
                         // Generación de instancias de los documentos REQUERIMIENTO EXTRA IEO
                         $file_socializacion_ruta = UploadedFile::getInstance( $model, "[$key]file_socializacion_ruta" );
@@ -191,7 +199,8 @@ class IeoController extends Controller
 
                         //Generación de instancias de los documentos Productos
                         $file_producto_imforme_ruta = UploadedFile::getInstance( $model, "[$key]file_producto_imforme_ruta" );
-                        $file_plan_accion = UploadedFile::getInstance( $model, "[$key]file_plan_accion" );
+                        $file_plan_accion = UploadedFile::getInstance( $model, "[$key]file_producto_plan_accion" );
+                        $file_producto_presentacion = UploadedFile::getInstance( $model, "[$key]file_producto_presentacion" );
                         
                         //Validación para el registro de documentos requerimientos extras IEO
                         if( $file_socializacion_ruta && $file_soporte_necesidad){
@@ -200,7 +209,7 @@ class IeoController extends Controller
                             //Se crea carpeta para almecenar los documentos de Socializacion
                             $carpetaSocializacion = "../documentos/documentosIeo/requerimientoExtra/socializacion/".$institucion->codigo_dane;
                             if (!file_exists($carpetaSocializacion)) {
-                                mkdir($carpeta, 0777, true);
+                                mkdir($carpetaSocializacion, 0777, true);
                             }
 
                             //Se crea carpeta para almecenar los documentos de Soporte Necesidad
@@ -289,7 +298,6 @@ class IeoController extends Controller
 
                             if( $saveInformeCaracterizacion && $saveMatrizCaracterizacion && $saveRevisionPei && $saveAutoevaluacion && $saveRevisionPmi && $saveResultadosCaracterizacion && $saveHorarioTrabajo){
                                 //Le asigno la ruta al arhvio
-
                                 $modelDocumentosReconocimiento[$countDocumentos]->informe_caracterizacion = $rutaFisicaDirectoriaUploadDocumentosReconocimientoInformeCaracterizacion;
                                 $modelDocumentosReconocimiento[$countDocumentos]->matriz_caracterizacion = $rutaFisicaDirectoriaUploadDocumentosReconocimientoMatrizCaracterizacion;
                                 $modelDocumentosReconocimiento[$countDocumentos]->revision_pei = $rutaFisicaDirectoriaUploadDocumentosReconocimientoRevisionPei;
@@ -298,7 +306,7 @@ class IeoController extends Controller
                                 $modelDocumentosReconocimiento[$countDocumentos]->resultados_caracterizacion = $rutaFisicaDirectoriaUploadDocumentosReconocimientoResultadosCaracterizacion;
                                 $modelDocumentosReconocimiento[$countDocumentos]->horario_trabajo = $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo;
                                 $modelDocumentosReconocimiento[$countDocumentos]->ieo_id = $ieo_id;
-                                $modelDocumentosReconocimiento[$countDocumentos]->proyecto_ieo_id = $key+1;
+                                $modelDocumentosReconocimiento[$countDocumentos]->proyecto_ieo_id = 1;
                             }else{
                                 echo $file->error;
                                 exit("finnn....");
@@ -308,9 +316,6 @@ class IeoController extends Controller
 
                         //Validación para el registro de documentos Actividades Evidencias
                         if( $file_producto_ruta && $file_resultados_actividad_ruta && $file_acta_ruta && $file_listado_ruta){
-                           
-                            
-                            
                             $modelEvidencias [] = new Evidencias();
                             //Se crea carpeta para almecenar los documentos de Socializacion
                             $carpetaEvidencias = "../documentos/documentosIeo/actividades/evidencias/".$institucion->codigo_dane;
@@ -347,12 +352,10 @@ class IeoController extends Controller
                             $saveFotografia = $file_fotografias_ruta->saveAs( $rutaFisicaDirectoriaUploadFotografia );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
                              
 
-                            if( $saveProducto && $saveResultadosActividad && $saveActa && $saveListado && $saveFotografia){ 
-                                
+                            if( $saveProducto && $saveResultadosActividad && $saveActa && $saveListado && $saveFotografia){                                 
                                 //Le asigno la ruta al arhvio
                                 $modelEvidencias[$countEvidencias]->ieo_id = $ieo_id;
                                 $modelEvidencias[$countEvidencias]->tipo_actividad_id = 1;
-                                $modelEvidencias[$countEvidencias]->observaciones = "dsadada";
                                 $modelEvidencias[$countEvidencias]->producto_ruta = $rutaFisicaDirectoriaUploadProducto;
                                 $modelEvidencias[$countEvidencias]->resultados_actividad_ruta = $rutaFisicaDirectoriaUploadResultadosActividad;
                                 $modelEvidencias[$countEvidencias]->acta_ruta = $rutaFisicaDirectoriaUploadActa;
@@ -408,6 +411,7 @@ class IeoController extends Controller
 
                         
                     }
+                 
                     
                     foreach( $modelRequerimientoExtra as $key => $model) {
                         if(!$model->save()){
@@ -470,8 +474,7 @@ class IeoController extends Controller
                                                     if(!$modelEstudiantes->save()){
                                                         $status = false;
                                                     }
-                                                    
-                                                    break;
+                                                    //break;
                                                 }
                                                 
                                             }
@@ -491,22 +494,9 @@ class IeoController extends Controller
       
         $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
 		$zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
-
-        $model = new Ieo();
-        $requerimientoExtra = new RequerimientoExtraIeo();
-        $documentosReconocimiento = new DocumentosReconocimiento();
-        $tiposCantidadPoblacion = new TiposCantidadPoblacion();
-        $estudiantesGrado = new EstudiantesIeo();
-        $evidencias = new Evidencias();
-        
         
         return $this->renderAjax('create', [
-            'model' => $model,
-            'requerimientoExtra' => $requerimientoExtra,
-            "documentosReconocimiento" =>  $documentosReconocimiento,
-            'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
-            'estudiantesGrado' => $estudiantesGrado,
-            "evidencias" => $evidencias,
+            'model' => $ieo_model,
             'zonasEducativas' => $zonasEducativas,
         ]);
     }

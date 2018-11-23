@@ -17,7 +17,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
-    
+    $contador = $index +  $numProyecto;
+    var_dump($contador);
     if ($index == 1){
     ?>
         <?= $form->field($model, "[$index$numProyecto]file_socializacion_ruta")->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
@@ -46,7 +47,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                     'autoclose' => true,
                     'format'    => 'yyyy-mm-dd',
             ],
-        ]);  ?>
+        ]);  ?> 
         <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]tipo_actividad")->textInput() ?>
         <h3 style='background-color: #ccc;padding:5px;'>Docentes</h3>
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]tiempo_libre")->textInput() ?>
@@ -177,13 +178,12 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             <?= $form->field($model, "[$index$numProyecto]file_acta_ruta")->label('ACTA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
             <?= $form->field($model, "[$index$numProyecto]file_listado_ruta")->label('LISTADO')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
             <?= $form->field($model, "[$index$numProyecto]file_fotografias_ruta")->label('FOTOGRAFÍAS')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$index$numProyecto]tipo_actividad")->hiddenInput( [ 'value' => 'asdsadasdsa' ] ) ?>
     <?php
     }if($index == 6){ ?>
-
+    
         <?= $form->field($model, "[$index$numProyecto]file_producto_imforme_ruta")->label('Informe de rutas de cualificación ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_plan_accion")->label('Plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_plan_accion")->label('Presentación del plan de acción para la I.E.O ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($model, "[$index$numProyecto]file_producto_plan_accion")->label('Plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($model, "[$index$numProyecto]file_producto_presentacion")->label('Presentación del plan de acción para la I.E.O ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 
     <?php
     }

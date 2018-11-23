@@ -21,10 +21,10 @@ use Yii;
  * @property string $grado_9
  * @property string $grado_10
  * @property string $grado_11
+ * @property int $total
  */
 class EstudiantesIeo extends \yii\db\ActiveRecord
 {
-    public $total;
     /**
      * @inheritdoc
      */
@@ -39,8 +39,8 @@ class EstudiantesIeo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tipo_cantidad_p'], 'default', 'value' => null],
-            [['id_tipo_cantidad_p'], 'integer'],
+            [['id_tipo_cantidad_p', 'total'], 'default', 'value' => null],
+            [['id_tipo_cantidad_p', 'total'], 'integer'],
             [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11'], 'string'],
             [['id_tipo_cantidad_p'], 'exist', 'skipOnError' => true, 'targetClass' => TiposCantidadPoblacion::className(), 'targetAttribute' => ['id_tipo_cantidad_p' => 'id']],
         ];
@@ -66,6 +66,7 @@ class EstudiantesIeo extends \yii\db\ActiveRecord
             'grado_9' => 'Grado 9',
             'grado_10' => 'Grado 10',
             'grado_11' => 'Grado 11',
+            'total' => 'Total',
         ];
     }
 }
