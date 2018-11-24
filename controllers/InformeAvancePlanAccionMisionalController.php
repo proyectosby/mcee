@@ -50,9 +50,9 @@ use app\models\EcPorcentajeAvance;
 use yii\bootstrap\Collapse;
 
 /**
- * EcinformeplaneacionieoController implements the CRUD actions for EcInformePlaneacionIeo model.
+ * informeAvancePlanAccionMisional implements the CRUD actions for EcInformePlaneacionIeo model.
  */
-class EcinformeplaneacionieoController extends Controller
+class InformeAvancePlanAccionMisionalController extends Controller
 {
     /**
      * @inheritdoc
@@ -77,10 +77,17 @@ class EcinformeplaneacionieoController extends Controller
 
 	   $modelProyectos = new EcProyectos();
 		$estadoActual = [ 
+					0 => '0',
 					1 => '1',
 					2 => '2',
 					3 => '3',
-					4 => '4'
+					4 => '4',
+					5 => '5',
+					6 => '6',
+					7 => '7',
+					8 => '8',
+					9 => '9',
+					10 => '10'
 				];
 		 
 		$ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
@@ -543,7 +550,7 @@ class EcinformeplaneacionieoController extends Controller
 					 ->execute();
 			
 			
-            return $this->redirect(['index']);
+            return $this->redirect(['index','idTipoInforme' => $idTipoInforme]);
         }
 
 	
@@ -593,7 +600,8 @@ class EcinformeplaneacionieoController extends Controller
 
         if ($model->load(Yii::$app->request->post())) 
 		{
-			
+			// echo "<pre>"; print_r(Yii::$app->request->post()); echo "</pre>"; 
+			// die;
 			$model->save();
 			$post = Yii::$app->request->post();
 			
@@ -603,7 +611,7 @@ class EcinformeplaneacionieoController extends Controller
 			// die;
 		
 			$idInforme = $model->id;
-			
+			$idTipoInforme =  $model->id_tipo_informe;
 			//ids en tabla parametros
 			$idsPreguntaPorcentajeAvance = array
 			(
@@ -713,7 +721,7 @@ class EcinformeplaneacionieoController extends Controller
 				$result = $command->queryAll();
 			}
 			
-            return $this->redirect(['index']);
+            return $this->redirect(['index','idTipoInforme' => $idTipoInforme]);
         }
 
 		$idSedes 		= $_SESSION['sede'][0];
