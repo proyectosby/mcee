@@ -8,7 +8,7 @@ $index = 0;
 ?>
 
 <?php
-    echo $form->field($model, '[]persona_acargo')->textInput();
+    echo $form->field($model, "[$numProyecto]persona_acargo")->textInput();
      $actividades =[
         1 =>    "Requerimientos extras I.E.O",
         2 =>    "Reconocimiento previo y documentos a desarrollar por el profesional de apoyo",

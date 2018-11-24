@@ -19,11 +19,10 @@ use Yii;
  * @property string $directivos
  * @property string $fecha_creacion
  * @property int $proyecto_ieo_id
+ * @property string $tipo_actividad
  */
 class TiposCantidadPoblacion extends \yii\db\ActiveRecord
 {
-    public $fecha_creacion;
-    public $tipo_actividad;
     /**
      * @inheritdoc
      */
@@ -40,10 +39,8 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
         return [
             [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'default', 'value' => null],
             [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'integer'],
-            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'string'],
+            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tipo_actividad'], 'string'],
             [['fecha_creacion'], 'safe'],
-            [['actividad_id'], 'exist', 'skipOnError' => true, 'targetClass' => ActividadesIeo::className(), 'targetAttribute' => ['actividad_id' => 'id']],
-            [['proyecto_ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoIeo::className(), 'targetAttribute' => ['proyecto_ieo_id' => 'id']],
         ];
     }
 
@@ -63,9 +60,9 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
-            'fecha_creacion' => 'Fecha',
+            'fecha_creacion' => 'Fecha Creacion',
             'proyecto_ieo_id' => 'Proyecto Ieo ID',
-            'tipo_actividad' => 'Tipo Actividad'
+            'tipo_actividad' => 'Tipo Actividad',
         ];
     }
 }
