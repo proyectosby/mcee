@@ -194,12 +194,12 @@ class EcinformeplaneacionieoController extends Controller
      * Lists all EcInformePlaneacionIeo models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($idInforme)
     {
 		$idSedes 		= $_SESSION['sede'][0];
         $searchModel = new EcInformePlaneacionIeoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes and id_tipo_informe =2" ); 
+		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes and id_tipo_informe = $idInforme" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -421,7 +421,7 @@ class EcinformeplaneacionieoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idTipoInforme)
     {
         $model = new EcInformePlaneacionIeo();
 
@@ -496,7 +496,7 @@ class EcinformeplaneacionieoController extends Controller
 			//se agrega el id del informe despues de haber sido creado 
 			foreach($arrayDatosEcAvances as $datos => $valores)
 			{
-				$arrayDatosEcAvances[$datos]['id_informe']=$idInforme;
+				$arrayDatosEcAvances[$datos]['id_informe']=$idTipoInforme;
 			}
 			
 			$columnNameArrayEcAvances=['estado_actual','logros','retos','argumentos','id_acciones','estado','id_informe'];

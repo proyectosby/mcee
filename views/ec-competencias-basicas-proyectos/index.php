@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			   <?= Html::a('2. Planeación y reporte de actividad', 
 										[
 											'ec-datos-basicos/create',
-											// 'idReporte'	=> 1,
+											'idInforme'	=> 1,
 										], 
 										['class' => 'btn btn-success'
 				]) ?>
@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										[
 											
 											'ieo/index',
-											// 'idReporte'		=> 3, 
+											'idInforme'		=> 2, 
 										], 
 										['class' => 'btn btn-success'
 				]) ?>
@@ -88,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::a('3.A Informe de avance Mensual I.E.O Fase Plan de acción - Misional', 
 										[
 											'ecinformeplaneacionieo/index',
-											// 'idReporte'		=> 4,
+											'idInforme'		=> 3,
 										], 
 										['class' => 'btn btn-success'
 				]) ?>
@@ -96,26 +96,25 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::a('3. B Informe de avance Mensual I.E.O Fase Implementación Plan de acción - Ejecución', 
 										[
 											'implementacion-ieo/index',
-											// 'idReporte'		=> 2,
+											'idInforme'		=> 4,
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
 			</div>
 			
-		
 
 		<div class="form-group">
 			<?= Html::a('3. B Informe de avance Mensual I.E.O Fase Implementación Plan de acción - Misional', 
 										[
 											'',
-											// 'idReporte'		=> 2,
+											'idInforme'		=> 5,
 										], 
 										['class' => 'btn btn-info'
 				]) ?> 
 			<?= Html::a('4. Informe ejecutivo del estado del eje en la IEO', 
 										[
 											'',
-											// 'idReporte'		=> 5,
+											'idInforme'		=> 6,
 										], 
 										['class' => 'btn btn-info']) ?>
 										
@@ -126,13 +125,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?= Html::a('5 y 6. Informe Semanal Ejecución - Informe de cierre de fase', 
 										[
 											'informe-semanal-ejecucion-ise/index',
-											// 'idReporte'		=> 6,
+											'idInforme'		=> 7,
 										], 
 										['class' => 'btn btn-success']) ?>
 			<?= Html::a('5 y 6. Informe Semanal Ejecución - Informe de cierre de fase - Total ejecutivo', 
 										[
 											'ec-informe-semanal-total-ejecutivo/index',
-											// 'idReporte'		=> 16,
+											'idInforme'		=> 8,
 										], 
 										['class' => 'btn btn-success']) ?>
 										
@@ -142,13 +141,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?= Html::a('7. Levantamiento de orientación misional y método', 
 										[
 											'ec-levantamiento-orientacion/index',
-											// 'idReporte'		=> 16,
+											'idInforme'		=> 9,
 										], 
 										['class' => 'btn btn-success']) ?>
 			<?= Html::a('8.Informe Avance Misional Ejes - TP IEO', 
 										[
 											'',
-											// 'idReporte'		=> 16,
+											'idInforme'		=> 10,
 										], 
 										['class' => 'btn btn-success']) ?>
 										
@@ -158,13 +157,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?= Html::a('8.Informe Avance Misional Ejes - TP misional', 
 										[
 											'',
-											// 'idReporte'		=> 16,
+											'idInforme'		=> 11,
 										], 
 										['class' => 'btn btn-success']) ?>
 			<?= Html::a('9. Informe de avance ejecución y misional del proyecto', 
 										[
 											'',
-											// 'idReporte'		=> 16,
+											'idInforme'		=> 12,
 										], 
 										['class' => 'btn btn-info']) ?>
 

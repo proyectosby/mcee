@@ -27,7 +27,7 @@ use yii\grid\GridView;
 
 $this->title = 'Informe de avance Mensual I.E.O - Misional';
 $this->params['breadcrumbs'][] = $this->title;
-
+$idInforme =$_GET['idInforme'];
 ?> 
 
 <h1></h1>
@@ -52,7 +52,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
+        <?=  Html::button('Agregar',['value'=>Url::to(['create','idInforme'	=> $idInforme]),'class'=>'btn btn-success','id'=>'modalButton']) ?>
+		
+		
 		
 		
 		<?= Html::a('Volver', 
