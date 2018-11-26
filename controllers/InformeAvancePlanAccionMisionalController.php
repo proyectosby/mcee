@@ -89,6 +89,16 @@ class InformeAvancePlanAccionMisionalController extends Controller
 					9 => '9',
 					10 => '10'
 				];
+				
+				
+				$productoValor = [ 
+				
+					1 => '1',
+					2 => '2',
+					3 => '3',
+					4 => '4',
+					];
+				
 		 
 		$ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
 		foreach ($ecProyectos as $idProyecto => $v)
@@ -102,6 +112,7 @@ class InformeAvancePlanAccionMisionalController extends Controller
                                                         'idProyecto' => $idProyecto,
 														'form' => $form,
 														'estadoActual' => $estadoActual,
+														'productoValor' => $productoValor,
 														'modelProyectos' =>  $modelProyectos,
 														'datos'=>$datos,
 														'datoRespuesta'=> $datoRespuesta,
@@ -503,7 +514,7 @@ class InformeAvancePlanAccionMisionalController extends Controller
 			//se agrega el id del informe despues de haber sido creado 
 			foreach($arrayDatosEcAvances as $datos => $valores)
 			{
-				$arrayDatosEcAvances[$datos]['id_informe']=$idTipoInforme;
+				$arrayDatosEcAvances[$datos]['id_informe']=$idInforme;
 			}
 			
 			$columnNameArrayEcAvances=['estado_actual','logros','retos','argumentos','id_acciones','estado','id_informe'];
@@ -810,7 +821,7 @@ class InformeAvancePlanAccionMisionalController extends Controller
 		$model->estado = 2;
 		$model->update(false);
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','idTipoInforme' => $model->id_tipo_informe]);
     }
 
     /**

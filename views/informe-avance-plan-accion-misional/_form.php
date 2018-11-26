@@ -20,7 +20,7 @@ use yii\bootstrap\Progress;
 /* @var $model app\models\EcInformePlaneacionIeo */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
 
 
 $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $model->id_tipo_informe;
@@ -65,23 +65,8 @@ $.get( "index.php?r=ecinformeplaneacionieo/info-porcentajes",
 		
 function colorBarra(valor)
 {
-	color ="";
-	if(valor < 50)
-	{
-		color = "red";
-	}
-	else if(valor < 70)
-	{
-		color = "yellow";
-	}
-	else if (valor < 100)
-	{
-		color = "green";
-	}
-	else
-	{
-		color ="blue";
-	}
+	
+	color ="gray";
 	return color;
 }
 

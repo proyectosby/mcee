@@ -24,6 +24,7 @@ foreach ($ecEstrategias as $fecha => $dataEstrategia)
 																		'contador'=> $idEstrategia,
 																		'form' => $form,
 																		'estadoActual' => $estadoActual,
+																		'productoValor' => $productoValor,
 																		'fecha' => $fecha,
 																		'datoRespuesta'=> $datoRespuesta,
 																	] ),

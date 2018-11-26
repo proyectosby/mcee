@@ -61,6 +61,7 @@ foreach( $ecProductos as $idProductos => $v )
                                                         'idProductos' => $idProductos,
 														'form' => $form,
 														'estadoActual' => $estadoActual,
+														'productoValor' => $productoValor,
 														'datoRespuesta'=> $datoRespuesta,
 													] 
 										),
