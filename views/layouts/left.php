@@ -265,12 +265,12 @@
 													'url' => '#',
 													'items' => [
 													
-															['label' => 'Cometencias básicas', 
+															['label' => 'Competencias básicas', 
 															'icon' => 'arrow-right', 
 															'url' => '#',
 															'items' => [
-																['label' => 'Articulación Familiar', 'icon' => 'circle-o','url' => '#',],
-																['label' => 'Servicio social obligatorio', 'icon' => 'circle-o','url' => '#',],
+																['label' => 'Articulación Familiar', 'icon' => 'circle-o','url' => ['ec-competencias-basicas-proyectos-articulacion/index'],],
+																['label' => 'Servicio social obligatorio', 'icon' => 'circle-o','url' => ['ec-competencias-basicas-proyectos-obligatorio/index'],],
 																['label' => 'Proyectos pedagógicos transversales',
 																'icon' => 'circle-o',
 																'url' => ['ec-competencias-basicas-proyectos/index'],
