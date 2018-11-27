@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformePlaneacionIeo */
 
-$this->title = 'Actualizar';
-$this->params['breadcrumbs'][] = ['label' => 'Informe de avance misional ejes - Ejecutivo', 'url' => ['index']];
+$this->title = 'Actualizar 8.Informe Avance Misional Ejes - TP misional';
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = "Actualizar";
 ?>

@@ -146,7 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										['class' => 'btn btn-success']) ?>
 			<?= Html::a('8.Informe Avance Misional Ejes - TP IEO', 
 										[
-											'',
+											'informe-avance-misional-ejes-tpieo/index',
 											'idTipoInforme'		=> 22,
 										], 
 										['class' => 'btn btn-success']) ?>
@@ -156,7 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="form-group">
 			<?= Html::a('8.Informe Avance Misional Ejes - TP misional', 
 										[
-											'',
+											'informe-avance-misional-ejes-misional/index',
 											'idTipoInforme'		=> 23,
 										], 
 										['class' => 'btn btn-success']) ?>

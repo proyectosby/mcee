@@ -46,6 +46,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Parametro;
+use app\models\EcPorcentajeAvance;
 use yii\bootstrap\Collapse;
 
 /**
@@ -112,6 +113,67 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
 		 
 		
     }
+	
+	
+	public function actionInfoPorcentajes()
+	{
+		
+		$proyectos = new EcProyectos();
+		$proyectos = $proyectos->find()->orderby("id")->all();
+		$proyectos = ArrayHelper::map($proyectos,'id','descripcion');
+		
+		
+		$idsPreguntaPorcentajeAvance = new Parametro();
+		$idsPreguntaPorcentajeAvance = $idsPreguntaPorcentajeAvance->find()->orderby("id")->andWhere("id in(128,129,130,131,132,133,134,135,136,137,138,139,140)")->all();
+		// $idsPreguntaPorcentajeAvance = ArrayHelper::map($idsPreguntaPorcentajeAvance,'id','descripcion');
+		
+		
+		$result = ArrayHelper::getColumn($idsPreguntaPorcentajeAvance, function ($element) {
+				return $element['descripcion'];
+			});
+			
+		$arrayColorPanel = array
+		(
+			"panel panel-danger",
+			"panel panel-success",
+			"panel panel-primary",
+			"panel panel-info",
+		);
+		
+		
+		$cont=0;
+		$bandera = 0;
+		
+		$html =array();
+		foreach($proyectos as $pro)
+		{
+			$html[]= "<div class='".$arrayColorPanel[$cont]."'>
+					<div class='panel-heading'> 
+						<h3 class='panel-title'>$pro</h3>
+					</div>
+					<div class='panel-body'>
+					";
+		//muestra las preguntas de los porcentajes de avance de 4 en 4
+			for($i=0;;$i++)
+			{
+				$bandera++;
+			$html[] = array_shift($result)."
+					<div id='myProgress'>
+					  <div id='porcentajeAvance$bandera' class='myBar'>0%</div>
+					</div>
+					<br>";
+				if($bandera % 4 == 0 or $bandera ==13)					
+					break;
+			}
+			
+				$cont++;
+		}
+		$html[] = "</div>
+					</div>";
+		echo json_encode( $html);
+		// echo $json_encode();
+		
+	}
 
 	public function obtenerParametros()
 	{
@@ -132,12 +194,12 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
      * Lists all EcInformePlaneacionIeo models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($idTipoInforme)
     {
 		$idSedes 		= $_SESSION['sede'][0];
         $searchModel = new EcInformePlaneacionIeoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes and id_tipo_informe = 10" ); 
+		$dataProvider->query->andWhere( "estado=1 and id_sede= $idSedes and id_tipo_informe = $idTipoInforme" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -186,12 +248,180 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
         ]);
     }
 
+	
+	public function obtenerPorcentajes($post)
+	{
+		
+		$estado1 = 0;
+		$estado2 = 0;
+		$estado3 = 0;
+		$estado4 = 0;
+		$estado5 = 0;
+		$estado6 = 0;
+		$estado7 = 0;
+		$estado8 = 0;
+		$estado9 = 0;
+		$estado10 = 0;
+		$estado11 = 0;
+		$estado12 = 0;
+		$estado13 = 0;
+		$contador=0;
+		foreach ($post['EcAvances'] as $avances)
+		{
+			$contador++;
+			// echo $contador;
+				
+			switch ($contador) 
+			{
+				case 1:
+				case 2:
+				case 3:
+				$estado1 += $avances['estado_actual'];
+				break;
+				
+				case 4:
+				case 5:
+				case 6:
+				$estado2 += $avances['estado_actual'];
+				break;
+				
+				case 7:
+				case 8:
+				case 9:
+				$estado3 += $avances['estado_actual'];
+				break;
+			
+				case 10:
+				case 11:
+				case 12:
+				$estado4 += $avances['estado_actual'];
+				break;
+				
+				case 13:
+				case 14:
+				case 15:
+				$estado5 += $avances['estado_actual'];
+				break;
+				
+				case 16:
+				case 17:
+				case 18:
+				$estado6 += $avances['estado_actual'];
+				break;
+				
+				case 19:
+				case 20:
+				case 21:
+				$estado7 += $avances['estado_actual'];
+				break;
+				
+				case 22:
+				case 23:
+				case 24:
+				$estado8 += $avances['estado_actual'];
+				break;
+				
+				case 25:
+				case 26:
+				case 27:
+				$estado9 += $avances['estado_actual'];
+				break;
+				
+				case 28:
+				case 29:
+				case 30:
+				case 31:
+				case 32:
+				$estado10 += $avances['estado_actual'];
+				break;
+				
+			}
+			
+		}
+		$porcentajeAvances1 = explode(".", ($estado1 / 12*100));
+		$porcentajeAvances2 = explode(".", ($estado2 / 12*100));
+		$porcentajeAvances3 = explode(".", ($estado3 / 20*100));
+		$porcentajeAvances4 = explode(".", ($estado4 / 12*100));
+		$porcentajeAvances5 = explode(".", ($estado5 / 12*100));
+		$porcentajeAvances6 = explode(".", ($estado6 / 12*100));
+		$porcentajeAvances7 = explode(".", ($estado7 / 12*100));
+		$porcentajeAvances8 = explode(".", ($estado8 / 12*100));
+		$porcentajeAvances9 = explode(".", ($estado9 / 12*100));
+		$porcentajeAvances10 = explode(".", ($estado10 / 12*100));
+		
+		
+		
+		$contador=0;
+		
+		
+		
+		foreach ($post['EcRespuestas'] as $respuestas)
+		{
+			$contador++;
+				
+			switch ($contador) 
+			{
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				$estado11 += $respuestas['respuesta'];
+				break;
+				
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				case 10:
+				case 11:
+				$estado12 += $respuestas['respuesta'];
+				break;
+				
+				case 12:
+				case 13:
+				case 14:
+				case 15:
+				case 16:
+				case 17:
+				$estado13 += $respuestas['respuesta'];
+				break;
+		
+			}	
+		}
+		
+		$porcentajeRespuestas4 = explode(".", ($estado11 / 20*100));
+		$porcentajeRespuestas5 = explode(".", ($estado12 / 24*100));
+		$porcentajeRespuestas6 = explode(".", ($estado13 / 24*100));
+		
+	
+		$arrayPorcentajes = array
+		(
+			$porcentajeAvances1[0], 
+			$porcentajeAvances2[0], 
+			$porcentajeAvances3[0],
+			$porcentajeRespuestas4[0],		
+			$porcentajeAvances4[0],
+			$porcentajeAvances5[0], 
+			$porcentajeAvances6[0],
+			$porcentajeRespuestas5[0],
+			$porcentajeAvances7[0],
+			$porcentajeAvances8[0],
+			$porcentajeAvances9[0],
+			$porcentajeRespuestas6[0],
+			$porcentajeAvances10[0]
+		);
+		
+		// echo "<pre>"; print_r($arrayPorcentajes ); echo "</pre>"; 
+			// die;
+		return $arrayPorcentajes;
+	}
     /**
      * Creates a new EcInformePlaneacionIeo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idTipoInforme)
     {
         $model = new EcInformePlaneacionIeo();
 
@@ -202,12 +432,71 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
 			$post = Yii::$app->request->post();
 			
 			$idInforme = $model->id;
+			$porcentajes = $this->obtenerPorcentajes($post);
+			
+			//ids en tabla parametros
+			$idsPreguntaPorcentajeAvance = array
+			(
+				128,
+				129,
+				130,
+				131,
+				132,
+				133,
+				134,
+				135,
+				136,
+				137,
+				138,
+				139,
+				140,
+			);
+			
+			//id de la tabla procesos y cada 3 el id de la tabla productos
+			$idProcesos = array
+			(
+				2,
+				1,
+				4,
+				1,
+				6,
+				5,
+				9,
+				2,
+				10,
+				11,
+				13,
+				3,
+				8,
+			);
+			for($i=0;$i<= count($porcentajes)-1;$i++)
+			{
+				$modelPorcentajes = new EcPorcentajeAvance();
+				//cada tercer id se inserta en el campo productos
+				if($i == 3 or $i == 7 or $i== 11)
+				{
+					$modelPorcentajes->id_productos = $idProcesos[$i];
+					// $modelPorcentajes->id_proceso = 0;
+				}
+				else
+				{
+					// echo $i;
+					// $modelPorcentajes->id_proceso = 0;
+					$modelPorcentajes->id_proceso = $idProcesos[$i];
+				}
+				echo $idsPreguntaPorcentajeAvance[$i];
+				$modelPorcentajes->id_pregunta_porcentaje_avance = $idsPreguntaPorcentajeAvance[$i]; 
+				$modelPorcentajes->id_informe_planeacion = $idInforme;
+				$modelPorcentajes->fecha_avance = date("Y-m-d H:i:s");
+				$modelPorcentajes->porcentaje = $porcentajes[$i];
+				$modelPorcentajes->save();
+			}
 			$arrayDatosEcAvances = $post['EcAvances'];
 			
 			//se agrega el id del informe despues de haber sido creado 
 			foreach($arrayDatosEcAvances as $datos => $valores)
 			{
-				$arrayDatosEcAvances[$datos]['id_informe']=$idInforme;
+				$arrayDatosEcAvances[$datos]['id_informe']=$idTipoInforme;
 			}
 			
 			$columnNameArrayEcAvances=['estado_actual','logros','retos','argumentos','id_acciones','estado','id_informe'];
@@ -305,13 +594,79 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
         if ($model->load(Yii::$app->request->post())) 
 		{
 			
-			// echo "<pre>"; print_r(Yii::$app->request->post()); echo "</pre>"; 
-			// die;
 			$model->save();
 			$post = Yii::$app->request->post();
 			
+			$porcentajes = $this->obtenerPorcentajes($post);
+			// echo "<pre>"; print_r($porcentajes); echo "</pre>"; 
+			
+			// die;
+		
 			$idInforme = $model->id;
+			
+			//ids en tabla parametros
+			$idsPreguntaPorcentajeAvance = array
+			(
+				128,
+				129,
+				130,
+				131,
+				132,
+				133,
+				134,
+				135,
+				136,
+				137,
+				138,
+				139,
+				140,
+			);
+			
+			//id de la tabla procesos y cada 3 el id de la tabla productos
+			$idProcesos = array
+			(
+				2,
+				1,
+				4,
+				1,
+				6,
+				5,
+				9,
+				2,
+				10,
+				11,
+				13,
+				3,
+				8,
+			);
+			for($i=0;$i<= count($porcentajes)-1;$i++)
+			{
+				$modelPorcentajes = new EcPorcentajeAvance();
+				//cada tercer id se inserta en el campo productos
+				if($i == 3 or $i == 7 or $i== 11)
+				{
+					$modelPorcentajes->id_productos = $idProcesos[$i];
+					// $modelPorcentajes->id_proceso = 0;
+				}
+				else
+				{
+					// echo $i;
+					// $modelPorcentajes->id_proceso = 0;
+					$modelPorcentajes->id_proceso = $idProcesos[$i];
+				}
+				$modelPorcentajes->id_pregunta_porcentaje_avance = $idsPreguntaPorcentajeAvance[$i]; 
+				$modelPorcentajes->id_informe_planeacion = $idInforme;
+				$modelPorcentajes->fecha_avance = date("Y-m-d H:i:s");
+				$modelPorcentajes->porcentaje = $porcentajes[$i];
+				$modelPorcentajes->save();
+			}
+			
+			
+			
+			
+		    // echo "<pre>"; print_r($porcentajes); echo "</pre>"; 
 			$arrayDatosEcAvances = $post['EcAvances'];
+			
 			
 			//se agrega el id del informe despues de haber sido creado 
 			$connection = Yii::$app->getDb();
