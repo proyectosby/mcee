@@ -106,10 +106,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="form-group">
 			<?= Html::a('3. B Informe de avance Mensual I.E.O Fase Implementación Plan de acción - Misional', 
 										[
-											'',
+											'informe-avance-plan-accion-misional/index',
 											'idTipoInforme'		=> 29,
 										], 
-										['class' => 'btn btn-info'
+										['class' => 'btn btn-success'
 				]) ?> 
 			<?= Html::a('4. Informe ejecutivo del estado del eje en la IEO', 
 										[
