@@ -36,11 +36,6 @@ use dosamigos\datepicker\DatePicker;
 
     <?php // echo $form->field($modelDatosBasico, 'estado')->textInput(); ?>
 	
-
-	<div class="form-group">
-		<?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
-		<?= Html::submitButton('Eliminar', ['class' => 'btn btn-danger']) ?>
-	</div>
 	
 	<?= Collapse::widget([
 		'items' => [
@@ -52,6 +47,7 @@ use dosamigos\datepicker\DatePicker;
 														'modelVerificacion' => $modelVerificacion,
 														'modelReportes' 	=> $modelReportes,
 														'tiposVerificacion'	=> $tiposVerificacion,
+														'modelDatosBasico' => $modelDatosBasico,
 												] ),
 							'contentOptions'=> [],
 						]
@@ -64,6 +60,7 @@ use dosamigos\datepicker\DatePicker;
 			'modelVerificacion' => $modelVerificacion,
 			'modelReportes' 	=> $modelReportes,
 			'tiposVerificacion'	=> $tiposVerificacion,
+			'modelDatosBasico' => $modelDatosBasico,
 	] ); ?>
 		
     <div class="form-group">

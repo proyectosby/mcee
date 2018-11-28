@@ -16,15 +16,19 @@ else
 use Yii;
 use app\models\EcDatosBasicos;
 use app\models\EcDatosBasicosBuscar;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-
+use app\models\Instituciones;
 use app\models\EcPlaneacion;
 use app\models\EcReportes;
 use app\models\EcVerificacion;
 use app\models\Parametro;
+
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
+
 /**
  * EcDatosBasicosController implements the CRUD actions for EcDatosBasicos model.
  */
@@ -85,9 +89,62 @@ class EcDatosBasicosController extends Controller
         $modelVerificacion	= new EcVerificacion();
         $modelReportes		= new EcReportes();
 
-        if ($modelDatosBasico->load(Yii::$app->request->post()) && $modelDatosBasico->save()) {
-            return $this->redirect(['view', 'id' => $modelDatosBasico->id]);
+        
+
+        if ($modelDatosBasico->load(Yii::$app->request->post())) {
+            $modelDatosBasico->id_institucion = $_SESSION['instituciones'][0];
+            $modelDatosBasico->id_sede = 2;
+            $modelDatosBasico->estado = 1;
+
+            if($modelDatosBasico->save()){
+            
+                if ($modelPlaneacion->load(Yii::$app->request->post())){
+                    
+                    $modelPlaneacion->id_datos_basicos = $modelDatosBasico->id;
+                    $modelPlaneacion->estado = 1;
+                    
+                    if($modelPlaneacion->save()){
+
+                        if ($modelVerificacion->load(Yii::$app->request->post())){
+
+                            $ruta_archivo = UploadedFile::getInstance( $modelVerificacion, "ruta_archivo" );
+            
+                            if($ruta_archivo){
+                                $institucion = Instituciones::findOne($_SESSION['instituciones'][0]);
+                                $carpetaVerificacion = "../documentos/documentosPlaneacionReporteActividad/".$institucion->codigo_dane;
+                                if (!file_exists($carpetaVerificacion)) {
+                                    mkdir($carpetaVerificacion, 0777, true);
+                                }
+            
+                                $rutaFisicaDirectoriaUploadVerificacion  = "../documentos/documentosPlaneacionReporteActividad/".$institucion->codigo_dane."/";
+                                $rutaFisicaDirectoriaUploadVerificacion .= $ruta_archivo->baseName;
+                                $rutaFisicaDirectoriaUploadVerificacion .= date( "_Y_m_d_His" ) . '.' . $ruta_archivo->extension;
+                                $saveVerificacion = $ruta_archivo->saveAs( $rutaFisicaDirectoriaUploadVerificacion );
+            
+                                if($saveVerificacion){
+                                    $modelVerificacion->id_planeacion = $modelPlaneacion->id;
+                                    $modelVerificacion->ruta_archivo = $rutaFisicaDirectoriaUploadVerificacion;
+                                    $modelVerificacion->estado = 1;            
+                                    $modelVerificacion->save();
+            
+                                }
+            
+                            }
+                        }
+
+                       if ($modelReportes->load(Yii::$app->request->post())){
+                            $modelReportes->id_planeacion = $modelPlaneacion->id;
+                            $modelReportes->estado = 1;
+                            $modelReportes->save();
+                        }                        
+                    }
+                }
+            }
+            
+            return $this->redirect(['view', 'id' => $modelDatosBasico->id, 'guardado' => 1]);
         }
+
+
 		
 		$dataTiposVerificacion = Parametro::find()
 									->where( 'id_tipo_parametro=12' )

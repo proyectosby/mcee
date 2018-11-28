@@ -41,7 +41,7 @@ class EcPlaneacion extends \yii\db\ActiveRecord
             [['tipo_actividad', 'tipo_actor', 'objetivo', 'responsable', 'rol', 'descripcion_actividad'], 'string'],
             [['fecha'], 'safe'],
             [['id_datos_basicos'], 'exist', 'skipOnError' => true, 'targetClass' => EcDatosBasicos::className(), 'targetAttribute' => ['id_datos_basicos' => 'id']],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['id' => 'id']],
+            //[['id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['id' => 'id']],
         ];
     }
 

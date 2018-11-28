@@ -15,7 +15,9 @@ use Yii;
  * @property string $estado
  */
 class EcDatosBasicos extends \yii\db\ActiveRecord
-{
+{   
+    public $ruta_archivo;
+
     /**
      * @inheritdoc
      */

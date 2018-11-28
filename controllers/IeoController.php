@@ -170,13 +170,9 @@ class IeoController extends Controller
                 $countProducto = 0;
 
                 if (Ieo::loadMultiple($models, Yii::$app->request->post() )) {
-                    var_dump(count($models));
-                    var_dump("<br>");
+                    
                     foreach( $models as $key => $model) {
-                       
-                        var_dump($key);
-                        var_dump("<br>");
-                                                
+                                                                       
                         // Generación de instancias de los documentos REQUERIMIENTO EXTRA IEO
                         $file_socializacion_ruta = UploadedFile::getInstance( $model, "[$key]file_socializacion_ruta" );
                         $file_soporte_necesidad = UploadedFile::getInstance( $model, "[$key]file_soporte_necesidad" );

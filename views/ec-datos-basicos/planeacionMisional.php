@@ -48,10 +48,7 @@ use dosamigos\datepicker\DatePicker;
 				
 				<h1 style='background-color:#ccc;'><?= Html::encode( "MEDIOS DE VERIFICACIÓN Y PRODUCTOS" ) ?></h1>
 				
-				<div class="form-group"s style='text-align:right;padding:15px;'>
-					<?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
-					<?= Html::submitButton('Eliminar', ['class' => 'btn btn-danger']) ?>
-				</div>
+							
 				
 				<?= $form->field($modelVerificacion, 'tipo_verificacion')->dropDownList( $tiposVerificacion, ['prompt' => 'Seleccione...' ] ) ?>
 				
@@ -75,10 +72,7 @@ use dosamigos\datepicker\DatePicker;
 						]
 				]); ?>
 				
-				<div class="form-group"s style='text-align:right;padding:15px;'>
-					<?= Html::submitButton('Agregar', ['class' => 'btn btn-success']) ?>
-					<?= Html::submitButton('Eliminar', ['class' => 'btn btn-danger']) ?>
-				</div>
+				
 				
 				<?= $form->field($modelReportes, 'ejecutado')->textInput() ?>
 				
