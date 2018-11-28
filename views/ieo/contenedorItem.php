@@ -18,7 +18,7 @@ use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
     $contador = $index +  $numProyecto;
-    var_dump($contador);
+    
     if ($index == 1){
     ?>
         <?= $form->field($model, "[$index$numProyecto]file_socializacion_ruta")->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>

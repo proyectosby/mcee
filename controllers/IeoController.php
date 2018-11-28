@@ -485,7 +485,7 @@ class IeoController extends Controller
                     }
                     
                 }
-                return $this->redirect(['index', 'guardado' => true ]);
+                return $this->redirect(['index', 'guardado' => 1 ]);
             }
             
 
