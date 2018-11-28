@@ -87,10 +87,12 @@ class EcLevantamientoOrientacionController extends Controller
      * Lists all EcLevantamientoOrientacion models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($idTipoInforme)
     {
         $searchModel = new EcLevantamientoOrientacionBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere( "estado=1" ); 
+		$dataProvider->query->andWhere( "id_tipo_informe=$idTipoInforme" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -116,12 +118,12 @@ class EcLevantamientoOrientacionController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($idTipoInforme)
     {
         $model = new EcLevantamientoOrientacion();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'idTipoInforme' => $idTipoInforme]);
         }
 
         return $this->renderAjax('create', [
@@ -130,6 +132,7 @@ class EcLevantamientoOrientacionController extends Controller
 			'instituciones' =>$this->obtenerInstituciones(),
 			'estados' =>$this->obtenerEstados(),
 			'parametros' =>$this->obtenerParametros(),
+			'idTipoInforme' => $idTipoInforme,
         ]);
     }
 
@@ -143,9 +146,9 @@ class EcLevantamientoOrientacionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+		$idTipoInforme = $model->id_tipo_informe;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index','idTipoInforme' => $model->id_tipo_informe]);
         }
 
         return $this->renderAjax('update', [
@@ -154,6 +157,7 @@ class EcLevantamientoOrientacionController extends Controller
 			'instituciones' =>$this->obtenerInstituciones(),
 			'estados' =>$this->obtenerEstados(),
 			'parametros' =>$this->obtenerParametros(),
+			'idTipoInforme' => $idTipoInforme,
         ]);
     }
 
@@ -168,7 +172,7 @@ class EcLevantamientoOrientacionController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','idTipoInforme' => $model->id_tipo_informe]);
     }
 
     /**

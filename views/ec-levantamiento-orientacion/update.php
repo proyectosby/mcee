@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = "Actualizar";
 		'instituciones' => $instituciones,
 		'estados' =>$estados,
 		'parametros' =>$parametros,
+		'idTipoInforme' => $idTipoInforme,
     ]) ?>
 
 </div>

@@ -23,6 +23,7 @@ use yii\grid\GridView;
 
 $this->title = 'Levantamiento Orientación';
 $this->params['breadcrumbs'][] = $this->title;
+$idTipoInforme =$_GET['idTipoInforme'];
 ?> 
 
 <h1></h1>
@@ -48,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
+        <?=  Html::button('Agregar',['value'=>Url::to(['create','idTipoInforme'	=> $idTipoInforme]),'class'=>'btn btn-success','id'=>'modalButton']) ?>
 		
 		
 		<?= Html::a('Volver', 

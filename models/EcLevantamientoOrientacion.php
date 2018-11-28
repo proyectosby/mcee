@@ -38,7 +38,7 @@ class EcLevantamientoOrientacion extends \yii\db\ActiveRecord
         return [
             [['id_institucion', 'id_sede', 'visita_realizada', 'actividad_seguimiento', 'profesional_encargado', 'id_tipo_levantamiento', 'estado'], 'required'],
             [['id_institucion', 'id_sede', 'id_tipo_levantamiento', 'estado'], 'default', 'value' => null],
-            [['id_institucion', 'id_sede', 'id_tipo_levantamiento', 'estado'], 'integer'],
+            [['id_institucion', 'id_sede', 'id_tipo_levantamiento', 'estado','id_tipo_informe'], 'integer'],
             [['visita_realizada'], 'safe'],
             [['actividad_seguimiento', 'profesional_encargado'], 'string'],
             [['fortalezas_identificadas', 'necesidades_orientacion', 'observacion_general', 'uso_insumo'], 'string', 'max' => 2000],
@@ -67,6 +67,7 @@ class EcLevantamientoOrientacion extends \yii\db\ActiveRecord
             'uso_insumo' => 'En qué se uso este insumo',
             'id_tipo_levantamiento' => 'Tipo Levantamiento',
             'estado' => 'Estado',
+            'id_tipo_informe' => 'id_tipo_informe',
 
         ];
     }
