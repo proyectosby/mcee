@@ -14,11 +14,13 @@ use Yii;
  * @property int $visitas_fallidas
  * @property string $observaciones_evidencias
  * @property string $alarmas
+ * @property string $logros
+ * @property string $dificultades
+ * @property int $id_proyecto
+ * @property int $estado
  */
 class EcVisitasIse extends \yii\db\ActiveRecord
 {
-    public $logros;
-    public $dificultades;
     /**
      * @inheritdoc
      */
@@ -33,10 +35,12 @@ class EcVisitasIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas'], 'default', 'value' => null],
-            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas'], 'integer'],
-            [['observaciones_evidencias', 'alarmas'], 'string'],
-            //[['informe_semanal_ejecucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcInformeSemanalEjecucionIse::className(), 'targetAttribute' => ['informe_semanal_ejecucion_id' => 'id']],
+            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado'], 'default', 'value' => null],
+            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado'], 'integer'],
+            [['observaciones_evidencias', 'alarmas', 'logros', 'dificultades'], 'string'],
+            [['informe_semanal_ejecucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['informe_semanal_ejecucion_id' => 'id']],
+            [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
+            [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
 
@@ -55,6 +59,8 @@ class EcVisitasIse extends \yii\db\ActiveRecord
             'alarmas' => 'Alarmas',
             'logros' => 'Logros',
             'dificultades' => 'Dificultades',
+            'id_proyecto' => 'Id Proyecto',
+            'estado' => 'Estado',
         ];
     }
 }

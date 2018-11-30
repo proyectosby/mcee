@@ -8,9 +8,21 @@ use Yii;
  * This is the model class for table "ec.estudiantes_ise".
  *
  * @property int $id
- * @property int $tipo_cantidad_poblacion_ise_id
- * @property int $grado
- * @property int $cantidad
+ * @property int $grado_0
+ * @property int $grado_1
+ * @property int $grado_2
+ * @property int $grado_3
+ * @property int $grado_4
+ * @property int $grado_5
+ * @property int $grado_6
+ * @property int $grado_7
+ * @property int $grado_8
+ * @property int $grado_9
+ * @property int $grado_10
+ * @property int $grado_11
+ * @property int $total
+ * @property int $id_informe_semanal
+ * @property int $id_proyecto
  * @property int $estado
  */
 class EcEstudiantesIse extends \yii\db\ActiveRecord
@@ -29,9 +41,10 @@ class EcEstudiantesIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo_cantidad_poblacion_ise_id', 'grado', 'cantidad', 'estado'], 'default', 'value' => null],
-            [['tipo_cantidad_poblacion_ise_id', 'grado', 'cantidad', 'estado'], 'integer'],
-            [['tipo_cantidad_poblacion_ise_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcTipoCantidadPoblacionIse::className(), 'targetAttribute' => ['tipo_cantidad_poblacion_ise_id' => 'id']],
+            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_informe_semanal', 'id_proyecto', 'estado'], 'default', 'value' => null],
+            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_informe_semanal', 'id_proyecto', 'estado'], 'integer'],
+            [['id_informe_semanal'], 'exist', 'skipOnError' => true, 'targetClass' =>   InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['id_informe_semanal' => 'id']],
+            [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
@@ -43,9 +56,21 @@ class EcEstudiantesIse extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'tipo_cantidad_poblacion_ise_id' => 'Tipo Cantidad Poblacion Ise ID',
-            'grado' => 'Grado',
-            'cantidad' => 'Cantidad',
+            'grado_0' => 'Grado 0',
+            'grado_1' => 'Grado 1',
+            'grado_2' => 'Grado 2',
+            'grado_3' => 'Grado 3',
+            'grado_4' => 'Grado 4',
+            'grado_5' => 'Grado 5',
+            'grado_6' => 'Grado 6',
+            'grado_7' => 'Grado 7',
+            'grado_8' => 'Grado 8',
+            'grado_9' => 'Grado 9',
+            'grado_10' => 'Grado 10',
+            'grado_11' => 'Grado 11',
+            'total' => 'Total',
+            'id_informe_semanal' => 'Id Informe Semanal',
+            'id_proyecto' => 'Id Proyecto',
             'estado' => 'Estado',
         ];
     }

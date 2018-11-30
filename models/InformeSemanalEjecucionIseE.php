@@ -13,7 +13,7 @@ use Yii;
  * @property int $proyecto_id
  * @property int $estado
  */
-class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
+class InformeSemanalEjecucionIseE extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -30,7 +30,7 @@ class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
     {
         return [
             [['institucion_id', 'sede_id', 'proyecto_id', 'estado'], 'default', 'value' => null],
-            [['institucion_id', 'sede_id', 'proyecto_id', 'estado'], 'integer'],
+            [[ 'sede_id', 'proyecto_id', 'estado'], 'integer'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
             [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['sede_id' => 'id']],

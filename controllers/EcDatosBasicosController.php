@@ -88,7 +88,6 @@ class EcDatosBasicosController extends Controller
         $modelPlaneacion	= new EcPlaneacion();
         $modelVerificacion	= new EcVerificacion();
         $modelReportes		= new EcReportes();
-
         
 
         if ($modelDatosBasico->load(Yii::$app->request->post())) {
