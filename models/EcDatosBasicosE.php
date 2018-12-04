@@ -7,16 +7,17 @@ use Yii;
 /**
  * This is the model class for table "ec.datos_basicos".
  *
- * @property int $id
+ * @property string $id
  * @property string $profesional_campo
- * @property int $id_institucion
- * @property int $id_sede
+ * @property string $id_institucion
+ * @property string $id_sede
  * @property string $fecha_diligenciamiento
- * @property int $estado
- * @property int $id_tipo_informe
+ * @property string $estado
  */
-class EcDatosBasicos extends \yii\db\ActiveRecord
-{
+class EcDatosBasicosE extends \yii\db\ActiveRecord
+{   
+    public $ruta_archivo;
+
     /**
      * @inheritdoc
      */
@@ -33,10 +34,9 @@ class EcDatosBasicos extends \yii\db\ActiveRecord
         return [
             [['profesional_campo', 'id_institucion', 'id_sede', 'fecha_diligenciamiento', 'estado'], 'required'],
             [['profesional_campo'], 'string'],
-            [['id_institucion', 'id_sede', 'estado', 'id_tipo_informe'], 'default', 'value' => null],
-            [['id_institucion', 'id_sede', 'estado', 'id_tipo_informe'], 'integer'],
+            [['id_institucion', 'id_sede', 'estado'], 'default', 'value' => null],
+            [['id_institucion', 'id_sede', 'estado'], 'integer'],
             [['fecha_diligenciamiento'], 'safe'],
-            [['id_tipo_informe'], 'exist', 'skipOnError' => true, 'targetClass' => TipoInforme::className(), 'targetAttribute' => ['id_tipo_informe' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
@@ -49,13 +49,12 @@ class EcDatosBasicos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'profesional_campo' => 'Profesional Campo',
-            'id_institucion' => 'Id Institucion',
-            'id_sede' => 'Id Sede',
-            'fecha_diligenciamiento' => 'Fecha Diligenciamiento',
-            'estado' => 'Estado',
-            'id_tipo_informe' => 'Id Tipo Informe',
+            'id' 						=> 'ID',
+            'profesional_campo' 		=> 'Nombre Profesional de Campo',
+            'id_institucion' 			=> 'Nombre de IEO',
+            'id_sede' 					=> 'Nombre de SEDE',
+            'fecha_diligenciamiento' 	=> 'Fecha Diligenciamiento',
+            'estado' 					=> 'Estado',
         ];
     }
 }

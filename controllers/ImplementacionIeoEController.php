@@ -14,17 +14,16 @@ else
 }
 
 use Yii;
-use app\models\ImplementacionIeo;
+use app\models\ImplementacionIeoE;
 use app\models\CantidadPoblacionImpIeo;
 use app\models\EvidenciasImpIeo;
 use app\models\EstudiantesImpIeo;
 use app\models\ProductoImplementacionIeo;
 use app\models\Instituciones;
 use app\models\ProductosImpIeo;
-use app\models\ZonasEducativas;
 
 
-use yii\helpers\ArrayHelper;
+
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -36,12 +35,8 @@ use yii\bootstrap\Collapse;
 /**
  * ImplementacionIeoController implements the CRUD actions for ImplementacionIeo model.
  */
-class ImplementacionIeoController extends Controller
+class ImplementacionIeoEController extends Controller
 {
-
-    public $tipo_informe;
-
-
     /**
      * @inheritdoc
      */
@@ -64,22 +59,16 @@ class ImplementacionIeoController extends Controller
     public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => ImplementacionIeo::find(),
+            'query' => ImplementacionIeoE::find(),
         ]);
-        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : $_SESSION["tipo_informe"]; 
-
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'guardado' 		=> $guardado,
         ]);
-
-        
     }
 
     function actionViewFases($model, $form){
-       
-        
         $actividades = [ 
             1 => 'Actividad 1. Socialización de plan de acción',
             2 => 'Actividad general. MCEE Encuentro',
@@ -104,7 +93,6 @@ class ImplementacionIeoController extends Controller
         $estudiantesGrado = new EstudiantesImpIeo();
         $evidencias = new EvidenciasImpIeo();
         $producto = new ProductoImplementacionIeo();
-        
 
         foreach ($actividades as $actividad => $a)
 		{
@@ -150,18 +138,17 @@ class ImplementacionIeoController extends Controller
      */
     public function actionCreate()
     {
-        $ieo_model = new ImplementacionIeo();
+        $ieo_model = new ImplementacionIeoE();
         $idInstitucion = $_SESSION['instituciones'][0];
         $institucion = Instituciones::findOne( $idInstitucion );
         $ieo_id = 0;
         $status = false;
-       
+
         if ($ieo_model->load(Yii::$app->request->post())) {
 
             $ieo_model->institucion_id = $idInstitucion;
             $ieo_model->estado = 1;
             $ieo_model->sede_id = 2;
-            $ieo_model->id_tipo_informe = $_SESSION["tipo_informe"];
                        
             if($ieo_model->save()){
                 $ieo_id = $ieo_model->id;
@@ -386,12 +373,9 @@ class ImplementacionIeoController extends Controller
 
 
      
-        $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
-        $zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
-        
+
         return $this->renderAjax('create', [
             'model' => $ieo_model,
-            'zonasEducativas' => $zonasEducativas,
             
         ]);
     }
@@ -439,7 +423,7 @@ class ImplementacionIeoController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = ImplementacionIeo::findOne($id)) !== null) {
+        if (($model = ImplementacionIeoE::findOne($id)) !== null) {
             return $model;
         }
 

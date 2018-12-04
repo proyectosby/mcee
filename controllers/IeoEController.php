@@ -14,7 +14,7 @@ else
 }
 
 use Yii;
-use app\models\Ieo;
+use app\models\IeoE;
 use app\models\DocumentosReconocimiento;
 use app\models\TiposCantidadPoblacion;
 use app\models\Evidencias;
@@ -35,7 +35,7 @@ use app\models\EstudiantesIeo;
 /**
  * IeoController implements the CRUD actions for Ieo model.
  */
-class IeoController extends Controller
+class IeoEController extends Controller
 {
     /**
      * @inheritdoc
@@ -54,7 +54,7 @@ class IeoController extends Controller
 
     function actionViewFases($model, $form){
         
-        $model = new Ieo();
+        $model = new IeoE();
         $documentosReconocimiento = new DocumentosReconocimiento();
         $tiposCantidadPoblacion = new TiposCantidadPoblacion();
         $requerimientoExtra = new RequerimientoExtraIeo();
@@ -90,7 +90,7 @@ class IeoController extends Controller
     public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Ieo::find(),
+            'query' => IeoE::find(),
         ]);
 
         return $this->render('index', [
@@ -135,7 +135,7 @@ class IeoController extends Controller
         $institucion = Instituciones::findOne( $idInstitucion );
         $status = false;
         
-        $ieo_model = new Ieo();
+        $ieo_model = new IeoE();
         //$postData = Yii::$app->request->post();
         
         if ($ieo_model->load(Yii::$app->request->post())) {
@@ -143,7 +143,7 @@ class IeoController extends Controller
             $ieo_model->institucion_id = $idInstitucion;
             $ieo_model->estado = 1;
             $ieo_model->sede_id = 2;
-            $ieo_model->id_tipo_informe = intval($_GET['idTipoInforme']);;          
+            $ieo_model->id_tipo_informe = 2;          
             $ieo_model->codigo_dane = $institucion->codigo_dane;
 
             
@@ -540,7 +540,7 @@ class IeoController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Ieo::findOne($id)) !== null) {
+        if (($model = IeoE::findOne($id)) !== null) {
             return $model;
         }
 

@@ -14,7 +14,7 @@ else
 }
 
 use Yii;
-use app\models\EcInformeSemanalTotalEjecutivo;
+use app\models\EcInformeSemanalTotalEjecutivoE;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -24,7 +24,7 @@ use yii\helpers\ArrayHelper;
 /**
  * EcInformeSemanalTotalEjecutivoController implements the CRUD actions for EcInformeSemanalTotalEjecutivo model.
  */
-class EcInformeSemanalTotalEjecutivoController extends Controller
+class EcInformeSemanalTotalEjecutivoEController extends Controller
 {
     /**
      * @inheritdoc
@@ -48,11 +48,9 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
     public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => EcInformeSemanalTotalEjecutivo::find(),
+            'query' => EcInformeSemanalTotalEjecutivoE::find(),
         ]);
         
-        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : $_SESSION["tipo_informe"];
-
         return $this->redirect(['create', 'guardado' => $guardado ]);
             
         /*return $this->render('index', [
@@ -84,8 +82,8 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
         $data = [];
         $idInstitucion = $_SESSION['instituciones'][0];
         $secuenciaData = 1;
-        if( Yii::$app->request->post('EcInformeSemanalTotalEjecutivo') )
-			$data = Yii::$app->request->post('EcInformeSemanalTotalEjecutivo');
+        if( Yii::$app->request->post('EcInformeSemanalTotalEjecutivoE') )
+			$data = Yii::$app->request->post('EcInformeSemanalTotalEjecutivoE');
 
         $count 	= count( $data );
         $models = [];
@@ -94,15 +92,14 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			$models[] = new EcInformeSemanalTotalEjecutivo();
         }
         
-        if (EcInformeSemanalTotalEjecutivo::loadMultiple($models, Yii::$app->request->post() )) {
+        if (EcInformeSemanalTotalEjecutivoE::loadMultiple($models, Yii::$app->request->post() )) {
             
-            EcInformeSemanalTotalEjecutivo::deleteAll('institucion_id = '. $idInstitucion);
+            EcInformeSemanalTotalEjecutivoE::deleteAll('institucion_id = '. $idInstitucion);
            
            
             foreach( $models as $key => $model) {
                 $model->institucion_id = $idInstitucion;
-                $model->secuencia = $secuenciaData; 
-                $model->id_tipo_informe =  $_SESSION["tipo_informe"];              
+                $model->secuencia = $secuenciaData;               
                 $secuenciaData++;
             }
                                  
@@ -113,8 +110,7 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
             return $this->redirect(['index', 'guardado' => 1 ]);
            
         }
-
-        $data = EcInformeSemanalTotalEjecutivo::find()
+        $data = EcInformeSemanalTotalEjecutivoE::find()
             ->where('institucion_id = '.$idInstitucion)
             ->orderby( 'id' )
             ->all();
@@ -130,7 +126,7 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
         $poblacion_beneficiada_indirecta = ArrayHelper::map( $data, 'secuencia', 'poblacion_beneficiada_indirecta' );
         $alarmas_generales = ArrayHelper::map( $data, 'secuencia', 'alarmas_generales' );        
 
-        $model = new EcInformeSemanalTotalEjecutivo();
+        $model = new EcInformeSemanalTotalEjecutivoE();
     
         return $this->render('create', [
             'model' => $model,
