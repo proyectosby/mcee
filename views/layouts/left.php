@@ -193,15 +193,16 @@
 													'items' => [
 														['label' => 'Acompañamiento in Situ', 
 														'icon' => 'arrow-right', 
-														'url' => '#',
+														'url' => ['acompanamiento-in-situ/index'],
 														],
 														
-														['label' => 'Formación en liderazgo', 'icon' => 'arrow-right', 'url' => '#',],
-														['label' => 'Comunicación para la gestión', 'icon' => 'arrow-right','url' => '#',],
+														['label' => 'Formación en liderazgo', 'icon' => 'arrow-right', 'url' => '#',],  //se agrega el index
+														['label' => 'Comunicación para la gestión', 'icon' => 'arrow-right','url' => '#',], //se agrega el index
 														['label' => 'Clima escolar y convivencia', 
 														'icon' => 'arrow-right', 
 														'url' => '#',
 															'items' => [
+																['label' => 'Clima escolar', 'icon' => 'circle-o','url' => ['clima-escolar/index'],],
 																['label' => 'Medición', 'icon' => 'circle-o','url' => '#',],
 																['label' => 'Caja de herramientas', 'icon' => 'circle-o','url' => '#',],  
 															],
