@@ -16,10 +16,10 @@ use Yii;
  * @property string $profesional_cargo
  * @property string $horario_trabajo
  * @property int $estado
- * @property int $id_tipo_informe
  */
-class ImplementacionIeo extends \yii\db\ActiveRecord
+class ImplementacionIeoE extends \yii\db\ActiveRecord
 {
+
     public $producto_acuerdo;
     public $resultado_actividad;
     public $acta;
@@ -48,10 +48,11 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['institucion_id', 'sede_id', 'estado', 'id_tipo_informe'], 'default', 'value' => null],
-            [['institucion_id', 'sede_id', 'estado', 'id_tipo_informe'], 'integer'],
+            //[['id'], 'required'],
+            [['institucion_id', 'sede_id', 'estado'], 'default', 'value' => null],
+            [['institucion_id', 'sede_id', 'estado'], 'integer'],
             [['zona_educativa', 'comuna', 'barrio', 'profesional_cargo', 'horario_trabajo'], 'string'],
-            [['id_tipo_informe'], 'exist', 'skipOnError' => true, 'targetClass' => TipoInforme::className(), 'targetAttribute' => ['id_tipo_informe' => 'id']],
+            //[['id'], 'unique'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
             [['sede_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['sede_id' => 'id']],
@@ -64,7 +65,6 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'institucion_id' => 'Institucion ID',
             'sede_id' => 'Sede ID',
             'zona_educativa' => 'Zona Educativa',
@@ -73,7 +73,6 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
             'profesional_cargo' => 'Profesional Cargo',
             'horario_trabajo' => 'Horario Trabajo',
             'estado' => 'Estado',
-            'id_tipo_informe' => 'Id Tipo Informe',
         ];
     }
 }

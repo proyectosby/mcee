@@ -14,7 +14,7 @@ else
 }
 
 use Yii;
-use app\models\EcDatosBasicos;
+use app\models\EcDatosBasicosE;
 use app\models\EcDatosBasicosBuscar;
 use app\models\Instituciones;
 use app\models\EcPlaneacion;
@@ -32,7 +32,7 @@ use yii\web\UploadedFile;
 /**
  * EcDatosBasicosController implements the CRUD actions for EcDatosBasicos model.
  */
-class EcDatosBasicosController extends Controller
+class EcDatosBasicosEController extends Controller
 {
     /**
      * @inheritdoc
@@ -84,7 +84,7 @@ class EcDatosBasicosController extends Controller
      */
     public function actionCreate()
     {
-        $modelDatosBasico 	= new EcDatosBasicos();
+        $modelDatosBasico 	= new EcDatosBasicosE();
         $modelPlaneacion	= new EcPlaneacion();
         $modelVerificacion	= new EcVerificacion();
         $modelReportes		= new EcReportes();
@@ -94,7 +94,6 @@ class EcDatosBasicosController extends Controller
             $modelDatosBasico->id_institucion = $_SESSION['instituciones'][0];
             $modelDatosBasico->id_sede = 2;
             $modelDatosBasico->estado = 1;
-            $modelDatosBasico->id_tipo_informe = intval($_GET['idTipoInforme']);
 
             if($modelDatosBasico->save()){
             

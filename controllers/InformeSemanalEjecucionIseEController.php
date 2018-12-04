@@ -14,7 +14,7 @@ else
 }
 
 use Yii;
-use app\models\InformeSemanalEjecucionIse;
+use app\models\InformeSemanalEjecucionIseE;
 use app\models\EcTipoCantidadPoblacionIse;
 use app\models\EcDocentesIse;
 use app\models\EcEstudiantesIse;
@@ -33,7 +33,7 @@ use yii\helpers\ArrayHelper;
 /**
  * InformeSemanalEjecucionIseController implements the CRUD actions for InformeSemanalEjecucionIse model.
  */
-class InformeSemanalEjecucionIseController extends Controller
+class InformeSemanalEjecucionIseEController extends Controller
 {
     /**
      * @inheritdoc
@@ -79,10 +79,8 @@ class InformeSemanalEjecucionIseController extends Controller
     public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => InformeSemanalEjecucionIse::find(),
+            'query' => InformeSemanalEjecucionIseE::find(),
         ]);
-        
-        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : $_SESSION["tipo_informe"]; 
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -122,8 +120,7 @@ class InformeSemanalEjecucionIseController extends Controller
             //$model->sede_id = 55;
             $model->proyecto_id = 1;
             $model->estado = 1;
-            $model->id_tipo_informe = $_SESSION["tipo_informe"];
-           
+            $model->id_tipo_informe = 7;
             $id_informe = 0;
 
             if($model->save()){

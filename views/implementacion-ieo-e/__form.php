@@ -12,8 +12,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 <div class="implementacion-ieo-form">
 
     <?php $form = ActiveForm::begin(); ?>
-       
-        <?= $form->field($model, 'zona_educativa')->dropDownList( $zonasEducativas, [ 'prompt' => 'Seleccione...' ] ) ?>
+
+        <?= $form->field($model, 'zona_educativa')->textInput() ?>
         <?= $form->field($model, 'comuna')->textInput() ?>
         <?= $form->field($model, 'barrio')->textInput() ?>
         <?= $form->field($model, 'profesional_cargo')->textInput() ?>
