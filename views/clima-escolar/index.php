@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="form-group">
 			   <?= Html::a('Seguimiento operadores', 
 										[
-											 'ec-datos-basicos/create',
+											'ec-datos-basicos/create',
 											'idTipoSeguimiento'	=> 1,
 										], 
 										['class' => 'btn btn-success'
