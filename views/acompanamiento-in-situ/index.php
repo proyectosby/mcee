@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="form-group">
 			   <?= Html::a('Seguimiento operadores', 
 										[
-											 'ec-datos-basicos/create',
+											'ge-seguimiento-operador/create',
 											'idTipoSeguimiento'	=> 1,
 										], 
 										['class' => 'btn btn-success'
@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<?= Html::a('Seguimiento Institucional', 
 										[
 											
-											'ieo/index',
+											'ge-seguimiento-gestion/create',
 											'idTipoSeguimiento'		=> 2, 
 										], 
 										['class' => 'btn btn-success'
@@ -87,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="form-group">
 				<?= Html::a('Seguimiento a gestores por frente', 
 										[
-											 'ecinformeplaneacionieo/index',
+											'ge-seguimiento-operador-frente/create',
 											'idTipoSeguimiento'		=> 3,
 										], 
 										['class' => 'btn btn-success'
@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 				<?= Html::a('Seguimiento a gestión escolar', 
 										[
-											 'implementacion-ieo/index',
+											'ge-seguimiento-gestion/create',
 											'idTipoSeguimiento'		=> 4,
 										], 
 										['class' => 'btn btn-success'

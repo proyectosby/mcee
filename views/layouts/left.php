@@ -196,7 +196,12 @@
 														'url' => ['acompanamiento-in-situ/index'],
 														],
 														
-														['label' => 'Formación en liderazgo', 'icon' => 'arrow-right', 'url' => '#',],  //se agrega el index
+														[
+															'label' => 'Formación en liderazgo', 'icon' => 'arrow-right', 'url' => [
+																'ge-seguimiento-gestion/create',
+																'idTipoSeguimiento'		=> 4,
+																],
+														],  //se agrega el index
 														['label' => 'Comunicación para la gestión', 'icon' => 'arrow-right','url' => '#',], //se agrega el index
 														['label' => 'Clima escolar y convivencia', 
 														'icon' => 'arrow-right', 
