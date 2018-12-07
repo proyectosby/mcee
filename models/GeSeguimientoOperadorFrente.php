@@ -39,18 +39,36 @@ class GeSeguimientoOperadorFrente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tipo_seguimiento', 'id_persona_diligencia', 'id_gestor_a_evaluar', 'mes_reporte', 'fecha_corte', 'cumple_cronograma', 'descripcion_cronograma', 'compromisos_establecidos', 'cuantas_reuniones', 'aportes_reuniones', 'logros', 'dificultades', 'estado'], 'required'],
+            // [['id_tipo_seguimiento', 'id_persona_diligencia', 'id_gestor_a_evaluar', 'mes_reporte', 'fecha_corte', 'cumple_cronograma', 'descripcion_cronograma', 'compromisos_establecidos', 'cuantas_reuniones', 'aportes_reuniones', 'logros', 'dificultades', 'estado'], 'required'],
+            [[
+				'id_tipo_seguimiento',
+				'email',
+				'id_persona_diligencia',
+				'id_gestor_a_evaluar',
+				'mes_reporte',
+				'fecha_corte',
+				'cumple_cronograma',
+				'descripcion_cronograma',
+				'compromisos_establecidos',
+				'cuantas_reuniones',
+				'aportes_reuniones',
+				'logros',
+				'dificultades',
+				'estado',
+			], 'required'],
             [['id_tipo_seguimiento', 'id_persona_diligencia', 'id_gestor_a_evaluar', 'compromisos_establecidos', 'cuantas_reuniones', 'estado'], 'default', 'value' => null],
             [['id_tipo_seguimiento', 'id_persona_diligencia', 'id_gestor_a_evaluar', 'compromisos_establecidos', 'cuantas_reuniones', 'estado'], 'integer'],
             [['fecha_corte'], 'safe'],
             [['cumple_cronograma'], 'boolean'],
             [['descripcion_cronograma'], 'string'],
             [['email', 'mes_reporte'], 'string', 'max' => 200],
+            [['email'], 'email'],
             [['aportes_reuniones', 'logros', 'dificultades'], 'string', 'max' => 700],
             [['id_tipo_seguimiento'], 'exist', 'skipOnError' => true, 'targetClass' => GeTipoSeguimiento::className(), 'targetAttribute' => ['id_tipo_seguimiento' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_persona_diligencia'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['id_persona_diligencia' => 'id']],
             [['id_gestor_a_evaluar'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['id_gestor_a_evaluar' => 'id']],
+            [['compromisos_establecidos'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['compromisos_establecidos' => 'id']],
         ];
     }
 
