@@ -18,6 +18,7 @@ use Yii;
  */
 class IsaIniciacionSencibilizacionArtistica extends \yii\db\ActiveRecord
 {
+    public $nombre_institucion;
     /**
      * @inheritdoc
      */
@@ -38,7 +39,7 @@ class IsaIniciacionSencibilizacionArtistica extends \yii\db\ActiveRecord
             [['caracterizacion_fecha'], 'safe'],
             [['id_insticion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_insticion' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
-            [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['estado' => 'id']],
+            //[['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
 

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\IsaIniciacionSencibilizacionArtistica */
@@ -13,7 +14,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_insticion')->textInput(['readonly' => true, 'value' => $institucion]) ?>
+    <?= $form->field($model, 'nombre_institucion')->textInput(['readonly' => true, 'value' => $institucion]) ?>
 
     <?= $form->field($model, 'id_sede')->dropDownList( $sedes, [ 'prompt' => 'Seleccione...' ] ) ?>
 
@@ -21,7 +22,16 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?= $form->field($model, 'caracterizacion_nombre')->textInput() ?>
 
-    <?= $form->field($model, 'caracterizacion_fecha')->textInput() ?>
+    <?= $form->field($model, 'caracterizacion_fecha')->widget(
+        DatePicker::className(), [
+            // modify template for custom rendering
+            'template' => '{addon}{input}',
+            'language' => 'es',
+            'clientOptions' => [
+                'autoclose' => true,
+                'format'    => 'yyyy-mm-dd',
+            ],
+    ]);  ?>
 
     <?= $form->field($model, 'caracterizacion_justificacion')->textInput() ?>
 

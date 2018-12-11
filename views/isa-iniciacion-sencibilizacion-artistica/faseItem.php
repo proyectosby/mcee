@@ -18,7 +18,7 @@ $index = 0;
     
     foreach( $actividades as $keyFase => $actividad ){ 
 
-            if($proyecto ==  1 && $keyFase <= 2){
+            if($proyecto ==  1 && $keyFase <= 3){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,
 					'content' 		=>  $this->render( 'contenedorItem', 
@@ -31,7 +31,7 @@ $index = 0;
 										),
 					'contentOptions'=> []
 				];
-            }else if($proyecto ==  2 && $keyFase > 2){
+            }else if($proyecto ==  2 && $keyFase > 3){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,
 					'content' 		=>  $this->render( 'contenedorItem', 

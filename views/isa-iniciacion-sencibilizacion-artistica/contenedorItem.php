@@ -3,7 +3,7 @@ if(@$_SESSION['sesion']=="si")
 { 
 	// echo $_SESSION['nombre'];
 } 
-//si no tiene sesion se redirecciona al login
+//si no tiene sesion | redirecciona al login
 else
 {
 	echo "<script> window.location=\"index.php?r=site%2Flogin\";</script>";
@@ -17,7 +17,22 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 
+    if($index == 1 || $index == 2 || $index == 3){?>
+        <div style ="display : none">
+            <?= $form->field($actividades_isa, "[$index]id_componente")->textInput(["value" => 1]) ?>
+            <?= $form->field($actividades_isa, "[$index]id_actividad")->textInput(["value" => $index]) ?>
+        </div>
+    <?php
+    }else{ ?>
+        <div style ="display : none">
+            <?= $form->field($actividades_isa, "[$index]id_componente")->textInput(["value" => 2]) ?>
+            <?= $form->field($actividades_isa, "[$index]id_actividad")->textInput(["value" => $index]) ?>
+        </div>
+    <?php
+    }
 ?>
+
+
     <h3 style='background-color: #ccc;padding:5px;'>Fecha prevista para realizar la actividad</h3>
     <?= $form->field($actividades_isa, "[$index]fecha_prevista_desde")->widget(
         DatePicker::className(), [
@@ -61,7 +76,7 @@ use dosamigos\datepicker\DatePicker;
    <?= $form->field($actividades_isa, "[$index]tiempo_previsto")->textInput() ?>
    <?= $form->field($actividades_isa, "[$index]productos")->textInput() ?>
    <h3 style='background-color: #ccc;padding:5px;'>¿El contenido de esta actividad  responde al plan de acción construido colectivamente para la institución desde la articulación de la estrategia MCEE?</h3>
-   <?= $form->field($actividades_isa, 'cotenido_si_no')->dropDownList([ 'prompt' => 'Seleccione...' , 'SI', 'NO' ] ) ?>
+   <?= $form->field($actividades_isa, "[$index]contenido_si_no")->dropDownList([ 'prompt' => 'Seleccione...' , 'SI', 'NO' ] ) ?>
    <?= $form->field($actividades_isa, "[$index]cotenido_nombre")->textInput() ?>
    <?= $form->field($actividades_isa, "[$index]cotenido_fecha")->widget(
         DatePicker::className(), [

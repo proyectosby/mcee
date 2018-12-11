@@ -8,7 +8,6 @@ use Yii;
  * This is the model class for table "isa.actividades_isa".
  *
  * @property int $id
- * @property int $id_imp_isa
  * @property int $id_actividad
  * @property string $fecha_prevista_desde
  * @property string $fecha_prevista_hasta
@@ -24,7 +23,7 @@ use Yii;
  * @property string $objetivos_especificos
  * @property string $tiempo_previsto
  * @property string $productos
- * @property string $cotenido_si_no
+ * @property string $contenido_si_no
  * @property string $cotenido_nombre
  * @property string $cotenido_fecha
  * @property string $cotenido_vigencia
@@ -39,9 +38,18 @@ use Yii;
  * @property string $nombre_diligencia
  * @property string $rol
  * @property string $fecha
+ * @property int $estado
+ * @property int $id_iniciacion_sencibilizacion_artistica
+ * @property int $id_componente
  */
 class IsaActividadesIsa extends \yii\db\ActiveRecord
 {
+    public $id_sede;
+    public $caracterizacion_si_no;
+    public $caracterizacion_nombre;
+    public $caracterizacion_fecha;
+    public $caracterizacion_justificacion;
+    
     /**
      * @inheritdoc
      */
@@ -56,11 +64,12 @@ class IsaActividadesIsa extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_imp_isa', 'id_actividad', 'num_equipo_campo', 'num_encuentro', 'cantidad_participantes'], 'default', 'value' => null],
-            [['id_imp_isa', 'id_actividad', 'num_equipo_campo', 'num_encuentro', 'cantidad_participantes'], 'integer'],
+            [['id_actividad', 'num_equipo_campo', 'num_encuentro', 'cantidad_participantes', 'estado', 'id_iniciacion_sencibilizacion_artistica', 'id_componente'], 'default', 'value' => null],
+            [['id_actividad', 'num_equipo_campo', 'num_encuentro', 'cantidad_participantes', 'estado', 'id_iniciacion_sencibilizacion_artistica', 'id_componente'], 'integer'],
             [['fecha_prevista_desde', 'fecha_prevista_hasta', 'cotenido_fecha', 'fecha'], 'safe'],
-            [['perfiles', 'docente_orientador', 'fases', 'nombre_actividad', 'actividad_desarrollar', 'lugares_recorrer', 'tematicas_abordadas', 'objetivos_especificos', 'tiempo_previsto', 'productos', 'cotenido_si_no', 'cotenido_nombre', 'cotenido_vigencia', 'contenido_justificacion', 'acticulacion', 'requerimientos_tecnicos', 'requerimientos_logisticos', 'destinatarios', 'fecha_entega_envio', 'observaciones_generales', 'nombre_diligencia', 'rol'], 'string'],
-            //[['id_imp_isa'], 'exist', 'skipOnError' => true, 'targetClass' => IsaImpIsa::className(), 'targetAttribute' => ['id_imp_isa' => 'id']],
+            [['perfiles', 'docente_orientador', 'fases', 'nombre_actividad', 'actividad_desarrollar', 'lugares_recorrer', 'tematicas_abordadas', 'objetivos_especificos', 'tiempo_previsto', 'productos', 'contenido_si_no', 'cotenido_nombre', 'cotenido_vigencia', 'contenido_justificacion', 'acticulacion', 'requerimientos_tecnicos', 'requerimientos_logisticos', 'destinatarios', 'fecha_entega_envio', 'observaciones_generales', 'nombre_diligencia', 'rol'], 'string'],
+            [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
+            [['id_iniciacion_sencibilizacion_artistica'], 'exist', 'skipOnError' => true, 'targetClass' => IsaIniciacionSencibilizacionArtistica::className(), 'targetAttribute' => ['id_iniciacion_sencibilizacion_artistica' => 'id']],
         ];
     }
 
@@ -71,37 +80,39 @@ class IsaActividadesIsa extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_imp_isa' => 'Id Imp Isa',
             'id_actividad' => 'Id Actividad',
             'fecha_prevista_desde' => 'Fecha Prevista Desde',
             'fecha_prevista_hasta' => 'Fecha Prevista Hasta',
-            'num_equipo_campo' => 'No. del Equipo o equipos en campo',
-            'perfiles' => 'Perfiles (Seleccione el perfil y cantidad por perfiles de profesionales en campo)',
-            'docente_orientador' => 'Docente orientador(a)  (Nombre del o la profesional)',
-            'fases' => 'Fases (Indique la fase del Proyecto MCEE desde las Artes y las Culturas  en el que se encuentra la actividad) ',
-            'num_encuentro' => 'No. de Encuentro (Indique el número del encuentro según la propuesta metodológica)',
-            'nombre_actividad' => 'Nombre o título de la actividad o encuentro ',
-            'actividad_desarrollar' => 'Actividades a desarrollar (Didácticas que estructuran el encuentro )',
-            'lugares_recorrer' => 'Lugares a recorrer o visitar: Mencione los espacios a ser recorridos o visitados.',
-            'tematicas_abordadas' => 'Temáticas que se abordan',
-            'objetivos_especificos' => 'Objetivos específicos: (Especifique cómo se espera lograr, con cada una de las actividades, sensibilizar a la comunidad sobre la importancia del arte...)',
-            'tiempo_previsto' => 'Tiempo previsto para realizar la actividad (Indique el tiempo previsto en horas y minutos)',
-            'productos' => 'Productos Describa los resultados o productos esperados.',
-            'cotenido_si_no' => 'Cotenido Si No',
+            'num_equipo_campo' => 'Num Equipo Campo',
+            'perfiles' => 'Perfiles',
+            'docente_orientador' => 'Docente Orientador',
+            'fases' => 'Fases',
+            'num_encuentro' => 'Num Encuentro',
+            'nombre_actividad' => 'Nombre Actividad',
+            'actividad_desarrollar' => 'Actividad Desarrollar',
+            'lugares_recorrer' => 'Lugares Recorrer',
+            'tematicas_abordadas' => 'Tematicas Abordadas',
+            'objetivos_especificos' => 'Objetivos Especificos',
+            'tiempo_previsto' => 'Tiempo Previsto',
+            'productos' => 'Productos',
+            'contenido_si_no' => 'Contenido Si No',
             'cotenido_nombre' => 'Cotenido Nombre',
             'cotenido_fecha' => 'Cotenido Fecha',
             'cotenido_vigencia' => 'Cotenido Vigencia',
             'contenido_justificacion' => 'Contenido Justificacion',
-            'acticulacion' => 'Articulación  (Si es el caso, describa cómo la actividad o actividades planeadas se articulan con las actividades de otros proyectos de la iniciativa MCEE)',
-            'cantidad_participantes' => 'Cantidad prevista de participantes (Indique el número de personas que espera que participen de  la actividad, considerando la convocatoria realizada por su equipo)',
-            'requerimientos_tecnicos' => '(Indique los requerimientos  técnicos,  materiales y de espacio)',
-            'requerimientos_logisticos' => 'Indique los requerimientos  logísticos, No. de refrigerios, No. de vehículos y capacidad de transporte, etc. )',
-            'destinatarios' => 'Destinatario (s)',
-            'fecha_entega_envio' => 'Fecha de entrega o envío',
-            'observaciones_generales' => 'Observaciones generales (Mencione aspectos adicionales que deban considerarse en la planeación de la actividad)',
-            'nombre_diligencia' => 'Nombre completo de quien diligenció',
+            'acticulacion' => 'Acticulacion',
+            'cantidad_participantes' => 'Cantidad Participantes',
+            'requerimientos_tecnicos' => 'Requerimientos Tecnicos',
+            'requerimientos_logisticos' => 'Requerimientos Logisticos',
+            'destinatarios' => 'Destinatarios',
+            'fecha_entega_envio' => 'Fecha Entega Envio',
+            'observaciones_generales' => 'Observaciones Generales',
+            'nombre_diligencia' => 'Nombre Diligencia',
             'rol' => 'Rol',
             'fecha' => 'Fecha',
+            'estado' => 'Estado',
+            'id_iniciacion_sencibilizacion_artistica' => 'Id Iniciacion Sencibilizacion Artistica',
+            'id_componente' => 'Id Componente',
         ];
     }
 }

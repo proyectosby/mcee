@@ -49,7 +49,7 @@ class IsaIniciacionSencibilizacionArtisticaController extends Controller
      * Lists all IsaIniciacionSencibilizacionArtistica models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => IsaIniciacionSencibilizacionArtistica::find(),
@@ -57,6 +57,7 @@ class IsaIniciacionSencibilizacionArtisticaController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'guardado' => $guardado,
         ]);
     }
 
@@ -101,8 +102,38 @@ class IsaIniciacionSencibilizacionArtisticaController extends Controller
         $model = new IsaIniciacionSencibilizacionArtistica();
         $idInstitucion = $_SESSION['instituciones'][0];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->id_insticion = $idInstitucion;
+            $model->estado = 1;
+            $model->id_sede = intval($model->id_sede);
+
+            if($model->save()){
+                $isa_id = $model->id;
+                if (Yii::$app->request->post('IsaActividadesIsa')){
+                    $data = Yii::$app->request->post('IsaActividadesIsa');
+                    $count 	= count( $data );
+                    $modelActividades = [];
+
+                    for( $i = 0; $i < 5; $i++ ){
+                        $modelActividades[] = new IsaActividadesIsa();
+                    }
+
+                    if (IsaActividadesIsa::loadMultiple($modelActividades, Yii::$app->request->post() )) {
+                        foreach( $modelActividades as $key => $model) {
+                            if($model->fecha_prevista_desde and $model->fecha_prevista_hasta){
+
+                                $model->id_iniciacion_sencibilizacion_artistica = $isa_id;
+                                $model->estado = 1;
+                                $model->save();    
+                            }                        
+                        }
+                    }
+
+                }
+            }
+           
+            return $this->redirect(['index', 'guardado' => 1]);
         }
 
         $Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
