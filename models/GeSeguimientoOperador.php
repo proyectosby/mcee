@@ -32,6 +32,8 @@ use Yii;
  */
 class GeSeguimientoOperador extends \yii\db\ActiveRecord
 {
+	public $documentFile;
+	
     /**
      * @inheritdoc
      */
@@ -72,6 +74,7 @@ class GeSeguimientoOperador extends \yii\db\ActiveRecord
 				'id_indicador',
 				'id_objetivo',
 				'id_actividad',
+				'documentFile',
 			], 'required' ],
             [['id_tipo_seguimiento', 'id_ie', 'id_persona_responsable', 'numero_participantes', 'estado', 'id_operador'], 'default', 'value' => null],
             [['id_tipo_seguimiento', 'id_ie', 'id_persona_responsable', 'numero_participantes', 'estado', 'id_operador','id_indicador','id_objetivo','id_actividad'], 'integer'],
@@ -117,6 +120,8 @@ class GeSeguimientoOperador extends \yii\db\ActiveRecord
             'id_indicador'						=> 'A qué indicador del proyecto le apuntó la actividad?',
             'id_objetivo'						=> 'Objetivo al que reporta',
             'id_actividad'						=> 'Actividad que reporta',
+            'ruta_archivo'						=> 'Ruta del archivo',
+            'documentFile'						=> 'Agregar Archivo',
         ];
     }
 }

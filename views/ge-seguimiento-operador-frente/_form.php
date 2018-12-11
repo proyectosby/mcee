@@ -28,7 +28,7 @@ if( $guardado ){
 
 <div class="ge-seguimiento-operador-frente-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?php /*$form->field($model, 'id_tipo_seguimiento')->textInput()*/ ?>
 
@@ -87,6 +87,8 @@ if( $guardado ){
     <?= $form->field($model, 'logros')->textarea(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'dificultades')->textarea(['maxlength' => true]) ?>
+	
+	<?= $form->field($model, 'documentFile')->fileInput() ?>
 
     <?php /* $form->field($model, 'estado')->textInput() */ ?>
 

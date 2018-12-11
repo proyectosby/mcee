@@ -29,6 +29,9 @@ use app\models\GeObjetivos;
 use app\models\GeActividades;
 use yii\helpers\ArrayHelper;
 
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+
 /**
  * GeSeguimientoOperadorController implements the CRUD actions for GeSeguimientoOperador model.
  */
@@ -98,10 +101,30 @@ class GeSeguimientoOperadorController extends Controller
 			$model->id_tipo_seguimiento = $tipo_seguimiento;
 			$model->estado 				= 1;		//Siempre 1(activo)
 			
-			if( $model->save() ){
-				$guardado = true;
+			$model->documentFile = UploadedFile::getInstance( $model, 'documentFile' );
+			
+			if( $model->documentFile ) {
 				
-				// return $this->redirect(['index']);
+				//Si no existe la carpeta se crea
+				$carpeta = "../documentos/seguimientoOperador/";
+				if (!file_exists($carpeta)) {
+					mkdir($carpeta, 0777, true);
+				}
+				
+				//Construyo la ruta completa del archivo a guardar
+				$rutaFisicaDirectoriaUploads  = "../documentos/seguimientoOperador/";
+				$rutaFisicaDirectoriaUploads .= $model->documentFile->baseName;
+				$rutaFisicaDirectoriaUploads .= date( "_Y_m_d_His" ) . '.' . $model->documentFile->extension;
+				
+				$save = $model->documentFile->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+				
+				$model->ruta_archivo = $rutaFisicaDirectoriaUploads;
+				
+				if( $model->save() ){
+					$guardado = true;
+					
+					// return $this->redirect(['index']);
+				}
 			}
         }
 

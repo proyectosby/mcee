@@ -25,6 +25,9 @@ use app\models\Instituciones;
 use app\models\Personas;
 use yii\helpers\ArrayHelper;
 
+use app\models\UploadForm;
+use yii\web\UploadedFile;
+
 /**
  * GeSeguimientoOperadorFrenteController implements the CRUD actions for GeSeguimientoOperadorFrente model.
  */
@@ -95,10 +98,30 @@ class GeSeguimientoOperadorFrenteController extends Controller
 			$model->id_tipo_seguimiento = $tipo_seguimiento;
 			$model->estado = 1;
 			
-			if( $model->save() )
-			{
-				$guardado = true;
-				// return $this->redirect(['index']);
+			$model->documentFile = UploadedFile::getInstance( $model, 'documentFile' );
+			
+			if( $model->documentFile ) {
+				
+				//Si no existe la carpeta se crea
+				$carpeta = "../documentos/seguimientoOperadorFrente/";
+				if (!file_exists($carpeta)) {
+					mkdir($carpeta, 0777, true);
+				}
+				
+				//Construyo la ruta completa del archivo a guardar
+				$rutaFisicaDirectoriaUploads  = "../documentos/seguimientoOperadorFrente/";
+				$rutaFisicaDirectoriaUploads .= $model->documentFile->baseName;
+				$rutaFisicaDirectoriaUploads .= date( "_Y_m_d_His" ) . '.' . $model->documentFile->extension;
+				
+				$save = $model->documentFile->saveAs( $rutaFisicaDirectoriaUploads );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+				
+				$model->ruta_archivo = $rutaFisicaDirectoriaUploads;
+				
+				if( $model->save() )
+				{	
+					$guardado = true;
+					// return $this->redirect(['index']);
+				}
 			}
         }
 		

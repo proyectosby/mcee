@@ -26,7 +26,7 @@ if( $guardado ){
 
 <div class="ge-seguimiento-operador-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?php /* $form->field($model, 'id_tipo_seguimiento')->textInput() */ ?>
 
@@ -86,6 +86,12 @@ if( $guardado ){
     <?= $form->field($model, 'logros_alcanzados')->textarea() ?>
 
     <?= $form->field($model, 'dificultadades')->textarea() ?>
+	
+	<h3 style='background-color:#ccc;padding:5px;'><?= "Evidencias de soporte"?></h3>
+	
+	<p>Listado de participantes, registro visual, informe de actividades o acta</p>
+	
+	<?= $form->field($model, 'documentFile')->fileInput() ?>
 	
 	<h3 style='background-color:#ccc;padding:5px;'><?= "Avances del proyecto"?></h3>
 	

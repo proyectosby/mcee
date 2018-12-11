@@ -25,6 +25,8 @@ use Yii;
  */
 class GeSeguimientoOperadorFrente extends \yii\db\ActiveRecord
 {
+	public $documentFile;
+	
     /**
      * @inheritdoc
      */
@@ -55,7 +57,9 @@ class GeSeguimientoOperadorFrente extends \yii\db\ActiveRecord
 				'logros',
 				'dificultades',
 				'estado',
+				'documentFile',
 			], 'required'],
+			[['documentFile'], 'file', 'skipOnEmpty' => false],
             [['id_tipo_seguimiento', 'id_persona_diligencia', 'id_gestor_a_evaluar', 'compromisos_establecidos', 'cuantas_reuniones', 'estado'], 'default', 'value' => null],
             [['id_tipo_seguimiento', 'id_persona_diligencia', 'id_gestor_a_evaluar', 'compromisos_establecidos', 'cuantas_reuniones', 'estado'], 'integer'],
             [['fecha_corte'], 'safe'],
@@ -93,6 +97,8 @@ class GeSeguimientoOperadorFrente extends \yii\db\ActiveRecord
             'logros' 					=> 'Logros alcanzados',
             'dificultades' 				=> 'Dificultades en la gestión',
             'estado' 					=> 'Estado',
+            'documentFile'				=> 'Agregar Archivo',
+            'ruta_archivo'				=> 'Ruta del archivo',
         ];
     }
 }
