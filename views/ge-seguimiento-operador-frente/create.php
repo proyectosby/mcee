@@ -6,10 +6,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\GeSeguimientoOperadorFrente */
 
-$this->title = 'Agregar Ge Seguimiento Operador Frente';
-$this->params['breadcrumbs'][] = ['label' => 'Ge Seguimiento Operador Frentes', 'url' => ['index']];
+$this->title = 'Seguimiento Operador Frente';
+$this->params['breadcrumbs'][] = ['label' => 'Seguimiento Operador Frentes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
+
+<?= Html::a('Volver', 
+									[
+										'acompanamiento-in-situ/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+				
 <div class="ge-seguimiento-operador-frente-create">
 
     <h1><?= Html::encode($this->title) ?></h1>

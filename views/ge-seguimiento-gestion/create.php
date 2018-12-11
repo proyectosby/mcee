@@ -6,10 +6,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\GeSeguimientoGestion */
 
-$this->title = 'Agregar Ge Seguimiento Gestion';
-$this->params['breadcrumbs'][] = ['label' => 'Ge Seguimiento Gestions', 'url' => ['index']];
+$this->title = 'Seguimiento Gestión';
+$this->params['breadcrumbs'][] = ['label' => 'Seguimiento Gestion', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
+
+<?= Html::a('Volver', 
+									[
+										'acompanamiento-in-situ/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+				
 <div class="ge-seguimiento-gestion-create">
 
     <h1><?= Html::encode($this->title) ?></h1>

@@ -10,6 +10,14 @@ $this->title = 'Seguimiento al Operador';
 $this->params['breadcrumbs'][] = ['label' => 'Seguimiento al Operador', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
+
+<?= Html::a('Volver', 
+									[
+										'acompanamiento-in-situ/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+				
+				
 <div class="ge-seguimiento-operador-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
