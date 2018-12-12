@@ -322,7 +322,7 @@
 												'icon' => 'university',
 												'url' => '#',
 												'items' => [
-																	['label' => 'Sensibilización artistica', 'icon' => 'arrow-right','url' => '#',],
+																	['label' => 'Sensibilización artistica', 'icon' => 'arrow-right','url' => ['sensibilizacion-artistica/index'],],
 																	['label' => 'Competencias lúdicas', 'icon' => 'arrow-right','url' => '#',],
 																	['label' => 'Primera infancia', 'icon' => 'arrow-right','url' => '#',],
 															],
