@@ -76,7 +76,7 @@ use dosamigos\datepicker\DatePicker;
    <?= $form->field($actividades_isa, "[$index]tiempo_previsto")->textInput() ?>
    <?= $form->field($actividades_isa, "[$index]productos")->textInput() ?>
    <h3 style='background-color: #ccc;padding:5px;'>¿El contenido de esta actividad  responde al plan de acción construido colectivamente para la institución desde la articulación de la estrategia MCEE?</h3>
-   <?= $form->field($actividades_isa, "[$index]contenido_si_no")->dropDownList([ 'prompt' => 'Seleccione...' , 'SI', 'NO' ] ) ?>
+   <?= $form->field($actividades_isa, "[$index]cotenido_si_no")->dropDownList([ 'prompt' => 'Seleccione...' , 'SI', 'NO' ] ) ?>
    <?= $form->field($actividades_isa, "[$index]cotenido_nombre")->textInput() ?>
    <?= $form->field($actividades_isa, "[$index]cotenido_fecha")->widget(
         DatePicker::className(), [
