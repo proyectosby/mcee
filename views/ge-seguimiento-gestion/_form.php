@@ -43,6 +43,7 @@ if( $guardado ){
 					'items' => $personas,
 					'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
 					'multiple' => false,
+					'placeholder' => 'Seleccione...',
 					'clientOptions' => [
 						'search_contains' => true,
 						'single_backstroke_delete' => false,
@@ -68,6 +69,7 @@ if( $guardado ){
 					'items' => $personas,
 					'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
 					'multiple' => false,
+					'placeholder' => 'Seleccione...',
 					'clientOptions' => [
 						'search_contains' => true,
 						'single_backstroke_delete' => false,
