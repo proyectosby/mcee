@@ -13,7 +13,14 @@ use yii\grid\GridView;
 
 $this->title = 'Reporte Operativo Misional';
 $this->params['breadcrumbs'][] = $this->title;
-?> 
+
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
+?>
 
 <h1></h1>
 	

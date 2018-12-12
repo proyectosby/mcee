@@ -17,6 +17,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 
+
     if($index == 1 || $index == 2 || $index == 3){?>
         <div style ="display : none">
             <?= $form->field($actividades_rom, "[$index]id_componente")->textInput(["value" => 1]) ?>
@@ -31,6 +32,7 @@ use dosamigos\datepicker\DatePicker;
     <?php
     }
 ?>
+    
     <h3 style='background-color: #ccc;padding:5px;'>Fecha de realización de la o las actividades</h3>
     <?= $form->field($actividades_rom, "[$index]fehca_desde")->widget(
         DatePicker::className(), [
@@ -131,4 +133,6 @@ use dosamigos\datepicker\DatePicker;
                 'autoclose' => true,
                 'format'    => 'yyyy-mm-dd',
         ],
-    ]);  ?>
+    ]);  
+    
+    ?>
