@@ -23,7 +23,7 @@ use Yii;
  * @property string $objetivos_especificos
  * @property string $tiempo_previsto
  * @property string $productos
- * @property string $contenido_si_no
+ * @property string $cotenido_si_no
  * @property string $cotenido_nombre
  * @property string $cotenido_fecha
  * @property string $cotenido_vigencia
@@ -67,7 +67,7 @@ class IsaActividadesIsa extends \yii\db\ActiveRecord
             [['id_actividad', 'num_equipo_campo', 'num_encuentro', 'cantidad_participantes', 'estado', 'id_iniciacion_sencibilizacion_artistica', 'id_componente'], 'default', 'value' => null],
             [['id_actividad', 'num_equipo_campo', 'num_encuentro', 'cantidad_participantes', 'estado', 'id_iniciacion_sencibilizacion_artistica', 'id_componente'], 'integer'],
             [['fecha_prevista_desde', 'fecha_prevista_hasta', 'cotenido_fecha', 'fecha'], 'safe'],
-            [['perfiles', 'docente_orientador', 'fases', 'nombre_actividad', 'actividad_desarrollar', 'lugares_recorrer', 'tematicas_abordadas', 'objetivos_especificos', 'tiempo_previsto', 'productos', 'contenido_si_no', 'cotenido_nombre', 'cotenido_vigencia', 'contenido_justificacion', 'acticulacion', 'requerimientos_tecnicos', 'requerimientos_logisticos', 'destinatarios', 'fecha_entega_envio', 'observaciones_generales', 'nombre_diligencia', 'rol'], 'string'],
+            [['perfiles', 'docente_orientador', 'fases', 'nombre_actividad', 'actividad_desarrollar', 'lugares_recorrer', 'tematicas_abordadas', 'objetivos_especificos', 'tiempo_previsto', 'productos', 'cotenido_si_no', 'cotenido_nombre', 'cotenido_vigencia', 'contenido_justificacion', 'acticulacion', 'requerimientos_tecnicos', 'requerimientos_logisticos', 'destinatarios', 'fecha_entega_envio', 'observaciones_generales', 'nombre_diligencia', 'rol'], 'string'],
             [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
             [['id_iniciacion_sencibilizacion_artistica'], 'exist', 'skipOnError' => true, 'targetClass' => IsaIniciacionSencibilizacionArtistica::className(), 'targetAttribute' => ['id_iniciacion_sencibilizacion_artistica' => 'id']],
         ];
@@ -95,7 +95,7 @@ class IsaActividadesIsa extends \yii\db\ActiveRecord
             'objetivos_especificos' => 'Objetivos Especificos',
             'tiempo_previsto' => 'Tiempo Previsto',
             'productos' => 'Productos',
-            'contenido_si_no' => 'Contenido Si No',
+            'cotenido_si_no' => 'Contenido Si No',
             'cotenido_nombre' => 'Cotenido Nombre',
             'cotenido_fecha' => 'Cotenido Fecha',
             'cotenido_vigencia' => 'Cotenido Vigencia',
