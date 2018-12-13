@@ -48,11 +48,11 @@ class IsaOrientacionProceso extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'orientacion_proceso' => 'Orientacion Proceso',
+            'orientacion_proceso' => 'Orientación Proceso',
             'fecha_desde' => 'Fecha Desde',
             'fecha_hasta' => 'Fecha Hasta',
-            'id_institucion' => 'Id Institucion',
-            'id_sede' => 'Id Sede',
+            'id_institucion' => 'Institución',
+            'id_sede' => 'Sede',
             'estado' => 'Estado',
         ];
     }
