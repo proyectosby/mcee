@@ -108,9 +108,9 @@ class CbacPlanMisionalOperativoController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             
             $model->id_institucion = $idInstitucion;
-            if(/*$model->save()*/true){
-                //$id_pmo = $model->id;
-                $id_pmo = 2;
+            if($model->save()){
+                $id_pmo = $model->id;
+                //$id_pmo = 2;
 
                 if (Yii::$app->request->post('CbacPmoActividades')){
                     $data = Yii::$app->request->post('CbacPmoActividades');
