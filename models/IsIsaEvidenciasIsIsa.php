@@ -27,7 +27,7 @@ class IsIsaEvidenciasIsIsa extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'is_isa.evidencias_is_isa';
+        return 'isa.evidencias_is_isa';
     }
 
     /**

@@ -25,7 +25,7 @@ class IsIsaTipoCantidadPoblacionIsIsa extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'is_isa.tipo_cantidad_poblacion_is_isa';
+        return 'isa.tipo_cantidad_poblacion_is_isa';
     }
 
     /**

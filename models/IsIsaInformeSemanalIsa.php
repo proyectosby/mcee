@@ -22,7 +22,7 @@ class IsIsaInformeSemanalIsa extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'is_isa.informe_semanal_isa';
+        return 'isa.informe_semanal_isa';
     }
 
     /**

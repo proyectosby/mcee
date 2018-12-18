@@ -29,7 +29,7 @@ class IsIsaActividadesIsIsa extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'is_isa.actividades_is_isa';
+        return 'isa.actividades_is_isa';
     }
 
     /**
