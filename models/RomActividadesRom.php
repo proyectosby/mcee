@@ -41,7 +41,7 @@ class RomActividadesRom extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rom.actividades_rom';
+        return 'isa.actividades_rom';
     }
 
     /**

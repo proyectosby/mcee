@@ -20,7 +20,7 @@ class RomReporteOperativoMisional extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rom.reporte_operativo_misional';
+        return 'isa.reporte_operativo_misional';
     }
 
     /**

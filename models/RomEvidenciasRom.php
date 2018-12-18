@@ -30,7 +30,7 @@ class RomEvidenciasRom extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rom.evidencias_rom';
+        return 'isa.evidencias_rom';
     }
 
     /**

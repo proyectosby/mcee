@@ -25,7 +25,7 @@ class RomTipoCantidadPoblacionRom extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rom.tipo_cantidad_poblacion_rom';
+        return 'isa.tipo_cantidad_poblacion_rom';
     }
 
     /**
