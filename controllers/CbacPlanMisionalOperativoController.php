@@ -50,7 +50,7 @@ class CbacPlanMisionalOperativoController extends Controller
      * Lists all CbacPlanMisionalOperativo models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => CbacPlanMisionalOperativo::find(),
@@ -58,6 +58,7 @@ class CbacPlanMisionalOperativoController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'guardado' => $guardado,
         ]);
     }
 
@@ -134,7 +135,7 @@ class CbacPlanMisionalOperativoController extends Controller
 
 
             }
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'guardado' => 1 ]);
         }
 
         $Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
