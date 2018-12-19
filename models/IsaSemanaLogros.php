@@ -14,6 +14,7 @@ use Yii;
  * @property string $semana4
  * @property string $id_logros_actividades
  * @property string $estado
+ * @property string $id_seguimiento_proceso
  */
 class IsaSemanaLogros extends \yii\db\ActiveRecord
 {
@@ -31,10 +32,12 @@ class IsaSemanaLogros extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['semana1', 'semana2', 'semana3', 'semana4', 'id_logros_actividades', 'estado', 'id_seguimiento_proceso'], 'required'],
             [['semana1', 'semana2', 'semana3', 'semana4'], 'string'],
-            [['id_logros_actividades', 'estado'], 'default', 'value' => null],
-            [['id_logros_actividades', 'estado'], 'integer'],
+            [['id_logros_actividades', 'estado', 'id_seguimiento_proceso'], 'default', 'value' => null],
+            [['id_logros_actividades', 'estado', 'id_seguimiento_proceso'], 'integer'],
             [['id_logros_actividades'], 'exist', 'skipOnError' => true, 'targetClass' => IsaLogrosActividades::className(), 'targetAttribute' => ['id_logros_actividades' => 'id']],
+            [['id_seguimiento_proceso'], 'exist', 'skipOnError' => true, 'targetClass' => IsaSeguimientoProceso::className(), 'targetAttribute' => ['id_seguimiento_proceso' => 'id']],
         ];
     }
 
@@ -51,6 +54,7 @@ class IsaSemanaLogros extends \yii\db\ActiveRecord
             'semana4' => 'Semana4',
             'id_logros_actividades' => 'Id Logros Actividades',
             'estado' => 'Estado',
+            'id_seguimiento_proceso' => 'Id Seguimiento Proceso',
         ];
     }
 }

@@ -17,11 +17,11 @@ $porcentajes = new IsaPorcentajesActividades();
 <div class="container-fluid">
             <div class="ieo-form">
 
-                    <?= $form->field($porcentajes, "[$idProyecto]total_sesiones")->textInput([ 'value' => $datos[$idProyecto]['total_sesiones'] ])?>
-                    <?= $form->field($porcentajes, "[$idProyecto]avance_sede")->textInput([ 'value' => $datos[$idProyecto]['avance_sede'] ])?>
-                    <?= $form->field($porcentajes, "[$idProyecto]avance_ieo")->textInput([ 'value' => $datos[$idProyecto]['avance_ieo'] ])?> 
-                    <?= $form->field($porcentajes, "[$idProyecto]seguimiento_actividades")->textInput([ 'value' => $datos[$idProyecto]['seguimiento_actividades'] ])?>
-                    <?= $form->field($porcentajes, "[$idProyecto]evaluacion_actividades")->textInput([ 'value' => $datos[$idProyecto]['evaluacion_actividades'] ])?>
-                    <?= $form->field($porcentajes, "[$idProyecto]estado")->hiddenInput( [ 'value' => '1' ] )->label(false ) ?>
+                    <?= $form->field($porcentajes, "[$idActividad]total_sesiones")->textInput([ 'value' => $datos[$idActividad]['total_sesiones'] ])?>
+                    <?= $form->field($porcentajes, "[$idActividad]avance_sede")->textInput([ 'value' => $datos[$idActividad]['avance_sede'] ])?>
+                    <?= $form->field($porcentajes, "[$idActividad]avance_ieo")->textInput([ 'value' => $datos[$idActividad]['avance_ieo'] ])?> 
+                    <?= $form->field($porcentajes, "[$idActividad]seguimiento_actividades")->textInput([ 'value' => $datos[$idActividad]['seguimiento_actividades'] ])?>
+                    <?= $form->field($porcentajes, "[$idActividad]evaluacion_actividades")->textInput([ 'value' => $datos[$idActividad]['evaluacion_actividades'] ])?>
+                    <?= $form->field($porcentajes, "[$idActividad]estado")->hiddenInput( [ 'value' => '1' ] )->label(false ) ?>
             </div>
 </div>

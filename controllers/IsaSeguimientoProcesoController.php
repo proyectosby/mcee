@@ -134,7 +134,111 @@ class IsaSeguimientoProcesoController extends Controller
     {
         $model = new IsaSeguimientoProceso();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load( Yii::$app->request->post() )) 
+		{
+			
+			$post = Yii::$app->request->post();
+			
+			
+			
+			$model->save();
+			
+			//se guardan los datos en la tabla Isa.Porcentajes_Actividades
+			$arrayDatosActivides = $post['IsaPorcentajesActividades'];
+			//se agrega el id de la tabla principal despues de guardarla
+			foreach($arrayDatosActivides as $datos => $valores)
+			{
+				$arrayDatosActivides[$datos]['id_seguimiento_proceso']=$model->id;
+			}
+			
+			$columnNameArrayIsaPorcentajesActividades=['total_sesiones','avance_sede','avance_ieo','seguimiento_actividades','evaluacion_actividades','estado','id_seguimiento_proceso'];
+			
+			// inserta todos los datos que trae el array 
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'isa.porcentajes_actividades', $columnNameArrayIsaPorcentajesActividades, $arrayDatosActivides
+                     )
+					 ->execute();
+					 
+					 
+			//se guardan los datos en la tabla Isa.Semana_Logros
+			$arrayDatosSemanaLogros = $post['IsaSemanaLogros'];
+			//se agrega el id de la tabla principal despues de guardarla
+			foreach($arrayDatosSemanaLogros as $datos => $valores)
+			{
+				$arrayDatosSemanaLogros[$datos]['id_seguimiento_proceso']=$model->id;
+			}
+			
+			$columnNameArraySemanaLogros=['semana1','semana2','semana3','semana4','id_logros_actividades','estado','id_seguimiento_proceso'];
+			
+			// inserta todos los datos que trae el array
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'isa.semana_logros', $columnNameArraySemanaLogros, $arrayDatosSemanaLogros
+                     )
+					 ->execute();
+					 
+					 
+					 
+			// echo "<pre>"; print_r($post); echo "</pre>"; 
+			// die;		 
+			//se guardan los datos en la tabla Isa.Orientacion_Metodologica_Actividades
+			$arrayDatosIsaOrientacionMetodologicaActividades = $post['IsaOrientacionMetodologicaActividades'];
+			//se agrega el id de la tabla principal despues de guardarla
+			foreach($arrayDatosIsaOrientacionMetodologicaActividades as $datos => $valores)
+			{
+				$arrayDatosIsaOrientacionMetodologicaActividades[$datos]['estado']=1;
+				$arrayDatosIsaOrientacionMetodologicaActividades[$datos]['id_seguimiento_proceso']=$model->id;
+			}
+			
+			$columnNameIsaOrientacionMetodologicaActividades=['descripcion','id_actividades','estado','id_seguimiento_proceso'];
+			
+			// inserta todos los datos que trae el array
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'isa.orientacion_metodologica_actividades', $columnNameIsaOrientacionMetodologicaActividades, $arrayDatosIsaOrientacionMetodologicaActividades
+                     )
+					 ->execute();
+					 
+			
+
+			
+			//se guardan los datos en la tabla Isa.Semana_Logros_For_Deb_Ret
+			$arrayDatosIsaSemanaLogrosForDebRet = $post['IsaSemanaLogrosForDebRet'];
+			//se agrega el id de la tabla principal despues de guardarla
+			foreach($arrayDatosIsaSemanaLogrosForDebRet as $datos => $valores)
+			{
+				$arrayDatosIsaSemanaLogrosForDebRet[$datos]['id_seguimiento_proceso']=$model->id;
+			}
+			
+			$columnNameIsaSemanaLogrosForDebRet=['semana1','semana2','semana3','semana4','id_for_deb_ret','estado','id_seguimiento_proceso'];
+			
+			// inserta todos los datos que trae el array
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'isa.semana_logros_for_deb_ret', $columnNameIsaSemanaLogrosForDebRet, $arrayDatosIsaSemanaLogrosForDebRet
+                     )
+					 ->execute();		 
+					 
+			
+			//se guardan los datos en la tabla Isa.Orientacion_Metodologica_Variaciones
+			$arrayDatosIsaOrientacionMetodologicaVariaciones = $post['IsaOrientacionMetodologicaVariaciones'];
+			//se agrega el id de la tabla principal despues de guardarla
+			foreach($arrayDatosIsaOrientacionMetodologicaVariaciones as $datos => $valores)
+			{
+				$arrayDatosIsaOrientacionMetodologicaVariaciones[$datos]['estado']=1;
+				$arrayDatosIsaOrientacionMetodologicaVariaciones[$datos]['id_seguimiento_proceso']=$model->id;
+			}
+			
+			$columnNameIsaSemanaLogrosForDebRet=['descripcion','id_variaciones_actividades','estado','id_seguimiento_proceso'];
+			
+			// inserta todos los datos que trae el array
+			$insertCount = Yii::$app->db->createCommand()
+                   ->batchInsert(
+                         'isa.orientacion_metodologica_variaciones', $columnNameIsaSemanaLogrosForDebRet, $arrayDatosIsaOrientacionMetodologicaVariaciones
+                     )
+					 ->execute();		 
+					  
             return $this->redirect(['index']);
         }
 

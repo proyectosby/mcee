@@ -11,16 +11,16 @@ use yii\bootstrap\Collapse;
 $IsaForDebRet = IsaForDebRet::find()->where( "estado=1 and id_variaciones_actividades=$idVariaciones" )->all();
 $IsaForDebRet = ArrayHelper::map($IsaForDebRet,'id','descripcion');
        
-foreach ($IsaForDebRet as $IsaForDebRet => $dataIsaForDebRet)
+foreach ($IsaForDebRet as $idIsaForDebRet => $dataIsaForDebRet)
 {
 		$items[] = 	[
 						'label' 		=>  $dataIsaForDebRet,
 						'content' 		=>  $this->render( 'semanafordebret', 
 														[ 
-															'IsaForDebRet' => $IsaForDebRet,
+															'idIsaForDebRet' => $idIsaForDebRet,
 															'form' => $form,
-															'idProyecto' => $idProyecto,
 															'datos' => $datos,
+															'idVariaciones' => $idVariaciones,
 														] 
 											),
 						'contentOptions'=> []

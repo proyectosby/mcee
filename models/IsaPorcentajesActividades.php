@@ -48,11 +48,11 @@ class IsaPorcentajesActividades extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'total_sesiones' => 'Total Sesiones',
-            'avance_sede' => 'Avance Sede',
-            'avance_ieo' => 'Avance Ieo',
-            'seguimiento_actividades' => 'Seguimiento Actividades',
-            'evaluacion_actividades' => 'Evaluacion Actividades',
+            'total_sesiones' => 'Total de sesiones realizadas en el mes',
+            'avance_sede' => '% Avance por sede',
+            'avance_ieo' => '% Avance por IEO',
+            'seguimiento_actividades' => 'Se cuenta con documentos de seguimiento de actividades desarrolladas',
+            'evaluacion_actividades' => 'Se cuenta con documentos de evaluación de actividades desarrolladas',
             'id_seguimiento_proceso' => 'Id Seguimiento Proceso',
             'estado' => 'Estado',
         ];

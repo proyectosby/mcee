@@ -14,6 +14,7 @@ use Yii;
  * @property string $semana4
  * @property string $id_for_deb_ret
  * @property string $estado
+ * @property string $id_seguimiento_proceso
  */
 class IsaSemanaLogrosForDebRet extends \yii\db\ActiveRecord
 {
@@ -33,9 +34,10 @@ class IsaSemanaLogrosForDebRet extends \yii\db\ActiveRecord
         return [
             [['semana1', 'semana2', 'semana3', 'semana4', 'id_for_deb_ret', 'estado'], 'required'],
             [['semana1', 'semana2', 'semana3', 'semana4'], 'string'],
-            [['id_for_deb_ret', 'estado'], 'default', 'value' => null],
-            [['id_for_deb_ret', 'estado'], 'integer'],
+            [['id_for_deb_ret', 'estado', 'id_seguimiento_proceso'], 'default', 'value' => null],
+            [['id_for_deb_ret', 'estado', 'id_seguimiento_proceso'], 'integer'],
             [['id_for_deb_ret'], 'exist', 'skipOnError' => true, 'targetClass' => IsaForDebRet::className(), 'targetAttribute' => ['id_for_deb_ret' => 'id']],
+            [['id_seguimiento_proceso'], 'exist', 'skipOnError' => true, 'targetClass' => IsaSeguimientoProceso::className(), 'targetAttribute' => ['id_seguimiento_proceso' => 'id']],
         ];
     }
 
@@ -52,6 +54,7 @@ class IsaSemanaLogrosForDebRet extends \yii\db\ActiveRecord
             'semana4' => 'Semana4',
             'id_for_deb_ret' => 'Id For Deb Ret',
             'estado' => 'Estado',
+            'id_seguimiento_proceso' => 'Id Seguimiento Proceso',
         ];
     }
 }

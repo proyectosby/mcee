@@ -26,7 +26,6 @@ foreach ($actividadesSeguimiento as $idActividad => $dataActividad)
 															[ 
 																'idActividad' => $idActividad,
 																'form' => $form,
-																'idProyecto' => $idProyecto,
 																'datos' => $datos,
 															] 
 														),
@@ -35,7 +34,6 @@ foreach ($actividadesSeguimiento as $idActividad => $dataActividad)
 															[ 
 																'idActividad' => $idActividad,
 																'form' => $form,
-																'idProyecto' => $idProyecto,
 																'datos' => $datos,
 															] 
 														),
@@ -44,7 +42,6 @@ foreach ($actividadesSeguimiento as $idActividad => $dataActividad)
 															[ 
 																'idActividad' => $idActividad,
 																'form' => $form,
-																'idProyecto' => $idProyecto,
 																'datos' => $datos,
 															] 
 														),														

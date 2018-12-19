@@ -7,20 +7,24 @@
 use app\models\EcAvances;
 use yii\widgets\ActiveForm;
 use app\models\IsaSemanaLogrosForDebRet;
+use app\models\IsaOrientacionMetodologicaVariaciones;
 
 
 $semanLogros = new IsaSemanaLogrosForDebRet();
- 
-
+$orientacion = new IsaOrientacionMetodologicaVariaciones();
 ?>
 
 <div class="container-fluid">
             <div class="ieo-form">
 
-                    <?= $form->field($semanLogros, "[$idProyecto]semana1")->textInput([ 'value' => $datos[$idProyecto]['semana1'] ])?>
-                    <?= $form->field($semanLogros, "[$idProyecto]semana2")->textInput([ 'value' => $datos[$idProyecto]['semana2'] ])?>
-                    <?= $form->field($semanLogros, "[$idProyecto]semana3")->textInput([ 'value' => $datos[$idProyecto]['semana3'] ])?> 
-                    <?= $form->field($semanLogros, "[$idProyecto]semana4")->textInput([ 'value' => $datos[$idProyecto]['semana4'] ])?>
-                    <?= $form->field($semanLogros, "[$idProyecto]estado")->hiddenInput( [ 'value' => '1' ] )->label(false ) ?>
+                    <?= $form->field($semanLogros, "[$idIsaForDebRet]semana1")->textInput([ 'value' => $datos[$idIsaForDebRet]['semana1'] ])?>
+                    <?= $form->field($semanLogros, "[$idIsaForDebRet]semana2")->textInput([ 'value' => $datos[$idIsaForDebRet]['semana2'] ])?>
+                    <?= $form->field($semanLogros, "[$idIsaForDebRet]semana3")->textInput([ 'value' => $datos[$idIsaForDebRet]['semana3'] ])?> 
+                    <?= $form->field($semanLogros, "[$idIsaForDebRet]semana4")->textInput([ 'value' => $datos[$idIsaForDebRet]['semana4'] ])?>
+                    <?= $form->field($semanLogros, "[$idIsaForDebRet]id_for_deb_ret")->hiddenInput( [ 'value' => $idIsaForDebRet ] )->label(false ) ?>
+                    <?= $form->field($semanLogros, "[$idIsaForDebRet]estado")->hiddenInput( [ 'value' => '1' ] )->label(false ) ?>
+					
+					<?= $form->field($orientacion, "[$idIsaForDebRet]descripcion")->textInput([ 'value' => $datos[$idIsaForDebRet]['descripcion'] ])->label("ORIENTACION METODOLÓGICA")?>
+					<?= $form->field($orientacion, "[$idIsaForDebRet]id_variaciones_actividades")->hiddenInput( [ 'value' => $idVariaciones ] )->label(false ) ?>
             </div>
 </div>

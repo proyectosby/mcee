@@ -13,6 +13,10 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 <div class="isa-seguimiento-proceso-form">
 
     <?php $form = ActiveForm::begin(); ?>
+	
+	<?= $form->field($model, "seguimiento_proceso")->textInput()?>
+	
+	
 	<?= $form->field($model, 'fecha_desde')->widget(
 			DatePicker::className(), [
 				

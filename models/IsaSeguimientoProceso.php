@@ -51,8 +51,8 @@ class IsaSeguimientoProceso extends \yii\db\ActiveRecord
             'seguimiento_proceso' => 'Seguimiento Proceso',
             'fecha_desde' => 'Fecha Desde',
             'fecha_hasta' => 'Fecha Hasta',
-            'id_institucion' => 'Id Institucion',
-            'id_sede' => 'Id Sede',
+            'id_institucion' => 'Institución',
+            'id_sede' => 'Sede',
             'estado' => 'Estado',
         ];
     }

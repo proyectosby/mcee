@@ -18,8 +18,8 @@ foreach ($logros as $idLogros => $dataLogros)
 														[ 
 															'idLogros' => $idLogros,
 															'form' => $form,
-															'idProyecto' => $idProyecto,
 															'datos' => $datos,
+															'idActividad' => $idActividad,
 														] 
 											),
 						'contentOptions'=> []

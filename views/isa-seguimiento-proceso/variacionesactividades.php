@@ -19,7 +19,6 @@ foreach ($variaciones as $idVariaciones => $dataVariaciones)
 														[ 
 															'idVariaciones' => $idVariaciones,
 															'form' => $form,
-															'idProyecto' => $idProyecto,
 															'datos' => $datos,
 														] 
 											),
