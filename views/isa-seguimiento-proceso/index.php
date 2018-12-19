@@ -9,10 +9,10 @@ use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\IsaOrientacionProcesoBuscar */
+/* @var $searchModel app\models\IsaSeguimientoProcesoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Isa Orientación Procesos';
+$this->title = 'Seguimiento Procesos';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Orientación Procesos</h3>
+<h3>Seguimiento Procesos</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="isa-orientacion-proceso-index">
+<div class="isa-seguimiento-proceso-index">
 
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -79,11 +79,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			
-            'orientacion_proceso',
+
+            
+            'seguimiento_proceso',
             'fecha_desde',
             'fecha_hasta',
-            //'id_institucion',
+            // 'id_institucion',
             //'id_sede',
             //'estado',
 

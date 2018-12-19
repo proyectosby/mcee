@@ -103,6 +103,7 @@ class IsaOrientacionProcesoController extends Controller
     {
         $searchModel = new IsaOrientacionProcesoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider->query->andWhere( "estado=1" ); 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -282,11 +283,13 @@ class IsaOrientacionProcesoController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+	public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+		$model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
+		
+		return $this->redirect(['index']);	
     }
 
     /**
