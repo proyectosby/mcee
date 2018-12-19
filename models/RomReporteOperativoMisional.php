@@ -47,6 +47,7 @@ class RomReporteOperativoMisional extends \yii\db\ActiveRecord
             'id_institucion' => 'Institucion',
             'id_sedes' => 'Sedes',
             'estado' => 'Estado',
+            'nombre_institucion' => 'Nombre institución'
         ];
     }
 }
