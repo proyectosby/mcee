@@ -16,7 +16,7 @@ use Yii;
  * @property string $caracterizacion_justificacion
  * @property int $estado
  */
-class IsaIniciacionSencibilizacionArtistica extends \yii\db\ActiveRecord
+class CbacIniciacionSencibilizacionArtistica extends \yii\db\ActiveRecord
 {
     public $nombre_institucion;
     
@@ -25,7 +25,7 @@ class IsaIniciacionSencibilizacionArtistica extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'isa.iniciacion_sencibilizacion_artistica';
+        return 'cbac.iniciacion_sencibilizacion_artistica';
     }
 
     /**

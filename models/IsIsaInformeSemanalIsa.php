@@ -47,11 +47,12 @@ class IsIsaInformeSemanalIsa extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_institucion' => 'Institucion',
+            'id_institucion' => 'Institución',
             'id_sede' => 'Sede',
             'desde' => 'Desde',
             'hasta' => 'Hasta',
             'estado' => 'Estado',
+            'nombre_institucion' => 'Nombre institución'
         ];
     }
 }

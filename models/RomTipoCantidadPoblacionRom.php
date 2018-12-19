@@ -51,7 +51,7 @@ class RomTipoCantidadPoblacionRom extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_actividad_rom' => 'Id Actividad Rom',
             'vecinos' => 'Vecinos',
-            'lideres_comunitarios' => 'Lideres Comunitarios',
+            'lideres_comunitarios' => 'Líderes Comunitarios',
             'empresarios_comerciantes' => 'Empresarios Comerciantes',
             'organizaciones_locales' => 'Organizaciones Locales',
             'grupos_comunitarios' => 'Grupos Comunitarios',

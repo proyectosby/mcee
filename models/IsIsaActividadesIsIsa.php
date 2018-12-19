@@ -54,15 +54,15 @@ class IsIsaActividadesIsIsa extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_informe_semanal_isa' => 'Id Informe Semanal Isa',
-            'duracion' => 'Duracion',
+            'id_informe_semanal_isa' => 'Informe Semanal Isa',
+            'duracion' => 'Duración',
             'docente' => 'Docente',
             'equipos' => 'Equipos',
             'logros' => 'Logros',
             'variaciones_devilidades' => 'Variaciones Devilidades',
             'variaciones_fortalezas' => 'Variaciones Fortalezas',
             'retos' => 'Retos',
-            'articulacion' => 'Articulacion',
+            'articulacion' => 'Articulación',
             'alrmas' => 'Alrmas',
             'estado' => 'Estado',
             'id_actividad' => 'Id Actividad',
