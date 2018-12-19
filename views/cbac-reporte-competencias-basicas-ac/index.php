@@ -11,16 +11,9 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Isa Iniciacion Sencibilizacion Artisticas';
+$this->title = 'Cbac Reporte Competencias Basicas Acs';
 $this->params['breadcrumbs'][] = $this->title;
-
-$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
-if( isset($guardado) && $guardado == 1 ){
-	echo Html::hiddenInput( 'guardadoFormulario', '1' );
-}
-?>
+?> 
 
 <h1></h1>
 	
@@ -29,7 +22,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Iniciacion Sencibilizacion Artistica</h3>
+<h3>NombreCrud</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -38,7 +31,7 @@ if( isset($guardado) && $guardado == 1 ){
 </div>
 </div>
 </div>
-<div class="isa-iniciacion-sencibilizacion-artistica-index">
+<div class="cbac-reporte-competencias-basicas-ac-index">
 
    
 
@@ -86,13 +79,9 @@ if( isset($guardado) && $guardado == 1 ){
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_insticion',
-            'id_sede',
-            'caracterizacion_si_no',
-            'caracterizacion_nombre',
-            //'caracterizacion_fecha',
-            //'caracterizacion_justificacion',
-            //'estado',
+            'id_institucion',
+            'id_sedes',
+            'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',
