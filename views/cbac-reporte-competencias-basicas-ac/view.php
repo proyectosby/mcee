@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\IsaIniciacionSencibilizacionArtistica */
+/* @var $model app\models\CbacReporteCompetenciasBasicasAc */
 
 $this->title = "Detalles";
-$this->params['breadcrumbs'][] = ['label' => 'Isa Iniciacion Sencibilizacion Artisticas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Cbac Reporte Competencias Basicas Acs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
-<div class="isa-iniciacion-sencibilizacion-artistica-view">
+<div class="cbac-reporte-competencias-basicas-ac-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,12 +30,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         'model' => $model,
         'attributes' => [
             'id',
-            'id_insticion',
-            'id_sede',
-            'caracterizacion_si_no',
-            'caracterizacion_nombre',
-            'caracterizacion_fecha',
-            'caracterizacion_justificacion',
+            'id_institucion',
+            'id_sedes',
             'estado',
         ],
     ]) ?>

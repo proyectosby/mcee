@@ -9,7 +9,7 @@ foreach( $fases as $keyFase => $fase ){
 	/*$sesiones = Sesiones::find()
 					->andWhere( 'id_fase='.$fase->id )
 					->all();*/
-
+    
 	$items[] = 	[
 					'label' 		=>  $fase,
 					'content' 		=>  $this->render( 'faseItem', 
@@ -17,7 +17,9 @@ foreach( $fases as $keyFase => $fase ){
 														'form' => $form,
                                                         "model" => $model,
                                                         'proyecto' => $keyFase,
-                                                        'actividades_isa' => $actividades_isa
+                                                        'actividades_rom' => $actividades_rom,
+                                                        'tipo_poblacion_rom' => $tipo_poblacion_rom,
+                                                        'evidencias_rom' => $evidencias_rom,
 														
 													] 
 										),
