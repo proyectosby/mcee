@@ -27,6 +27,7 @@ foreach ($actividadesSeguimiento as $idActividad => $dataActividad)
 																'idActividad' => $idActividad,
 																'form' => $form,
 																'datos' => $datos,
+																'idProyecto' => $idProyecto,
 															] 
 														),
 												$this->render
@@ -35,6 +36,7 @@ foreach ($actividadesSeguimiento as $idActividad => $dataActividad)
 																'idActividad' => $idActividad,
 																'form' => $form,
 																'datos' => $datos,
+																'idProyecto' => $idProyecto,
 															] 
 														),
 												$this->render
@@ -43,6 +45,7 @@ foreach ($actividadesSeguimiento as $idActividad => $dataActividad)
 																'idActividad' => $idActividad,
 																'form' => $form,
 																'datos' => $datos,
+																'idProyecto' => $idProyecto,
 															] 
 														),														
 											],

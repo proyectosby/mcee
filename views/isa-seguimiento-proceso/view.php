@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\Instituciones;
+use app\models\Sedes;
 /* @var $this yii\web\View */
 /* @var $model app\models\IsaSeguimientoProceso */
 
@@ -29,13 +30,24 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'seguimiento_proceso',
             'fecha_desde',
             'fecha_hasta',
-            'id_institucion',
-            'id_sede',
-            'estado',
+            
+			[
+				'attribute' => 'id_institucion',
+				'value' => function( $model ){
+					$institucion = Instituciones::findOne( $model->id_institucion );
+					return $institucion ? $institucion->descripcion: '' ;
+				},
+			],
+			[
+				'attribute' => 'id_sede',
+				'value' => function( $model ){
+					$sedes = Sedes::findOne($model->id_sede);
+					return $sedes ? $sedes->descripcion : '';
+				},
+			],
         ],
     ]) ?>
 

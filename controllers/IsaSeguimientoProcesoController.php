@@ -24,6 +24,11 @@ use yii\bootstrap\Collapse;
 use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\IsaSeguimientoProyectos;
+use app\models\IsaPorcentajesActividades;
+use app\models\IsaSemanaLogros;
+use app\models\IsaSemanaLogrosForDebRet;
+use app\models\IsaOrientacionMetodologicaActividades;
+use app\models\IsaOrientacionMetodologicaVariaciones;
 
 
 /**
@@ -150,8 +155,8 @@ class IsaSeguimientoProcesoController extends Controller
 			{
 				$arrayDatosActivides[$datos]['id_seguimiento_proceso']=$model->id;
 			}
-			
-			$columnNameArrayIsaPorcentajesActividades=['total_sesiones','avance_sede','avance_ieo','seguimiento_actividades','evaluacion_actividades','estado','id_seguimiento_proceso'];
+	
+			$columnNameArrayIsaPorcentajesActividades=['total_sesiones','avance_sede','avance_ieo','seguimiento_actividades','evaluacion_actividades','id_actividades_seguimiento','estado','id_seguimiento_proceso',];
 			
 			// inserta todos los datos que trae el array 
 			$insertCount = Yii::$app->db->createCommand()
@@ -260,10 +265,216 @@ class IsaSeguimientoProcesoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) 
+		{
+			
+			$post = Yii::$app->request->post();
+			// echo "<pre>"; print_r($post); echo "</pre>"; 
+
+			// die;
+			$connection = Yii::$app->getDb();
+			$arrayDatosIsaPorcentajesActividades = $post['IsaPorcentajesActividades'];
+			foreach($arrayDatosIsaPorcentajesActividades as $idPlaneacion => $val)
+			{
+				$command = $connection->createCommand
+				(" 
+					UPDATE isa.porcentajes_actividades set 			
+					total_sesiones 	='". $val['total_sesiones']."', 
+					avance_sede 	='". $val['avance_sede']."', 
+					avance_ieo 		='". $val['avance_ieo']."', 
+					seguimiento_actividades	 ='". $val['seguimiento_actividades']."', 
+					evaluacion_actividades	 ='". $val['evaluacion_actividades']."'
+					WHERE id_seguimiento_proceso = $id and  id_actividades_seguimiento =". $val['id_actividades_seguimiento']."
+				");
+				$result = $command->queryAll();
+			}
+			
+			 
+			$arrayDatosIsaSemanaLogros = $post['IsaSemanaLogros'];
+			foreach($arrayDatosIsaSemanaLogros as $idLogros => $val)
+			{
+				$command = $connection->createCommand
+				(" 
+					UPDATE isa.semana_logros set 			
+					semana1  ='". $val['semana1']."', 
+					semana2  ='". $val['semana2']."', 
+					semana3  ='". $val['semana3']."', 
+					semana4  ='". $val['semana4']."'
+					WHERE id_seguimiento_proceso = $id and id_logros_actividades = $idLogros
+				");
+				$result = $command->queryAll();
+			}
+			
+			
+			$arrayDatosisaSemanaLogrosForDebRet = $post['IsaSemanaLogrosForDebRet'];
+			foreach($arrayDatosisaSemanaLogrosForDebRet as $idLogrosfdr => $val)
+			{
+				$command = $connection->createCommand
+				(" 
+					UPDATE isa.semana_logros_for_deb_ret set 			
+					semana1  ='". $val['semana1']."', 
+					semana2  ='". $val['semana2']."', 
+					semana3  ='". $val['semana3']."', 
+					semana4  ='". $val['semana4']."'
+					WHERE id_seguimiento_proceso = $id and id_for_deb_ret = $idLogros
+				");
+				$result = $command->queryAll();
+			}
+			
+			
+				
+			$arrayDatosIsaOrientacionMetodologicaActividades = $post['IsaOrientacionMetodologicaActividades'];
+			foreach($arrayDatosIsaOrientacionMetodologicaActividades as $idActividades => $val)
+			{
+				$command = $connection->createCommand
+				(" 
+					UPDATE isa.orientacion_metodologica_actividades set 			
+					descripcion  ='". $val['descripcion']."'
+					
+					WHERE id_seguimiento_proceso = $id and id_actividades = $idLogros
+				");
+				$result = $command->queryAll();
+			}
+			
+		
+			$arrayDatosIsaOrientacionMetodologicaVariaciones = $post['IsaOrientacionMetodologicaVariaciones'];
+			foreach($arrayDatosIsaOrientacionMetodologicaVariaciones as $idActividades => $val)
+			{
+				$command = $connection->createCommand
+				(" 
+					UPDATE isa.orientacion_metodologica_variaciones set 			
+					descripcion  ='". $val['descripcion']."'
+					WHERE id_seguimiento_proceso = $id and id_variaciones_actividades = $idLogros
+				");
+				$result = $command->queryAll();
+			}
+			
+				
+			$model->save();
             return $this->redirect(['index']);
         }
-
+		
+		// incio -- se llenan los datos del formulario desde la base de datos
+		$isaPorcentajesActividades = new IsaPorcentajesActividades();
+		$isaPorcentajesActividades = $isaPorcentajesActividades->find()->orderby("id")->andWhere("id_seguimiento_proceso=$id")->all();
+		
+		//se trae la informacionde la basse de datos tabla ec.avances
+		$resultisaPorcentajesActividades = ArrayHelper::getColumn($isaPorcentajesActividades, function ($element) 
+		{
+			$dato[$element['id_actividades_seguimiento']]['total_sesiones']= $element['total_sesiones'];
+			$dato[$element['id_actividades_seguimiento']]['avance_sede']= $element['avance_sede'];
+			$dato[$element['id_actividades_seguimiento']]['avance_ieo']= $element['avance_ieo'];
+			$dato[$element['id_actividades_seguimiento']]['seguimiento_actividades']= $element['seguimiento_actividades'];
+			$dato[$element['id_actividades_seguimiento']]['evaluacion_actividades']= $element['evaluacion_actividades'];
+			$dato[$element['id_actividades_seguimiento']]['id_seguimiento_proceso']= $element['id_seguimiento_proceso'];
+			$dato[$element['id_actividades_seguimiento']]['id_actividades_seguimiento']= $element['id_actividades_seguimiento'];
+			return $dato;
+		});
+		
+		
+		//se formate la informacion que deben tener los campos tabla ec.avances
+		foreach	($resultisaPorcentajesActividades as $r => $valor)
+		{
+			foreach	($valor as $ids => $valores)
+				
+				$datos['PorcentajesActividades'][$ids] = $valores;
+		}
+		
+	
+		$isaSemanaLogros = new IsaSemanaLogros();
+		$isaSemanaLogros = $isaSemanaLogros->find()->orderby("id")->andWhere("id_seguimiento_proceso=$id")->all();
+		
+		//se trae la informacionde la basse de datos tabla ec.avances
+		$resultisaSemanaLogros = ArrayHelper::getColumn($isaSemanaLogros, function ($element) 
+		{
+			$dato[$element['id_logros_actividades']]['semana1']= $element['semana1'];
+			$dato[$element['id_logros_actividades']]['semana2']= $element['semana2'];
+			$dato[$element['id_logros_actividades']]['semana3']= $element['semana3'];
+			$dato[$element['id_logros_actividades']]['semana4']= $element['semana4'];
+			$dato[$element['id_logros_actividades']]['id_logros_actividades']= $element['id_logros_actividades'];
+			$dato[$element['id_logros_actividades']]['id_seguimiento_proceso']= $element['id_seguimiento_proceso'];
+			return $dato;
+		});
+		
+		
+		//se formate la informacion que deben tener los campos tabla ec.avances
+		foreach	($resultisaSemanaLogros as $r => $valor)
+		{
+			foreach	($valor as $ids => $valores)
+				
+				$datos['SemanaLogros'][$ids] = $valores;
+		}
+		
+		$isaSemanaLogrosForDebRet = new IsaSemanaLogrosForDebRet();
+		$isaSemanaLogrosForDebRet = $isaSemanaLogrosForDebRet->find()->orderby("id")->andWhere("id_seguimiento_proceso=$id")->all();
+		
+		//se trae la informacionde la basse de datos tabla ec.avances
+		$resultisaSemanaLogros = ArrayHelper::getColumn($isaSemanaLogrosForDebRet, function ($element) 
+		{
+			$dato[$element['id_for_deb_ret']]['semana1']= $element['semana1'];
+			$dato[$element['id_for_deb_ret']]['semana2']= $element['semana2'];
+			$dato[$element['id_for_deb_ret']]['semana3']= $element['semana3'];
+			$dato[$element['id_for_deb_ret']]['semana4']= $element['semana4'];
+			$dato[$element['id_for_deb_ret']]['id_for_deb_ret']= $element['id_for_deb_ret'];
+			$dato[$element['id_for_deb_ret']]['id_seguimiento_proceso']= $element['id_seguimiento_proceso'];
+			return $dato;
+		});
+		
+		
+		//se formate la informacion que deben tener los campos tabla ec.avances
+		foreach	($resultisaSemanaLogros as $r => $valor)
+		{
+			foreach	($valor as $ids => $valores)
+				
+				$datos['semanaLogrosfdr'][$ids] = $valores;
+		}
+		
+		
+		$isaOrientacionMetodologicaActividades = new IsaOrientacionMetodologicaActividades();
+		$isaOrientacionMetodologicaActividades = $isaOrientacionMetodologicaActividades->find()->orderby("id")->andWhere("id_seguimiento_proceso=$id")->all();
+		
+		//se trae la informacionde la basse de datos tabla ec.avances
+		$resultisaOrientacionMetodologicaActividades = ArrayHelper::getColumn($isaOrientacionMetodologicaActividades, function ($element) 
+		{
+			$dato[$element['id_actividades']]['descripcion']= $element['descripcion'];
+			$dato[$element['id_actividades']]['id_actividades']= $element['id_actividades'];
+			$dato[$element['id_actividades']]['id_seguimiento_proceso']= $element['id_seguimiento_proceso'];
+			return $dato;
+		});
+		
+		
+		//se formate la informacion que deben tener los campos tabla ec.avances
+		foreach	($resultisaOrientacionMetodologicaActividades as $r => $valor)
+		{
+			foreach	($valor as $ids => $valores)
+				
+				$datos['OrientacionMetodologicaActividades'][$ids] = $valores;
+		}
+		
+		
+		
+		$isaOrientacionMetodologicaVariaciones = new IsaOrientacionMetodologicaVariaciones();
+		$isaOrientacionMetodologicaVariaciones = $isaOrientacionMetodologicaVariaciones->find()->orderby("id")->andWhere("id_seguimiento_proceso=$id")->all();
+		
+		//se trae la informacionde la basse de datos tabla ec.avances
+		$resultisaOrientacionMetodologicaVariaciones = ArrayHelper::getColumn($isaOrientacionMetodologicaVariaciones, function ($element) 
+		{
+			$dato[$element['id_variaciones_actividades']]['descripcion']= $element['descripcion'];
+			$dato[$element['id_variaciones_actividades']]['id_variaciones_actividades']= $element['id_variaciones_actividades'];
+			$dato[$element['id_variaciones_actividades']]['id_seguimiento_proceso']= $element['id_seguimiento_proceso'];
+			return $dato;
+		});
+		
+		
+		//se formate la informacion que deben tener los campos tabla ec.avances
+		foreach	($resultisaOrientacionMetodologicaVariaciones as $r => $valor)
+		{
+			foreach	($valor as $ids => $valores)
+				
+				$datos['OrientacionMetodologicaVariaciones'][$ids] = $valores;
+		}
+		
+		// fin -- se llenan los datos del formulario desde la base de datos
         return $this->renderAjax('update', [
             'model' => $model,
 			'sedes' => $this->obtenerSede(),
