@@ -11,9 +11,16 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '2 Reporte Competencias Basicas Arte y Cultura';
+$this->title = '3 Informe de ejecucion semanal Competencias Arte y Cultura';
 $this->params['breadcrumbs'][] = $this->title;
-?> 
+
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
+?>
 
 <h1></h1>
 	
@@ -22,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Reporte Competencias Basicas Arte y Cultura</h3>
+<h3>Informe de ejecucion semanal Competencias Arte y Cultura</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -31,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="cbac-reporte-competencias-basicas-ac-index">
+<div class="cbac-informe-semanal-cac-index">
 
    
 
@@ -80,8 +87,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'id_institucion',
-            'id_sedes',
-            'estado',
+            'id_sede',
+            'desde',
+            'hasta',
+            //'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',

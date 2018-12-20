@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\CbacReporteCompetenciasBasicasAc */
+/* @var $model app\models\CbacInformeSemanalCac */
 
-$this->title = 'Nuevo Reporte Competencias Basicas Arte y Cultura';
-$this->params['breadcrumbs'][] = ['label' => 'Cbac Reporte Competencias Basicas Acs', 'url' => ['index']];
+$this->title = 'Nuevo Informe de ejecucion semanal Competencias Arte y Cultura';
+$this->params['breadcrumbs'][] = ['label' => 'Cbac Informe Semanal Cacs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
-<div class="cbac-reporte-competencias-basicas-ac-create">
+<div class="cbac-informe-semanal-cac-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
