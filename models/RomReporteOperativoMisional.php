@@ -20,7 +20,7 @@ class RomReporteOperativoMisional extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rom.reporte_operativo_misional';
+        return 'isa.reporte_operativo_misional';
     }
 
     /**
@@ -47,6 +47,7 @@ class RomReporteOperativoMisional extends \yii\db\ActiveRecord
             'id_institucion' => 'Institucion',
             'id_sedes' => 'Sedes',
             'estado' => 'Estado',
+            'nombre_institucion' => 'Nombre institución'
         ];
     }
 }

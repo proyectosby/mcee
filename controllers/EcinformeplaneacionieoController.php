@@ -484,7 +484,7 @@ class EcinformeplaneacionieoController extends Controller
 					// $modelPorcentajes->id_proceso = 0;
 					$modelPorcentajes->id_proceso = $idProcesos[$i];
 				}
-				echo $idsPreguntaPorcentajeAvance[$i];
+				
 				$modelPorcentajes->id_pregunta_porcentaje_avance = $idsPreguntaPorcentajeAvance[$i]; 
 				$modelPorcentajes->id_informe_planeacion = $idInforme;
 				$modelPorcentajes->fecha_avance = date("Y-m-d H:i:s");

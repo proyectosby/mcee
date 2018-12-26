@@ -75,33 +75,42 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			 <?= Html::a('Reporte', 
 									[
-										'ejecucion-fase-i/create',
+										'rom-reporte-operativo-misional/index',
 										// 'idReporte'		=> 2,
 									], 
-									['class' => 'btn btn-info'
+									['class' => 'btn btn-success'
 			]) ?> 
 			
 			<?= Html::a('Informe de ejecución semanal', 
 									[
 										
-										'ejecucion-fase-ii/create',
+										'is-isa-informe-semanal-isa/index',
 										// 'idReporte'		=> 3, 
 									], 
-									['class' => 'btn btn-info'
+									['class' => 'btn btn-success'
 			]) ?>
 			
-			<?= Html::a('Orientación del proceso', 
+			<?= Html::a('Orientación del proceso - Seguimiento', 
 									[
-										'ejecucion-fase-iii/create',
+										'isa-seguimiento-proceso/index',
 										// 'idReporte'		=> 4,
 									], 
-									['class' => 'btn btn-info'
+									['class' => 'btn btn-success'
 			]) ?>
 			
 			
 		</div>
 
 		<div class="form-group">
+			
+			<?= Html::a('Orientación del proceso - Orientación', 
+									[
+										'isa-orientacion-proceso/index',
+										// 'idReporte'		=> 4,
+									], 
+									['class' => 'btn btn-success'
+			]) ?>
+			
 			<?= Html::a('Consolidado por mes', 
 										[
 											'semilleros-tic-diario-de-campo/index',

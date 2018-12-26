@@ -30,7 +30,7 @@ class RomEvidenciasRom extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'rom.evidencias_rom';
+        return 'isa.evidencias_rom';
     }
 
     /**
@@ -61,13 +61,13 @@ class RomEvidenciasRom extends \yii\db\ActiveRecord
             'listados' => 'Listados',
             'plan_trabajo' => 'Plan Trabajo',
             'formato_seguimiento' => 'Formato Seguimiento',
-            'formato_evaluacion' => 'Formato Evaluacion',
-            'fotografias' => 'Fotografias',
+            'formato_evaluacion' => 'Formato Evaluació  n',
+            'fotografias' => 'Fotografías',
             'vidoes' => 'Vidoes',
             'otros_productos' => 'Otros Productos',
             'cantidad' => 'Cantidad',
             'archivos_enviados_entregados' => 'Archivos enviados o entregados a:',
-            'fecha_entrega_envio' => 'Fecha Entrega Envio',
+            'fecha_entrega_envio' => 'Fecha Entrega Envío',
             'estado' => 'Estado',
         ];
     }

@@ -19,6 +19,7 @@ use Yii;
 class IsaIniciacionSencibilizacionArtistica extends \yii\db\ActiveRecord
 {
     public $nombre_institucion;
+    
     /**
      * @inheritdoc
      */
