@@ -117,9 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				},
 				
 				'informe' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-download-alt" value ="'.$url.'"></span>', $url, [
-								'title' => ( 'Informe'),
-					]);
+					return Html::a('<span name="informe" class="glyphicon glyphicon-download-alt" value ="'.$url.'"></span>', $url, ['title' => Yii::t('app', 'Informe'),'target'=>'_blank', 'data-pjax'=>"0"]);
 				},
 			  ],
 			
