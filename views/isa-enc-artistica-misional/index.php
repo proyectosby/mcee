@@ -9,18 +9,12 @@ use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\IsaEncArtisticaMisionalBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Iniciación Sensibilización Artistica';
+$this->title = 'Isa Enc Artistica Misionals';
 $this->params['breadcrumbs'][] = $this->title;
-
-$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
-if( isset($guardado) && $guardado == 1 ){
-	echo Html::hiddenInput( 'guardadoFormulario', '1' );
-}
-?>
+?> 
 
 <h1></h1>
 	
@@ -29,7 +23,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Iniciación Sensibilización Artistica</h3>
+<h3>NombreCrud</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -38,9 +32,10 @@ if( isset($guardado) && $guardado == 1 ){
 </div>
 </div>
 </div>
-<div class="isa-iniciacion-sencibilizacion-artistica-index">
+<div class="isa-enc-artistica-misional-index">
 
    
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
@@ -82,17 +77,15 @@ if( isset($guardado) && $guardado == 1 ){
 				],
 			],
 	],
-        'columns' => [
+           'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_insticion',
+            'id_institucion',
             'id_sede',
-            'caracterizacion_si_no',
-            'caracterizacion_nombre',
-            //'caracterizacion_fecha',
-            //'caracterizacion_justificacion',
-            //'estado',
+            'estado',
+            'periodo',
+            //'fecha',
 
             [
 			'class' => 'yii\grid\ActionColumn',

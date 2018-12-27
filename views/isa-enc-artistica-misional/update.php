@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\IsaIniciacionSencibilizacionArtistica */
+/* @var $model app\models\IsaEncArtisticaMisional */
 
-$this->title = 'Actualizar Iniciación Sensibilización Artistica';
-$this->params['breadcrumbs'][] = ['label' => 'Iniciación Sensibilización Artistica', 'url' => ['index']];
+$this->title = 'Actualizar';
+$this->params['breadcrumbs'][] = ['label' => 'Isa Enc Artistica Misionals', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = "Actualizar";
 ?>
-<div class="isa-iniciacion-sencibilizacion-artistica-update">
+<div class="isa-enc-artistica-misional-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
