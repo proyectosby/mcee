@@ -7,6 +7,16 @@ use dosamigos\datepicker\DatePicker;
 
 use yii\bootstrap\Collapse;
 
+$this->registerJsFile(
+    '@web/js/isaIniciacionSensibilizacionArtisticaConsolidado.js',
+    [
+		'depends' => [
+						\yii\web\JqueryAsset::className(),
+						\dosamigos\editable\EditableBootstrapAsset::className(),
+					]
+	]
+);
+
 if( $guardado ){
 	
 	$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
@@ -69,6 +79,32 @@ foreach( $actividades as $keySesion => $actividad )
 		'items' => $items,
 		'options' => [ "id" => "collapseOne" ],
 	]); ?>
+	
+	<div class="form-group">
+	
+		<?= Html::label( "Porcentaje de Avance por Sede" ) ?>
+		
+		<?= Html::textInput( "total_porcentaje_sede", "", [ 
+					"class" 		=> "form-control", 
+					"style" 		=> "background-color:#eee",
+					"disabled" 		=> true, 
+					"id" 			=> "total_porcentaje_sede", 
+				] ) ?>
+		
+	</div>
+	
+	<div class="form-group">
+	
+		<?= Html::label( "Porcentaje de Avance por IEO" ) ?>
+		
+		<?= Html::textInput( "total_porcentaje_sede", "", [ 
+					"class" 		=> "form-control", 
+					"style" 		=> "background-color:#eee",
+					"disabled" 		=> true, 
+					"id" 			=> "total_porcentaje_ieo", 
+				] ) ?>
+		
+	</div>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

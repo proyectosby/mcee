@@ -111,12 +111,19 @@ $this->params['breadcrumbs'][] = $this->title;
 									['class' => 'btn btn-success'
 			]) ?>
 			
-			<?= Html::a('Consolidado por mes', 
+			<?= Html::a('Consolidado por mes - Operativo', 
 										[
-											'semilleros-tic-diario-de-campo/index',
+											'isa-iniciacion-sensibilizacion-artistica-consolidado/create',
 											// 'idReporte'		=> 5,
 										], 
-										['class' => 'btn btn-info']) ?>
+										['class' => 'btn btn-success']) ?>
+										
+			<?= Html::a('Consolidado por mes - Misional', 
+										[
+											'isa-enc-artistica-misional/create',
+											// 'idReporte'		=> 5,
+										], 
+										['class' => 'btn btn-success']) ?>
 										
 										
 			

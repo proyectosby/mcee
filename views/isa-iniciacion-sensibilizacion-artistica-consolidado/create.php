@@ -10,6 +10,13 @@ $this->title = 'Agregar Isa Iniciacion Sensibilizacion Artistica Consolidado';
 $this->params['breadcrumbs'][] = ['label' => 'Isa Iniciacion Sensibilizacion Artistica Consolidados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
+
+<?= Html::a('Volver', 
+									[
+										'sensibilizacion-artistica/index',
+									], 
+									['class' => 'btn btn-info']) ?>
+
 <div class="isa-iniciacion-sensibilizacion-artistica-consolidado-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
