@@ -1,40 +1,39 @@
 <?php
 
-/**********
-Modificación: 
-Fecha: 23-10-2018
-Desarrollador: Maria Viviana Rodas
-Descripción: Se agrega boton de volver al index donde estan los botones de competencias basicas - proyecto
----------------------------------------
-
-**********/
-
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
-use app\models\Instituciones;
-use app\models\Sedes;
-use app\models\Parametro;
 
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EcInformePlaneacionIeoSearch */
+/* @var $searchModel app\models\EcInformeEjecutivoEstadoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '4. Informe ejecutivo del estado del eje en la IEO';
 $this->params['breadcrumbs'][] = $this->title;
-$idTipoInforme =$_GET['idTipoInforme'];
 
- 
+
+
+
+// $phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+// $document = $phpWord->loadTemplate('plantillas\4.InformePlantilla.docx');
+
+// $document->setValue('ieo', $institucion);
+
+// $document->saveAs('temp.docx'); // Save to temp file
+
+// \PhpOffice\PhpWord\Settings::setPdfRendererPath('tcpdf');
+// \PhpOffice\PhpWord\Settings::setPdfRendererName('TCPDF');
+
+// $phpWord = \PhpOffice\PhpWord\IOFactory::load('temp.docx'); 
+// $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+// $xmlWriter->save("temp.PDF");
 
 ?> 
-
-
-
 
 <h1></h1>
 	
@@ -43,7 +42,7 @@ $idTipoInforme =$_GET['idTipoInforme'];
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3><?php echo $this->title ?></h3>
+<h3>4. Informe ejecutivo del estado del eje en la IEO</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -52,24 +51,13 @@ $idTipoInforme =$_GET['idTipoInforme'];
 </div>
 </div>
 </div>
-<div class="ec-informe-planeacion-ieo-index">
+<div class="ec-informe-ejecutivo-estado-index">
 
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create','idTipoInforme'	=> $idTipoInforme]),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
-		
-		
-		
-		<?= Html::a('Volver', 
-									[
-										'ec-competencias-basicas-proyectos/index',
-									], 
-									['class' => 'btn btn-info']) ?>
-				
-
+        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
 		
     </p>
 
@@ -110,38 +98,23 @@ $idTipoInforme =$_GET['idTipoInforme'];
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			[
-				'attribute'=>'id_institucion',
-				'value' => function( $model )
-				{
-					$institucion = Instituciones::findOne($model->id_institucion);
-					return $institucion ? $institucion->descripcion : '';
-				}, 
-			],
-            [
-				'attribute' => 'id_sede',
-				'value' 	=> function( $model ){
-					$sede = Sedes::findOne( $model->id_sede );
-					return $sede ? $sede->descripcion : '';
-				},
-			],
-            // 'codigo_dane',
-            // 'zona_educativa',
-            //'id_comuna',
-            //'id_barrio',
-            
-			[
-				'attribute' => 'fase',
-				'value' 	=> function( $model ){
-					$fase = Parametro::findOne( $model->fase );
-					return $fase ? $fase->descripcion : '';
-				},
-			],
-            //'fecha_reporte',
+
+   
+            'id_eje',
+            // 'id_persona',
+            // 'id_coordinador',
+            // 'id_secretaria',
+            //'mision',
+            //'descripcion',
+            //'avance_producto',
+            //'hallazgos',
+            //'logros',
+            'fecha_creacion',
+            //'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
+			'template'=>'{view}{update}{delete}{informe}',
 				'buttons' => [
 				'view' => function ($url, $model) {
 					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
@@ -153,8 +126,13 @@ $idTipoInforme =$_GET['idTipoInforme'];
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
 								'title' => Yii::t('app', 'lead-update'),
 					]);
-				}
-
+				},
+				
+				'informe' => function ($url, $model) {
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-download-alt" value ="'.$url.'"></span>', $url, [
+								'title' => Yii::t('app', 'Informe'),
+					]);
+				},
 			  ],
 			
 			],
