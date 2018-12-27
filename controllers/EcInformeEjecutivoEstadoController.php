@@ -206,7 +206,9 @@ class EcInformeEjecutivoEstadoController extends Controller
 		$model = $this->findModel($id);
 		
 		$institucionNombre  = Instituciones::findOne($model->id_institucion)->descripcion;
+		
 		$ejeNombre  		= EcProyectos::findOne($model->id_eje)->descripcion;
+		
 		$idPersona			= PerfilesXPersonas::findOne($model->id_persona)->id_personas;
 		$nombrePersona 		= Personas::findOne($idPersona);
 		$nombrePersona 		= $nombrePersona->nombres." ".$nombrePersona->apellidos ;
@@ -219,8 +221,8 @@ class EcInformeEjecutivoEstadoController extends Controller
 		
 		
 		$idPerfilesXpersonasSecretaria	= PerfilesXPersonasInstitucion::findOne($model->id_secretaria)->id_perfiles_x_persona;
-		$perfiles_x_personaSecretaria 	= PerfilesXPersonas::findOne($idPerfilesXpersonasCoordinador)->id_personas;		
-		$secretaria 					= Personas::findOne($perfiles_x_personaCoordinador);
+		$perfiles_x_personaSecretaria 	= PerfilesXPersonas::findOne($idPerfilesXpersonasSecretaria)->id_personas;		
+		$secretaria 					= Personas::findOne($perfiles_x_personaSecretaria);
 		$secretaria 					= $secretaria->nombres." ".$secretaria->apellidos;
 		
 		
@@ -248,7 +250,14 @@ class EcInformeEjecutivoEstadoController extends Controller
 		$document->setValue('hallazgos', $hallazgos);
 		$document->setValue('logros', $logros);
 		
-		$document->saveAs('temp.docx'); // Save to temp file
+		$document->saveAs('informe.docx'); // Save to temp file
+		
+		
+		header("Content-disposition: attachment; filename=informe.docx");
+		header("Content-type: MIME");
+		readfile("informe.docx");
+		
+		
     }
 
     /**

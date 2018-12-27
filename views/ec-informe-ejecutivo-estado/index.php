@@ -7,6 +7,7 @@ use yii\helpers\Url;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
+use app\models\EcProyectos;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EcInformeEjecutivoEstadoBuscar */
@@ -14,24 +15,6 @@ use yii\grid\GridView;
 
 $this->title = '4. Informe ejecutivo del estado del eje en la IEO';
 $this->params['breadcrumbs'][] = $this->title;
-
-
-
-
-// $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-// $document = $phpWord->loadTemplate('plantillas\4.InformePlantilla.docx');
-
-// $document->setValue('ieo', $institucion);
-
-// $document->saveAs('temp.docx'); // Save to temp file
-
-// \PhpOffice\PhpWord\Settings::setPdfRendererPath('tcpdf');
-// \PhpOffice\PhpWord\Settings::setPdfRendererName('TCPDF');
-
-// $phpWord = \PhpOffice\PhpWord\IOFactory::load('temp.docx'); 
-// $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
-// $xmlWriter->save("temp.PDF");
 
 ?> 
 
@@ -98,10 +81,15 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-   
-            'id_eje',
-            // 'id_persona',
+			[
+				'attribute' => 'id_eje',
+				'value'		=> function( $model )
+								{
+									$ejes = EcProyectos::findOne($model->id_eje);
+									return $ejes ? $ejes->descripcion: '';
+							    },
+			],
+			// 'id_persona',
             // 'id_coordinador',
             // 'id_secretaria',
             //'mision',
@@ -130,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 				'informe' => function ($url, $model) {
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-download-alt" value ="'.$url.'"></span>', $url, [
-								'title' => Yii::t('app', 'Informe'),
+								'title' => ( 'Informe'),
 					]);
 				},
 			  ],
