@@ -26,7 +26,7 @@ if (@$_GET['instituciones'])
 	$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['institucionSeleccionada']])->one();
 	$nombreInstitucion = @$nombreInstitucion->descripcion;
 	$_SESSION['sede'][0]=-1;
-	die("$nombreInstitucion - SEDE NO ASIGNADA");
+    die("$nombreInstitucion - <label id='nameSede'>SEDE NO ASIGNADA</label>");
 }
 if (@$_GET['sede'])
 {
@@ -65,51 +65,90 @@ foreach($result as $r)
 	$datos.= "'$id':'$descripcion',";
 }
 
+if (!isset($_SESSION['institucionSeleccionada']) || (isset($_GET['institucion']) && $_GET['institucion'])){
 
-
-$this->registerJs( <<< EOT_JS_CODE
-	
-	//que institucion selecciono
-const {value: institucion} = swal({
-  title: 'Seleccione una Institución',
-  input: 'select',
-  inputOptions: { $datos
+    $this->registerJs( <<< EOT_JS_CODE
+        
+        //que institucion selecciono
+    const {value: institucion} = swal({
     
-  },
-  inputPlaceholder: 'Seleccione...',
-  inputValidator: (value) => {
-    return new Promise((resolve) => {
-      if (value !== '') 
-	  {  
-   
-		  //crear variable de session que tenga la institucion que seleciono
-		 var Institucion = $.get( "index.php?instituciones="+value, function(data) 
-			{
-				$("#InstitucionSede").html(" ");
-			
-				$("#InstitucionSede").append(data.replace('"', ' ').replace('"', ' '));
-				console.log(data.charAt(0));
-			})
-			  
-								 
-			  
-			  
-			resolve();
+        closeOnConfirm: false, 
+        closeOnCancel: false,
+        allowOutsideClick: false,
+        title: 'Seleccione una Institución',
+        input: 'select',
+        inputOptions: { $datos
+      },
+      inputPlaceholder: 'Seleccione...',
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value !== '') 
+          {  
+       
+              //crear variable de session que tenga la institucion que seleciono
+             var Institucion = $.get( "index.php?instituciones="+value, function(data) 
+                {
+                    $("#InstitucionSede").html(" ");
+                
+                    $("#InstitucionSede").append(data.replace('"', ' ').replace('"', ' '));
+                    console.log(data.charAt(0));
+                })
+                  
+             return fetch('index.php?r=sedes/sedes&idInstitucion='+value)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                (prueba) = response.json();
 
-      }
-	  else 
-	  {
-        resolve('Debe seleccionar una institucion')
+                const {valor: sede} = swal({
+                    closeOnConfirm: false,
+                    closeOnCancel: false,
+                    allowOutsideClick: false,
+                    title: 'Seleccione una sede',
+                    input: 'select',
+                    inputOptions: (prueba),
+                    inputPlaceholder: 'Seleccione una sede',
+
+                    inputValidator: (valor) => {
+                        return new Promise((resolve) => {
+                            if (valor !== '') {
+                                dataSede = {
+                                  id: valor
+                                };
+                                //variable de sesion con la sede que selecciono
+                                $.post("index.php?r=sedes/set-sede", dataSede, function (data) {
+                                    $('#nameSede').text(data);
+                                });
+			                    location.href = location.pathname
+                                resolve()
+                            }
+                            else {
+                                resolve('Debe seleccionar una sede')
+                            }
+                        })
+                    }
+                })
+            })           
+                resolve();
+    
+          }
+          else 
+          {
+            resolve('Debe seleccionar una institucion')
+          }
+        })
       }
     })
-  }
-})
-
-
-
+    
+    
+    
 
 EOT_JS_CODE
-);
+    );
+
+}
+
 
 
 ?>
