@@ -77,7 +77,7 @@ class RomActividadesRom extends \yii\db\ActiveRecord
             'duracion_sesion' => 'Duración de la sesión (Indique el tiempo  en horas y minutos)',
             'logros' => 'Logros (Indique los resultados de avance que permitan constatar que, por medio de las actividades realizadas, se está logrando desarrollar de programas de iniciación y sensibilización artística desde las instituciones educativas oficiales dirigidos a la comunidad...)',
             'fortalezas' => 'Fortalezas (Describa las fortalezas que se detectaron en el desarrollo de la actividad para potenciar los objetivos del proyecto.)',
-            'devilidades' => 'Debilidades (Describa las debilidades, dificultades, problemas que se le presentaron en el desarrollo de la actividad y que pueden afectar negativamente el  cumplimiento de los objetivos del proyecto)',
+            'debilidades' => 'Debilidades (Describa las debilidades, dificultades, problemas que se le presentaron en el desarrollo de la actividad y que pueden afectar negativamente el  cumplimiento de los objetivos del proyecto)',
             'alternativas' => 'Alternativas: Describa las decisiones y acciones adoptadas por su equipo para superar las dificultades presentadas.',
             'retos' => 'Retos (Condiciones externas a tener en cuenta y que pueden afectar o beneficiar el logro de  los objetivos del proyecto)',
             'articulacion' => 'Articulación  Resultado de la articulación con otros proyectos de la iniciativa MCEE (Si aplica)',
