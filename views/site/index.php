@@ -26,7 +26,7 @@ if (@$_GET['instituciones'])
 	$nombreInstitucion = Instituciones::find()->where(['id' => @$_SESSION['institucionSeleccionada']])->one();
 	$nombreInstitucion = @$nombreInstitucion->descripcion;
 	$_SESSION['sede'][0]=-1;
-	die("$nombreInstitucion - SEDE NO ASIGNADA");
+	die("$nombreInstitucion - <label id='nameSede'>SEDE NO ASIGNADA</label>");
 }
 if (@$_GET['sede'])
 {
@@ -71,10 +71,13 @@ $this->registerJs( <<< EOT_JS_CODE
 	
 	//que institucion selecciono
 const {value: institucion} = swal({
-  title: 'Seleccione una Institución',
-  input: 'select',
-  inputOptions: { $datos
-    
+
+    closeOnConfirm: false, 
+    closeOnCancel: false,
+    allowOutsideClick: false,
+    title: 'Seleccione una Institución',
+    input: 'select',
+    inputOptions: { $datos
   },
   inputPlaceholder: 'Seleccione...',
   inputValidator: (value) => {

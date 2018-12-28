@@ -33,15 +33,17 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
 							
 							$nombreSede = Sedes::find()->where(['id' => @$_SESSION['sede'][0]])->one();
 							$nombreSede = @$nombreSede->descripcion;
-							if($nombreSede == null)
-								$nombreSede = "SEDE NO ASIGNADA";
+							if($nombreSede == null){
+                                $nombreSede = "SEDE NO ASIGNADA";
+                            }
+
 							
-							
-							if($nombreInstitucion == null)
-								$nombreInstitucion = "INSTITUCIÓN NO ASIGNADA";
-								
+							if($nombreInstitucion == null){
+                                $nombreInstitucion = "INSTITUCIÓN NO ASIGNADA";
+                            }
+
 							// if($nombreInstitucion)
-								echo "&nbsp;&nbsp;&nbsp;$nombreInstitucion - $nombreSede";
+                                echo "<label>$nombreInstitucion</label> - <label id='nameSede'>$nombreSede</label>";
 								
 						?> 
 			
@@ -122,7 +124,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                           <!--  </ul>-->
                        <!-- </li>-->
                         <li class="footer"><a href="index.php">Cambiar Institución</a></li>
-                        <li class="footer"><a href='javascript:void(0);' id="cambiarSede">Cambiar sede</a></li>
+                        <li class="footer"><a onclick="changeSede()">Cambiar sede</a></li>
                     </ul>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -305,3 +307,42 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
         </div>
     </nav>
 </header>
+<script>
+    function changeSede(){
+        return fetch('index.php?r=sedes/sedes&idInstitucion='+<?= @$_SESSION['instituciones'][0]; ?>)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                (prueba) = response.json();
+
+                const {valor: sede} = swal({
+                    closeOnConfirm: false,
+                    closeOnCancel: false,
+                    allowOutsideClick: false,
+                    title: 'Seleccione una sede',
+                    input: 'select',
+                    inputOptions: (prueba),
+                    inputPlaceholder: 'Seleccione una sede',
+
+                    inputValidator: (valor) => {
+                        return new Promise((resolve) => {
+                            if (valor !== '') {
+                                dataSede = {
+                                    id: valor
+                                };
+                                //variable de sesion con la sede que selecciono
+                                $.post("index.php?r=sedes/set-sede", dataSede, function (data) {
+                                    $('#nameSede').text(data);
+                                });
+                                resolve()
+                            }
+                            else {
+                                resolve('Debe seleccionar una sede')
+                            }
+                        })
+                    }
+                })
+            })
+    }
+</script>
