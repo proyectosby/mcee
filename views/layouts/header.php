@@ -123,7 +123,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                                 </li>-->
                           <!--  </ul>-->
                        <!-- </li>-->
-                        <li class="footer"><a href="index.php">Cambiar Institución</a></li>
+                        <li class="footer"><a href="index.php?institucion=true">Cambiar Institución</a></li>
                         <li class="footer"><a onclick="changeSede()">Cambiar sede</a></li>
                     </ul>
                 </li>
