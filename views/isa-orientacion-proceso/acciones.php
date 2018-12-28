@@ -7,7 +7,7 @@ use yii\bootstrap\Collapse;
 
 
 
-$acciones = IsaAcciones::find()->where( "estado=1 and id_proceso=$idProceso" )->all();
+$acciones = IsaAcciones::find()->where( "estado=1 and id_proceso=$idProceso" )->orderby("id")->all();
 $acciones = ArrayHelper::map($acciones,'id','descripcion');
        
 

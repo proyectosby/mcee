@@ -38,8 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
+		<?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DataTables::widget([
@@ -88,23 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'fecha',
 
             [
-			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
-				'buttons' => [
-				'view' => function ($url, $model) {
-					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
-								'title' => Yii::t('app', 'lead-view'),
-					]);
-				},
-
-				'update' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
-								'title' => Yii::t('app', 'lead-update'),
-					]);
-				}
-
-			  ],
-			
+				'class' => 'yii\grid\ActionColumn',
+				'template'=>'{update}',			
 			],
 
         ],
