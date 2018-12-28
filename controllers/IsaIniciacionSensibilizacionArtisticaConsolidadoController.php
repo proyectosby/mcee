@@ -24,6 +24,7 @@ use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\IsaActividadesArtisticas;
 use app\models\IsaEncabezadoIniciacionArtisticaConsolidado;
+use app\models\IsaEncabezadoIniciacionArtisticaConsolidadoBuscar;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -52,7 +53,7 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
      */
     public function actionIndex()
     {
-        $searchModel = new IsaIniciacionSensibilizacionArtisticaConsolidadoBuscar();
+        $searchModel = new IsaEncabezadoIniciacionArtisticaConsolidadoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
