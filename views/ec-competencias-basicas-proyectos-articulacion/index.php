@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
 											'ec-informe-ejecutivo-estado/index',
 											'idTipoInforme'		=> 30,
 										], 
-										['class' => 'btn btn-info']) ?>
+										['class' => 'btn btn-success']) ?>
 										
 										
 			
