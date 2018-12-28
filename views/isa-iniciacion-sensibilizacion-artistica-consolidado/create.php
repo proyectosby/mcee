@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\IsaIniciacionSensibilizacionArtisticaConsolidado */
 
-$this->title = 'Agregar Isa Iniciacion Sensibilizacion Artistica Consolidado';
+$this->title = 'Consolidado por mes - Operativo';
 $this->params['breadcrumbs'][] = ['label' => 'Isa Iniciacion Sensibilizacion Artistica Consolidados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>

@@ -11,6 +11,8 @@ use dosamigos\datepicker\DatePicker;
 ?>
 
 
+    <?= Html::activeHiddenInput($actividad, '['.$index.']id') ?>
+	
     <?= $form->field($actividad, '['.$index.']total_sesiones_realizadas')->textInput() ?>
 
     <?= $form->field($actividad, '['.$index.']avance_por_mes')->textInput([ 'data-porcentaje' => $index ]) ?>
