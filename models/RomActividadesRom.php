@@ -19,7 +19,7 @@ use Yii;
  * @property string $duracion_sesion
  * @property string $logros
  * @property string $fortalezas
- * @property string $devilidades
+ * @property string $debilidades
  * @property string $alternativas
  * @property string $retos
  * @property string $articulacion
@@ -53,7 +53,7 @@ class RomActividadesRom extends \yii\db\ActiveRecord
             [['id_rom', 'id_componente', 'id_actividad'], 'default', 'value' => null],
             [['id_rom', 'id_componente', 'id_actividad'], 'integer'],
             [['fehca_desde', 'fecha_hasta', 'fecha_reprogramacion'], 'safe'],
-            [['estado', 'num_equipos', 'perfiles', 'docente_orientador', 'nombre_actividad', 'duracion_sesion', 'logros', 'fortalezas', 'devilidades', 'alternativas', 'retos', 'articulacion', 'evaluacion', 'observaciones_generales', 'alarmas', 'justificacion_activiad_no_realizada', 'diligencia', 'rol', 'fecha_diligencia'], 'string'],
+            [['estado', 'num_equipos', 'perfiles', 'docente_orientador', 'nombre_actividad', 'duracion_sesion', 'logros', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'articulacion', 'evaluacion', 'observaciones_generales', 'alarmas', 'justificacion_activiad_no_realizada', 'diligencia', 'rol', 'fecha_diligencia'], 'string'],
             [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
             [['id_rom'], 'exist', 'skipOnError' => true, 'targetClass' => RomReporteOperativoMisional::className(), 'targetAttribute' => ['id_rom' => 'id']],
         ];

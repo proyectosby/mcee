@@ -3,8 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-use app\models\Instituciones;
-use app\models\Sedes;
+
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
@@ -12,16 +11,9 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Reporte Operativo Misional';
+$this->title = 'Cbac Consolidado Mes Cbacs';
 $this->params['breadcrumbs'][] = $this->title;
-
-$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
-if( isset($guardado) && $guardado == 1 ){
-	echo Html::hiddenInput( 'guardadoFormulario', '1' );
-}
-?>
+?> 
 
 <h1></h1>
 	
@@ -30,7 +22,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>2 Reporte Iniciación y Sensibilización artística</h3>
+<h3>NombreCrud</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -39,7 +31,7 @@ if( isset($guardado) && $guardado == 1 ){
 </div>
 </div>
 </div>
-<div class="rom-reporte-operativo-misional-index">
+<div class="cbac-consolidado-mes-cbac-index">
 
    
 
@@ -86,23 +78,11 @@ if( isset($guardado) && $guardado == 1 ){
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            [
-			'attribute'=>'id_institucion',
-			'value' => function( $model )
-				{
-					$nombreInstituciones = Instituciones::findOne($model->id_institucion);
-					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
-				}, //para buscar por el nombre
-			],
-			[
-			'attribute'=>'id_sedes',
-			'value' => function( $model )
-				{
-					$nombreSedes = Sedes::findOne($model->id_sedes);
-					return $nombreSedes ? $nombreSedes->descripcion : '';  
-				}, //para buscar por el nombre
-			],
+            'id',
+            'id_institucion',
+            'id_sede',
+            'desde',
+            'hasta',
             //'estado',
 
             [
