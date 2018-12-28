@@ -58,7 +58,7 @@ h4 {
 
 <div class="isa-enc-artistica-misional-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action' => '/yii/mcee/web/index.php?r=isa-enc-artistica-misional/create' ]); ?>
 
     <?= Html::hiddenInput('guardar', 1 ) ?>
 	
