@@ -42,7 +42,7 @@ $index = 0;
 										),
 					'contentOptions'=> []
 				];
-                echo $form->field($imp_cbac, "[$proyecto]id_componente")->hiddenInput(["value" => 4])->label(false);
+                echo $form->field($imp_cbac, "[$proyecto]id_componente")->hiddenInput(["value" => 6])->label(false);
             }else if($proyecto ==  2 && $keyFase > 2 && $keyFase <= 7){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,

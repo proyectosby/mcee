@@ -45,6 +45,7 @@ class CbacConsolidadoMesCbac extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'nombre_institucion' => 'Nombre Institución',
             'id' => 'ID',
             'id_institucion' => 'Id Institucion',
             'id_sede' => 'Id Sede',

@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\CbacConsolidadoMesCbac */
 
 $this->title = 'Agregar Cbac Consolidado Mes Cbac';
-$this->params['breadcrumbs'][] = ['label' => 'Cbac Consolidado Mes Cbacs', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Consolidado por mes Competencias Básicas Arte y Cultura', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="cbac-consolidado-mes-cbac-create">

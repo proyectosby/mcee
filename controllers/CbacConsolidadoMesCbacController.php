@@ -53,7 +53,7 @@ class CbacConsolidadoMesCbacController extends Controller
      * Lists all CbacConsolidadoMesCbac models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => CbacConsolidadoMesCbac::find(),
@@ -61,6 +61,7 @@ class CbacConsolidadoMesCbacController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'guardado' => $guardado,
         ]);
     }
 
@@ -117,9 +118,9 @@ class CbacConsolidadoMesCbacController extends Controller
 
             $model->id_institucion = $idInstitucion;
             
-            if(/*$model->save()*/true){
-                 //$id_consolidado = $model->id;
-                 $id_consolidado = 1;
+            if($model->save()){
+                 $id_consolidado = $model->id;
+                 //$id_consolidado = 1;
 
                  if (Yii::$app->request->post('CbacImpConsolidadoMesCbac')){
                      $data = Yii::$app->request->post('CbacImpConsolidadoMesCbac');
@@ -132,8 +133,9 @@ class CbacConsolidadoMesCbacController extends Controller
 
                     if (CbacImpConsolidadoMesCbac::loadMultiple($modelImpCbac, Yii::$app->request->post() )) {
                         foreach($modelImpCbac as $key => $model) {
+                             
                              if($model->avance_sede and $model->avance_ieo){
-                                $model->id_consolidado_mes_cbac = 1;
+                                $model->id_consolidado_mes_cbac = $id_consolidado;
                                 
                                 if($model->save()){
                                     
@@ -178,7 +180,7 @@ class CbacConsolidadoMesCbacController extends Controller
                                         }
                                     }
 
-                                    /*if(Yii::$app->request->post('CbacTipoCantidaidPoblacionConsolidadoCbac'){
+                                    if(Yii::$app->request->post('CbacTipoCantidaidPoblacionConsolidadoCbac')){
                                         
                                         $dataPoblacion = Yii::$app->request->post('CbacTipoCantidaidPoblacionConsolidadoCbac');
                                         $countPoblacion = count( $dataPoblacion );
@@ -189,12 +191,361 @@ class CbacConsolidadoMesCbacController extends Controller
                                         }
                                         if (CbacTipoCantidaidPoblacionConsolidadoCbac::loadMultiple($modelTipoPoblacion, Yii::$app->request->post() )) {
 
-                                            if($modelTipoPoblacion[$key]->ciencias_naturales){
-
-
+                                            foreach($modelTipoPoblacion as $key2 => $model2) {
+                                                $model2->id_imp_consolidado_mes_cbac = $id_imp;
+                                                if($key == 1 && $key2 <= 2){
+                                                    if($model2->ciencias_naturales || $model2->grado_6 || $model2->cuidadores){
+                                                         $model2->save();
+                                                    }
+                                                }
+                                                if($key == 2 && $key2 > 2 && $key2 <= 7){
+                                                    if($model2->ciencias_naturales || $model2->grado_6 || $model2->cuidadores){
+                                                         $model2->save();
+                                                    }
+                                                }
+                                                if($key == 3 && $key2 > 7){
+                                                    if($model2->ciencias_naturales || $model2->grado_6 || $model2->cuidadores){
+                                                         $model2->save();
+                                                    }
+                                                }
                                             }
                                         }
-                                    }*/
+                                    }
+
+                                    if(Yii::$app->request->post('CbacEvidenciasConsolidadoCbac')){
+                                        $dataEvidencias = Yii::$app->request->post('CbacEvidenciasConsolidadoCbac');
+                                        $countEvidencias = count( $dataEvidencias );
+                                        $modelEvidencias = [];
+
+                                        for( $i = 0; $i < $countEvidencias; $i++ ){
+                                            $modelEvidencias[] = new CbacEvidenciasConsolidadoCbac();
+                                        }
+
+                                        if (CbacEvidenciasConsolidadoCbac::loadMultiple($modelEvidencias, Yii::$app->request->post() )) {
+
+                                            foreach($modelEvidencias as $key3 => $model3) {
+                                                    if($key == 1 && $key3 <= 2){
+
+                                                        $file_actas = UploadedFile::getInstance( $model3, "[$key3]actas") ? UploadedFile::getInstance( $model3, "[$key3]actas") : null;
+                                                        $file_reportes = UploadedFile::getInstance( $model3, "[$key3]reportes" ) ? UploadedFile::getInstance( $model3, "[$key3]reportes") : null;
+                                                        $file_listados = UploadedFile::getInstance( $model3, "[$key3]listados" ) ? UploadedFile::getInstance( $model3, "[$key3]listados") : null;
+                                                        $file_plan_trabajo = UploadedFile::getInstance( $model3, "[$key3]plan_trabajo" ) ? UploadedFile::getInstance( $model3, "[$key3]plan_trabajo") : null;
+                                                        $file_formato_seguimiento = UploadedFile::getInstance( $model3, "[$key3]formato_seguimiento" ) ? UploadedFile::getInstance( $model3, "[$key3]formato_seguimiento") : null;
+                                                        $file_formato_evaluacion = UploadedFile::getInstance( $model3, "[$key3]formato_evaluacion" ) ? UploadedFile::getInstance( $model3, "[$key3]formato_evaluacion") : null;
+                                                        $file_fotografias = UploadedFile::getInstance( $model3, "[$key3]fotografias" ) ? UploadedFile::getInstance( $model3, "[$key3]fotografias") : null;
+                                                        $file_vidoes = UploadedFile::getInstance( $model3, "[$key3]vidoes") ? UploadedFile::getInstance( $model3, "[$key3]vidoes") : null;
+                                                        $file_otros = UploadedFile::getInstance( $model3, "[$key3]otros_productos") ? UploadedFile::getInstance( $model3, "[$key3]otros_productos") : null;
+
+                                                    
+                                                        $carpetaEvidencias = "../documentos/documentos_CBAC_MES/evidencias_CBAC/".$institucion->codigo_dane;
+                                                        if (!file_exists($carpetaEvidencias)) {
+                                                            mkdir($carpetaEvidencias, 0777, true);
+                                                        }
+
+                                                        if($file_actas){
+                                                        $rutaFisicaActas  = $carpetaEvidencias."/";
+                                                        $rutaFisicaActas .= $file_actas->baseName;
+                                                        $rutaFisicaActas .= date( "_Y_m_d_His" ) . '.' . $file_actas->extension;
+                                                        $saveActa = $file_actas->saveAs( $rutaFisicaActas );
+                                                        $file_actas = $rutaFisicaActas;
+                                                    
+
+                                                        if($file_reportes){
+                                                            $rutaFisicaReportes  = $carpetaEvidencias."/";
+                                                            $rutaFisicaReportes .= $file_reportes->baseName;
+                                                            $rutaFisicaReportes .= date( "_Y_m_d_His" ) . '.' . $file_reportes->extension;
+                                                            $saveReportes = $file_reportes->saveAs( $rutaFisicaReportes );
+                                                            $file_reportes = $rutaFisicaReportes;
+                                                        }
+
+                                                        if($file_listados){
+                                                            $rutaFisicaListados  = $carpetaEvidencias."/";
+                                                            $rutaFisicaListados .= $file_listados->baseName;
+                                                            $rutaFisicaListados .= date( "_Y_m_d_His" ) . '.' . $file_listados->extension;
+                                                            $saveListados = $file_listados->saveAs( $rutaFisicaListados );
+                                                            $file_listados = $rutaFisicaListados;
+                                                        }
+
+                                                        if($file_plan_trabajo){
+                                                            $rutaFisicaPlanTrabajo  = $carpetaEvidencias."/";
+                                                            $rutaFisicaPlanTrabajo .= $file_plan_trabajo->baseName;
+                                                            $rutaFisicaPlanTrabajo .= date( "_Y_m_d_His" ) . '.' . $file_plan_trabajo->extension;
+                                                            $savePlanTrabajo = $file_plan_trabajo->saveAs( $rutaFisicaPlanTrabajo );
+                                                            $file_plan_trabajo = $rutaFisicaPlanTrabajo;
+                                                        }
+
+
+                                                        if($file_formato_seguimiento){
+                                                            $rutaFisicaFormato  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFormato .= $file_formato_seguimiento->baseName;
+                                                            $rutaFisicaFormato .= date( "_Y_m_d_His" ) . '.' . $file_formato_seguimiento->extension;
+                                                            $saveFormato = $file_formato_seguimiento->saveAs( $rutaFisicaFormato );
+                                                            $file_formato_seguimiento = $rutaFisicaFormato;
+                                                        }
+
+                                                        if($file_formato_evaluacion){
+                                                            $rutaFisicaFormatoEvaluacion  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFormatoEvaluacion .= $file_formato_evaluacion->baseName;
+                                                            $rutaFisicaFormatoEvaluacion .= date( "_Y_m_d_His" ) . '.' . $file_formato_evaluacion->extension;
+                                                            $saveFormato = $file_formato_evaluacion->saveAs( $rutaFisicaFormatoEvaluacion );
+                                                            $file_formato_evaluacion = $rutaFisicaFormatoEvaluacion;
+                                                        }
+
+                                                        if($file_fotografias){
+                                                            $rutaFisicaFotografias  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFotografias .= $file_fotografias->baseName;
+                                                            $rutaFisicaFotografias .= date( "_Y_m_d_His" ) . '.' . $file_fotografias->extension;
+                                                            $saveFotografias = $file_fotografias->saveAs( $rutaFisicaFotografias );
+                                                            $file_fotografias = $rutaFisicaFotografias;
+                                                        }
+
+                                                        if($file_vidoes){
+                                                            $rutaFisicaVideos  = $carpetaEvidencias."/";
+                                                            $rutaFisicaVideos .= $file_vidoes->baseName;
+                                                            $rutaFisicaVideos .= date( "_Y_m_d_His" ) . '.' . $file_vidoes->extension;
+                                                            $saveVideos = $file_vidoes->saveAs( $rutaFisicaVideos );
+                                                            $file_vidoes = $rutaFisicaVideos;
+                                                        }
+
+                                                        if($file_otros){
+                                                            $rutaFisicaOtros  = $carpetaEvidencias."/";
+                                                            $rutaFisicaOtros .= $file_otros->baseName;
+                                                            $rutaFisicaOtros .= date( "_Y_m_d_His" ) . '.' . $file_otros->extension;
+                                                            $saveOtros = $file_otros->saveAs( $rutaFisicaOtros );
+                                                            $file_otros = $rutaFisicaOtros;
+                                                        }
+
+
+                                                        $modelEvidencias[$key]->id_imp_consolidado_mes_cbac = $id_imp;
+                                                        $modelEvidencias[$key]->actas = $file_actas;
+                                                        $modelEvidencias[$key]->reportes = $file_reportes;
+                                                        $modelEvidencias[$key]->listados = $file_listados;
+                                                        $modelEvidencias[$key]->plan_trabajo = $file_plan_trabajo;
+                                                        $modelEvidencias[$key]->formato_seguimiento = $file_formato_seguimiento;
+                                                        $modelEvidencias[$key]->formato_evaluacion = $file_formato_evaluacion;
+                                                        $modelEvidencias[$key]->fotografias = $file_fotografias;
+                                                        $modelEvidencias[$key]->vidoes = $file_vidoes;
+                                                        $modelEvidencias[$key]->otros_productos = $file_otros;
+                                                        $modelEvidencias[$key]->save();
+                                                    }
+                                                    if($key == 2 && $key2 > 2 && $key2 <= 7){
+
+                                                        $file_actas = UploadedFile::getInstance( $model3, "[$key3]actas") ? UploadedFile::getInstance( $model3, "[$key3]actas") : null;
+                                                        $file_reportes = UploadedFile::getInstance( $model3, "[$key3]reportes" ) ? UploadedFile::getInstance( $model3, "[$key3]reportes") : null;
+                                                        $file_listados = UploadedFile::getInstance( $model3, "[$key3]listados" ) ? UploadedFile::getInstance( $model3, "[$key3]listados") : null;
+                                                        $file_plan_trabajo = UploadedFile::getInstance( $model3, "[$key3]plan_trabajo" ) ? UploadedFile::getInstance( $model3, "[$key3]plan_trabajo") : null;
+                                                        $file_formato_seguimiento = UploadedFile::getInstance( $model3, "[$key3]formato_seguimiento" ) ? UploadedFile::getInstance( $model3, "[$key3]formato_seguimiento") : null;
+                                                        $file_formato_evaluacion = UploadedFile::getInstance( $model3, "[$key3]formato_evaluacion" ) ? UploadedFile::getInstance( $model3, "[$key3]formato_evaluacion") : null;
+                                                        $file_fotografias = UploadedFile::getInstance( $model3, "[$key3]fotografias" ) ? UploadedFile::getInstance( $model3, "[$key3]fotografias") : null;
+                                                        $file_vidoes = UploadedFile::getInstance( $model3, "[$key3]vidoes") ? UploadedFile::getInstance( $model3, "[$key3]vidoes") : null;
+                                                        $file_otros = UploadedFile::getInstance( $model3, "[$key3]otros_productos") ? UploadedFile::getInstance( $model3, "[$key3]otros_productos") : null;
+
+                                                    
+                                                        $carpetaEvidencias = "../documentos/documentos_CBAC_MES/evidencias_CBAC/".$institucion->codigo_dane;
+                                                        if (!file_exists($carpetaEvidencias)) {
+                                                            mkdir($carpetaEvidencias, 0777, true);
+                                                        }
+
+                                                        if($file_actas){
+                                                        $rutaFisicaActas  = $carpetaEvidencias."/";
+                                                        $rutaFisicaActas .= $file_actas->baseName;
+                                                        $rutaFisicaActas .= date( "_Y_m_d_His" ) . '.' . $file_actas->extension;
+                                                        $saveActa = $file_actas->saveAs( $rutaFisicaActas );
+                                                        $file_actas = $rutaFisicaActas;
+                                                    
+
+                                                        if($file_reportes){
+                                                            $rutaFisicaReportes  = $carpetaEvidencias."/";
+                                                            $rutaFisicaReportes .= $file_reportes->baseName;
+                                                            $rutaFisicaReportes .= date( "_Y_m_d_His" ) . '.' . $file_reportes->extension;
+                                                            $saveReportes = $file_reportes->saveAs( $rutaFisicaReportes );
+                                                            $file_reportes = $rutaFisicaReportes;
+                                                        }
+
+                                                        if($file_listados){
+                                                            $rutaFisicaListados  = $carpetaEvidencias."/";
+                                                            $rutaFisicaListados .= $file_listados->baseName;
+                                                            $rutaFisicaListados .= date( "_Y_m_d_His" ) . '.' . $file_listados->extension;
+                                                            $saveListados = $file_listados->saveAs( $rutaFisicaListados );
+                                                            $file_listados = $rutaFisicaListados;
+                                                        }
+
+                                                        if($file_plan_trabajo){
+                                                            $rutaFisicaPlanTrabajo  = $carpetaEvidencias."/";
+                                                            $rutaFisicaPlanTrabajo .= $file_plan_trabajo->baseName;
+                                                            $rutaFisicaPlanTrabajo .= date( "_Y_m_d_His" ) . '.' . $file_plan_trabajo->extension;
+                                                            $savePlanTrabajo = $file_plan_trabajo->saveAs( $rutaFisicaPlanTrabajo );
+                                                            $file_plan_trabajo = $rutaFisicaPlanTrabajo;
+                                                        }
+
+
+                                                        if($file_formato_seguimiento){
+                                                            $rutaFisicaFormato  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFormato .= $file_formato_seguimiento->baseName;
+                                                            $rutaFisicaFormato .= date( "_Y_m_d_His" ) . '.' . $file_formato_seguimiento->extension;
+                                                            $saveFormato = $file_formato_seguimiento->saveAs( $rutaFisicaFormato );
+                                                            $file_formato_seguimiento = $rutaFisicaFormato;
+                                                        }
+
+                                                        if($file_formato_evaluacion){
+                                                            $rutaFisicaFormatoEvaluacion  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFormatoEvaluacion .= $file_formato_evaluacion->baseName;
+                                                            $rutaFisicaFormatoEvaluacion .= date( "_Y_m_d_His" ) . '.' . $file_formato_evaluacion->extension;
+                                                            $saveFormato = $file_formato_evaluacion->saveAs( $rutaFisicaFormatoEvaluacion );
+                                                            $file_formato_evaluacion = $rutaFisicaFormatoEvaluacion;
+                                                        }
+
+                                                        if($file_fotografias){
+                                                            $rutaFisicaFotografias  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFotografias .= $file_fotografias->baseName;
+                                                            $rutaFisicaFotografias .= date( "_Y_m_d_His" ) . '.' . $file_fotografias->extension;
+                                                            $saveFotografias = $file_fotografias->saveAs( $rutaFisicaFotografias );
+                                                            $file_fotografias = $rutaFisicaFotografias;
+                                                        }
+
+                                                        if($file_vidoes){
+                                                            $rutaFisicaVideos  = $carpetaEvidencias."/";
+                                                            $rutaFisicaVideos .= $file_vidoes->baseName;
+                                                            $rutaFisicaVideos .= date( "_Y_m_d_His" ) . '.' . $file_vidoes->extension;
+                                                            $saveVideos = $file_vidoes->saveAs( $rutaFisicaVideos );
+                                                            $file_vidoes = $rutaFisicaVideos;
+                                                        }
+
+                                                        if($file_otros){
+                                                            $rutaFisicaOtros  = $carpetaEvidencias."/";
+                                                            $rutaFisicaOtros .= $file_otros->baseName;
+                                                            $rutaFisicaOtros .= date( "_Y_m_d_His" ) . '.' . $file_otros->extension;
+                                                            $saveOtros = $file_otros->saveAs( $rutaFisicaOtros );
+                                                            $file_otros = $rutaFisicaOtros;
+                                                        }
+
+
+                                                        $modelEvidencias[$key]->id_imp_consolidado_mes_cbac = $id_imp;
+                                                        $modelEvidencias[$key]->actas = $file_actas;
+                                                        $modelEvidencias[$key]->reportes = $file_reportes;
+                                                        $modelEvidencias[$key]->listados = $file_listados;
+                                                        $modelEvidencias[$key]->plan_trabajo = $file_plan_trabajo;
+                                                        $modelEvidencias[$key]->formato_seguimiento = $file_formato_seguimiento;
+                                                        $modelEvidencias[$key]->formato_evaluacion = $file_formato_evaluacion;
+                                                        $modelEvidencias[$key]->fotografias = $file_fotografias;
+                                                        $modelEvidencias[$key]->vidoes = $file_vidoes;
+                                                        $modelEvidencias[$key]->otros_productos = $file_otros;
+                                                        $modelEvidencias[$key]->save();
+                                                    }
+
+                                                    if($key == 2 && $key2 > 2 && $key2 <= 7){
+
+                                                        $file_actas = UploadedFile::getInstance( $model3, "[$key3]actas") ? UploadedFile::getInstance( $model3, "[$key3]actas") : null;
+                                                        $file_reportes = UploadedFile::getInstance( $model3, "[$key3]reportes" ) ? UploadedFile::getInstance( $model3, "[$key3]reportes") : null;
+                                                        $file_listados = UploadedFile::getInstance( $model3, "[$key3]listados" ) ? UploadedFile::getInstance( $model3, "[$key3]listados") : null;
+                                                        $file_plan_trabajo = UploadedFile::getInstance( $model3, "[$key3]plan_trabajo" ) ? UploadedFile::getInstance( $model3, "[$key3]plan_trabajo") : null;
+                                                        $file_formato_seguimiento = UploadedFile::getInstance( $model3, "[$key3]formato_seguimiento" ) ? UploadedFile::getInstance( $model3, "[$key3]formato_seguimiento") : null;
+                                                        $file_formato_evaluacion = UploadedFile::getInstance( $model3, "[$key3]formato_evaluacion" ) ? UploadedFile::getInstance( $model3, "[$key3]formato_evaluacion") : null;
+                                                        $file_fotografias = UploadedFile::getInstance( $model3, "[$key3]fotografias" ) ? UploadedFile::getInstance( $model3, "[$key3]fotografias") : null;
+                                                        $file_vidoes = UploadedFile::getInstance( $model3, "[$key3]vidoes") ? UploadedFile::getInstance( $model3, "[$key3]vidoes") : null;
+                                                        $file_otros = UploadedFile::getInstance( $model3, "[$key3]otros_productos") ? UploadedFile::getInstance( $model3, "[$key3]otros_productos") : null;
+
+                                                    
+                                                        $carpetaEvidencias = "../documentos/documentos_CBAC_MES/evidencias_CBAC/".$institucion->codigo_dane;
+                                                        if (!file_exists($carpetaEvidencias)) {
+                                                            mkdir($carpetaEvidencias, 0777, true);
+                                                        }
+
+                                                        if($file_actas){
+                                                        $rutaFisicaActas  = $carpetaEvidencias."/";
+                                                        $rutaFisicaActas .= $file_actas->baseName;
+                                                        $rutaFisicaActas .= date( "_Y_m_d_His" ) . '.' . $file_actas->extension;
+                                                        $saveActa = $file_actas->saveAs( $rutaFisicaActas );
+                                                        $file_actas = $rutaFisicaActas;
+                                                    
+
+                                                        if($file_reportes){
+                                                            $rutaFisicaReportes  = $carpetaEvidencias."/";
+                                                            $rutaFisicaReportes .= $file_reportes->baseName;
+                                                            $rutaFisicaReportes .= date( "_Y_m_d_His" ) . '.' . $file_reportes->extension;
+                                                            $saveReportes = $file_reportes->saveAs( $rutaFisicaReportes );
+                                                            $file_reportes = $rutaFisicaReportes;
+                                                        }
+
+                                                        if($file_listados){
+                                                            $rutaFisicaListados  = $carpetaEvidencias."/";
+                                                            $rutaFisicaListados .= $file_listados->baseName;
+                                                            $rutaFisicaListados .= date( "_Y_m_d_His" ) . '.' . $file_listados->extension;
+                                                            $saveListados = $file_listados->saveAs( $rutaFisicaListados );
+                                                            $file_listados = $rutaFisicaListados;
+                                                        }
+
+                                                        if($file_plan_trabajo){
+                                                            $rutaFisicaPlanTrabajo  = $carpetaEvidencias."/";
+                                                            $rutaFisicaPlanTrabajo .= $file_plan_trabajo->baseName;
+                                                            $rutaFisicaPlanTrabajo .= date( "_Y_m_d_His" ) . '.' . $file_plan_trabajo->extension;
+                                                            $savePlanTrabajo = $file_plan_trabajo->saveAs( $rutaFisicaPlanTrabajo );
+                                                            $file_plan_trabajo = $rutaFisicaPlanTrabajo;
+                                                        }
+
+
+                                                        if($file_formato_seguimiento){
+                                                            $rutaFisicaFormato  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFormato .= $file_formato_seguimiento->baseName;
+                                                            $rutaFisicaFormato .= date( "_Y_m_d_His" ) . '.' . $file_formato_seguimiento->extension;
+                                                            $saveFormato = $file_formato_seguimiento->saveAs( $rutaFisicaFormato );
+                                                            $file_formato_seguimiento = $rutaFisicaFormato;
+                                                        }
+
+                                                        if($file_formato_evaluacion){
+                                                            $rutaFisicaFormatoEvaluacion  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFormatoEvaluacion .= $file_formato_evaluacion->baseName;
+                                                            $rutaFisicaFormatoEvaluacion .= date( "_Y_m_d_His" ) . '.' . $file_formato_evaluacion->extension;
+                                                            $saveFormato = $file_formato_evaluacion->saveAs( $rutaFisicaFormatoEvaluacion );
+                                                            $file_formato_evaluacion = $rutaFisicaFormatoEvaluacion;
+                                                        }
+
+                                                        if($file_fotografias){
+                                                            $rutaFisicaFotografias  = $carpetaEvidencias."/";
+                                                            $rutaFisicaFotografias .= $file_fotografias->baseName;
+                                                            $rutaFisicaFotografias .= date( "_Y_m_d_His" ) . '.' . $file_fotografias->extension;
+                                                            $saveFotografias = $file_fotografias->saveAs( $rutaFisicaFotografias );
+                                                            $file_fotografias = $rutaFisicaFotografias;
+                                                        }
+
+                                                        if($file_vidoes){
+                                                            $rutaFisicaVideos  = $carpetaEvidencias."/";
+                                                            $rutaFisicaVideos .= $file_vidoes->baseName;
+                                                            $rutaFisicaVideos .= date( "_Y_m_d_His" ) . '.' . $file_vidoes->extension;
+                                                            $saveVideos = $file_vidoes->saveAs( $rutaFisicaVideos );
+                                                            $file_vidoes = $rutaFisicaVideos;
+                                                        }
+
+                                                        if($file_otros){
+                                                            $rutaFisicaOtros  = $carpetaEvidencias."/";
+                                                            $rutaFisicaOtros .= $file_otros->baseName;
+                                                            $rutaFisicaOtros .= date( "_Y_m_d_His" ) . '.' . $file_otros->extension;
+                                                            $saveOtros = $file_otros->saveAs( $rutaFisicaOtros );
+                                                            $file_otros = $rutaFisicaOtros;
+                                                        }
+
+
+                                                        $modelEvidencias[$key]->id_imp_consolidado_mes_cbac = $id_imp;
+                                                        $modelEvidencias[$key]->actas = $file_actas;
+                                                        $modelEvidencias[$key]->reportes = $file_reportes;
+                                                        $modelEvidencias[$key]->listados = $file_listados;
+                                                        $modelEvidencias[$key]->plan_trabajo = $file_plan_trabajo;
+                                                        $modelEvidencias[$key]->formato_seguimiento = $file_formato_seguimiento;
+                                                        $modelEvidencias[$key]->formato_evaluacion = $file_formato_evaluacion;
+                                                        $modelEvidencias[$key]->fotografias = $file_fotografias;
+                                                        $modelEvidencias[$key]->vidoes = $file_vidoes;
+                                                        $modelEvidencias[$key]->otros_productos = $file_otros;
+                                                        $modelEvidencias[$key]->save();
+                                                        }
+                                                    }
+                                                    }
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+
                                 }
                              
                              }
@@ -203,7 +554,7 @@ class CbacConsolidadoMesCbacController extends Controller
                  }
             }
 
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'guardado' => 1]);
         }
 
         $Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
