@@ -43,6 +43,7 @@ class CbacAvances extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['logros', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'observaciones', 'alarmas', 'necesidades', 'estrategias_fortalezas', 'estrategias_debilidades', 'ajustes', 'temas_abordar', 'como', 'necesidades_articulacion', 'indique', 'estado', 'id_acciones', 'id_orientacion_proceso'], 'required'],
             [['logros', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'observaciones', 'alarmas', 'necesidades', 'estrategias_fortalezas', 'estrategias_debilidades', 'ajustes', 'temas_abordar', 'como', 'necesidades_articulacion', 'indique'], 'string'],
             [['estado', 'id_acciones', 'id_orientacion_proceso'], 'default', 'value' => null],
             [['estado', 'id_acciones', 'id_orientacion_proceso'], 'integer'],
@@ -56,7 +57,7 @@ class CbacAvances extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+         return [
             'id' => 'ID',
             'logros' => 'Logros: Resultados de avance que permitan constatar que, por medio de las actividades realizadas, se está logrando desarrollar herramientas en docentes y directivos ',
             'fortalezas' => 'Fortalezas',
