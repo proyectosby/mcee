@@ -24,6 +24,7 @@ use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\IsaActividadesArtisticas;
 use app\models\IsaEncabezadoIniciacionArtisticaConsolidado;
+use app\models\IsaEncabezadoIniciacionArtisticaConsolidadoBuscar;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -52,7 +53,7 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
      */
     public function actionIndex()
     {
-        $searchModel = new IsaIniciacionSensibilizacionArtisticaConsolidadoBuscar();
+        $searchModel = new IsaEncabezadoIniciacionArtisticaConsolidadoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -95,6 +96,10 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
 
 		if( Yii::$app->request->post() )
 		{
+			if( !empty( Yii::$app->request->post('IsaEncabezadoIniciacionArtisticaConsolidado')['id'] ) ){
+				$modelEncabezado = IsaEncabezadoIniciacionArtisticaConsolidado::findOne( Yii::$app->request->post('IsaEncabezadoIniciacionArtisticaConsolidado')['id'] );
+			}
+			
 			if( $modelEncabezado->load(Yii::$app->request->post()) )
 			{
 				$modelEncabezado->estado = 1;
@@ -105,7 +110,15 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
 				{
 					foreach( $modelsArtisticos as $id_actividad => $model )
 					{
-						$models[ $id_actividad ] = new IsaIniciacionSensibilizacionArtisticaConsolidado();
+						if( !empty( $model['id'] ) )
+						{
+							$models[ $id_actividad ] = IsaIniciacionSensibilizacionArtisticaConsolidado::findOne( $model['id'] );
+						}
+						else
+						{
+							$models[ $id_actividad ] = new IsaIniciacionSensibilizacionArtisticaConsolidado();
+						}
+						
 						$models[ $id_actividad ]->load( $model, '' );
 					}
 				}
@@ -210,14 +223,56 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+		$id_sede 		= $_SESSION['sede'][0];
+		$id_institucion	= $_SESSION['instituciones'][0];
+		
+		$guardado = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
+		$institucion	= Instituciones::findOne( $id_institucion );
+		$sede			= Sedes::findOne( $id_sede );
+		
+        // $model = $this->findModel($id);
 
-        return $this->renderAjax('update', [
-            'model' => $model,
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // return $this->redirect(['index']);
+        // }
+		
+		$modelEncabezado = IsaEncabezadoIniciacionArtisticaConsolidado::findOne($id);
+		
+		$modelsActividades = IsaIniciacionSensibilizacionArtisticaConsolidado::find()
+									->where( 'id_encabezado_iniciacion_artistica_consolidado='.$modelEncabezado->id )
+									->andWhere('estado=1')
+									->all();
+		
+		foreach( $modelsActividades as $actividad )
+		{
+			$models[ $actividad->id_actividad ] = $actividad;
+		}
+		
+
+		$actividades = IsaActividadesArtisticas::find()
+								->where( 'estado=1' )
+								->orderBy(['orden'=>SORT_ASC])
+								->all();
+
+		// if( count($actividades) > 0 )
+		// {
+			// foreach( $actividades as $actividad )
+			// {
+				// if( empty( $models[ $actividad->id ] ) )
+				// {
+					// $models[ $actividad->id ] = new IsaIniciacionSensibilizacionArtisticaConsolidado();
+				// }
+			// }
+		// }
+		
+        return $this->render('create', [
+            'models' 			=> $models,
+            'institucion' 		=> $institucion,
+            'sede' 				=> $sede,
+            'actividades' 		=> $actividades,
+            'modelEncabezado' 	=> $modelEncabezado,
+            'guardado' 			=> $guardado,
         ]);
     }
 

@@ -51,12 +51,13 @@ class IsaIniciacionSencibilizacionArtistica extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_insticion' => 'Instición',
+            'nombre_institucion' => 'Nombre Institución',
+            'id_insticion' => 'Institución',
             'id_sede' => 'Sede',
-            'caracterizacion_si_no' => 'Caracterizacion Si No',
-            'caracterizacion_nombre' => 'Caracterizacion Nombre',
-            'caracterizacion_fecha' => 'Caracterizacion Fecha',
-            'caracterizacion_justificacion' => 'Caracterizacion Justificacion',
+            'caracterizacion_si_no' => 'Caracterización Si No',
+            'caracterizacion_nombre' => 'Caracterización Nombre',
+            'caracterizacion_fecha' => 'Caracterización Fecha',
+            'caracterizacion_justificacion' => 'Caracterización Justificación',
             'estado' => 'Estado',
         ];
     }

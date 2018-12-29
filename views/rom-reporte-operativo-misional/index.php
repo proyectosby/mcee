@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-
+use app\models\Instituciones;
+use app\models\Sedes;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
@@ -85,10 +86,24 @@ if( isset($guardado) && $guardado == 1 ){
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'id_institucion',
-            'id_sedes',
-            'estado',
+            //'id',
+            [
+			'attribute'=>'id_institucion',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->id_institucion);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			[
+			'attribute'=>'id_sedes',
+			'value' => function( $model )
+				{
+					$nombreSedes = Sedes::findOne($model->id_sedes);
+					return $nombreSedes ? $nombreSedes->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+            //'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',

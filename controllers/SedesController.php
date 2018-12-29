@@ -416,4 +416,13 @@ class SedesController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    /**
+     * @return string
+     */
+    public function actionSetSede(){
+        @$_SESSION['sede'][0] = Yii::$app->request->post('id');
+        $sede = Sedes::findOne(@$_SESSION['sede'][0]);
+        return $sede->descripcion;
+    }
 }

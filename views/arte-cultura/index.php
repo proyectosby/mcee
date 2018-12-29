@@ -12,9 +12,9 @@ else
 
 /**********
 Versión: 001
-Fecha: 18-10-2018
+Fecha: 27-12-2018
 Desarrollador: Maria Viviana Rodas
-Descripción: Index donde van los botones se semilleros tic
+Descripción: Index donde van los botones se arte y cultura
 ---------------------------------------
 
 **********/
@@ -38,7 +38,7 @@ use yii\bootstrap\Button;
 
 
 
-$this->title = "Iniciación Sensibilización Artistica";
+$this->title = "Competencias de Arte y Cultura";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -60,14 +60,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="panel panel-info">
 		
 		<div class="panel-heading">
-			<h3 class="panel-title">Sensibilización Artistica</h3>
+			<h3 class="panel-title">Competencias básicas de arte y cultura</h3>
 		</div>
 		<div class="panel-body">
 			
 			<div class="form-group">
 		   <?= Html::a('Planeación', 
 									[
-										'isa-iniciacion-sencibilizacion-artistica/index',
+										'cbac-plan-misional-operativo/index',
 										// 'idReporte'	=> 1,
 									], 
 									['class' => 'btn btn-success'
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			 <?= Html::a('Reporte', 
 									[
-										'rom-reporte-operativo-misional/index',
+										'cbac-reporte-competencias-basicas-ac/index',
 										// 'idReporte'		=> 2,
 									], 
 									['class' => 'btn btn-success'
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<?= Html::a('Informe de ejecución semanal', 
 									[
 										
-										'is-isa-informe-semanal-isa/index',
+										'cbac-informe-semanal-cac/index',
 										// 'idReporte'		=> 3, 
 									], 
 									['class' => 'btn btn-success'
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			<?= Html::a('Orientación del proceso - Seguimiento', 
 									[
-										'isa-seguimiento-proceso/index',
+										'cbac-orientacion-proceso-cbac/index',
 										// 'idReporte'		=> 4,
 									], 
 									['class' => 'btn btn-success'
@@ -108,22 +108,22 @@ $this->params['breadcrumbs'][] = $this->title;
 										'isa-orientacion-proceso/index',
 										// 'idReporte'		=> 4,
 									], 
-									['class' => 'btn btn-success'
+									['class' => 'btn btn-info'
 			]) ?>
 			
 			<?= Html::a('Consolidado por mes - Operativo', 
 										[
-											'isa-iniciacion-sensibilizacion-artistica-consolidado/index',
+											'isa-iniciacion-sensibilizacion-artistica-consolidado/create',
 											// 'idReporte'		=> 5,
 										], 
-										['class' => 'btn btn-success']) ?>
+										['class' => 'btn btn-info']) ?>
 										
 			<?= Html::a('Consolidado por mes - Misional', 
 										[
-											'isa-enc-artistica-misional/index',
+											'isa-enc-artistica-misional/create',
 											// 'idReporte'		=> 5,
 										], 
-										['class' => 'btn btn-success']) ?>
+										['class' => 'btn btn-info']) ?>
 										
 										
 			

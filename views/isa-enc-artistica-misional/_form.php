@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -58,7 +59,7 @@ h4 {
 
 <div class="isa-enc-artistica-misional-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action' => Url::to( ['create'] )]); ?>
 
     <?= Html::hiddenInput('guardar', 1 ) ?>
 	

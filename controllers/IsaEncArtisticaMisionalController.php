@@ -106,6 +106,17 @@ class IsaEncArtisticaMisionalController extends Controller
 		
 		$guardado = false;
 		
+		/**
+		 * Se pinta el formulario en arrays de acuerdo a como está relacionado las tablas
+		 * Es decir:
+		 * El formulario está compuesto por:
+		 * - Un encabezado (tabla enc_artistica_misional)
+		 * - Por cada encabezado hay dos detalles (tabla det_artistica_misional)
+		 * - Por cada tabla detalle hay una serie de datos a llenar por cada actividad (tabla det_misional_artistica_x_actividad)
+		 * - Además de una actividad por detalle también hay indicadores (tabla indicadores_x_det_artistica_misional)
+		 *
+		 * Se deja a continuación un array que representa como está pintado el formulario
+		 */
 		// $models=[
 					// 'encabezado'=> 	new IsaEncArtisticaMisional(),
 					// 'detalle' 	=>	[
@@ -128,22 +139,28 @@ class IsaEncArtisticaMisionalController extends Controller
 		
 		$models['encabezado'] = new IsaEncArtisticaMisional();
 		
+		//Si es post es que se va a guardar los datos
 		if( Yii::$app->request->post() )
 		{
+			//A continuación se carga cada modelo de acuerdo a lo ingresado
+			
 			$encabezado = Yii::$app->request->post("IsaEncArtisticaMisional");
+			
 			//Buscando los datos ingresados por el usuario
 			if( !empty( $encabezado['id'] ) )
 			{
 				$models['encabezado'] = IsaEncArtisticaMisional::findOne( $encabezado['id'] );
 			}
 			
+			//Cargando el encabezado
 			$models['encabezado']->load( Yii::$app->request->post() );
 			
 			$models['detalle'] = [];
 			
 			
 			$modelsMisionales = Yii::$app->request->post("IsaDetArtisticaMisional");
-			
+
+			//Se carga cada detalle ingreado por el usuario
 			foreach( $modelsMisionales as $i => $misional )
 			{
 				if( !empty( $misional['id'] ) )
@@ -179,6 +196,7 @@ class IsaEncArtisticaMisionalController extends Controller
 			
 			$isaIndicadores = Yii::$app->request->post("IsaIndicadoresXDetArtisticaMisional");
 			
+			//Por cada detalle hay 4 indicadores para el primer detalle y 2 para el segundo detalle
 			foreach( $isaIndicadores as $i => $isaind )
 			{
 				foreach( $isaind as $j => $ind )
@@ -197,6 +215,7 @@ class IsaEncArtisticaMisionalController extends Controller
 			
 			$valido = true;
 			
+			//Proceso a validar todos los datos
 			if( $guardar )
 			{
 				$valido = $models['encabezado']->validate([
@@ -237,7 +256,7 @@ class IsaEncArtisticaMisionalController extends Controller
 					}
 				}
 				
-				
+				//Una vez validado cada modelo procedo a guardar
 				if( $valido )
 				{
 					$models['encabezado']->estado = 1;
@@ -259,7 +278,7 @@ class IsaEncArtisticaMisionalController extends Controller
 						foreach( $valueDetalle['indicadores'] as $key => $indicador )
 						{
 							$indicador->id_det_artisctica_misional = $valueDetalle['misional']->id;
-							$indicador->id_indicador = $valueDetalle['misional']->id;
+							// $indicador->id_indicador = $valueDetalle['misional']->id;
 							$indicador->estado = 1;
 							$indicador->save(false);
 						}
@@ -298,6 +317,9 @@ class IsaEncArtisticaMisionalController extends Controller
 			}
 		}
 		
+		//Se consulta el indicador que se guarda para cada detalle
+		//En la tabla indicadores se guarda la descripción que debe ir en cada indicador que se va a mostrar
+		//y en la tabla indicadores_x_det_artistica_misional se guarda el dato ingresado por el usuario
 		if( empty($indicadores) )
 		{	
 			for( $i = 0; $i < 4; $i++ )
@@ -311,6 +333,8 @@ class IsaEncArtisticaMisionalController extends Controller
 			}
 		}
 		
+		//Se usa la tabla actividades_artistica para consultar la descripción de cada actividad
+		//Esa descripción se muestra en el formulario y su id se guarda en las tablas correspondientes
 		for( $i = 0; $i < 3; $i++ )
 		{
 			$actividades[0][] = IsaActividadesArtisticas::findOne( $i+1 );
@@ -338,14 +362,89 @@ class IsaEncArtisticaMisionalController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+		//Este array indica cuantos detalles misionales por actividad deben haber
+		//Para el primer detalle debe haber 3 y para el segundo solo uno
+		$totalActividades = [ 3, 1 ];
+		$totalIndicadores = [ 4, 2 ];
+		$idsIndicadores   = [ 1,2,3,4,5,6 ];
+		
+		$indicadores = [];
+		$actividades = [];
+		
+		$id_sede 		= $_SESSION['sede'][0];
+		$id_institucion	= $_SESSION['instituciones'][0];
+		
+		$institucion = Instituciones::findOne($id_institucion);
+		$sede 		 = Sedes::findOne($id_sede);
+		
+		$guardado = false;
+				
+		$models['encabezado'] = IsaEncArtisticaMisional::findOne( $id );	
+			
+		$models['detalle'] = [];
+		
+		
+		$modelsMisionales = Yii::$app->request->post("IsaDetArtisticaMisional");
+		
+		$misionales = IsaDetArtisticaMisional::find()
+							->where( 'id_enc_artistica_misional='.$models['encabezado']->id )
+							->andWhere( 'estado=1' )
+							->all();
+							
+		foreach( $misionales as $i => $misional )
+		{
+			$models['detalle'][$i]['misional'] = $misional;
+			
+			$actividadesPorMisional = IsaDetMisionalArtisticaXActividad::find()
+											->where( 'id_det_artistica_misional='.$misional->id )
+											->andWhere( 'estado=1' )
+											->all();
+											
+			foreach( $actividadesPorMisional as $j => $actividad )
+			{
+				$models['detalle'][$i]['actividades'][] = $actividad;
+			}
+			
+			$indicadoresPorMisional = IsaIndicadoresXDetArtisticaMisional::find()
+											->where( 'id_det_artisctica_misional='.$misional->id )
+											->andWhere( 'estado=1' )
+											->all();
+											
+			foreach( $indicadoresPorMisional as $j => $indicador )
+			{
+				$models['detalle'][$i]['indicadores'][] = $indicador;
+			}
+		}
+		
+		if( empty($indicadores) )
+		{	
+			for( $i = 0; $i < 4; $i++ )
+			{
+				$indicadores[0][] = IsaIndicadores::findOne( $idsIndicadores[ $i ] );
+			}
+			
+			for( $i = 4; $i < 6; $i++ )
+			{
+				$indicadores[1][] = IsaIndicadores::findOne( $idsIndicadores[ $i ] );
+			}
+		}
+		
+		for( $i = 0; $i < 3; $i++ )
+		{
+			$actividades[0][] = IsaActividadesArtisticas::findOne( $i+1 );
+		}
+		
+		$actividades[1][0] = IsaActividadesArtisticas::findOne( 4 );
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        }
-
-        return $this->renderAjax('update', [
-            'model' => $model,
+		//Se llama a la vista create por que esta permite editar los datos
+        return $this->render('create', [
+            'model' 		=> $models['encabezado'],
+			'models' 		=> $models,
+            'institucion' 	=> $institucion,
+            'sede' 			=> $sede,
+            'indicadores'	=> $indicadores,
+            'actividades'	=> $actividades,
+            'guardado'		=> $guardado,
         ]);
     }
 
