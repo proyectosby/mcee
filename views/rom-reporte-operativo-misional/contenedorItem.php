@@ -102,7 +102,7 @@ use dosamigos\datepicker\DatePicker;
     <?= $form->field($actividades_rom, "[$index]duracion_sesion")->textInput() ?>
     <?= $form->field($actividades_rom, "[$index]logros")->textInput() ?>
     <?= $form->field($actividades_rom, "[$index]fortalezas")->textInput() ?>
-    <?= $form->field($actividades_rom, "[$index]devilidades")->textInput() ?>
+    <?= $form->field($actividades_rom, "[$index]debilidades")->textInput() ?>
     <?= $form->field($actividades_rom, "[$index]alternativas")->textInput() ?>
     <?= $form->field($actividades_rom, "[$index]retos")->textInput() ?>
     <?= $form->field($actividades_rom, "[$index]articulacion")->textInput() ?>

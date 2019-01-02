@@ -113,10 +113,10 @@ $this->params['breadcrumbs'][] = $this->title;
 				]) ?> 
 			<?= Html::a('4. Informe ejecutivo del estado del eje en la IEO', 
 										[
-											'',
+											'ec-informe-ejecutivo-estado/index',
 											'idTipoInforme'		=> 18,
 										], 
-										['class' => 'btn btn-info']) ?>
+										['class' => 'btn btn-success']) ?>
 										
 										
 			

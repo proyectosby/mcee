@@ -7,6 +7,18 @@ use dosamigos\datepicker\DatePicker;
 
 use yii\bootstrap\Collapse;
 
+use yii\helpers\Url;
+
+$this->registerJsFile(
+    '@web/js/isaIniciacionSensibilizacionArtisticaConsolidado.js',
+    [
+		'depends' => [
+						\yii\web\JqueryAsset::className(),
+						\dosamigos\editable\EditableBootstrapAsset::className(),
+					]
+	]
+);
+
 if( $guardado ){
 	
 	$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
@@ -25,7 +37,9 @@ if( $guardado ){
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
-$form = ActiveForm::begin();
+$form = ActiveForm::begin(['action' => Url::to( ['create'] )]);
+
+
 
 $items = [];
 
@@ -59,6 +73,8 @@ foreach( $actividades as $keySesion => $actividad )
         ],
     ]); ?>
 
+	<?= Html::activeHiddenInput($modelEncabezado, 'id') ?>
+	
     <?= $form->field($modelEncabezado, 'periodo')->textInput() ?>
 	
     <?= $form->field($modelEncabezado, 'id_institucion')->dropDownList( [ $institucion->id => $institucion->descripcion ] ) ?>
@@ -69,6 +85,32 @@ foreach( $actividades as $keySesion => $actividad )
 		'items' => $items,
 		'options' => [ "id" => "collapseOne" ],
 	]); ?>
+	
+	<div class="form-group">
+	
+		<?= Html::label( "Porcentaje de Avance por Sede" ) ?>
+		
+		<?= Html::textInput( "total_porcentaje_sede", "", [ 
+					"class" 		=> "form-control", 
+					"style" 		=> "background-color:#eee",
+					"disabled" 		=> true, 
+					"id" 			=> "total_porcentaje_sede", 
+				] ) ?>
+		
+	</div>
+	
+	<div class="form-group">
+	
+		<?= Html::label( "Porcentaje de Avance por IEO" ) ?>
+		
+		<?= Html::textInput( "total_porcentaje_sede", "", [ 
+					"class" 		=> "form-control", 
+					"style" 		=> "background-color:#eee",
+					"disabled" 		=> true, 
+					"id" 			=> "total_porcentaje_ieo", 
+				] ) ?>
+		
+	</div>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

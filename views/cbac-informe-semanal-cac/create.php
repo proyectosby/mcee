@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\CbacInformeSemanalCac */
 
-$this->title = 'Nuevo Informe de ejecucion semanal Competencias Arte y Cultura';
+$this->title = 'Nuevo Informe de ejecución semanal Competencias Arte y Cultura';
 $this->params['breadcrumbs'][] = ['label' => 'Cbac Informe Semanal Cacs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>

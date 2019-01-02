@@ -29,21 +29,7 @@ $this->title = '4. Informe ejecutivo del estado del eje en la IEO';
 $this->params['breadcrumbs'][] = $this->title;
 $idTipoInforme =$_GET['idTipoInforme'];
 
-
-$phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-$document = $phpWord->loadTemplate('plantillas\4.InformePlantilla.docx');
-
-$document->setValue('ieo', $institucion);
-
-$document->saveAs('temp.docx'); // Save to temp file
-
-// \PhpOffice\PhpWord\Settings::setPdfRendererPath('tcpdf');
-// \PhpOffice\PhpWord\Settings::setPdfRendererName('TCPDF');
-
-// $phpWord = \PhpOffice\PhpWord\IOFactory::load('temp.docx'); 
-// $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
-// $xmlWriter->save("temp.PDF"); 
+ 
 
 ?> 
 
