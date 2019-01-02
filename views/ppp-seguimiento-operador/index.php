@@ -31,10 +31,19 @@ $this->title = 'Seguimiento Operador';
 $this->params['breadcrumbs'][] = $this->title;
 $idTipoSeguimiento = $_GET['idTipoSeguimiento'];
 
-
-if( isset($guardado) && $guardado == 1 ){
-	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+if( @$_GET['guardado'])
+{
+	
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
 }
+
 ?> 
 
 <h1></h1>

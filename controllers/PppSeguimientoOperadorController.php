@@ -1,5 +1,16 @@
 <?php
-
+/**********
+Versión: 001
+Fecha: 02-01-2019
+Desarrollador: Oscar David Lopez Villa
+Descripción: crud Seguimiento operador
+---------------------------------------
+Modificaciones:
+Fecha: 02-01-2019
+Persona encargada: Oscar David Lopez Villa
+Cambios realizados: Modificaciones en los actionCreate y actionDelete
+----------------------------------------
+**********/
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -102,7 +113,7 @@ class PppSeguimientoOperadorController extends Controller
 			{
 				$guardado = true;
 				
-				return $this->redirect(['index','idTipoSeguimiento' => $idTipoSeguimiento]);
+				return $this->redirect(['index','idTipoSeguimiento' => $idTipoSeguimiento,'guardado' => 1]);
 			}
         }
 
@@ -191,7 +202,7 @@ class PppSeguimientoOperadorController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) 
 		{
 			$guardado = true;
-            return $this->redirect(['index','idTipoSeguimiento' => $idTipoSeguimiento]);
+            return $this->redirect(['index','idTipoSeguimiento' => $idTipoSeguimiento,'guardado' => 1]);
         }
 		
 		$dataNombresOperador = Parametro::find()
