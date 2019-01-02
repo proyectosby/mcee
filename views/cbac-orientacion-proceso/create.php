@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\IsaOrientacionProceso */
 
-$this->title = 'Agregar Isa Orientacion Proceso';
+$this->title = 'Agregar Orientación Procesos';
 $this->params['breadcrumbs'][] = ['label' => 'Isa Orientacion Procesos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>

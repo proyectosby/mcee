@@ -12,8 +12,12 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\IsaOrientacionProcesoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Isa Orientación Procesos';
+$this->title = '4.Orientación Procesos';
 $this->params['breadcrumbs'][] = $this->title;
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
 ?> 
 
 <h1></h1>
@@ -39,7 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
+		<?= Html::a('Volver',['arte-cultura/index',],['class' => 'btn btn-info']) ?>
+				
     </p>
 
     <?= DataTables::widget([

@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\IsaOrientacionProceso */
 
-$this->title = 'Actualizar';
-$this->params['breadcrumbs'][] = ['label' => 'Isa Orientacion Procesos', 'url' => ['index']];
+$this->title = 'Actualizar Orientación Procesos';
+$this->params['breadcrumbs'][] = ['label' => 'Orientacion Procesos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = "Actualizar";
 ?>

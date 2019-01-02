@@ -1,5 +1,20 @@
 <?php
 
+/**********
+Versión: 001
+Fecha: 02-01-2019
+Desarrollador: Oscar David Lopez Villa
+Descripción: crud y formulario de orientacion proceso
+---------------------------------------
+Modificaciones:
+Fecha: 02-01-2019
+Persona encargada: Oscar David Lopez Villa
+Cambios realizados: creacion funcion actionFormulario
+modificacion update 
+modificacion create 
+----------------------------------------
+**********/
+
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -45,7 +60,9 @@ class IsaOrientacionProcesoController extends Controller
         ];
     }
 
-	
+	/*
+		funcion encargarda de mostrar los acordeones con sus respectivos titulos y campos 
+	*/
 	public function actionFormulario($model,$form,$datos = 0)
 	{
 		
@@ -173,7 +190,7 @@ class IsaOrientacionProcesoController extends Controller
                      )
 					 ->execute();
 			
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 'guardado' => 1]);
         }
 
         return $this->renderAjax('create', [
@@ -227,7 +244,7 @@ class IsaOrientacionProcesoController extends Controller
 				$result = $command->queryAll();
 			}
             
-			return $this->redirect(['index']);
+			return $this->redirect(['index', 'guardado' => 1]);
         }
 
 		
