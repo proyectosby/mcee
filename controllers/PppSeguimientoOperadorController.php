@@ -102,7 +102,7 @@ class PppSeguimientoOperadorController extends Controller
 			{
 				$guardado = true;
 				
-				return $this->redirect(['index']);
+				return $this->redirect(['index','idTipoSeguimiento' => $idTipoSeguimiento]);
 			}
         }
 
@@ -191,7 +191,7 @@ class PppSeguimientoOperadorController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) 
 		{
 			$guardado = true;
-            return $this->redirect(['index']);
+            return $this->redirect(['index','idTipoSeguimiento' => $idTipoSeguimiento]);
         }
 		
 		$dataNombresOperador = Parametro::find()

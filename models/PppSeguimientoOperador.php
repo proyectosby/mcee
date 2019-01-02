@@ -75,7 +75,7 @@ class PppSeguimientoOperador extends \yii\db\ActiveRecord
             'email' => 'Email',
             'cual_operador' => 'Cual Operador',
             'proyecto_reportar' => 'Proyecto Reportar',
-            'id_ie' => 'Institucion educativa',
+            'id_ie' => 'Institución educativa',
             'mes_reporte' => 'Mes Reporte',
             'semana_reporte' => 'Semana Reporte',
             'id_persona_responsable' => 'Persona Responsable',

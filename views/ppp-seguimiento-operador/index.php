@@ -4,7 +4,7 @@
 Versión: 001
 Fecha: 02-03-2018
 Desarrollador: Oscar David Lopez villa 
-Descripción: ppp.seguimiento_operador
+Descripción: crud seguimiento_operador
 ---------------------------------------
 Modificaciones:
 Fecha: 03-03-2018
@@ -27,10 +27,14 @@ use app\models\Parametro;
 /* @var $searchModel app\models\GeSeguimientoOperadorBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'PPP Seguimiento Operador';
+$this->title = 'Seguimiento Operador';
 $this->params['breadcrumbs'][] = $this->title;
 $idTipoSeguimiento = $_GET['idTipoSeguimiento'];
 
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
 ?> 
 
 <h1></h1>
