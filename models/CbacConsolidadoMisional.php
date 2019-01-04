@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "cbac.orientacion_proceso_cbac".
+ * This is the model class for table "cbac.consolidado_misional".
  *
  * @property int $id
  * @property int $id_institucion
@@ -14,15 +14,14 @@ use Yii;
  * @property string $hasta
  * @property int $estado
  */
-class CbacOrientacionProcesoCbac extends \yii\db\ActiveRecord
+class CbacConsolidadoMisional extends \yii\db\ActiveRecord
 {
-    public $nombre_institucion;
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'cbac.orientacion_proceso_cbac';
+        return 'cbac.consolidado_misional';
     }
 
     /**
@@ -47,13 +46,13 @@ class CbacOrientacionProcesoCbac extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'nombre_institucion' => 'Institución',
             'id' => 'ID',
-            'id_institucion' => 'Id Institucion',
-            'id_sede' => 'Id Sede',
+            'id_institucion' => 'Institución',
+            'id_sede' => 'Sede',
             'desde' => 'Desde',
             'hasta' => 'Hasta',
             'estado' => 'Estado',
-            'nombre_institucion' => 'Nombre institución'
         ];
     }
 }

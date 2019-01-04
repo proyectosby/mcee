@@ -34,7 +34,8 @@ $index = 0;
                                                         'form' => $form,
                                                         "model" => $model,
                                                         'actividades_isa' => $actividades_isa,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []
@@ -47,7 +48,8 @@ $index = 0;
                                                         'form' => $form,
                                                         "model" => $model,
                                                         'actividades_isa' => $actividades_isa,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []
@@ -61,7 +63,8 @@ $index = 0;
                                                         'form' => $form,
                                                         "model" => $model,
                                                         'actividades_isa' => $actividades_isa,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []

@@ -1,4 +1,11 @@
 <?php
+/**********
+Versión: 001
+Fecha: 03-01-2019
+Desarrollador: Edwin Molina Grisales
+Descripción: Se usa para llamar al script _form tanto para crear como editar registros Consolidado por mes - Misional
+---------------------------------------
+**********/
 
 use yii\helpers\Html;
 
@@ -13,7 +20,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 
 <?= Html::a('Volver', 
 									[
-										'sensibilizacion-artistica/index',
+										'isa-enc-artistica-misional/index',
 									], 
 									['class' => 'btn btn-info']) ?>
 									

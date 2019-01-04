@@ -31,7 +31,7 @@ class IsaDetArtisticaMisional extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado', 'id_enc_artistica_misional'], 'required'],
+            [['estado', 'id_enc_artistica_misional','mision','descripcion_proceso','hallazgos','avance_sede_sensibilizacion'], 'required'],
             [['estado', 'id_enc_artistica_misional', 'avance_sede_sensibilizacion'], 'default', 'value' => null],
             [['estado', 'id_enc_artistica_misional', 'avance_sede_sensibilizacion'], 'integer'],
             [['mision', 'descripcion_proceso', 'hallazgos'], 'string'],

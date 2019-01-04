@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-
+use app\models\Instituciones;
+use app\models\Sedes;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
@@ -11,7 +12,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Cbac Plan Misional Operativos';
+$this->title = '1 Planeación Competencias Básicas Arte y Cultura';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -28,7 +29,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>NombreCrud</h3>
+<h3>Planeación Competencias Básicas Arte y Cultura</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -84,10 +85,34 @@ if( isset($guardado) && $guardado == 1 ){
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'id_institucion',
-            'id_sede',
-            'caracterizacion_diagnostico',
+            //'id',
+			[
+			'attribute'=>'id_institucion',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->id_institucion);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			//'id_institucion',
+			//'id_sede',
+			[
+			'attribute'=>'id_sede',
+			'value' => function( $model )
+				{
+					$nombreSedes = Sedes::findOne($model->id_sede);
+					return $nombreSedes ? $nombreSedes->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			//'caracterizacion_diagnostico',
+			[
+			'attribute'=>'caracterizacion_diagnostico',
+			'value' => function( $model )
+				{
+					
+					return $model->caracterizacion_diagnostico == 0 ? "SI" : 'NO';  
+				}, //para buscar por el nombre
+			],
             'fecha_caracterizacion_',
             //'nombre_caracterizacion',
             //'caracterizacion_no_justificacion',

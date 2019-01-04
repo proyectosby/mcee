@@ -1,4 +1,11 @@
 <?php
+/**********
+Versión: 001
+Fecha: 03-01-2019
+Desarrollador: Edwin Molina Grisales
+Descripción: CRUD Consolidado por mes - Misional
+---------------------------------------
+**********/
 
 use yii\helpers\Url;
 use yii\helpers\Html;
@@ -18,7 +25,7 @@ $titles	  =	[
 			
 $titleMision  = [
 					0 => "Personas de la comunidad (líderes, organizaciones de base, población no escolar, etc.) capacitadas en procesos de iniciación y sensibilización artística.",
-					1 => "Instituciones educativas que integran estrategias de iniciación y sensibilización artística para fortalecer la creación de proyectos específicos con la comunidad (líderes, organizaciones de base, población no escolar, etc.). Para enriquecer el proceso formativo de ",
+					1 => "Instituciones educativas que integran estrategias de iniciación y sensibilización artística para fortalecer la creación de proyectos específicos con la comunidad (líderes, organizaciones de base, población no escolar, etc.). Para enriquecer el proceso formativo de niños, niñas, adolescentes y jóvenes, al año.",
 				];
 				
 $this->registerJsFile(
@@ -30,9 +37,14 @@ $this->registerJsFile(
 					]
 	]
 );
+
+if( !$sede ){
+	$this->registerJs( "changeSede();" );
+	return;
+}
 			
-if( $guardado )
-{	
+if( $guardado === true )
+{
 	$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 	
 	$this->registerJs( "
@@ -105,9 +117,13 @@ h4 {
 	?>
 	
 
+	<?php if( !$guardado ) : ?>
+
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
+	
+	<?php endif; ?>
 
     <?php ActiveForm::end(); ?>
 

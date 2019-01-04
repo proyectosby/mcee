@@ -78,7 +78,7 @@ class CbacConsolidadoMesCbacController extends Controller
         ]);
     }
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos = 0){
         
         $imp_cbac = new CbacImpConsolidadoMesCbac();
         $actividade_cbac = new CbacActividadesConsolidadoCbac();
@@ -89,6 +89,7 @@ class CbacConsolidadoMesCbacController extends Controller
             1 => "Desarrollar herramientas en docentes y directivos docentes de las IEO que implementen componentes artísticos y culturales.",
             2 => "Fortalecer la oferta de programas culturales para estudiantes en el proceso formativo de competencias básicas dentro y fuera del aula.",
             3 => "Promover el acompañamiento de padres de familia desde el arte y la cultura en el proceso de fortalecimiento de competencias básicas de estudiantes de las IEO.",
+            4 => "",
         ];
         
         return $this->renderAjax('fases', [
@@ -99,6 +100,7 @@ class CbacConsolidadoMesCbacController extends Controller
             'actividade_cbac' => $actividade_cbac,
             'tipo_poblacion_cbac' => $tipo_poblacion_cbac,
             'evidencias_cbac' => $evidencias_cbac,
+            'datos' => $datos
         ]);
         
     }
@@ -582,9 +584,48 @@ class CbacConsolidadoMesCbacController extends Controller
             return $this->redirect(['index']);
         }
 
+
+        $impConsolidado = new CbacImpConsolidadoMesCbac();
+        $impConsolidado = $impConsolidado->find()->orderby("id")->andWhere("id_consolidado_mes_cbac=$id")->all();
+        
+        var_dump($impConsolidado);
+        die();
+
+        $result = ArrayHelper::getColumn($impConsolidado, function ($element) 
+		{
+            $dato[$element['id_componente']]['avance_sede']= $element['avance_sede'];
+            $dato[$element['id_componente']]['avance_ieo']= $element['avance_ieo'];
+
+            return $dato;
+        });
+
+        foreach	($result as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos[$ids] = $valores;
+        }
+
+        
+
+        $idInstitucion = $_SESSION['instituciones'][0];
+        $institucion = Instituciones::findOne($idInstitucion);
+
         return $this->renderAjax('update', [
             'model' => $model,
+            'sedes' => $this->obtenerSede(),
+            'institucion' => $institucion->descripcion,
+            'datos'=> $datos,
         ]);
+    }
+
+    public function obtenerSede()
+	{
+        $idInstitucion = $_SESSION['instituciones'][0];
+		$Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
+        $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+		
+		return $sedes;
     }
 
     /**

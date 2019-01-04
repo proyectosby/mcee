@@ -29,7 +29,7 @@ class IsaIndicadoresXDetArtisticaMisional extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_det_artisctica_misional', 'estado', 'id_indicador'], 'required'],
+            [['id_det_artisctica_misional', 'estado', 'id_indicador','valor_indicador'], 'required'],
             [['id_det_artisctica_misional', 'estado', 'id_indicador', 'valor_indicador'], 'default', 'value' => null],
             [['id_det_artisctica_misional', 'estado', 'id_indicador', 'valor_indicador'], 'integer'],
             [['id_det_artisctica_misional'], 'exist', 'skipOnError' => true, 'targetClass' => IsaDetArtisticaMisional::className(), 'targetAttribute' => ['id_det_artisctica_misional' => 'id']],

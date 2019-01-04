@@ -17,7 +17,8 @@ foreach( $fases as $keyFase => $fase ){
 														'form' => $form,
                                                         "model" => $model,
                                                         'proyecto' => $keyFase,
-                                                        'actividades_isa' => $actividades_isa
+														'actividades_isa' => $actividades_isa,
+														'datos' => $datos,
 														
 													] 
 										),

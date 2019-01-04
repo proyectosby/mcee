@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\Instituciones;
+use app\models\Sedes;
 /* @var $this yii\web\View */
 /* @var $model app\models\CbacPlanMisionalOperativo */
 
 $this->title = "Detalles";
-$this->params['breadcrumbs'][] = ['label' => 'Cbac Plan Misional Operativos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '1 Planeación Competencias Básicas Arte y Cultura', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
@@ -29,14 +30,36 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'id_institucion',
-            'id_sede',
-            'caracterizacion_diagnostico',
+            //'id',
+            [
+            'attribute'=>'id_institucion',
+            'value' => function( $model )
+                {
+                    $nombreInstituciones = Instituciones::findOne($model->id_institucion);
+                    return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            [
+            'attribute'=>'id_sede',
+            'value' => function( $model )
+                {
+                    $nombreSedes = Sedes::findOne($model->id_sede);
+                    return $nombreSedes ? $nombreSedes->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            [
+            'attribute'=>'caracterizacion_diagnostico',
+            'value' => function( $model )
+                {
+                    
+                    return $model->caracterizacion_diagnostico == 0 ? "SI" : 'NO';  
+                }, //para buscar por el nombre
+            ],
+            //'caracterizacion_diagnostico',
             'fecha_caracterizacion_',
             'nombre_caracterizacion',
             'caracterizacion_no_justificacion',
-            'estado',
+            //'estado',
         ],
     ]) ?>
 

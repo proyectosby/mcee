@@ -33,6 +33,7 @@ class CbacConsolidadoMesCbac extends \yii\db\ActiveRecord
             [['id_institucion', 'id_sede', 'estado'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'estado'], 'integer'],
             [['desde', 'hasta'], 'safe'],
+            [['id_institucion','id_sede', 'desde', 'hasta'],'required'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
@@ -47,8 +48,8 @@ class CbacConsolidadoMesCbac extends \yii\db\ActiveRecord
         return [
             'nombre_institucion' => 'Nombre Institución',
             'id' => 'ID',
-            'id_institucion' => 'Id Institucion',
-            'id_sede' => 'Id Sede',
+            'id_institucion' => 'Institucion',
+            'id_sede' => 'Sede',
             'desde' => 'Desde',
             'hasta' => 'Hasta',
             'estado' => 'Estado',

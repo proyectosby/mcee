@@ -47,6 +47,7 @@ class CbacActividadesCbac extends \yii\db\ActiveRecord
             [['id_orientacion_proceso_cbac', 'id_actividad_c', 'id_componente', 'estado'], 'default', 'value' => null],
             [['id_orientacion_proceso_cbac', 'id_actividad_c', 'id_componente', 'estado'], 'integer'],
             [['logors', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'observaciones', 'alarmas', 'necesidades', 'estrategias_aprovechar', 'estrategias_enfrentar', 'ajustes', 'temas', 'articulacion', 'necesidades_articulacion', 'cumplimiento_objetivos'], 'string'],
+            [['logors', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'observaciones', 'alarmas', 'necesidades', 'estrategias_aprovechar', 'estrategias_enfrentar', 'ajustes', 'temas', 'articulacion', 'necesidades_articulacion', 'cumplimiento_objetivos'],'required'],
             [['id_orientacion_proceso_cbac'], 'exist', 'skipOnError' => true, 'targetClass' => CbacOrientacionProcesoCbac::className(), 'targetAttribute' => ['id_orientacion_proceso_cbac' => 'id']],
             [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],

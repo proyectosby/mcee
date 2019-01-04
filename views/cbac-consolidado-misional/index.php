@@ -3,17 +3,23 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-
+use app\models\Instituciones;
+use app\models\Sedes;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\GeSeguimientoGestionBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Ge Seguimiento Gestions';
+$this->title = '5 Consolidado por mes Competencias Básicas Arte y Cultura Misional';
 $this->params['breadcrumbs'][] = $this->title;
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
 ?> 
 
 <h1></h1>
@@ -23,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3><?= $this->title ?></h3>
+<h3>5 Consolidado por mes Competencias Básicas Arte y Cultura Misional</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -32,10 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="ge-seguimiento-gestion-index">
+<div class="cbac-consolidado-misional-index">
 
    
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
@@ -77,28 +82,28 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 			],
 	],
-           'columns' => [
+        'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'id_tipo_seguimiento',
-            'id_ie',
-            'id_cargo',
-            'id_nombre',
-            //'fecha',
-            //'id_persona_gestor',
-            //'numero_visitas',
-            //'socializo_plan',
-            //'plan_trabajo_socializo',
-            //'descripcion_plan_trabajo',
-            //'cronocrama_propuesto',
-            //'descripcion_cronograma',
-            //'avances_proyectos',
-            //'dificultades',
-            //'mejoras',
-            //'observaciones',
-            //'calificacion_nivel',
-            //'descripcion_calificacion',
+            //'id',
+            [
+			'attribute'=>'id_institucion',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->id_institucion);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+            [
+			'attribute'=>'id_sede',
+			'value' => function( $model )
+				{
+					$nombreSedes = Sedes::findOne($model->id_sede);
+					return $nombreSedes ? $nombreSedes->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+            'desde',
+            'hasta',
             //'estado',
 
             [

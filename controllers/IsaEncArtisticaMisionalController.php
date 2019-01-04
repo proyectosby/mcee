@@ -1,4 +1,13 @@
 <?php
+/**********
+Versión: 001
+Fecha: 03-01-2019
+Desarrollador: Edwin Molina Grisales
+Descripción: CRUD Consolidado por mes - Misional. A tener en cuenta action create sirve
+			 tanto para crear como actualizar registros
+---------------------------------------
+**********/
+
 
 namespace app\controllers;
 
@@ -56,7 +65,7 @@ class IsaEncArtisticaMisionalController extends Controller
      * Lists all IsaEncArtisticaMisional models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex( $guardado = null )
     {
         $searchModel = new IsaEncArtisticaMisionalBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -64,6 +73,7 @@ class IsaEncArtisticaMisionalController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'guardado' => $guardado,
         ]);
     }
 
@@ -285,6 +295,8 @@ class IsaEncArtisticaMisionalController extends Controller
 					}
 					
 					$guardado = true;
+					
+					return $this->redirect( ['index', 'guardado' => true ] );
 				}
 			}
 		}
@@ -342,7 +354,7 @@ class IsaEncArtisticaMisionalController extends Controller
 		
 		$actividades[1][0] = IsaActividadesArtisticas::findOne( 4 );
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 		=> $models['encabezado'],
             'models' 		=> $models,
             'institucion' 	=> $institucion,
@@ -437,7 +449,7 @@ class IsaEncArtisticaMisionalController extends Controller
 		$actividades[1][0] = IsaActividadesArtisticas::findOne( 4 );
 
 		//Se llama a la vista create por que esta permite editar los datos
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' 		=> $models['encabezado'],
 			'models' 		=> $models,
             'institucion' 	=> $institucion,

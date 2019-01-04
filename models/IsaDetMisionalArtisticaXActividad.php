@@ -34,7 +34,7 @@ class IsaDetMisionalArtisticaXActividad extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado', 'id_actividad', 'id_det_artistica_misional'], 'required'],
+            [['estado', 'id_actividad', 'id_det_artistica_misional','estado_actual','logros','fortalezas','debilidades','retos','alarmas'], 'required'],
             [['estado', 'id_actividad', 'id_det_artistica_misional'], 'default', 'value' => null],
             [['estado', 'id_actividad', 'id_det_artistica_misional'], 'integer'],
             [['estado_actual', 'logros', 'fortalezas', 'debilidades', 'retos', 'alarmas'], 'string'],

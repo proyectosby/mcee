@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\Instituciones;
-use app\models\Sedes
+use app\models\Sedes;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\IsaOrientacionProceso */
