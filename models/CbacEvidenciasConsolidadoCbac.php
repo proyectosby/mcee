@@ -38,6 +38,7 @@ class CbacEvidenciasConsolidadoCbac extends \yii\db\ActiveRecord
             [['id_imp_consolidado_mes_cbac'], 'default', 'value' => null],
             [['id_imp_consolidado_mes_cbac'], 'integer'],
             [['actas', 'reportes', 'listados', 'plan_trabajo', 'formato_seguimiento', 'formato_evaluacion', 'fotografias', 'vidoes', 'otros_productos'], 'string'],
+            //[['actas', 'reportes', 'listados', 'plan_trabajo', 'formato_seguimiento', 'formato_evaluacion', 'fotografias', 'vidoes'], 'required'],
             [['id_imp_consolidado_mes_cbac'], 'exist', 'skipOnError' => true, 'targetClass' => CbacImpConsolidadoMesCbac::className(), 'targetAttribute' => ['id_imp_consolidado_mes_cbac' => 'id']],
         ];
     }

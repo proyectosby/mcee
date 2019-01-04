@@ -4,15 +4,16 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\Instituciones;
 use app\models\Sedes;
+
 /* @var $this yii\web\View */
-/* @var $model app\models\CbacOrientacionProcesoCbac */
+/* @var $model app\models\CbacConsolidadoMisional */
 
 $this->title = "Detalles";
-$this->params['breadcrumbs'][] = ['label' => 'Cbac Orientacion Proceso Cbacs', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Cbac Consolidado Misionals', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
-<div class="cbac-orientacion-proceso-cbac-view">
+<div class="cbac-consolidado-misional-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,22 +32,21 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         'model' => $model,
         'attributes' => [
             //'id',
-            //'id_institucion',
-            ['attribute'=>'id_institucion',
-			'value' => function( $model )
-				{
-					$nombreInstituciones = Instituciones::findOne($model->id_institucion);
-					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
-				}, //para buscar por el nombre
-			],
-
             [
-                'attribute'=>'id_sede',
-                'value' => function( $model )
-                    {
-                        $nombreSedes = Sedes::findOne($model->id_sede);
-                        return $nombreSedes ? $nombreSedes->descripcion : '';  
-                    }, //para buscar por el nombre
+            'attribute'=>'id_institucion',
+            'value' => function( $model )
+                {
+                    $nombreInstituciones = Instituciones::findOne($model->id_institucion);
+                    return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            [
+            'attribute'=>'id_sede',
+            'value' => function( $model )
+                {
+                    $nombreSedes = Sedes::findOne($model->id_sede);
+                    return $nombreSedes ? $nombreSedes->descripcion : '';  
+                }, //para buscar por el nombre
             ],
             'desde',
             'hasta',

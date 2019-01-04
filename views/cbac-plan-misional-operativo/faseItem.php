@@ -33,7 +33,8 @@ $index = 0;
                                                         'form' => $form,
                                                         "model" => $model,
                                                         'actividades_pom' => $actividades_pom,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []
@@ -46,7 +47,8 @@ $index = 0;
                                                         'form' => $form,
                                                         "model" => $model,
                                                         'actividades_pom' => $actividades_pom,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []
@@ -60,7 +62,8 @@ $index = 0;
                                                         'form' => $form,
                                                         "model" => $model,
                                                         'actividades_pom' => $actividades_pom,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []

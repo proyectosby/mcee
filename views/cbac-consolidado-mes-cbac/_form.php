@@ -43,7 +43,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <div class="panel panel panel-primary" >
         <div class="panel-heading" style="margin-bottom: 15px;"> Implementar estrategias artisticas y culturales que fortalezcan las competencias básicas de los estudiantes de grados sexto a once de las Instituciones Educativas Oficiales </div>
-        <?= $this->context->actionViewFases($model, $form);   ?>
+        <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0);   ?>
     </div>
 
     <div class="form-group">

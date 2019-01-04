@@ -20,7 +20,8 @@ foreach( $fases as $keyFase => $fase ){
                                                         'imp_cbac' => $imp_cbac,
 											            'actividade_cbac' => $actividade_cbac,
 											            'tipo_poblacion_cbac' => $tipo_poblacion_cbac,
-											            'evidencias_cbac' => $evidencias_cbac,														
+														'evidencias_cbac' => $evidencias_cbac,
+														'datos' => $datos														
 													] 
 										),
 					'contentOptions'=> []
