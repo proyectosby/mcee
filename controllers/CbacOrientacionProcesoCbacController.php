@@ -74,7 +74,7 @@ class CbacOrientacionProcesoCbacController extends Controller
         ]);
     }
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos = 0){
         
         $actividades_isa = new CbacActividadesCbac();
         $proyectos = [ 
@@ -88,7 +88,8 @@ class CbacOrientacionProcesoCbacController extends Controller
             'fases' => $proyectos,
             'form' => $form,
             "model" => $model,
-            'actividades_isa' => $actividades_isa
+            'actividades_isa' => $actividades_isa,
+            'datos' => $datos,
         ]);
 		
 	}
@@ -156,16 +157,67 @@ class CbacOrientacionProcesoCbacController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
+       
+        $actividades = new CbacActividadesCbac();
+        $actividades = $actividades->find()->orderby("id")->andWhere("id_orientacion_proceso_cbac=$id")->all();
+        
+
+        $result = ArrayHelper::getColumn($actividades, function ($element) 
+		{
+            $dato[$element['id_actividad_c']]['logors']= $element['logors'];
+            $dato[$element['id_actividad_c']]['fortalezas']= $element['fortalezas'];
+            $dato[$element['id_actividad_c']]['debilidades']= $element['debilidades'];
+            $dato[$element['id_actividad_c']]['alternativas']= $element['alternativas'];
+            $dato[$element['id_actividad_c']]['retos']= $element['retos'];
+            $dato[$element['id_actividad_c']]['observaciones']= $element['observaciones'];
+            $dato[$element['id_actividad_c']]['alarmas']= $element['alarmas'];
+            $dato[$element['id_actividad_c']]['necesidades']= $element['necesidades'];
+            $dato[$element['id_actividad_c']]['estrategias_aprovechar']= $element['estrategias_aprovechar'];
+            $dato[$element['id_actividad_c']]['estrategias_enfrentar']= $element['estrategias_enfrentar'];
+            $dato[$element['id_actividad_c']]['ajustes']= $element['ajustes'];
+            $dato[$element['id_actividad_c']]['temas']= $element['temas'];
+            $dato[$element['id_actividad_c']]['articulacion']= $element['articulacion'];
+            $dato[$element['id_actividad_c']]['necesidades_articulacion']= $element['necesidades_articulacion'];
+            $dato[$element['id_actividad_c']]['cumplimiento_objetivos']= $element['cumplimiento_objetivos'];
+
+            return $dato;
+
+        });
+
+        foreach	($result as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos[$ids] = $valores;
+        }
+
+        $idInstitucion = $_SESSION['instituciones'][0];
+        $institucion = Instituciones::findOne($idInstitucion);
+
 
         return $this->renderAjax('update', [
             'model' => $model,
+            'sedes' => $this->obtenerSede(),
+            'datos'=>$datos,
+            'institucion' => $institucion->descripcion,
         ]);
     }
 
+    public function obtenerSede()
+	{
+		$idSedes 		= $_SESSION['sede'][0];
+		$sedes = new Sedes();
+		$sedes = $sedes->find()->where("id =  $idSedes")->all();
+		$sedes = ArrayHelper::map($sedes,'id','descripcion');
+		
+		return $sedes;
+    }
+    
     /**
      * Deletes an existing CbacOrientacionProcesoCbac model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

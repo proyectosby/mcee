@@ -31,8 +31,9 @@ class CbacImpConsolidadoMesCbac extends \yii\db\ActiveRecord
         return [
             [['id_consolidado_mes_cbac', 'id_componente', 'avance_sede', 'avance_ieo'], 'default', 'value' => null],
             [['id_consolidado_mes_cbac', 'id_componente', 'avance_sede', 'avance_ieo'], 'integer'],
+            //[['avance_sede', 'avance_ieo'],'required'],
             [['id_consolidado_mes_cbac'], 'exist', 'skipOnError' => true, 'targetClass' => CbacConsolidadoMesCbac::className(), 'targetAttribute' => ['id_consolidado_mes_cbac' => 'id']],
-            [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
+            //[['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
         ];
     }
 

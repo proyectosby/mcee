@@ -12,7 +12,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '1 Planeación Competencias Básicas Arte y Cultura';
+$this->title = '5 Consolidado por mes Competencias Básicas Arte y Cultura Misional';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -29,7 +29,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Planeación Competencias Básicas Arte y Cultura</h3>
+<h3>5 Consolidado por mes Competencias Básicas Arte y Cultura Misional</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -38,7 +38,7 @@ if( isset($guardado) && $guardado == 1 ){
 </div>
 </div>
 </div>
-<div class="cbac-plan-misional-operativo-index">
+<div class="cbac-consolidado-misional-index">
 
    
 
@@ -86,7 +86,7 @@ if( isset($guardado) && $guardado == 1 ){
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-			[
+            [
 			'attribute'=>'id_institucion',
 			'value' => function( $model )
 				{
@@ -94,9 +94,7 @@ if( isset($guardado) && $guardado == 1 ){
 					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
 				}, //para buscar por el nombre
 			],
-			//'id_institucion',
-			//'id_sede',
-			[
+            [
 			'attribute'=>'id_sede',
 			'value' => function( $model )
 				{
@@ -104,18 +102,8 @@ if( isset($guardado) && $guardado == 1 ){
 					return $nombreSedes ? $nombreSedes->descripcion : '';  
 				}, //para buscar por el nombre
 			],
-			//'caracterizacion_diagnostico',
-			[
-			'attribute'=>'caracterizacion_diagnostico',
-			'value' => function( $model )
-				{
-					
-					return $model->caracterizacion_diagnostico == 0 ? "SI" : 'NO';  
-				}, //para buscar por el nombre
-			],
-            'fecha_caracterizacion_',
-            //'nombre_caracterizacion',
-            //'caracterizacion_no_justificacion',
+            'desde',
+            'hasta',
             //'estado',
 
             [

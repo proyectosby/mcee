@@ -42,7 +42,7 @@ $index = 0;
 										),
 					'contentOptions'=> []
 				];
-                echo $form->field($imp_cbac, "[$proyecto]id_componente")->hiddenInput(["value" => 6])->label(false);
+                
             }else if($proyecto ==  2 && $keyFase > 2 && $keyFase <= 7){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,
@@ -58,8 +58,8 @@ $index = 0;
 													] 
 										),
 					'contentOptions'=> []
-				];
-                echo $form->field($imp_cbac, "[$index]id_componente")->hiddenInput(["value" => 4])->label(false);
+                ];
+                
             }
             else if($proyecto ==  3 && $keyFase > 7){
                 $contenedores[] = 	[
@@ -78,7 +78,6 @@ $index = 0;
 					'contentOptions'=> []
 				];
 
-                echo $form->field($imp_cbac, "[$proyecto]id_componente")->hiddenInput(["value" => 5])->label(false);
             }    
         
             
@@ -93,6 +92,9 @@ $index = 0;
     ?>
     <h3 style='background-color: #ccc;padding:5px;'>Cuál es el % del estado general  del desarrollo de herramientas en docentes y directivos docentes de las IEO que implementen componentes artísticos y culturales</h3>
     <?php
-    echo $form->field($imp_cbac, "[$proyecto]avance_sede")->textInput();
-    echo $form->field($imp_cbac, "[$proyecto]avance_ieo")->textInput();
+    var_dump($datos);
+    //die();
+    echo $form->field($imp_cbac, "[$proyecto]avance_sede")->textInput([ 'value' => isset($datos[$index]['avance_sede']) ? $datos[$index]['avance_sede'] : '' ]);
+    echo $form->field($imp_cbac, "[$proyecto]avance_ieo")->textInput([ 'value' => isset($datos[$index]['avance_ieo']) ? $datos[$index]['avance_ieo'] : '' ]);
+    echo $form->field($imp_cbac, "[$proyecto]id_componente")->hiddenInput(["value" => $proyecto])->label(false);
 ?>

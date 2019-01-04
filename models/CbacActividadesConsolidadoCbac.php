@@ -35,6 +35,7 @@ class CbacActividadesConsolidadoCbac extends \yii\db\ActiveRecord
             [['id_imp_consolidado_mes_cbac', 'id_actividad', 'avance_sede', 'avance_ieo', 'sesiones_realizadas', 'sesiones_canceladas'], 'default', 'value' => null],
             [['id_imp_consolidado_mes_cbac', 'id_actividad', 'avance_sede', 'avance_ieo', 'sesiones_realizadas', 'sesiones_canceladas'], 'integer'],
             [['nombre'], 'string'],
+            //[['avance_sede', 'avance_ieo', 'sesiones_realizadas', 'sesiones_canceladas'], 'required'],
             [['id_imp_consolidado_mes_cbac'], 'exist', 'skipOnError' => true, 'targetClass' => CbacImpConsolidadoMesCbac::className(), 'targetAttribute' => ['id_imp_consolidado_mes_cbac' => 'id']],
         ];
     }

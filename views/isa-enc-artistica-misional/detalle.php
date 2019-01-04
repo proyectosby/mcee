@@ -1,4 +1,12 @@
 <?php
+/**********
+Versión: 001
+Fecha: 03-01-2019
+Desarrollador: Edwin Molina Grisales
+Descripción: Este script hace parte del _form.php del Consolidado por mes - Misional
+---------------------------------------
+**********/
+
 use yii\helpers\Html;
 ?>
 

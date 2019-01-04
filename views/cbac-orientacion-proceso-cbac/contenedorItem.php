@@ -39,19 +39,19 @@ use dosamigos\datepicker\DatePicker;
     <?php
     }
     ?>
-    <?= $form->field($actividades_isa, "[$index]logors")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]fortalezas")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]debilidades")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]alternativas")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]retos")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]observaciones")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]alarmas")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]necesidades")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]estrategias_aprovechar")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]estrategias_enfrentar")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]ajustes")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]temas")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]articulacion")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]necesidades_articulacion")->textInput() ?>
-    <?= $form->field($actividades_isa, "[$index]cumplimiento_objetivos")->textInput() ?>
+    <?= $form->field($actividades_isa, "[$index]logors")->textInput([ 'value' => isset($datos[$index]['logors']) ? $datos[$index]['logors'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]fortalezas")->textInput([ 'value' => isset($datos[$index]['fortalezas']) ? $datos[$index]['fortalezas'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]debilidades")->textInput([ 'value' => isset($datos[$index]['debilidades']) ? $datos[$index]['debilidades'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]alternativas")->textInput([ 'value' => isset($datos[$index]['alternativas']) ? $datos[$index]['alternativas'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]retos")->textInput([ 'value' => isset($datos[$index]['retos']) ? $datos[$index]['retos'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]observaciones")->textInput([ 'value' => isset($datos[$index]['observaciones']) ? $datos[$index]['observaciones'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]alarmas")->textInput([ 'value' => isset($datos[$index]['alarmas']) ? $datos[$index]['alarmas'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]necesidades")->textInput([ 'value' => isset($datos[$index]['necesidades']) ? $datos[$index]['necesidades'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]estrategias_aprovechar")->textInput([ 'value' => isset($datos[$index]['estrategias_aprovechar']) ? $datos[$index]['estrategias_aprovechar'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]estrategias_enfrentar")->textInput([ 'value' => isset($datos[$index]['estrategias_enfrentar']) ? $datos[$index]['estrategias_enfrentar'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]ajustes")->textInput([ 'value' => isset($datos[$index]['ajustes']) ? $datos[$index]['ajustes'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]temas")->textInput([ 'value' => isset($datos[$index]['temas']) ? $datos[$index]['temas'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]articulacion")->textInput([ 'value' => isset($datos[$index]['articulacion']) ? $datos[$index]['articulacion'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]necesidades_articulacion")->textInput([ 'value' => isset($datos[$index]['necesidades_articulacion']) ? $datos[$index]['necesidades_articulacion'] : '' ]) ?>
+    <?= $form->field($actividades_isa, "[$index]cumplimiento_objetivos")->textInput([ 'value' => isset($datos[$index]['cumplimiento_objetivos']) ? $datos[$index]['cumplimiento_objetivos'] : '' ]) ?>
     <?= $form->field($actividades_isa, "[$index]estado")->hiddenInput(['value'=> 1])->label(false); ?>
