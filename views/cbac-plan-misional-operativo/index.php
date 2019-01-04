@@ -28,7 +28,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>NombreCrud</h3>
+<h3>Seguimiento Operador</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
