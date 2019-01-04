@@ -543,7 +543,7 @@ class EcinformeplaneacionieoController extends Controller
 					 ->execute();
 			
 			
-            return $this->redirect(['index']);
+            return $this->redirect(['index','guardado'=>1]);
         }
 
 	
@@ -713,7 +713,7 @@ class EcinformeplaneacionieoController extends Controller
 				$result = $command->queryAll();
 			}
 			
-            return $this->redirect(['index']);
+            return $this->redirect(['index','guardado'=>1]);
         }
 
 		$idSedes 		= $_SESSION['sede'][0];
