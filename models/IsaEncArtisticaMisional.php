@@ -30,7 +30,7 @@ class IsaEncArtisticaMisional extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_institucion', 'id_sede', 'estado'], 'required'],
+            [['id_institucion', 'id_sede', 'estado','periodo','fecha'], 'required'],
             [['id_institucion', 'id_sede', 'estado'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'estado'], 'integer'],
             [['periodo'], 'string'],
