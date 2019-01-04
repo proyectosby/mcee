@@ -8,6 +8,10 @@ use yii\helpers\Url;
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
+use app\models\Instituciones;
+use app\models\Sedes;
+use app\models\Estados;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\IsaIniciacionSensibilizacionArtisticaConsolidadoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -39,6 +43,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
+		<?= Html::a('Volver', 
+				[
+					'sensibilizacion-artistica/index',
+				], 
+				['class' => 'btn btn-info']) ?>
 		
     </p>
 
@@ -80,11 +89,28 @@ $this->params['breadcrumbs'][] = $this->title;
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'fecha',
-            'id_institucion',
-            'id_sede',
-            'estado',
+			[
+				'attribute' => 'id_institucion',
+				'value' 	=> function( $model ){
+					$institucion = Instituciones::findOne($model->id_institucion);
+					return $institucion ? $institucion->descripcion : '';
+				},
+			],
+			[
+				'attribute' => 'id_sede',
+				'value' 	=> function( $model ){
+					$sede = Sedes::findOne($model->id_sede);
+					return $sede ? $sede->descripcion : '';
+				},
+			],
+			[
+				'attribute' => 'estado',
+				'value' 	=> function( $model ){
+					$estado = Estados::findOne($model->estado);
+					return $estado ? $estado->descripcion : '';
+				},
+			],
             //'total_sesiones_realizadas',
             //'avance_por_mes',
             //'total_sesiones_aplazadas',
