@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use app\models\Instituciones;
+use app\models\Sedes;
+use app\models\Parametro;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformePlaneacionIeo */
 
@@ -29,14 +33,32 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'id_institucion',
-            'id_sede',
+            [
+				'attribute'=>'id_institucion',
+				'value' => function( $model )
+				{
+					$institucion = Instituciones::findOne($model->id_institucion);
+					return $institucion ? $institucion->descripcion : '';
+				}, 
+			],
+            [
+				'attribute' => 'id_sede',
+				'value' 	=> function( $model ){
+					$sede = Sedes::findOne( $model->id_sede );
+					return $sede ? $sede->descripcion : '';
+				},
+			],
             'codigo_dane',
             'zona_educativa',
             'id_comuna',
             'id_barrio',
-            'fase',
+           [
+				'attribute' => 'fase',
+				'value' 	=> function( $model ){
+					$fase = Parametro::findOne( $model->fase );
+					return $fase ? $fase->descripcion : '';
+				},
+			],
             'fecha_reporte',
         ],
     ]) ?>

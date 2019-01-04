@@ -561,7 +561,7 @@ class InformeAvancePlanAccionMisionalController extends Controller
 					 ->execute();
 			
 			
-            return $this->redirect(['index','idTipoInforme' => $idTipoInforme]);
+            return $this->redirect(['index','idTipoInforme' => $idTipoInforme,'guardado' => 1]);
         }
 
 	
@@ -732,7 +732,7 @@ class InformeAvancePlanAccionMisionalController extends Controller
 				$result = $command->queryAll();
 			}
 			
-            return $this->redirect(['index','idTipoInforme' => $idTipoInforme]);
+            return $this->redirect(['index','idTipoInforme' => $idTipoInforme,'guardado' => 1]);
         }
 
 		$idSedes 		= $_SESSION['sede'][0];
