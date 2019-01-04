@@ -16,6 +16,17 @@ use app\models\EcProyectos;
 $this->title = '4. Informe ejecutivo del estado del eje en la IEO';
 $this->params['breadcrumbs'][] = $this->title;
 
+if( @$_GET['guardado'])
+{
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
+}
 ?> 
 
 <h1></h1>
@@ -41,7 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
+		<?= Html::a('Volver',['ec-competencias-basicas-proyectos/index',],['class' => 'btn btn-info']) ?>
+				
     </p>
 
     <?= DataTables::widget([

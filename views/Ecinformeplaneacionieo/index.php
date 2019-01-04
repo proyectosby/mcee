@@ -65,10 +65,6 @@ if( @$_GET['guardado'])
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create','idTipoInforme'	=> $idTipoInforme]),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
-		
-		
-		
 		<?= Html::a('Volver', 
 									[
 										'ec-competencias-basicas-proyectos/index',
