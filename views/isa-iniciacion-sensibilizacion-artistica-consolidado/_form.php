@@ -32,6 +32,11 @@ if( $guardado ){
 	);
 }
 
+if( !$sede ){
+	
+	exit( "<div class='btn-danger' style='font-size:20pt;text-align:center;width:100%;'>Por favor seleccione una sede</div>" );
+}
+
 /* @var $this yii\web\View */
 /* @var $model app\models\IsaIniciacionSensibilizacionArtisticaConsolidado */
 /* @var $form yii\widgets\ActiveForm */

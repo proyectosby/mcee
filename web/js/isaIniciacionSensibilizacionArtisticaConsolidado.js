@@ -55,3 +55,36 @@
 	});
 	
 	
+	function inicilializandoFunciones(){
+		
+		setTimeout(function(){
+			
+			//A todos los que tengan campo participantes se les agrega evento change
+			$( "[data-participante]" )
+				.each(function(){
+					
+					//Cada vez que se haga un change se actualiza el total de participantes
+					$( this ).change(function(){
+						actualizar_total_participantes( $( this ).data('participante') );
+					});
+				});
+			
+			$( "[data-participante]" ).each(function(){
+				actualizar_total_participantes( $( this ).data('participante') );
+			});
+			
+			$( "[data-porcentaje]" ).each(function(){
+			
+				$( this ).change(function(){
+					actualizar_porcentaje_sede();
+					actualizar_porcentaje_ieo();
+				});
+			});
+			
+			actualizar_porcentaje_sede();
+			actualizar_porcentaje_ieo();
+			
+		}, 1000 );
+		
+	}
+	

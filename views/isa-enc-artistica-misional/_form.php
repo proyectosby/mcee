@@ -39,8 +39,8 @@ $this->registerJsFile(
 );
 
 if( !$sede ){
-	$this->registerJs( "changeSede();" );
-	return;
+	
+	exit( "<div class='btn-danger' style='font-size:20pt;text-align:center;width:100%;'>Por favor seleccione una sede</div>" );
 }
 			
 if( $guardado === true )
@@ -75,7 +75,7 @@ h4 {
 
     <?= Html::hiddenInput('guardar', 1 ) ?>
 	
-    <?= $form->field($models['encabezado'], 'id')->hiddenInput(['style' => 'display:none'])->label('') ?>
+    <?= Html::activeHiddenInput($models['encabezado'], 'id') ?>
 	
     <?= $form->field($models['encabezado'], 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ]) ?>
 

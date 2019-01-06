@@ -11,15 +11,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Isa Iniciacion Sensibilizacion Art
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 
-<?= Html::a('Volver', 
+<!-- <?= Html::a('Volver', 
 									[
 										'sensibilizacion-artistica/index',
 									], 
-									['class' => 'btn btn-info']) ?>
+									['class' => 'btn btn-info']) ?> --!>
 
 <div class="isa-iniciacion-sensibilizacion-artistica-consolidado-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <?= $this->render('_form', [
         'models' 			=> $models,

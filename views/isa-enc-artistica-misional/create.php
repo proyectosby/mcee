@@ -18,15 +18,15 @@ $this->params['breadcrumbs'][] = ['label' => 'Isa Enc Artistica Misionals', 'url
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 
-<?= Html::a('Volver', 
+<!-- <?= Html::a('Volver', 
 									[
 										'isa-enc-artistica-misional/index',
 									], 
-									['class' => 'btn btn-info']) ?>
+									['class' => 'btn btn-info']) ?> -->
 									
 <div class="isa-enc-artistica-misional-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> --!>
 
     <?= $this->render('_form', [
         'model' 		=> $model,

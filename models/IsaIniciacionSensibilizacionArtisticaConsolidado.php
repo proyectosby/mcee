@@ -49,7 +49,7 @@ class IsaIniciacionSensibilizacionArtisticaConsolidado extends \yii\db\ActiveRec
     public function rules()
     {
         return [
-            [['estado', 'id_actividad'], 'required'],
+            [['estado', 'id_actividad','total_sesiones_realizadas','avance_por_mes','total_sesiones_aplazadas','total_sesiones_canceladas','vecinos','lideres_comunitarios','empresarios_comerciantes_microempresas','representantes_organizaciones_locales','asociaciones_grupos_comunitarios','otros_actores','actas','reportes','listados','plan_trabajo','formato_seguimiento','formato_evaluacion','fotografias','videos','otros_productos'], 'required'],
             [[ 'estado', 'total_sesiones_realizadas', 'avance_por_mes', 'total_sesiones_aplazadas', 'total_sesiones_canceladas', 'vecinos', 'lideres_comunitarios', 'empresarios_comerciantes_microempresas', 'representantes_organizaciones_locales', 'asociaciones_grupos_comunitarios', 'otros_actores', 'actas', 'reportes', 'listados', 'plan_trabajo', 'formato_seguimiento', 'formato_evaluacion', 'fotografias', 'videos', 'otros_productos', 'id_actividad'], 'default', 'value' => 0],
             [[ 'estado', 'total_sesiones_realizadas', 'avance_por_mes', 'total_sesiones_aplazadas', 'total_sesiones_canceladas', 'vecinos', 'lideres_comunitarios', 'empresarios_comerciantes_microempresas', 'representantes_organizaciones_locales', 'asociaciones_grupos_comunitarios', 'otros_actores', 'actas', 'reportes', 'listados', 'plan_trabajo', 'formato_seguimiento', 'formato_evaluacion', 'fotografias', 'videos', 'otros_productos', 'id_actividad'], 'integer'],
             [['id_actividad'], 'exist', 'skipOnError' => true, 'targetClass' => IsaActividadesArtisticas::className(), 'targetAttribute' => ['id_actividad' => 'id']],

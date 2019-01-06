@@ -51,14 +51,15 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
      * Lists all IsaIniciacionSensibilizacionArtisticaConsolidado models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex( $guardado = null )
     {
         $searchModel = new IsaEncabezadoIniciacionArtisticaConsolidadoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'searchModel' 	=> $searchModel,
+            'dataProvider' 	=> $dataProvider,
+            'guardado' 		=> $guardado,
         ]);
     }
 
@@ -176,6 +177,8 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
 					}
 					
 					$guardado = true;
+					
+					return $this->redirect( ['index', 'guardado' => true ] );
 				}
 			}
 		}
@@ -204,7 +207,7 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
 			}
 		}
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'models' 			=> $models,
             'institucion' 		=> $institucion,
             'sede' 				=> $sede,
@@ -266,7 +269,7 @@ class IsaIniciacionSensibilizacionArtisticaConsolidadoController extends Control
 			// }
 		// }
 		
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'models' 			=> $models,
             'institucion' 		=> $institucion,
             'sede' 				=> $sede,
