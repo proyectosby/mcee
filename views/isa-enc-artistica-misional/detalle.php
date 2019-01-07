@@ -14,11 +14,11 @@ use yii\helpers\Html;
 
 <?= Html::activeHiddenInput( $models['misional'], "[$index]id" ) ?>
 
-<?= $form->field( $models['misional'], "[$index]mision" )->textInput() ?>
+<?= $form->field( $models['misional'], "[$index]mision" )->textarea() ?>
 
-<?= $form->field( $models['misional'], "[$index]descripcion_proceso" )->textInput() ?>
+<?= $form->field( $models['misional'], "[$index]descripcion_proceso" )->textarea() ?>
 
-<?= $form->field( $models['misional'], "[$index]hallazgos" )->textInput() ?>
+<?= $form->field( $models['misional'], "[$index]hallazgos" )->textarea() ?>
 
 <?php 
 	$i = -1;
@@ -33,17 +33,17 @@ use yii\helpers\Html;
 	
 	<?= Html::activeHiddenInput( $actividad, "[$index][$i]id_actividad", ['value' => $actividades[$i]->id] ) ?>
 	
-	<?= $form->field( $actividad, "[$index][$i]estado_actual" )->textInput() ?>
+	<?= $form->field( $actividad, "[$index][$i]estado_actual" )->textarea() ?>
 	
-	<?= $form->field( $actividad, "[$index][$i]logros" )->textInput() ?>
+	<?= $form->field( $actividad, "[$index][$i]logros" )->textarea() ?>
 	
-	<?= $form->field( $actividad, "[$index][$i]fortalezas" )->textInput() ?>
+	<?= $form->field( $actividad, "[$index][$i]fortalezas" )->textarea() ?>
 	
-	<?= $form->field( $actividad, "[$index][$i]debilidades" )->textInput() ?>
+	<?= $form->field( $actividad, "[$index][$i]debilidades" )->textarea() ?>
 	
-	<?= $form->field( $actividad, "[$index][$i]retos" )->textInput() ?>
+	<?= $form->field( $actividad, "[$index][$i]retos" )->textarea() ?>
 	
-	<?= $form->field( $actividad, "[$index][$i]alarmas" )->textInput() ?>
+	<?= $form->field( $actividad, "[$index][$i]alarmas" )->textarea() ?>
 
 <?php endforeach; ?>
 
