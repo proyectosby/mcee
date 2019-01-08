@@ -23,7 +23,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\IsaEncArtisticaMisionalBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Isa Enc Artistica Misionals';
+$this->title = 'Consolidado por mes - Misional';
 $this->params['breadcrumbs'][] = $this->title;
 
 if( $guardado )
