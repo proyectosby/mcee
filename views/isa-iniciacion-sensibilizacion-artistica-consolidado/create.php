@@ -31,3 +31,10 @@ $this->params['breadcrumbs'][] = "Agregar";
     ]) ?>
 
 </div>
+
+
+<script>
+    $('#modalContent .main-header').hide();
+    $('#modalContent .main-sidebar').hide();
+    $('#modalContent .content-wrapper').css('margin-left','0');
+</script>
