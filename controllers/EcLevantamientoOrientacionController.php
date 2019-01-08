@@ -123,9 +123,9 @@ class EcLevantamientoOrientacionController extends Controller
         $model = new EcLevantamientoOrientacion();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'idTipoInforme' => $idTipoInforme]);
+            return $this->redirect(['index', 'guardado' => 1,'idTipoInforme' => $idTipoInforme]);
         }
-
+;
         return $this->renderAjax('create', [
             'model' => $model,
 			'sedes' => $this->obtenerSedes(),
@@ -148,7 +148,7 @@ class EcLevantamientoOrientacionController extends Controller
         $model = $this->findModel($id);
 		$idTipoInforme = $model->id_tipo_informe;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index','idTipoInforme' => $model->id_tipo_informe]);
+            return $this->redirect(['index','guardado' => 1,'idTipoInforme' => $model->id_tipo_informe]);
         }
 
         return $this->renderAjax('update', [
@@ -170,7 +170,9 @@ class EcLevantamientoOrientacionController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
 
         return $this->redirect(['index','idTipoInforme' => $model->id_tipo_informe]);
     }

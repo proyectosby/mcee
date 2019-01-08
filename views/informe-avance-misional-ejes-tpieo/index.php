@@ -28,6 +28,17 @@ use yii\grid\GridView;
 $this->title = '8.Informe Avance Misional Ejes - TP IEO';
 $this->params['breadcrumbs'][] = $this->title;
 $idTipoInforme =$_GET['idTipoInforme'];
+if( @$_GET['guardado'])
+{
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
+}
 ?> 
 
 <h1></h1>

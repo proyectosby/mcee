@@ -19,6 +19,11 @@ $this->params['breadcrumbs'][] = "Agregar";
 				
 				
 <div class="ge-seguimiento-operador-create">
+    <script>
+        $('#modalContent .main-header').hide();
+        $('#modalContent .main-sidebar').hide();
+        $('#modalContent .content-wrapper').css('margin-left','0');
+    </script>
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -161,7 +161,7 @@ class EcInformeEjecutivoEstadoController extends Controller
         $model = new EcInformeEjecutivoEstado();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+			return $this->redirect(['index','guardado' => 1]);
         }
 
         return $this->renderAjax('create', [
@@ -186,7 +186,7 @@ class EcInformeEjecutivoEstadoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index','guardado' => 1]);
         }
 
         return $this->renderAjax('update', [

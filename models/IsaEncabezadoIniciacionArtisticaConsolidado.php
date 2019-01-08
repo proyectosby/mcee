@@ -30,7 +30,7 @@ class IsaEncabezadoIniciacionArtisticaConsolidado extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_institucion', 'id_sede', 'estado'], 'required'],
+            [['id_institucion', 'id_sede', 'estado','fecha','periodo'], 'required'],
             [['id_institucion', 'id_sede', 'estado'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'estado'], 'integer'],
             [['fecha'], 'safe'],
