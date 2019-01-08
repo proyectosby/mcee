@@ -76,7 +76,7 @@ class CbacReporteCompetenciasBasicasAcController extends Controller
         ]);
     }
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos = 0){
         
         $actividades_rcb = new CbacActividadesRcb();
         $tipo_poblacion_rcb = new CbacTipoCantidadPoblacionRcb();
@@ -95,6 +95,7 @@ class CbacReporteCompetenciasBasicasAcController extends Controller
             'actividades_rom' => $actividades_rcb,
             'tipo_poblacion_rom' => $tipo_poblacion_rcb,
             'evidencias_rom' => $evidencias_rcb,
+            'datos' => $datos
         ]);
 		
 	}
@@ -115,9 +116,9 @@ class CbacReporteCompetenciasBasicasAcController extends Controller
             
             $model->id_institucion = $idInstitucion;
 
-            if(/*$model->save()*/true){
-                //$rcb_id = $model->id;
-                $rcb_id = 1;
+            if($model->save()){
+                $rcb_id = $model->id;
+                //$rcb_id = 1;
 
                 if (Yii::$app->request->post('CbacActividadesRcb')){
                     $data = Yii::$app->request->post('CbacActividadesRcb');
@@ -264,7 +265,7 @@ class CbacReporteCompetenciasBasicasAcController extends Controller
             }
 
 
-            //return $this->redirect(['index']);
+            return $this->redirect(['index']);
         }
 
         $Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
@@ -293,11 +294,83 @@ class CbacReporteCompetenciasBasicasAcController extends Controller
             return $this->redirect(['index']);
         }
 
+        $command = Yii::$app->db->createCommand("SELECT act.fehca_desde, act.fecha_hasta, act.estado, act.num_equipos, act.perfiles, act.docente_orientador, act.nombre_actividad, act.duracion_sesion, act.logros, act.fortalezas, act.debilidades, act.alternativas, act.retos, act.articulacion, act.evaluacion, act.observaciones_generales, act.alarmas, act.justificacion_activiad_no_realizada, act.fecha_reprogramacion, act.diligencia, act.rol, act.fecha_diligencia, act.id_actividad,
+                                                tip.ciencias_naturales, tip.ciencias_sociales, tip.educacion_artistica, tip.educacion_etica, tip.educacion_fisica, tip.educacion_religiosa, tip.estadistica, tip.humanidades, tip.idiomas_extranjeros, tip.lengua_castellana, tip.matematicas, tip.tecnologia, tip.otras
+                                                FROM cbac.actividades_rcb AS act
+                                                INNER JOIN cbac.tipo_cantidad_poblacion_rcb AS tip ON tip.id_actividad_rcb = act.id
+                                                WHERE act.id_rcb = $id" );
+
+        $result= $command->queryAll();                                       
+        
+        $result = ArrayHelper::getColumn($result, function ($element) 
+		{
+            $dato[$element['id_actividad']]['fehca_desde']= $element['fehca_desde'];
+            $dato[$element['id_actividad']]['fecha_hasta']= $element['fecha_hasta'];
+            $dato[$element['id_actividad']]['estado']= $element['estado'];
+            $dato[$element['id_actividad']]['num_equipos']= $element['num_equipos'];
+            $dato[$element['id_actividad']]['perfiles']= $element['perfiles'];
+            $dato[$element['id_actividad']]['docente_orientador']= $element['docente_orientador'];
+            $dato[$element['id_actividad']]['nombre_actividad']= $element['nombre_actividad'];
+            $dato[$element['id_actividad']]['duracion_sesion']= $element['duracion_sesion'];
+            $dato[$element['id_actividad']]['logros']= $element['logros'];
+            $dato[$element['id_actividad']]['fortalezas']= $element['fortalezas'];
+            $dato[$element['id_actividad']]['debilidades']= $element['debilidades'];
+            $dato[$element['id_actividad']]['alternativas']= $element['alternativas'];
+            $dato[$element['id_actividad']]['retos']= $element['retos'];
+            $dato[$element['id_actividad']]['articulacion']= $element['articulacion'];
+            $dato[$element['id_actividad']]['evaluacion']= $element['evaluacion'];
+            $dato[$element['id_actividad']]['observaciones_generales']= $element['observaciones_generales'];
+            $dato[$element['id_actividad']]['alarmas']= $element['alarmas'];
+            $dato[$element['id_actividad']]['justificacion_activiad_no_realizada']= $element['justificacion_activiad_no_realizada'];
+            $dato[$element['id_actividad']]['fecha_reprogramacion']= $element['fecha_reprogramacion'];
+            $dato[$element['id_actividad']]['diligencia']= $element['diligencia'];
+            $dato[$element['id_actividad']]['rol']= $element['rol'];
+            $dato[$element['id_actividad']]['fecha_diligencia']= $element['fecha_diligencia'];
+
+            $dato[$element['id_actividad']]['ciencias_naturales']= $element['ciencias_naturales'];
+            $dato[$element['id_actividad']]['ciencias_sociales']= $element['ciencias_sociales'];
+            $dato[$element['id_actividad']]['educacion_artistica']= $element['educacion_artistica'];
+            $dato[$element['id_actividad']]['educacion_etica']= $element['educacion_etica'];
+            $dato[$element['id_actividad']]['educacion_fisica']= $element['educacion_fisica'];
+            $dato[$element['id_actividad']]['educacion_religiosa']= $element['educacion_religiosa'];
+            $dato[$element['id_actividad']]['estadistica']= $element['estadistica'];
+            $dato[$element['id_actividad']]['humanidades']= $element['humanidades'];
+            $dato[$element['id_actividad']]['idiomas_extranjeros']= $element['idiomas_extranjeros'];
+            $dato[$element['id_actividad']]['lengua_castellana']= $element['lengua_castellana'];
+            $dato[$element['id_actividad']]['matematicas']= $element['matematicas'];
+            $dato[$element['id_actividad']]['tecnologia']= $element['tecnologia'];
+            $dato[$element['id_actividad']]['otras']= $element['otras'];
+            
+            return $dato;
+
+        });
+
+        foreach	($result as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos[$ids] = $valores;
+        }
+
+        $idInstitucion = $_SESSION['instituciones'][0];
+        $institucion = Instituciones::findOne($idInstitucion);
+
         return $this->renderAjax('update', [
             'model' => $model,
+            'sedes' => $this->obtenerSede(),
+            'institucion' => $institucion->descripcion,
+            'datos'=> $datos,
         ]);
     }
 
+      public function obtenerSede()
+	{
+        $idInstitucion = $_SESSION['instituciones'][0];
+		$Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
+        $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+		
+		return $sedes;
+    }
     /**
      * Deletes an existing CbacReporteCompetenciasBasicasAc model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

@@ -581,20 +581,89 @@ class CbacConsolidadoMesCbacController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            $post = Yii::$app->request->post();
+			
+			$arrayDatosImp = $post['CbacImpConsolidadoMesCbac'];
+            $connection = Yii::$app->getDb();
+            
+            foreach($arrayDatosImp as $idAcciones => $valores)
+			{
+                if($valores['avance_sede'] != "" and $valores['avance_ieo'] != ""){
+                    $command = $connection->createCommand
+                    ("UPDATE cbac.imp_consolidado_mes_cbac set 			
+                        avance_sede = '". $valores['avance_sede']."',
+                        avance_ieo = '". $valores['avance_ieo']."'  
+                        WHERE id_componente = $idAcciones and id_consolidado_mes_cbac = $id
+                    ");
+
+                    $result = $command->queryAll();
+                }
+            }
+            
             return $this->redirect(['index']);
         }
 
 
-        $impConsolidado = new CbacImpConsolidadoMesCbac();
-        $impConsolidado = $impConsolidado->find()->orderby("id")->andWhere("id_consolidado_mes_cbac=$id")->all();
-        
-        var_dump($impConsolidado);
-        die();
+        //$impConsolidado = new CbacImpConsolidadoMesCbac();
+        //$impConsolidado = $impConsolidado->find()->orderby("id")->andWhere("id_consolidado_mes_cbac=$id")->all();
+        /*$impConsolidado = $impConsolidado->findBySql("SELECT imp.id, imp.id_componente, imp.avance_sede, imp.avance_ieo, act.sesiones_realizadas, act.sesiones_canceladas FROM cbac.imp_consolidado_mes_cbac AS imp 
+                                                        INNER JOIN  cbac.actividades_consolidado_cbac AS act ON imp.id = act.id_imp_consolidado_mes_cbac 
+                                                        WHERE imp.id_consolidado_mes_cbac=$id")->all();*/
 
-        $result = ArrayHelper::getColumn($impConsolidado, function ($element) 
+        $command = Yii::$app->db->createCommand("SELECT imp.id, imp.id_componente, imp.avance_sede, imp.avance_ieo, 
+                                                        act.avance_sede_actividad, act.avance_ieo_actividad ,act.sesiones_realizadas, act.sesiones_canceladas,
+                                                        tip.ciencias_naturales, tip.ciencias_sociales, tip.educacion_artisticas, tip.educacion_etica, tip.educacion_fisica, tip.educacion_religiosa, tip.estadistica, tip.humanidasdes, tip.idiomas_extranjeros, tip.lengua_castellana, tip.matematicas, tip.tecnologia, tip.otras, tip.numero_participantes, 
+                                                        tip.rectora, tip.coordinadora, tip.directivos, tip.grado_6, tip.grado_7, tip.grado_8, tip.grado_9, tip.grado_10, tip.grado_11, tip.cuidadores, tip.madres, tip.padres, tip.hermanos, tip.otros_parientes,
+                                                        evi.actas
+
+                                                FROM cbac.imp_consolidado_mes_cbac AS imp 
+                                                INNER JOIN  cbac.actividades_consolidado_cbac AS act ON imp.id = act.id_imp_consolidado_mes_cbac
+                                                INNER JOIN  cbac.tipo_cantidaid_poblacion_consolidado_cbac AS tip ON imp.id = tip.id_imp_consolidado_mes_cbac
+                                                INNER JOIN  cbac.evidencias_consolidado_cbac AS evi ON imp.id = evi.id_imp_consolidado_mes_cbac
+                                                WHERE imp.id_consolidado_mes_cbac=$id");
+        
+        $result= $command->queryAll();                                       
+        
+        $result = ArrayHelper::getColumn($result, function ($element) 
 		{
+            
             $dato[$element['id_componente']]['avance_sede']= $element['avance_sede'];
             $dato[$element['id_componente']]['avance_ieo']= $element['avance_ieo'];
+            $dato[$element['id_componente']]['avance_sede_actividad']= $element['avance_sede_actividad'];
+            $dato[$element['id_componente']]['avance_ieo_actividad']= $element['avance_ieo_actividad'];
+            $dato[$element['id_componente']]['sesiones_realizadas']= $element['sesiones_realizadas'];
+            $dato[$element['id_componente']]['sesiones_canceladas']= $element['sesiones_canceladas'];
+
+            $dato[$element['id_componente']]['ciencias_naturales']= $element['ciencias_naturales'];
+            $dato[$element['id_componente']]['ciencias_sociales']= $element['ciencias_sociales'];
+            $dato[$element['id_componente']]['educacion_artisticas']= $element['educacion_artisticas'];
+            $dato[$element['id_componente']]['educacion_etica']= $element['educacion_etica'];
+            $dato[$element['id_componente']]['educacion_fisica']= $element['educacion_fisica'];
+            $dato[$element['id_componente']]['educacion_religiosa']= $element['educacion_religiosa'];
+            $dato[$element['id_componente']]['estadistica']= $element['estadistica'];
+            $dato[$element['id_componente']]['humanidasdes']= $element['humanidasdes'];
+            $dato[$element['id_componente']]['idiomas_extranjeros']= $element['idiomas_extranjeros'];
+            $dato[$element['id_componente']]['lengua_castellana']= $element['lengua_castellana'];
+            $dato[$element['id_componente']]['matematicas']= $element['matematicas'];
+            $dato[$element['id_componente']]['tecnologia']= $element['tecnologia'];
+            $dato[$element['id_componente']]['otras']= $element['otras'];
+            $dato[$element['id_componente']]['numero_participantes']= $element['numero_participantes'];
+            $dato[$element['id_componente']]['rectora']= $element['rectora'];
+            $dato[$element['id_componente']]['coordinadora']= $element['coordinadora'];
+            $dato[$element['id_componente']]['directivos']= $element['directivos'];
+            $dato[$element['id_componente']]['grado_6']= $element['grado_6'];
+            $dato[$element['id_componente']]['grado_7']= $element['grado_7'];
+            $dato[$element['id_componente']]['grado_8']= $element['grado_8'];
+            $dato[$element['id_componente']]['grado_9']= $element['grado_9'];
+            $dato[$element['id_componente']]['grado_10']= $element['grado_10'];
+            $dato[$element['id_componente']]['grado_11']= $element['grado_11'];
+            $dato[$element['id_componente']]['cuidadores']= $element['cuidadores'];
+            $dato[$element['id_componente']]['madres']= $element['madres'];
+            $dato[$element['id_componente']]['padres']= $element['padres'];
+            $dato[$element['id_componente']]['hermanos']= $element['hermanos'];
+            $dato[$element['id_componente']]['otros_parientes']= $element['otros_parientes'];
+            $dato[$element['id_componente']]['actas']= $element['actas'];
 
             return $dato;
         });

@@ -48,8 +48,8 @@ class CbacOrientacionProcesoCbac extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_institucion' => 'Id Institucion',
-            'id_sede' => 'Id Sede',
+            'id_institucion' => 'Institución',
+            'id_sede' => 'Sede',
             'desde' => 'Desde',
             'hasta' => 'Hasta',
             'estado' => 'Estado',

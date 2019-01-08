@@ -62,6 +62,7 @@ use dosamigos\datepicker\DatePicker;
                                                         "model" => $model,
                                                         'actividadMisional' => $actividadMisional,
                                                         'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -76,6 +77,7 @@ use dosamigos\datepicker\DatePicker;
                                                         "model" => $model,
                                                         'actividadMisional' => $actividadMisional,
                                                         'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -90,6 +92,7 @@ use dosamigos\datepicker\DatePicker;
                                                         "model" => $model,
                                                         'actividadMisional' => $actividadMisional,
                                                         'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []

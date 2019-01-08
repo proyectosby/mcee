@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-
+use app\models\Instituciones;
+use app\models\Sedes;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
@@ -11,7 +12,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '2 Reporte Competencias Basicas Arte y Cultura';
+$this->title = '2 Reporte Competencias Básicas Arte y Cultura';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -22,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Reporte Competencias Basicas Arte y Cultura</h3>
+<h3>2 Reporte Competencias Basicas Arte y Cultura</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -78,10 +79,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'id_institucion',
-            'id_sedes',
-            'estado',
+            //'id',
+			[
+			'attribute'=>'id_institucion',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->id_institucion);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			[
+			'attribute'=>'id_sedes',
+			'value' => function( $model )
+				{
+					$nombreSedes = Sedes::findOne($model->id_sedes);
+					return $nombreSedes ? $nombreSedes->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+            //'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',

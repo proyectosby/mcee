@@ -95,35 +95,35 @@ use dosamigos\datepicker\DatePicker;
     <?php
     }
 ?>
-    <?= $form->field($actividade_is_isa, "[$index]sesiones_realizadas")->textInput() ?>
-    <?= $form->field($actividade_is_isa, "[$index]porcentaje")->textInput() ?>
-    <?= $form->field($actividade_is_isa, "[$index]sesiones_aplazadas")->textInput() ?>
-    <?= $form->field($actividade_is_isa, "[$index]sesiones_canceladas")->textInput() ?>
+    <?= $form->field($actividade_is_isa, "[$index]sesiones_realizadas")->textInput([ 'value' => isset($datos[$index]['sesiones_realizadas']) ? $datos[$index]['sesiones_realizadas'] : '' ]) ?>
+    <?= $form->field($actividade_is_isa, "[$index]porcentaje")->textInput([ 'value' => isset($datos[$index]['porcentaje']) ? $datos[$index]['porcentaje'] : '' ]) ?>
+    <?= $form->field($actividade_is_isa, "[$index]sesiones_aplazadas")->textInput([ 'value' => isset($datos[$index]['sesiones_aplazadas']) ? $datos[$index]['sesiones_aplazadas'] : '' ]) ?>
+    <?= $form->field($actividade_is_isa, "[$index]sesiones_canceladas")->textInput([ 'value' => isset($datos[$index]['sesiones_canceladas']) ? $datos[$index]['sesiones_canceladas'] : '' ]) ?>
     <?= $form->field($actividade_is_isa, "[$index]estado")->hiddenInput(['value'=> 1])->label(false); ?>
 
-    <?= $form->field($actividades_is_isa, "[$index]duracion")->textInput() ?>
-    <?= $form->field($actividades_is_isa, "[$index]docente")->textInput() ?>
-    <?= $form->field($actividades_is_isa, "[$index]equipos")->textInput() ?>
+    <?= $form->field($actividades_is_isa, "[$index]duracion")->textInput([ 'value' => isset($datos[$index]['duracion']) ? $datos[$index]['duracion'] : '' ]) ?>
+    <?= $form->field($actividades_is_isa, "[$index]docente")->textInput([ 'value' => isset($datos[$index]['docente']) ? $datos[$index]['docente'] : '' ]) ?>
+    <?= $form->field($actividades_is_isa, "[$index]equipos")->textInput([ 'value' => isset($datos[$index]['equipos']) ? $datos[$index]['equipos'] : '' ]) ?>
 
     <h2 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h2>
     <h3 style='background-color: #ccc;padding:5px;'>Número de participantes por filiación por sede educativa en la actividad</h3>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]ciencias_naturales")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]ciencias_sociales")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_artistica")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_etica")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_fisica")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_religiosa")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]estadistica")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]humanidades")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]idiomas_extranjeros")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]lengua_castellana")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]matematicas")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]tecnologia")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]otras")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]docentes_partipantes_sede")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]rectora")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]coordinadores")->textInput() ?>
-    <?= $form->field($tipo_poblacion_is_isa, "[$index]directivos_partipantes_sede")->textInput() ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]ciencias_naturales")->textInput([ 'value' => isset($datos[$index]['ciencias_naturales']) ? $datos[$index]['ciencias_naturales'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]ciencias_sociales")->textInput([ 'value' => isset($datos[$index]['ciencias_sociales']) ? $datos[$index]['ciencias_sociales'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_artistica")->textInput([ 'value' => isset($datos[$index]['educacion_artistica']) ? $datos[$index]['educacion_artistica'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_etica")->textInput([ 'value' => isset($datos[$index]['educacion_etica']) ? $datos[$index]['educacion_etica'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_fisica")->textInput([ 'value' => isset($datos[$index]['educacion_fisica']) ? $datos[$index]['educacion_fisica'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]educacion_religiosa")->textInput([ 'value' => isset($datos[$index]['educacion_religiosa']) ? $datos[$index]['educacion_religiosa'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]estadistica")->textInput([ 'value' => isset($datos[$index]['estadistica']) ? $datos[$index]['estadistica'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]humanidades")->textInput([ 'value' => isset($datos[$index]['humanidades']) ? $datos[$index]['humanidades'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]idiomas_extranjeros")->textInput([ 'value' => isset($datos[$index]['idiomas_extranjeros']) ? $datos[$index]['idiomas_extranjeros'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]lengua_castellana")->textInput([ 'value' => isset($datos[$index]['lengua_castellana']) ? $datos[$index]['lengua_castellana'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]matematicas")->textInput([ 'value' => isset($datos[$index]['matematicas']) ? $datos[$index]['matematicas'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]tecnologia")->textInput([ 'value' => isset($datos[$index]['tecnologia']) ? $datos[$index]['tecnologia'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]otras")->textInput([ 'value' => isset($datos[$index]['otras']) ? $datos[$index]['otras'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]docentes_partipantes_sede")->textInput([ 'value' => isset($datos[$index]['docentes_partipantes_sede']) ? $datos[$index]['docentes_partipantes_sede'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]rectora")->textInput([ 'value' => isset($datos[$index]['rectora']) ? $datos[$index]['rectora'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]coordinadores")->textInput([ 'value' => isset($datos[$index]['coordinadores']) ? $datos[$index]['coordinadores'] : '' ]) ?>
+    <?= $form->field($tipo_poblacion_is_isa, "[$index]directivos_partipantes_sede")->textInput([ 'value' => isset($datos[$index]['directivos_partipantes_sede']) ? $datos[$index]['directivos_partipantes_sede'] : '' ]) ?>
     <?= $form->field($tipo_poblacion_is_isa, "[$index]estado")->hiddenInput(['value'=> 1])->label(false); ?>
 
 
@@ -139,13 +139,13 @@ use dosamigos\datepicker\DatePicker;
     <?= $form->field($evidencias_is_isa, "[$index]otros_productos")->label('Otros productos  de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
     <?= $form->field($evidencias_is_isa, "[$index]estado")->hiddenInput(['value'=> 1])->label(false); ?>
 
-     <?= $form->field($actividades_is_isa, "[$index]logros")->textInput() ?>
+     <?= $form->field($actividades_is_isa, "[$index]logros")->textInput([ 'value' => isset($datos[$index]['grado_6']) ? $datos[$index]['grado_6'] : '' ]) ?>
     <h3 style='background-color: #ccc;padding:5px;'>Variaciones en la implementación del proyecto:</h3>
     <h3 style='background-color: #ccc;padding:5px;'>Situaciones de dificultad y/o ventaja, surgidos o presentes durante el periodo,  que influyen en el cumplimiento de los objetivos.</h3>
-    <?= $form->field($actividades_is_isa, "[$index]variaciones_devilidades")->textInput() ?>
-    <?= $form->field($actividades_is_isa, "[$index]variaciones_fortalezas")->textInput() ?>
-    <?= $form->field($actividades_is_isa, "[$index]retos")->textInput() ?>
-    <?= $form->field($actividades_is_isa, "[$index]articulacion")->textInput() ?>
-    <?= $form->field($actividades_is_isa, "[$index]alrmas")->textInput() ?>
+    <?= $form->field($actividades_is_isa, "[$index]variaciones_devilidades")->textInput([ 'value' => isset($datos[$index]['variaciones_devilidades']) ? $datos[$index]['variaciones_devilidades'] : '' ]) ?>
+    <?= $form->field($actividades_is_isa, "[$index]variaciones_fortalezas")->textInput([ 'value' => isset($datos[$index]['variaciones_fortalezas']) ? $datos[$index]['variaciones_fortalezas'] : '' ]) ?>
+    <?= $form->field($actividades_is_isa, "[$index]retos")->textInput([ 'value' => isset($datos[$index]['retos']) ? $datos[$index]['retos'] : '' ]) ?>
+    <?= $form->field($actividades_is_isa, "[$index]articulacion")->textInput([ 'value' => isset($datos[$index]['articulacion']) ? $datos[$index]['articulacion'] : '' ]) ?>
+    <?= $form->field($actividades_is_isa, "[$index]alrmas")->textInput([ 'value' => isset($datos[$index]['alrmas']) ? $datos[$index]['alrmas'] : '' ]) ?>
     <?= $form->field($actividades_is_isa, "[$index]estado")->hiddenInput(['value'=> 1])->label(false); ?>
 

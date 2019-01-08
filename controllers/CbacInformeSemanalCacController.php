@@ -77,7 +77,7 @@ class CbacInformeSemanalCacController extends Controller
         ]);
     }
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos = 0){
         
         $actividades_is_isa = new CbacActividadesIsCac();
         $actividade_is_isa = new CbacActividadIsCac();
@@ -99,6 +99,7 @@ class CbacInformeSemanalCacController extends Controller
             'actividade_is_isa' => $actividade_is_isa,
             'tipo_poblacion_is_isa' => $tipo_poblacion_is_isa,
             'evidencias_is_isa' => $evidencias_is_isa,
+            'datos' => $datos
         ]);
 		
 	}
@@ -322,9 +323,82 @@ class CbacInformeSemanalCacController extends Controller
             return $this->redirect(['index']);
         }
 
+
+        $command = Yii::$app->db->createCommand("SELECT acts.id_actividad, acts.duracion, acts.docente, acts.equipos, acts.logros, acts.variaciones_devilidades, acts.variaciones_fortalezas, acts.retos, acts.articulacion, acts.alrmas,
+                                                        act.sesiones_realizadas, act.porcentaje, act.sesiones_aplazadas, act.sesiones_canceladas,
+                                                        tip.ciencias_naturales, tip.ciencias_sociales, tip.educacion_artistica, tip.educacion_etica, tip.educacion_fisica, tip.educacion_religiosa, tip.estadistica, tip.humanidades, tip.idiomas_extranjeros, tip.lengua_castellana, tip.matematicas, tip.tecnologia, tip.otras, tip.docentes_partipantes_sede, tip.rectora, tip.coordinadores, tip.directivos_partipantes_sede
+                                                FROM cbac.actividades_is_cac AS acts
+                                                INNER JOIN cbac.actividad_is_cac AS act on act.id_actividades_is_cac = acts.id
+                                                INNER JOIN cbac.tipo_cantidad_poblacion_is_cac AS tip on tip.id_actividades_is_cac = acts.id
+                                                WHERE acts.id_informe_semanal_isa = $id");
+
+        $result= $command->queryAll();                                       
+                
+        $result = ArrayHelper::getColumn($result, function ($element) 
+        {
+            $dato[$element['id_actividad']]['duracion']= $element['duracion'];
+            $dato[$element['id_actividad']]['docente']= $element['docente'];
+            $dato[$element['id_actividad']]['equipos']= $element['equipos'];
+            $dato[$element['id_actividad']]['logros']= $element['logros'];
+            $dato[$element['id_actividad']]['variaciones_devilidades']= $element['variaciones_devilidades'];
+            $dato[$element['id_actividad']]['variaciones_fortalezas']= $element['variaciones_fortalezas'];
+            $dato[$element['id_actividad']]['retos']= $element['retos'];
+            $dato[$element['id_actividad']]['articulacion']= $element['articulacion'];
+            $dato[$element['id_actividad']]['alrmas']= $element['alrmas'];
+            $dato[$element['id_actividad']]['sesiones_realizadas']= $element['sesiones_realizadas'];
+            $dato[$element['id_actividad']]['porcentaje']= $element['porcentaje'];
+            $dato[$element['id_actividad']]['sesiones_aplazadas']= $element['sesiones_aplazadas'];
+            $dato[$element['id_actividad']]['sesiones_canceladas']= $element['sesiones_canceladas'];
+
+            $dato[$element['id_actividad']]['ciencias_naturales']= $element['ciencias_naturales'];
+            $dato[$element['id_actividad']]['ciencias_sociales']= $element['ciencias_sociales'];
+            $dato[$element['id_actividad']]['educacion_artistica']= $element['educacion_artistica'];
+            $dato[$element['id_actividad']]['educacion_etica']= $element['educacion_etica'];
+            $dato[$element['id_actividad']]['educacion_fisica']= $element['educacion_fisica'];
+            $dato[$element['id_actividad']]['educacion_religiosa']= $element['educacion_religiosa'];
+            $dato[$element['id_actividad']]['estadistica']= $element['estadistica'];
+            $dato[$element['id_actividad']]['humanidades']= $element['humanidades'];
+            $dato[$element['id_actividad']]['idiomas_extranjeros']= $element['idiomas_extranjeros'];
+            $dato[$element['id_actividad']]['lengua_castellana']= $element['lengua_castellana'];
+            $dato[$element['id_actividad']]['matematicas']= $element['matematicas'];
+            $dato[$element['id_actividad']]['tecnologia']= $element['tecnologia'];
+            $dato[$element['id_actividad']]['otras']= $element['otras'];
+            $dato[$element['id_actividad']]['docentes_partipantes_sede']= $element['docentes_partipantes_sede'];
+            $dato[$element['id_actividad']]['rectora']= $element['rectora'];
+            $dato[$element['id_actividad']]['coordinadores']= $element['coordinadores'];
+            $dato[$element['id_actividad']]['directivos_partipantes_sede']= $element['directivos_partipantes_sede'];
+
+
+            return $dato;
+            
+        });
+
+        foreach	($result as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos[$ids] = $valores;
+        }
+        
+
+        $idInstitucion = $_SESSION['instituciones'][0];
+        $institucion = Instituciones::findOne($idInstitucion);
+
         return $this->renderAjax('update', [
             'model' => $model,
+            'sedes' => $this->obtenerSede(),
+            'institucion' => $institucion->descripcion,
+            'datos'=> $datos,
         ]);
+    }
+
+    public function obtenerSede()
+	{
+        $idInstitucion = $_SESSION['instituciones'][0];
+		$Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
+        $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+		
+		return $sedes;
     }
 
     /**

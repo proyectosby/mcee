@@ -36,7 +36,8 @@ $index = 0;
                                                         'actividades_rom' => $actividades_rom,
                                                         'tipo_poblacion_rom' => $tipo_poblacion_rom,
                                                         'evidencias_rom' => $evidencias_rom,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -51,7 +52,8 @@ $index = 0;
                                                         'actividades_rom' => $actividades_rom,
                                                         'tipo_poblacion_rom' => $tipo_poblacion_rom,
                                                         'evidencias_rom' => $evidencias_rom,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -66,7 +68,8 @@ $index = 0;
                                                         'actividades_rom' => $actividades_rom,
                                                         'tipo_poblacion_rom' => $tipo_poblacion_rom,
                                                         'evidencias_rom' => $evidencias_rom,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []

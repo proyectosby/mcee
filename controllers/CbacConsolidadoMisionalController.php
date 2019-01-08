@@ -241,10 +241,18 @@ class CbacConsolidadoMisionalController extends Controller
             return $this->redirect(['index']);
         }
 
-        $impMisional = new CbacImpMisional();
-        $impMisional = $impMisional->find()->orderby("id")->andWhere("id_consolidado_misional=$id")->all();
+        //$impMisional = new CbacImpMisional();
+        //$impMisional = $impMisional->find()->orderby("id")->andWhere("id_consolidado_misional=$id")->all();
 
-        $result = ArrayHelper::getColumn($impMisional, function ($element) 
+        $command = Yii::$app->db->createCommand("SELECT imp.mison, imp.descripcion, imp.hallazgo, imp.sedes_institucion_1, imp.sedes_institucion_2, imp.docentes_institucion_1, imp.docentes_institucion_2, imp.avance_sede, imp.avance_ieo, imp.componente_id,
+                                                        act.estado, act.logros, act.fortalezas, act.debilidades, act.retos, act.alarmas
+                                                FROM cbac.imp_misional as imp
+                                                INNER JOIN cbac.actividad_misional AS act ON act.id_imp_misional = imp.id
+                                                WHERE imp.id_consolidado_misional=$id");
+
+        $result= $command->queryAll();    
+
+        $result = ArrayHelper::getColumn($result, function ($element) 
 		{
             $dato[$element['componente_id']]['mison']= $element['mison'];
             $dato[$element['componente_id']]['descripcion']= $element['descripcion'];
@@ -255,7 +263,12 @@ class CbacConsolidadoMisionalController extends Controller
             $dato[$element['componente_id']]['docentes_institucion_2']= $element['docentes_institucion_2'];
             $dato[$element['componente_id']]['avance_sede']= $element['avance_sede'];
             $dato[$element['componente_id']]['avance_ieo']= $element['avance_ieo'];
-            $dato[$element['componente_id']]['componente_id']= $element['componente_id'];
+            $dato[$element['componente_id']]['estado']= $element['estado'];
+            $dato[$element['componente_id']]['logros']= $element['logros'];
+            $dato[$element['componente_id']]['fortalezas']= $element['fortalezas'];
+            $dato[$element['componente_id']]['debilidades']= $element['debilidades'];
+            $dato[$element['componente_id']]['retos']= $element['retos'];
+            $dato[$element['componente_id']]['alarmas']= $element['alarmas'];
 
             return $dato;
         });

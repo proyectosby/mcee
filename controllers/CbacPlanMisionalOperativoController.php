@@ -279,10 +279,9 @@ class CbacPlanMisionalOperativoController extends Controller
 
     public function obtenerSede()
 	{
-		$idSedes 		= $_SESSION['sede'][0];
-		$sedes = new Sedes();
-		$sedes = $sedes->find()->where("id =  $idSedes")->all();
-		$sedes = ArrayHelper::map($sedes,'id','descripcion');
+        $idInstitucion = $_SESSION['instituciones'][0];
+		$Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
+        $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
 		
 		return $sedes;
     }
