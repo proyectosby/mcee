@@ -116,11 +116,13 @@ if (!isset($_SESSION['institucionSeleccionada']) || (isset($_GET['institucion'])
                                 dataSede = {
                                   id: valor
                                 };
+                                
                                 //variable de sesion con la sede que selecciono
                                 $.post("index.php?r=sedes/set-sede", dataSede, function (data) {
                                     $('#nameSede').text(data);
+                                    location.href = location.pathname
                                 });
-			                    location.href = location.pathname
+			                    
                                 resolve()
                             }
                             else {
@@ -148,13 +150,6 @@ EOT_JS_CODE
     );
 
 }
-
-
-
-?>
-
-<?php
-
 
 if(@$_SESSION['sesion']=="si")
 { 

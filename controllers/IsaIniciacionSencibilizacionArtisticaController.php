@@ -100,11 +100,12 @@ class IsaIniciacionSencibilizacionArtisticaController extends Controller
     public function actionCreate()
     {
         $model = new IsaIniciacionSencibilizacionArtistica();
+
         $idInstitucion = $_SESSION['instituciones'][0];
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->id_insticion = $idInstitucion;
+            $model->id_institucion = $_SESSION['instituciones'][0];
             $model->estado = 1;
             $model->id_sede = intval($model->id_sede);
 
