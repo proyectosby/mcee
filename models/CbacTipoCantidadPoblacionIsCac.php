@@ -46,6 +46,7 @@ class CbacTipoCantidadPoblacionIsCac extends \yii\db\ActiveRecord
         return [
             [['id_actividades_is_cac', 'ciencias_naturales', 'ciencias_sociales', 'educacion_artistica', 'educacion_etica', 'educacion_fisica', 'educacion_religiosa', 'estadistica', 'humanidades', 'idiomas_extranjeros', 'lengua_castellana', 'matematicas', 'tecnologia', 'otras', 'docentes_partipantes_sede', 'rectora', 'coordinadores', 'directivos_partipantes_sede', 'estado'], 'default', 'value' => null],
             [['id_actividades_is_cac', 'ciencias_naturales', 'ciencias_sociales', 'educacion_artistica', 'educacion_etica', 'educacion_fisica', 'educacion_religiosa', 'estadistica', 'humanidades', 'idiomas_extranjeros', 'lengua_castellana', 'matematicas', 'tecnologia', 'otras', 'docentes_partipantes_sede', 'rectora', 'coordinadores', 'directivos_partipantes_sede', 'estado'], 'integer'],
+            [['id_actividades_is_cac', 'ciencias_naturales', 'ciencias_sociales', 'educacion_artistica', 'educacion_etica', 'educacion_fisica', 'educacion_religiosa', 'estadistica', 'humanidades', 'idiomas_extranjeros', 'lengua_castellana', 'matematicas', 'tecnologia', 'otras', 'docentes_partipantes_sede', 'rectora', 'coordinadores', 'directivos_partipantes_sede'], 'required'],
             [['id_actividades_is_cac'], 'exist', 'skipOnError' => true, 'targetClass' => CbacActividadesIsCac::className(), 'targetAttribute' => ['id_actividades_is_cac' => 'id']],
         ];
     }

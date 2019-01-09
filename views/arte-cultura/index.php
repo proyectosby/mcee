@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										'isa-orientacion-proceso/index',
 										// 'idReporte'		=> 4,
 									], 
-									['class' => 'btn btn-info'
+									['class' => 'btn btn-success'
 			]) ?>
 			
 			<?= Html::a('Consolidado por mes - Operativo', 

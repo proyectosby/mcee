@@ -37,7 +37,8 @@ $index = 0;
                                                         'actividade_cbac' => $actividade_cbac,
                                                         'tipo_poblacion_cbac' => $tipo_poblacion_cbac,
                                                         'evidencias_cbac' => $evidencias_cbac,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -54,7 +55,8 @@ $index = 0;
                                                         'actividade_cbac' => $actividade_cbac,
                                                         'tipo_poblacion_cbac' => $tipo_poblacion_cbac,
                                                         'evidencias_cbac' => $evidencias_cbac,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -72,7 +74,8 @@ $index = 0;
                                                         'actividade_cbac' => $actividade_cbac,
                                                         'tipo_poblacion_cbac' => $tipo_poblacion_cbac,
                                                         'evidencias_cbac' => $evidencias_cbac,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -92,9 +95,8 @@ $index = 0;
     ?>
     <h3 style='background-color: #ccc;padding:5px;'>Cuál es el % del estado general  del desarrollo de herramientas en docentes y directivos docentes de las IEO que implementen componentes artísticos y culturales</h3>
     <?php
-    var_dump($datos);
-    //die();
-    echo $form->field($imp_cbac, "[$proyecto]avance_sede")->textInput([ 'value' => isset($datos[$index]['avance_sede']) ? $datos[$index]['avance_sede'] : '' ]);
-    echo $form->field($imp_cbac, "[$proyecto]avance_ieo")->textInput([ 'value' => isset($datos[$index]['avance_ieo']) ? $datos[$index]['avance_ieo'] : '' ]);
+    
+    echo $form->field($imp_cbac, "[$proyecto]avance_sede")->textInput([ 'value' => isset($datos[$proyecto]['avance_sede']) ? $datos[$proyecto]['avance_sede'] : '' ]);
+    echo $form->field($imp_cbac, "[$proyecto]avance_ieo")->textInput([ 'value' => isset($datos[$proyecto]['avance_ieo']) ? $datos[$proyecto]['avance_ieo'] : '' ]);
     echo $form->field($imp_cbac, "[$proyecto]id_componente")->hiddenInput(["value" => $proyecto])->label(false);
 ?>

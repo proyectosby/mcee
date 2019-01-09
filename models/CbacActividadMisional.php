@@ -35,6 +35,7 @@ class CbacActividadMisional extends \yii\db\ActiveRecord
             [['id_imp_misional'], 'default', 'value' => null],
             [['id_imp_misional'], 'integer'],
             [['estado', 'logros', 'fortalezas', 'debilidades', 'retos', 'alarmas'], 'string'],
+            [['estado', 'logros', 'fortalezas', 'debilidades', 'retos', 'alarmas'], 'required'],
             [['id_imp_misional'], 'exist', 'skipOnError' => true, 'targetClass' => CbacImpMisional::className(), 'targetAttribute' => ['id_imp_misional' => 'id']],
         ];
     }

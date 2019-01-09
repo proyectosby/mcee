@@ -39,6 +39,7 @@ class CbacEvidenciasCac extends \yii\db\ActiveRecord
             [['id_actividades_is_cac', 'estado'], 'default', 'value' => null],
             [['id_actividades_is_cac', 'estado'], 'integer'],
             [['actas', 'reportes', 'listados', 'plan_trabajo', 'formato_seguimiento', 'formato_evaluacion', 'fotografias', 'vidoes', 'otros_productos'], 'string'],
+            [['actas', 'reportes', 'listados', 'plan_trabajo', 'formato_seguimiento', 'formato_evaluacion', 'fotografias', 'vidoes'], 'required'],
             [['id_actividades_is_cac'], 'exist', 'skipOnError' => true, 'targetClass' => CbacActividadesIsCac::className(), 'targetAttribute' => ['id_actividades_is_cac' => 'id']],
         ];
     }

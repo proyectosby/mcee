@@ -35,6 +35,7 @@ class CbacActividadIsCac extends \yii\db\ActiveRecord
             [['id_actividades_is_cac', 'porcentaje', 'estado'], 'default', 'value' => null],
             [['id_actividades_is_cac', 'porcentaje', 'estado'], 'integer'],
             [['nombre', 'sesiones_realizadas', 'sesiones_aplazadas', 'sesiones_canceladas'], 'string'],
+            [['sesiones_realizadas', 'porcentaje', 'porcentaje', 'sesiones_aplazadas','sesiones_canceladas'],'required'],
             [['id_actividades_is_cac'], 'exist', 'skipOnError' => true, 'targetClass' => CbacActividadesIsCac::className(), 'targetAttribute' => ['id_actividades_is_cac' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];

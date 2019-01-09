@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Instituciones;
+use app\models\Sedes;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\CbacReporteCompetenciasBasicasAc */
@@ -29,10 +31,24 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'id_institucion',
-            'id_sedes',
-            'estado',
+            //'id',
+            [
+            'attribute'=>'id_institucion',
+            'value' => function( $model )
+                {
+                    $nombreInstituciones = Instituciones::findOne($model->id_institucion);
+                    return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            [
+            'attribute'=>'id_sedes',
+            'value' => function( $model )
+                {
+                    $nombreSedes = Sedes::findOne($model->id_sedes);
+                    return $nombreSedes ? $nombreSedes->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            //'estado',
         ],
     ]) ?>
 

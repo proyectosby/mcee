@@ -37,7 +37,8 @@ $index = 0;
                                                         'actividade_is_isa' => $actividade_is_isa,
                                                         'tipo_poblacion_is_isa' => $tipo_poblacion_is_isa,
                                                         'evidencias_is_isa' => $evidencias_is_isa,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -53,7 +54,8 @@ $index = 0;
                                                         'actividade_is_isa' => $actividade_is_isa,
                                                         'tipo_poblacion_is_isa' => $tipo_poblacion_is_isa,
                                                         'evidencias_is_isa' => $evidencias_is_isa,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []
@@ -70,7 +72,8 @@ $index = 0;
                                                         'actividade_is_isa' => $actividade_is_isa,
                                                         'tipo_poblacion_is_isa' => $tipo_poblacion_is_isa,
                                                         'evidencias_is_isa' => $evidencias_is_isa,
-                                                        'index' => $keyFase
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
 													] 
 										),
 					'contentOptions'=> []

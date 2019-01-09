@@ -43,8 +43,9 @@ class CbacReporteCompetenciasBasicasAc extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_institucion' => 'Id Institucion',
-            'id_sedes' => 'Id Sedes',
+            'nombre_institucion' => 'Institución',
+            'id_institucion' => 'Institución',
+            'id_sedes' => 'Sede',
             'estado' => 'Estado',
         ];
     }

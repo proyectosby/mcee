@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\CbacReporteCompetenciasBasicasAc */
 
-$this->title = 'Nuevo Reporte Competencias Basicas Arte y Cultura';
-$this->params['breadcrumbs'][] = ['label' => 'Cbac Reporte Competencias Basicas Acs', 'url' => ['index']];
+$this->title = 'Nuevo Reporte Competencias Básicas Arte y Cultura';
+$this->params['breadcrumbs'][] = ['label' => 'Reporte Competencias Basicas Arte y Cultura', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="cbac-reporte-competencias-basicas-ac-create">

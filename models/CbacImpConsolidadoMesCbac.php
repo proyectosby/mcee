@@ -15,6 +15,7 @@ use Yii;
  */
 class CbacImpConsolidadoMesCbac extends \yii\db\ActiveRecord
 {
+    
     /**
      * @inheritdoc
      */

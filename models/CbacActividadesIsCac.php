@@ -41,6 +41,7 @@ class CbacActividadesIsCac extends \yii\db\ActiveRecord
             [['id_informe_semanal_isa', 'estado', 'id_actividad', 'id_componente'], 'default', 'value' => null],
             [['id_informe_semanal_isa', 'estado', 'id_actividad', 'id_componente'], 'integer'],
             [['duracion', 'docente', 'equipos', 'logros', 'variaciones_devilidades', 'variaciones_fortalezas', 'retos', 'articulacion', 'alrmas'], 'string'],
+            [['duracion', 'docente', 'equipos', 'logros', 'variaciones_devilidades', 'variaciones_fortalezas', 'retos', 'articulacion', 'alrmas'],'required'],
             [['id_informe_semanal_isa'], 'exist', 'skipOnError' => true, 'targetClass' => CbacInformeSemanalCac::className(), 'targetAttribute' => ['id_informe_semanal_isa' => 'id']],
             [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
         ];

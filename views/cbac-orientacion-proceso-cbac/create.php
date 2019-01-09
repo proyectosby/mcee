@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\CbacOrientacionProcesoCbac */
 
-$this->title = 'Planeacion Competencias Basicas Arte y Cultura';
-$this->params['breadcrumbs'][] = ['label' => 'Cbac Orientacion Proceso Cbacs', 'url' => ['index']];
+$this->title = 'Orientación del proceso Competencias Básicas Arte y Cultura';
+$this->params['breadcrumbs'][] = ['label' => 'Agregar Orientación del proceso Competencias Básicas Arte y Cultura', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="cbac-orientacion-proceso-cbac-create">

@@ -12,7 +12,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '4 Orientación del proceso Competencias Basicas Arte y Cultura';
+$this->title = '4 Orientación del proceso Competencias Básicas Arte y Cultura';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -29,7 +29,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Orientación del proceso Competencias Basicas Arte y Cultura</h3>
+<h3>Orientación del proceso Competencias Básicas Arte y Cultura</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
