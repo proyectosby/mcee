@@ -1,4 +1,14 @@
 <?php
+/**********
+---------------------------------------
+Modificaciones:
+Fecha: 09-01-2019
+Persona encargada: Edwin Molina - Johan Ospina
+Cambios realizados: Se mejora script para pedir la institución y la sede. Los script correspondientes js están todo incluidos en header.js.
+---------------------------------------
+**********/ 
+
+
 use yii\helpers\Html;
 use app\models\Sedes;
 use app\models\Instituciones;
@@ -123,7 +133,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                                 </li>-->
                           <!--  </ul>-->
                        <!-- </li>-->
-                        <li class="footer"><a href="index.php?institucion=true">Cambiar Institución</a></li>
+                        <li class="footer"><a id='cambiarInstitucion' href="index.php?institucion=true">Cambiar Institución</a></li>
                         <li class="footer"><a id="cambiarSede">Cambiar sede</a></li>
                     </ul>
                 </li>

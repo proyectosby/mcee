@@ -12,7 +12,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\IsaOrientacionProcesoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Orientación Procesos';
+$this->title = '4. Orientación del proceso - Orientación';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Orientación Procesos</h3>
+<h3>4. Orientación del proceso - Orientación</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>

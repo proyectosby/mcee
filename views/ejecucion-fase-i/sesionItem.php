@@ -119,7 +119,7 @@ use nex\chosen\Chosen;
 			</div>
 			
 			<div class='col-sm-1'>
-				<span total class='form-control' style='background-color:#ccc;'>Temas problema que atiende la cración</span>
+				<span total class='form-control' style='background-color:#ccc;'>Temas problema que atiende la creación</span>
 			</div>
 			
 			<div class='col-sm-1'>

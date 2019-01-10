@@ -146,12 +146,17 @@ class EjecucionFaseIiiController extends Controller
     {
 		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
 		$ciclo = new SemillerosTicCiclos();
+		$anio = new SemillerosTicAnio();
 		
 		$ciclo->load( Yii::$app->request->post() );
 		
 		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
 		if( empty( $ciclo->id ) ){
 			return $this->actionCiclos();
+		}
+		else{
+			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
 		}
 		
 		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
@@ -450,6 +455,7 @@ class EjecucionFaseIiiController extends Controller
 			'profesionales'	=> $profesionales,
 			'cursos'		=> $cursos,
 			'listaSesiones'	=> $listaSesiones,
+			'anio'			=> $anio,
         ]);
     }
 

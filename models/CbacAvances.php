@@ -64,7 +64,7 @@ class CbacAvances extends \yii\db\ActiveRecord
             'debilidades' => 'Debilidades',
             'alternativas' => 'Alternativas adoptadas por los profesionales de campo',
             'retos' => 'Retos',
-            'observaciones' => 'Observaciones',
+            'observaciones' => 'Observaciones de los profesionales del equipo de campo',
             'alarmas' => 'Alarmas',
             'necesidades' => 'Necesidades de orientación identificadas',
             'estrategias_fortalezas' => ' Estrategias para aprovechar las fortalezas: Indique las estrategias que se plantean y actividades realizadas para aprovechar y potencializar las fortalezas detectadas.',
