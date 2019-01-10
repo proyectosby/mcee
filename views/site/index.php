@@ -99,38 +99,9 @@ if (!isset($_SESSION['institucionSeleccionada']) || (isset($_GET['institucion'])
                 if (!response.ok) {
                     throw new Error(response.statusText)
                 }
-                (prueba) = response.json();
-
-                const {valor: sede} = swal({
-                    closeOnConfirm: false,
-                    closeOnCancel: false,
-                    allowOutsideClick: false,
-                    title: 'Seleccione una sede',
-                    input: 'select',
-                    inputOptions: (prueba),
-                    inputPlaceholder: 'Seleccione una sede',
-
-                    inputValidator: (valor) => {
-                        return new Promise((resolve) => {
-                            if (valor !== '') {
-                                dataSede = {
-                                  id: valor
-                                };
-                                
-                                //variable de sesion con la sede que selecciono
-                                $.post("index.php?r=sedes/set-sede", dataSede, function (data) {
-                                    $('#nameSede').text(data);
-                                    location.href = location.pathname
-                                });
-			                    
-                                resolve()
-                            }
-                            else {
-                                resolve('Debe seleccionar una sede')
-                            }
-                        })
-                    }
-                })
+				else{
+					location.href = location.pathname
+				}
             })           
                 resolve();
     
