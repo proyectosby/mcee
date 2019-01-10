@@ -41,6 +41,7 @@ class CbacTotalEjecutivo extends \yii\db\ActiveRecord
             [['objetivos_generale', 'objetivos_especificos', 'id_actividad'], 'string'],
             [['avance_objetivos_sede', 'avance_ieo', 'avance_actividad_sede', 'avance_actividad_ieo', 'beneficiarios', 'sesiones_realizadas_ieo', 'sesiones_aplazadas_ieo', 'sesiones_canceladas_ieo', 'id_institucion', 'id_sede'], 'default', 'value' => null],
             [['avance_objetivos_sede', 'avance_ieo', 'avance_actividad_sede', 'avance_actividad_ieo', 'beneficiarios', 'sesiones_realizadas_ieo', 'sesiones_aplazadas_ieo', 'sesiones_canceladas_ieo', 'id_institucion', 'id_sede'], 'integer'],
+            [['avance_objetivos_sede', 'avance_ieo', 'avance_actividad_sede', 'avance_actividad_ieo', 'beneficiarios', 'sesiones_realizadas_ieo', 'sesiones_aplazadas_ieo', 'sesiones_canceladas_ieo'], 'required'],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
         ];
