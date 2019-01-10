@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			
 			<?= Html::a('4. Orientación del proceso - Orientación', 
 									[
-										'isa-orientacion-proceso/index',
+										'cbac-orientacion-proceso/index',
 										// 'idReporte'		=> 4,
 									], 
 									['class' => 'btn btn-success'
@@ -120,10 +120,10 @@ $this->params['breadcrumbs'][] = $this->title;
 										
 			<?= Html::a('5. Consolidado por mes - Misional', 
 										[
-											'isa-enc-artistica-misional/create',
+											'cbac-consolidado-mes-cbac/index',
 											// 'idReporte'		=> 5,
 										], 
-										['class' => 'btn btn-info']) ?>
+										['class' => 'btn btn-success']) ?>
 										
 										
 			
