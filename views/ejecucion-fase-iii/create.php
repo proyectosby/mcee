@@ -19,7 +19,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EjecucionFase */
 
-$this->title = 'EJECUCION DE FASE III';
+$this->title = 'EJECUCION DE FASE III '.$anio->descripcion." - ".$ciclo->descripcion;
 $this->params['breadcrumbs'][] = ['label' => 'Ejecución Fase III', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 
 <div class="ejecucion-fase-create">
 
-    <h1><?= Html::encode($fase->descripcion) ?></h1>
+    <h1><?= Html::encode($fase->descripcion)." ".$anio->descripcion." - ".$ciclo->descripcion ?></h1>
 
     <?= $this->render('_form', [
         'model' 		=> $model,

@@ -150,12 +150,17 @@ class EjecucionFaseIEstudiantesController extends Controller
     {
 		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
 		$ciclo = new SemillerosTicCiclos();
+		$anio = new SemillerosTicAnio();
 		
 		$ciclo->load( Yii::$app->request->post() );
 		
 		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
 		if( empty( $ciclo->id ) ){
 			return $this->actionCiclos();
+		}
+		else{
+			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
 		}
 		
 		$id_sede 		= $_SESSION['sede'][0];
@@ -500,6 +505,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 			'condiciones'	=> $condiciones,
 			'guardado'		=> $guardado,
 			'cursos'		=> $cursos,
+			'anio'			=> $anio,
         ]);
     }
 

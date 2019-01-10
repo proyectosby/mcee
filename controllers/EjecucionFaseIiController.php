@@ -146,12 +146,17 @@ class EjecucionFaseIiController extends Controller
     {
 		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>"; exit();
 		$ciclo = new SemillerosTicCiclos();
+		$anio = new SemillerosTicAnio();
 		
 		$ciclo->load( Yii::$app->request->post() );
 		
 		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
 		if( empty( $ciclo->id ) ){
 			return $this->actionCiclos();
+		}
+		else{
+			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
 		}
 		
 		//Indica si se guarda la fase
@@ -545,6 +550,7 @@ class EjecucionFaseIiController extends Controller
             'guardado'				=> $guardado,
             'ciclo'					=> $ciclo,
             'profesionales'			=> $profesionales,
+			'anio'					=> $anio,
         ]);
     }
 
