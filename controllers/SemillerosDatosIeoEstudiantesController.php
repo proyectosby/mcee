@@ -392,7 +392,8 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 								->all();
 								
 		$cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
-					
+		
+
         return $this->render('create', [
             'datosIEO' 			=> $datosIEO,
             'institucion' 		=> $institucion,
