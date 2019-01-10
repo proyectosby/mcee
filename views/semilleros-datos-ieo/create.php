@@ -18,8 +18,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\SemillerosDatosIeo */
-
-$this->title = 'CONFORMACIÓN SEMILLEROS TIC';
+$this->title = 'CONFORMACIÓN SEMILLEROS TIC '.$anio->descripcion." - ".$ciclo->descripcion;
 $this->params['breadcrumbs'][] = ['label' => 'Semilleros Datos Ieos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 

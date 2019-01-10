@@ -1,17 +1,9 @@
 <?php
 
-/**********
-Modificación: 
-Fecha: 23-10-2018
-Desarrollador: Maria Viviana Rodas
-Descripción: Se agrega boton de volver al index donde estan los botones de competencias basicas - proyecto
----------------------------------------
-
-**********/
-
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+
 
 
 use fedemotta\datatables\DataTables;
@@ -20,8 +12,17 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Informe Semanal Total Ejecutivo';
+$this->title = 'Cbac Total Ejecutivos';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
+?>
+
 ?> 
 
 <h1></h1>
@@ -31,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>NombreCrud</h3>
+<h3><?= $this->title ?></h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -40,21 +41,12 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="ec-informe-semanal-total-ejecutivo-index">
+<div class="cbac-total-ejecutivo-index">
 
    
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		
-		
-		<?= Html::a('Volver', 
-									[
-										'ec-competencias-basicas-proyectos/index',
-									], 
-									['class' => 'btn btn-info']) ?>
-				
-
 		
     </p>
 
@@ -97,17 +89,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'institucion_id',
-            'cantidad_ieo',
-            'cantidad_sedes',
-            'porcentaje_ieo',
-            //'porcentaje_sedes',
-            //'porcentaje_actividad_uno',
-            //'porcentaje_actividad_dos',
-            //'porcentaje_actividad_tres',
-            //'poblacion_beneficiada_directa',
-            //'poblacion_beneficiada_indirecta',
-            //'alarmas_generales',
+            'objetivos_generale',
+            'objetivos_especificos',
+            'id_actividad',
+            'avance_objetivos_sede',
+            //'avance_ieo',
+            //'avance_actividad_sede',
+            //'avance_actividad_ieo',
+            //'beneficiarios',
+            //'sesiones_realizadas_ieo',
+            //'sesiones_aplazadas_ieo',
+            //'sesiones_canceladas_ieo',
 
             [
 			'class' => 'yii\grid\ActionColumn',

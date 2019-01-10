@@ -1,4 +1,14 @@
 <?php
+/**********
+---------------------------------------
+Modificaciones:
+Fecha: 09-01-2019
+Persona encargada: Edwin Molina - Johan Ospina
+Cambios realizados: Se mejora script para pedir la institución y la sede. Los script correspondientes js están todo incluidos en header.js.
+---------------------------------------
+**********/ 
+
+
 use yii\helpers\Html;
 use app\models\Sedes;
 use app\models\Instituciones;
@@ -123,8 +133,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                                 </li>-->
                           <!--  </ul>-->
                        <!-- </li>-->
-                        <li class="footer"><a href="index.php?institucion=true">Cambiar Institución</a></li>
-                        <li class="footer"><a onclick="changeSede()">Cambiar sede</a></li>
+                        <li class="footer"><a id='cambiarInstitucion' href="index.php?institucion=true">Cambiar Institución</a></li>
+                        <li class="footer"><a id="cambiarSede">Cambiar sede</a></li>
                     </ul>
                 </li>
                 <li class="dropdown notifications-menu">
@@ -307,42 +317,3 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
         </div>
     </nav>
 </header>
-<script>
-    function changeSede(){
-        return fetch('index.php?r=sedes/sedes&idInstitucion='+<?= @$_SESSION['instituciones'][0]; ?>)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(response.statusText)
-                }
-                (prueba) = response.json();
-
-                const {valor: sede} = swal({
-                    closeOnConfirm: false,
-                    closeOnCancel: false,
-                    allowOutsideClick: false,
-                    title: 'Seleccione una sede',
-                    input: 'select',
-                    inputOptions: (prueba),
-                    inputPlaceholder: 'Seleccione una sede',
-
-                    inputValidator: (valor) => {
-                        return new Promise((resolve) => {
-                            if (valor !== '') {
-                                dataSede = {
-                                    id: valor
-                                };
-                                //variable de sesion con la sede que selecciono
-                                $.post("index.php?r=sedes/set-sede", dataSede, function (data) {
-                                    $('#nameSede').text(data);
-                                });
-                                resolve()
-                            }
-                            else {
-                                resolve('Debe seleccionar una sede')
-                            }
-                        })
-                    }
-                })
-            })
-    }
-</script>

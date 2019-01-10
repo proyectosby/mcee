@@ -1,19 +1,15 @@
 /**********
 ---------------------------------------
 Modificaciones:
+Fecha: 09-01-2019
+Persona encargada: Edwin Molina - Johan Ospina
+Cambios realizados: Se mejora script para pedir la institución y la sede. Los script correspondientes js están todo incluidos en header.js.
+---------------------------------------
 Fecha: 17-09-2018
 Persona encargada: Oscar David Lopez Villa
 Cambios realizados: Se habilita el swal para cambio de sede
 ---------------------------------------
-**********/
-
-
-$( document ).ready(function() 
-{
-	 
-	
-});
-
+**********/ 
 
 //extraer el valor de institucion seleccionada de las cookies
 function readCookie(name) {
@@ -22,6 +18,55 @@ function readCookie(name) {
 
 }
 
+
+
+$( "#cambiarInstitucion" ).click(function() 
+{
+	
+	//que institucion selecciono
+    const {value: institucion} = swal({
+    
+        closeOnConfirm: false, 
+        closeOnCancel: false,
+        allowOutsideClick: false,
+        title: 'Seleccione una Institución',
+        input: 'select',
+        inputOptions: datosInstitucion,
+      inputPlaceholder: 'Seleccione...',
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value !== '') 
+          {  
+       
+              //crear variable de session que tenga la institucion que seleciono
+             var Institucion = $.get( "index.php?instituciones="+value, function(data) 
+                {
+                    $("#InstitucionSede").html(" ");
+                
+                    $("#InstitucionSede").append(data.replace('"', ' ').replace('"', ' '));
+                    console.log(data.charAt(0));
+                })
+                  
+             return fetch('index.php?r=sedes/sedes&idInstitucion='+value)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+				else{
+					location.href = location.pathname
+				}
+            })           
+                resolve();
+    
+          }
+          else 
+          {
+            resolve('Debe seleccionar una institucion')
+          }
+        })
+      }
+    })
+});
 
 
 $( "#cambiarSede" ).click(function() 

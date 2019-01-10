@@ -51,7 +51,7 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
             'query' => EcInformeSemanalTotalEjecutivo::find(),
         ]);
         
-        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : $_SESSION["tipo_informe"];
+        //$_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : $_SESSION["tipo_informe"];
 
         return $this->redirect(['create', 'guardado' => $guardado ]);
             
