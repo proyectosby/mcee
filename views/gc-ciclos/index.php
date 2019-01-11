@@ -9,10 +9,10 @@ use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\IsaOrientacionProcesoBuscar */
+/* @var $searchModel app\models\GcCiclosBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '4. Orientación del proceso - Orientación';
+$this->title = 'Ciclos';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>4. Orientación del proceso - Orientación</h3>
+<h3>Ciclos</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -32,14 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="isa-orientacion-proceso-index">
+<div class="gc-ciclos-index">
 
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		<?= Html::a('Volver',['arte-cultura/index',],['class' => 'btn btn-info']) ?>
 		
     </p>
 
@@ -80,17 +79,21 @@ $this->params['breadcrumbs'][] = $this->title;
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			
-            'orientacion_proceso',
-            'fecha_desde',
-            'fecha_hasta',
-            //'id_institucion',
-            //'id_sede',
+
+            // 'id',
+            'fecha',
+            'descripcion',
+            'fecha_inicio',
+            'fecha_finalizacion',
+            //'fecha_cierre',
+            //'fecha_maxima_acceso',
+            //'id_creador',
             //'estado',
+            //'id_semana',
 
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
+			'template'=>'{view}{update}{delete}{bitacora}',
 				'buttons' => [
 				'view' => function ($url, $model) {
 					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
@@ -101,6 +104,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				'update' => function ($url, $model) {
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
 								'title' => Yii::t('app', 'lead-update'),
+					]);
+				},
+				
+				'bitacora' => function ($url, $model) {
+					// return Html::a('<span name="actualizar" class="btn btn-success" value ="'."aaa".'">Bitacora</span>', $url, [
+					return Html::a('<span name="actualizar" class="btn btn-success" value ="'.Url::to(['gc-bitacora/create', 'id' => 100]).'">Bitacora</span>', 
+									['gc-bitacora/create', 'id'=>$model->id], [
+									'title' => Yii::t('app', 'lead-update'),
 					]);
 				}
 

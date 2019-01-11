@@ -9,10 +9,9 @@ use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\IsaOrientacionProcesoBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '4. Orientación del proceso - Orientación';
+$this->title = '4 Orientación del proceso Competencias Básicas Arte y Cultura Seguimiento';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>4. Orientación del proceso - Orientación</h3>
+<h3>Orientación del proceso Competencias Básicas Arte y Cultura Seguimiento</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -32,14 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 </div>
 </div>
-<div class="isa-orientacion-proceso-index">
+<div class="cbac-orientacion-proceso-seguimiento-index">
 
    
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		<?= Html::a('Volver',['arte-cultura/index',],['class' => 'btn btn-info']) ?>
 		
     </p>
 
@@ -78,13 +75,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				],
 			],
 	],
-           'columns' => [
+        'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			
-            'orientacion_proceso',
-            'fecha_desde',
-            'fecha_hasta',
-            //'id_institucion',
+
+            //'id',
+            'seguimieno',
+            'desde',
+            'hasta',
+            'id_institcion',
             //'id_sede',
             //'estado',
 

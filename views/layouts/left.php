@@ -225,6 +225,7 @@
 														'icon' => 'arrow-right',
 														'url' => '#',
 														'items' => [
+															['label' => 'Bitacora nueva', 'icon' => 'arrow-right', 'url' => ['gc-ciclos/index'],],
 															['label' => 'Acompañamiento docentes tutores',
 															'icon' => 'circle-o',
 															'url' => '#',
