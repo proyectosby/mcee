@@ -14,8 +14,8 @@ else
 }
 
 use Yii;
-use app\models\EcInformeEjecutivoEstado;
-use app\models\EcInformeEjecutivoEstadoBuscar;
+use app\models\EcInformeAvanceEjecucionMisional;
+use app\models\EcInformeAvanceEjecucionMisionalBuscar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,11 +27,10 @@ use app\models\Personas;
 use app\models\PerfilesXPersonasInstitucion;
 
 
-
 /**
- * EcInformeEjecutivoEstadoController implements the CRUD actions for EcInformeEjecutivoEstado model.
+ * EcInformeAvanceEjecucionMisionalController implements the CRUD actions for EcInformeAvanceEjecucionMisional model.
  */
-class EcInformeEjecutivoEstadoController extends Controller
+class EcInformeAvanceEjecucionMisionalController extends Controller
 {
     /**
      * @inheritdoc
@@ -49,12 +48,12 @@ class EcInformeEjecutivoEstadoController extends Controller
     }
 
     /**
-     * Lists all EcInformeEjecutivoEstado models.
+     * Lists all EcInformeAvanceEjecucionMisional models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EcInformeEjecutivoEstadoBuscar();
+        $searchModel = new EcInformeAvanceEjecucionMisionalBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere( "estado=1" ); 
 
@@ -65,7 +64,7 @@ class EcInformeEjecutivoEstadoController extends Controller
     }
 
     /**
-     * Displays a single EcInformeEjecutivoEstado model.
+     * Displays a single EcInformeAvanceEjecucionMisional model.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -76,6 +75,8 @@ class EcInformeEjecutivoEstadoController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+
+   
 
 	public function obtenerNombresXPerfiles($idPerfil)
 	{
@@ -104,7 +105,6 @@ class EcInformeEjecutivoEstadoController extends Controller
 		
 		return $nombresPerfil;
 	}
-	
 	
 	public function obtenerNombrePersona()
 	{
@@ -149,20 +149,18 @@ class EcInformeEjecutivoEstadoController extends Controller
 		return $ejes;
 	}
 	
-    /**
-     * Creates a new EcInformeEjecutivoEstado model.
+	
+	 /**
+     * Creates a new EcInformeAvanceEjecucionMisional model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-		$idInstitucion 	= $_SESSION['instituciones'][0];
-		
-		
-        $model = new EcInformeEjecutivoEstado();
+        $model = new EcInformeAvanceEjecucionMisional();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index','guardado' => 1]);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('create', [
@@ -174,9 +172,8 @@ class EcInformeEjecutivoEstadoController extends Controller
 			'ejes'=> $this->obtenerProyectosEjes(),
         ]);
     }
-
     /**
-     * Updates an existing EcInformeEjecutivoEstado model.
+     * Updates an existing EcInformeAvanceEjecucionMisional model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -187,7 +184,7 @@ class EcInformeEjecutivoEstadoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index','guardado' => 1]);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('update', [
@@ -199,7 +196,7 @@ class EcInformeEjecutivoEstadoController extends Controller
 			'ejes'=> $this->obtenerProyectosEjes(),
         ]);
     }
-	
+
 	
 	public function actionInforme($id)
     {
@@ -260,9 +257,8 @@ class EcInformeEjecutivoEstadoController extends Controller
 		
 		
     }
-
     /**
-     * Deletes an existing EcInformeEjecutivoEstado model.
+     * Deletes an existing EcInformeAvanceEjecucionMisional model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -278,15 +274,15 @@ class EcInformeEjecutivoEstadoController extends Controller
     }
 
     /**
-     * Finds the EcInformeEjecutivoEstado model based on its primary key value.
+     * Finds the EcInformeAvanceEjecucionMisional model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return EcInformeEjecutivoEstado the loaded model
+     * @return EcInformeAvanceEjecucionMisional the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EcInformeEjecutivoEstado::findOne($id)) !== null) {
+        if (($model = EcInformeAvanceEjecucionMisional::findOne($id)) !== null) {
             return $model;
         }
 
