@@ -101,6 +101,7 @@ $this->params['breadcrumbs'][] = $nombre;
 					* Llenar nombre personas por perfil
 					*/
 					//variable con la conexion a la base de datos 
+					
 					$connection = Yii::$app->getDb();
 					$command = $connection->createCommand("SELECT pp.id, concat(p.nombres,' ',p.apellidos,' - ',pe.descripcion) as nombres
 														FROM public.perfiles_x_personas as pp, personas as p, perfiles as pe, perfiles_x_personas_institucion as ppi
@@ -113,7 +114,15 @@ $this->params['breadcrumbs'][] = $nombre;
 														AND ppi.id_perfiles_x_persona = pp.id
 					");
 					$result = $command->queryAll();
-								
+					
+					if ( !isset($result[0]) == 1)
+					{
+						return "(No definido)";
+					}
+					else
+					{
+						return $result[0]['nombres'];
+					}
 					return $result[0]['nombres'];
 				},
 				
