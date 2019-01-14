@@ -2,7 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\Instituciones;
+use app\models\EcProyectos;
+use app\models\PerfilesXPersonas;
+use app\models\Personas;
+use app\models\PerfilesXPersonasInstitucion;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformeAvanceEjecucionMisional */
 
@@ -29,12 +33,74 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'id_institucion',
-            'id_eje',
-            'id_persona',
-            'id_coordinador',
-            'id_secretaria',
+            [
+			'attribute'=>'id_institucion',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->id_institucion);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+            [
+				'attribute' => 'id_eje',
+				'value'		=> function( $model )
+								{
+									$ejes = EcProyectos::findOne($model->id_eje);
+									return $ejes ? $ejes->descripcion: '';
+							    },
+			],
+			[
+			'attribute'=>'id_coordinador',
+			'value' => function( $model )
+				{
+					
+					$idPerfilesXpersonas	= PerfilesXPersonasInstitucion::findOne($model->id_coordinador)->id_perfiles_x_persona;
+					$perfiles_x_persona 	= PerfilesXPersonas::findOne($idPerfilesXpersonas)->id_personas;		
+					$nombres 				= Personas::findOne($perfiles_x_persona);
+					$nombres				= $nombres->nombres." ".$nombres->apellidos;
+					
+					return $nombres;
+				}, 
+			],
+			[
+			'attribute'=>'id_secretaria',
+			'value' => function( $model )
+				{
+					
+					$idPerfilesXpersonas	= PerfilesXPersonasInstitucion::findOne($model->id_secretaria)->id_perfiles_x_persona;
+					$perfiles_x_persona 	= PerfilesXPersonas::findOne($idPerfilesXpersonas)->id_personas;		
+					$nombres 				= Personas::findOne($perfiles_x_persona);
+					$nombres				= $nombres->nombres." ".$nombres->apellidos;
+					
+					return $nombres;
+				}, 
+			],
+			[
+			'attribute'=>'id_coor_proyecto_uni',
+			'value' => function( $model )
+				{
+					
+					$idPerfilesXpersonas	= PerfilesXPersonasInstitucion::findOne($model->id_coor_proyecto_uni)->id_perfiles_x_persona;
+					$perfiles_x_persona 	= PerfilesXPersonas::findOne($idPerfilesXpersonas)->id_personas;		
+					$nombres 				= Personas::findOne($perfiles_x_persona);
+					$nombres				= $nombres->nombres." ".$nombres->apellidos;
+					
+					return $nombres;
+				}, 
+			],
+			[
+			'attribute'=>'id_coor_proyecto_sec',
+			'value' => function( $model )
+				{
+					
+					$idPerfilesXpersonas	= PerfilesXPersonasInstitucion::findOne($model->id_coor_proyecto_sec)->id_perfiles_x_persona;
+					$perfiles_x_persona 	= PerfilesXPersonas::findOne($idPerfilesXpersonas)->id_personas;		
+					$nombres 				= Personas::findOne($perfiles_x_persona);
+					$nombres				= $nombres->nombres." ".$nombres->apellidos;
+					
+					return $nombres;
+				}, 
+			],
             'descripcion',
             'presentacion',
             'productos',
@@ -42,7 +108,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             'alarmas',
             'consolidad_avance',
             'fecha_creacion',
-            'estado',
         ],
     ]) ?>
 

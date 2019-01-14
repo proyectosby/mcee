@@ -168,10 +168,12 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 			'persona' => $this->obtenerNombrePersona(),
 			'coordinador' =>$this->obtenerNombresXPerfiles(23),
 			'secretario' =>$this->obtenerNombresXPerfiles(24),
+			'coordinadorProyecto' =>$this->obtenerNombresXPerfiles(25),
 			'instituciones'=> $this->obtenerInstituciones(),
 			'ejes'=> $this->obtenerProyectosEjes(),
         ]);
     }
+	
     /**
      * Updates an existing EcInformeAvanceEjecucionMisional model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -192,11 +194,22 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 			'persona' => $this->obtenerNombrePersona(),
 			'coordinador' =>$this->obtenerNombresXPerfiles(23),
 			'secretario' =>$this->obtenerNombresXPerfiles(24),
+			'coordinadorProyecto' =>$this->obtenerNombresXPerfiles(25),
 			'instituciones'=> $this->obtenerInstituciones(),
 			'ejes'=> $this->obtenerProyectosEjes(),
         ]);
     }
 
+	
+	public function nombrePerfilesXPersonas($id)
+	{
+		$idPerfilesXpersonas	= PerfilesXPersonasInstitucion::findOne($id)->id_perfiles_x_persona;
+		$perfiles_x_persona 	= PerfilesXPersonas::findOne($idPerfilesXpersonas)->id_personas;		
+		$nombres 				= Personas::findOne($perfiles_x_persona);
+		$nombres				= $nombres->nombres." ".$nombres->apellidos;
+		
+		return $nombres;
+	}
 	
 	public function actionInforme($id)
     {
@@ -211,49 +224,45 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 		$nombrePersona 		= Personas::findOne($idPersona);
 		$nombrePersona 		= $nombrePersona->nombres." ".$nombrePersona->apellidos ;
 		
-		$idPerfilesXpersonasCoordinador	= PerfilesXPersonasInstitucion::findOne($model->id_coordinador)->id_perfiles_x_persona;
-		$perfiles_x_personaCoordinador 	= PerfilesXPersonas::findOne($idPerfilesXpersonasCoordinador)->id_personas;		
-		$coordinador 					= Personas::findOne($perfiles_x_personaCoordinador);
-		$coordinador					= $coordinador->nombres." ".$coordinador->apellidos;
 		
+		$coordinador	= $this->nombrePerfilesXPersonas($model->id_coordinador);
+		$secretaria 	= $this->nombrePerfilesXPersonas($model->id_secretaria);
+		$id_coor_proyecto_uni = $this->nombrePerfilesXPersonas($model->id_coor_proyecto_uni);
+		$id_coor_proyecto_sec = $this->nombrePerfilesXPersonas($model->id_coor_proyecto_sec);
 		
-		
-		$idPerfilesXpersonasSecretaria	= PerfilesXPersonasInstitucion::findOne($model->id_secretaria)->id_perfiles_x_persona;
-		$perfiles_x_personaSecretaria 	= PerfilesXPersonas::findOne($idPerfilesXpersonasSecretaria)->id_personas;		
-		$secretaria 					= Personas::findOne($perfiles_x_personaSecretaria);
-		$secretaria 					= $secretaria->nombres." ".$secretaria->apellidos;
-		
-		
-		$mision			= $model->mision;
-		$descripcion	= $model->descripcion;
-		$avances		= $model->avance_producto;
-		$hallazgos		= $model->hallazgos;
-		$logros			= $model->logros;
-
-		// echo "<pre>"; print_r($idPerfilesXpersonasCoordinador); echo "</pre>"; 
-		// die;
+		$descripcion			= $model->descripcion;
+		$presentacion			= $model->presentacion;
+		$productos				= $model->productos;
+		$presentacion_retos		= $model->presentacion_retos;
+		$alarmas				= $model->alarmas;
+		$consolidad_avance		= $model->consolidad_avance;
 		
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-		$document = $phpWord->loadTemplate('plantillas\4.InformePlantilla.docx');
+		$document = $phpWord->loadTemplate('plantillas\9.Informe_de_avance_ejecución_y_misional_del_proyectoPlantilla.docx');
+		
 		$document->setValue('ieo', $institucionNombre);
 		$document->setValue('eje', $ejeNombre);
 		$document->setValue('nombreLogin', $nombrePersona);
 		$document->setValue('coordinador', $coordinador);
 		$document->setValue('secretaria', $secretaria);
+		$document->setValue('id_coor_proyecto_uni', $id_coor_proyecto_uni);
+		$document->setValue('id_coor_proyecto_sec', $id_coor_proyecto_sec);
 		$document->setValue('año', date("Y"));
 		
-		$document->setValue('mision', $mision);
 		$document->setValue('descripcion', $descripcion);
-		$document->setValue('avances', $avances);
-		$document->setValue('hallazgos', $hallazgos);
-		$document->setValue('logros', $logros);
+		$document->setValue('presentacion', $presentacion);
+		$document->setValue('productos', $productos);
+		$document->setValue('presentacion_retos', $presentacion_retos);
+		$document->setValue('alarmas', $alarmas);
+		$document->setValue('consolidad_avance', $consolidad_avance);
 		
-		$document->saveAs('informe.docx'); // Save to temp file
+		$nombreArchivo ='9.Informe_de_avance_ejecución_y_misional_del_proyecto.docx';
+		$document->saveAs($nombreArchivo); // Save to temp file
 		
 		
-		header("Content-disposition: attachment; filename=informe.docx");
+		header("Content-disposition: attachment; filename=$nombreArchivo");
 		header("Content-type: MIME");
-		readfile("informe.docx");
+		readfile($nombreArchivo);
 		
 		
     }

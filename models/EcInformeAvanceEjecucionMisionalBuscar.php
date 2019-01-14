@@ -18,7 +18,7 @@ class EcInformeAvanceEjecucionMisionalBuscar extends EcInformeAvanceEjecucionMis
     public function rules()
     {
         return [
-            [['id', 'id_institucion', 'id_eje', 'id_persona', 'id_coordinador', 'id_secretaria', 'estado'], 'integer'],
+            [['id', 'id_institucion', 'id_eje', 'id_coordinador', 'id_secretaria', 'estado'], 'integer'],
             [['descripcion', 'presentacion', 'productos', 'presentacion_retos', 'alarmas', 'consolidad_avance', 'fecha_creacion'], 'safe'],
         ];
     }
@@ -62,7 +62,6 @@ class EcInformeAvanceEjecucionMisionalBuscar extends EcInformeAvanceEjecucionMis
             'id' => $this->id,
             'id_institucion' => $this->id_institucion,
             'id_eje' => $this->id_eje,
-            'id_persona' => $this->id_persona,
             'id_coordinador' => $this->id_coordinador,
             'id_secretaria' => $this->id_secretaria,
             'fecha_creacion' => $this->fecha_creacion,
