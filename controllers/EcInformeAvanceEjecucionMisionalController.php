@@ -1,5 +1,21 @@
 <?php
-
+/**********
+Versión: 001
+Fecha: 14-01-2019
+Desarrollador: Oscar David Lopez Villa
+Descripción: crud y generacion de word Informe Avance Ejecucion Misional
+-------------------------------------
+Modificaciones:
+Fecha: 14-01-2019
+Persona encargada: Oscar David Lopez Villa
+Cambios realizados: se crean las funciones 
+					obtenerNombresXPerfiles
+					obtenerNombrePersona
+					obtenerProyectosEjes
+					nombrePerfilesXPersonas
+					obtenerInstituciones
+----------------------------------------
+**********/
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -77,7 +93,9 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
     }
 
    
-
+	/****
+		obtener el nombre de la persona de acuerdo el id del perfil y la institucion
+	****/
 	public function obtenerNombresXPerfiles($idPerfil)
 	{
 		$idInstitucion 	= $_SESSION['instituciones'][0];
@@ -106,6 +124,10 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 		return $nombresPerfil;
 	}
 	
+	
+	/****
+		Obtener el nombre de la persona segun el id perfilesxpersonas de la sesion actual
+	****/
 	public function obtenerNombrePersona()
 	{
 		$idPersona 	= $_SESSION['perfilesxpersonas'];
@@ -128,6 +150,10 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 		
 	}
 	
+	/****
+		Nombre de la institucion segun el id de la institucion de la sesion
+	****/
+	
 	public function obtenerInstituciones()
 	{
 		$idInstitucion = $_SESSION['instituciones'][0];
@@ -138,7 +164,9 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 		return $instituciones;
 	}
 	
-	
+	/****
+		Obtener los nombre de los proyectos que en este caso son los ejes
+	****/
 	public function obtenerProyectosEjes()
 	{
 		
@@ -160,7 +188,7 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
         $model = new EcInformeAvanceEjecucionMisional();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index','guardado'=> 1]);
         }
 
         return $this->renderAjax('create', [
@@ -186,7 +214,7 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+             return $this->redirect(['index','guardado'=> 1]);
         }
 
         return $this->renderAjax('update', [
