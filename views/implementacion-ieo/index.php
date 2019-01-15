@@ -107,7 +107,7 @@ if( isset($guardado) && $guardado == 1 ){
 				}, //para buscar por el nombre
 			],
             //'sede_id',
-			'zona_educativa',
+			//'zona_educativa',
 			[
 			'attribute'=>'zona_educativa',
 			'value' => function( $model )

@@ -28,6 +28,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends'
 
 $_SESSION["idTipoInforme"] = isset($_GET['idTipoInforme']) ?  $_GET['idTipoInforme'] : 0; 
 
+
+
 if( isset($guardado) && $guardado == 1 ){
 	echo Html::hiddenInput( 'guardadoFormulario', '1' );
 }
