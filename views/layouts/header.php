@@ -7,12 +7,12 @@ Persona encargada: Edwin Molina - Johan Ospina
 Cambios realizados: Se mejora script para pedir la institución y la sede. Los script correspondientes js están todo incluidos en header.js.
 ---------------------------------------
 **********/ 
-
-
+?>
+<?php
 use yii\helpers\Html;
 use app\models\Sedes;
 use app\models\Instituciones;
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
@@ -25,7 +25,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
 
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
-			
 				
         </a>
 		
@@ -317,3 +316,5 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
         </div>
     </nav>
 </header>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="<?= Yii::$app->request->baseUrl.'/js/header.js'?>"></script>

@@ -57,7 +57,7 @@ class HojaVidaEstudianteController extends Controller
 		
 		// var_dump( Yii::$app->request->queryParams );
 		// exit();
-		
+
         $searchModel = new HojaVidaEstudianteBuscar();
         $dataProvider = $searchModel->search('');
         $dataProvider->query
@@ -95,6 +95,8 @@ class HojaVidaEstudianteController extends Controller
 		else
 			$dataProvider->query->andWhere( 'personas.id=-1' );
 
+		var_dump($dataProvider);
+		die();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
