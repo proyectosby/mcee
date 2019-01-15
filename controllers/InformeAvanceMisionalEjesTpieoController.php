@@ -799,8 +799,6 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-		
-		
 		$model->estado = 2;
 		$model->update(false);
 
