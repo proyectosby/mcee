@@ -139,14 +139,12 @@ class IeoController extends Controller
         //$postData = Yii::$app->request->post();
         
         if ($ieo_model->load(Yii::$app->request->post())) {
-            
+
             $ieo_model->institucion_id = $idInstitucion;
             $ieo_model->estado = 1;
             $ieo_model->sede_id = 2;
-            $ieo_model->id_tipo_informe = intval($_GET['idTipoInforme']);;          
-            $ieo_model->codigo_dane = $institucion->codigo_dane;
-
-            
+            $ieo_model->id_tipo_informe = $_SESSION["idTipoInforme"];          
+                        
             /**Registro de Modelo Base y todos los modelos realacionados con documentación */
             if($ieo_model->save()){
 
