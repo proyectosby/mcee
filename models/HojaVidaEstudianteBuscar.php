@@ -41,9 +41,10 @@ class HojaVidaEstudianteBuscar extends HojaVidaEstudiante
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public static function search($params)
     {
         $query = HojaVidaEstudiante::find();
+        $thisHV = new HojaVidaEstudianteBuscar();
 
         // add conditions that should always apply here
 
@@ -51,9 +52,9 @@ class HojaVidaEstudianteBuscar extends HojaVidaEstudiante
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $thisHV->load($params);
 
-        if (!$this->validate()) {
+        if (!$thisHV->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
@@ -61,31 +62,31 @@ class HojaVidaEstudianteBuscar extends HojaVidaEstudiante
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'fecha_nacimiento' => $this->fecha_nacimiento,
-            'fecha_registro' => $this->fecha_registro,
-            'fecha_ultimo_ingreso' => $this->fecha_ultimo_ingreso,
-            'envio_correo' => $this->envio_correo,
-            'id_municipios' => $this->id_municipios,
-            'id_tipos_identificaciones' => $this->id_tipos_identificaciones,
-            'latitud' => $this->latitud,
-            'longitud' => $this->longitud,
-            'id_estados_civiles' => $this->id_estados_civiles,
-            'id_generos' => $this->id_generos,
-            'id_barrios_veredas' => $this->id_barrios_veredas,
-            'estado' => $this->estado,
+            'id' => $thisHV->id,
+            'fecha_nacimiento' => $thisHV->fecha_nacimiento,
+            'fecha_registro' => $thisHV->fecha_registro,
+            'fecha_ultimo_ingreso' => $thisHV->fecha_ultimo_ingreso,
+            'envio_correo' => $thisHV->envio_correo,
+            'id_municipios' => $thisHV->id_municipios,
+            'id_tipos_identificaciones' => $thisHV->id_tipos_identificaciones,
+            'latitud' => $thisHV->latitud,
+            'longitud' => $thisHV->longitud,
+            'id_estados_civiles' => $thisHV->id_estados_civiles,
+            'id_generos' => $thisHV->id_generos,
+            'id_barrios_veredas' => $thisHV->id_barrios_veredas,
+            'estado' => $thisHV->estado,
         ]);
 
-        $query->andFilterWhere(['ilike', 'usuario', $this->usuario])
-            ->andFilterWhere(['ilike', 'psw', $this->psw])
-            ->andFilterWhere(['ilike', 'identificacion', $this->identificacion])
-            ->andFilterWhere(['ilike', 'nombres', $this->nombres])
-            ->andFilterWhere(['ilike', 'apellidos', $this->apellidos])
-            ->andFilterWhere(['ilike', 'telefonos', $this->telefonos])
-            ->andFilterWhere(['ilike', 'correo', $this->correo])
-            ->andFilterWhere(['ilike', 'domicilio', $this->domicilio])
-            ->andFilterWhere(['ilike', 'hobbies', $this->hobbies])
-            ->andFilterWhere(['ilike', 'grupo_sanguineo', $this->grupo_sanguineo]);
+        $query->andFilterWhere(['ilike', 'usuario', $thisHV->usuario])
+            ->andFilterWhere(['ilike', 'psw', $thisHV->psw])
+            ->andFilterWhere(['ilike', 'identificacion', $thisHV->identificacion])
+            ->andFilterWhere(['ilike', 'nombres', $thisHV->nombres])
+            ->andFilterWhere(['ilike', 'apellidos', $thisHV->apellidos])
+            ->andFilterWhere(['ilike', 'telefonos', $thisHV->telefonos])
+            ->andFilterWhere(['ilike', 'correo', $thisHV->correo])
+            ->andFilterWhere(['ilike', 'domicilio', $thisHV->domicilio])
+            ->andFilterWhere(['ilike', 'hobbies', $thisHV->hobbies])
+            ->andFilterWhere(['ilike', 'grupo_sanguineo', $thisHV->grupo_sanguineo]);
 
         return $dataProvider;
     }
