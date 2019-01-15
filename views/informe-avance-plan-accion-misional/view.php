@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Parametro;
+use app\models\ZonasEducativas;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformePlaneacionIeo */
 
@@ -47,9 +48,13 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 				},
 			],
             'codigo_dane',
-            'zona_educativa',
-            'id_comuna',
-            'id_barrio',
+             [
+				'attribute' => 'zona_educativa',
+				'value' 	=> function( $model ){
+					$zona = ZonasEducativas::findOne( $model->zona_educativa );
+					return $zona ? $zona->descripcion : '';
+				},
+			],
            [
 				'attribute' => 'fase',
 				'value' 	=> function( $model ){
