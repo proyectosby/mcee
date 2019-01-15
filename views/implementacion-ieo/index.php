@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-
+use app\models\Instituciones;
+use app\models\Sedes;
+use app\models\ZonasEducativas;
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
@@ -86,11 +88,35 @@ if( isset($guardado) && $guardado == 1 ){
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'institucion_id',
-            'sede_id',
-            'zona_educativa',
-            'comuna',
+            //'id',
+			//'institucion_id',
+			[
+			'attribute'=>'institucion_id',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->institucion_id);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			[
+			'attribute'=>'sede_id',
+			'value' => function( $model )
+				{
+					$nombreSedes = Sedes::findOne($model->sede_id);
+					return $nombreSedes ? $nombreSedes->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+            //'sede_id',
+			'zona_educativa',
+			[
+			'attribute'=>'zona_educativa',
+			'value' => function( $model )
+				{
+					$zona = ZonasEducativas::findOne($model->zona_educativa);
+					return $zona ? $zona->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+		'comuna',
             //'barrio',
             //'profesional_cargo',
             //'horario_trabajo',

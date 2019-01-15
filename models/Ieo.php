@@ -79,15 +79,15 @@ class Ieo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'institucion_id' => 'Institucion ID',
+            'institucion_id' => 'Institución',
             'sede_id' => 'Sede ID',
             'estado' => 'Estado',
             'persona_acargo' => 'Persona Acargo',
-            'codigo_dane' => 'Codigo Dane',
+            'codigo_dane' => 'Código Dane',
             'comuna' => 'Comuna',
             'barrio' => 'Barrio',
             'id_tipo_informe' => 'Id Tipo Informe',
-            'zonas_educativas_id' => 'Zonas Educativas ID',
+            'zonas_educativas_id' => 'Zonas Educativas',
         ];
     }
 }

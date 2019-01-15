@@ -65,8 +65,8 @@ class ImplementacionIeo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'institucion_id' => 'Institucion ID',
-            'sede_id' => 'Sede ID',
+            'institucion_id' => 'Institución',
+            'sede_id' => 'Sede',
             'zona_educativa' => 'Zona Educativa',
             'comuna' => 'Comuna',
             'barrio' => 'Barrio',
