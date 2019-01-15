@@ -1,5 +1,21 @@
 <?php
-
+/**********
+Versión: 001
+Fecha: 14-01-2019
+Desarrollador: Oscar David Lopez Villa
+Descripción: crud y generacion de word Informe Avance Ejecucion Misional
+-------------------------------------
+Modificaciones:
+Fecha: 14-01-2019
+Persona encargada: Oscar David Lopez Villa
+Cambios realizados: se crean las funciones 
+					obtenerNombresXPerfiles
+					obtenerNombrePersona
+					obtenerProyectosEjes
+					nombrePerfilesXPersonas
+					obtenerInstituciones
+----------------------------------------
+**********/
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -14,8 +30,8 @@ else
 }
 
 use Yii;
-use app\models\EcInformeEjecutivoEstado;
-use app\models\EcInformeEjecutivoEstadoBuscar;
+use app\models\EcInformeAvanceEjecucionMisional;
+use app\models\EcInformeAvanceEjecucionMisionalBuscar;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,11 +43,10 @@ use app\models\Personas;
 use app\models\PerfilesXPersonasInstitucion;
 
 
-
 /**
- * EcInformeEjecutivoEstadoController implements the CRUD actions for EcInformeEjecutivoEstado model.
+ * EcInformeAvanceEjecucionMisionalController implements the CRUD actions for EcInformeAvanceEjecucionMisional model.
  */
-class EcInformeEjecutivoEstadoController extends Controller
+class EcInformeAvanceEjecucionMisionalController extends Controller
 {
     /**
      * @inheritdoc
@@ -49,12 +64,12 @@ class EcInformeEjecutivoEstadoController extends Controller
     }
 
     /**
-     * Lists all EcInformeEjecutivoEstado models.
+     * Lists all EcInformeAvanceEjecucionMisional models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EcInformeEjecutivoEstadoBuscar();
+        $searchModel = new EcInformeAvanceEjecucionMisionalBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere( "estado=1" ); 
 
@@ -65,7 +80,7 @@ class EcInformeEjecutivoEstadoController extends Controller
     }
 
     /**
-     * Displays a single EcInformeEjecutivoEstado model.
+     * Displays a single EcInformeAvanceEjecucionMisional model.
      * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -77,6 +92,10 @@ class EcInformeEjecutivoEstadoController extends Controller
         ]);
     }
 
+   
+	/****
+		obtener el nombre de la persona de acuerdo el id del perfil y la institucion
+	****/
 	public function obtenerNombresXPerfiles($idPerfil)
 	{
 		$idInstitucion 	= $_SESSION['instituciones'][0];
@@ -106,6 +125,9 @@ class EcInformeEjecutivoEstadoController extends Controller
 	}
 	
 	
+	/****
+		Obtener el nombre de la persona segun el id perfilesxpersonas de la sesion actual
+	****/
 	public function obtenerNombrePersona()
 	{
 		$idPersona 	= $_SESSION['perfilesxpersonas'];
@@ -128,6 +150,10 @@ class EcInformeEjecutivoEstadoController extends Controller
 		
 	}
 	
+	/****
+		Nombre de la institucion segun el id de la institucion de la sesion
+	****/
+	
 	public function obtenerInstituciones()
 	{
 		$idInstitucion = $_SESSION['instituciones'][0];
@@ -138,7 +164,9 @@ class EcInformeEjecutivoEstadoController extends Controller
 		return $instituciones;
 	}
 	
-	
+	/****
+		Obtener los nombre de los proyectos que en este caso son los ejes
+	****/
 	public function obtenerProyectosEjes()
 	{
 		
@@ -149,20 +177,18 @@ class EcInformeEjecutivoEstadoController extends Controller
 		return $ejes;
 	}
 	
-    /**
-     * Creates a new EcInformeEjecutivoEstado model.
+	
+	 /**
+     * Creates a new EcInformeAvanceEjecucionMisional model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-		$idInstitucion 	= $_SESSION['instituciones'][0];
-		
-		
-        $model = new EcInformeEjecutivoEstado();
+        $model = new EcInformeAvanceEjecucionMisional();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index','guardado' => 1]);
+            return $this->redirect(['index','guardado'=> 1]);
         }
 
         return $this->renderAjax('create', [
@@ -170,13 +196,14 @@ class EcInformeEjecutivoEstadoController extends Controller
 			'persona' => $this->obtenerNombrePersona(),
 			'coordinador' =>$this->obtenerNombresXPerfiles(23),
 			'secretario' =>$this->obtenerNombresXPerfiles(24),
+			'coordinadorProyecto' =>$this->obtenerNombresXPerfiles(25),
 			'instituciones'=> $this->obtenerInstituciones(),
 			'ejes'=> $this->obtenerProyectosEjes(),
         ]);
     }
-
+	
     /**
-     * Updates an existing EcInformeEjecutivoEstado model.
+     * Updates an existing EcInformeAvanceEjecucionMisional model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -187,7 +214,7 @@ class EcInformeEjecutivoEstadoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index','guardado' => 1]);
+             return $this->redirect(['index','guardado'=> 1]);
         }
 
         return $this->renderAjax('update', [
@@ -195,11 +222,22 @@ class EcInformeEjecutivoEstadoController extends Controller
 			'persona' => $this->obtenerNombrePersona(),
 			'coordinador' =>$this->obtenerNombresXPerfiles(23),
 			'secretario' =>$this->obtenerNombresXPerfiles(24),
+			'coordinadorProyecto' =>$this->obtenerNombresXPerfiles(25),
 			'instituciones'=> $this->obtenerInstituciones(),
 			'ejes'=> $this->obtenerProyectosEjes(),
         ]);
     }
+
 	
+	public function nombrePerfilesXPersonas($id)
+	{
+		$idPerfilesXpersonas	= PerfilesXPersonasInstitucion::findOne($id)->id_perfiles_x_persona;
+		$perfiles_x_persona 	= PerfilesXPersonas::findOne($idPerfilesXpersonas)->id_personas;		
+		$nombres 				= Personas::findOne($perfiles_x_persona);
+		$nombres				= $nombres->nombres." ".$nombres->apellidos;
+		
+		return $nombres;
+	}
 	
 	public function actionInforme($id)
     {
@@ -214,55 +252,50 @@ class EcInformeEjecutivoEstadoController extends Controller
 		$nombrePersona 		= Personas::findOne($idPersona);
 		$nombrePersona 		= $nombrePersona->nombres." ".$nombrePersona->apellidos ;
 		
-		$idPerfilesXpersonasCoordinador	= PerfilesXPersonasInstitucion::findOne($model->id_coordinador)->id_perfiles_x_persona;
-		$perfiles_x_personaCoordinador 	= PerfilesXPersonas::findOne($idPerfilesXpersonasCoordinador)->id_personas;		
-		$coordinador 					= Personas::findOne($perfiles_x_personaCoordinador);
-		$coordinador					= $coordinador->nombres." ".$coordinador->apellidos;
 		
+		$coordinador	= $this->nombrePerfilesXPersonas($model->id_coordinador);
+		$secretaria 	= $this->nombrePerfilesXPersonas($model->id_secretaria);
+		$id_coor_proyecto_uni = $this->nombrePerfilesXPersonas($model->id_coor_proyecto_uni);
+		$id_coor_proyecto_sec = $this->nombrePerfilesXPersonas($model->id_coor_proyecto_sec);
 		
-		
-		$idPerfilesXpersonasSecretaria	= PerfilesXPersonasInstitucion::findOne($model->id_secretaria)->id_perfiles_x_persona;
-		$perfiles_x_personaSecretaria 	= PerfilesXPersonas::findOne($idPerfilesXpersonasSecretaria)->id_personas;		
-		$secretaria 					= Personas::findOne($perfiles_x_personaSecretaria);
-		$secretaria 					= $secretaria->nombres." ".$secretaria->apellidos;
-		
-		
-		$mision			= $model->mision;
-		$descripcion	= $model->descripcion;
-		$avances		= $model->avance_producto;
-		$hallazgos		= $model->hallazgos;
-		$logros			= $model->logros;
-
-		// echo "<pre>"; print_r($idPerfilesXpersonasCoordinador); echo "</pre>"; 
-		// die;
+		$descripcion			= $model->descripcion;
+		$presentacion			= $model->presentacion;
+		$productos				= $model->productos;
+		$presentacion_retos		= $model->presentacion_retos;
+		$alarmas				= $model->alarmas;
+		$consolidad_avance		= $model->consolidad_avance;
 		
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-		$document = $phpWord->loadTemplate('plantillas\4.InformePlantilla.docx');
+		$document = $phpWord->loadTemplate('plantillas\9.Informe_de_avance_ejecución_y_misional_del_proyectoPlantilla.docx');
+		
 		$document->setValue('ieo', $institucionNombre);
 		$document->setValue('eje', $ejeNombre);
 		$document->setValue('nombreLogin', $nombrePersona);
 		$document->setValue('coordinador', $coordinador);
 		$document->setValue('secretaria', $secretaria);
+		$document->setValue('id_coor_proyecto_uni', $id_coor_proyecto_uni);
+		$document->setValue('id_coor_proyecto_sec', $id_coor_proyecto_sec);
 		$document->setValue('año', date("Y"));
 		
-		$document->setValue('mision', $mision);
 		$document->setValue('descripcion', $descripcion);
-		$document->setValue('avances', $avances);
-		$document->setValue('hallazgos', $hallazgos);
-		$document->setValue('logros', $logros);
+		$document->setValue('presentacion', $presentacion);
+		$document->setValue('productos', $productos);
+		$document->setValue('presentacion_retos', $presentacion_retos);
+		$document->setValue('alarmas', $alarmas);
+		$document->setValue('consolidad_avance', $consolidad_avance);
 		
-		$document->saveAs('informe.docx'); // Save to temp file
+		$nombreArchivo ='9.Informe_de_avance_ejecución_y_misional_del_proyecto.docx';
+		$document->saveAs($nombreArchivo); // Save to temp file
 		
 		
-		header("Content-disposition: attachment; filename=informe.docx");
+		header("Content-disposition: attachment; filename=$nombreArchivo");
 		header("Content-type: MIME");
-		readfile("informe.docx");
+		readfile($nombreArchivo);
 		
 		
     }
-
     /**
-     * Deletes an existing EcInformeEjecutivoEstado model.
+     * Deletes an existing EcInformeAvanceEjecucionMisional model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -278,15 +311,15 @@ class EcInformeEjecutivoEstadoController extends Controller
     }
 
     /**
-     * Finds the EcInformeEjecutivoEstado model based on its primary key value.
+     * Finds the EcInformeAvanceEjecucionMisional model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return EcInformeEjecutivoEstado the loaded model
+     * @return EcInformeAvanceEjecucionMisional the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EcInformeEjecutivoEstado::findOne($id)) !== null) {
+        if (($model = EcInformeAvanceEjecucionMisional::findOne($id)) !== null) {
             return $model;
         }
 

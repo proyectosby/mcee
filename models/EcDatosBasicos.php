@@ -49,13 +49,13 @@ class EcDatosBasicos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'profesional_campo' => 'Profesional Campo',
-            'id_institucion' => 'Id Institucion',
-            'id_sede' => 'Id Sede',
-            'fecha_diligenciamiento' => 'Fecha Diligenciamiento',
-            'estado' => 'Estado',
-            'id_tipo_informe' => 'Id Tipo Informe',
+            'id' 					=> 'ID',
+            'profesional_campo' 	=> 'Profesional Campo',
+            'id_institucion' 		=> 'Institución',
+            'id_sede' 				=> 'Sede',
+            'fecha_diligenciamiento'=> 'Fecha Diligenciamiento',
+            'estado' 				=> 'Estado',
+            'id_tipo_informe' 		=> 'Id Tipo Informe',
         ];
     }
 }

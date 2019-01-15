@@ -5,11 +5,15 @@ use yii\helpers\Html;
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
+use app\models\Personas;
+use app\models\Instituciones;
+use app\models\Sedes;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EcDatosBasicosBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Ec Datos Basicos';
+$this->title = 'Datos Básicos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="ec-datos-basicos-index">
@@ -59,10 +63,27 @@ $this->params['breadcrumbs'][] = $this->title;
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'profesional_campo',
-            'id_institucion',
-            'id_sede',
+            [
+				'attribute' => 'profesional_campo',
+				'value' 	=> function( $model ){
+					$persona = Personas::findOne( $model->profesional_campo );
+					return $persona ? $persona->nombres." ".$persona->apellidos : '';
+				},
+			],
+			[
+				'attribute' => 'id_institucion',
+				'value' 	=> function( $model ){
+					$institucion = Instituciones::findOne( $model->id_institucion );
+					return $institucion ? $institucion->descripcion : '';
+				},
+			],
+			[
+				'attribute' => 'id_sede',
+				'value' 	=> function( $model ){
+					$sedes = Sedes::findOne( $model->id_institucion );
+					return $sedes ? $sedes->descripcion : '';
+				},
+			],
             'fecha_diligenciamiento',
             //'estado',
 

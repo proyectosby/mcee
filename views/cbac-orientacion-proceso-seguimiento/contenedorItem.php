@@ -84,7 +84,8 @@ use dosamigos\datepicker\DatePicker;
         <?= $form->field($actividades_isa, "[$index]nombre")->hiddenInput(['value'=> "Actividad 11. Realizar seguimiento y evaluación de las acciones desarrolladas con las familias de las instituciones educativas."])->label(false); ?>
     <?php
     }
-
+    echo $form->field($actividades_isa, "id_actividad")->hiddenInput(['value'=> $index])->label(false);
+    //var_dump($datos);
 ?>
 
 <?= $form->field($actividades_isa, "[$index]total_sesiones_realizadas")->textInput([ 'value' => isset($datos[$index]['total_sesiones_realizadas']) ? $datos[$index]['total_sesiones_realizadas'] : '' ]) ?>
@@ -103,6 +104,7 @@ use dosamigos\datepicker\DatePicker;
                                                 "model" => $model,
                                                 'actividades_isa' => $actividades_isa,
                                                 'index' => $index,
+                                                'fase' => $keyFase,
                                                 'datos' => $datos,
                                                 'impOps'=> $impOps,
                                             ] 

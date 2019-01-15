@@ -16,11 +16,11 @@ use dosamigos\datepicker\DatePicker;
 
     <?php $form = ActiveForm::begin([ 'layout' => 'horizontal']); ?>
 
-    <?= $form->field($modelDatosBasico, 'profesional_campo')->textInput() ?>
+    <?= $form->field($modelDatosBasico, 'profesional_campo')->dropDownList( $profesional, [ 'prompt' => 'Seleccione...' ] ) ?>
 
-    <?= $form->field($modelDatosBasico, 'id_institucion')->textInput() ?>
+    <?= $form->field($modelDatosBasico, 'id_institucion')->dropDownList( [ $institucion->id => $institucion->descripcion ] ) ?>
 
-    <?= $form->field($modelDatosBasico, 'id_sede')->textInput() ?>
+    <?= $form->field($modelDatosBasico, 'id_sede')->dropDownList( [ $sede->id => $sede->descripcion ] ) ?>
 
 	<?= $form->field($modelDatosBasico, 'fecha_diligenciamiento')->widget(
 					DatePicker::className(), [

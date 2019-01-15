@@ -3,26 +3,29 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-use app\models\Instituciones;
-use app\models\Sedes;
 
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
-
+use app\models\EcProyectos;
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\EcInformeAvanceEjecucionMisionalBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '4 Orientación del proceso Competencias Básicas Arte y Cultura Seguimiento';
+$this->title = '9 Informe de avance ejecución y misional';
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
-if( isset($guardado) && $guardado == 1 ){
-	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+if( @$_GET['guardado'])
+{
+	
+	$this->registerJs( "
+	  swal({
+			text: 'Registro guardado',
+			icon: 'success',
+			button: 'Salir',
+		});" 
+	);
 }
-
 ?> 
 
 <h1></h1>
@@ -32,7 +35,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Orientación del proceso Competencias Básicas Arte y Cultura Seguimiento</h3>
+<h3><?= $this->title ?> </h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -41,9 +44,10 @@ if( isset($guardado) && $guardado == 1 ){
 </div>
 </div>
 </div>
-<div class="cbac-orientacion-proceso-seguimiento-index">
+<div class="ec-informe-avance-ejecucion-misional-index">
 
    
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
@@ -85,34 +89,34 @@ if( isset($guardado) && $guardado == 1 ){
 				],
 			],
 	],
-        'columns' => [
+           'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            'seguimieno',
-            'desde',
-            'hasta',
-			[	
-			'attribute'=>'id_institcion',
-			'value' => function( $model )
-				{
-					$nombreInstituciones = Instituciones::findOne($model->id_institcion);
-					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
-				}, //para buscar por el nombre
+            // 'id',
+            // 'id_institucion',
+           [
+				'attribute' => 'id_eje',
+				'value'		=> function( $model )
+								{
+									$ejes = EcProyectos::findOne($model->id_eje);
+									return $ejes ? $ejes->descripcion: '';
+							    },
 			],
-			[
-			'attribute'=>'id_sede',
-			'value' => function( $model )
-				{
-					$nombreSedes = Sedes::findOne($model->id_sede);
-					return $nombreSedes ? $nombreSedes->descripcion : '';  
-				}, //para buscar por el nombre
-			],
+            // 'id_persona',
+            // 'id_coordinador',
+            //'id_secretaria',
+            //'descripcion',
+            //'presentacion',
+            //'productos',
+            //'presentacion_retos',
+            //'alarmas',
+            //'consolidad_avance',
+            'fecha_creacion',
             //'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
+			'template'=>'{view}{update}{delete}{informe}',
 				'buttons' => [
 				'view' => function ($url, $model) {
 					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
@@ -124,7 +128,11 @@ if( isset($guardado) && $guardado == 1 ){
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
 								'title' => Yii::t('app', 'lead-update'),
 					]);
-				}
+				},
+				
+				'informe' => function ($url, $model) {
+					return Html::a('<span name="informe" class="glyphicon glyphicon-download-alt" value ="'.$url.'"></span>', $url, ['title' => Yii::t('app', 'Informe'),'target'=>'_blank', 'data-pjax'=>"0"]);
+				},
 
 			  ],
 			

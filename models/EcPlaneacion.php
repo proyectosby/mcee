@@ -53,14 +53,14 @@ class EcPlaneacion extends \yii\db\ActiveRecord
         return [
             'id' 					=> 'ID',
             'id_datos_basicos' 		=> 'Id Datos Basicos',
-            'tipo_actividad' 		=> 'Tipo Actividad',
+            'tipo_actividad' 		=> 'Tipo de Actividad',
             'fecha' 				=> 'Fecha',
             'tipo_actor' 			=> 'Tipo Actor',
-            'cantidad_asistentes' 	=> 'Cantidad Asistentes',
+            'cantidad_asistentes' 	=> 'Cantidad de Asistentes',
             'objetivo' 				=> 'Objetivo',
             'responsable' 			=> 'Responsable',
             'rol' 					=> 'Rol',
-            'descripcion_actividad' => 'Descripcion Actividad',
+            'descripcion_actividad' => 'Descripción de la Actividad',
             'estado' 				=> 'Estado',
         ];
     }
