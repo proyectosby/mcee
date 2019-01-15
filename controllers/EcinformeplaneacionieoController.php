@@ -144,32 +144,36 @@ class EcinformeplaneacionieoController extends Controller
 		$cont=0;
 		$bandera = 0;
 		
-		$html =array();
+		$html ="";
 		foreach($proyectos as $pro)
 		{
-			$html[]= "<div class='".$arrayColorPanel[$cont]."'>
-					<div class='panel-heading'> 
-						<h3 class='panel-title'>$pro</h3>
-					</div>
-					<div class='panel-body'>
-					";
+			
+			$html.= "<div class='".$arrayColorPanel[$cont]."'><div class='panel-heading'> 
+							<h3 class='panel-title'>$pro</h3> 
+							<div class='panel-body'>
+							</div>
+							</div>";
+							
 		//muestra las preguntas de los porcentajes de avance de 4 en 4
 			for($i=0;;$i++)
 			{
 				$bandera++;
-			$html[] = array_shift($result)."
-					<div id='myProgress'>
-					  <div id='porcentajeAvance$bandera' class='myBar'>0%</div>
-					</div>
-					<br>";
+				$html .= array_shift($result)."
+				<div id='myProgress'>
+					<div id='porcentajeAvance$bandera' class='myBar'>0%</div> 
+				</div>
+				<br>";
 				if($bandera % 4 == 0 or $bandera ==13)					
 					break;
 			}
 			
-				$cont++;
+			$html.= "</div>";
+					
+					
+					
+					$cont++;
 		}
-		$html[] = "</div>
-					</div>";
+		
 		echo json_encode( $html);
 		// echo $json_encode();
 		

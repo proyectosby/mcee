@@ -112,3 +112,18 @@ $( "#cambiarSede" ).click(function()
 		})
 	 })
 });
+
+$( document ).ready(function() {
+    $('input[type="text"]').keyup(function(){
+        var searchText = $(this).val();
+
+        $('ul > li').each(function(){
+            var currentLiText = $(this).text(),
+                showCurrentLi = currentLiText.toUpperCase().indexOf(searchText.toUpperCase()) !== -1;
+
+            $(this).toggle(showCurrentLi);
+            $('.treeview-menu').css('display','block')
+
+        });
+    });
+});
