@@ -9,12 +9,11 @@ Descripción: Se agrega boton de volver al index donde estan los botones de comp
 **********/
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\EcDatosBasicos */
 
-$this->title = 'Datos Basicos';
-$this->params['breadcrumbs'][] = ['label' => 'Ec Datos Basicos', 'url' => ['index']];
+$this->title = 'Datos Básicos';
+$this->params['breadcrumbs'][] = ['label' => 'Datos Básicos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 
@@ -22,7 +21,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 		
 		<?= Html::a('Volver', 
 									[
-										'ec-competencias-basicas-proyectos/index',
+										$urlVolver,
 									], 
 									['class' => 'btn btn-info']) ?>
 				
@@ -38,6 +37,9 @@ $this->params['breadcrumbs'][] = "Agregar";
 		'modelVerificacion' => $modelVerificacion,
 		'modelReportes' 	=> $modelReportes,
 		'tiposVerificacion'	=> $tiposVerificacion,
+		'profesional'		=> $profesional,
+		'sede'				=> $sede,
+		'institucion'		=> $institucion,
     ]) ?>
 
 </div>

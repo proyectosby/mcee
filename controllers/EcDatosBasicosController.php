@@ -1,4 +1,14 @@
 <?php
+/**********
+Modificación: 
+Fecha: 14-01-2019
+Desarrollador: Edwin Molina G
+Descripción: - Se corrige guardado agregando campo faltante en el modelo EcDatosBasicos
+			 - Se agregan corrigen titulos en el model EcDatosBasicos
+			 - Se agrega un swithc para que el botón volver regrese al menu correspondiente
+---------------------------------------
+*/
+
 
 namespace app\controllers;
 
@@ -22,6 +32,8 @@ use app\models\EcReportes;
 use app\models\EcVerificacion;
 use app\models\Parametro;
 
+use app\models\Personas;
+use app\models\Sedes;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -70,10 +82,12 @@ class EcDatosBasicosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($id, $guardado, $urlVolver )
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' 	=> $this->findModel($id),
+            'guardado' 	=> $guardado,
+            'urlVolver' => $urlVolver,
         ]);
     }
 
@@ -84,15 +98,31 @@ class EcDatosBasicosController extends Controller
      */
     public function actionCreate()
     {
+		$id_sede 		= $_SESSION['sede'][0];
+		$id_institucion	= $_SESSION['instituciones'][0];
+		
         $modelDatosBasico 	= new EcDatosBasicos();
         $modelPlaneacion	= new EcPlaneacion();
         $modelVerificacion	= new EcVerificacion();
         $modelReportes		= new EcReportes();
-        
+		
+		$urlVolver = "";
+		echo "-----".intval($_GET['idTipoInforme']);
+		switch( intval($_GET['idTipoInforme']) ){
+			
+			case 1: 
+				$urlVolver = 'ec-competencias-basicas-proyectos/index';
+				break;
+				
+			case 13: 
+				$urlVolver = 'ec-competencias-basicas-proyectos-obligatorio/index';
+				break;
+			
+		}
 
         if ($modelDatosBasico->load(Yii::$app->request->post())) {
             $modelDatosBasico->id_institucion = $_SESSION['instituciones'][0];
-            $modelDatosBasico->id_sede = 2;
+            $modelDatosBasico->id_sede = $id_sede;
             $modelDatosBasico->estado = 1;
             $modelDatosBasico->id_tipo_informe = intval($_GET['idTipoInforme']);
 
@@ -141,7 +171,7 @@ class EcDatosBasicosController extends Controller
                 }
             }
             
-            return $this->redirect(['view', 'id' => $modelDatosBasico->id, 'guardado' => 1]);
+            return $this->redirect(['view', 'id' => $modelDatosBasico->id, 'guardado' => 1 , 'urlVolver' => $urlVolver ]);
         }
 
 
@@ -152,6 +182,20 @@ class EcDatosBasicosController extends Controller
 									->all();
 									
 		$tiposVerificacion = ArrayHelper::map( $dataTiposVerificacion, 'id', 'descripcion' );
+		
+		$dataPersonas 		= Personas::find()
+								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								->where( 'personas.estado=1' )
+								->andWhere( 'id_institucion='.$id_institucion )
+								->all();
+		
+		$profesional		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		
+		$sede = Sedes::findOne( $id_sede );
+		$institucion = Instituciones::findOne( $id_institucion );
 
         return $this->render('create', [
             'modelDatosBasico' 	=> $modelDatosBasico,
@@ -159,6 +203,10 @@ class EcDatosBasicosController extends Controller
             'modelVerificacion' => $modelVerificacion,
             'modelReportes' 	=> $modelReportes,
             'tiposVerificacion'	=> $tiposVerificacion,
+            'profesional'		=> $profesional,
+            'sede'				=> $sede,
+            'institucion'		=> $institucion,
+            'urlVolver'			=> $urlVolver,
         ]);
     }
 
