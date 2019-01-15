@@ -53,7 +53,7 @@ class CbacOrientacionProcesoSeguimiento extends \yii\db\ActiveRecord
             'desde' => 'Desde',
             'hasta' => 'Hasta',
             'id_institcion' => 'Institución',
-            'id_sede' => 'Id Sede',
+            'id_sede' => 'Sede',
             'estado' => 'Estado',
         ];
     }

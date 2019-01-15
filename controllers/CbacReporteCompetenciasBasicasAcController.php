@@ -52,7 +52,7 @@ class CbacReporteCompetenciasBasicasAcController extends Controller
      * Lists all CbacReporteCompetenciasBasicasAc models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => CbacReporteCompetenciasBasicasAc::find(),
@@ -60,6 +60,7 @@ class CbacReporteCompetenciasBasicasAcController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'guardado' => $guardado,
         ]);
     }
 

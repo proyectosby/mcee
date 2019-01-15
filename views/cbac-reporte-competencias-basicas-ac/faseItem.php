@@ -58,7 +58,7 @@ $index = 0;
 										),
 					'contentOptions'=> []
 				];
-            }else if($proyecto ==  3 && $keyFase > 7){
+            }else if($proyecto ==  3 && $keyFase < 12){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,
 					'content' 		=>  $this->render( 'contenedorItem', 
@@ -70,11 +70,29 @@ $index = 0;
                                                         'evidencias_rom' => $evidencias_rom,
                                                         'index' => $keyFase,
                                                         'datos' => $datos
-													] 
+													]
 										),
 					'contentOptions'=> []
 				];
-            }    
+            } 
+            else if($proyecto ==  3 && $keyFase == 12){
+                $contenedores[] = 	[
+                    'label' 		=>  $actividad,
+                    'content' 		=>  $this->render( 'contenedorItem', 
+                                                    [  
+                                                        'form' => $form,
+                                                        "model" => $model,
+                                                        'actividades_rom' => $actividades_rom,
+                                                        'tipo_poblacion_rom' => $tipo_poblacion_rom,
+                                                        'evidencias_rom' => $evidencias_rom,
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
+                                                    ]
+                                        ),
+                    'options' => ['style' => 'display: none;'],
+                    'contentOptions'=> []
+                ];
+            }  
         
             
 

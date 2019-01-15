@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use app\models\Instituciones;
+use app\models\Sedes;
 
 
 use fedemotta\datatables\DataTables;
@@ -13,6 +15,14 @@ use yii\grid\GridView;
 
 $this->title = '4 Orientación del proceso Competencias Básicas Arte y Cultura Seguimiento';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
+
 ?> 
 
 <h1></h1>
@@ -82,8 +92,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'seguimieno',
             'desde',
             'hasta',
-            'id_institcion',
-            //'id_sede',
+			[	
+			'attribute'=>'id_institcion',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->id_institcion);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			[
+			'attribute'=>'id_sede',
+			'value' => function( $model )
+				{
+					$nombreSedes = Sedes::findOne($model->id_sede);
+					return $nombreSedes ? $nombreSedes->descripcion : '';  
+				}, //para buscar por el nombre
+			],
             //'estado',
 
             [
