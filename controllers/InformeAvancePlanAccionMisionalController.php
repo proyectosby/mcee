@@ -69,6 +69,22 @@ class InformeAvancePlanAccionMisionalController extends Controller
         ];
     }
 
+	
+	public function actionLogros()
+	{
+		
+		$idsPreguntaPorcentajeAvance = new Parametro();
+		$idsPreguntaPorcentajeAvance = $idsPreguntaPorcentajeAvance->find()->orderby("id")->andWhere("id_tipo_parametro = 42")->all();
+		// $idsPreguntaPorcentajeAvance = ArrayHelper::map($idsPreguntaPorcentajeAvance,'id','descripcion');
+		
+		
+		$result = ArrayHelper::getColumn($idsPreguntaPorcentajeAvance, function ($element) {
+				return $element['descripcion'];
+			});
+			
+		echo json_encode($result);
+	}
+	
     function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0,$datoInformePlaneacionProyectos=0)
 	{
         

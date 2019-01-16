@@ -69,7 +69,7 @@ class InformeAvanceMisionalEjesMisionalController extends Controller
         ];
     }
 
-    function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0,$datoInformePlaneacionProyectos=0)
+    function actionViewfases($model, $form, $datos = 0, $datoRespuesta=0, $datoInformePlaneacionProyectos=0)
 	{
         
        $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();

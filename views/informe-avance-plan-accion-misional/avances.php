@@ -18,7 +18,7 @@ $avances = new EcAvances();
             <div class="ieo-form">
 
                     <?= $form->field($avances, "[$contador]estado_actual")->DropDownList($estadoActual,['prompt' => 'Seleccione','value' =>  $datos[$contador]['estado_actual']])->label('Estado Actual') ?>
-                    <?= $form->field($avances, "[$contador]logros")->textInput([ 'value' => $datos[$contador]['logros'] ])->label('Logros') ?>
+                    <?= $form->field($avances, "[$contador]logros")->textInput([ 'value' => $datos[$contador]['logros'],'readonly'=> true ])->label('Logros') ?>
                     <?= $form->field($avances, "[$contador]retos")->textInput([ 'value' => $datos[$contador]['retos'] ])->label('Retos') ?>
                     <?= $form->field($avances, "[$contador]argumentos")->textInput([ 'value' => $datos[$contador]['argumentos'] ])->label('Argumentos') ?>
                     <?= $form->field($avances, "[$contador]id_acciones")->hiddenInput( [ 'value' => $contador ] )->label( false ) ?>
