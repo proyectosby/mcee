@@ -12,6 +12,8 @@ Descripción: Se agrega boton de volver al index donde estan los botones de comp
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use app\models\Instituciones;
+use app\models\Sedes;
 
 
 use fedemotta\datatables\DataTables;
@@ -101,10 +103,24 @@ if( isset($guardado) && $guardado == 1 ){
             ['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'institucion_id',
-            'sede_id',
-            'proyecto_id',
-            'estado',
+			[	
+			'attribute'=>'institucion_id',
+			'value' => function( $model )
+				{
+					$nombreInstituciones = Instituciones::findOne($model->institucion_id);
+					return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			[
+			'attribute'=>'sede_id',
+			'value' => function( $model )
+				{
+					$nombreSedes = Sedes::findOne($model->sede_id);
+					return $nombreSedes ? $nombreSedes->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+            //'proyecto_id',
+            //'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',

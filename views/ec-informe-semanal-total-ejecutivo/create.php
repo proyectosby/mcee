@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformeSemanalTotalEjecutivo */
 
-$this->title = 'Agregar Informe Semanal Total Ejecutivo';
+$this->title = 'Informe Semanal Total Ejecutivo';
 $this->params['breadcrumbs'][] = ['label' => 'Informe Semanal Total Ejecutivos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = "Agregar";
+$this->params['breadcrumbs'][] = "";
 ?>
 <div class="ec-informe-semanal-total-ejecutivo-create">
 

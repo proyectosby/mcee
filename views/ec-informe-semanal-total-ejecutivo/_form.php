@@ -156,7 +156,7 @@ $this->registerJsFile(
 
     </table>
 
-    <div class="form-group">
+    <div class="form-group" style="display: none;">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
