@@ -162,10 +162,10 @@ $this->params['breadcrumbs'][] = $this->title;
 										['class' => 'btn btn-success']) ?>
 			<?= Html::a('9. Informe de avance ejecución y misional del proyecto', 
 										[
-											'',
+											'ec-informe-avance-ejecucion-misional/index',
 											'idTipoInforme'		=> 12,
 										], 
-										['class' => 'btn btn-info']) ?>
+										['class' => 'btn btn-success']) ?>
 
 		</div>
 			
