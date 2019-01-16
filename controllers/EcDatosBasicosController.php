@@ -107,7 +107,7 @@ class EcDatosBasicosController extends Controller
         $modelReportes		= new EcReportes();
 		
 		$urlVolver = "";
-		echo "-----".intval($_GET['idTipoInforme']);
+
 		switch( intval($_GET['idTipoInforme']) ){
 			
 			case 1: 
@@ -116,6 +116,10 @@ class EcDatosBasicosController extends Controller
 				
 			case 13: 
 				$urlVolver = 'ec-competencias-basicas-proyectos-obligatorio/index';
+				break;
+				
+			case 25: 
+				$urlVolver = 'ec-competencias-basicas-proyectos-articulacion/index';
 				break;
 			
 		}
