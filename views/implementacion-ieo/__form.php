@@ -19,7 +19,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         <?= $form->field($model, 'profesional_cargo')->textInput() ?>
         <?= $form->field($model, 'horario_trabajo')->textInput() ?>
 
-        <?= $this->context->actionViewFases($model, $form);   ?>
+        <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0);   ?>
     
         <div class="form-group">
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

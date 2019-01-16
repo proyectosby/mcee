@@ -18,6 +18,7 @@ use Yii;
  * @property string $directivos
  * @property string $fecha_creacion
  * @property int $tipo_actividad
+ * @property int $id_actividad
  */
 class CantidadPoblacionImpIeo extends \yii\db\ActiveRecord
 {
@@ -35,9 +36,11 @@ class CantidadPoblacionImpIeo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['implementacion_ieo_id', 'tipo_actividad'], 'default', 'value' => null],
-            [['implementacion_ieo_id', 'tipo_actividad'], 'integer'],
-            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos', 'fecha_creacion'], 'string'],
+            [['implementacion_ieo_id', 'tipo_actividad', 'id_actividad'], 'default', 'value' => null],
+            [['implementacion_ieo_id', 'tipo_actividad', 'id_actividad'], 'integer'],
+            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'string'],
+            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'required'],
+            [['fecha_creacion'], 'safe'],
             [['tipo_actividad'], 'exist', 'skipOnError' => true, 'targetClass' => ActividadesIeo::className(), 'targetAttribute' => ['tipo_actividad' => 'id']],
             [['implementacion_ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => ImplementacionIeo::className(), 'targetAttribute' => ['implementacion_ieo_id' => 'id']],
         ];
@@ -54,12 +57,13 @@ class CantidadPoblacionImpIeo extends \yii\db\ActiveRecord
             'tiempo_libre' => 'Tiempo Libre',
             'edu_derechos' => 'Edu Derechos',
             'sexualidad' => 'Sexualidad',
-            'ciudadania' => 'Ciudadania',
+            'ciudadania' => 'Ciudadanía',
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
-            'fecha_creacion' => 'Fecha',
+            'fecha_creacion' => 'Fecha Creación',
             'tipo_actividad' => 'Tipo Actividad',
+            'id_actividad' => 'Id Actividad',
         ];
     }
 }

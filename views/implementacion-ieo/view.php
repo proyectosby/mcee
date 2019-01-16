@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Instituciones;
+use app\models\Sedes;
+use app\models\ZonasEducativas;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ImplementacionIeo */
@@ -29,15 +32,38 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'institucion_id',
-            'sede_id',
-            'zona_educativa',
+            //'id',
+            [
+            'attribute'=>'institucion_id',
+            'value' => function( $model )
+                {
+                    $nombreInstituciones = Instituciones::findOne($model->institucion_id);
+                    return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            [
+            'attribute'=>'sede_id',
+            'value' => function( $model )
+                {
+                    $nombreSedes = Sedes::findOne($model->sede_id);
+                    return $nombreSedes ? $nombreSedes->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            //'sede_id',
+            //'zona_educativa',
+            [
+            'attribute'=>'zona_educativa',
+            'value' => function( $model )
+                {
+                    $zona = ZonasEducativas::findOne($model->zona_educativa);
+                    return $zona ? $zona->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
             'comuna',
             'barrio',
-            'profesional_cargo',
+            //'profesional_cargo',
             'horario_trabajo',
-            'estado',
+            //'estado',
         ],
     ]) ?>
 

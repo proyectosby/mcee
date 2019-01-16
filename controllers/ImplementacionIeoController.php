@@ -63,8 +63,11 @@ class ImplementacionIeoController extends Controller
      */
     public function actionIndex($guardado = 0)
     {
+
+        $query = ImplementacionIeo::find()->where(['estado' => 1]);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => ImplementacionIeo::find(),
+            'query' =>$query,
         ]);
         $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : $_SESSION["tipo_informe"]; 
 
@@ -77,7 +80,7 @@ class ImplementacionIeoController extends Controller
         
     }
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos){
        
         
         $actividades = [ 
@@ -118,6 +121,9 @@ class ImplementacionIeoController extends Controller
                                             'model' =>$model,
                                             'tiposCantidadPoblacion' =>  $tiposCantidadPoblacion,
                                             'estudiantesGrado' => $estudiantesGrado,
+                                            'producto' => $producto,
+                                            'evidencias' => $evidencias,
+                                            'datos' => $datos
                                         ] 
                                     )
                 ];
@@ -165,172 +171,185 @@ class ImplementacionIeoController extends Controller
                        
             if($ieo_model->save()){
                 $ieo_id = $ieo_model->id;
+                //$ieo_id = 1;
 
-                $data = Yii::$app->request->post('ImplementacionIeo');
-                $count 	= count( $data );
-                $models = [];
-                $modelEvidencias = [];
-                $modelProductos = [];
-                $countEvidencias = 0;
-                $countProductos = 0;
+                if(Yii::$app->request->post('EvidenciasImpIeo')){
 
-                for( $i = 0; $i < $count; $i++ ){
-                    $models[] = new ImplementacionIeo();
-                }
+                    $dataEvidencias = Yii::$app->request->post('EvidenciasImpIeo');
+                    $countEvidencias = count( $dataEvidencias );
+                    $modelEvidencias = [];
 
-                if (ImplementacionIeo::loadMultiple($models, Yii::$app->request->post() )) {
+                    for( $i = 0; $i < $countEvidencias; $i++ ){
+                        $modelEvidencias[] = new EvidenciasImpIeo();
+                    }
 
-                    foreach( $models as $key => $model) {
-                        //Generación de instancias de los documentos Actividades Evidencias
-                        $producto_acuerdo = UploadedFile::getInstance( $model, "[$key]producto_acuerdo" );
-                        $resultado_actividad = UploadedFile::getInstance( $model, "[$key]resultado_actividad" );
-                        $acta = UploadedFile::getInstance( $model, "[$key]acta" );
-                        $listado = UploadedFile::getInstance( $model, "[$key]listado" );
-                        $fotografias = UploadedFile::getInstance( $model, "[$key]fotografias" );
-                        $avance_formula = UploadedFile::getInstance( $model, "[$key]avance_formula" );
-                        $avance_ruta_gestion = UploadedFile::getInstance( $model, "[$key]avance_ruta_gestion" );
+                    if (EvidenciasImpIeo::loadMultiple($modelEvidencias, Yii::$app->request->post() )) {
+                        foreach($modelEvidencias as $key => $model3) {
+                            $saveAvemceFormula = "";
+                            $saveAvanceRutaGestion = "";
+                            
+                            $producto_acuerdo = UploadedFile::getInstance( $model3, "[$key]producto_acuerdo" );
+                            $resultado_actividad = UploadedFile::getInstance( $model3, "[$key]resultado_actividad" );
+                            $acta = UploadedFile::getInstance( $model3, "[$key]acta" );
+                            $listado = UploadedFile::getInstance( $model3, "[$key]listado" );
+                            $fotografias = UploadedFile::getInstance( $model3, "[$key]fotografias" );
 
-                        //Generación de instancias de los documentos Productos
-                        $producto_informe_acompañamiento = UploadedFile::getInstance( $model, "[$key]producto_informe_acompañamiento" );
-                        $producto_trazabilidad = UploadedFile::getInstance( $model, "[$key]producto_trazabilidad" );
-                        $producto_formnulacion_sistemactizacion = UploadedFile::getInstance( $model, "[$key]producto_formnulacion_sistemactizacion" );
-                        $producto_ruta_gestion = UploadedFile::getInstance( $model, "[$key]producto_ruta_gestion" );
-                        $producto_presentacion_resultados = UploadedFile::getInstance( $model, "[$key]producto_presentacion_resultados" );
-
-
-
-                        $saveAvemceFormula = "";
-                        $saveAvanceRutaGestion = "";
-
-                        //Validación para el registro de documentos Actividades Evidencias
-                        if( $producto_acuerdo && $resultado_actividad && $acta && $listado && $fotografias){
+                            $avance_formula = UploadedFile::getInstance( $model3, "[$key]avance_formula" );
+                            $avance_ruta_gestion = UploadedFile::getInstance( $model3, "[$key]avance_ruta_gestion" );
+                            
+                            if( $producto_acuerdo && $resultado_actividad && $acta && $listado && $fotografias){
                                                        
-                            $modelEvidencias [] = new EvidenciasImpIeo();
-                            //Se crea carpeta para almecenar los documentos de Socializacion
-                            $carpetaEvidencias = "../documentos/documentosIeo/actividades/evidenciasImlementacionIeo/".$institucion->codigo_dane;
-                            if (!file_exists($carpetaEvidencias)) {
-                                mkdir($carpetaEvidencias, 0777, true);
-                            }
+                                $modelEvidencias [] = new EvidenciasImpIeo();
+                                //Se crea carpeta para almecenar los documentos de Socializacion
+                                $carpetaEvidencias = "../documentos/documentosIeo/actividades/evidenciasImlementacionIeo/".$institucion->codigo_dane;
+                                if (!file_exists($carpetaEvidencias)) {
+                                    mkdir($carpetaEvidencias, 0777, true);
+                                }
 
-                            $base = "../documentos/documentosIeo/actividades/evidenciasImlementacionIeo/".$institucion->codigo_dane."/";
+                                $base = "../documentos/documentosIeo/actividades/evidenciasImlementacionIeo/".$institucion->codigo_dane."/";
                           
-                            $rutaFisicaDirectoriaUploadProducto = $base.$producto_acuerdo->baseName;
-                            $rutaFisicaDirectoriaUploadProducto .= date( "_Y_m_d_His" ) . '.' . $producto_acuerdo->extension;
-                            $saveProducto = $producto_acuerdo->saveAs( $rutaFisicaDirectoriaUploadProducto );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-                            
-                            $rutaFisicaDirectoriaUploadResultadoActividad = $base.$resultado_actividad->baseName;
-                            $rutaFisicaDirectoriaUploadResultadoActividad .= date( "_Y_m_d_His" ) . '.' . $resultado_actividad->extension;
-                            $saveResultadoActividad = $resultado_actividad->saveAs( $rutaFisicaDirectoriaUploadResultadoActividad );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-                            
-                            $rutaFisicaDirectoriaUploadActa = $base.$acta->baseName;
-                            $rutaFisicaDirectoriaUploadActa .= date( "_Y_m_d_His" ) . '.' . $acta->extension;
-                            $saveActa = $acta->saveAs( $rutaFisicaDirectoriaUploadActa );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-                             
-                            $rutaFisicaDirectoriaUploadListado = $base.$listado->baseName;
-                            $rutaFisicaDirectoriaUploadListado .= date( "_Y_m_d_His" ) . '.' . $listado->extension;
-                            $saveListado = $listado->saveAs( $rutaFisicaDirectoriaUploadListado );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                                $rutaFisicaDirectoriaUploadProducto = $base.$producto_acuerdo->baseName;
+                                $rutaFisicaDirectoriaUploadProducto .= date( "_Y_m_d_His" ) . '.' . $producto_acuerdo->extension;
+                                $saveProducto = $producto_acuerdo->saveAs( $rutaFisicaDirectoriaUploadProducto );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                                
+                                $rutaFisicaDirectoriaUploadResultadoActividad = $base.$resultado_actividad->baseName;
+                                $rutaFisicaDirectoriaUploadResultadoActividad .= date( "_Y_m_d_His" ) . '.' . $resultado_actividad->extension;
+                                $saveResultadoActividad = $resultado_actividad->saveAs( $rutaFisicaDirectoriaUploadResultadoActividad );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                                
+                                $rutaFisicaDirectoriaUploadActa = $base.$acta->baseName;
+                                $rutaFisicaDirectoriaUploadActa .= date( "_Y_m_d_His" ) . '.' . $acta->extension;
+                                $saveActa = $acta->saveAs( $rutaFisicaDirectoriaUploadActa );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                                
+                                $rutaFisicaDirectoriaUploadListado = $base.$listado->baseName;
+                                $rutaFisicaDirectoriaUploadListado .= date( "_Y_m_d_His" ) . '.' . $listado->extension;
+                                $saveListado = $listado->saveAs( $rutaFisicaDirectoriaUploadListado );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
 
-                            $rutaFisicaDirectoriaUploadFotografia = $base.$fotografias->baseName;
-                            $rutaFisicaDirectoriaUploadFotografia .= date( "_Y_m_d_His" ) . '.' . $fotografias->extension;
-                            $saveFotografia = $fotografias->saveAs( $rutaFisicaDirectoriaUploadFotografia );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-                             
-                            if($avance_formula && $avance_ruta_gestion){
-                                $rutaFisicaDirectoriaUploadAvemceFormula = $base.$avance_formula->baseName;
-                                $rutaFisicaDirectoriaUploadAvemceFormula .= date( "_Y_m_d_His" ) . '.' . $avance_formula->extension;
-                                $saveAvemceFormula = $avance_formula->saveAs( $rutaFisicaDirectoriaUploadAvemceFormula );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-
-                                $rutaFisicaDirectoriaUploadAvanceRutaGestion = $base.$avance_ruta_gestion->baseName;
-                                $rutaFisicaDirectoriaUploadAvanceRutaGestion .= date( "_Y_m_d_His" ) . '.' . $avance_ruta_gestion->extension;
-                                $saveAvanceRutaGestion = $avance_ruta_gestion->saveAs( $rutaFisicaDirectoriaUploadAvanceRutaGestion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
-                            }
-
-
-                            if( $saveProducto && $saveResultadoActividad && $saveActa && $saveListado && $saveFotografia){ 
-                                //Le asigno la ruta al arhvio
-                                $modelEvidencias[$countEvidencias]->implementacion_ieo_id = $ieo_id;
-                                $modelEvidencias[$countEvidencias]->producto_acuerdo = $rutaFisicaDirectoriaUploadProducto;
-                                $modelEvidencias[$countEvidencias]->resultado_actividad = $rutaFisicaDirectoriaUploadResultadoActividad;
-                                $modelEvidencias[$countEvidencias]->acta = $rutaFisicaDirectoriaUploadActa;
-                                $modelEvidencias[$countEvidencias]->listado = $rutaFisicaDirectoriaUploadListado;
-                                $modelEvidencias[$countEvidencias]->fotografias = $rutaFisicaDirectoriaUploadFotografia;
-
-                                if($saveAvemceFormula && $saveAvanceRutaGestion){
-                                    $modelEvidencias[$countEvidencias]->avance_formula = $rutaFisicaDirectoriaUploadAvemceFormula;
-                                    $modelEvidencias[$countEvidencias]->avance_ruta_gestion = $rutaFisicaDirectoriaUploadAvanceRutaGestion;                           
+                                $rutaFisicaDirectoriaUploadFotografia = $base.$fotografias->baseName;
+                                $rutaFisicaDirectoriaUploadFotografia .= date( "_Y_m_d_His" ) . '.' . $fotografias->extension;
+                                $saveFotografia = $fotografias->saveAs( $rutaFisicaDirectoriaUploadFotografia );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                                
+                                if($avance_formula && $avance_ruta_gestion){
+                                    $rutaFisicaDirectoriaUploadAvemceFormula = $base.$avance_formula->baseName;
+                                    $rutaFisicaDirectoriaUploadAvemceFormula .= date( "_Y_m_d_His" ) . '.' . $avance_formula->extension;
+                                    $saveAvemceFormula = $avance_formula->saveAs( $rutaFisicaDirectoriaUploadAvemceFormula );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+    
+                                    $rutaFisicaDirectoriaUploadAvanceRutaGestion = $base.$avance_ruta_gestion->baseName;
+                                    $rutaFisicaDirectoriaUploadAvanceRutaGestion .= date( "_Y_m_d_His" ) . '.' . $avance_ruta_gestion->extension;
+                                    $saveAvanceRutaGestion = $avance_ruta_gestion->saveAs( $rutaFisicaDirectoriaUploadAvanceRutaGestion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
                                 }
 
 
-                            }else{
-                                echo $file->error;
-                                exit("finnn....");
+                                if( $saveProducto && $saveResultadoActividad && $saveActa && $saveListado && $saveFotografia){ 
+                                    //Le asigno la ruta al arhvio
+                                    $modelEvidencias[$key]->implementacion_ieo_id = $ieo_id;
+                                    $modelEvidencias[$key]->producto_acuerdo = $rutaFisicaDirectoriaUploadProducto;
+                                    $modelEvidencias[$key]->resultado_actividad = $rutaFisicaDirectoriaUploadResultadoActividad;
+                                    $modelEvidencias[$key]->acta = $rutaFisicaDirectoriaUploadActa;
+                                    $modelEvidencias[$key]->listado = $rutaFisicaDirectoriaUploadListado;
+                                    $modelEvidencias[$key]->fotografias = $rutaFisicaDirectoriaUploadFotografia;
+                                    
+                                    if($saveAvemceFormula && $saveAvanceRutaGestion){
+                                        $modelEvidencias[$key]->avance_formula = $rutaFisicaDirectoriaUploadAvemceFormula;
+                                        $modelEvidencias[$key]->avance_ruta_gestion = $rutaFisicaDirectoriaUploadAvanceRutaGestion;                           
+                                    }
+                                    
+                                    $modelEvidencias[$key]->save();
+        
+    
+                                }else{
+                                    echo $file->error;
+                                    exit("finnn....");
+                                }
+
                             }
-                            $countEvidencias++;
-                        }
-
-                        //Validación para el registro de documentos Producto
-                        if($producto_informe_acompañamiento && $producto_trazabilidad && $producto_formnulacion_sistemactizacion && $producto_ruta_gestion && $producto_presentacion_resultados){
-                           
-                            $modelProductos [] = new ProductosImpIeo();
-                            
-                            $carpetaEvidencias = "../documentos/documentosIeo/actividades/productosImlementacionIeo/".$institucion->codigo_dane;
-                            if (!file_exists($carpetaEvidencias)) {
-                                mkdir($carpetaEvidencias, 0777, true);
-                            }
-
-                            $base = "../documentos/documentosIeo/actividades/productosImlementacionIeo/".$institucion->codigo_dane."/";
-
-                            $rutaFisicaDirectoriaUploadProductoAcompañamiento = $base.$producto_informe_acompañamiento->baseName;
-                            $rutaFisicaDirectoriaUploadProductoAcompañamiento .= date( "_Y_m_d_His" ) . '.' . $producto_informe_acompañamiento->extension;
-                            $saveProductoAcompañamiento = $producto_informe_acompañamiento->saveAs( $rutaFisicaDirectoriaUploadProductoAcompañamiento );
-
-                            $rutaFisicaDirectoriaUploadProductoTrazabilidad = $base.$producto_trazabilidad->baseName;
-                            $rutaFisicaDirectoriaUploadProductoTrazabilidad .= date( "_Y_m_d_His" ) . '.' . $producto_trazabilidad->extension;
-                            $saveProductoTrazabilidad = $producto_trazabilidad->saveAs( $rutaFisicaDirectoriaUploadProductoTrazabilidad );
-
-                            $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion = $base.$producto_formnulacion_sistemactizacion->baseName;
-                            $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion .= date( "_Y_m_d_His" ) . '.' . $producto_formnulacion_sistemactizacion->extension;
-                            $saveProductoFormulacionSistematizacion = $producto_formnulacion_sistemactizacion->saveAs( $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion );
-
-                            $rutaFisicaDirectoriaUploadProductoRutaGestion = $base.$producto_ruta_gestion->baseName;
-                            $rutaFisicaDirectoriaUploadProductoRutaGestion .= date( "_Y_m_d_His" ) . '.' . $producto_ruta_gestion->extension;
-                            $saveProductoRutaGestion = $producto_ruta_gestion->saveAs( $rutaFisicaDirectoriaUploadProductoRutaGestion );
-
-                            $rutaFisicaDirectoriaUploadProductoPresentacionResultado = $base.$producto_presentacion_resultados->baseName;
-                            $rutaFisicaDirectoriaUploadProductoPresentacionResultado .= date( "_Y_m_d_His" ) . '.' . $producto_presentacion_resultados->extension;
-                            $saveProductoPresentacionResultado = $producto_presentacion_resultados->saveAs( $rutaFisicaDirectoriaUploadProductoPresentacionResultado );
-
-                            if( $saveProductoAcompañamiento && $saveProductoTrazabilidad && $saveProductoFormulacionSistematizacion && $saveProductoRutaGestion && $saveProductoPresentacionResultado){
-
-                                $modelProductos[$countProductos]->implementacion_ieo_id = $ieo_id;
-                                $modelProductos[$countProductos]->informe_acompañamiento = $rutaFisicaDirectoriaUploadProductoAcompañamiento;
-                                $modelProductos[$countProductos]->trazabilidad = $rutaFisicaDirectoriaUploadProductoTrazabilidad;
-                                $modelProductos[$countProductos]->formnulacion_sistemactizacion = $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion;
-                                $modelProductos[$countProductos]->ruta_gestion = $rutaFisicaDirectoriaUploadProductoRutaGestion;
-                                $modelProductos[$countProductos]->presentacion_resultados = $rutaFisicaDirectoriaUploadProductoPresentacionResultado;
-                            }else{
-                                echo $file->error;
-                                exit("finnn....");
-                            }
-                            $countProductos++;
-                        }
-
-                    }
-
-                    foreach( $modelEvidencias as $key => $model) {
-                        if(!$model->save()){
-                            exit( "Error al guardar documentos Evidencias" );
                         }
                     }
 
-                    foreach( $modelProductos as $key => $model) {
-                        if(!$model->save()){
+                }
+
+                if(Yii::$app->request->post('ProductoImplementacionIeo')){
+                    
+                    $dataProductos = Yii::$app->request->post('ProductoImplementacionIeo');
+                    $countProductos = count( $dataProductos );
+                    $modelProductos = [];
+
+
+                    for( $i = 0; $i < $countProductos+1; $i++ ){
+                        $modelProductos[] = new ProductoImplementacionIeo();
+                    }
+
+                                        
+
+                    if (ProductoImplementacionIeo::loadMultiple($modelProductos, Yii::$app->request->post() )) {
+                        
+                        foreach($modelProductos as $key => $model3) {
+
                             
-                            exit( "Error al guardar documentos Productos" );
+                            $producto_informe_acompañamiento = UploadedFile::getInstance( $model3, "[$key]informe_acompanamiento" );
+                            $producto_trazabilidad = UploadedFile::getInstance( $model3, "[$key]trazabilidad_plan_accion" );
+                            $producto_formnulacion_sistemactizacion = UploadedFile::getInstance( $model3, "[$key]formulacion" );
+                            $producto_ruta_gestion = UploadedFile::getInstance( $model3, "[$key]ruta_gestion" );
+                            $producto_presentacion_resultados = UploadedFile::getInstance( $model3, "[$key]resultados_procesos" );
+                            
+
+
+                            if($producto_informe_acompañamiento && $producto_trazabilidad && $producto_formnulacion_sistemactizacion && $producto_ruta_gestion && $producto_presentacion_resultados){
+
+                                
+
+                                $modelProductos [] = new ProductoImplementacionIeo();
+                            
+                                $carpetaEvidencias = "../documentos/documentosIeo/actividades/productosImlementacionIeo/".$institucion->codigo_dane;
+                                if (!file_exists($carpetaEvidencias)) {
+                                    mkdir($carpetaEvidencias, 0777, true);
+                                }    
+
+                                $base = "../documentos/documentosIeo/actividades/productosImlementacionIeo/".$institucion->codigo_dane."/";
+
+                                $rutaFisicaDirectoriaUploadProductoAcompañamiento = $base.$producto_informe_acompañamiento->baseName;
+                                $rutaFisicaDirectoriaUploadProductoAcompañamiento .= date( "_Y_m_d_His" ) . '.' . $producto_informe_acompañamiento->extension;
+                                $saveProductoAcompañamiento = $producto_informe_acompañamiento->saveAs( $rutaFisicaDirectoriaUploadProductoAcompañamiento );
+
+                                $rutaFisicaDirectoriaUploadProductoTrazabilidad = $base.$producto_trazabilidad->baseName;
+                                $rutaFisicaDirectoriaUploadProductoTrazabilidad .= date( "_Y_m_d_His" ) . '.' . $producto_trazabilidad->extension;
+                                $saveProductoTrazabilidad = $producto_trazabilidad->saveAs( $rutaFisicaDirectoriaUploadProductoTrazabilidad );
+
+                                $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion = $base.$producto_formnulacion_sistemactizacion->baseName;
+                                $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion .= date( "_Y_m_d_His" ) . '.' . $producto_formnulacion_sistemactizacion->extension;
+                                $saveProductoFormulacionSistematizacion = $producto_formnulacion_sistemactizacion->saveAs( $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion );
+
+                                $rutaFisicaDirectoriaUploadProductoRutaGestion = $base.$producto_ruta_gestion->baseName;
+                                $rutaFisicaDirectoriaUploadProductoRutaGestion .= date( "_Y_m_d_His" ) . '.' . $producto_ruta_gestion->extension;
+                                $saveProductoRutaGestion = $producto_ruta_gestion->saveAs( $rutaFisicaDirectoriaUploadProductoRutaGestion );
+
+                                $rutaFisicaDirectoriaUploadProductoPresentacionResultado = $base.$producto_presentacion_resultados->baseName;
+                                $rutaFisicaDirectoriaUploadProductoPresentacionResultado .= date( "_Y_m_d_His" ) . '.' . $producto_presentacion_resultados->extension;
+                                $saveProductoPresentacionResultado = $producto_presentacion_resultados->saveAs( $rutaFisicaDirectoriaUploadProductoPresentacionResultado );
+
+                                if( $saveProductoAcompañamiento && $saveProductoTrazabilidad && $saveProductoFormulacionSistematizacion && $saveProductoRutaGestion && $saveProductoPresentacionResultado){
+
+                                    $modelProductos[$key]->implementacion_ieo_id = $ieo_id;
+                                    $modelProductos[$key]->informe_acompanamiento = $rutaFisicaDirectoriaUploadProductoAcompañamiento;
+                                    $modelProductos[$key]->trazabilidad_plan_accion = $rutaFisicaDirectoriaUploadProductoTrazabilidad;
+                                    $modelProductos[$key]->formulacion = $rutaFisicaDirectoriaUploadProductoformulacionSistematizacion;
+                                    $modelProductos[$key]->ruta_gestion = $rutaFisicaDirectoriaUploadProductoRutaGestion;
+                                    $modelProductos[$key]->resultados_procesos = $rutaFisicaDirectoriaUploadProductoPresentacionResultado;
+                                    $modelProductos[$key]->estado = 1;
+                                    $modelProductos[$key]->save();
+
+                                }else{
+                                    echo $file->error;
+                                    exit("finnn....");
+                                }
+
+                            }
                         }
+                        
                     }
 
 
                 }
+
 
                 if (Yii::$app->request->post('CantidadPoblacionImpIeo')){
                     $data = Yii::$app->request->post('CantidadPoblacionImpIeo');
@@ -360,8 +379,10 @@ class ImplementacionIeoController extends Controller
 
 
                                     if (EstudiantesImpIeo::loadMultiple($modelEstudiantesIeo, Yii::$app->request->post() )) {
-                                        foreach( $modelEstudiantesIeo as $key => $modelEstudiantes) {
-                                                if($modelEstudiantes->grado_0){
+                                        foreach( $modelEstudiantesIeo as $key1 => $modelEstudiantes) {
+                                                
+                                            if($modelEstudiantes->grado_0){
+                                                    
                                                     $modelEstudiantes->cantidad_poblacion_imp_ieo_id = $model->id;
                                                     
                                                     if(!$modelEstudiantes->save()){
@@ -412,8 +433,55 @@ class ImplementacionIeoController extends Controller
             return $this->redirect(['index']);
         }
 
+        $command = Yii::$app->db->createCommand("SELECT canp.id_actividad, canp.tiempo_libre, canp.edu_derechos, canp.sexualidad, canp.ciudadania, canp.medio_ambiente, canp.familia, canp.directivos, canp.fecha_creacion, canp.tipo_actividad,
+                                                        est.grado_0, est.grado_1, est.grado_2, est.grado_3, est.grado_4, est.grado_5, est.grado_6, est.grado_7, est.grado_8, est.grado_9, est.grado_10, est.grado_11
+                                                FROM ec.cantidad_poblacion_imp_ieo AS canp
+                                                INNER JOIN ec.estudiantes_imp_ieo AS est ON canp.id = est.cantidad_poblacion_imp_ieo_id
+                                                WHERE canp.implementacion_ieo_id = $id");
+
+        $result= $command->queryAll();                                       
+
+        $result = ArrayHelper::getColumn($result, function ($element) 
+        {
+            $dato[$element['id_actividad']]['tiempo_libre']= $element['tiempo_libre'];
+            $dato[$element['id_actividad']]['tipo_actividad']= $element['tipo_actividad'];
+            $dato[$element['id_actividad']]['edu_derechos']= $element['edu_derechos'];
+            $dato[$element['id_actividad']]['sexualidad']= $element['sexualidad'];
+            $dato[$element['id_actividad']]['ciudadania']= $element['ciudadania'];
+            $dato[$element['id_actividad']]['medio_ambiente']= $element['medio_ambiente'];
+            $dato[$element['id_actividad']]['directivos']= $element['directivos'];
+            $dato[$element['id_actividad']]['familia']= $element['familia'];
+            $dato[$element['id_actividad']]['grado_0']= $element['grado_0'];
+            $dato[$element['id_actividad']]['grado_1']= $element['grado_1'];
+            $dato[$element['id_actividad']]['grado_2']= $element['grado_2'];
+            $dato[$element['id_actividad']]['grado_3']= $element['grado_3'];
+            $dato[$element['id_actividad']]['grado_4']= $element['grado_4'];
+            $dato[$element['id_actividad']]['grado_5']= $element['grado_5'];
+            $dato[$element['id_actividad']]['grado_6']= $element['grado_6'];
+            $dato[$element['id_actividad']]['grado_7']= $element['grado_7'];
+            $dato[$element['id_actividad']]['grado_8']= $element['grado_8'];
+            $dato[$element['id_actividad']]['grado_9']= $element['grado_9'];
+            $dato[$element['id_actividad']]['grado_10']= $element['grado_10'];
+            $dato[$element['id_actividad']]['grado_11']= $element['grado_11'];
+
+            return $dato;
+        });
+
+        foreach	($result as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos[$ids] = $valores;
+        }
+
+
+        $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
+        $zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
+
         return $this->renderAjax('update', [
             'model' => $model,
+            'zonasEducativas' => $zonasEducativas,
+            'datos'=> $datos,
         ]);
     }
 
@@ -426,7 +494,12 @@ class ImplementacionIeoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+
+        $model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
+
+        //$this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
