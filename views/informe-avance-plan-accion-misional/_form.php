@@ -71,7 +71,7 @@ $.get( "index.php?r=informe-avance-plan-accion-misional/logros",
 		"json");		
 
 //llenar los logros, segun el estado actual
-$("[id|='ecavances']").change(function() 
+$("[id$='-estado_actual']").change(function() 
 {
   
 	valorSelect = $(this).val();
