@@ -248,9 +248,7 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 		
 		$ejeNombre  		= EcProyectos::findOne($model->id_eje)->descripcion;
 		
-		$idPersona			= PerfilesXPersonas::findOne($model->id_persona)->id_personas;
-		$nombrePersona 		= Personas::findOne($idPersona);
-		$nombrePersona 		= $nombrePersona->nombres." ".$nombrePersona->apellidos ;
+		
 		
 		
 		$coordinador	= $this->nombrePerfilesXPersonas($model->id_coordinador);
@@ -270,7 +268,6 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 		
 		$document->setValue('ieo', $institucionNombre);
 		$document->setValue('eje', $ejeNombre);
-		$document->setValue('nombreLogin', $nombrePersona);
 		$document->setValue('coordinador', $coordinador);
 		$document->setValue('secretaria', $secretaria);
 		$document->setValue('id_coor_proyecto_uni', $id_coor_proyecto_uni);
