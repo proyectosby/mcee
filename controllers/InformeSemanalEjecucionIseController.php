@@ -82,7 +82,7 @@ class InformeSemanalEjecucionIseController extends Controller
             'query' => InformeSemanalEjecucionIse::find(),
         ]);
         
-        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : $_SESSION["tipo_informe"]; 
+        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : 0; 
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,

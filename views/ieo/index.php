@@ -12,7 +12,8 @@ Descripción: Se agrega boton de volver al index donde estan los botones de comp
 use yii\helpers\Html;
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
-
+use app\models\ZonasEducativas;
+								
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
@@ -25,11 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
+$_SESSION["idTipoInforme"] = isset($_GET['idTipoInforme']) ?  $_GET['idTipoInforme'] : 0; 
+
+
+
 if( isset($guardado) && $guardado == 1 ){
 	echo Html::hiddenInput( 'guardadoFormulario', '1' );
 }
 ?>
-
 
 
 <div class="ieo-index">
@@ -104,7 +108,14 @@ if( isset($guardado) && $guardado == 1 ){
 
             //'id',
             'persona_acargo',
-            'zona_educativa',
+			[
+			'attribute'=>'zonas_educativas_id',
+			'value' => function( $model )
+				{
+					$zona = ZonasEducativas::findOne($model->zonas_educativas_id);
+					return $zona ? $zona->descripcion : '';  
+				}, //para buscar por el nombre
+			],
 			'comuna',
 			'barrio',
             //'proyecto_id',

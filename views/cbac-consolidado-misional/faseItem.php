@@ -68,7 +68,7 @@ use dosamigos\datepicker\DatePicker;
 					'contentOptions'=> []
 				];
             }
-            if($index ==  2 && $keyFase > 2 && $keyFase <= 7){
+            else if($index ==  2 && $keyFase > 2 && $keyFase <= 7){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,
 					'content' 		=>  $this->render( 'contenedorItem', 
@@ -83,7 +83,23 @@ use dosamigos\datepicker\DatePicker;
 					'contentOptions'=> []
 				];
             }
-            if($index ==  3 && $keyFase > 7){
+            else if($index ==  3 && $keyFase == 12){
+                $contenedores[] = 	[
+					'label' 		=>  $actividad,
+					'content' 		=>  $this->render( 'contenedorItem', 
+													[  
+                                                        'form' => $form,
+                                                        "model" => $model,
+                                                        'actividadMisional' => $actividadMisional,
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
+													] 
+                                        ),
+                    'options' => ['style' => 'display: none;'],
+					'contentOptions'=> []
+				];
+            }
+            else if($index ==  3 && $keyFase > 7){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,
 					'content' 		=>  $this->render( 'contenedorItem', 

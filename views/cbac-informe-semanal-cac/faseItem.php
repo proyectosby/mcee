@@ -61,6 +61,25 @@ $index = 0;
 					'contentOptions'=> []
 				];
             }
+            else if($proyecto ==  3 && $keyFase == 12){
+                $contenedores[] = 	[
+					'label' 		=>  $actividad,
+					'content' 		=>  $this->render( 'contenedorItem', 
+													[  
+                                                        'form' => $form,
+                                                        "model" => $model,
+                                                        'actividades_is_isa' => $actividades_is_isa,
+                                                        'actividade_is_isa' => $actividade_is_isa,
+                                                        'tipo_poblacion_is_isa' => $tipo_poblacion_is_isa,
+                                                        'evidencias_is_isa' => $evidencias_is_isa,
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
+													] 
+                                        ),
+                    'options' => ['style' => 'display: none;'],
+					'contentOptions'=> []
+				];
+            }            
             else if($proyecto ==  3 && $keyFase > 7){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,
@@ -78,13 +97,13 @@ $index = 0;
 										),
 					'contentOptions'=> []
 				];
-            }    
+            }
         
             
 
     $index ++;
     }
-    
+
     use yii\bootstrap\Collapse;
     echo Collapse::widget([
         'items' => $contenedores,

@@ -15,6 +15,7 @@ use Yii;
  * @property string $documentos_seguimiento
  * @property string $documentos_evaluacion
  * @property string $resumen_alertar
+ * @property string $id_actividad
  */
 class CbacActividadOps extends \yii\db\ActiveRecord
 {
@@ -33,7 +34,7 @@ class CbacActividadOps extends \yii\db\ActiveRecord
     {
         return [
             [['id_orientacion_proceso_seguimiento', 'total_sesiones_realizadas', 'avance_sede', 'avance_ieo'], 'default', 'value' => null],
-            [['id_orientacion_proceso_seguimiento', 'total_sesiones_realizadas', 'avance_sede', 'avance_ieo'], 'integer'],
+            [['id_orientacion_proceso_seguimiento', 'total_sesiones_realizadas', 'avance_sede', 'avance_ieo', 'id_actividad'], 'integer'],
             [['documentos_seguimiento', 'documentos_evaluacion', 'resumen_alertar'], 'string'],
             [['id_orientacion_proceso_seguimiento'], 'exist', 'skipOnError' => true, 'targetClass' => CbacOrientacionProcesoSeguimiento::className(), 'targetAttribute' => ['id_orientacion_proceso_seguimiento' => 'id']],
         ];
@@ -53,6 +54,7 @@ class CbacActividadOps extends \yii\db\ActiveRecord
             'documentos_seguimiento' => 'Se cuenta con documentos de seguimiento de actividades desarrolladas',
             'documentos_evaluacion' => 'Se cuenta con documentos de evaluación de actividades desarrolladas',
             'resumen_alertar' => 'Resumen Alertar',
+            'id_actividad' => 'Id Actividad',
         ];
     }
 }

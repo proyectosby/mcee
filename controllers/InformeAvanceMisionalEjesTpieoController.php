@@ -496,7 +496,7 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
 			//se agrega el id del informe despues de haber sido creado 
 			foreach($arrayDatosEcAvances as $datos => $valores)
 			{
-				$arrayDatosEcAvances[$datos]['id_informe']=$idTipoInforme;
+				$arrayDatosEcAvances[$datos]['id_informe']=$model->id;
 			}
 			
 			$columnNameArrayEcAvances=['estado_actual','logros','retos','argumentos','id_acciones','estado','id_informe'];
@@ -543,7 +543,7 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
 					 ->execute();
 			
 			
-             return $this->redirect(['index','guardado' => 1]);
+             return $this->redirect(['index','idTipoInforme'=> $idTipoInforme ,'guardado' => 1]);
         }
 
 	
@@ -590,7 +590,7 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+		
         if ($model->load(Yii::$app->request->post())) 
 		{
 			
@@ -713,7 +713,7 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
 				$result = $command->queryAll();
 			}
 			
-            return $this->redirect(['index','guardado' => 1]);
+             return $this->redirect(['index','idTipoInforme'=> $model->id_tipo_informe ,'guardado' => 1]);
         }
 
 		$idSedes 		= $_SESSION['sede'][0];
@@ -802,7 +802,7 @@ class InformeAvanceMisionalEjesTpieoController extends Controller
 		$model->estado = 2;
 		$model->update(false);
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','idTipoInforme'=> $model->id_tipo_informe ]);
     }
 
     /**

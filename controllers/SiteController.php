@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\HojaVidaEstudiante;
+use app\models\HojaVidaEstudianteBuscar;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,6 +63,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if (isset($_GET['q'])){
+            $search = HojaVidaEstudianteBuscar::search($_GET['q']);
+            $searchModel = new HojaVidaEstudianteBuscar();
+            return $this->render('/hoja-vida-estudiante/index', [
+                'dataProvider' => $search,
+                'searchModel' => $searchModel
+            ]);
+        }
         return $this->render('index');
     }
 
