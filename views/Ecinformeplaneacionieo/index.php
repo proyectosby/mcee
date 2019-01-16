@@ -25,7 +25,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\EcInformePlaneacionIeoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Informe de avance Mensual I.E.O - Misional';
+$this->title = '3.A Informe de avance Mensual I.E.O Fase Plan de acción - Misional';
 $this->params['breadcrumbs'][] = $this->title;
 $idTipoInforme =$_GET['idTipoInforme'];
 
