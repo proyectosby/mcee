@@ -24,7 +24,9 @@ foreach( $fases as $keyFase => $fase ){
 														'producto' => $producto,
 														'requerimientoExtra' => $requerimientoExtra,
 														"model" => $model,
-														"estudiantesGrado" =>  $estudiantesGrado
+														"estudiantesGrado" =>  $estudiantesGrado,
+														'datos'=> $datos,
+														"persona" => $persona
 													] 
 										),
 					'contentOptions'=> []

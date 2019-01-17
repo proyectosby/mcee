@@ -8,7 +8,7 @@ $index = 0;
 ?>
 
 <?php
-    echo $form->field($model, "[$numProyecto]persona_acargo")->textInput();
+    echo $form->field($model, "[$numProyecto]persona_acargo")->textInput([ 'value' => isset($persona) ? $persona : '' ]);
      $actividades =[
         1 =>    "Requerimientos extras I.E.O",
         2 =>    "Reconocimiento previo y documentos a desarrollar por el profesional de apoyo",
@@ -35,7 +35,8 @@ $index = 0;
                                                         'producto' => $producto,
                                                         'requerimientoExtra' => $requerimientoExtra,
                                                         "model" => $model,
-                                                        "estudiantesGrado" =>  $estudiantesGrado
+                                                        "estudiantesGrado" =>  $estudiantesGrado,
+                                                        "datos" => $datos
 													] 
 										),
 					'contentOptions'=> []

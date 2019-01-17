@@ -17,11 +17,11 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= $form->field($model, 'comuna')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>
     <?= $form->field($model, 'barrio')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>  
     <?= $form->field($model, 'persona_acargo')->textInput() ?>  
-
+    <?= $model->persona_acargo ?>
     
     <h3 style='background-color: #ccc;padding:5px;'>I.E.O Avance Ejecución</h3>
 
-    <?= $this->context->actionViewFases($model, $form);   ?>
+    <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0, isset($model->persona_acargo) ?  $model->persona_acargo : '');   ?>
     
     
     <div class="form-group">

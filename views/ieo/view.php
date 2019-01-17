@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\ZonasEducativas;
 /* @var $this yii\web\View */
 /* @var $model app\models\Ieo */
 
@@ -29,12 +29,19 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'persona_id',
-            'institucion_id',
-            'sede_id',
-            'proyecto_id',
-            'estado',
+            //'id',
+            'persona_acargo',
+			[
+			'attribute'=>'zonas_educativas_id',
+			'value' => function( $model )
+				{
+					$zona = ZonasEducativas::findOne($model->zonas_educativas_id);
+					return $zona ? $zona->descripcion : '';  
+				}, //para buscar por el nombre
+			],
+			'comuna',
+			'barrio',
+            //'estado',
         ],
     ]) ?>
 

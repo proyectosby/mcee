@@ -51,13 +51,13 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ieo_id' => 'Ieo ID',
-            'informe_caracterizacion' => 'Informe Caracterizacion',
-            'matriz_caracterizacion' => 'Matriz Caracterizacion',
-            'revision_pei' => 'Revision Pei',
-            'revision_autoevaluacion' => 'Revision Autoevaluacion',
-            'revision_pmi' => 'Revision Pmi',
-            'resultados_caracterizacion' => 'Resultados Caracterizacion',
-            'horario_trabajo' => 'Horario Trabajo',
+            'informe_caracterizacion' => 'Informe de caracterización e informe ejecutivo',
+            'matriz_caracterizacion' => 'Matriz de Caracterización- Trazabilidad ',
+            'revision_pei' => 'Revisión PEI',
+            'revision_autoevaluacion' => 'Revisión Autoevaluación',
+            'revision_pmi' => 'Revisión PMI',
+            'resultados_caracterizacion' => 'Presentación resultados de Caracterización ',
+            'horario_trabajo' => 'Horario fijo de trabajo con los actores de la IEO',
             'proyecto_ieo_id' => 'Proyecto Ieo ID',
         ];
     }

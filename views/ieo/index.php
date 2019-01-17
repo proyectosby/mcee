@@ -20,7 +20,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Informe de avance Mensual I.E.O - Ejecución';
+$this->title = '3.A Informe de avance Mensual I.E.O Fase Plan de acción - Ejecución';
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
@@ -57,7 +57,7 @@ if( isset($guardado) && $guardado == 1 ){
 	<?php 
 		
 		Modal::Begin([
-			'header'=>'<h3>I.E.O Avance Ejecución</h3>',
+			'header'=>'<h3>3.A Informe de avance Mensual I.E.O Fase Plan de acción - Ejecución</h3>',
 			'id'=>'modal',
 			'size'=>'modal-lg',
 		
@@ -118,10 +118,29 @@ if( isset($guardado) && $guardado == 1 ){
 			],
 			'comuna',
 			'barrio',
+			[
+				'class' => 'yii\grid\ActionColumn',
+				'template'=>'{view}{update}{delete}',
+					'buttons' => [
+					'view' => function ($url, $model) {
+						return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+									'title' => Yii::t('app', 'lead-view'),
+						]);
+					},
+	
+					'update' => function ($url, $model) {
+						return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+									'title' => Yii::t('app', 'lead-update'),
+						]);
+					}
+	
+				  ],
+				
+				],
             //'proyecto_id',
             //'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            
         ],
     ]); ?>
 </div>

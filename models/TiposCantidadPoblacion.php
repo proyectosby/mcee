@@ -56,11 +56,11 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
             'tiempo_libre' => 'Tiempo Libre',
             'edu_derechos' => 'Edu Derechos',
             'sexualidad' => 'Sexualidad',
-            'ciudadania' => 'Ciudadania',
+            'ciudadania' => 'Ciudadanía',
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
-            'fecha_creacion' => 'Fecha Creacion',
+            'fecha_creacion' => 'Fecha',
             'proyecto_ieo_id' => 'Proyecto Ieo ID',
             'tipo_actividad' => 'Tipo Actividad',
         ];

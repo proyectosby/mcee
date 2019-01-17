@@ -52,7 +52,7 @@ class IeoController extends Controller
         ];
     }
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos, $persona){
         
         $model = new Ieo();
         $documentosReconocimiento = new DocumentosReconocimiento();
@@ -78,7 +78,9 @@ class IeoController extends Controller
             "evidencias" => $evidencias,
             "producto" => $producto,
             "requerimientoExtra" => $requerimientoExtra,
-            "estudiantesGrado" =>  $estudiantesGrado
+            "estudiantesGrado" =>  $estudiantesGrado,
+            "datos" => $datos,
+            "persona" => $persona
         ]);
 		
 	}
@@ -89,8 +91,11 @@ class IeoController extends Controller
      */
     public function actionIndex($guardado = 0)
     {
+
+        $query = Ieo::find()->where(['estado' => 1]);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Ieo::find(),
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -107,7 +112,7 @@ class IeoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -150,6 +155,7 @@ class IeoController extends Controller
                 
                 $status = true;  
                 $ieo_id = $ieo_model->id;
+                //$ieo_id = 46;
                 $data = Yii::$app->request->post('Ieo');
                 $count 	= count( $data );
         
@@ -167,6 +173,7 @@ class IeoController extends Controller
                 $countEvidencias = 0;
                 $countProducto = 0;
 
+                /**Registro de documentos */
                 if (Ieo::loadMultiple($models, Yii::$app->request->post() )) {
                     
                     foreach( $models as $key => $model) {
@@ -409,25 +416,25 @@ class IeoController extends Controller
                     
                     foreach( $modelRequerimientoExtra as $key => $model) {
                         if(!$model->save()){
-                            exit( "Error al guardar documentos Requrimientos extras IEO" );
+                            //exit( "Error al guardar documentos Requrimientos extras IEO" );
                         }
                     }
 
                     foreach( $modelDocumentosReconocimiento as $key => $model) {
                         if(!$model->save()){
-                            exit( "Error al guardar documentos Reconocimiento IEO" );
+                            //exit( "Error al guardar documentos Reconocimiento IEO" );
                         }
                     }
 
                     foreach( $modelEvidencias as $key => $model) {
                         if(!$model->save()){
-                            exit( "Error al guardar documentos Evidencias" );
+                            //exit( "Error al guardar documentos Evidencias" );
                         }
                     }
 
                     foreach( $modelProducto as $key => $model) {
                         if(!$model->save()){
-                            exit( "Error al guardar documentos Producto" );
+                            //exit( "Error al guardar documentos Producto" );
                         }
                       }
 
@@ -435,22 +442,20 @@ class IeoController extends Controller
 
                 /**Validacion y registro de campos para modelo Tipo de cantidad poblacion */
                 if (Yii::$app->request->post('TiposCantidadPoblacion')){
+                    
                     $data = Yii::$app->request->post('TiposCantidadPoblacion');
                     $count 	= count( $data );
                     $modelCantidadPoblacion = [];
         
-                    for( $i = 0; $i < $count; $i++ ){
+                    for( $i = 0; $i < 54; $i++ ){
                         $modelCantidadPoblacion[] = new TiposCantidadPoblacion();
                     }
-        
+                    
                     if (TiposCantidadPoblacion::loadMultiple($modelCantidadPoblacion, Yii::$app->request->post() )) {
+                      
                         foreach( $modelCantidadPoblacion as $key => $model) {
-                                                if($model->tiempo_libre){
-                                $model->actividad_id = 1;
+                            if($model->tiempo_libre){
                                 $model->ieo_id = $ieo_id;
-                                $model->proyecto_ieo_id = 1;
-                                                
-                                
                                 if($model->save() && Yii::$app->request->post('EstudiantesIeo')){
                                     $status = true;
                                     $dataEstudiantes = Yii::$app->request->post('EstudiantesIeo');
@@ -458,7 +463,7 @@ class IeoController extends Controller
                                     $countEstudiantes 	= count( $dataEstudiantes );
                                     $modelEstudiantesIeo = [];
                                     
-                                    for( $i = 0; $i < $countEstudiantes; $i++ ){
+                                    for( $i = 0; $i < 54; $i++ ){
                                         $modelEstudiantesIeo[] = new EstudiantesIeo();
                                     }
                                     if (EstudiantesIeo::loadMultiple($modelEstudiantesIeo, Yii::$app->request->post() )) {
@@ -510,8 +515,57 @@ class IeoController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        $command = Yii::$app->db->createCommand("SELECT cantp.actividad_id, cantp.tipo_actividad, cantp.tiempo_libre, cantp.edu_derechos, cantp.sexualidad, cantp.ciudadania, cantp.medio_ambiente, cantp.familia, cantp.directivos, cantp.fecha_creacion, cantp.proyecto_ieo_id,
+                                                        est.grado_0, est.grado_1, est.grado_2, est.grado_3, est.grado_4, est.grado_5, est.grado_6, est.grado_7, est.grado_8, est.grado_9, est.grado_10, est.grado_11, est.total
+                                                FROM ec.tipos_cantidad_poblacion AS cantp
+                                                INNER JOIN ec.estudiantes_ieo AS est ON cantp.id = est.id_tipo_cantidad_p 
+                                                WHERE cantp.ieo_id = $id");
+
+        $result= $command->queryAll();                                       
+
+        $result = ArrayHelper::getColumn($result, function ($element) 
+        {
+            $index = $element['actividad_id']."".$element['tipo_actividad'];
+            $dato[$index]['tipo_actividad']= $element['tipo_actividad'];
+            $dato[$index]['tiempo_libre']= $element['tiempo_libre'];
+            $dato[$index]['edu_derechos']= $element['edu_derechos'];
+            $dato[$index]['sexualidad']= $element['sexualidad'];
+            $dato[$index]['ciudadania']= $element['ciudadania'];
+            $dato[$index]['medio_ambiente']= $element['medio_ambiente'];
+            $dato[$index]['familia']= $element['familia'];
+            $dato[$index]['directivos']= $element['directivos'];
+            $dato[$index]['fecha_creacion']= $element['fecha_creacion'];
+            $dato[$index]['grado_0']= $element['grado_0'];
+            $dato[$index]['grado_1']= $element['grado_1'];
+            $dato[$index]['grado_2']= $element['grado_2'];
+            $dato[$index]['grado_3']= $element['grado_3'];
+            $dato[$index]['grado_4']= $element['grado_4'];
+            $dato[$index]['grado_5']= $element['grado_5'];
+            $dato[$index]['grado_6']= $element['grado_6'];
+            $dato[$index]['grado_7']= $element['grado_7'];
+            $dato[$index]['grado_8']= $element['grado_8'];
+            $dato[$index]['grado_9']= $element['grado_9'];
+            $dato[$index]['grado_10']= $element['grado_10'];
+            $dato[$index]['grado_11']= $element['grado_11'];
+            $dato[$index]['total']= $element['total'];
+
+            return $dato;
+        });
+
+        foreach	($result as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos[$ids] = $valores;
+        }
+
+        $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
+		$zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
+
+        return $this->renderAjax('update', [
             'model' => $model,
+            'zonasEducativas' => $zonasEducativas,
+            'datos'=> $datos,
         ]);
     }
 
@@ -524,7 +578,11 @@ class IeoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+		$model->estado = 2;
+        $model->update(false);
+        
+        //$this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
