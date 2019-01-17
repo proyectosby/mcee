@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcInformeSemanalTotalEjecutivo */
 
-$this->title = 'Informe Semanal Total Ejecutivo';
-$this->params['breadcrumbs'][] = ['label' => 'Informe Semanal Total Ejecutivos', 'url' => ['index']];
+$this->title = '5 y 6. InformeSemanalEjecución - Informe de cierre de fase - total ejecutivo';
+$this->params['breadcrumbs'][] = ['label' => '5 y 6. InformeSemanalEjecución - Informe de cierre de fase - total ejecutivo', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "";
 ?>
 <div class="ec-informe-semanal-total-ejecutivo-create">

@@ -52,7 +52,7 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_informe_semanal_ejecucion_ise' => 'Id Informe Semanal Ejecucion Ise',
             'edu_derechos' => 'Edu Derechos',
-            'sexualidad_ciudadania' => 'Sexualidad Ciudadania',
+            'sexualidad_ciudadania' => 'Sexualidad y Ciudadanía',
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',

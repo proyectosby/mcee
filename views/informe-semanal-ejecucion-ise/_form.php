@@ -13,11 +13,11 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'institucion_id')->textInput(['value' => $institucion]) ?>
+    <?= $form->field($model, 'nombre_institucion')->textInput(['value' => $institucion]) ?>
     
     <?= $form->field($model, 'sede_id')->dropDownList( $sedes, [ 'prompt' => 'Seleccione...' ] ) ?>
 
-    <?= $this->context->actionViewFases($model, $form);   ?>
+    <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0, isset($datos2) ? $datos2 : 0);   ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

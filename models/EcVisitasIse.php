@@ -52,10 +52,10 @@ class EcVisitasIse extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'informe_semanal_ejecucion_id' => 'Informe Semanal Ejecucion ID',
-            'cantidad_visitas_realizadas' => 'Cantidad Visitas Realizadas',
+            'cantidad_visitas_realizadas' => 'Cantidad de visitas relizadas',
             'canceladas' => 'Canceladas',
-            'visitas_fallidas' => 'Visitas Fallidas',
-            'observaciones_evidencias' => 'Observaciones Evidencias',
+            'visitas_fallidas' => 'Visitas fallidas',
+            'observaciones_evidencias' => 'Observaciones sobre las evidencias',
             'alarmas' => 'Alarmas',
             'logros' => 'Logros',
             'dificultades' => 'Dificultades',

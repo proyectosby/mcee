@@ -41,7 +41,7 @@ class EcActividadesIse extends \yii\db\ActiveRecord
             [['informe_semanal_ejecucion_id', 'estado', 'actividad_1_porcentaje', 'actividad_2_porcentaje', 'actividad_3_porcentaje', 'avance_sede', 'avance_ieo', 'id_proyecto'], 'integer'],
             [['nombre', 'actividad_1', 'actividad_2', 'actividad_3'], 'string'],
             [['informe_semanal_ejecucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['informe_semanal_ejecucion_id' => 'id']],
-            [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
+            //[['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
@@ -57,13 +57,13 @@ class EcActividadesIse extends \yii\db\ActiveRecord
             'nombre' => 'Nombre',
             'estado' => 'Estado',
             'actividad_1' => 'Actividad 1',
-            'actividad_1_porcentaje' => 'Actividad 1 Porcentaje',
+            'actividad_1_porcentaje' => 'Actividad 1 %',
             'actividad_2' => 'Actividad 2',
-            'actividad_2_porcentaje' => 'Actividad 2 Porcentaje',
+            'actividad_2_porcentaje' => 'Actividad 2 %',
             'actividad_3' => 'Actividad 3',
-            'actividad_3_porcentaje' => 'Actividad 3 Porcentaje',
-            'avance_sede' => 'Avance Sede',
-            'avance_ieo' => 'Avance Ieo',
+            'actividad_3_porcentaje' => 'Actividad 3 %',
+            'avance_sede' => 'Avance Sede %',
+            'avance_ieo' => 'Avance Ieo %',
             'id_proyecto' => 'Id Proyecto',
         ];
     }

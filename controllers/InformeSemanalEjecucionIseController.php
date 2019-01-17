@@ -51,7 +51,7 @@ class InformeSemanalEjecucionIseController extends Controller
     }
 
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos, $datos2){
         
         
         //$model = new InformeSemanalEjecucionIse();
@@ -68,6 +68,8 @@ class InformeSemanalEjecucionIseController extends Controller
             "actividades" => $actividades,
             "visitas"  => $visitas,
             "form" => $form,
+            "datos" => $datos,
+            "datos2" => $datos2,
         ]);
 		
 	}
@@ -78,8 +80,10 @@ class InformeSemanalEjecucionIseController extends Controller
      */
     public function actionIndex($guardado = 0)
     {
+        $query = InformeSemanalEjecucionIse::find()->where(['estado' => 1]);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => InformeSemanalEjecucionIse::find(),
+            'query' => $query
         ]);
         
         $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : 0; 
@@ -122,7 +126,8 @@ class InformeSemanalEjecucionIseController extends Controller
             //$model->sede_id = 55;
             $model->proyecto_id = 1;
             $model->estado = 1;
-            $model->id_tipo_informe = $_SESSION["tipo_informe"];
+            
+            $model->id_tipo_informe = $_SESSION["idTipoInforme"];
            
             $id_informe = 0;
 
@@ -137,13 +142,15 @@ class InformeSemanalEjecucionIseController extends Controller
                 }
                 
                 if (EcActividadesIse::loadMultiple($modelsActividades, Yii::$app->request->post() )) {
-                    foreach( $modelsActividades as $key => $model) {
-                        if($model->avance_ieo){
-                            $model->informe_semanal_ejecucion_id = $id_informe;
-                            $model->nombre= "";
-                            $model->estado = 1;
+                    foreach( $modelsActividades as $key => $model2) {
+                        
+                        if($model2->avance_ieo){
+                            $model2->informe_semanal_ejecucion_id = $id_informe;
+                            $model2->nombre= "";
+                            $model2->estado = 1;
+                            
 
-                            if(!$model->save()){
+                            if(!$model2->save()){
                                 var_dump("Error al guarda Actividade ".$key);
                                 die();
                             }
@@ -247,10 +254,77 @@ class InformeSemanalEjecucionIseController extends Controller
             return $this->redirect(['index']);
         }
 
-        
+        $command = Yii::$app->db->createCommand("SELECT act.nombre, act.actividad_1, act.actividad_1_porcentaje, act.actividad_2, act.actividad_2_porcentaje, act.actividad_3, act.actividad_3_porcentaje, act.avance_sede, act.avance_ieo, act.id_proyecto
+                                                FROM ec.actividades_ise AS act
+                                                WHERE act.informe_semanal_ejecucion_id = $id");
 
+        $result= $command->queryAll();                                       
+
+        $result = ArrayHelper::getColumn($result, function ($element) 
+        {
+            $index = $element['id_proyecto'] - 1;
+            $dato[$index]['nombre']= $element['nombre'];
+            $dato[$index]['actividad_1']= $element['actividad_1'];
+            $dato[$index]['actividad_1_porcentaje']= $element['actividad_1_porcentaje'];
+            $dato[$index]['actividad_2']= $element['actividad_2'];
+            $dato[$index]['actividad_2_porcentaje']= $element['actividad_2_porcentaje'];
+            $dato[$index]['actividad_3']= $element['actividad_3'];
+            $dato[$index]['actividad_3_porcentaje']= $element['actividad_3_porcentaje'];
+            $dato[$index]['avance_sede']= $element['avance_sede'];
+            $dato[$index]['avance_ieo']= $element['avance_ieo'];
+
+            return $dato;
+           
+        });
+
+        $command2 = Yii::$app->db->createCommand("SELECT vis.cantidad_visitas_realizadas, vis.canceladas, vis.visitas_fallidas, vis.observaciones_evidencias, vis.alarmas,   vis.logros, vis.dificultades, vis.id_proyecto 
+                                                FROM ec.visitas_ise AS vis
+                                                WHERE vis.informe_semanal_ejecucion_id = $id");
+
+        $result2= $command2->queryAll();
+
+        $result2 = ArrayHelper::getColumn($result2, function ($element) 
+        {
+            $index = $element['id_proyecto'] - 1;
+            $dato[$index]['cantidad_visitas_realizadas']= $element['cantidad_visitas_realizadas'];
+            $dato[$index]['canceladas']= $element['canceladas'];
+            $dato[$index]['visitas_fallidas']= $element['visitas_fallidas'];
+            $dato[$index]['observaciones_evidencias']= $element['observaciones_evidencias'];
+            $dato[$index]['alarmas']= $element['alarmas'];
+            $dato[$index]['logros']= $element['logros'];
+            $dato[$index]['dificultades']= $element['dificultades'];
+
+            return $dato;
+        
+        });
+                
+        
+        foreach	($result as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos[$ids] = $valores;
+        }
+
+        foreach	($result2 as $r => $valor)
+        {
+            foreach	($valor as $ids => $valores)
+                
+                $datos2[$ids] = $valores;
+        }
+
+        $idInstitucion = $_SESSION['instituciones'][0];
+        $institucion = Instituciones::findOne( $idInstitucion );
+
+        $Sedes = Sedes::find()->where( "id_instituciones =  $idInstitucion" )->all();
+		$sedes = ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+       
         return $this->renderAjax('update', [
             'model' => $model,
+            'institucion' => $institucion->descripcion,
+            'sedes' => $sedes,
+            'datos'=> $datos,
+            'datos2'=> $datos2,
             
         ]);
     }
@@ -264,7 +338,10 @@ class InformeSemanalEjecucionIseController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+		$model->estado = 2;
+        $model->update(false);
+        //$this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }

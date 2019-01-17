@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Instituciones;
+use app\models\Sedes;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\InformeSemanalEjecucionIse */
@@ -29,11 +31,25 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'institucion_id',
-            'sede_id',
-            'proyecto_id',
-            'estado',
+            //'id',
+            [	
+            'attribute'=>'institucion_id',
+            'value' => function( $model )
+                {
+                    $nombreInstituciones = Instituciones::findOne($model->institucion_id);
+                    return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            [
+            'attribute'=>'sede_id',
+            'value' => function( $model )
+                {
+                    $nombreSedes = Sedes::findOne($model->sede_id);
+                    return $nombreSedes ? $nombreSedes->descripcion : '';  
+                }, //para buscar por el nombre
+            ],
+            //'proyecto_id',
+            //'estado',
         ],
     ]) ?>
 

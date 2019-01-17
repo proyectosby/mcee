@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\InformeSemanalEjecucionIse */
 
-$this->title = 'Agregar Informe Semanal Ejecucion Ise';
-$this->params['breadcrumbs'][] = ['label' => 'Informe Semanal Ejecucion Ises', 'url' => ['index']];
+$this->title = '5 y 6. Informe Semanal Ejecución - Informe de cierre de fase';
+$this->params['breadcrumbs'][] = ['label' => '5 y 6. Informe Semanal Ejecución - Informe de cierre de fase', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="informe-semanal-ejecucion-ise-create">
