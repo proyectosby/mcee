@@ -21,7 +21,8 @@ $this->params['breadcrumbs'][] = "Agregar";
 		
 		<?= Html::a('Volver', 
 									[
-										$urlVolver,
+										'index',
+										'idTipoInforme' => $_GET['idTipoInforme'],
 									], 
 									['class' => 'btn btn-info']) ?>
 				

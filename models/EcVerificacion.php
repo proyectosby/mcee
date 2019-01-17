@@ -29,7 +29,7 @@ class EcVerificacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_planeacion', 'tipo_verificacion', 'estado'], 'required'],
+            [['id_planeacion', 'tipo_verificacion', 'estado','ruta_archivo'], 'required'],
             [['id_planeacion', 'tipo_verificacion', 'estado'], 'default', 'value' => null],
             [['id_planeacion', 'tipo_verificacion', 'estado'], 'integer'],
             [['ruta_archivo'], 'string'],
@@ -47,8 +47,8 @@ class EcVerificacion extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_planeacion' => 'Id Planeacion',
-            'tipo_verificacion' => 'Tipo Verificacion',
-            'ruta_archivo' => 'Ruta Archivo',
+            'tipo_verificacion' => 'Tipo de Verificación',
+            'ruta_archivo' => 'Ruta del archivo',
             'estado' => 'Estado',
         ];
     }

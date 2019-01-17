@@ -8,6 +8,10 @@ use yii\grid\GridView;
 use app\models\Personas;
 use app\models\Instituciones;
 use app\models\Sedes;
+use app\models\EcPlaneacion;
+use app\models\EcVerificacion;
+
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EcDatosBasicosBuscar */
@@ -22,72 +26,86 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Agregar', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Volver', [ $urlVolver ], ['class' => 'btn btn-info']) ?>
+        <?= Html::a('Agregar', ['create', 'idTipoInforme' => $_GET['idTipoInforme'] ], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
 		'clientOptions' => [
-		'language'=>[
-                'url' => '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json',
-            ],
-		"lengthMenu"=> [[20,-1], [20,Yii::t('app',"All")]],
-		"info"=>false,
-		"responsive"=>true,
-		 "dom"=> 'lfTrtip',
-		 "tableTools"=>[
-			 "aButtons"=> [  
-					// [
-					// "sExtends"=> "copy",
-					// "sButtonText"=> Yii::t('app',"Copiar")
-					// ],
-					// [
-					// "sExtends"=> "csv",
-					// "sButtonText"=> Yii::t('app',"CSV")
-					// ],
-					[
-					"sExtends"=> "xls",
-					"oSelectorOpts"=> ["page"=> 'current']
+				'language'=>[
+						'url' => '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json',
 					],
-					[
-					"sExtends"=> "pdf",
-					"oSelectorOpts"=> ["page"=> 'current']
+				"lengthMenu"=> [[20,-1], [20,Yii::t('app',"All")]],
+				"info"=>false,
+				"responsive"=>true,
+				 "dom"=> 'lfTrtip',
+				 "tableTools"=>[
+					 "aButtons"=> [  
+							// [
+							// "sExtends"=> "copy",
+							// "sButtonText"=> Yii::t('app',"Copiar")
+							// ],
+							// [
+							// "sExtends"=> "csv",
+							// "sButtonText"=> Yii::t('app',"CSV")
+							// ],
+							[
+							"sExtends"=> "xls",
+							"oSelectorOpts"=> ["page"=> 'current']
+							],
+							[
+							"sExtends"=> "pdf",
+							"oSelectorOpts"=> ["page"=> 'current']
+							],
+							// [
+							// "sExtends"=> "print",
+							// "sButtonText"=> Yii::t('app',"Imprimir")
+							// ],
+						],
 					],
-					// [
-					// "sExtends"=> "print",
-					// "sButtonText"=> Yii::t('app',"Imprimir")
-					// ],
+			],
+           'columns' => [
+				['class' => 'yii\grid\SerialColumn'],
+
+				[
+					'attribute' => 'profesional_campo',
+					'value' 	=> function( $model ){
+						$persona = Personas::findOne( $model->profesional_campo );
+						return $persona ? $persona->nombres." ".$persona->apellidos : '';
+					},
+				],
+				[
+					'attribute' => 'id_institucion',
+					'value' 	=> function( $model ){
+						$institucion = Instituciones::findOne( $model->id_institucion );
+						return $institucion ? $institucion->descripcion : '';
+					},
+				],
+				[
+					'attribute' => 'id_sede',
+					'value' 	=> function( $model ){
+						$sedes = Sedes::findOne( $model->id_institucion );
+						return $sedes ? $sedes->descripcion : '';
+					},
+				],
+				'fecha_diligenciamiento',
+				[ 
+					'label' 	=> 'Ruta del archivo' ,
+					'attribute' => 'ruta archivo' ,
+					'format' 	=> 'raw' ,
+					'value'		=> function( $model ){
+						$modelPlaneacion	= EcPlaneacion::findOne(['id_datos_basicos' => $model->id ]);
+						$modelVerificacion	= EcVerificacion::findOne(['id_planeacion' => $modelPlaneacion->id ]);
+						return Html::a( "Ver archivo", Url::to( "@web/".$modelVerificacion->ruta_archivo , true), [ "target"=>"_blank" ] );
+					},
+				],
+				//'estado',
+
+				[
+					'class' 	=> 'yii\grid\ActionColumn',
+					'template' 	=> '{view}{delete}',
 				],
 			],
-	],
-           'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            [
-				'attribute' => 'profesional_campo',
-				'value' 	=> function( $model ){
-					$persona = Personas::findOne( $model->profesional_campo );
-					return $persona ? $persona->nombres." ".$persona->apellidos : '';
-				},
-			],
-			[
-				'attribute' => 'id_institucion',
-				'value' 	=> function( $model ){
-					$institucion = Instituciones::findOne( $model->id_institucion );
-					return $institucion ? $institucion->descripcion : '';
-				},
-			],
-			[
-				'attribute' => 'id_sede',
-				'value' 	=> function( $model ){
-					$sedes = Sedes::findOne( $model->id_institucion );
-					return $sedes ? $sedes->descripcion : '';
-				},
-			],
-            'fecha_diligenciamiento',
-            //'estado',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
     ]); ?>
 </div>

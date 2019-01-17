@@ -1,6 +1,13 @@
 <?php
 /**********
 Modificación: 
+Fecha: 16-01-2019
+Desarrollador: Edwin Molina G
+Descripción: - Se modfica la vista
+			 - Se quita la opción de editar
+			 - Se agrega boton de volver en la vista index
+			 - Los botones de volver en la vista index y create regresan al index
+---------------------------------------
 Fecha: 14-01-2019
 Desarrollador: Edwin Molina G
 Descripción: - Se corrige guardado agregando campo faltante en el modelo EcDatosBasicos
@@ -69,10 +76,30 @@ class EcDatosBasicosController extends Controller
     {
         $searchModel = new EcDatosBasicosBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere( 'id_tipo_informe='.Yii::$app->request->get('idTipoInforme') )->andWhere( 'estado=1' );
+		
+		$urlVolver = "";
+
+		switch( intval($_GET['idTipoInforme']) ){
+			
+			case 1: 
+				$urlVolver = 'ec-competencias-basicas-proyectos/index';
+				break;
+				
+			case 13: 
+				$urlVolver = 'ec-competencias-basicas-proyectos-obligatorio/index';
+				break;
+				
+			case 25: 
+				$urlVolver = 'ec-competencias-basicas-proyectos-articulacion/index';
+				break;
+			
+		}
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'searchModel' 	=> $searchModel,
+            'dataProvider' 	=> $dataProvider,
+            'urlVolver' 	=> $urlVolver,
         ]);
     }
 
@@ -82,10 +109,18 @@ class EcDatosBasicosController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id, $guardado, $urlVolver )
+    public function actionView($id, $guardado = 1, $urlVolver = '' )
     {
+		$modelDatosBasico 	= $this->findModel($id);
+        $modelPlaneacion	= EcPlaneacion::findOne(['id_datos_basicos' => $id ]);
+        $modelVerificacion	= EcVerificacion::findOne(['id_planeacion' => $modelPlaneacion->id ]);
+        $modelReportes		= EcReportes::findOne(['id_planeacion' => $modelPlaneacion->id ]);
+		
         return $this->render('view', [
-            'model' 	=> $this->findModel($id),
+            'model' 			=> $modelDatosBasico,
+            'modelPlaneacion' 	=> $modelPlaneacion,
+            'modelVerificacion' => $modelVerificacion,
+            'modelReportes' 	=> $modelReportes,
             'guardado' 	=> $guardado,
             'urlVolver' => $urlVolver,
         ]);
@@ -98,6 +133,9 @@ class EcDatosBasicosController extends Controller
      */
     public function actionCreate()
     {
+		$_SESSION['sede'][0] = 48;
+		$_SESSION['instituciones'][0] = 55;
+		
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
 		
@@ -223,14 +261,106 @@ class EcDatosBasicosController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+		$_SESSION['sede'][0] = 48;
+		$_SESSION['instituciones'][0] = 55;
+		
+		$id_sede 		= $_SESSION['sede'][0];
+		$id_institucion	= $_SESSION['instituciones'][0];
+		
+		$urlVolver = "";
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+		
+		$modelDatosBasico 	= EcDatosBasicos::findOne($id);
+        $modelPlaneacion	= EcPlaneacion::findOne(['id_datos_basicos' => $id ]);
+        $modelVerificacion	= EcVerificacion::findOne(['id_planeacion' => $modelPlaneacion->id ]);
+        $modelReportes		= EcReportes::findOne(['id_planeacion' => $modelPlaneacion->id ]);
+		
+		switch( $modelDatosBasico->id_tipo_informe ){
+			
+			case 1: 
+				$urlVolver = 'ec-competencias-basicas-proyectos/index';
+				break;
+				
+			case 13: 
+				$urlVolver = 'ec-competencias-basicas-proyectos-obligatorio/index';
+				break;
+				
+			case 25: 
+				$urlVolver = 'ec-competencias-basicas-proyectos-articulacion/index';
+				break;
+			
+		}
+
+        if($modelDatosBasico->load(Yii::$app->request->post()) && $modelDatosBasico->save())
+		{
+			if($modelPlaneacion->load(Yii::$app->request->post()) && $modelPlaneacion->save())
+			{
+				if($modelVerificacion->load(Yii::$app->request->post()) /*&& $modelVerificacion->save()*/ )
+				{	
+					$ruta_archivo = UploadedFile::getInstance( $modelVerificacion, "ruta_archivo" );
+            
+					if($ruta_archivo)
+					{
+						$institucion = Instituciones::findOne($_SESSION['instituciones'][0]);
+						$carpetaVerificacion = "../documentos/documentosPlaneacionReporteActividad/".$institucion->codigo_dane;
+						if (!file_exists($carpetaVerificacion)) {
+							mkdir($carpetaVerificacion, 0777, true);
+						}
+	
+						$rutaFisicaDirectoriaUploadVerificacion  = "../documentos/documentosPlaneacionReporteActividad/".$institucion->codigo_dane."/";
+						$rutaFisicaDirectoriaUploadVerificacion .= $ruta_archivo->baseName;
+						$rutaFisicaDirectoriaUploadVerificacion .= date( "_Y_m_d_His" ) . '.' . $ruta_archivo->extension;
+						$saveVerificacion = $ruta_archivo->saveAs( $rutaFisicaDirectoriaUploadVerificacion );
+	
+						if($saveVerificacion){
+							// $modelVerificacion->id_planeacion = $modelPlaneacion->id;
+							// $modelVerificacion->estado = 1;            
+							$modelVerificacion->ruta_archivo = $rutaFisicaDirectoriaUploadVerificacion;
+							
+							if( $modelVerificacion->save() )
+							{
+								if($modelReportes->load(Yii::$app->request->post()) && $modelReportes->save())
+								{
+									return $this->redirect(['view', 'id' => $modelDatosBasico->id, 'guardado' => 1 , 'urlVolver' => $urlVolver ]);
+								}
+							}
+						}
+					}
+				}
+			}
         }
+		
+		$dataTiposVerificacion = Parametro::find()
+									->where( 'id_tipo_parametro=12' )
+									->andWhere( 'estado=1' )
+									->all();
+									
+		$tiposVerificacion = ArrayHelper::map( $dataTiposVerificacion, 'id', 'descripcion' );
+		
+		$dataPersonas 		= Personas::find()
+								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								->where( 'personas.estado=1' )
+								->andWhere( 'id_institucion='.$id_institucion )
+								->all();
+		
+		$profesional		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		
+		$sede = Sedes::findOne( $id_sede );
+		$institucion = Instituciones::findOne( $id_institucion );
 
         return $this->render('update', [
-            'model' => $model,
+            'modelDatosBasico' 	=> $modelDatosBasico,
+            'modelPlaneacion' 	=> $modelPlaneacion,
+            'modelVerificacion' => $modelVerificacion,
+            'modelReportes' 	=> $modelReportes,
+            'tiposVerificacion'	=> $tiposVerificacion,
+            'profesional'		=> $profesional,
+            'sede'				=> $sede,
+            'institucion'		=> $institucion,
+            'urlVolver'			=> $urlVolver,
         ]);
     }
 
@@ -243,9 +373,35 @@ class EcDatosBasicosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $modelDatosBasico 	= $this->findModel($id);
+		
+		if( $modelDatosBasico )
+		{
+			$modelPlaneacion	= EcPlaneacion::findOne(['id_datos_basicos' => $id ]);
+			
+			if( $modelPlaneacion )
+			{
+				$modelVerificacion	= EcVerificacion::findOne(['id_planeacion' => $modelPlaneacion->id ]);
+				$modelReportes		= EcReportes::findOne(['id_planeacion' => $modelPlaneacion->id ]);
+				
+				if( $modelVerificacion && $modelReportes )
+				{
+					$idTipoInforme = $modelDatosBasico->id_tipo_informe;
+					
+					$modelDatosBasico->estado 	= 2;
+					$modelPlaneacion->estado 	= 2;
+					$modelVerificacion->estado 	= 2;
+					$modelReportes->estado		= 2;
+					
+					$modelDatosBasico->save(false);
+					$modelPlaneacion->save(false);
+					$modelVerificacion->save(false);
+					$modelReportes->save(false);
+        
+					return $this->redirect(['index', 'idTipoInforme' => $idTipoInforme ]);
+				}
+			}
+		}
     }
 
     /**

@@ -53,7 +53,7 @@ class EcDatosBasicos extends \yii\db\ActiveRecord
             'profesional_campo' 	=> 'Profesional Campo',
             'id_institucion' 		=> 'Institución',
             'id_sede' 				=> 'Sede',
-            'fecha_diligenciamiento'=> 'Fecha Diligenciamiento',
+            'fecha_diligenciamiento'=> 'Fecha de Diligenciamiento',
             'estado' 				=> 'Estado',
             'id_tipo_informe' 		=> 'Id Tipo Informe',
         ];
