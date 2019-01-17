@@ -39,8 +39,7 @@ class EcInformeSemanalTotalEjecutivo extends \yii\db\ActiveRecord
     {
         return [
             [['institucion_id', 'cantidad_ieo', 'cantidad_sedes', 'porcentaje_ieo', 'porcentaje_sedes', 'porcentaje_actividad_uno', 'porcentaje_actividad_dos', 'porcentaje_actividad_tres', 'poblacion_beneficiada_directa', 'poblacion_beneficiada_indirecta', 'secuencia', 'id_tipo_informe'], 'default', 'value' => null],
-            [['institucion_id', 'cantidad_ieo', 'cantidad_sedes', 'porcentaje_ieo', 'porcentaje_sedes', 'porcentaje_actividad_uno', 'porcentaje_actividad_dos', 'porcentaje_actividad_tres', 'poblacion_beneficiada_directa', 'poblacion_beneficiada_indirecta', 'secuencia', 'id_tipo_informe'], 'integer'],
-            [['alarmas_generales'], 'string'],
+            [['institucion_id', 'cantidad_ieo', 'cantidad_sedes', 'poblacion_beneficiada_directa', 'poblacion_beneficiada_indirecta', 'secuencia', 'id_tipo_informe'], 'integer'],
             [['id_tipo_informe'], 'exist', 'skipOnError' => true, 'targetClass' => TipoInforme::className(), 'targetAttribute' => ['id_tipo_informe' => 'id']],
             [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
         ];

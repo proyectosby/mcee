@@ -22,6 +22,8 @@ use yii\grid\GridView;
 
 $this->title = 'Informe Semanal Total Ejecutivo';
 $this->params['breadcrumbs'][] = $this->title;
+
+
 ?> 
 
 <h1></h1>

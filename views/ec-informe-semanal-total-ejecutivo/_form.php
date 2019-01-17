@@ -149,14 +149,14 @@ $this->registerJsFile(
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_actividad_tres')->textInput([ 'value' =>  isset($porcentaje_actividad_tres[3]) ? ((($porcentaje_actividad_tres[3]+ $porcentaje_actividad_tres[2] + $porcentaje_actividad_tres[1]) / 3) .'%') : '', 'readonly' => true]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[4]poblacion_beneficiada_directa')->textInput([ 'value' => isset($poblacion_beneficiada_directa[1]) ? ($poblacion_beneficiada_directa[1] + $poblacion_beneficiada_directa[2] +$poblacion_beneficiada_directa[3]) : '', 'readonly' => true ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[4]poblacion_beneficiada_indirecta')->textInput([ 'value' => isset($poblacion_beneficiada_indirecta[1]) ? ($poblacion_beneficiada_indirecta[1] + $poblacion_beneficiada_indirecta[2] +$poblacion_beneficiada_indirecta[3]) : '', 'readonly' => true ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]alarmas_generales')->textInput([ 'value' => isset($alarmas_generales[1]) ? ($alarmas_generales[1] + $alarmas_generales[2] +$alarmas_generales[3]) : '', 'readonly' => true]) ?></td>                
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]alarmas_generales')->textInput([ 'value' => isset($alarmas_generales[1], $alarmas_generales[2],$alarmas_generales[3]) ? (intval($alarmas_generales[1]) + intval($alarmas_generales[2]) +intval($alarmas_generales[3])) : '', 'readonly' => true]) ?></td>                
             </tr>
         </tbody>
 
 
     </table>
 
-    <div class="form-group" style="display: none;">
+    <div class="form-group" style="display:none">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
