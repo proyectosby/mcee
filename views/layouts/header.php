@@ -6,13 +6,13 @@ Fecha: 09-01-2019
 Persona encargada: Edwin Molina - Johan Ospina
 Cambios realizados: Se mejora script para pedir la institución y la sede. Los script correspondientes js están todo incluidos en header.js.
 ---------------------------------------
-**********/ 
+**********/
 ?>
 <?php
 use yii\helpers\Html;
 use app\models\Sedes;
 use app\models\Instituciones;
-//$this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
@@ -25,9 +25,9 @@ use app\models\Instituciones;
 
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
-				
+
         </a>
-		
+
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
@@ -282,8 +282,8 @@ use app\models\Instituciones;
                         <li class="user-body">
                             <div class="col-xs-16 text-center">
                                 <!-- <a href="index.php"><b>Cambiar Institución</b></a> -->
-								
-                                
+
+
                             </div>
                             <!--<div class="col-xs-4 text-center">
                                 <a href="#">Sales</a>
@@ -316,5 +316,3 @@ use app\models\Instituciones;
         </div>
     </nav>
 </header>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="<?= Yii::$app->request->baseUrl.'/js/header.js'?>"></script>
