@@ -35,7 +35,7 @@ class EcPlaneacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_datos_basicos', 'tipo_actividad', 'fecha'], 'required'],
+            [['id_datos_basicos', 'tipo_actividad', 'fecha','tipo_actor','cantidad_asistentes','objetivo','responsable','rol','descripcion_actividad'], 'required'],
             [['id_datos_basicos', 'cantidad_asistentes', 'estado'], 'default', 'value' => null],
             [['id_datos_basicos', 'cantidad_asistentes', 'estado'], 'integer'],
             [['tipo_actividad', 'tipo_actor', 'objetivo', 'responsable', 'rol', 'descripcion_actividad'], 'string'],

@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="form-group">
 			   <?= Html::a('2. Planeación y reporte de actividad', 
 										[
-											'ec-datos-basicos/create',
+											'ec-datos-basicos/index',
 											'idTipoInforme'	=> 25,
 										], 
 										['class' => 'btn btn-success'

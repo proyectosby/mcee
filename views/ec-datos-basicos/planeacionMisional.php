@@ -48,7 +48,6 @@ use dosamigos\datepicker\DatePicker;
 				
 				<h1 style='background-color:#ccc;'><?= Html::encode( "MEDIOS DE VERIFICACIÓN Y PRODUCTOS" ) ?></h1>
 				
-							
 				
 				<?= $form->field($modelVerificacion, 'tipo_verificacion')->dropDownList( $tiposVerificacion, ['prompt' => 'Seleccione...' ] ) ?>
 				
