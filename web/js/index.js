@@ -1,8 +1,8 @@
 /**********
 Versión: 001
-Fecha: Fecha en formato (28-05-2018)
+Fecha: 
 Desarrollador: Oscar David lopez
-Descripción: Horario docente 
+Descripción: 
 ---------------------------------------
 
 */

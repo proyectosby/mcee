@@ -145,6 +145,10 @@ class IeoController extends Controller
         
         if ($ieo_model->load(Yii::$app->request->post())) {
             
+			
+			echo "<pre>"; print_r($_POST); echo "</pre>"; 
+			die;
+			
             $ieo_model->institucion_id = $idInstitucion;
             $ieo_model->estado = 1;
             $ieo_model->sede_id = 2;
