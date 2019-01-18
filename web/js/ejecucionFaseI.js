@@ -107,7 +107,7 @@ $( document ).ready(function(){
 
 		
 		 
-		$( "input:text[id^=datossesiones]" ).each(function(x){
+		$( "input:text[id$=fecha_sesion]" ).each(function(x){
 			
 			$('#w0').yiiActiveForm('find', this.id ).validate = function (attribute, value, messages, deferred, $form) {
 				
@@ -136,6 +136,43 @@ $( document ).ready(function(){
 						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede estar vacío"});
 					else
 						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y llenar todos los campos", cmp );
+					 
+					return false;
+				}
+			}
+		});
+		
+		$( "input:text[id$=duracion_sesion]" ).each(function(x){
+			
+			$('#w0').yiiActiveForm('find', this.id ).validate = function (attribute, value, messages, deferred, $form) {
+				
+				var cmp = $( "#"+this.id ).val();
+				
+				var hayCamposVacios = false;
+				$( "textarea[id^=ejecucionfase]", $( this.container ).parent() ).each(function(){
+					if( $( this ).val() == '' ){
+						hayCamposVacios = true;
+					}
+				});
+				
+				
+				//Si no se ha ingresado fecha y mas de una fila (ejecucion de fase)
+				if( cmp == "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length == 0 ){
+					// alert(1);
+					return true;
+				}
+				else if( cmp != "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length > 0 && !hayCamposVacios ){
+					yii.validation.regularExpression(value, messages, {"pattern":/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/i,"not":false,"message":"Duración de la sesión debe ser una hora valida.","skipOnEmpty":1});
+					return true;
+				}
+				else{
+					// alert(2);
+					if( cmp == "" )
+						yii.validation.required(cmp, messages, {"message":"Fecha de la Sesión no puede estar vacío"});
+					else{
+						yii.validation.regularExpression(value, messages, {"pattern":/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/i,"not":false,"message":"Duración de la sesión debe ser una hora valida.","skipOnEmpty":1});
+						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y llenar todos los campos", cmp );
+					}
 					 
 					return false;
 				}
