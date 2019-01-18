@@ -8,7 +8,6 @@ use Yii;
  * This is the model class for table "ec.tipo_cantidad_poblacion_ise".
  *
  * @property int $id
- * @property int $id_informe_semanal_ejecucion_ise
  * @property string $edu_derechos
  * @property string $sexualidad_ciudadania
  * @property string $medio_ambiente
@@ -17,6 +16,7 @@ use Yii;
  * @property string $tiempo_libre
  * @property int $id_proyecto
  * @property int $estado
+ * @property int $id_actividad_ise
  */
 class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
 {
@@ -34,10 +34,10 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_informe_semanal_ejecucion_ise', 'id_proyecto', 'estado'], 'default', 'value' => null],
-            [['id_informe_semanal_ejecucion_ise', 'id_proyecto', 'estado'], 'integer'],
             [['edu_derechos', 'sexualidad_ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tiempo_libre'], 'string'],
-            [['id_informe_semanal_ejecucion_ise'], 'exist', 'skipOnError' => true, 'targetClass' => InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['id_informe_semanal_ejecucion_ise' => 'id']],
+            [['id_proyecto', 'estado', 'id_actividad_ise'], 'default', 'value' => null],
+            [['id_proyecto', 'estado', 'id_actividad_ise'], 'integer'],
+            [['id_actividad_ise'], 'exist', 'skipOnError' => true, 'targetClass' => EcActividadesIse::className(), 'targetAttribute' => ['id_actividad_ise' => 'id']],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
@@ -50,15 +50,15 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_informe_semanal_ejecucion_ise' => 'Id Informe Semanal Ejecucion Ise',
             'edu_derechos' => 'Edu Derechos',
-            'sexualidad_ciudadania' => 'Sexualidad y Ciudadanía',
+            'sexualidad_ciudadania' => 'Sexualidad Ciudadanía',
             'medio_ambiente' => 'Medio Ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
             'tiempo_libre' => 'Tiempo Libre',
             'id_proyecto' => 'Id Proyecto',
             'estado' => 'Estado',
+            'id_actividad_ise' => 'Id Actividad Ise',
         ];
     }
 }

@@ -149,63 +149,56 @@ class InformeSemanalEjecucionIseController extends Controller
                             $model2->nombre= "";
                             $model2->estado = 1;
                             
+                            if($model2->save()){
 
-                            if(!$model2->save()){
-                                var_dump("Error al guarda Actividade ".$key);
-                                die();
+                                $dataCantidadPoblacion = Yii::$app->request->post('EcTipoCantidadPoblacionIse')[$key];
+                                
+                                if($dataCantidadPoblacion["edu_derechos"]){
+                                    $modelPoblacion = new EcTipoCantidadPoblacionIse();
+                                    $modelPoblacion->edu_derechos = $dataCantidadPoblacion["edu_derechos"];
+                                    $modelPoblacion->sexualidad_ciudadania = $dataCantidadPoblacion["sexualidad_ciudadania"];
+                                    $modelPoblacion->familia = $dataCantidadPoblacion["familia"];
+                                    $modelPoblacion->directivos = $dataCantidadPoblacion["directivos"];
+                                    $modelPoblacion->tiempo_libre = $dataCantidadPoblacion["tiempo_libre"];
+                                    $modelPoblacion->id_proyecto = $key+1;
+                                    $modelPoblacion->estado = 1;
+                                    $modelPoblacion->id_actividad_ise = $model2->id;
+                                    
+                                    if($modelPoblacion->save()){
+                                        $dataEstudiantes = Yii::$app->request->post('EcEstudiantesIse')[$key];
+
+                                        if($dataEstudiantes["grado_0"]){
+                                            $modelEstudiantes = new EcEstudiantesIse();
+                                            $modelEstudiantes->grado_0 = $dataEstudiantes["grado_0"];
+                                            $modelEstudiantes->grado_1 = $dataEstudiantes["grado_1"];
+                                            $modelEstudiantes->grado_2 = $dataEstudiantes["grado_2"];
+                                            $modelEstudiantes->grado_3 = $dataEstudiantes["grado_3"];
+                                            $modelEstudiantes->grado_4 = $dataEstudiantes["grado_4"];
+                                            $modelEstudiantes->grado_5 = $dataEstudiantes["grado_5"];
+                                            $modelEstudiantes->grado_6 = $dataEstudiantes["grado_6"];
+                                            $modelEstudiantes->grado_7 = $dataEstudiantes["grado_7"];
+                                            $modelEstudiantes->grado_8 = $dataEstudiantes["grado_8"];
+                                            $modelEstudiantes->grado_9 = $dataEstudiantes["grado_9"];
+                                            $modelEstudiantes->grado_10 = $dataEstudiantes["grado_10"];
+                                            $modelEstudiantes->grado_11 = $dataEstudiantes["grado_11"];
+                                            $modelEstudiantes->total = $dataEstudiantes["total"];
+                                            $modelEstudiantes->id_proyecto = $key +1;
+                                            $modelEstudiantes->estado = 1;
+                                            $modelEstudiantes->id_tipo_cantidad_poblacion = $modelPoblacion->id;
+                                            $modelEstudiantes->save();
+                                        }
+                                    }
+                                    
+                                }
+
+                               
                             }
                         }
                         
                     }
 
                 }
-
-                $dataCantidadPoblacion = Yii::$app->request->post('EcTipoCantidadPoblacionIse');
-                $modelsCantidadPoblacion = [];
-
-                for( $i = 0; $i < count($dataActividades); $i++ ){
-                    $modelsCantidadPoblacion[] = new EcTipoCantidadPoblacionIse();
-                }
-
-                if (EcTipoCantidadPoblacionIse::loadMultiple($modelsCantidadPoblacion, Yii::$app->request->post() )) {
-                    foreach( $modelsCantidadPoblacion as $key => $model) {
-                        if($model->edu_derechos){
-                            $model->id_informe_semanal_ejecucion_ise = $id_informe;
-                            $model->estado = 1;
-
-                            if(!$model->save()){
-                                var_dump("Error al guarda Actividade ".$key);
-                                die();
-                            }
-
-                        }
-                    }
-                }
-
-                $dataEstudiantes = Yii::$app->request->post('EcEstudiantesIse');
-                $modelsEstudiantes = [];
-
-                for( $i = 0; $i < count($dataEstudiantes); $i++ ){
-                    $modelsEstudiantes[] = new EcEstudiantesIse();
-                }
-
-                if (EcEstudiantesIse::loadMultiple($modelsEstudiantes, Yii::$app->request->post() )) {
-                    foreach( $modelsEstudiantes as $key => $model) {
-                        if($model->grado_0){
-                            
-                            $model->id_informe_semanal = $id_informe;
-                            $model->estado = 1;
-                            $model->total = $model->grado_0 + $model->grado_1 +$model->grado_2 +$model->grado_3 + $model->grado_4 + $model->grado_5 + $model->grado_6 + $model->grado_7 + $model->grado_8 + $model->grado_9 +$model->grado_10+ $model->grado_11;
-
-                            if(!$model->save()){
-                                var_dump("Error al guarda Estudiantes ".$key);
-                                die();
-                            }
-
-                        }
-                    }
-                }
-
+            
                 $dataVisitas = Yii::$app->request->post('EcVisitasIse');
                 $modelsVisitas = [];
 
@@ -250,12 +243,129 @@ class InformeSemanalEjecucionIseController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $model->save();
+            $idInforme = $model->id;
+
+            $post = Yii::$app->request->post();
+
+            $connection = Yii::$app->getDb();
+            
+            $arrayDatosActividad = $post['EcActividadesIse'];
+
+            foreach($arrayDatosActividad as $idAcciones => $valores)
+			{
+                if($valores['actividad_1']){
+                    $index = $idAcciones +1;
+                    $command = $connection->createCommand
+                    (" 
+                        UPDATE ec.actividades_ise set 			
+                        actividad_1 	='". $valores['actividad_1']."',
+                        actividad_1_porcentaje			='" .$valores['actividad_1_porcentaje']."',
+                        actividad_2			='". $valores['actividad_2']."',
+                        actividad_2_porcentaje		='". $valores['actividad_2_porcentaje']."',
+                        actividad_3		='". $valores['actividad_3']."',
+                        actividad_3_porcentaje		='". $valores['actividad_3_porcentaje']."',
+                        avance_sede		='". $valores['avance_sede']."',
+                        avance_ieo		='". $valores['avance_ieo']."'
+                        WHERE informe_semanal_ejecucion_id = $idInforme and id_proyecto = $index
+                    ");
+                    $result = $command->queryAll();
+                }
+            }
+
+            
+            
+            $arrayDatosTipoPoblacion = $post['EcTipoCantidadPoblacionIse'];
+
+            foreach($arrayDatosTipoPoblacion as $idAcciones => $valores)
+			{
+                if($valores['edu_derechos']){
+                    
+                    $index = $idAcciones +1;
+                    $id =  $valores['id_tip'];
+                    $command = $connection->createCommand
+                    (" 
+                        UPDATE ec.tipo_cantidad_poblacion_ise set 			
+                        edu_derechos 	='". $valores['edu_derechos']."',
+                        sexualidad_ciudadania			='" .$valores['sexualidad_ciudadania']."',
+                        medio_ambiente			='". $valores['medio_ambiente']."',
+                        familia		='". $valores['familia']."',
+                        directivos		='". $valores['directivos']."',
+                        tiempo_libre		='". $valores['tiempo_libre']."'
+                        WHERE id =  $id
+                    ");
+                    $result = $command->queryAll();
+                }
+            }
+
+            $arrayDatosEstudiantes = $post['EcEstudiantesIse'];
+
+            foreach($arrayDatosEstudiantes as $idAcciones => $valores)
+			{
+                if($valores['grado_0']){
+                    
+                    $index = $idAcciones +1;
+                    $id =  $valores['est_id'];
+                    $command = $connection->createCommand
+                    (" 
+                        UPDATE ec.estudiantes_ise set 			
+                        grado_0 	='". $valores['grado_0']."',
+                        grado_1			='" .$valores['grado_1']."',
+                        grado_2			='". $valores['grado_2']."',
+                        grado_3		='". $valores['grado_3']."',
+                        grado_4		='". $valores['grado_4']."',
+                        grado_5		='". $valores['grado_5']."',
+                        grado_6		='". $valores['grado_6']."',
+                        grado_7		='". $valores['grado_7']."',
+                        grado_8		='". $valores['grado_8']."',
+                        grado_9		='". $valores['grado_9']."',
+                        grado_10		='". $valores['grado_10']."',
+                        grado_11		='". $valores['grado_11']."',
+                        total		='". $valores['total']."'
+                        WHERE id =  $id
+                    ");
+                    $result = $command->queryAll();
+                }
+            }
+
+            $arrayDatosVisitas = $post['EcVisitasIse'];
+
+            foreach($arrayDatosVisitas as $idAcciones => $valores)
+			{
+                if($valores['cantidad_visitas_realizadas']){
+                    
+                    $index = $idAcciones +1;
+                    $command = $connection->createCommand
+                    (" 
+                        UPDATE ec.visitas_ise set 			
+                        cantidad_visitas_realizadas 	='". $valores['cantidad_visitas_realizadas']."',
+                        canceladas			='" .$valores['canceladas']."',
+                        visitas_fallidas			='". $valores['visitas_fallidas']."',
+                        observaciones_evidencias		='". $valores['observaciones_evidencias']."',
+                        alarmas		='". $valores['alarmas']."',
+                        logros		='". $valores['logros']."',
+                        dificultades		='". $valores['dificultades']."'
+                        WHERE informe_semanal_ejecucion_id = $idInforme and id_proyecto = $index
+                    ");
+                    $result = $command->queryAll();
+                }
+			}
+
+            
+
+            
+            
             return $this->redirect(['index']);
         }
 
-        $command = Yii::$app->db->createCommand("SELECT act.nombre, act.actividad_1, act.actividad_1_porcentaje, act.actividad_2, act.actividad_2_porcentaje, act.actividad_3, act.actividad_3_porcentaje, act.avance_sede, act.avance_ieo, act.id_proyecto
+        $command = Yii::$app->db->createCommand("SELECT act.nombre, act.actividad_1, act.actividad_1_porcentaje, act.actividad_2, act.actividad_2_porcentaje, act.actividad_3, act.actividad_3_porcentaje, act.avance_sede, act.avance_ieo, act.id_proyecto,
+                                                        tip.edu_derechos, tip.sexualidad_ciudadania, tip.medio_ambiente, tip.familia, tip.directivos, tip.tiempo_libre, tip.id as id_tip,
+                                                        est.grado_0, est.grado_1, est.grado_2, est.grado_3, est.grado_4, est.grado_5, est.grado_6, est.grado_7, est.grado_8, est.grado_9, est.grado_10, est.grado_11, est.total, est.id as est_id
                                                 FROM ec.actividades_ise AS act
+                                                INNER JOIN ec.tipo_cantidad_poblacion_ise AS tip on act.id = tip.id_actividad_ise
+                                                INNER JOIN ec.estudiantes_ise AS est ON tip.id = est.id_tipo_cantidad_poblacion
                                                 WHERE act.informe_semanal_ejecucion_id = $id");
 
         $result= $command->queryAll();                                       
@@ -272,6 +382,27 @@ class InformeSemanalEjecucionIseController extends Controller
             $dato[$index]['actividad_3_porcentaje']= $element['actividad_3_porcentaje'];
             $dato[$index]['avance_sede']= $element['avance_sede'];
             $dato[$index]['avance_ieo']= $element['avance_ieo'];
+            $dato[$index]['edu_derechos']= $element['edu_derechos'];
+            $dato[$index]['sexualidad_ciudadania']= $element['sexualidad_ciudadania'];
+            $dato[$index]['medio_ambiente']= $element['medio_ambiente'];
+            $dato[$index]['familia']= $element['familia'];
+            $dato[$index]['directivos']= $element['directivos'];
+            $dato[$index]['tiempo_libre']= $element['tiempo_libre'];
+            $dato[$index]['id_tip']= $element['id_tip'];
+            $dato[$index]['grado_0']= $element['grado_0'];
+            $dato[$index]['grado_1']= $element['grado_1'];
+            $dato[$index]['grado_2']= $element['grado_2'];
+            $dato[$index]['grado_3']= $element['grado_3'];
+            $dato[$index]['grado_4']= $element['grado_4'];
+            $dato[$index]['grado_5']= $element['grado_5'];
+            $dato[$index]['grado_6']= $element['grado_6'];
+            $dato[$index]['grado_7']= $element['grado_7'];
+            $dato[$index]['grado_8']= $element['grado_8'];
+            $dato[$index]['grado_9']= $element['grado_9'];
+            $dato[$index]['grado_10']= $element['grado_10'];
+            $dato[$index]['grado_11']= $element['grado_11'];
+            $dato[$index]['total']= $element['total'];
+            $dato[$index]['est_id']= $element['est_id'];
 
             return $dato;
            
@@ -297,6 +428,8 @@ class InformeSemanalEjecucionIseController extends Controller
             return $dato;
         
         });
+
+      
                 
         
         foreach	($result as $r => $valor)
