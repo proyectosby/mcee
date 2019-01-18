@@ -189,7 +189,7 @@ class IeoController extends Controller
                         $file_revision_autoevaluacion = UploadedFile::getInstance( $model, "[$key]file_revision_autoevaluacion" );
                         $file_revision_pmi = UploadedFile::getInstance( $model, "[$key]file_revision_pmi" );
                         $file_resultados_caracterizacion = UploadedFile::getInstance( $model, "[$key]file_resultados_caracterizacion" );
-                        $file_horario_trabajo = UploadedFile::getInstance( $model, "[$key]file_horario_trabajo" );
+                        // $file_horario_trabajo = UploadedFile::getInstance( $model, "[$key]file_horario_trabajo" );
 
                         //Generación de instancias de los documentos Actividades Evidencias
                         $file_producto_ruta = UploadedFile::getInstance( $model, "[$key]file_producto_ruta" );
@@ -249,7 +249,7 @@ class IeoController extends Controller
                         }
 
                         //Validación para el registro de documentos Reconocimiento previo y documentos a desarrollar por el profesional de apoyo
-                        if( $file_informe_caracterizacion && $file_matriz_caracterizacion && $file_revision_pei && $file_revision_autoevaluacion && $file_revision_pmi && $file_resultados_caracterizacion && $file_horario_trabajo){   
+                        if( $file_informe_caracterizacion && $file_matriz_caracterizacion && $file_revision_pei && $file_revision_autoevaluacion && $file_revision_pmi && $file_resultados_caracterizacion){   
                            
                             $modelDocumentosReconocimiento []= new DocumentosReconocimiento();
                             //Se crea carpeta para almecenar los documentos de Socializacion
@@ -291,9 +291,9 @@ class IeoController extends Controller
                             $saveResultadosCaracterizacion = $file_resultados_caracterizacion->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoResultadosCaracterizacion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
 
                             
-                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo = $ruta.$file_horario_trabajo->baseName;
-                            $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo .= date( "_Y_m_d_His" ) . '.' . $file_horario_trabajo->extension;
-                            $saveHorarioTrabajo = $file_horario_trabajo->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                            // $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo = $ruta.$file_horario_trabajo->baseName;
+                            // $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo .= date( "_Y_m_d_His" ) . '.' . $file_horario_trabajo->extension;
+                            // $saveHorarioTrabajo = $file_horario_trabajo->saveAs( $rutaFisicaDirectoriaUploadDocumentosReconocimientoHorarioTrabajo );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
                             
                             
 

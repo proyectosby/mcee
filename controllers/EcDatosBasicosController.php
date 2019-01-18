@@ -132,10 +132,7 @@ class EcDatosBasicosController extends Controller
      * @return mixed
      */
     public function actionCreate()
-    {
-		$_SESSION['sede'][0] = 48;
-		$_SESSION['instituciones'][0] = 55;
-		
+    {	
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
 		
@@ -260,10 +257,7 @@ class EcDatosBasicosController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
-    {
-		$_SESSION['sede'][0] = 48;
-		$_SESSION['instituciones'][0] = 55;
-		
+    {	
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
 		
