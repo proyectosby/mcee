@@ -21,9 +21,9 @@ use Yii;
  * @property int $grado_10
  * @property int $grado_11
  * @property int $total
- * @property int $id_informe_semanal
  * @property int $id_proyecto
  * @property int $estado
+ * @property int $id_tipo_cantidad_poblacion
  */
 class EcEstudiantesIse extends \yii\db\ActiveRecord
 {
@@ -41,10 +41,10 @@ class EcEstudiantesIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_informe_semanal', 'id_proyecto', 'estado'], 'default', 'value' => null],
-            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_informe_semanal', 'id_proyecto', 'estado'], 'integer'],
-            [['id_informe_semanal'], 'exist', 'skipOnError' => true, 'targetClass' =>   InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['id_informe_semanal' => 'id']],
+            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_proyecto', 'estado', 'id_tipo_cantidad_poblacion'], 'default', 'value' => null],
+            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_proyecto', 'estado', 'id_tipo_cantidad_poblacion'], 'integer'],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
+            [['id_tipo_cantidad_poblacion'], 'exist', 'skipOnError' => true, 'targetClass' => EcTipoCantidadPoblacionIse::className(), 'targetAttribute' => ['id_tipo_cantidad_poblacion' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
@@ -69,9 +69,9 @@ class EcEstudiantesIse extends \yii\db\ActiveRecord
             'grado_10' => 'Grado 10',
             'grado_11' => 'Grado 11',
             'total' => 'Total',
-            'id_informe_semanal' => 'Id Informe Semanal',
             'id_proyecto' => 'Id Proyecto',
             'estado' => 'Estado',
+            'id_tipo_cantidad_poblacion' => 'Id Tipo Cantidad Poblacion',
         ];
     }
 }

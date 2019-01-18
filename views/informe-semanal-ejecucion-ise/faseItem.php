@@ -22,6 +22,7 @@ $contenedores = [];
                                                         "estudiasntes" => $estudiasntes,
                                                         "visitas"  => $visitas,
                                                         "form" => $form,
+                                                        "datos" => $datos
 													] 
 										),
 					'contentOptions'=> []
