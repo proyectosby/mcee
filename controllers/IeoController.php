@@ -153,10 +153,67 @@ class IeoController extends Controller
             /**Registro de Modelo Base y todos los modelos realacionados con documentación */
             if($ieo_model->save()){
                 
-                $status = true;  
+                //$status = true;  
                 $ieo_id = $ieo_model->id;
                 //$ieo_id = 46;
-                $data = Yii::$app->request->post('Ieo');
+               
+                if(Yii::$app->request->post('RequerimientoExtraIeo')){
+                    $dataRequerimiento = Yii::$app->request->post('RequerimientoExtraIeo');
+                    $countRequerimiento = count( $dataRequerimiento );
+                    $modelRequerimiento = [];
+
+                    for( $i = 0; $i < $countEvidencias; $i++ ){
+                        $modelRequerimiento[] = new RequerimientoExtraIeo();
+                    }
+
+                    if (RequerimientoExtraIeo::loadMultiple($modelRequerimiento, Yii::$app->request->post() )) {
+                        
+                        foreach($modelRequerimiento as $key => $model3) {
+                            $file_socializacion_ruta = UploadedFile::getInstance( $model3, "[$key]socializacion_ruta" );
+                            $file_soporte_necesidad = UploadedFile::getInstance( $model3, "[$key]soporte_necesidad" );
+
+                            if( $file_socializacion_ruta && $file_soporte_necesidad){
+                                
+                                //Se crea carpeta para almecenar los documentos de Soporte Necesidad
+                                $carpetaSocializacion = "../documentos/documentosIeo/requerimientoExtra/".$institucion->codigo_dane;
+                                if (!file_exists($carpetaSocializacion)) {
+                                    mkdir($carpetaSocializacion, 0777, true);
+                                }
+                                
+                                //Construyo la ruta completa del archivo IEO Socialiazacion a guardar 
+                                $rutaFisicaDirectoriaUploadSocializacion  = "../documentos/documentosIeo/requerimientoExtra/".$institucion->codigo_dane."/";
+                                $rutaFisicaDirectoriaUploadSocializacion .= $file_socializacion_ruta->baseName;
+                                $rutaFisicaDirectoriaUploadSocializacion .= date( "_Y_m_d_His" ) . '.' . $file_socializacion_ruta->extension;
+                                $saveSocializacion = $file_socializacion_ruta->saveAs( $rutaFisicaDirectoriaUploadSocializacion );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                                
+
+                                //Construyo la ruta completa del archivo IEO Soporte Necesidad a guardar 
+                                $rutaFisicaDirectoriaUploadSoporteNecesidad  = "../documentos/documentosIeo/requerimientoExtra/".$institucion->codigo_dane."/";
+                                $rutaFisicaDirectoriaUploadSoporteNecesidad .= $file_soporte_necesidad->baseName;
+                                $rutaFisicaDirectoriaUploadSoporteNecesidad .= date( "_Y_m_d_His" ) . '.' . $file_soporte_necesidad->extension;
+                                $saveSoporteNecesidad = $file_soporte_necesidad->saveAs( $rutaFisicaDirectoriaUploadSoporteNecesidad );//$file->baseName puede ser cambiado por el nombre que quieran darle al archivo en el servidor.
+                            
+                                if( $saveSocializacion && $saveSoporteNecesidad){
+                                
+                                    //Le asigno la ruta al arhvio
+                                    $modelRequerimiento[$key]->socializacion_ruta = $rutaFisicaDirectoriaUploadSocializacion;
+                                    $modelRequerimiento[$key]->soporte_necesidad = $rutaFisicaDirectoriaUploadSoporteNecesidad;
+                                    $modelRequerimiento[$key]->ieo_id = $ieo_id;
+                                    $modelRequerimiento[$key]->proyecto_ieo_id = 1;
+                                    
+    
+                                }else{
+                                    echo $file->error;
+                                    exit("finnn....");
+                                }
+                            }
+                            
+                        }
+                    }
+
+
+                }
+                /*$data = Yii::$app->request->post('Ieo');
                 $count 	= count( $data );
         
                 $models = [];
@@ -171,10 +228,10 @@ class IeoController extends Controller
                 $countRequeimientos = 0;
                 $countDocumentos = 0;
                 $countEvidencias = 0;
-                $countProducto = 0;
+                $countProducto = 0;*/
 
                 /**Registro de documentos */
-                if (Ieo::loadMultiple($models, Yii::$app->request->post() )) {
+                /*if (Ieo::loadMultiple($models, Yii::$app->request->post() )) {
                     
                     foreach( $models as $key => $model) {
                                                                        
@@ -438,7 +495,7 @@ class IeoController extends Controller
                         }
                       }
 
-                }
+                }*/
 
                 /**Validacion y registro de campos para modelo Tipo de cantidad poblacion */
                 if (Yii::$app->request->post('TiposCantidadPoblacion')){
