@@ -56,7 +56,23 @@ $index = 0;
 										),
 					'contentOptions'=> []
 				];
-            } 
+            }else if($proyecto ==  3 && $keyFase == 12){
+                $contenedores[] = 	[
+					'label' 		=>  $actividad,
+					'content' 		=>  $this->render( 'contenedorItem', 
+													[  
+                                                        'form' => $form,
+                                                        "model" => $model,
+                                                        'actividades_isa' => $actividades_isa,
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos,
+                                                        'impOps'=> $impOps,
+													] 
+                                        ),
+                    'options' => ['style' => 'display: none;'],
+					'contentOptions'=> []
+				];
+            }     
             else if($proyecto ==  3 && $keyFase > 7){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,

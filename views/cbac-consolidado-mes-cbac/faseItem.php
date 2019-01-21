@@ -63,6 +63,26 @@ $index = 0;
                 ];
                 
             }
+            else if($proyecto ==  3 && $keyFase == 12){
+                $contenedores[] = 	[
+					'label' 		=>  $actividad,
+					'content' 		=>  $this->render( 'contenedorItem', 
+													[  
+                                                        'form' => $form,
+                                                        "model" => $model,
+                                                        'imp_cbac' => $imp_cbac,
+                                                        'actividade_cbac' => $actividade_cbac,
+                                                        'tipo_poblacion_cbac' => $tipo_poblacion_cbac,
+                                                        'evidencias_cbac' => $evidencias_cbac,
+                                                        'index' => $keyFase,
+                                                        'datos' => $datos
+													] 
+                                        ),
+                    'options' => ['style' => 'display: none;'],
+					'contentOptions'=> []
+				];
+
+            }
             else if($proyecto ==  3 && $keyFase > 7){
                 $contenedores[] = 	[
 					'label' 		=>  $actividad,

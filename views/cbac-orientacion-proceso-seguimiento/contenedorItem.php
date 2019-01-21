@@ -96,21 +96,43 @@ use dosamigos\datepicker\DatePicker;
 
 <?php
     foreach( $imps as $keyFase => $imp ){
-        $contenedores[] = 	[
-            'label' 		=>  $imp,
-            'content' 		=>  $this->render( 'contenedorItemImp', 
-                                            [  
-                                                'form' => $form,
-                                                "model" => $model,
-                                                'actividades_isa' => $actividades_isa,
-                                                'index' => $index,
-                                                'fase' => $keyFase,
-                                                'datos' => $datos,
-                                                'impOps'=> $impOps,
-                                            ] 
-                                ),
-            'contentOptions'=> []
-        ];
+        
+        if($keyFase == 9){
+            $contenedores[] = 	[
+                'label' 		=>  $imp,
+                'content' 		=>  $this->render( 'contenedorItemImp', 
+                                                [  
+                                                    'form' => $form,
+                                                    "model" => $model,
+                                                    'actividades_isa' => $actividades_isa,
+                                                    'index' => $index,
+                                                    'fase' => $keyFase,
+                                                    'datos' => $datos,
+                                                    'impOps'=> $impOps,
+                                                ] 
+                                    ),
+                //'options' => ['style' => 'display: none;'],
+                'contentOptions'=> []
+            ];
+        }else{
+            $contenedores[] = 	[
+                'label' 		=>  $imp,
+                'content' 		=>  $this->render( 'contenedorItemImp', 
+                                                [  
+                                                    'form' => $form,
+                                                    "model" => $model,
+                                                    'actividades_isa' => $actividades_isa,
+                                                    'index' => $index,
+                                                    'fase' => $keyFase,
+                                                    'datos' => $datos,
+                                                    'impOps'=> $impOps,
+                                                ] 
+                                    ),
+                'contentOptions'=> []
+            ];
+        }
+        
+        
     }
     use yii\bootstrap\Collapse;
     echo Collapse::widget([
