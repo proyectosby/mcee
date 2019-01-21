@@ -20,6 +20,8 @@ foreach( $fases as $keyFase => $fase ){
                                                         'actividades_rom' => $actividades_rom,
                                                         'tipo_poblacion_rom' => $tipo_poblacion_rom,
                                                         'evidencias_rom' => $evidencias_rom,
+														'actividades'=> $actividades,
+														'estados'=> $estados,
 														
 													] 
 										),

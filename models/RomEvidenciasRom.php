@@ -45,7 +45,8 @@ class RomEvidenciasRom extends \yii\db\ActiveRecord
             [['fecha_entrega_envio'], 'safe'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_actividad_rom'], 'exist', 'skipOnError' => true, 'targetClass' => RomActividadesRom::className(), 'targetAttribute' => ['id_actividad_rom' => 'id']],
-        ];
+			[['id_actividad_rom','actas','reportes','listados','plan_trabajo','formato_seguimiento','formato_evaluacion','vidoes','otros_productos','cantidad','archivos_enviados_entregados','fecha_entrega_envio','estado','fotografias'], 'required'],
+	   ];
     }
 
     /**
@@ -61,7 +62,7 @@ class RomEvidenciasRom extends \yii\db\ActiveRecord
             'listados' => 'Listados',
             'plan_trabajo' => 'Plan Trabajo',
             'formato_seguimiento' => 'Formato Seguimiento',
-            'formato_evaluacion' => 'Formato Evaluació  n',
+            'formato_evaluacion' => 'Formato Evaluación',
             'fotografias' => 'Fotografías',
             'vidoes' => 'Vidoes',
             'otros_productos' => 'Otros Productos',

@@ -20,6 +20,7 @@ use app\models\RomTipoCantidadPoblacionRom;
 use app\models\RomEvidenciasRom;
 use app\models\Sedes;
 use app\models\Instituciones;
+use app\models\Parametro;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
@@ -64,17 +65,47 @@ class RomReporteOperativoMisionalController extends Controller
         ]);
     }
 
+	public function obtenerParametros($idTipoParametro)
+	{
+		//parametros de Fases informe planeación IEO
+		$dataParametros = Parametro::find()
+						->where( "id_tipo_parametro=$idTipoParametro" )
+						->andWhere( 'estado=1' )
+						->orderby( 'id' )
+						->all();
+						
+		$parametros		= ArrayHelper::map( $dataParametros, 'id', 'descripcion' );
+		
+		return $parametros;
+	
+	}
+		
+	
     function actionViewFases($model, $form){
         
         $actividades_rom = new RomActividadesRom();
         $tipo_poblacion_rom = new RomTipoCantidadPoblacionRom();
         $evidencias_rom = new RomEvidenciasRom();
-
-        $proyectos = [ 
-            1 => "Sensibilizar a la comunidad sobre la importancia del arte y la cultura a través de la oferta cultural del municipio.",
-            2 => "Desarrollar programas de iniciación y sensibilización artística desde las instituciones educativas oficiales dirigidos a la comunidad.",
-        ];
 		
+		//la estrutura de los datos debe ser  $proyectos = [1 ="Sensibilizar....",  2 => "Desarrollar]
+		$proyectos = Array();
+		$actividades = Array();
+		$estados = Array();
+		$contador = 0;
+		foreach ($this->obtenerParametros(43) as $valor)
+		{
+			$proyectos[++$contador]= $valor;
+		}
+		
+		$contador = 0;
+		foreach ($this->obtenerParametros(44) as $valor)
+		{
+			$actividades[++$contador]= $valor;
+		}
+		
+		$estados= $this->obtenerParametros(45);
+		
+
 		return $this->renderAjax('fases', [
             'fases' => $proyectos,
             'form' => $form,
@@ -82,6 +113,8 @@ class RomReporteOperativoMisionalController extends Controller
             'actividades_rom' => $actividades_rom,
             'tipo_poblacion_rom' => $tipo_poblacion_rom,
             'evidencias_rom' => $evidencias_rom,
+			'actividades'=> $actividades,
+			'estados'=> $estados,
         ]);
 		
 	}
@@ -107,8 +140,7 @@ class RomReporteOperativoMisionalController extends Controller
     public function actionCreate()
     {
         $model = new RomReporteOperativoMisional();
-        $idInstitucion = $_SESSION['instituciones'][0];
-        $institucion = Instituciones::findOne($idInstitucion);
+       
 
         if ($model->load(Yii::$app->request->post())) {
             
@@ -274,7 +306,7 @@ class RomReporteOperativoMisionalController extends Controller
             return $this->redirect(['index', 'guardado' => 1 ]);            
             //return $this->redirect(['index']);
         }
-
+		$idInstitucion = $_SESSION['instituciones'][0];
         $Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
         $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
 
@@ -283,10 +315,23 @@ class RomReporteOperativoMisionalController extends Controller
         return $this->renderAjax('create', [
             'model' => $model,
             'sedes' => $sedes,
-            'institucion' => $institucion->descripcion,
+            'institucion'=> $this->obtenerInstitucion(),
         ]);
     }
 
+	
+	public function obtenerInstitucion()
+	{
+		$idInstitucion = $_SESSION['instituciones'][0];
+		$instituciones = new Instituciones();
+		$instituciones = $instituciones->find()->where("id = $idInstitucion")->all();
+		$instituciones = ArrayHelper::map($instituciones,'id','descripcion');
+		
+		return $instituciones;
+	}
+	
+
+	
     /**
      * Updates an existing RomReporteOperativoMisional model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -297,6 +342,9 @@ class RomReporteOperativoMisionalController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+		$idInstitucion = $_SESSION['instituciones'][0];
+		$Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
+        $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -304,6 +352,8 @@ class RomReporteOperativoMisionalController extends Controller
 
         return $this->renderAjax('update', [
             'model' => $model,
+			'sedes' => $sedes,
+			'institucion'=> $this->obtenerInstitucion(),
         ]);
     }
 

@@ -57,7 +57,7 @@ use dosamigos\datepicker\DatePicker;
     ]);  ?> 
 
     <h3 style='background-color: #ccc;padding:5px;'>Estado de la actividad</h3>
-    <?= $form->field($actividades_rom, "[$index]estado")->dropDownList([ 'prompt' => 'Seleccione...' , 'Se realizó', 'Se aplazó', 'Se canceló' ] ) ?>
+    <?= $form->field($actividades_rom, "[$index]estado")->dropDownList($estados,[ 'prompt' => 'Seleccione...'] ) ?>
     
     <h3 style='background-color: #ccc;padding:5px;'>Equipo o equipos que hicieron la intervención</h3>
     <?= $form->field($actividades_rom, "[$index]num_equipos")->textInput() ?>
@@ -75,6 +75,7 @@ use dosamigos\datepicker\DatePicker;
      <?= $form->field($tipo_poblacion_rom, "[$index]grupos_comunitarios")->textInput() ?>
      <?= $form->field($tipo_poblacion_rom, "[$index]otos_actores")->textInput() ?>
      <?= $form->field($tipo_poblacion_rom, "[$index]total_participantes")->textInput() ?>
+	 
      <h3 style='background-color: #ccc;padding:5px;'>Evidencias (Indique la cantidad y destino de evidencias que resultaron de la actividad, tales  como fotografías, videos, actas, trabajos de los participantes, etc )</h3>
      <?= $form->field($evidencias_rom, "[$index]actas")->label('ACTAS (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
      <?= $form->field($evidencias_rom, "[$index]reportes")->label('REPORTES  (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>

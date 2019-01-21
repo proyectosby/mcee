@@ -103,7 +103,7 @@ class CbacPmoActividades extends \yii\db\ActiveRecord
             'requerimientos_tecnicos' => '(Indique los requerimientos  técnicos,  materiales y de espacio)',
             'requerimientos_logoisticos' => '(Indique los requerimientos  logísticos, No. de refrigerios, No. de vehículos y capacidad de transporte, etc. )',
             'destinatarios' => 'Destinatarios',
-            'fehca_entrega' => 'Fehca Entrega',
+            'fehca_entrega' => 'Fecha Entrega',
             'observaciones_generales' => 'Observaciones Generales',
             'nombre_dilegencia' => 'Nombre completo de quien diligenció',
             'rol' => 'Rol',

@@ -13,7 +13,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nombre_institucion')->textInput(['readonly' => true, 'value' => $institucion]) ?>
+    <?= $form->field($model, 'nombre_institucion')->dropDownList($institucion) ?>
 
     <?= $form->field($model, 'id_sedes')->dropDownList( $sedes, [ 'prompt' => 'Seleccione...' ] ) ?>
 
