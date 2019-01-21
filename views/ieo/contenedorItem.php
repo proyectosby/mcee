@@ -24,18 +24,21 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     ?>
         <?= $form->field($requerimientoExtra, "[$index$numProyecto]socializacion_ruta")->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
         <?= $form->field($requerimientoExtra, "[$index$numProyecto]soporte_necesidad")->label('ANEXO SOPORTE DE NECESIDAD DE HACER SOCIALIZACIÓN SI APLICA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-
+        <?= $form->field($requerimientoExtra, "[$index$numProyecto]proyecto_ieo_id")->hiddenInput(['value'=> $index])->label(false); ?>
+        <?= $form->field($requerimientoExtra, "[$index$numProyecto]actividad_id")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
     <?php
     }
     if($index == 2){
     ?>
-        <?= $form->field($model, "[$index$numProyecto]file_informe_caracterizacion")->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_matriz_caracterizacion")->label('Matriz de Trazabilidad ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_revision_pei")->label('Revisión Pei')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_revision_autoevaluacion")->label('Revisión Autoevaluación')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_revision_pmi")->label('Revisión Pmi')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_resultados_caracterizacion")->label('Resultados Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_horario_trabajo")->label('Horario Trabajo')->textArea() ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]informe_caracterizacion")->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]matriz_caracterizacion")->label('Matriz de Trazabilidad ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]revision_pei")->label('Revisión Pei')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]revision_autoevaluacion")->label('Revisión Autoevaluación')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]revision_pmi")->label('Revisión Pmi')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]resultados_caracterizacion")->label('Resultados Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]horario_trabajo")->label('Horario Trabajo')->textArea() ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]proyecto_ieo_id")->hiddenInput(['value'=> $index])->label(false); ?>
+        <?= $form->field($documentosReconocimiento, "[$index$numProyecto]actividad_id")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
     <?php
     }
     if($index == 3 || $index == 4 || $index == 5){?>
@@ -176,17 +179,20 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                 } 
                 ?>
         <h3 style='background-color: #ccc;padding:5px;'>Evidencias</h3>
-            <?= $form->field($model, "[$index$numProyecto]file_producto_ruta")->label('Producto: mapa puntos de partida y llegada')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$index$numProyecto]file_resultados_actividad_ruta")->label('Resultados de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$index$numProyecto]file_acta_ruta")->label('ACTA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$index$numProyecto]file_listado_ruta")->label('LISTADO')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-            <?= $form->field($model, "[$index$numProyecto]file_fotografias_ruta")->label('FOTOGRAFÍAS')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($evidencias, "[$index$numProyecto]producto_ruta")->label('Producto: mapa puntos de partida y llegada')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($evidencias, "[$index$numProyecto]resultados_actividad_ruta")->label('Resultados de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($evidencias, "[$index$numProyecto]acta_ruta")->label('ACTA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($evidencias, "[$index$numProyecto]listado_ruta")->label('LISTADO')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($evidencias, "[$index$numProyecto]fotografias_ruta")->label('FOTOGRAFÍAS')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+            <?= $form->field($evidencias, "[$index$numProyecto]actividad_id")->hiddenInput(['value'=> $index])->label(false); ?>
+            <?= $form->field($evidencias, "[$index$numProyecto]proyecto_id")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
     <?php
     }if($index == 6){ ?>
     
-        <?= $form->field($model, "[$index$numProyecto]file_producto_imforme_ruta")->label('Informe de rutas de cualificación ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_producto_plan_accion")->label('Plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-        <?= $form->field($model, "[$index$numProyecto]file_producto_presentacion")->label('Presentación del plan de acción para la I.E.O ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($producto, "[$index$numProyecto]imforme_ruta")->label('Informe de rutas de cualificación ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($producto, "[$index$numProyecto]plan_accion_ruta")->label('Plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+        <?= $form->field($producto, "[$index$numProyecto]id_actividad")->hiddenInput(['value'=> $index])->label(false); ?>
+        <?= $form->field($producto, "[$index$numProyecto]id_proyecto")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
 
     <?php
     }

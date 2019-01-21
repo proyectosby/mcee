@@ -17,11 +17,10 @@ use Yii;
  * @property string $resultados_caracterizacion
  * @property string $horario_trabajo
  * @property int $proyecto_ieo_id
+ * @property int $actividad_id
  */
 class DocumentosReconocimiento extends \yii\db\ActiveRecord
 {
-    public $tipo_actiividad;
-    public $fecha_creacion;
     /**
      * @inheritdoc
      */
@@ -36,10 +35,9 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ieo_id', 'proyecto_ieo_id'], 'default', 'value' => null],
-            [['ieo_id', 'proyecto_ieo_id'], 'integer'],
+            [['ieo_id', 'proyecto_ieo_id', 'actividad_id'], 'default', 'value' => null],
+            [['ieo_id', 'proyecto_ieo_id', 'actividad_id'], 'integer'],
             [['informe_caracterizacion', 'matriz_caracterizacion', 'revision_pei', 'revision_autoevaluacion', 'revision_pmi', 'resultados_caracterizacion', 'horario_trabajo'], 'string'],
-            [['proyecto_ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoIeo::className(), 'targetAttribute' => ['proyecto_ieo_id' => 'id']],
         ];
     }
 
@@ -51,14 +49,15 @@ class DocumentosReconocimiento extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ieo_id' => 'Ieo ID',
-            'informe_caracterizacion' => 'Informe de caracterización e informe ejecutivo',
-            'matriz_caracterizacion' => 'Matriz de Caracterización- Trazabilidad ',
-            'revision_pei' => 'Revisión PEI',
-            'revision_autoevaluacion' => 'Revisión Autoevaluación',
-            'revision_pmi' => 'Revisión PMI',
-            'resultados_caracterizacion' => 'Presentación resultados de Caracterización ',
-            'horario_trabajo' => 'Horario fijo de trabajo con los actores de la IEO',
+            'informe_caracterizacion' => 'Informe Caracterizacion',
+            'matriz_caracterizacion' => 'Matriz Caracterizacion',
+            'revision_pei' => 'Revision Pei',
+            'revision_autoevaluacion' => 'Revision Autoevaluacion',
+            'revision_pmi' => 'Revision Pmi',
+            'resultados_caracterizacion' => 'Resultados Caracterizacion',
+            'horario_trabajo' => 'Horario Trabajo',
             'proyecto_ieo_id' => 'Proyecto Ieo ID',
+            'actividad_id' => 'Actividad ID',
         ];
     }
 }

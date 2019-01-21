@@ -13,8 +13,9 @@ use Yii;
  * @property string $acta_ruta
  * @property string $listado_ruta
  * @property string $fotografias_ruta
- * @property int $tipo_actividad_id
  * @property int $ieo_id
+ * @property int $proyecto_id
+ * @property int $actividad_id
  */
 class Evidencias extends \yii\db\ActiveRecord
 {
@@ -33,8 +34,8 @@ class Evidencias extends \yii\db\ActiveRecord
     {
         return [
             [['producto_ruta', 'resultados_actividad_ruta', 'acta_ruta', 'listado_ruta', 'fotografias_ruta'], 'string'],
-            [['tipo_actividad_id', 'ieo_id'], 'default', 'value' => null],
-            [['tipo_actividad_id', 'ieo_id'], 'integer'],
+            [['ieo_id', 'proyecto_id', 'actividad_id'], 'default', 'value' => null],
+            [['ieo_id', 'proyecto_id', 'actividad_id'], 'integer'],
             [['ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Ieo::className(), 'targetAttribute' => ['ieo_id' => 'id']],
         ];
     }
@@ -46,13 +47,14 @@ class Evidencias extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'producto_ruta' => 'Producto: mapa puntos de partida y llegada',
-            'resultados_actividad_ruta' => 'Resultados de la actividad',
-            'acta_ruta' => 'ACTA',
-            'listado_ruta' => 'LISTADO',
-            'fotografias_ruta' => 'FOTOGRAFÍAS',
-            'tipo_actividad_id' => 'Observaciones sobre las evidencias',
+            'producto_ruta' => 'Producto Ruta',
+            'resultados_actividad_ruta' => 'Resultados Actividad Ruta',
+            'acta_ruta' => 'Acta Ruta',
+            'listado_ruta' => 'Listado Ruta',
+            'fotografias_ruta' => 'Fotografias Ruta',
             'ieo_id' => 'Ieo ID',
+            'proyecto_id' => 'Proyecto ID',
+            'actividad_id' => 'Actividad ID',
         ];
     }
 }

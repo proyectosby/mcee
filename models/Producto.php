@@ -11,7 +11,8 @@ use Yii;
  * @property int $ieo_id
  * @property string $imforme_ruta
  * @property string $plan_accion_ruta
- * @property int $actividades_ieo_id
+ * @property int $id_proyecto
+ * @property int $id_actividad
  */
 class Producto extends \yii\db\ActiveRecord
 {
@@ -29,10 +30,9 @@ class Producto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ieo_id', 'actividades_ieo_id'], 'default', 'value' => null],
-            [['ieo_id', 'actividades_ieo_id'], 'integer'],
+            [['ieo_id', 'id_proyecto', 'id_actividad'], 'default', 'value' => null],
+            [['ieo_id', 'id_proyecto', 'id_actividad'], 'integer'],
             [['imforme_ruta', 'plan_accion_ruta'], 'string'],
-            [['actividades_ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => ActividadesIeo::className(), 'targetAttribute' => ['actividades_ieo_id' => 'id']],
         ];
     }
 
@@ -44,9 +44,10 @@ class Producto extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ieo_id' => 'Ieo ID',
-            'imforme_ruta' => 'Informe de rutas de cualificación ',
-            'plan_accion_ruta' => 'Plan de acción',
-            'actividades_ieo_id' => 'Actividades Ieo ID',
+            'imforme_ruta' => 'Imforme Ruta',
+            'plan_accion_ruta' => 'Plan Accion Ruta',
+            'id_proyecto' => 'Id Proyecto',
+            'id_actividad' => 'Id Actividad',
         ];
     }
 }
