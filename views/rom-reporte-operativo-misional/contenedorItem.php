@@ -39,12 +39,15 @@ use dosamigos\datepicker\DatePicker;
             // modify template for custom rendering
             'template' => '{addon}{input}',
             'language' => 'es',
+			
             'clientOptions' => [
                 'autoclose' => true,
                 'format'    => 'yyyy-mm-dd',
+				
         ],
     ]);  ?> 
 
+	
      <?= $form->field($actividades_rom, "[$index]fecha_hasta")->widget(
         DatePicker::className(), [
             // modify template for custom rendering
@@ -57,14 +60,14 @@ use dosamigos\datepicker\DatePicker;
     ]);  ?> 
 
     <h3 style='background-color: #ccc;padding:5px;'>Estado de la actividad</h3>
-    <?= $form->field($actividades_rom, "[$index]estado")->dropDownList($estados,[ 'prompt' => 'Seleccione...'] ) ?>
+    <?= $form->field($actividades_rom, "[$index]estado")->dropDownList($estados,[ 'prompt' => 'Seleccione...','value' => $datos['actividades'][$index]['estado'] ] ) ?>
     
     <h3 style='background-color: #ccc;padding:5px;'>Equipo o equipos que hicieron la intervención</h3>
-    <?= $form->field($actividades_rom, "[$index]num_equipos")->textInput() ?>
-    <?= $form->field($actividades_rom, "[$index]perfiles")->textInput() ?>
+    <?= $form->field($actividades_rom, "[$index]num_equipos")->textInput(['value' => $datos['actividades'][$index]['num_equipos'] ]) ?>
+    <?= $form->field($actividades_rom, "[$index]perfiles")->textInput(['value' => $datos['actividades'][$index]['perfiles'] ]) ?>
 
-    <?= $form->field($actividades_rom, "[$index]docente_orientador")->textInput() ?>
-    <?= $form->field($actividades_rom, "[$index]nombre_actividad")->textInput() ?>
+    <?= $form->field($actividades_rom, "[$index]docente_orientador")->textInput(['value' => $datos['actividades'][$index]['docente_orientador'] ]) ?>
+    <?= $form->field($actividades_rom, "[$index]nombre_actividad")->textInput(['value' => $datos['actividades'][$index]['nombre_actividad'] ]) ?>
 
      <h2 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h2>
      <h3 style='background-color: #ccc;padding:5px;'>Número de participantes por actividad comunitaria por sede educativa (Se deben revisar los nombres y datos de  la lista de asistencia para no repetir personas): </h3>

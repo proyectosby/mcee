@@ -57,6 +57,7 @@ class RomActividadesRom extends \yii\db\ActiveRecord
             [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
             [['id_rom'], 'exist', 'skipOnError' => true, 'targetClass' => RomReporteOperativoMisional::className(), 'targetAttribute' => ['id_rom' => 'id']],
 			[['id_rom','fehca_desde','fecha_hasta','estado','num_equipos','perfiles','docente_orientador','nombre_actividad','duracion_sesion','logros','fortalezas','debilidades','alternativas','retos','articulacion','evaluacion','observaciones_generales','alarmas','justificacion_activiad_no_realizada','fecha_reprogramacion','diligencia','rol','fecha_diligencia','id_componente','id_actividad' ], 'required'],
+			[['id_reporte_operativo_misional'], 'exist', 'skipOnError' => true, 'targetClass' => RomReporteOperativoMisional::className(), 'targetAttribute' => ['id_reporte_operativo_misional' => 'id']],
 		];
     }
 
@@ -92,6 +93,7 @@ class RomActividadesRom extends \yii\db\ActiveRecord
             'fecha_diligencia' => 'Fecha',
             'id_componente' => 'Id Componente',
             'id_actividad' => 'Id Actividad',
+            'id_reporte_operativo_misional' => 'id_reporte_operativo_misional',
         ];
     }
 }

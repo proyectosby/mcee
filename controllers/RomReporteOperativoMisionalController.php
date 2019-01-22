@@ -53,15 +53,14 @@ class RomReporteOperativoMisionalController extends Controller
      * Lists all RomReporteOperativoMisional models.
      * @return mixed
      */
-    public function actionIndex($guardado = 0)
+    public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => RomReporteOperativoMisional::find(),
+            'query' => RomReporteOperativoMisional::find()->where(['estado' => 1]),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'guardado' => $guardado,
         ]);
     }
 
@@ -81,7 +80,7 @@ class RomReporteOperativoMisionalController extends Controller
 	}
 		
 	
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $datos = 0 ){
         
         $actividades_rom = new RomActividadesRom();
         $tipo_poblacion_rom = new RomTipoCantidadPoblacionRom();
@@ -115,6 +114,7 @@ class RomReporteOperativoMisionalController extends Controller
             'evidencias_rom' => $evidencias_rom,
 			'actividades'=> $actividades,
 			'estados'=> $estados,
+			'datos' => $datos,
         ]);
 		
 	}
@@ -141,13 +141,11 @@ class RomReporteOperativoMisionalController extends Controller
     {
         $model = new RomReporteOperativoMisional();
        
-
-        if ($model->load(Yii::$app->request->post())) {
-            
-            $model->id_institucion = $idInstitucion;
-            $model->estado = 1;
-            $model->id_sedes = intval($model->id_sedes);
-
+		$idInstitucion = $_SESSION['instituciones'][0];
+		
+        $institucion = Instituciones::findOne($idInstitucion);
+        if ($model->load(Yii::$app->request->post())) 
+		{
             if($model->save()){
                 $rom_id = $model->id;
                 //$rom_id = 1;
@@ -345,15 +343,64 @@ class RomReporteOperativoMisionalController extends Controller
 		$idInstitucion = $_SESSION['instituciones'][0];
 		$Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
         $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+	
+        if ($model->load(Yii::$app->request->post()) && $model->save()) 
+		{
+			
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
-
+		
+		$datos = array();
+		
+		
+		$actividadesRom = new RomActividadesRom();
+		$actividadesRom = $actividadesRom->find()->orderby("id")->andWhere("id_reporte_operativo_misional = $id")->all();
+	
+		//se trae la informacionde la basse de datos tabla ec.avances
+		$result = ArrayHelper::getColumn($actividadesRom, function ($element) 
+		{
+			$dato[$element['id_reporte_operativo_misional']]['fehca_desde']= $element['fehca_desde'];
+			$dato[$element['id_reporte_operativo_misional']]['fecha_hasta']= $element['fecha_hasta'];
+			$dato[$element['id_reporte_operativo_misional']]['num_equipos']= $element['num_equipos'];
+			$dato[$element['id_reporte_operativo_misional']]['perfiles']= $element['perfiles'];
+			$dato[$element['id_reporte_operativo_misional']]['docente_orientador']= $element['docente_orientador'];
+			$dato[$element['id_reporte_operativo_misional']]['nombre_actividad']= $element['nombre_actividad'];
+			$dato[$element['id_reporte_operativo_misional']]['duracion_sesion']= $element['duracion_sesion'];
+			$dato[$element['id_reporte_operativo_misional']]['logros']= $element['logros'];
+			$dato[$element['id_reporte_operativo_misional']]['fortalezas']= $element['fortalezas'];
+			$dato[$element['id_reporte_operativo_misional']]['debilidades']= $element['debilidades'];
+			$dato[$element['id_reporte_operativo_misional']]['alternativas']= $element['alternativas'];
+			$dato[$element['id_reporte_operativo_misional']]['retos']= $element['retos'];
+			$dato[$element['id_reporte_operativo_misional']]['articulacion']= $element['articulacion'];
+			$dato[$element['id_reporte_operativo_misional']]['evaluacion']= $element['evaluacion'];
+			$dato[$element['id_reporte_operativo_misional']]['observaciones_generales']= $element['observaciones_generales'];
+			$dato[$element['id_reporte_operativo_misional']]['alarmas']= $element['alarmas'];
+			$dato[$element['id_reporte_operativo_misional']]['justificacion_activiad_no_realizada']= $element['justificacion_activiad_no_realizada'];
+			$dato[$element['id_reporte_operativo_misional']]['fecha_reprogramacion']= $element['fecha_reprogramacion'];
+			$dato[$element['id_reporte_operativo_misional']]['diligencia']= $element['diligencia'];
+			$dato[$element['id_reporte_operativo_misional']]['rol']= $element['rol'];
+			$dato[$element['id_reporte_operativo_misional']]['fecha_diligencia']= $element['alarmas'];
+			$dato[$element['id_reporte_operativo_misional']]['estado']= $element['estado'];
+			$dato[$element['id_reporte_operativo_misional']]['id_actividad']= $element['id_actividad'];
+			$dato[$element['id_reporte_operativo_misional']]['id_actividad']= $element['id_actividad'];
+			return $dato;
+		});
+		
+	
+		//se formate la informacion que deben tener los campos tabla ec.avances
+		foreach	($result as $r => $valor)
+			foreach	($valor as $ids => $valores)
+				$datos['actividades'][$valores['id_actividad']] = $valores;
+		
+		
+		// echo "<pre>"; print_r($datos); echo "</pre>"; 
+				// die;
         return $this->renderAjax('update', [
             'model' => $model,
 			'sedes' => $sedes,
 			'institucion'=> $this->obtenerInstitucion(),
+			'datos' => $datos,
         ]);
     }
 
@@ -366,8 +413,9 @@ class RomReporteOperativoMisionalController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+		$model = $this->findModel($id);
+		$model->estado = 2;
+		$model->update(false);
         return $this->redirect(['index']);
     }
 

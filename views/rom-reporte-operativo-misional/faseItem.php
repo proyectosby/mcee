@@ -31,6 +31,7 @@ $index = 0;
                                                         'evidencias_rom' => $evidencias_rom,
                                                         'index' => $keyFase,
 														'estados'=> $estados,
+														'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []
@@ -47,6 +48,7 @@ $index = 0;
                                                         'evidencias_rom' => $evidencias_rom,
                                                         'index' => $keyFase,
 														'estados'=> $estados,
+														'datos' => $datos,
 													] 
 										),
 					'contentOptions'=> []
