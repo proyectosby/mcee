@@ -36,10 +36,12 @@ class RomTipoCantidadPoblacionRom extends \yii\db\ActiveRecord
         return [
             [['id_actividad_rom', 'estado'], 'default', 'value' => null],
             [['id_actividad_rom', 'estado'], 'integer'],
-            [['vecinos', 'lideres_comunitarios', 'empresarios_comerciantes', 'organizaciones_locales', 'grupos_comunitarios', 'otos_actores', 'total_participantes'], 'string'],
+			[['id_actividad_rom', 'estado','id_actividad_rom','lideres_comunitarios','empresarios_comerciantes','organizaciones_locales','grupos_comunitarios','otos_actores'], 'required'],
+            [['vecinos', 'lideres_comunitarios', 'empresarios_comerciantes', 'organizaciones_locales', 'grupos_comunitarios', 'otos_actores', 'total_participantes','total_participantes','vecinos'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_actividad_rom'], 'exist', 'skipOnError' => true, 'targetClass' => RomActividadesRom::className(), 'targetAttribute' => ['id_actividad_rom' => 'id']],
-        ];
+			[['id_actividad_rom','vecinos','lideres_comunitarios','empresarios_comerciantes','organizaciones_locales','grupos_comunitarios','otos_actores','total_participantes','estado'], 'required'],
+		];
     }
 
     /**

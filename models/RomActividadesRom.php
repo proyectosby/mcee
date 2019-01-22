@@ -56,7 +56,9 @@ class RomActividadesRom extends \yii\db\ActiveRecord
             [['estado', 'num_equipos', 'perfiles', 'docente_orientador', 'nombre_actividad', 'duracion_sesion', 'logros', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'articulacion', 'evaluacion', 'observaciones_generales', 'alarmas', 'justificacion_activiad_no_realizada', 'diligencia', 'rol', 'fecha_diligencia'], 'string'],
             [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
             [['id_rom'], 'exist', 'skipOnError' => true, 'targetClass' => RomReporteOperativoMisional::className(), 'targetAttribute' => ['id_rom' => 'id']],
-        ];
+			[['id_rom','fehca_desde','fecha_hasta','estado','num_equipos','perfiles','docente_orientador','nombre_actividad','duracion_sesion','logros','fortalezas','debilidades','alternativas','retos','articulacion','evaluacion','observaciones_generales','alarmas','justificacion_activiad_no_realizada','fecha_reprogramacion','diligencia','rol','fecha_diligencia','id_componente','id_actividad' ], 'required'],
+			[['id_reporte_operativo_misional'], 'exist', 'skipOnError' => true, 'targetClass' => RomReporteOperativoMisional::className(), 'targetAttribute' => ['id_reporte_operativo_misional' => 'id']],
+		];
     }
 
     /**
@@ -67,12 +69,12 @@ class RomActividadesRom extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_rom' => 'Id Rom',
-            'fehca_desde' => 'Fehca Desde',
+            'fehca_desde' => 'Fecha Desde',
             'fecha_hasta' => 'Fecha Hasta',
             'estado' => 'Estado',
             'num_equipos' => 'No. del Equipo o equipos en campo',
             'perfiles' => 'Perfiles (Seleccione el perfil y cantidad por perfiles de profesionales en campo)',
-            'docente_orientador' => 'Docente orientador(a)  (Nombre del o la profesional)',
+            'docente_orientador' => 'Docente orientador(a) (Nombre del o la profesional)',
             'nombre_actividad' => 'Nombre o título de la actividad o encuentro ',
             'duracion_sesion' => 'Duración de la sesión (Indique el tiempo  en horas y minutos)',
             'logros' => 'Logros (Indique los resultados de avance que permitan constatar que, por medio de las actividades realizadas, se está logrando desarrollar de programas de iniciación y sensibilización artística desde las instituciones educativas oficiales dirigidos a la comunidad...)',
@@ -91,6 +93,7 @@ class RomActividadesRom extends \yii\db\ActiveRecord
             'fecha_diligencia' => 'Fecha',
             'id_componente' => 'Id Componente',
             'id_actividad' => 'Id Actividad',
+            'id_reporte_operativo_misional' => 'id_reporte_operativo_misional',
         ];
     }
 }

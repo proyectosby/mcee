@@ -40,7 +40,7 @@ class EstudiantesImpIeo extends \yii\db\ActiveRecord
     {
         return [
             [['cantidad_poblacion_imp_ieo_id', 'grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11'], 'default', 'value' => null],
-            [['cantidad_poblacion_imp_ieo_id', 'grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11'], 'integer'],
+            [['cantidad_poblacion_imp_ieo_id', 'grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11','total'], 'integer'],
             [['cantidad_poblacion_imp_ieo_id'], 'exist', 'skipOnError' => true, 'targetClass' => CantidadPoblacionImpIeo::className(), 'targetAttribute' => ['cantidad_poblacion_imp_ieo_id' => 'id']],
         ];
     }
@@ -65,6 +65,7 @@ class EstudiantesImpIeo extends \yii\db\ActiveRecord
             'grado_9' => 'Grado 9',
             'grado_10' => 'Grado 10',
             'grado_11' => 'Grado 11',
+            'total' => 'total',
         ];
     }
 }
