@@ -23,6 +23,7 @@ use Yii;
  */
 class TiposCantidadPoblacion extends \yii\db\ActiveRecord
 {
+    public $total;
     /**
      * @inheritdoc
      */
@@ -38,8 +39,8 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
     {
         return [
             [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'default', 'value' => null],
-            [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'integer'],
-            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tipo_actividad'], 'string'],
+            [['actividad_id', 'ieo_id', 'proyecto_ieo_id', 'tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'integer'],
+            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'required'],
             [['fecha_creacion'], 'safe'],
         ];
     }

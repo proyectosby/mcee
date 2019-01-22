@@ -7,6 +7,8 @@ use dosamigos\datepicker\DatePicker;
 /* @var $model app\models\ImplementacionIeo */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/imp-ieo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/imp-ieo-doncentes.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class="implementacion-ieo-form">
@@ -17,7 +19,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         <?= $form->field($model, 'comuna')->textInput() ?>
         <?= $form->field($model, 'barrio')->textInput() ?>
         <?= $form->field($model, 'profesional_cargo')->textInput() ?>
-        <?= $form->field($model, 'horario_trabajo')->textInput() ?>
+        <?= $form->field($model, 'horario_trabajo')->textArea() ?>
 
         <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0);   ?>
     

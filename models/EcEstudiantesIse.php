@@ -27,6 +27,7 @@ use Yii;
  */
 class EcEstudiantesIse extends \yii\db\ActiveRecord
 {
+    public $total;
     /**
      * @inheritdoc
      */

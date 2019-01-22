@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\InformeSemanalEjecucionIse */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-docentes.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class="informe-semanal-ejecucion-ise-form">

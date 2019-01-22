@@ -26,45 +26,46 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     <?= $form->field($tipo_poblacion, "[$index]medio_ambiente")->textInput([ 'value' => isset($datos[$index]['medio_ambiente']) ? $datos[$index]['medio_ambiente'] : '' ]) ?>  
     <?= $form->field($tipo_poblacion, "[$index]familia")->textInput([ 'value' => isset($datos[$index]['familia']) ? $datos[$index]['familia'] : '' ]) ?> 
     <?= $form->field($tipo_poblacion, "[$index]directivos")->textInput([ 'value' => isset($datos[$index]['directivos']) ? $datos[$index]['directivos'] : '' ]) ?> 
+    <?= $form->field($tipo_poblacion, "[$index]total")->textInput([ 'value' => isset($datos[$index]['total']) ? $datos[$index]['total'] : '' ]) ?> 
     <?= $form->field($tipo_poblacion, "[$index]id_tip")->hiddenInput( [ 'value' => isset($datos[$index]['id_tip']) ? $datos[$index]['id_tip'] : ''  ] )->label(false ) ?>
     
     <h3 style='background-color: #ccc;padding:5px;'>Estudiantes</h3>
     <div class=row style='text-align:center;'>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px;'>Est.Gra.0</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px;'>Gra.0</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.1</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.1</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.2</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.2</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.3</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.3</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.4</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.4</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.5</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.5</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.6</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.6</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.7</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.7</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.8</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.8</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.9</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.9</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.10</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.10</span>
         </div>
         <div class="col-sm-1" style='padding:0px;'>
-            <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.11</span>
+            <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.11</span>
         </div>
     </div>
     <div class=row>
@@ -104,6 +105,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         <div class="col-sm-1" style='padding:0px;'>
             <?=  Html::activeTextInput($estudiasntes, "[$index]grado_11", [ 'class' => 'form-control','value' => isset($datos[$index]['grado_11']) ? $datos[$index]['grado_11'] : ''] ) ?>
         </div>
+        <?= $form->field($estudiasntes, "[$index]total")->textInput([ 'value' => isset($datos[$index]['total']) ? $datos[$index]['total'] : '' ]) ?>
         <?= $form->field($estudiasntes, "[$index]est_id")->hiddenInput( [ 'value' => isset($datos[$index]['est_id']) ? $datos[$index]['est_id'] : ''  ] )->label(false ) ?>
         <?= $form->field($estudiasntes, "[$index]total")->textInput(['value' => isset($datos[$index]['total']) ? $datos[$index]['total'] : '']) ?>  
         <div class=cell style='display:none'>

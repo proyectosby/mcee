@@ -31,44 +31,45 @@
         <?= $form->field($tiposCantidadPoblacion, "[$numActividad]medio_ambiente")->textInput([ 'value' => isset($datos[$numActividad]['medio_ambiente']) ? $datos[$numActividad]['medio_ambiente'] : '' ]) ?>
         <?= $form->field($tiposCantidadPoblacion, "[$numActividad]familia")->textInput([ 'value' => isset($datos[$numActividad]['familia']) ? $datos[$numActividad]['familia'] : '' ]) ?>
         <?= $form->field($tiposCantidadPoblacion, "[$numActividad]directivos")->textInput([ 'value' => isset($datos[$numActividad]['directivos']) ? $datos[$numActividad]['directivos'] : '' ]) ?>
+        <?= $form->field($tiposCantidadPoblacion, "[$numActividad]total")->textInput([ 'value' => isset($datos[$numActividad]['total']) ? $datos[$numActividad]['total'] : '' ]) ?>
         
         <h3 style='background-color: #ccc;padding:5px;'>Estudiantes</h3>
         <div class=row style='text-align:center;'>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px;'>Est.Gra.0</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px;'>Gra.0</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.1</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.1</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.2</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.2</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.3</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.3</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.4</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.4</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.5</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.5</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.6</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.6</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.7</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.7</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.8</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.8</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.9</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.9</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.10</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.10</span>
             </div>
             <div class="col-sm-1" style='padding:0px;'>
-                <span total class='form-control' style='background-color:#ccc;height:70px'>Est.Gra.11</span>
+                <span total class='form-control' style='background-color:#ccc;height:70px'>Gra.11</span>
             </div>
         </div>
 
@@ -109,6 +110,7 @@
             <div class="col-sm-1" style='padding:0px;'>
                 <?=  Html::activeTextInput($estudiantesGrado, "[$numActividad]grado_11", [ 'class' => 'form-control', 'value' => isset($datos[$numActividad]['grado_11']) ? $datos[$numActividad]['grado_11'] : ''] ) ?>
             </div>
+            <?= $form->field($estudiantesGrado, "[$numActividad]total")->textInput([ 'value' => isset($datos[$numActividad]['total']) ? $datos[$numActividad]['total'] : '' ]) ?>
         </div>
         <h3 style='background-color: #ccc;padding:5px;'>Evidencias</h3>    
         <?php

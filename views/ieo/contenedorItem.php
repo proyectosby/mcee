@@ -61,6 +61,9 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]medio_ambiente")->textInput([ 'value' => isset($datos[$index."".$numProyecto]['medio_ambiente']) ? $datos[$index."".$numProyecto]['medio_ambiente'] : '' ]) ?>
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]familia")->textInput([ 'value' => isset($datos[$index."".$numProyecto]['familia']) ? $datos[$index."".$numProyecto]['familia'] : '' ]) ?>
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]directivos")->textInput([ 'value' => isset($datos[$index."".$numProyecto]['directivos']) ? $datos[$index."".$numProyecto]['directivos'] : '' ]) ?>
+            
+            <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]total")->textInput([ 'value' =>isset($datos[$index."".$numProyecto]['total']) ? $datos[$index."".$numProyecto]['total'] : '' ]) ?>
+
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]actividad_id")->hiddenInput(['value'=> $index])->label(false); ?>
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]proyecto_ieo_id")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
         <h3 style='background-color: #ccc;padding:5px;'>Estudiantes</h3>
@@ -138,10 +141,10 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                     </div>
                     <div class=row>
                         <div class="col-sm-1" style='padding:0px;'>
-                        <?=  Html::activeTextInput($estudiantesGrado, "[$index$numProyecto]grado_0", [ 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['grado_0']) ? $datos[$index."".$numProyecto]['grado_0'] : ''] ) ?>
+                        <?=  Html::activeTextInput($estudiantesGrado, "[$index$numProyecto]grado_0", [ 'class' => 'form-control est', 'value' => isset($datos[$index."".$numProyecto]['grado_0']) ? $datos[$index."".$numProyecto]['grado_0'] : ''] ) ?>
                         </div>
                         <div class="col-sm-1" style='padding:0px;'>
-                            <?=  Html::activeTextInput($estudiantesGrado, "[$index$numProyecto]grado_1", [ 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['grado_1']) ? $datos[$index."".$numProyecto]['grado_1'] : ''] ) ?>
+                            <?=  Html::activeTextInput($estudiantesGrado, "[$index$numProyecto]grado_1", [ 'class' => 'form-control est', 'value' => isset($datos[$index."".$numProyecto]['grado_1']) ? $datos[$index."".$numProyecto]['grado_1'] : ''] ) ?>
                         </div>
                         <div class="col-sm-1" style='padding:0px;'>
                             <?=  Html::activeTextInput($estudiantesGrado, "[$index$numProyecto]grado_2", [ 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['grado_2']) ? $datos[$index."".$numProyecto]['grado_2'] : ''] ) ?>
@@ -198,4 +201,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     }
     
 ?>
+
+
 

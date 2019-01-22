@@ -20,6 +20,7 @@ use Yii;
  */
 class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
 {
+    public $total;
     /**
      * @inheritdoc
      */
