@@ -41,7 +41,7 @@ class GcDocentesXBitacora extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'docente' => 'Docente',
+            'docente' => 'Docentes',
             'estado' => 'Estado',
             'id_bitacora' => 'Id Bitacora',
         ];

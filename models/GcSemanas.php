@@ -46,13 +46,13 @@ class GcSemanas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'descripcion' => 'Descripcion',
-            'fecha_inicio' => 'Fecha Inicio',
-            'fecha_finalizacion' => 'Fecha Finalizacion',
-            'fecha_cierre' => 'Fecha Cierre',
-            'estado' => 'Estado',
-            'id_ciclo' => 'Id Ciclo',
+            'id' 				=> 'ID',
+            'descripcion' 		=> 'Descripción de la semana',
+            'fecha_inicio' 		=> 'Fecha de inicio',
+            'fecha_finalizacion'=> 'Fecha de finalización',
+            'fecha_cierre' 		=> 'Fecha de cierre del momento',
+            'estado' 			=> 'Estado',
+            'id_ciclo' 			=> 'Ciclo',
         ];
     }
 }
