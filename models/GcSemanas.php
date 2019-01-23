@@ -13,6 +13,7 @@ use Yii;
  * @property string $fecha_finalizacion
  * @property string $fecha_cierre
  * @property string $estado
+ * @property string $id_ciclo
  */
 class GcSemanas extends \yii\db\ActiveRecord
 {
@@ -32,9 +33,9 @@ class GcSemanas extends \yii\db\ActiveRecord
         return [
             [['descripcion'], 'string'],
             [['fecha_inicio', 'fecha_finalizacion', 'fecha_cierre'], 'safe'],
-            [['estado'], 'required'],
-            [['estado'], 'default', 'value' => null],
-            [['estado'], 'integer'],
+            [['estado', 'id_ciclo'], 'required'],
+            [['estado', 'id_ciclo'], 'default', 'value' => null],
+            [['estado', 'id_ciclo'], 'integer'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
@@ -51,6 +52,7 @@ class GcSemanas extends \yii\db\ActiveRecord
             'fecha_finalizacion' => 'Fecha Finalizacion',
             'fecha_cierre' => 'Fecha Cierre',
             'estado' => 'Estado',
+            'id_ciclo' => 'Id Ciclo',
         ];
     }
 }

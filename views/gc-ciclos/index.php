@@ -12,7 +12,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\GcCiclosBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Ciclos';
+$this->title = 'Gc Ciclos';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Ciclos</h3>
+<h3>NombreCrud</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            // 'id',
+            'id',
             'fecha',
             'descripcion',
             'fecha_inicio',
@@ -89,11 +89,10 @@ $this->params['breadcrumbs'][] = $this->title;
             //'fecha_maxima_acceso',
             //'id_creador',
             //'estado',
-            //'id_semana',
 
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}{bitacora}',
+			'template'=>'{view}{update}{delete}',
 				'buttons' => [
 				'view' => function ($url, $model) {
 					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
@@ -104,14 +103,6 @@ $this->params['breadcrumbs'][] = $this->title;
 				'update' => function ($url, $model) {
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
 								'title' => Yii::t('app', 'lead-update'),
-					]);
-				},
-				
-				'bitacora' => function ($url, $model) {
-					// return Html::a('<span name="actualizar" class="btn btn-success" value ="'."aaa".'">Bitacora</span>', $url, [
-					return Html::a('<span name="actualizar" class="btn btn-success" value ="'.Url::to(['gc-bitacora/create', 'id' => 100]).'">Bitacora</span>', 
-									['gc-bitacora/create', 'id'=>$model->id], [
-									'title' => Yii::t('app', 'lead-update'),
 					]);
 				}
 

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\GcBitacora */
 
-$this->title = 'Actualizar Bitacora';
+$this->title = 'Actualizar';
 $this->params['breadcrumbs'][] = ['label' => 'Gc Bitacoras', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = "Actualizar";
@@ -16,10 +16,6 @@ $this->params['breadcrumbs'][] = "Actualizar";
 
     <?= $this->render('_form', [
         'model' => $model,
-        'docentes' => $docentes,
-		'sede' => $sede,
-		'jornadas' => $jornadas,
-		'ciclos' => $ciclos,
     ]) ?>
 
 </div>

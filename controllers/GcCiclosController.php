@@ -20,9 +20,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use app\models\Personas;
-use app\models\GcSemanas;
-use yii\helpers\ArrayHelper;
 /**
  * GcCiclosController implements the CRUD actions for GcCiclos model.
  */
@@ -78,38 +75,14 @@ class GcCiclosController extends Controller
      */
     public function actionCreate()
     {
-		$id_sede 		= $_SESSION['sede'][0];
-		$id_institucion	= $_SESSION['instituciones'][0];
-		
         $model = new GcCiclos();
-		
-		$model->estado = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
-		
-		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
-		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
-		$dataSemanas 		= GcSemanas::find()
-								->where( 'estado=1' )
-								->all();
-		
-		$semanas		= ArrayHelper::map( $dataSemanas, 'id', 'descripcion' );
 
         return $this->renderAjax('create', [
             'model' => $model,
-            'docentes' => $docentes,
-            'semanas' => $semanas,
         ]);
     }
 
@@ -122,36 +95,14 @@ class GcCiclosController extends Controller
      */
     public function actionUpdate($id)
     {
-		$id_sede 		= $_SESSION['sede'][0];
-		$id_institucion	= $_SESSION['instituciones'][0];
-		
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
-		
-		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
-		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
-		$dataSemanas 		= GcSemanas::find()
-								->where( 'estado=1' )
-								->all();
-		
-		$semanas		= ArrayHelper::map( $dataSemanas, 'id', 'descripcion' );
 
         return $this->renderAjax('update', [
             'model' => $model,
-			'docentes' => $docentes,
-            'semanas' => $semanas,
         ]);
     }
 

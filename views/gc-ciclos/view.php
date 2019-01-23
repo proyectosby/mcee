@@ -38,7 +38,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             'fecha_maxima_acceso',
             'id_creador',
             'estado',
-            'id_semana',
         ],
     ]) ?>
 

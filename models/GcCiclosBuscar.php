@@ -18,7 +18,7 @@ class GcCiclosBuscar extends GcCiclos
     public function rules()
     {
         return [
-            [['id', 'id_creador', 'estado', 'id_semana'], 'integer'],
+            [['id', 'id_creador', 'estado'], 'integer'],
             [['fecha', 'descripcion', 'fecha_inicio', 'fecha_finalizacion', 'fecha_cierre', 'fecha_maxima_acceso'], 'safe'],
         ];
     }
@@ -67,7 +67,6 @@ class GcCiclosBuscar extends GcCiclos
             'fecha_maxima_acceso' => $this->fecha_maxima_acceso,
             'id_creador' => $this->id_creador,
             'estado' => $this->estado,
-            'id_semana' => $this->id_semana,
         ]);
 
         $query->andFilterWhere(['ilike', 'descripcion', $this->descripcion]);

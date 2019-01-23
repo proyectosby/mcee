@@ -18,7 +18,7 @@ class GcSemanasBuscar extends GcSemanas
     public function rules()
     {
         return [
-            [['id', 'estado'], 'integer'],
+            [['id', 'estado', 'id_ciclo'], 'integer'],
             [['descripcion', 'fecha_inicio', 'fecha_finalizacion', 'fecha_cierre'], 'safe'],
         ];
     }
@@ -64,6 +64,7 @@ class GcSemanasBuscar extends GcSemanas
             'fecha_finalizacion' => $this->fecha_finalizacion,
             'fecha_cierre' => $this->fecha_cierre,
             'estado' => $this->estado,
+            'id_ciclo' => $this->id_ciclo,
         ]);
 
         $query->andFilterWhere(['ilike', 'descripcion', $this->descripcion]);

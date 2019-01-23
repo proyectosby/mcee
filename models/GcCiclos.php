@@ -16,7 +16,6 @@ use Yii;
  * @property string $fecha_maxima_acceso
  * @property string $id_creador
  * @property string $estado
- * @property string $id_semana
  */
 class GcCiclos extends \yii\db\ActiveRecord
 {
@@ -36,10 +35,9 @@ class GcCiclos extends \yii\db\ActiveRecord
         return [
             [['fecha', 'fecha_inicio', 'fecha_finalizacion', 'fecha_cierre', 'fecha_maxima_acceso'], 'safe'],
             [['descripcion'], 'string'],
-            [['id_creador', 'estado', 'id_semana'], 'required'],
-            [['id_creador', 'estado', 'id_semana'], 'default', 'value' => null],
-            [['id_creador', 'estado', 'id_semana'], 'integer'],
-            [['id_semana'], 'exist', 'skipOnError' => true, 'targetClass' => GcSemanas::className(), 'targetAttribute' => ['id_semana' => 'id']],
+            [['id_creador', 'estado'], 'required'],
+            [['id_creador', 'estado'], 'default', 'value' => null],
+            [['id_creador', 'estado'], 'integer'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_creador'], 'exist', 'skipOnError' => true, 'targetClass' => Personas::className(), 'targetAttribute' => ['id_creador' => 'id']],
         ];
@@ -51,16 +49,15 @@ class GcCiclos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' 					=> 'ID',
-            'fecha' 				=> 'Fecha',
-            'descripcion' 			=> 'Descripción',
-            'fecha_inicio' 			=> 'Fecha de inicio',
-            'fecha_finalizacion' 	=> 'Fecha de finalizacion',
-            'fecha_cierre' 			=> 'Fecha de cierre',
-            'fecha_maxima_acceso'	=> 'Fecha máxima  de acceso',
-            'id_creador' 			=> 'Creador',
-            'estado' 				=> 'Estado',
-            'id_semana' 			=> 'Semana',
+            'id' => 'ID',
+            'fecha' => 'Fecha',
+            'descripcion' => 'Descripcion',
+            'fecha_inicio' => 'Fecha Inicio',
+            'fecha_finalizacion' => 'Fecha Finalizacion',
+            'fecha_cierre' => 'Fecha Cierre',
+            'fecha_maxima_acceso' => 'Fecha Maxima Acceso',
+            'id_creador' => 'Id Creador',
+            'estado' => 'Estado',
         ];
     }
 }
