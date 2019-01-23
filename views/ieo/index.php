@@ -107,7 +107,7 @@ if( isset($guardado) && $guardado == 1 ){
             //['class' => 'yii\grid\SerialColumn'],
 
             //'id',
-            'persona_acargo',
+            //'persona_acargo',
 			[
 			'attribute'=>'zonas_educativas_id',
 			'value' => function( $model )

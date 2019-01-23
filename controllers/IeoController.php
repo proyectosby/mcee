@@ -102,7 +102,7 @@ class IeoController extends Controller
      * Lists all Ieo models.
      * @return mixed
      */
-    public function actionIndex($guardado = 0)
+    public function actionIndex($guardado = 0, $idTipoInforme = 0)
     {
 
         $query = Ieo::find()->where(['estado' => 1]);
@@ -113,6 +113,7 @@ class IeoController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'idTipoInforme' => $idTipoInforme,
             'guardado' => $guardado,
         ]);
     }
@@ -475,7 +476,7 @@ class IeoController extends Controller
                     }
                     
                 }
-                return $this->redirect(['index', 'guardado' => 1 ]);
+                return $this->redirect(['index', 'guardado' => 1, 'idTipoInforme' => $_SESSION["idTipoInforme"] ]);
             }
             
 
@@ -577,7 +578,7 @@ class IeoController extends Controller
         
         //$this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'idTipoInforme' => $_SESSION["idTipoInforme"]]);
     }
 
     /**

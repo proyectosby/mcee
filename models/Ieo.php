@@ -61,6 +61,7 @@ class Ieo extends \yii\db\ActiveRecord
         return [
             [['institucion_id', 'sede_id', 'estado', 'id_tipo_informe', 'zonas_educativas_id'], 'default', 'value' => null],
             [['institucion_id', 'sede_id', 'estado', 'id_tipo_informe', 'zonas_educativas_id'], 'integer'],
+            [['zonas_educativas_id'], 'required'],
             /*[['persona_acargo', 'codigo_dane', 'zonas_educativas_id', 'comuna', 'barrio', 'file_socializacion_ruta', 'file_soporte_necesidad', 'file_soporte_necesidad', 
                 'file_informe_caracterizacion', 'file_matriz_caracterizacion', 'file_revision_pei', 'file_revision_autoevaluacion', 'file_revision_pmi', 'file_resultados_caracterizacion', 'file_horario_trabajo',
             'file_producto_ruta', 'file_resultados_actividad_ruta', 'file_acta_ruta', 'file_listado_ruta', 'file_fotografias_ruta', 'file_producto_imforme_ruta', 'file_plan_accion'], 'required'],*/
