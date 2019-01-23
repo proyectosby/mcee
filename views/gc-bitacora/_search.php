@@ -19,13 +19,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_ciclo') ?>
 
-    <?= $form->field($model, 'id_docente') ?>
-
     <?= $form->field($model, 'id_jefe') ?>
 
     <?= $form->field($model, 'id_sede') ?>
 
-    <?php // echo $form->field($model, 'observaciones') ?>
+    <?= $form->field($model, 'observaciones') ?>
 
     <?php // echo $form->field($model, 'estado') ?>
 

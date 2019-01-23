@@ -20,13 +20,6 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use app\models\Personas;
-use app\models\GcSemanas;
-use app\models\Sedes;
-use app\models\Parametro;
-use app\models\GcCiclos;
-use yii\helpers\ArrayHelper;
-
 /**
  * GcBitacoraController implements the CRUD actions for GcBitacora model.
  */
@@ -82,50 +75,14 @@ class GcBitacoraController extends Controller
      */
     public function actionCreate()
     {
-		$id_sede 		= $_SESSION['sede'][0];
-		$id_institucion	= $_SESSION['instituciones'][0];
-		
-		$sede = Sedes::findOne( $id_sede );
-		
         $model = new GcBitacora();
-        
-		$model->estado = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['gc-ciclos/index']);
-            // return $this->redirect(['index']);
+            return $this->redirect(['index']);
         }
-		
-		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
-		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
-		$dataJornadas 		= Parametro::find()
-								->where( 'estado=1' )
-								->andWhere( 'id_tipo_parametro=7' )
-								->all();
-		
-		$jornadas		= ArrayHelper::map( $dataJornadas, 'id', 'descripcion' );
-		
-		$dataCiclos 		= GcCiclos::find()
-								->where( 'estado=1' )
-								->all();
-		
-		$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
 
         return $this->renderAjax('create', [
             'model' => $model,
-            'docentes' => $docentes,
-            'sede' => $sede,
-            'jornadas' => $jornadas,
-            'ciclos' => $ciclos,
         ]);
     }
 
@@ -138,48 +95,14 @@ class GcBitacoraController extends Controller
      */
     public function actionUpdate($id)
     {
-		$id_sede 		= $_SESSION['sede'][0];
-		$id_institucion	= $_SESSION['instituciones'][0];
-		
-		$sede = Sedes::findOne( $id_sede );
-		
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // return $this->redirect(['index']);
-            return $this->redirect(['gc-ciclos/index']);
+            return $this->redirect(['index']);
         }
-		
-		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
-		
-		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
-		$dataJornadas 		= Parametro::find()
-								->where( 'estado=1' )
-								->andWhere( 'id_tipo_parametro=7' )
-								->all();
-		
-		$jornadas		= ArrayHelper::map( $dataJornadas, 'id', 'descripcion' );
-		
-		$dataCiclos 		= GcCiclos::find()
-								->where( 'estado=1' )
-								->all();
-		
-		$ciclos		= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
 
         return $this->renderAjax('update', [
             'model' => $model,
-			'sede' => $sede,
-			'jornadas' => $jornadas,
-			'ciclos' => $ciclos,
-			'docentes' => $docentes,
         ]);
     }
 

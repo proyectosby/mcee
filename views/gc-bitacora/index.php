@@ -12,7 +12,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\GcBitacoraBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Bitacoras';
+$this->title = 'Gc Bitacoras';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Bitacora</h3>
+<h3>NombreCrud</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -80,12 +80,11 @@ $this->params['breadcrumbs'][] = $this->title;
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            // 'id',
+            'id',
             'id_ciclo',
-            'id_docente',
             'id_jefe',
             'id_sede',
-            //'observaciones',
+            'observaciones',
             //'estado',
             //'jornada',
 

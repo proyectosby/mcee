@@ -23,6 +23,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?= $form->field($model, 'estado')->textInput() ?>
 
+    <?= $form->field($model, 'id_ciclo')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>

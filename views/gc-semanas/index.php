@@ -86,6 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'fecha_finalizacion',
             'fecha_cierre',
             //'estado',
+            //'id_ciclo',
 
             [
 			'class' => 'yii\grid\ActionColumn',

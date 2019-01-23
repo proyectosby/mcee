@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\GcCiclos */
 
-$this->title = 'Agregar Ciclo';
+$this->title = 'Agregar Gc Ciclos';
 $this->params['breadcrumbs'][] = ['label' => 'Gc Ciclos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
@@ -16,8 +16,6 @@ $this->params['breadcrumbs'][] = "Agregar";
 
     <?= $this->render('_form', [
         'model' => $model,
-        'docentes' => $docentes,
-        'semanas' => $semanas,
     ]) ?>
 
 </div>

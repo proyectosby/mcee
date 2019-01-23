@@ -18,7 +18,7 @@ class GcBitacoraBuscar extends GcBitacora
     public function rules()
     {
         return [
-            [['id', 'id_ciclo', 'id_docente', 'id_jefe', 'id_sede', 'estado', 'jornada'], 'integer'],
+            [['id', 'id_ciclo', 'id_jefe', 'id_sede', 'estado', 'jornada'], 'integer'],
             [['observaciones'], 'safe'],
         ];
     }
@@ -61,7 +61,6 @@ class GcBitacoraBuscar extends GcBitacora
         $query->andFilterWhere([
             'id' => $this->id,
             'id_ciclo' => $this->id_ciclo,
-            'id_docente' => $this->id_docente,
             'id_jefe' => $this->id_jefe,
             'id_sede' => $this->id_sede,
             'estado' => $this->estado,

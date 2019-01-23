@@ -35,6 +35,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             'fecha_finalizacion',
             'fecha_cierre',
             'estado',
+            'id_ciclo',
         ],
     ]) ?>
 

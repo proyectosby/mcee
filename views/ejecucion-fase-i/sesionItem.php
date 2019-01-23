@@ -61,7 +61,8 @@ use nex\chosen\Chosen;
 				'language' => 'es',
 				'clientOptions' => [
 					'autoclose' => true,
-					'format' => 'dd-mm-yyyy'
+					'format' => 'dd-mm-yyyy',
+					'enableOnReadonly' => false,
 				]
 		])->label('Fecha de la sesión(dd-mm-aaaa)');?> 	
 		
