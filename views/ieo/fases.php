@@ -26,9 +26,11 @@ foreach( $fases as $keyFase => $fase ){
 														"model" => $model,
 														"estudiantesGrado" =>  $estudiantesGrado,
 														'datos'=> $datos,
-														"persona" => $persona
+														"persona" => $persona,
+														"nombres" => $nombres,
 													] 
 										),
+					//'options' => ['style' => 'background-color: red;'],
 					'contentOptions'=> []
 				];
 				
@@ -36,7 +38,11 @@ foreach( $fases as $keyFase => $fase ){
 }
 
 use yii\bootstrap\Collapse;
+use yii\bootstrap\Tabs;
 
-echo Collapse::widget([
+/*echo Collapse::widget([
+    'items' => $items,
+]);*/
+echo Tabs::widget([
     'items' => $items,
 ]);

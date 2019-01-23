@@ -21,7 +21,7 @@ use Yii;
 class Ieo extends \yii\db\ActiveRecord
 {
 
-    public $file_socializacion_ruta;
+    /*public $file_socializacion_ruta;
     public $file_soporte_necesidad;
     public $file_informe_caracterizacion;
     public $file_matriz_caracterizacion;
@@ -43,7 +43,7 @@ class Ieo extends \yii\db\ActiveRecord
     public $observaciones;
     public $tipo_actividad;
 
-    public $zona_educativa;
+    public $zona_educativa;*/
 
     /**
      * @inheritdoc

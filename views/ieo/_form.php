@@ -18,7 +18,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ieo-docentes.js',['depend
     <?= $form->field($model, 'zonas_educativas_id')->dropDownList( $zonasEducativas, [ 'prompt' => 'Seleccione...' ] ) ?>
     <?= $form->field($model, 'comuna')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>
     <?= $form->field($model, 'barrio')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>  
-    <?= $form->field($model, 'persona_acargo')->textInput() ?>  
+    
     <?= $model->persona_acargo ?>
     
     <h3 style='background-color: #ccc;padding:5px;'>I.E.O Avance Ejecución</h3>
