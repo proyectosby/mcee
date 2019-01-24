@@ -1,5 +1,14 @@
 <?php
 
+/**********
+Modificaciones:
+Fecha: 2019-01-22
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Si no se ha seleccionado una sede, se pide
+---------------------------------------
+**********/
+
+
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -10,6 +19,11 @@ use dosamigos\datepicker\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\EcDatosBasicos */
 /* @var $form yii\widgets\ActiveForm */
+
+if( !$sede ){
+	$this->registerJs( "$( cambiarSede ).click()" );
+	return;
+}
 ?>
 
 <div class="ec-datos-basicos-form">

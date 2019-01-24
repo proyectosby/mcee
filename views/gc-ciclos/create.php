@@ -12,10 +12,14 @@ $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="gc-ciclos-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+ 
 
     <?= $this->render('_form', [
-        'model' => $model,
+        'modelCiclo' 			=> $modelCiclo,
+		'modelBitacora' 		=> $modelBitacora,
+		'modelSemanas' 			=> $modelSemanas,
+		'modelDocentesXBitacora'=> $modelDocentesXBitacora,
+		'docentes'				=> $docentes,
     ]) ?>
 
 </div>

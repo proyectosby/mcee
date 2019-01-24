@@ -20,6 +20,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use app\models\GcSemanas;
+use app\models\GcBitacora;
+use app\models\GcDocentesXBitacora;
+use app\models\Personas;
+use yii\helpers\ArrayHelper;
 /**
  * GcCiclosController implements the CRUD actions for GcCiclos model.
  */
@@ -75,14 +80,36 @@ class GcCiclosController extends Controller
      */
     public function actionCreate()
     {
-        $model = new GcCiclos();
+        $modelCiclo 			= new GcCiclos();
+        $modelBitacora 			= new GcBitacora();
+        $modelSemanas 			= new GcSemanas();
+        $modelDocentesXBitacora	= new GcDocentesXBitacora();
+		
+		$id_institucion	= $_SESSION['instituciones'][0];
+		$id_sede 		= $_SESSION['sede'][0];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($modelCiclo->load(Yii::$app->request->post()) && $modelCiclo->save()) {
             return $this->redirect(['index']);
         }
+		
+		/*Se realiza consulta provisonal para obtener listado de docentes*/
+		$dataPersonas 		= Personas::find()
+								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								->where( 'personas.estado=1' )
+								->andWhere( 'id_institucion='.$id_institucion )
+								->all();
+		
+		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 
         return $this->renderAjax('create', [
-            'model' => $model,
+            'modelCiclo' 			=> $modelCiclo,
+            'modelBitacora' 		=> $modelBitacora,
+            'modelSemanas' 			=> $modelSemanas,
+            'modelDocentesXBitacora'=> $modelDocentesXBitacora,
+            'docentes'				=> $docentes,
         ]);
     }
 

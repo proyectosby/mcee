@@ -49,15 +49,15 @@ class GcCiclos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'fecha' => 'Fecha',
-            'descripcion' => 'Descripcion',
-            'fecha_inicio' => 'Fecha Inicio',
-            'fecha_finalizacion' => 'Fecha Finalizacion',
-            'fecha_cierre' => 'Fecha Cierre',
-            'fecha_maxima_acceso' => 'Fecha Maxima Acceso',
-            'id_creador' => 'Id Creador',
-            'estado' => 'Estado',
+            'id' 					=> 'ID',
+            'fecha' 				=> 'Fecha',
+            'descripcion' 			=> 'Descripción',
+            'fecha_inicio' 			=> 'Fecha de inicio',
+            'fecha_finalizacion'	=> 'Fecha de finalización',
+            'fecha_cierre' 			=> 'Fecha de cierre',
+            'fecha_maxima_acceso' 	=> 'Fecha máxima de acceso',
+            'id_creador' 			=> 'Creador',
+            'estado' 				=> 'Estado',
         ];
     }
 }
