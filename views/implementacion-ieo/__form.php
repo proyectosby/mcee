@@ -18,7 +18,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/imp-ieo-doncentes.js',['d
         <?= $form->field($model, 'zona_educativa')->dropDownList( $zonasEducativas, [ 'prompt' => 'Seleccione...' ] ) ?>
         <?= $form->field($model, 'comuna')->textInput() ?>
         <?= $form->field($model, 'barrio')->textInput() ?>
-        <?= $form->field($model, 'profesional_cargo')->textInput() ?>
+        <?= $form->field($model, 'profesional_cargo')->dropDownList( $nombres, [ 'prompt' => 'Seleccione...' ] ) ?>
         <?= $form->field($model, 'horario_trabajo')->textArea() ?>
 
         <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0);   ?>

@@ -22,7 +22,9 @@ use app\models\ProductoImplementacionIeo;
 use app\models\Instituciones;
 use app\models\ProductosImpIeo;
 use app\models\ZonasEducativas;
-
+use app\models\PerfilesXPersonasInstitucion;
+use app\models\PerfilesXPersonas;
+use app\models\Personas;
 
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
@@ -406,7 +408,10 @@ class ImplementacionIeoController extends Controller
             
         }
 
-
+        $idPerfilesXpersonas	= PerfilesXPersonasInstitucion::find()->where( "id_institucion = $idInstitucion" )->all();
+		$perfiles_x_persona 	= PerfilesXPersonas::findOne($idPerfilesXpersonas)->id_personas;		
+        $nombres1 				= Personas::find($perfiles_x_persona)->all();
+        $nombres	 = ArrayHelper::map( $nombres1, 'id', 'nombres');
      
         $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
         $zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
@@ -414,6 +419,7 @@ class ImplementacionIeoController extends Controller
         return $this->renderAjax('create', [
             'model' => $ieo_model,
             'zonasEducativas' => $zonasEducativas,
+            "nombres" => $nombres,
             
         ]);
     }
