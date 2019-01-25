@@ -70,12 +70,14 @@ $.get( "index.php?r=informe-avance-plan-accion-misional/logros",
 			},
 		"json");		
 
+		
+
+		
 //llenar los logros, segun el estado actual
 $("[id$='-estado_actual']").change(function() 
 {
   
 	valorSelect = $(this).val();
-  // arrayLogros[valorSelect]);
 
 	//extraer el numero (idAcciones) para llenar el logros correspondiente al estado actual
 	valorNombre = $(this).attr( 'name' );
@@ -89,8 +91,8 @@ $("[id$='-estado_actual']").change(function()
 	numero = nombreParte[1].split(separador, limite);
 	//
 	
-	//se asigna el valor a logors segun lo seleccionado en el estado actual
-	$("#ecavances-"+numero[0]+"-logros").val(arrayLogros[valorSelect]);
+	//se asigna el valor a logros segun lo seleccionado en el estado actual
+	$("#ecavances-"+numero[0]+"-logros").val(arrayLogros[numero[0]][valorSelect]);
 });		
 		
 function colorBarra(valor)

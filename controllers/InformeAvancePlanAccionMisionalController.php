@@ -47,6 +47,7 @@ use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Parametro;
 use app\models\EcPorcentajeAvance;
+use app\models\EcInformeMensualMisionalLogros;
 use yii\bootstrap\Collapse;
 
 /**
@@ -73,16 +74,25 @@ class InformeAvancePlanAccionMisionalController extends Controller
 	public function actionLogros()
 	{
 		
-		$idsPreguntaPorcentajeAvance = new Parametro();
-		$idsPreguntaPorcentajeAvance = $idsPreguntaPorcentajeAvance->find()->orderby("id")->andWhere("id_tipo_parametro = 42")->all();
+		$logros = new EcInformeMensualMisionalLogros();
+		$logros = $logros->find()->orderby("id")->all();
 		// $idsPreguntaPorcentajeAvance = ArrayHelper::map($idsPreguntaPorcentajeAvance,'id','descripcion');
 		
 		
-		$result = ArrayHelper::getColumn($idsPreguntaPorcentajeAvance, function ($element) {
-				return $element['descripcion'];
-			});
-			
-		echo json_encode($result);
+		$result = ArrayHelper::getColumn($logros, function ($element) 
+		{
+				
+			$dato[$element['id_acciones']]['id_acciones']= $element['id_acciones'];
+			$dato[$element['id_acciones']]['estado_actual']= $element['estado_actual'];
+			$dato[$element['id_acciones']]['logro_descripcion']= $element['logro_descripcion'];
+			return $dato;
+		});
+		
+		foreach	($result as $r => $valor)
+			foreach	($valor as $id_acciones => $valores)
+				$datos[$id_acciones][$valores['estado_actual']] = $valores['logro_descripcion'];
+				
+		echo json_encode($datos);
 	}
 	
     function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0,$datoInformePlaneacionProyectos=0)
