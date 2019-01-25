@@ -1,4 +1,9 @@
 <?php
+use yii\helpers\Html;
+use yii\helpers\Url;
+?>
+<a href="<?= Url::to(['gc-bitacora/index']) ?>">Bitacora Index</a>
+<?php
 /**********
 ---------------------------------------
 Modificaciones:
@@ -6,7 +11,7 @@ Fecha: 09-01-2019
 Persona encargada: Edwin Molina - Johan Ospina
 Cambios realizados: Se mejora script para pedir la institución y la sede. Los script correspondientes js están todo incluidos en header.js.
 ---------------------------------------
-**********/ 
+**********/
 
 if(@$_SESSION['sesion']=="si")
 { 

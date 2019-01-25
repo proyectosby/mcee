@@ -11,6 +11,11 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module',
+        ],
+    ],
     'components' => [
 		'view' => [
 			 'theme' => [
@@ -18,6 +23,20 @@ $config = [
 					'@app/views' => '@app/views'
 				 ],
 			 ],
+            'renderers' => [
+                'twig' => [
+                    'class' => 'yii\twig\ViewRenderer',
+                    'cachePath' => '@runtime/Twig/cache',
+                    // Array of twig options:
+                    'options' => [
+                        'auto_reload' => true,
+                    ],
+                    'globals' => [
+                        'html' => ['class' => '\yii\helpers\Html'],
+                    ],
+                    'uses' => ['yii\bootstrap'],
+                ],
+            ],
 		],
 		'assetManager' => [
 			'bundles' => [
@@ -58,17 +77,18 @@ $config = [
         ],
         'db' => $db,
 
-        // 'urlManager' => [
-            // 'class' => "yii\web\UrlManager",
-            // 'enablePrettyUrl' => true,
-            // 'showScriptName' => false,
-            // 'rules' => [
-                // '' => 'site/index',
-                // '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                // '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                // '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-            // ],
-        // ],
+         /*'urlManager' => [
+             'class' => "yii\web\UrlManager",
+             'enablePrettyUrl' => true,
+             'showScriptName' => false,
+             'rules' => [
+                 '' => 'site/index',
+                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                 'gc-bitacora/index' => 'gc-bitacora/index'
+             ],
+         ],*/
 
     ],
     'params' => $params,
