@@ -97,59 +97,59 @@ $this->registerJsFile(
 
             <tr>
                 <td rowspan='1' colspan='1'>PPT</td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_ieo')->textInput([ 'value' => isset($cantidad_ieo[1]) ? $cantidad_ieo[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_sedes')->textInput([ 'value' => isset($cantidad_sedes_ieo[1]) ? $cantidad_sedes_ieo[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_ieo')->textInput([ 'value' => isset($porcentaje_ieo[1]) ? $porcentaje_ieo[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_sedes')->textInput([ 'value' => isset($porcentaje_sedes[1]) ? $porcentaje_sedes[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_actividad_uno')->textInput([ 'value' => isset($porcentaje_actividad_uno[1]) ? $porcentaje_actividad_uno[1] : '']) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_actividad_dos')->textInput([ 'value' => isset($porcentaje_actividad_dos[1]) ? $porcentaje_actividad_dos[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_actividad_tres')->textInput([ 'value' => isset($porcentaje_actividad_tres[1]) ? $porcentaje_actividad_tres[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]poblacion_beneficiada_directa')->textInput([ 'value' => isset($poblacion_beneficiada_directa[1]) ? $poblacion_beneficiada_directa[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]poblacion_beneficiada_indirecta')->textInput([ 'value' => isset($poblacion_beneficiada_indirecta[1]) ? $poblacion_beneficiada_indirecta[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]alarmas_generales')->textInput([ 'value' => isset($alarmas_generales[1]) ? $alarmas_generales[1] : '']) ?></td>                
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => isset($cantidad_ieo[1]) ? $cantidad_ieo[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => isset($cantidad_sedes_ieo[1]) ? $cantidad_sedes_ieo[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_ieo')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_ieo[1]) ? $porcentaje_ieo[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_sedes')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_sedes[1]) ? $porcentaje_sedes[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_actividad_uno')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_uno[1]) ? $porcentaje_actividad_uno[1] : '']) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_actividad_dos')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_dos[1]) ? $porcentaje_actividad_dos[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_actividad_tres')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_tres[1]) ? $porcentaje_actividad_tres[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]poblacion_beneficiada_directa')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_directa[1]) ? $poblacion_beneficiada_directa[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]poblacion_beneficiada_indirecta')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_indirecta[1]) ? $poblacion_beneficiada_indirecta[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]alarmas_generales')->textInput([ 'type' => 'number', 'value' => isset($alarmas_generales[1]) ? $alarmas_generales[1] : '']) ?></td>                
             </tr>
 
             <tr>
                 <td rowspan='1' colspan='1'>PSSE</td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_ieo')->textInput([ 'value' => isset($cantidad_ieo[2]) ? $cantidad_ieo[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_sedes')->textInput([ 'value' => isset($cantidad_sedes_ieo[2]) ? $cantidad_sedes_ieo[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_ieo')->textInput([ 'value' => isset($porcentaje_ieo[2]) ? $porcentaje_ieo[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_sedes')->textInput([ 'value' => isset($porcentaje_sedes[2]) ? $porcentaje_sedes[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_actividad_uno')->textInput([ 'value' => isset($porcentaje_actividad_uno[2]) ? $porcentaje_actividad_uno[2] : '']) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_actividad_dos')->textInput([ 'value' => isset($porcentaje_actividad_dos[2]) ? $porcentaje_actividad_dos[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_actividad_tres')->textInput([ 'value' => isset($porcentaje_actividad_tres[2]) ? $porcentaje_actividad_tres[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]poblacion_beneficiada_directa')->textInput([ 'value' => isset($poblacion_beneficiada_directa[2]) ? $poblacion_beneficiada_directa[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]poblacion_beneficiada_indirecta')->textInput([ 'value' => isset($poblacion_beneficiada_indirecta[2]) ? $poblacion_beneficiada_indirecta[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]alarmas_generales')->textInput([ 'value' => isset($alarmas_generales[2]) ? $alarmas_generales[2] : '']) ?></td>               
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => isset($cantidad_ieo[2]) ? $cantidad_ieo[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => isset($cantidad_sedes_ieo[2]) ? $cantidad_sedes_ieo[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_ieo')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_ieo[2]) ? $porcentaje_ieo[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_sedes')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_sedes[2]) ? $porcentaje_sedes[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_actividad_uno')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_uno[2]) ? $porcentaje_actividad_uno[2] : '']) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_actividad_dos')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_dos[2]) ? $porcentaje_actividad_dos[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_actividad_tres')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_tres[2]) ? $porcentaje_actividad_tres[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]poblacion_beneficiada_directa')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_directa[2]) ? $poblacion_beneficiada_directa[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]poblacion_beneficiada_indirecta')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_indirecta[2]) ? $poblacion_beneficiada_indirecta[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]alarmas_generales')->textInput([ 'type' => 'number', 'value' => isset($alarmas_generales[2]) ? $alarmas_generales[2] : '']) ?></td>               
             </tr>
 
             <tr>
                 <td rowspan='1' colspan='1'>PAF</td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_ieo')->textInput([ 'value' => isset($cantidad_ieo[3]) ? $cantidad_ieo[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_sedes')->textInput([ 'value' => isset($cantidad_sedes_ieo[3]) ? $cantidad_sedes_ieo[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_ieo')->textInput([ 'value' => isset($porcentaje_ieo[3]) ? $porcentaje_ieo[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_sedes')->textInput([ 'value' => isset($porcentaje_sedes[3]) ? $porcentaje_sedes[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_actividad_uno')->textInput([ 'value' => isset($porcentaje_actividad_uno[3]) ? $porcentaje_actividad_uno[3] : '']) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_actividad_dos')->textInput([ 'value' => isset($porcentaje_actividad_dos[3]) ? $porcentaje_actividad_dos[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_actividad_tres')->textInput([ 'value' => isset($porcentaje_actividad_tres[3]) ? $porcentaje_actividad_tres[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]poblacion_beneficiada_directa')->textInput([ 'value' => isset($poblacion_beneficiada_directa[3]) ? $poblacion_beneficiada_directa[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]poblacion_beneficiada_indirecta')->textInput([ 'value' => isset($poblacion_beneficiada_indirecta[3]) ? $poblacion_beneficiada_indirecta[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]alarmas_generales')->textInput([ 'value' => isset($alarmas_generales[3]) ? $alarmas_generales[3] : '']) ?></td>                
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => isset($cantidad_ieo[3]) ? $cantidad_ieo[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => isset($cantidad_sedes_ieo[3]) ? $cantidad_sedes_ieo[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_ieo')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_ieo[3]) ? $porcentaje_ieo[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_sedes')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_sedes[3]) ? $porcentaje_sedes[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_actividad_uno')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_uno[3]) ? $porcentaje_actividad_uno[3] : '']) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_actividad_dos')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_dos[3]) ? $porcentaje_actividad_dos[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_actividad_tres')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_tres[3]) ? $porcentaje_actividad_tres[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]poblacion_beneficiada_directa')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_directa[3]) ? $poblacion_beneficiada_directa[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]poblacion_beneficiada_indirecta')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_indirecta[3]) ? $poblacion_beneficiada_indirecta[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]alarmas_generales')->textInput([ 'type' => 'number', 'value' => isset($alarmas_generales[3]) ? $alarmas_generales[3] : '']) ?></td>                
             </tr>
 
            
             <tr>
                 <td rowspan='1' colspan='1'>TOTAL</td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]cantidad_ieo')->textInput([ 'value' => isset($cantidad_ieo[1]) ? $cantidad_ieo[1] + $cantidad_ieo[2] +$cantidad_ieo[3] : '', 'readonly' => true]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]cantidad_sedes')->textInput([ 'value' => isset($cantidad_sedes_ieo[1]) ? $cantidad_sedes_ieo[1] + $cantidad_sedes_ieo[2]+ $cantidad_sedes_ieo[3] : '', 'readonly' => true]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_ieo')->textInput([ 'value' => isset($porcentaje_ieo[3]) ? ((($porcentaje_ieo[3]+ $porcentaje_ieo[2] + $porcentaje_ieo[1]) / 3) .'%') : '', 'readonly' => true ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_sedes')->textInput([ 'value' => isset($porcentaje_sedes[3]) ? ((($porcentaje_sedes[3]+ $porcentaje_sedes[2] + $porcentaje_sedes[1]) / 3) .'%') : '', 'readonly' => true ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_actividad_uno')->textInput([ 'value' => isset($porcentaje_actividad_uno[3]) ? ((($porcentaje_actividad_uno[3]+ $porcentaje_actividad_uno[2] + $porcentaje_actividad_uno[1]) / 3) .'%') : '', 'readonly' => true]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_actividad_dos')->textInput([ 'value' =>  isset($porcentaje_actividad_dos[3]) ? ((($porcentaje_actividad_dos[3]+ $porcentaje_actividad_dos[2] + $porcentaje_actividad_dos[1]) / 3) .'%') : '', 'readonly' => true]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_actividad_tres')->textInput([ 'value' =>  isset($porcentaje_actividad_tres[3]) ? ((($porcentaje_actividad_tres[3]+ $porcentaje_actividad_tres[2] + $porcentaje_actividad_tres[1]) / 3) .'%') : '', 'readonly' => true]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]poblacion_beneficiada_directa')->textInput([ 'value' => isset($poblacion_beneficiada_directa[1]) ? ($poblacion_beneficiada_directa[1] + $poblacion_beneficiada_directa[2] +$poblacion_beneficiada_directa[3]) : '', 'readonly' => true ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]poblacion_beneficiada_indirecta')->textInput([ 'value' => isset($poblacion_beneficiada_indirecta[1]) ? ($poblacion_beneficiada_indirecta[1] + $poblacion_beneficiada_indirecta[2] +$poblacion_beneficiada_indirecta[3]) : '', 'readonly' => true ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]alarmas_generales')->textInput([ 'value' => isset($alarmas_generales[1], $alarmas_generales[2],$alarmas_generales[3]) ? (intval($alarmas_generales[1]) + intval($alarmas_generales[2]) +intval($alarmas_generales[3])) : '', 'readonly' => true]) ?></td>                
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => isset($cantidad_ieo[1]) ? $cantidad_ieo[1] + $cantidad_ieo[2] +$cantidad_ieo[3] : '', 'readonly' => true]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => isset($cantidad_sedes_ieo[1]) ? $cantidad_sedes_ieo[1] + $cantidad_sedes_ieo[2]+ $cantidad_sedes_ieo[3] : '', 'readonly' => true]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_ieo')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_ieo[3]) ? ((($porcentaje_ieo[3]+ $porcentaje_ieo[2] + $porcentaje_ieo[1]) / 3) .'%') : '', 'readonly' => true ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_sedes')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_sedes[3]) ? ((($porcentaje_sedes[3]+ $porcentaje_sedes[2] + $porcentaje_sedes[1]) / 3) .'%') : '', 'readonly' => true ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_actividad_uno')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_uno[3]) ? ((($porcentaje_actividad_uno[3]+ $porcentaje_actividad_uno[2] + $porcentaje_actividad_uno[1]) / 3) .'%') : '', 'readonly' => true]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_actividad_dos')->textInput([ 'type' => 'number', 'value' =>  isset($porcentaje_actividad_dos[3]) ? ((($porcentaje_actividad_dos[3]+ $porcentaje_actividad_dos[2] + $porcentaje_actividad_dos[1]) / 3) .'%') : '', 'readonly' => true]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]porcentaje_actividad_tres')->textInput([ 'type' => 'number', 'value' =>  isset($porcentaje_actividad_tres[3]) ? ((($porcentaje_actividad_tres[3]+ $porcentaje_actividad_tres[2] + $porcentaje_actividad_tres[1]) / 3) .'%') : '', 'readonly' => true]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]poblacion_beneficiada_directa')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_directa[1]) ? ($poblacion_beneficiada_directa[1] + $poblacion_beneficiada_directa[2] +$poblacion_beneficiada_directa[3]) : '', 'readonly' => true ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]poblacion_beneficiada_indirecta')->textInput([ 'type' => 'number', 'value' => isset($poblacion_beneficiada_indirecta[1]) ? ($poblacion_beneficiada_indirecta[1] + $poblacion_beneficiada_indirecta[2] +$poblacion_beneficiada_indirecta[3]) : '', 'readonly' => true ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[4]alarmas_generales')->textInput([ 'type' => 'number', 'value' => isset($alarmas_generales[1], $alarmas_generales[2],$alarmas_generales[3]) ? (intval($alarmas_generales[1]) + intval($alarmas_generales[2]) +intval($alarmas_generales[3])) : '', 'readonly' => true]) ?></td>                
             </tr>
         </tbody>
 

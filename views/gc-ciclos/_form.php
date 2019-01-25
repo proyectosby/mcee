@@ -10,7 +10,17 @@ use dosamigos\datepicker\DatePicker;
 /* @var $model app\models\GcCiclos */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+
+//Registro el js (gc-ciclos.j)
+$this->registerJs( file_get_contents( '../web/js/gc-ciclos.js' ) );
+
+// echo "<pre>"; var_dump( $modelSemanas->getAttributes() ); echo "</pre>";
+
+$this->registerJs( "var attibutesWeek = ".\yii\helpers\Json::htmlEncode( $modelSemanas->getAttributes() ).";" );
 ?>
+
+
+
 
 <div class="gc-ciclos-form">
 
@@ -105,8 +115,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 		
 		<div>
 			 <div class="form-group text-right"'>
-				<?= Html::button('Agregar semana', ['class' => 'btn btn-success']) ?>
-				<?= Html::button('Eliminar semana', ['class' => 'btn btn-danger']) ?>
+				<?= Html::button('Agregar semana', ['class' => 'btn btn-success btn-add-semanas']) ?>
+				<?= Html::button('Eliminar semana', ['class' => 'btn btn-danger btn-remove-semanas']) ?>
 			</div>
 		</div>
 	
@@ -116,13 +126,13 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 		
 		<div id='dv-semana-0' style='background-color:#eee;padding:5px;'>
 			
-			<div id='dv-semana-title' style='font-size:18pt;background-color:#3c8dbc;padding:0 5px 0;'>
+			<div id='semana-title' style='font-size:18pt;background-color:#3c8dbc;padding:0 5px 0;'>
 				Semana 0
 			</div>
 			
-			<div class='dv-semana-contenido' style='padding:5px;'>
+			<div class='semana-contenido' style='padding:5px;'>
 	
-				<?= $form->field($modelSemanas, 'fecha_inicio')->widget(
+				<?= $form->field($modelSemanas, '[0]fecha_inicio')->widget(
 					DatePicker::className(), [
 						
 						 // modify template for custom rendering
@@ -134,7 +144,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 						]
 				]); ?>
 				
-				<?= $form->field($modelSemanas, 'fecha_finalizacion')->widget(
+				<?= $form->field($modelSemanas, '[0]fecha_finalizacion')->widget(
 					DatePicker::className(), [
 						
 						 // modify template for custom rendering
@@ -146,7 +156,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 						]
 				]); ?>
 				
-				<?= $form->field($modelSemanas, 'fecha_cierre')->widget(
+				<?= $form->field($modelSemanas, '[0]fecha_cierre')->widget(
 					DatePicker::className(), [
 						
 						 // modify template for custom rendering
