@@ -14,7 +14,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 //Registro el js (gc-ciclos.j)
 $this->registerJs( file_get_contents( '../web/js/gc-ciclos.js' ) );
 
-echo "<pre>"; var_dump( $modelSemanas->getAttributes() ); echo "</pre>";
+// echo "<pre>"; var_dump( $modelSemanas->getAttributes() ); echo "</pre>";
 
 $this->registerJs( "var attibutesWeek = ".\yii\helpers\Json::htmlEncode( $modelSemanas->getAttributes() ).";" );
 ?>
