@@ -105,7 +105,8 @@ class RomReporteOperativoMisionalController extends Controller
 														'estados'=>$estados,
 													] 
 										),
-					'contentOptions'=> []
+					'contentOptions'=> [],
+					'options' => ['class' => ' panel-primary']
 				];
 	
 		}
