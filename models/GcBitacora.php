@@ -14,6 +14,10 @@ use Yii;
  * @property string $observaciones
  * @property string $estado
  * @property string $jornada
+ *
+ * @property GcCiclos $ciclo
+ * @property Personas $jefe
+ * @property Sedes $sede
  */
 class GcBitacora extends \yii\db\ActiveRecord
 {
@@ -50,12 +54,36 @@ class GcBitacora extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_ciclo' => 'Id Ciclo',
-            'id_jefe' => 'Id Jefe',
-            'id_sede' => 'Id Sede',
+            'id_ciclo' => 'Ciclo',
+            'id_jefe' => 'Jefe',
+            'id_sede' => 'Sede',
             'observaciones' => 'Observaciones',
             'estado' => 'Estado',
             'jornada' => 'Jornada',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCiclo()
+    {
+        return $this->hasOne(GcCiclos::className(), ['id' => 'id_ciclo']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJefe()
+    {
+        return $this->hasOne(Personas::className(), ['id' => 'id_jefe']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSede()
+    {
+        return $this->hasOne(Sedes::className(), ['id' => 'id_sede']);
     }
 }

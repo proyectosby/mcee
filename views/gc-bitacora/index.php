@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>NombreCrud</h3>
+<h3>Bitacoras</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -46,9 +46,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php try { ?>
     <?php
         $gridColumns = [
-            'id_ciclo',
-            'id_jefe',
-            'id_sede',
+
+            [
+                'attribute'=>'id_ciclo',
+                'value'=>'ciclo.descripcion',
+            ],
+
+            [
+                'attribute'=>'id_jefe',
+                'value'=>'jefe.nombres',
+            ],
+
+            [
+                'attribute'=>'id_sede',
+                'value'=>'sede.descripcion',
+            ],
             'observaciones',
         ];
 
@@ -77,60 +89,43 @@ $this->params['breadcrumbs'][] = $this->title;
                 "lengthMenu" => [[20, -1], [20, Yii::t('app', "All")]],
                 "info" => true,
                 "responsive" => true,
-                "dom" => 'lfTrtip',
-                /*"tableTools" => [
-                    "aButtons" => [
-                        [
-                            "sExtends"=> "copy",
-                            "sButtonText"=> Yii::t('app',"Copiar")
-                        ],
-
-                        [
-                            "sExtends"=> "csv",
-                            "sButtonText"=> Yii::t('app',"CSV")
-
-                        ],
-                        [
-                            "sExtends" => "xls",
-                            "oSelectorOpts" => ["page" => 'current']
-                        ],
-                        [
-                            "sExtends" => "pdf",
-                            "oSelectorOpts" => ["page" => 'current']
-                        ],
-                        [
-                            "sExtends"=> "print",
-                            "sButtonText"=> Yii::t('app',"Imprimir")
-                        ],
-                    ],
-                ],*/
             ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 //'id',
-                'id_ciclo',
-                'id_jefe',
-                'id_sede',
+
+                [
+                    'attribute'=>'id_ciclo',
+                    'value'=>'ciclo.descripcion',
+                ],
+
+                [
+                    'attribute'=>'id_jefe',
+                    'value'=>'jefe.nombres',
+                ],
+
+                [
+                    'attribute'=>'id_sede',
+                    'value'=>'sede.descripcion',
+                ],
                 'observaciones',
                 //'estado',
                 //'jornada',
 
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{view}{update}{delete}',
+                    'template' => '{view}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="' . $url . '" ></span>', $url, [
+                            return Html::a('<span name="detalle" class="btn btn-xs btn-primary m-t-5" value ="' . $url . '" >Visualizar bitácora</span>', $url, [
                                 'title' => Yii::t('app', 'lead-view'),
                             ]);
                         },
-
-                        'update' => function ($url, $model) {
-                            return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="' . $url . '"></span>', $url, [
-                                'title' => Yii::t('app', 'lead-update'),
+                        'view2' => function ($url, $model) {
+                            return Html::a('<span name="detalle" class="btn btn-xs btn-primary m-t-5" value ="' . $url . '" >Ingresar a la bitácora</span>', $url, [
+                                'title' => Yii::t('app', 'lead-view'),
                             ]);
-                        }
-
+                        },
                     ],
 
                 ],
@@ -139,6 +134,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
     ?>
     <?php } catch (Exception $e) {
+        var_dump($e);
     } ?>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
