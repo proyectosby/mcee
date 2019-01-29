@@ -30,7 +30,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         'model' => $model,
         'attributes' => [
             'id',
-            'id_insticion',
+            'id_institucion',
             'id_sede',
             'caracterizacion_si_no',
             'caracterizacion_nombre',
