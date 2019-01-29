@@ -5,13 +5,11 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "rom.actividades_rom".
+ * This is the model class for table "isa.actividades_rom".
  *
  * @property int $id
- * @property int $id_rom_actividad
- * @property string $fehca_desde
+ * @property string $fecha_desde
  * @property string $fecha_hasta
- * @property string $estado
  * @property string $num_equipos
  * @property string $perfiles
  * @property string $docente_orientador
@@ -31,10 +29,11 @@ use Yii;
  * @property string $diligencia
  * @property string $rol
  * @property string $fecha_diligencia
- * @property int $id_componente
- * @property int $id_actividad
+ * @property string $id_rom_actividad
+ * @property string $estado
+ * @property string $id_reporte_operativo_misional
  */
-class RomActividadesRom extends \yii\db\ActiveRecord
+class IsaActividadesRom extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -50,15 +49,15 @@ class RomActividadesRom extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_rom_actividad', 'id_componente', 'id_actividad'], 'default', 'value' => null],
-            [['id_rom_actividad', 'id_componente', 'id_actividad'], 'integer'],
-            [['fehca_desde', 'fecha_hasta', 'fecha_reprogramacion'], 'safe'],
-            [['estado', 'num_equipos', 'perfiles', 'docente_orientador', 'nombre_actividad', 'duracion_sesion', 'logros', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'articulacion', 'evaluacion', 'observaciones_generales', 'alarmas', 'justificacion_activiad_no_realizada', 'diligencia', 'rol', 'fecha_diligencia'], 'string'],
-            [['id_componente'], 'exist', 'skipOnError' => true, 'targetClass' => IsaComponentes::className(), 'targetAttribute' => ['id_componente' => 'id']],
-            [['id_rom_actividad'], 'exist', 'skipOnError' => true, 'targetClass' => RomReporteOperativoMisional::className(), 'targetAttribute' => ['id_rom_actividad' => 'id']],
-			[['id_rom_actividad','fecha_desde','fecha_hasta','estado','num_equipos','perfiles','docente_orientador','nombre_actividad','duracion_sesion','logros','fortalezas','debilidades','alternativas','retos','articulacion','evaluacion','observaciones_generales','alarmas','justificacion_activiad_no_realizada','fecha_reprogramacion','diligencia','rol','fecha_diligencia','id_componente','id_actividad' ], 'required'],
-			[['id_reporte_operativo_misional'], 'exist', 'skipOnError' => true, 'targetClass' => RomReporteOperativoMisional::className(), 'targetAttribute' => ['id_reporte_operativo_misional' => 'id']],
-		];
+            [['fecha_desde', 'fecha_hasta', 'num_equipos', 'perfiles', 'docente_orientador', 'nombre_actividad', 'duracion_sesion', 'logros', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'articulacion', 'evaluacion', 'observaciones_generales', 'alarmas', 'justificacion_activiad_no_realizada', 'fecha_reprogramacion', 'diligencia', 'rol', 'fecha_diligencia', 'id_rom_actividad', 'estado', 'id_reporte_operativo_misional'], 'required'],
+            [['fecha_desde', 'fecha_hasta', 'fecha_reprogramacion'], 'safe'],
+            [['num_equipos', 'perfiles', 'docente_orientador', 'nombre_actividad', 'duracion_sesion', 'logros', 'fortalezas', 'debilidades', 'alternativas', 'retos', 'articulacion', 'evaluacion', 'observaciones_generales', 'alarmas', 'justificacion_activiad_no_realizada', 'diligencia', 'rol', 'fecha_diligencia'], 'string'],
+            [['id_rom_actividad', 'estado', 'id_reporte_operativo_misional'], 'default', 'value' => null],
+            [['id_rom_actividad', 'estado', 'id_reporte_operativo_misional'], 'integer'],
+            [['id_reporte_operativo_misional'], 'exist', 'skipOnError' => true, 'targetClass' => IsaReporteOperativoMisional::className(), 'targetAttribute' => ['id_reporte_operativo_misional' => 'id']],
+            [['id_rom_actividad'], 'exist', 'skipOnError' => true, 'targetClass' => IsaRomActividades::className(), 'targetAttribute' => ['id_rom_actividad' => 'id']],
+            [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['estado' => 'id']],
+        ];
     }
 
     /**
@@ -68,10 +67,8 @@ class RomActividadesRom extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_rom_actividad' => 'Id Rom',
-            'fehca_desde' => 'Fecha Desde',
+            'fecha_desde' => 'Fecha Desde',
             'fecha_hasta' => 'Fecha Hasta',
-            'estado' => 'Estado',
             'num_equipos' => 'No. del Equipo o equipos en campo',
             'perfiles' => 'Perfiles (Seleccione el perfil y cantidad por perfiles de profesionales en campo)',
             'docente_orientador' => 'Docente orientador(a) (Nombre del o la profesional)',
@@ -90,10 +87,10 @@ class RomActividadesRom extends \yii\db\ActiveRecord
             'fecha_reprogramacion' => 'Fecha de reprogramación',
             'diligencia' => 'Nombre completo de quien diligenció',
             'rol' => 'Rol',
-            'fecha_diligencia' => 'Fecha',
-            'id_componente' => 'Id Componente',
-            'id_actividad' => 'Id Actividad',
-            'id_reporte_operativo_misional' => 'id_reporte_operativo_misional',
+            'fecha_diligencia' => 'Fecha diligencia',
+            'id_rom_actividad' => 'Id Rom Actividad',
+            'estado' => 'Estado',
+            'id_reporte_operativo_misional' => 'Id Reporte Operativo Misional',
         ];
     }
 }
