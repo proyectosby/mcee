@@ -12,7 +12,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\GcCiclosBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Gc Ciclos';
+$this->title = 'Ciclos';
 $this->params['breadcrumbs'][] = $this->title;
 ?> 
 
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
 			'class' => 'yii\grid\ActionColumn',
-			'template'=>'{view}{update}{delete}',
+			'template'=>'{view}{create}{delete}',
 				'buttons' => [
 				'view' => function ($url, $model) {
 					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					]);
 				},
 
-				'update' => function ($url, $model) {
+				'create' => function ($url, $model) {
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
 								'title' => Yii::t('app', 'lead-update'),
 					]);

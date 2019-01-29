@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="panel-body">
 			
 			<div class="form-group">
-		   <?= Html::a('Planeación', 
+		   <?= Html::a('1. Planeación', 
 									[
 										'isa-iniciacion-sencibilizacion-artistica/index',
 										// 'idReporte'	=> 1,
@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									['class' => 'btn btn-success'
 			]) ?>
 			
-			 <?= Html::a('Reporte', 
+			 <?= Html::a('2. Reporte', 
 									[
 										'rom-reporte-operativo-misional/index',
 										// 'idReporte'		=> 2,
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									['class' => 'btn btn-success'
 			]) ?> 
 			
-			<?= Html::a('Informe de ejecución semanal', 
+			<?= Html::a('3. Informe de ejecución semanal', 
 									[
 										
 										'is-isa-informe-semanal-isa/index',
@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
 									['class' => 'btn btn-success'
 			]) ?>
 			
-			<?= Html::a('Orientación del proceso - Seguimiento', 
+			<?= Html::a('4. Orientación del proceso - Seguimiento', 
 									[
 										'isa-seguimiento-proceso/index',
 										// 'idReporte'		=> 4,
@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 		<div class="form-group">
 			
-			<?= Html::a('Orientación del proceso - Orientación', 
+			<?= Html::a('4. Orientación del proceso - Orientación', 
 									[
 										'isa-orientacion-proceso/index',
 										// 'idReporte'		=> 4,
@@ -111,14 +111,14 @@ $this->params['breadcrumbs'][] = $this->title;
 									['class' => 'btn btn-success'
 			]) ?>
 			
-			<?= Html::a('Consolidado por mes - Operativo', 
+			<?= Html::a('5. Consolidado por mes - Operativo', 
 										[
 											'isa-iniciacion-sensibilizacion-artistica-consolidado/index',
 											// 'idReporte'		=> 5,
 										], 
 										['class' => 'btn btn-success']) ?>
 										
-			<?= Html::a('Consolidado por mes - Misional', 
+			<?= Html::a('5.Consolidado por mes - Misional', 
 										[
 											'isa-enc-artistica-misional/index',
 											// 'idReporte'		=> 5,

@@ -29,7 +29,7 @@ use app\models\Parametro;
 
 $this->title = 'Seguimiento Operador';
 $this->params['breadcrumbs'][] = $this->title;
-$idTipoSeguimiento = $_GET['idTipoSeguimiento'];
+$idTipoSeguimiento = 1;  //seguimiento operador
 
 if( @$_GET['guardado'])
 {
