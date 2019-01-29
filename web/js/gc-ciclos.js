@@ -1,36 +1,122 @@
+	/**
+	 * Nota: El objeto modelSemana es creado desde la vista _form
+	 */
+	
+	//Máximo de semanas permitidas para agregar
+	var maxSemanasPermitidas = 6;
+	
+	//
+	var consecutivosSemana = totalSemanas;
+	
 
 	//Siempre hay un objeto semana y este se usa para replicar las demás semanas
 	var objSemana = $( "#dv-semana-0" );
+	
+	//Remuevo el objSemana para que no se vea en la vista y al hacer el submit no se envíe la información
 	objSemana.remove();
+	
+	/***********************************************************************************
+	 * Desde aquí quito atributos y clases que no requiero para los nuevos elmentos
+	 * que clono del elemento objSemana
+	 ***********************************************************************************/
+	
+	//Quito las clases no necesarias que se encuentran en el div-semana-0
+	$( ".form-group", objSemana ).each(function(){
+		//Dejo solo la clase form group
+		$( this )
+			.removeClass()
+			.addClass( "form-group" );
+	});
 
+	//Los campos que tengan for, que son los label los dejo vacio
+	$( "[for]", objSemana ).attr({'for':''});
+	
+	//Y los ids y name los dejo vacio de todos los campos input y textarea
+	// $( "input:text,textarea", objSemana ).prop({id: '', name: '' });
+	
+	
 	/**
 	 * funciones para agregar contenido de semanas
 	 */
 	$( ".btn-add-semanas" ).click(function(){
 		
-		/**
-		 * clono la semana original y la agrego al div que contiene la información de todas 
-		 * las semanas (dvSemanas)
-		 */
-		var clone = objSemana.clone();
-		clone.appendTo( "#dvSemanas" );
-		
-		//Todos los inputs tipo text del clone son fechas
-		$( "input:text", clone ).each(function(){
+		//No dejo agregar más del máximo de semanas permitidas
+		if( $("[id^=dv-semana]").length < maxSemanasPermitidas ){
 			
-			//this se refiere al campo input
+			//Aumento consecutivo de la semana
+			consecutivosSemana++;
 			
-			//Se hace de acuerdo con parent por que originalmente lo hace así el yii por defecto para las fechas
+			/**
+			 * clono la semana original y la agrego al div que contiene la información de todas 
+			 * las semanas (dvSemanas)
+			 */
+			var clon = objSemana.clone();
+			clon.appendTo( "#dvSemanas" );
 			
-			$( this ).parent().datepicker({
-				autoclose	: true,
-				format		: "yyyy-mm-dd",
-				language	: "es",
-			})
-		})
+			//Todos los inputs tipo text del clone son fechas
+			$( "input:text", clon )
+				.each(function(){
+					
+					//this se refiere al campo input
+					
+					//Se hace de acuerdo con parent por que originalmente lo hace así el yii por defecto para las fechas
+					
+					$( this ).parent().datepicker({
+						autoclose	: true,
+						format		: "yyyy-mm-dd",
+						language	: "es",
+					});
+				});
+			
+			//Cambio los ids y names de cada campo
+			$( "input:text,input:hidden,textarea", clon ).each(function(){
+				
+				var attribute = this.id.substr( modelSemana.formName.length+3 );
+				
+				$( this ).prop({
+					id	: modelSemana.formName.toLowerCase()+"-"+consecutivosSemana+"-"+attribute,
+					name: modelSemana.formName+"["+consecutivosSemana+"]["+attribute+"]",
+				});
+				
+			});
+			
+			//Al label con atributo for le dejo el mismo id recién puesto
+			$( "input:text", clon ).each(function(){
+				$( this ).parent().parent().parent().addClass( 'field-'+this.id );
+				$( "[for]", $( this ).parent().parent().parent() ).attr({'for':this.id});
+			});
+			
+			//Al label con atributo for le dejo el mismo id recién puesto
+			$( "textarea", clon ).each(function(){
+				$( this ).parent().parent().addClass( 'field-'+this.id );
+				$( "[for]", $( this ).parent().parent() ).attr({'for':this.id});
+			});
+			
+			//Por último cambio el titulo de todas las semanas para que se vea siempre en orden
+			$( "[id=semana-title]", $( "#dvSemanas" ) ).each(function(x){
+				
+				var con = x+1;
+				$( this ).html( 'Semana '+con );
+			});
+			
+			//Deshabilito el boton agregar en caso de llegar al máximo
+			if( consecutivosSemana == maxSemanasPermitidas ){
+				$( ".btn-add-semanas" ).addClass( 'disabled' );
+			}
+			
+			//Habilito siempre boton eliminar
+			$( ".btn-remove-semanas" ).removeClass( 'disabled' );
+		}
 	});
 
 	$( ".btn-remove-semanas" ).click(function(){
 		
 		$( "[id^=dv-semana]" ).last().remove();
+		
+		//habilito siempre boton agregar
+		$( ".btn-add-semanas" ).removeClass( 'disabled' );
+		
+		//Deshabilito solo si no hay nada más que eliminar
+		if( $( "[id^=dv-semana]" ).length == 0 )
+			$( ".btn-remove-semanas" ).addClass( 'disabled' );
 	});

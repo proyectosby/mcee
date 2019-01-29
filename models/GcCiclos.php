@@ -35,7 +35,7 @@ class GcCiclos extends \yii\db\ActiveRecord
         return [
             [['fecha', 'fecha_inicio', 'fecha_finalizacion', 'fecha_cierre', 'fecha_maxima_acceso'], 'safe'],
             [['descripcion'], 'string'],
-            [['id_creador', 'estado'], 'required'],
+            [['fecha','fecha_inicio','fecha_finalizacion','fecha_cierre','fecha_maxima_acceso','id_creador', 'estado','descripcion'], 'required'],
             [['id_creador', 'estado'], 'default', 'value' => null],
             [['id_creador', 'estado'], 'integer'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
