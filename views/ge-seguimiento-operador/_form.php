@@ -94,7 +94,7 @@ if( $guardado ){
 	
 	<p>Listado de participantes, registro visual, informe de actividades o acta</p>
 	
-	<?= $form->field($model, 'documentFile')->fileInput() ?>
+	<?= $form->field($model, 'documentFile')->fileInput(['multiple' => true]) ?>
 	
 	<h3 style='background-color:#ccc;padding:5px;'><?= "Avances del proyecto"?></h3>
 	
