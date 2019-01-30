@@ -35,7 +35,7 @@ class GcBitacora extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_ciclo', 'id_sede', 'estado'], 'required'],
+            [['id_ciclo', 'estado'], 'required'],
             [['id_ciclo', 'id_jefe', 'id_sede', 'estado', 'jornada'], 'default', 'value' => null],
             [['id_ciclo', 'id_jefe', 'id_sede', 'estado', 'jornada'], 'integer'],
             [['observaciones'], 'string'],
