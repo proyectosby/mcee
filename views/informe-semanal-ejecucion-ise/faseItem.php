@@ -34,33 +34,63 @@ $contenedores = [];
     ?>
      
             <h3 style='background-color: #ccc;padding:5px;'>Actividades</h3>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]actividad_1")->textInput([ 'value' => isset($datos[$index]['actividad_1']) ? $datos[$index]['actividad_1'] : '' ]) ?>
+            
+            <div class=row style='text-align:center;'>
+                <div class="col-sm-1" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px;'>Actividad 1</span>
+                </div>
+                <div class="col-sm-2" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px'>Actividad 1 %</span>
+                </div>
+                <div class="col-sm-1" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px'>Actividad 2</span>
+                </div>       
+                <div class="col-sm-2" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px'>Actividad 2 %</span>
+                </div>
+                <div class="col-sm-1" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px'>Actividad 3</span>
+                </div>
+                <div class="col-sm-2" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px'>Actividad 3 %</span>
+                </div>
+                <div class="col-sm-2" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px'>Avance sede %</span>
+                </div>
+                <div class="col-sm-1" style='padding:0px;'>
+                    <span total class='form-control' style='background-color:#ccc;height:70px'>Avance IEO %</span>
+                </div>
             </div>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]actividad_1_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_1_porcentaje']) ? $datos[$index]['actividad_1_porcentaje'] : '' ]) ?>
+
+            <div class=row>
+                <div class="col-sm-1" style='padding:0px;'>
+                    <?= $form->field($actividades, "[$index]actividad_1")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
+                </div>
+
+                <div class="col-sm-2" style='padding:0px;'>
+                <?= $form->field($actividades, "[$index]actividad_1_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_1_porcentaje']) ? $datos[$index]['actividad_1_porcentaje'] : '' ])->label(false); ?>
+                </div>
+                <div class="col-sm-1" style='padding:0px;'>
+                    <?= $form->field($actividades, "[$index]actividad_2")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
+                </div>        
+                <div class="col-sm-2" style='padding:0px;'>
+                    <?= $form->field($actividades, "[$index]actividad_2_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_2_porcentaje']) ? $datos[$index]['actividad_2_porcentaje'] : '' ])->label(false); ?>
+                </div>
+                <div class="col-sm-1" style='padding:0px;'> 
+                    <?= $form->field($actividades, "[$index]actividad_3")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
+                </div>
+                <div class="col-sm-2" style='padding:0px;'>
+                    <?= $form->field($actividades, "[$index]actividad_3_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_3_porcentaje']) ? $datos[$index]['actividad_3_porcentaje'] : '' ])->label(false); ?>
+                </div>
+                <div class="col-sm-2" style='padding:0px;'>
+                    <?= $form->field($actividades, "[$index]avance_sede")->textInput([ 'value' => isset($datos[$index]['avance_sede']) ? $datos[$index]['avance_sede'] : '' ])->label(false); ?>
+                </div>
+                <div class="col-sm-1" style='padding:0px;'>
+                    <?= $form->field($actividades, "[$index]avance_ieo")->textInput([ 'value' => isset($datos[$index]['avance_ieo']) ? $datos[$index]['avance_ieo'] : '' ])->label(false); ?>
+                </div>
             </div>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]actividad_2")->textInput([ 'value' => isset($datos[$index]['actividad_2']) ? $datos[$index]['actividad_2'] : '' ]) ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]actividad_2_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_2_porcentaje']) ? $datos[$index]['actividad_2_porcentaje'] : '' ]) ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]actividad_3")->textInput([ 'value' => isset($datos[$index]['actividad_3']) ? $datos[$index]['actividad_3'] : '' ]) ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]actividad_3_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_3_porcentaje']) ? $datos[$index]['actividad_3_porcentaje'] : '' ]) ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]avance_sede")->textInput([ 'value' => isset($datos[$index]['avance_sede']) ? $datos[$index]['avance_sede'] : '' ]) ?>
-            </div>
-            <div class=cell>
-                <?= $form->field($actividades, "[$index]avance_ieo")->textInput([ 'value' => isset($datos[$index]['avance_ieo']) ? $datos[$index]['avance_ieo'] : '' ]) ?>
-            </div>
+
             <?= $form->field($actividades, "[$index]id_proyecto")->hiddenInput(['value'=> $index+1])->label(false); ?>
-           
-   
     <?php
 
     echo Collapse::widget([
