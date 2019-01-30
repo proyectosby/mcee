@@ -14,13 +14,15 @@ else
 }
 
 use Yii;
-use app\models\RomReporteOperativoMisional;
-use app\models\RomActividadesRom;
-use app\models\RomTipoCantidadPoblacionRom;
-use app\models\RomEvidenciasRom;
 use app\models\Sedes;
 use app\models\Instituciones;
 use app\models\Parametro;
+use app\models\IsaRomProyectos;
+use app\models\IsaActividadesRom;
+use app\models\RomReporteOperativoMisional;
+use app\models\RomActividadesRom;
+use app\models\IsaTipoCantidadPoblacionRom;
+use yii\bootstrap\Collapse;
 
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
@@ -80,42 +82,44 @@ class RomReporteOperativoMisionalController extends Controller
 	}
 		
 	
-    function actionViewFases($model, $form, $datos = 0 ){
+    function actionFormulario($model, $form, $datos = 0 )
+	{
         
-        $actividades_rom = new RomActividadesRom();
-        $tipo_poblacion_rom = new RomTipoCantidadPoblacionRom();
-        $evidencias_rom = new RomEvidenciasRom();
 		
-		//la estrutura de los datos debe ser  $proyectos = [1 ="Sensibilizar....",  2 => "Desarrollar]
-		$proyectos = Array();
-		$actividades = Array();
-		$estados = Array();
-		$contador = 0;
-		foreach ($this->obtenerParametros(43) as $valor)
-		{
-			$proyectos[++$contador]= $valor;
-		}
-		
-		$contador = 0;
-		foreach ($this->obtenerParametros(44) as $valor)
-		{
-			$actividades[++$contador]= $valor;
-		}
+		$proyectos = new IsaRomProyectos();
+		$proyectos = $proyectos->find()->orderby("id")->all();
+		$proyectos = ArrayHelper::map($proyectos,'id','descripcion');
 		
 		$estados= $this->obtenerParametros(45);
+		// $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
 		
-
-		return $this->renderAjax('fases', [
-            'fases' => $proyectos,
-            'form' => $form,
-            "model" => $model,
-            'actividades_rom' => $actividades_rom,
-            'tipo_poblacion_rom' => $tipo_poblacion_rom,
-            'evidencias_rom' => $evidencias_rom,
-			'actividades'=> $actividades,
-			'estados'=> $estados,
-			'datos' => $datos,
-        ]);
+		foreach ($proyectos as $idProyecto => $v)
+		{
+			
+			 $contenedores[] = 	
+				[
+					'label' 		=>  $v,
+					'content' 		=>  $this->renderPartial( 'procesos', 
+													[  
+                                                        'idProyecto' => $idProyecto,
+														'form' => $form,
+														//'modelProyectos' =>  $modelProyectos,
+														'datos'=>$datos,
+														'estados'=>$estados,
+													] 
+										),
+					'contentOptions'=> ['class' => 'in'],
+					'options' => ['class' => ' panel-primary']
+					
+				];
+				
+	
+		}
+		
+		 echo Collapse::widget([
+			'items' => $contenedores,
+			
+		]);
 		
 	}
 
@@ -146,165 +150,48 @@ class RomReporteOperativoMisionalController extends Controller
         $institucion = Instituciones::findOne($idInstitucion);
         if ($model->load(Yii::$app->request->post())) 
 		{
-            if($model->save()){
+			
+            if($model->save())
+			{
+				
                 $rom_id = $model->id;
-                //$rom_id = 1;
-                if (Yii::$app->request->post('RomActividadesRom')){
-                    $data = Yii::$app->request->post('RomActividadesRom');
-                    $count 	= count($data);
-                    $modelActividades = [];
-                    
-                    for( $i = 0; $i < $count; $i++ ){
-                        $modelActividades[] = new RomActividadesRom();
-                    }
-
-                    if (RomActividadesRom::loadMultiple($modelActividades, Yii::$app->request->post() )) {
-                        foreach( $modelActividades as $key => $modelActividad) {
-                            
-                            if($modelActividad->fehca_desde and $modelActividad->fecha_hasta){
-                                $modelActividad->id_rom = $rom_id;
-                                
-                                /*var_dump($modelActividad->id_componente);
-                                die();*/
-
-                                if($modelActividad->save()){
-                                    //Registro de Tipo Cantidad Poblacion en base al id de la actividad registrada
-                                    if(Yii::$app->request->post('RomTipoCantidadPoblacionRom')){
-                                        $dataPoblacion = Yii::$app->request->post('RomTipoCantidadPoblacionRom');
-                                        $countPoblacion = count( $dataPoblacion );
-                                        $modelTipoPoblacion = [];
-
-                                        for( $i = 0; $i < $countPoblacion; $i++ ){
-                                            $modelTipoPoblacion[] = new RomTipoCantidadPoblacionRom();
-                                        }
-
-                                        if (RomTipoCantidadPoblacionRom::loadMultiple($modelTipoPoblacion, Yii::$app->request->post() )) {
-                                            $modelTipoPoblacion[$key]->id_actividad_rom = $modelActividad->id;
-                                            $modelTipoPoblacion[$key]->estado = 1;
-                                            $modelTipoPoblacion[$key]->save();
-                                        }
-                                    }
-                                    //Registro de las evidencias en base al id de la acitividad registrada
-                                    if(Yii::$app->request->post('RomEvidenciasRom')){
-                                        $dataEvidencias = Yii::$app->request->post('RomEvidenciasRom');
-                                        $countEvidencias = count( $dataEvidencias );
-                                        $modelEvidencias = [];
-
-                                        for( $i = 0; $i < $countEvidencias; $i++ ){
-                                            $modelEvidencias[] = new RomEvidenciasRom();
-                                        }
-
-                                        if (RomEvidenciasRom::loadMultiple($modelEvidencias, Yii::$app->request->post() )) {
-
-                                            $file_actas = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]actas") ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]actas") : null;
-                                            $file_reportes = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]reportes" ) ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]reportes") : null;
-                                            $file_listados = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]listados" ) ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]listados") : null;
-                                            $file_plan_trabajo = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]plan_trabajo" ) ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]plan_trabajo") : null;
-                                            $file_formato_seguimiento = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]formato_seguimiento" ) ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]formato_seguimiento") : null;
-                                            $file_formato_evaluacion = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]formato_evaluacion" ) ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]formato_evaluacion") : null;
-                                            $file_fotografias = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]fotografias" ) ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]fotografias") : null;
-                                            $file_vidoes = UploadedFile::getInstance( $modelEvidencias[$key], "[$key]vidoes") ? UploadedFile::getInstance( $modelEvidencias[$key], "[$key]vidoes") : null;
-                                            
-                                            $carpetaEvidencias = "../documentos/documentosROM/evidenciasROM/".$institucion->codigo_dane;
-                                            if (!file_exists($carpetaEvidencias)) {
-                                                mkdir($carpetaEvidencias, 0777, true);
-                                            }
-
-                                            if($file_actas){
-                                                $rutaFisicaActas  = $carpetaEvidencias."/";
-                                                $rutaFisicaActas .= $file_actas->baseName;
-                                                $rutaFisicaActas .= date( "_Y_m_d_His" ) . '.' . $file_actas->extension;
-                                                $saveActa = $file_actas->saveAs( $rutaFisicaActas );
-                                                $file_actas = $rutaFisicaActas;
-                                            }
-
-                                            if($file_reportes){
-                                                $rutaFisicaReportes  = $carpetaEvidencias."/";
-                                                $rutaFisicaReportes .= $file_reportes->baseName;
-                                                $rutaFisicaReportes .= date( "_Y_m_d_His" ) . '.' . $file_reportes->extension;
-                                                $saveReportes = $file_reportes->saveAs( $rutaFisicaReportes );
-                                                $file_reportes = $rutaFisicaReportes;
-                                            }
-
-                                            if($file_listados){
-                                                $rutaFisicaListados  = $carpetaEvidencias."/";
-                                                $rutaFisicaListados .= $file_listados->baseName;
-                                                $rutaFisicaListados .= date( "_Y_m_d_His" ) . '.' . $file_listados->extension;
-                                                $saveListados = $file_listados->saveAs( $rutaFisicaListados );
-                                                $file_listados = $rutaFisicaListados;
-                                            }
-
-                                            if($file_plan_trabajo){
-                                                $rutaFisicaPlanTrabajo  = $carpetaEvidencias."/";
-                                                $rutaFisicaPlanTrabajo .= $file_plan_trabajo->baseName;
-                                                $rutaFisicaPlanTrabajo .= date( "_Y_m_d_His" ) . '.' . $file_plan_trabajo->extension;
-                                                $savePlanTrabajo = $file_plan_trabajo->saveAs( $rutaFisicaPlanTrabajo );
-                                                $file_plan_trabajo = $rutaFisicaPlanTrabajo;
-                                            }
-
-
-                                            if($file_formato_seguimiento){
-                                                $rutaFisicaFormato  = $carpetaEvidencias."/";
-                                                $rutaFisicaFormato .= $file_formato_seguimiento->baseName;
-                                                $rutaFisicaFormato .= date( "_Y_m_d_His" ) . '.' . $file_formato_seguimiento->extension;
-                                                $saveFormato = $file_formato_seguimiento->saveAs( $rutaFisicaFormato );
-                                                $file_formato_seguimiento = $rutaFisicaFormato;
-                                            }
-
-                                            if($file_formato_evaluacion){
-                                                $rutaFisicaFormatoEvaluacion  = $carpetaEvidencias."/";
-                                                $rutaFisicaFormatoEvaluacion .= $file_formato_evaluacion->baseName;
-                                                $rutaFisicaFormatoEvaluacion .= date( "_Y_m_d_His" ) . '.' . $file_formato_evaluacion->extension;
-                                                $saveFormato = $file_formato_evaluacion->saveAs( $rutaFisicaFormatoEvaluacion );
-                                                $file_formato_evaluacion = $rutaFisicaFormatoEvaluacion;
-                                            }
-
-                                            if($file_fotografias){
-                                                $rutaFisicaFotografias  = $carpetaEvidencias."/";
-                                                $rutaFisicaFotografias .= $file_fotografias->baseName;
-                                                $rutaFisicaFotografias .= date( "_Y_m_d_His" ) . '.' . $file_fotografias->extension;
-                                                $saveFotografias = $file_fotografias->saveAs( $rutaFisicaFotografias );
-                                                $file_fotografias = $rutaFisicaFotografias;
-                                            }
-
-                                            if($file_vidoes){
-                                                $rutaFisicaVideos  = $carpetaEvidencias."/";
-                                                $rutaFisicaVideos .= $file_vidoes->baseName;
-                                                $rutaFisicaVideos .= date( "_Y_m_d_His" ) . '.' . $file_vidoes->extension;
-                                                $saveVideos = $file_vidoes->saveAs( $rutaFisicaVideos );
-                                                $file_vidoes = $rutaFisicaVideos;
-                                            }
-
-
-                                            $modelEvidencias[$key]->id_actividad_rom = $modelActividad->id;
-                                            $modelEvidencias[$key]->actas = $file_actas;
-                                            $modelEvidencias[$key]->reportes = $file_reportes;
-                                            $modelEvidencias[$key]->listados = $file_listados;
-                                            $modelEvidencias[$key]->plan_trabajo = $file_plan_trabajo;
-                                            $modelEvidencias[$key]->formato_seguimiento = $file_formato_seguimiento;
-                                            $modelEvidencias[$key]->formato_evaluacion = $file_formato_evaluacion;
-                                            $modelEvidencias[$key]->fotografias = $file_fotografias;
-                                            $modelEvidencias[$key]->vidoes = $file_vidoes;
-                                            $modelEvidencias[$key]->estado = 1;
-                                            $modelEvidencias[$key]->save();
-                                            
-                                            
-                                        }
-
-                                    }
-                                    
-                                }
-                            }
-                        }
-                    }
-
-                }
-                
-            }
-            return $this->redirect(['index', 'guardado' => 1 ]);            
-            //return $this->redirect(['index']);
+			
+				if($arrayDatosActividades = Yii::$app->request->post('IsaActividadesRom'))
+				{
+			
+				// se agrega el id del reporte despues de haber sido creado 
+					foreach($arrayDatosActividades as $datos => $valores)
+					{
+						$arrayDatosActividades[$datos]['id_reporte_operativo_misional']= $rom_id;
+					}
+					
+					$columnNameArrayActividades=['alarmas','alternativas','articulacion','debilidades','diligencia','docente_orientador','duracion_sesion','estado','evaluacion','fecha_desde','fecha_diligencia','fecha_hasta','fecha_reprogramacion','fortalezas','id_rom_actividad','justificacion_activiad_no_realizada','logros','nombre_actividad','num_equipos','observaciones_generales','perfiles','retos','rol','id_reporte_operativo_misional'];
+					// inserta todos los datos que trae el array arrayDatosActividades
+					$insertCount = Yii::$app->db->createCommand()
+					   ->batchInsert('isa.actividades_rom', $columnNameArrayActividades, $arrayDatosActividades) ->execute();
+				}
+				
+				if($arrayDatosPoblacion = Yii::$app->request->post('IsaTipoCantidadPoblacionRom'))
+				{
+					
+					// se agrega el id del reporte despues de haber sido creado 
+					foreach($arrayDatosPoblacion as $datos => $valores)
+					{
+						$arrayDatosPoblacion[$datos]['id_reporte_operativo_misional'] = $rom_id;
+					}
+					
+					$columnNameArrayPoblacion=['vecinos','lideres_comunitarios','empresarios_comerciantes','organizaciones_locales','grupos_comunitarios','otos_actores','total_participantes','id_rom_actividades','id_reporte_operativo_misional'];
+					// inserta todos los datos que trae el array arrayDatosActividades
+					$insertCount = Yii::$app->db->createCommand()
+					   ->batchInsert('isa.tipo_cantidad_poblacion_rom', $columnNameArrayPoblacion, $arrayDatosPoblacion)->execute(); 
+				} 
+						 
+			}
+			
+            return $this->redirect(['index', 'guardado' => 1 ]);
         }
 		$idInstitucion = $_SESSION['instituciones'][0];
+		
         $Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
         $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
 
@@ -314,6 +201,7 @@ class RomReporteOperativoMisionalController extends Controller
             'model' => $model,
             'sedes' => $sedes,
             'institucion'=> $this->obtenerInstitucion(),
+			
         ]);
     }
 
@@ -354,13 +242,13 @@ class RomReporteOperativoMisionalController extends Controller
 		$datos = array();
 		
 		
-		$actividadesRom = new RomActividadesRom();
+		$actividadesRom = new RomActividadesRom ();
 		$actividadesRom = $actividadesRom->find()->orderby("id")->andWhere("id_reporte_operativo_misional = $id")->all();
 	
-		//se trae la informacionde la basse de datos tabla ec.avances
+		//se trae la informacionde la base de datos 
 		$result = ArrayHelper::getColumn($actividadesRom, function ($element) 
 		{
-			$dato[$element['id_reporte_operativo_misional']]['fehca_desde']= $element['fehca_desde'];
+			$dato[$element['id_reporte_operativo_misional']]['fecha_desde']= $element['fecha_desde'];
 			$dato[$element['id_reporte_operativo_misional']]['fecha_hasta']= $element['fecha_hasta'];
 			$dato[$element['id_reporte_operativo_misional']]['num_equipos']= $element['num_equipos'];
 			$dato[$element['id_reporte_operativo_misional']]['perfiles']= $element['perfiles'];
@@ -383,15 +271,40 @@ class RomReporteOperativoMisionalController extends Controller
 			$dato[$element['id_reporte_operativo_misional']]['fecha_diligencia']= $element['alarmas'];
 			$dato[$element['id_reporte_operativo_misional']]['estado']= $element['estado'];
 			$dato[$element['id_reporte_operativo_misional']]['id_actividad']= $element['id_actividad'];
-			$dato[$element['id_reporte_operativo_misional']]['id_actividad']= $element['id_actividad'];
+
 			return $dato;
 		});
 		
-	
-		//se formate la informacion que deben tener los campos tabla ec.avances
+	//se formate la informacion que deben tener los campos 
 		foreach	($result as $r => $valor)
 			foreach	($valor as $ids => $valores)
 				$datos['actividades'][$valores['id_actividad']] = $valores;
+	
+		$tipoCantidadPoblacion = new RomTipoCantidadPoblacionRom ();
+		$tipoCantidadPoblacion = $tipoCantidadPoblacion->find()->orderby("id")->andWhere("id_reporte_operativo_misional = $id")->all();
+	
+		//se trae la informacionde la base de datos tabla ec.avances
+		$result = ArrayHelper::getColumn($tipoCantidadPoblacion, function ($element) 
+		{
+			$dato[$element['id_reporte_operativo_misional']]['vecinos']= $element['vecinos'];
+			$dato[$element['id_reporte_operativo_misional']]['lideres_comunitarios']= $element['lideres_comunitarios'];
+			$dato[$element['id_reporte_operativo_misional']]['empresarios_comerciantes']= $element['empresarios_comerciantes'];
+			$dato[$element['id_reporte_operativo_misional']]['organizaciones_locales']= $element['organizaciones_locales'];
+			$dato[$element['id_reporte_operativo_misional']]['grupos_comunitarios']= $element['grupos_comunitarios'];
+			$dato[$element['id_reporte_operativo_misional']]['otos_actores']= $element['otos_actores'];
+			$dato[$element['id_reporte_operativo_misional']]['total_participantes']= $element['total_participantes'];
+			$dato[$element['id_reporte_operativo_misional']]['id_actividades_rom']= $element['id_actividades_rom'];
+
+			return $dato;
+		});
+	
+		
+	
+	
+		//se formate la informacion que deben tener los campos 
+		foreach	($result as $r => $valor)
+			foreach	($valor as $ids => $valores)
+				$datos['tipoCantidadPoblacion'][$valores['id_actividades_rom']] = $valores;
 		
 		
 		// echo "<pre>"; print_r($datos); echo "</pre>"; 

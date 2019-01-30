@@ -14,12 +14,12 @@ return [
   'password' 	=> 'root',
 	'charset' 	=> 'utf8',
 
-	// 'schemaMap' => [
-					  // 'pgsql'=> [
-									// 'class'=>'yii\db\pgsql\Schema',
-									// 'defaultSchema' => 'semilleros_tic' //specify your schema here
-								  // ]
-					// ], // PostgreSQL
+	 /*'schemaMap' => [
+					   'pgsql'=> [
+									 'class'=>'yii\db\pgsql\Schema',
+									 'defaultSchema' => 'gestion_curricular' //specify your schema here
+								   ]
+					 ], // PostgreSQL*/
 	
 	
 	

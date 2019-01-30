@@ -80,34 +80,167 @@ class GcCiclosController extends Controller
      */
     public function actionCreate()
     {
-        $modelCiclo 			= new GcCiclos();
-        $modelBitacora 			= new GcBitacora();
-        $modelSemanas 			= new GcSemanas();
-        $modelDocentesXBitacora	= new GcDocentesXBitacora();
-		
 		$id_institucion	= $_SESSION['instituciones'][0];
 		$id_sede 		= $_SESSION['sede'][0];
+		
+		$modelCiclo 				= new GcCiclos();
+        $modelBitacora 				= new GcBitacora();
+        $modelSemanas				= [];
+        $modelDocentesXBitacora		= []; //new GcDocentesXBitacora();
+		$modelDatosDocentesXBitacora= [];
+		
+		if( Yii::$app->request->post() )
+		{
+			$idGcCiclos		= Yii::$app->request->post( 'GcCiclos' )['id'];
+			$idGcBitacora	= Yii::$app->request->post( 'GcBitacora' )['id'];
+			
+			if( $idGcCiclos )
+			{
+				$modelCiclo = GcCiclos::findOne($idGcCiclos);
+				$modelCiclo->load( Yii::$app->request->post() );
+			}
+			
+			if( $idGcBitacora )
+			{
+				$modelBitacora 			= GcBitacora::findOne( $idGcBitacora );
+			}
+			
+			$docentesUsuario = Yii::$app->request->post('GcDocentesXBitacora')['docente'];
+				
+			foreach( $docentesUsuario as $key => $docent )
+			{
+				$mdb = new GcDocentesXBitacora();
+				$mdb->docente = $docent;
+				$modelDocentesXBitacora[] = $mdb;
+			}
 
-        if ($modelCiclo->load(Yii::$app->request->post()) && $modelCiclo->save()) {
-            return $this->redirect(['index']);
-        }
+			$datosSemanas = Yii::$app->request->post( 'GcSemanas' );
+
+			if( count($datosSemanas) > 0 )
+			{
+				foreach( $datosSemanas as $keySemana => $semana )
+				{	
+					if( $semana['id'] ){
+						$mdSemana = GcSemanas::findOne( $semana['id'] );
+					}
+					else{
+						$mdSemana = new GcSemanas();
+					}
+					
+					$mdSemana->load( $semana, '' );
+					
+					$modelSemanas[]			= $mdSemana;
+				}
+			}
+			
+			$valido = true;
+			
+			if( $modelCiclo->load(Yii::$app->request->post()) ){
+				
+				$valido = $modelCiclo->validate([
+									'fecha',
+									'descripcion',
+									'fecha_inicio',
+									'fecha_finalizacion',
+									'fecha_cierre',
+									'fecha_maxima_acceso',
+									'id_creador',
+								]) && $valido;
+				echo $valido ? '<br>true ciclo' : '<br>false ciclo';
+								
+				foreach( $modelDocentesXBitacora as $key => $model )
+				{
+					$valido = $model->validate([
+										'docente',
+									]) && $valido;
+				}
+				echo $valido ? '<br>true dcxbit' : '<br>false dcxbit';
+				foreach( $modelSemanas as $key => $semana )
+				{
+					$valido = $semana->validate([
+												'descripcion',
+												'fecha_inicio',
+												'fecha_finalizacion',
+												'fecha_cierre',
+											]) && $valido;
+				}
+				echo $valido ? '<br>true sem' : '<br>false sem';
+				// return $this->redirect(['index']);
+			}
+			
+			if( $valido )
+			{
+				if( $modelCiclo->load(Yii::$app->request->post()) ){
+					
+					$modelCiclo->estado = 1;
+					$modelCiclo->save( false );
+					
+					$modelBitacora->id_ciclo 	= $modelCiclo->id;
+					$modelBitacora->id_sede 	= $id_sede;
+					$modelBitacora->estado 		= 1;
+					$modelBitacora->save( false );
+					
+					//Elimino todos los registros y luego se insetar todos los seleccionados por el usuario
+					GcDocentesXBitacora::deleteAll( 'id_bitacora='.$modelBitacora->id );
+					
+					foreach( $modelDocentesXBitacora as $key => $model )
+					{
+						$model->id_bitacora = $modelBitacora->id;
+						$model->estado = 1;
+						$model->save( false );
+					}
+					
+					foreach( $modelSemanas as $key => $semana )
+					{
+						$semana->estado = 1;
+						$semana->id_ciclo = $modelCiclo->id;
+						$semana->save(false);
+					}
+					
+					return $this->redirect(['index']);
+				}
+			}
+		}
+		else if( Yii::$app->request->get() )
+		{
+			$id_ciclo = Yii::$app->request->get('id');
+			
+			if( $id_ciclo )
+			{
+				$modelCiclo 			= GcCiclos::findOne( $id_ciclo );
+				$modelBitacora 			= GcBitacora::findOne([ 'id_ciclo' => $id_ciclo ]);
+				$modelDocentesXBitacora	= GcDocentesXBitacora::findAll([ 'id_bitacora' => $modelBitacora->id ]);
+				$modelSemanas			= GcSemanas::findAll([ 'id_ciclo' => $id_ciclo ]);
+			}
+		}
 		
 		/*Se realiza consulta provisonal para obtener listado de docentes*/
 		$dataPersonas 		= Personas::find()
-								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								->where( 'personas.estado=1' )
-								->andWhere( 'id_institucion='.$id_institucion )
-								->all();
+									->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+									->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+									->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+									->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+									->where( 'personas.estado=1' )
+									->andWhere( 'id_institucion='.$id_institucion )
+									->all();
 		
 		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		
+
+		if( count($modelDocentesXBitacora) > 0 )
+		{
+			foreach( $modelDocentesXBitacora as $key => $value){
+				$modelDatosDocentesXBitacora[] = $value->docente;
+			}
+		}
+		
+		$modelDocentesXBitacora = new GcDocentesXBitacora();
+		$modelDocentesXBitacora->docente = $modelDatosDocentesXBitacora;
 
         return $this->renderAjax('create', [
             'modelCiclo' 			=> $modelCiclo,
             'modelBitacora' 		=> $modelBitacora,
-            'modelSemanas' 			=> $modelSemanas,
+            'modelSemanas' 			=> array_merge( [ new GcSemanas() ], $modelSemanas ),
             'modelDocentesXBitacora'=> $modelDocentesXBitacora,
             'docentes'				=> $docentes,
         ]);

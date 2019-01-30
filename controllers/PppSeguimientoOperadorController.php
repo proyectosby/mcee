@@ -64,7 +64,7 @@ class PppSeguimientoOperadorController extends Controller
      * Lists all PppSeguimientoOperador models.
      * @return mixed
      */
-    public function actionIndex($idTipoSeguimiento)
+    public function actionIndex($idTipoSeguimiento = 1)
     {
         $searchModel = new PppSeguimientoOperadorBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

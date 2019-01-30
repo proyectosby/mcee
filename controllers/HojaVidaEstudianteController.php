@@ -95,8 +95,6 @@ class HojaVidaEstudianteController extends Controller
 		else
 			$dataProvider->query->andWhere( 'personas.id=-1' );
 
-		var_dump($dataProvider);
-		die();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
