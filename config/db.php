@@ -9,9 +9,9 @@ return [
 	 'charset' 	=> 'utf8',*/
 
 	'class' 	=> 'yii\db\Connection',
-	'dsn' 		=> 'pgsql:host=localhost;port=5432;dbname=colegio1',
+	'dsn' 		=> 'pgsql:host=localhost;port=5432;dbname=sga_aprender',
 	'username' 	=> 'postgres',
-  'password' 	=> '123456',
+  'password' 	=> 'root',
 	'charset' 	=> 'utf8',
 
 	// 'schemaMap' => [
