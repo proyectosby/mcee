@@ -1,4 +1,11 @@
 <?php
+/**********
+Versión: 001
+Fecha: 2019-01-29
+Desarrollador: Edwin Molina Grisales
+Descripción: Ciclos
+---------------------------------------
+**********/
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -142,7 +149,7 @@ $this->registerJs( file_get_contents( '../web/js/gc-ciclos.js' ) );
 			<div id='dv-semana-0' style='background-color:#eee;padding:5px;'>
 				
 				<div id='semana-title' style='font-size:18pt;background-color:#3c8dbc;padding:0 5px 0;'>
-					Semana 0
+					Semana <?= $index ?>
 				</div>
 				
 				<div class='semana-contenido' style='padding:5px;'>
@@ -196,7 +203,7 @@ $this->registerJs( file_get_contents( '../web/js/gc-ciclos.js' ) );
 	</div>
 			
     <div class="form-group">
-        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success', 'id' => 'btn-guardar' ]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

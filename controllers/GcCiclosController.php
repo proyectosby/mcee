@@ -1,4 +1,11 @@
 <?php
+/**********
+Versión: 001
+Fecha: 2019-01-29
+Desarrollador: Edwin Molina Grisales
+Descripción: Ciclos
+---------------------------------------
+**********/
 
 namespace app\controllers;
 
@@ -53,6 +60,7 @@ class GcCiclosController extends Controller
     {
         $searchModel = new GcCiclosBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere( 'estado=1' );
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -68,8 +76,16 @@ class GcCiclosController extends Controller
      */
     public function actionView($id)
     {
+		$modelCiclo 			= GcCiclos::findOne( $id );
+		$modelBitacora 			= GcBitacora::findOne([ 'id_ciclo' => $id ]);
+		$modelDocentesXBitacora	= GcDocentesXBitacora::findAll([ 'id_bitacora' => $modelBitacora->id ]);
+		$modelSemanas			= GcSemanas::findAll([ 'id_ciclo' => $id ]);
+		
         return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
+			'modelCiclo' 			=> $modelCiclo,
+            'modelBitacora' 		=> $modelBitacora,
+            'modelSemanas' 			=> $modelSemanas,
+            'modelDocentesXBitacora'=> $modelDocentesXBitacora,
         ]);
     }
 
@@ -176,7 +192,7 @@ class GcCiclosController extends Controller
 					$modelCiclo->save( false );
 					
 					$modelBitacora->id_ciclo 	= $modelCiclo->id;
-					$modelBitacora->id_sede 	= $id_sede;
+					// $modelBitacora->id_sede 	= $id_sede;
 					$modelBitacora->estado 		= 1;
 					$modelBitacora->save( false );
 					
@@ -275,7 +291,28 @@ class GcCiclosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        // $this->findModel($id)->delete();
+		
+		$modelCiclo 			= GcCiclos::findOne( $id );
+		$modelBitacora 			= GcBitacora::findOne([ 'id_ciclo' => $id ]);
+		$modelDocentesXBitacora	= GcDocentesXBitacora::findAll([ 'id_bitacora' => $modelBitacora->id ]);
+		$modelSemanas			= GcSemanas::findAll([ 'id_ciclo' => $id ]);
+		
+		$modelCiclo->estado = 2;
+		$modelBitacora->estado = 2;
+		
+		$modelCiclo->save(false);
+		$modelBitacora->save(false);
+		
+		foreach( $modelDocentesXBitacora as $key => $model ){
+			$model->estado = 2;
+			$model->save(false);
+		}
+		
+		foreach( $modelSemanas as $key => $model ){
+			$model->estado = 2;
+			$model->save(false);
+		}
 
         return $this->redirect(['index']);
     }
