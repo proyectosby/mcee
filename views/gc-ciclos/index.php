@@ -1,4 +1,11 @@
 <?php
+/**********
+Versión: 001
+Fecha: 2019-01-29
+Desarrollador: Edwin Molina Grisales
+Descripción: Ciclos
+---------------------------------------
+**********/
 
 use yii\helpers\Html;
 use yii\bootstrap\Modal;

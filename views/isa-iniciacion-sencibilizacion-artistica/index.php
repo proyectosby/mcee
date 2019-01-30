@@ -86,7 +86,7 @@ if( isset($guardado) && $guardado == 1 ){
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_insticion',
+            'id_institucion',
             'id_sede',
             'caracterizacion_si_no',
             'caracterizacion_nombre',
