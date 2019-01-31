@@ -1,3 +1,11 @@
+/**********
+Versión: 001
+Fecha: 2019-01-29
+Desarrollador: Edwin Molina Grisales
+Descripción: Ciclos
+---------------------------------------
+**********/
+
 	/**
 	 * Nota: El objeto modelSemana es creado desde la vista _form
 	 */
@@ -7,6 +15,8 @@
 	
 	//
 	var consecutivosSemana = totalSemanas;
+	
+	$( "#btn-guardar" ).addClass( 'disabled' ).attr({disabled:true});
 	
 
 	//Siempre hay un objeto semana y este se usa para replicar las demás semanas
@@ -84,6 +94,24 @@
 			$( "input:text", clon ).each(function(){
 				$( this ).parent().parent().parent().addClass( 'field-'+this.id );
 				$( "[for]", $( this ).parent().parent().parent() ).attr({'for':this.id});
+				
+				
+
+				
+			});
+			
+			$( "input:text,textarea", clon ).each(function(){
+				
+				$('#w0').yiiActiveForm('add', {
+					id			: this.id,
+					name		: this.name,
+					container	: '.field-'+this.id,
+					input		: '#'+this.id,
+					error		: '.help-block',
+					validate	: function (attribute, value, messages, deferred, $form) {
+									yii.validation.required(value, messages, {message: "El campo no puede estar vacío"});
+								},
+				});
 			});
 			
 			//Al label con atributo for le dejo el mismo id recién puesto
@@ -106,6 +134,8 @@
 			
 			//Habilito siempre boton eliminar
 			$( ".btn-remove-semanas" ).removeClass( 'disabled' );
+			
+			$( "#btn-guardar" ).removeClass( 'disabled' ).attr({disabled:false});
 		}
 	});
 
@@ -117,6 +147,9 @@
 		$( ".btn-add-semanas" ).removeClass( 'disabled' );
 		
 		//Deshabilito solo si no hay nada más que eliminar
-		if( $( "[id^=dv-semana]" ).length == 0 )
+		if( $( "[id^=dv-semana]" ).length == 0 ){
 			$( ".btn-remove-semanas" ).addClass( 'disabled' );
+			
+			$( "#btn-guardar" ).addClass( 'disabled' ).attr({disabled:true});
+		}
 	});

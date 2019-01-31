@@ -1,9 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
-?>
-<a href="<?= Url::to(['gc-bitacora/index']) ?>">Bitacora Index</a>
-<?php
+
 /**********
 ---------------------------------------
 Modificaciones:

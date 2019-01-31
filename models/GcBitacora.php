@@ -18,6 +18,7 @@ use Yii;
  * @property GcCiclos $ciclo
  * @property Personas $jefe
  * @property Sedes $sede
+ * @property GcSemanas[] $semanas
  */
 class GcBitacora extends \yii\db\ActiveRecord
 {
@@ -85,5 +86,13 @@ class GcBitacora extends \yii\db\ActiveRecord
     public function getSede()
     {
         return $this->hasOne(Sedes::className(), ['id' => 'id_sede']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSemanas()
+    {
+        return $this->hasMany(GcSemanas::className(), ['id_bitacora' => 'id']);
     }
 }

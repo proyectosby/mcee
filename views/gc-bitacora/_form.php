@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -13,17 +14,39 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_ciclo')->textInput() ?>
-
-    <?= $form->field($model, 'id_jefe')->textInput() ?>
-
-    <?= $form->field($model, 'id_sede')->textInput() ?>
+    <?php   $countries=\app\models\GcCiclos::find()->all();
+            $listData=ArrayHelper::map($countries,'id','descripcion');
+            echo $form->field($model, 'id_ciclo')->dropDownList(
+                $listData,
+                ['prompt'=>'Seleccione un ciclo']
+            ); ?>
+    <?php   $countries=\app\models\Personas::find()->all();
+    $listData=ArrayHelper::map($countries,'id','nombres');
+    echo $form->field($model, 'id_jefe')->dropDownList(
+        $listData,
+        ['prompt'=>'Seleccione un jefe']
+    ); ?>
+    <?php   $countries=\app\models\Sedes::find()->all();
+    $listData=ArrayHelper::map($countries,'id','descripcion');
+    echo $form->field($model, 'id_sede')->dropDownList(
+        $listData,
+        ['prompt'=>'Seleccione una sede']
+    ); ?>
 
     <?= $form->field($model, 'observaciones')->textInput() ?>
+    <?php   $countries=\app\models\Estados::find()->all();
+    $listData=ArrayHelper::map($countries,'id','descripcion');
+    echo $form->field($model, 'estado')->dropDownList(
+        $listData,
+        ['prompt'=>'Seleccione un estado']
+    ); ?>
 
-    <?= $form->field($model, 'estado')->textInput() ?>
-
-    <?= $form->field($model, 'jornada')->textInput() ?>
+    <?php   $countries=\app\models\Jornadas::find()->all();
+    $listData=ArrayHelper::map($countries,'id','descripcion');
+    echo $form->field($model, 'jornada')->dropDownList(
+        $listData,
+        ['prompt'=>'Seleccione una jornada']
+    ); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

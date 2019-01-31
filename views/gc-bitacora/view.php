@@ -19,14 +19,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         <div class="col-md-12 ui-sortable">
             <div class="panel panel-danger">
                 <div class="panel-heading">
-                    <div class="panel-heading-btn hidden-print">
-                        <a href="javascript:;" onclick="imprimir()" class="btn btn-xs btn-primary">
-                            <i class="material-icons pull-left f-s-18 m-r-5">print</i> Imprimir
-                        </a>
-                        <a class="btn btn-xs btn-success" href="/bitacora/listado-bitacoras">
-                            <i class="fa fa-arrow-left"></i> Regresar
-                        </a>
-                    </div>
                     <h4 class="panel-title">Información del docente tutor</h4>
                 </div>
                 <div class="panel-body">

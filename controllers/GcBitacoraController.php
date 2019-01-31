@@ -13,9 +13,12 @@ else
 	die;
 }
 
+use app\models\GcCiclos;
+use app\models\GcSemanas;
 use Yii;
 use app\models\GcBitacora;
 use app\models\GcBitacoraBuscar;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -48,8 +51,6 @@ class GcBitacoraController extends Controller
     {
         $searchModel = new GcBitacoraBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        Yii::$app->view->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js');
-
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -65,8 +66,37 @@ class GcBitacoraController extends Controller
      */
     public function actionView($id)
     {
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Displays a single GcBitacora model.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionView2($id)
+    {
+        $bitacora = new GcBitacora();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => GcSemanas::find()
+                ->where(['=', 'id_bitacora', $id])
+        ]);
+
+        /*$dataProvider = GcSemanas::find()
+            ->where(['=', 'id_bitacora', $id])
+            ->asArray()
+            ->all();
+
+        var_dump($dataProvider);
+        die();*/
+
+        return $this->render('view2', [
+            'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -79,12 +109,16 @@ class GcBitacoraController extends Controller
     {
         $model = new GcBitacora();
 
+        $ciclos = GcCiclos::find()->asArray()->all();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
 
-        return $this->renderAjax('create', [
+        return $this->render('create', [
             'model' => $model,
+            'ciclos' => $ciclos,
+
         ]);
     }
 
