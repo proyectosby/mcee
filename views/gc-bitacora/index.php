@@ -13,9 +13,13 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\GcBitacoraBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Gc Bitacoras';
+$this->title = 'Bitácora';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<p>
+    <?=  Html::a( '<span class="btn btn-success">Crear Bitácora</span>', Url::to(['create']), []); ?>
+
+</p>
 <?php try { ?>
         <?=
         DataTables::widget([
@@ -58,9 +62,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 //'id',
-                'id_ciclo',
-                'id_jefe',
-                'id_sede',
+                [
+                    'attribute'=>'id_ciclo',
+                    'value'=>'ciclo.descripcion',
+                ],
+
+                [
+                    'attribute'=>'id_jefe',
+                    'value'=>'jefe.nombres',
+                ],
+
+                [
+                    'attribute'=>'id_sede',
+                    'value'=>'sede.descripcion',
+                ],
                 'observaciones',
                 //'estado',
                 //'jornada',
@@ -70,11 +85,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{view}{view2}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a( '<span class="btn btn-xs btn-primary m-t-5">Visualizar Bitacora</span>', $url, [
+                            return Html::a( '<span class="btn btn-xs btn-primary m-t-5">Visualizar Bitácora</span>', $url, [
                             ]);
                         },
                         'view2' => function ($url, $model) {
-                            return Html::a( '<span class="btn btn-xs btn-success m-t-5">Ingresar Bitacora</span>', $url, [
+                            return Html::a( '<span class="btn btn-xs btn-success m-t-5">Ingresar Bitácora</span>', $url, [
                             ]);
                         },
 
