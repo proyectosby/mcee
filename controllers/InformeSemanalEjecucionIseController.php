@@ -145,6 +145,11 @@ class InformeSemanalEjecucionIseController extends Controller
                     foreach( $modelsActividades as $key => $model2) {
                         
                         if($model2->avance_ieo){
+                            
+                            $model2->actividad_1_porcentaje = explode("%",$model2->actividad_1_porcentaje)[0];
+                            $model2->actividad_2_porcentaje = explode("%",$model2->actividad_2_porcentaje)[0];
+                            $model2->actividad_3_porcentaje = explode("%",$model2->actividad_3_porcentaje)[0];                            
+
                             $model2->informe_semanal_ejecucion_id = $id_informe;
                             $model2->nombre= "";
                             $model2->estado = 1;

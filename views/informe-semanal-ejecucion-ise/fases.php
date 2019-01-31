@@ -69,7 +69,7 @@ foreach( $fases as $keyFase => $fase ){
 												"datos2" => $datos2,
 											] 
 								),
-			'headerOptions' => ['style' => 'background-color: #347ab6'],
+			'headerOptions' => ['style' => 'background-color: #95b3d7'],
 			'contentOptions'=> []
 		];
 	}
