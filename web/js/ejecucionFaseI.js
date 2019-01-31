@@ -17,7 +17,7 @@ $( document ).ready(function(){
 		"Nombre de las aplicaciones creadas",
 		"Número de sesiones empleadas para la creación de cada aplicación",
 		"Acciones realizadas con mayor incidencia para estimular la creación de las App 0.0",
-		"Temas problema que atiende la cración",
+		"Temas problema que atiende la creción",
 		"Tipo de competencias inferencias y comprometidas en el proceso de creación de la App 0.0",
 		"Observaciones",
 	];
