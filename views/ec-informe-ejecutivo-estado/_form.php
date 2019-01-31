@@ -23,15 +23,15 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 	
     <?= $form->field($model, 'id_secretaria')->DropDownList($secretario,['prompt'=>"Seleccione..."]) ?>
 
-    <?= $form->field($model, 'mision')->textArea() ?>
+    <?= $form->field($model, 'mision')->textArea(['placeholder' => "Ingrese el texto 300 caracteres máximo ",'maxlength' => 300, 'rows' => 6, 'cols' => 50] )?>
 
-    <?= $form->field($model, 'descripcion')->textArea() ?>
+    <?= $form->field($model, 'descripcion')->textArea(['placeholder' => "Ingrese el texto 300 caracteres máximo ",'maxlength' => 300, 'rows' => 6, 'cols' => 50]) ?>
 
-    <?= $form->field($model, 'avance_producto')->textArea() ?>
+    <?= $form->field($model, 'avance_producto')->textArea(['placeholder' => "Ingrese el texto 300 caracteres máximo ",'maxlength' => 300, 'rows' => 6, 'cols' => 50]) ?>
 
-    <?= $form->field($model, 'hallazgos')->textArea() ?>
+    <?= $form->field($model, 'hallazgos')->textArea(['placeholder' => "Ingrese el texto 300 caracteres máximo ",'maxlength' => 300, 'rows' => 6, 'cols' => 50]) ?>
 
-    <?= $form->field($model, 'logros')->textArea() ?>
+    <?= $form->field($model, 'logros')->textArea(['placeholder' => "Ingrese el texto 300 caracteres máximo ",'maxlength' => 300, 'rows' => 6, 'cols' => 50]) ?>
 
     <?= $form->field($model, 'estado')->hiddenInput(['value'=> 1])->label(false); ?>
 
