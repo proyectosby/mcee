@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-use kartik\export\ExportMenu;
+/*use kartik\export\ExportMenu;*/
 
 
 use fedemotta\datatables\DataTables;
@@ -37,15 +37,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+<!--
     <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
+        <?/*=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) */?>
 		
     </p>
 
-    <?php try { ?>
+    <?php /*try { */?>
     <?php
-        $gridColumns = [
+/*        $gridColumns = [
 
             [
                 'attribute'=>'id_ciclo',
@@ -73,12 +73,12 @@ $this->params['breadcrumbs'][] = $this->title;
         var_dump($e);
         die();
     }
-    ?>
+    */?>
     <button id="w0-html" class="btn btn-light export-full-html" href="#" data-format="Html" tabindex="-1"><i class="text-info glyphicon glyphicon-save"></i> HTML</button>
     <button id="w0-csv"  class="btn btn-light export-full-csv" href="#" data-format="Csv" tabindex="-1"><i class="text-primary glyphicon glyphicon-floppy-open"></i> CSV</button>
     <button id="w0-pdf"  class="btn btn-light export-full-pdf" href="#" data-format="Pdf" tabindex="-1"><i class="text-danger glyphicon glyphicon-floppy-disk"></i> PDF</button>
     <button id="w0-xlsx" class="btn btn-light export-full-xlsx" href="#" data-format="Xlsx" tabindex="-1"><i class="text-success glyphicon glyphicon-floppy-remove"></i>Excel</button>
-    <?php try { ?>
+   --> <?php try { ?>
     <?=
         DataTables::widget([
             'dataProvider' => $dataProvider,
@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
         var_dump($e);
     } ?>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $('.btn-group').addClass('hide')
-</script>
+</script>-->
