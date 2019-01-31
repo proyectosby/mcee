@@ -27,163 +27,25 @@ $( document ).ready(function()
 	});
 
 });
+
+$('div[class *= docentes],[id *= cantidad]').keyup(function() 
+{
 	
-//selector para seleccionar solo las celdas de estudiantes
-//hace la sumatoria y la asigna a total
-$('div[id *= tiposcantidadpoblacion],[id *= tiempo_libre]').keyup(function() 
-{
-    total = 0;
+	total =0;
 	
 	//numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
-	ValId = $(this).attr("id");
+	ValId = $(this).attr("class");
 	num = ValId.split("-");
+
 	
 	//cuando se presione un numero se hace la suma
-	$('[id *= tiposcantidadpoblacion-'+num[1]+'-tiempo_libre]').each(function( ) 
+	$('[class *= docentes-'+num[2]+'-cantidad]').each(function( ) 
 	{
-	  total += $(this).val()*1;
+	 	 total += $(this).val()*1;
 	});
-    
-    //se asigna la suma total a la caja de texto correspondiente
-   
 
-	$("#tiposcantidadpoblacion-"+num[1]+"-total").val(total);
+	$("#tiposcantidadpoblacion-"+num[2]+"-total").val(total);
+	//se asigna la suma total a la caja de texto correspondiente
+	//$("#estudiantesimpieo-"+num[1]+"-total").val(total);
 
 });
-
-$('div[id *= tiposcantidadpoblacion],[id *= edu_derechos]').keyup(function() 
-{
-    	
-	//numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
-	ValId = $(this).attr("id");
-	num = ValId.split("-");
-    
-    total = $("#tiposcantidadpoblacion-"+num[1]+"-total").val()*1;
-    
-	//cuando se presione un numero se hace la suma
-	$('[id *= tiposcantidadpoblacion-'+num[1]+'-edu_derechos]').each(function( ) 
-	{
-	  total += $(this).val()*1;
-	});
-    
-    //se asigna la suma total a la caja de texto correspondiente
-   
-
-	$("#tiposcantidadpoblacion-"+num[1]+"-total").val(total);
-
-});
-
-$('div[id *= tiposcantidadpoblacion],[id *= sexualidad]').keyup(function() 
-{
-    	
-	//numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
-	ValId = $(this).attr("id");
-	num = ValId.split("-");
-    
-    total = $("#tiposcantidadpoblacion-"+num[1]+"-total").val()*1;
-    
-	//cuando se presione un numero se hace la suma
-	$('[id *= tiposcantidadpoblacion-'+num[1]+'-sexualidad]').each(function( ) 
-	{
-	  total += $(this).val()*1;
-	});
-    
-    //se asigna la suma total a la caja de texto correspondiente
-   
-
-	$("#tiposcantidadpoblacion-"+num[1]+"-total").val(total);
-
-});
-
-$('div[id *= tiposcantidadpoblacion],[id *= ciudadania]').keyup(function() 
-{
-    	
-	//numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
-	ValId = $(this).attr("id");
-	num = ValId.split("-");
-    
-    total = $("#tiposcantidadpoblacion-"+num[1]+"-total").val()*1;
-    
-	//cuando se presione un numero se hace la suma
-	$('[id *= tiposcantidadpoblacion-'+num[1]+'-ciudadania]').each(function( ) 
-	{
-	  total += $(this).val()*1;
-	});
-    
-    //se asigna la suma total a la caja de texto correspondiente
-   
-
-	$("#tiposcantidadpoblacion-"+num[1]+"-total").val(total);
-
-});
-
-$('div[id *= tiposcantidadpoblacion],[id *= medio_ambiente]').keyup(function() 
-{
-    	
-	//numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
-	ValId = $(this).attr("id");
-	num = ValId.split("-");
-    
-    total = $("#tiposcantidadpoblacion-"+num[1]+"-total").val()*1;
-    
-	//cuando se presione un numero se hace la suma
-	$('[id *= tiposcantidadpoblacion-'+num[1]+'-medio_ambiente]').each(function( ) 
-	{
-	  total += $(this).val()*1;
-	});
-    
-    //se asigna la suma total a la caja de texto correspondiente
-   
-
-	$("#tiposcantidadpoblacion-"+num[1]+"-total").val(total);
-
-});
-
-$('div[id *= tiposcantidadpoblacion],[id *= familia]').keyup(function() 
-{
-    	
-	//numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
-	ValId = $(this).attr("id");
-	num = ValId.split("-");
-    
-    total = $("#tiposcantidadpoblacion-"+num[1]+"-total").val()*1;
-    
-	//cuando se presione un numero se hace la suma
-	$('[id *= tiposcantidadpoblacion-'+num[1]+'-familia]').each(function( ) 
-	{
-	  total += $(this).val()*1;
-	});
-    
-    //se asigna la suma total a la caja de texto correspondiente
-   
-
-	$("#tiposcantidadpoblacion-"+num[1]+"-total").val(total);
-
-});
-
-$('div[id *= tiposcantidadpoblacion],[id *= directivos]').keyup(function() 
-{
-    	
-	//numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
-	ValId = $(this).attr("id");
-	num = ValId.split("-");
-    
-    total = $("#tiposcantidadpoblacion-"+num[1]+"-total").val()*1;
-    
-	//cuando se presione un numero se hace la suma
-	$('[id *= tiposcantidadpoblacion-'+num[1]+'-directivos]').each(function( ) 
-	{
-	  total += $(this).val()*1;
-	});
-    
-    //se asigna la suma total a la caja de texto correspondiente
-   
-
-	$("#tiposcantidadpoblacion-"+num[1]+"-total").val(total);
-
-});
-
-
-
-
-

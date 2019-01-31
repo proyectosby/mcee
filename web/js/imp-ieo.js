@@ -1,4 +1,3 @@
-
 $( document ).ready(function()
 {
 	//solo numeron en la caja de estudiantes

@@ -91,25 +91,25 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             </div>
             <div class=row>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]tiempo_libre", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['tiempo_libre']) ? $datos[$index."".$numProyecto]['tiempo_libre'] : ''] ) ?>
+                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]tiempo_libre", [ 'type' => 'number', 'class' => "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['tiempo_libre']) ? $datos[$index."".$numProyecto]['tiempo_libre'] : ''] ) ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]edu_derechos", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['edu_derechos']) ? $datos[$index."".$numProyecto]['edu_derechos'] : ''] ) ?>
+                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]edu_derechos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['edu_derechos']) ? $datos[$index."".$numProyecto]['edu_derechos'] : ''] ) ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]sexualidad", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['sexualidad']) ? $datos[$index."".$numProyecto]['sexualidad'] : ''] ) ?>
+                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]sexualidad", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['sexualidad']) ? $datos[$index."".$numProyecto]['sexualidad'] : ''] ) ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]ciudadania", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['ciudadania']) ? $datos[$index."".$numProyecto]['ciudadania'] : ''] ) ?>
+                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]ciudadania", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['ciudadania']) ? $datos[$index."".$numProyecto]['ciudadania'] : ''] ) ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]medio_ambiente", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['medio_ambiente']) ? $datos[$index."".$numProyecto]['medio_ambiente'] : ''] ) ?>
+                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]medio_ambiente", [ 'type' => 'number', 'class' => "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['medio_ambiente']) ? $datos[$index."".$numProyecto]['medio_ambiente'] : ''] ) ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]familia", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['familia']) ? $datos[$index."".$numProyecto]['familia'] : ''] ) ?>
+                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]familia", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['familia']) ? $datos[$index."".$numProyecto]['familia'] : ''] ) ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]directivos", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['directivos']) ? $datos[$index."".$numProyecto]['directivos'] : ''] ) ?>
+                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]directivos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['directivos']) ? $datos[$index."".$numProyecto]['directivos'] : ''] ) ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
                     <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]total", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['total']) ? $datos[$index."".$numProyecto]['total'] : ''] ) ?>
