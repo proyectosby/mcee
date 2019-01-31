@@ -41,7 +41,12 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         ['prompt'=>'Seleccione un estado']
     ); ?>
 
-    <?= $form->field($model, 'jornada')->textInput() ?>
+    <?php   $countries=\app\models\Jornadas::find()->all();
+    $listData=ArrayHelper::map($countries,'id','descripcion');
+    echo $form->field($model, 'jornada')->dropDownList(
+        $listData,
+        ['prompt'=>'Seleccione una jornada']
+    ); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
