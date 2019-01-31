@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-/*use kartik\export\ExportMenu;*/
+use kartik\export\ExportMenu;
 
 
 use fedemotta\datatables\DataTables;
@@ -15,71 +15,9 @@ use yii\grid\GridView;
 
 $this->title = 'Gc Bitacoras';
 $this->params['breadcrumbs'][] = $this->title;
-?> 
-
-<h1></h1>
-	
-<div id="modal" class="fade modal" role="dialog" tabindex="-1">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3>Bitacoras</h3>
-</div>
-<div class="modal-body">
-<div id='modalContent'></div>
-</div>
-
-</div>
-</div>
-</div>
-<div class="gc-bitacora-index">
-
-   
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-<!--
-    <p>
-        <?/*=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) */?>
-		
-    </p>
-
-    <?php /*try { */?>
-    <?php
-/*        $gridColumns = [
-
-            [
-                'attribute'=>'id_ciclo',
-                'value'=>'ciclo.descripcion',
-            ],
-
-            [
-                'attribute'=>'id_jefe',
-                'value'=>'jefe.nombres',
-            ],
-
-            [
-                'attribute'=>'id_sede',
-                'value'=>'sede.descripcion',
-            ],
-            'observaciones',
-        ];
-
-        echo ExportMenu::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => $gridColumns,
-            'class' => 'hide'
-        ]);
-    } catch (Exception $e) {
-        var_dump($e);
-        die();
-    }
-    */?>
-    <button id="w0-html" class="btn btn-light export-full-html" href="#" data-format="Html" tabindex="-1"><i class="text-info glyphicon glyphicon-save"></i> HTML</button>
-    <button id="w0-csv"  class="btn btn-light export-full-csv" href="#" data-format="Csv" tabindex="-1"><i class="text-primary glyphicon glyphicon-floppy-open"></i> CSV</button>
-    <button id="w0-pdf"  class="btn btn-light export-full-pdf" href="#" data-format="Pdf" tabindex="-1"><i class="text-danger glyphicon glyphicon-floppy-disk"></i> PDF</button>
-    <button id="w0-xlsx" class="btn btn-light export-full-xlsx" href="#" data-format="Xlsx" tabindex="-1"><i class="text-success glyphicon glyphicon-floppy-remove"></i>Excel</button>
-   --> <?php try { ?>
-    <?=
+?>
+<?php try { ?>
+        <?=
         DataTables::widget([
             'dataProvider' => $dataProvider,
             'clientOptions' => [
@@ -89,55 +27,63 @@ $this->params['breadcrumbs'][] = $this->title;
                 "lengthMenu" => [[20, -1], [20, Yii::t('app', "All")]],
                 "info" => true,
                 "responsive" => true,
+                "dom" => 'lfTrtip',
+                /*"tableTools" => [
+                    "aButtons" => [
+                        [
+                            "sExtends"=> "copy",
+                            "sButtonText"=> Yii::t('app',"Copiar")
+                        ],
+
+                        [
+                            "sExtends"=> "csv",
+                            "sButtonText"=> Yii::t('app',"CSV")
+
+                        ],
+                        [
+                            "sExtends" => "xls",
+                            "oSelectorOpts" => ["page" => 'current']
+                        ],
+                        [
+                            "sExtends" => "pdf",
+                            "oSelectorOpts" => ["page" => 'current']
+                        ],
+                        [
+                            "sExtends"=> "print",
+                            "sButtonText"=> Yii::t('app',"Imprimir")
+                        ],
+                    ],
+                ],*/
             ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 //'id',
-
-                [
-                    'attribute'=>'id_ciclo',
-                    'value'=>'ciclo.descripcion',
-                ],
-
-                [
-                    'attribute'=>'id_jefe',
-                    'value'=>'jefe.nombres',
-                ],
-
-                [
-                    'attribute'=>'id_sede',
-                    'value'=>'sede.descripcion',
-                ],
+                'id_ciclo',
+                'id_jefe',
+                'id_sede',
                 'observaciones',
                 //'estado',
                 //'jornada',
 
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{view}',
+                    'template' => '{view}{view2}',
                     'buttons' => [
                         'view' => function ($url, $model) {
-                            return Html::a('<span name="detalle" class="btn btn-xs btn-primary m-t-5" value ="' . $url . '" >Visualizar bitácora</span>', $url, [
-                                'title' => Yii::t('app', 'lead-view'),
+                            return Html::a( '<span class="btn btn-xs btn-primary m-t-5">Visualizar Bitacora</span>', $url, [
                             ]);
                         },
                         'view2' => function ($url, $model) {
-                            return Html::a('<span name="detalle" class="btn btn-xs btn-primary m-t-5" value ="' . $url . '" >Ingresar a la bitácora</span>', $url, [
-                                'title' => Yii::t('app', 'lead-view'),
+                            return Html::a( '<span class="btn btn-xs btn-success m-t-5">Ingresar Bitacora</span>', $url, [
                             ]);
                         },
+
                     ],
 
                 ],
 
             ],
         ]);
-    ?>
+        ?>
     <?php } catch (Exception $e) {
-        var_dump($e);
-    } ?>
-</div>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $('.btn-group').addClass('hide')
-</script>-->
+} ?>

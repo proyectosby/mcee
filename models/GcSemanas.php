@@ -14,6 +14,8 @@ use Yii;
  * @property string $fecha_cierre
  * @property string $estado
  * @property string $id_ciclo
+ *
+ * @property GcBitacora $bitacora
  */
 class GcSemanas extends \yii\db\ActiveRecord
 {
@@ -54,5 +56,13 @@ class GcSemanas extends \yii\db\ActiveRecord
             'estado' 			=> 'Estado',
             'id_ciclo' 			=> 'Ciclo',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBitacora()
+    {
+        return $this->hasOne(GcBitacora::className(), ['id' => 'id_bitacora']);
     }
 }
