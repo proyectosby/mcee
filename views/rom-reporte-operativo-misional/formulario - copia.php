@@ -81,7 +81,7 @@ $tipo_poblacion_rom = new IsaTipoCantidadPoblacionRom();
 	<?= $form->field($evidencias_rom, "[$idActividad]otros_productos")->label('Otros productos  de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 	<?= $form->field($evidencias_rom, "[$idActividad]cantidad")->textInput() ?>
 	<?= $form->field($evidencias_rom, "[$idActividad]archivos_enviados_entregados")->textInput() ?>
-		<?= $form->field($evidencias_rom, "[$idActividad]id_rom_actividad")->hiddenInput(['value' => $idActividad])->label(false) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]id_rom_actividad")->hiddenInput(['value' => $idActividad])->label(false) ?>
 	<?= $form->field($evidencias_rom, "[$idActividad]fecha_entrega_envio")->widget(
 	DatePicker::className(), [
 		// modify template for custom rendering
