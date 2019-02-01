@@ -14,22 +14,23 @@ else
 }
 
 use Yii;
+use yii\web\UploadedFile;
 use app\models\Sedes;
 use app\models\Instituciones;
 use app\models\Parametro;
 use app\models\IsaRomProyectos;
 use app\models\IsaActividadesRom;
 use app\models\RomReporteOperativoMisional;
-use app\models\RomActividadesRom;
 use app\models\IsaTipoCantidadPoblacionRom;
+use app\models\IsaEvidenciasRom;
 use yii\bootstrap\Collapse;
-
-use yii\web\UploadedFile;
+use app\models\UploadForm;
 use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\controllers\DateTime;
 
 /**
  * RomReporteOperativoMisionalController implements the CRUD actions for RomReporteOperativoMisional model.
@@ -144,21 +145,21 @@ class RomReporteOperativoMisionalController extends Controller
     public function actionCreate()
     {
         $model = new RomReporteOperativoMisional();
+		
        
 		$idInstitucion = $_SESSION['instituciones'][0];
 		
         $institucion = Instituciones::findOne($idInstitucion);
         if ($model->load(Yii::$app->request->post())) 
 		{
-			
             if($model->save())
 			{
 				
                 $rom_id = $model->id;
-			
+				
 				if($arrayDatosActividades = Yii::$app->request->post('IsaActividadesRom'))
 				{
-			
+					
 				// se agrega el id del reporte despues de haber sido creado 
 					foreach($arrayDatosActividades as $datos => $valores)
 					{
@@ -184,26 +185,123 @@ class RomReporteOperativoMisionalController extends Controller
 					// inserta todos los datos que trae el array arrayDatosActividades
 					$insertCount = Yii::$app->db->createCommand()
 					   ->batchInsert('isa.tipo_cantidad_poblacion_rom', $columnNameArrayPoblacion, $arrayDatosPoblacion)->execute(); 
-				} 
-						 
+				}
+				
+				
+				if($arrayDatosEvidencias = Yii::$app->request->post('IsaEvidenciasRom'))
+				{
+					
+					$modeloEvidencias = [];
+					$cantidad = count($arrayDatosEvidencias);
+					for( $i = 0; $i < $cantidad; $i++ )
+					{
+						$modeloEvidencias[] = new IsaEvidenciasRom();
+					}
+					
+					
+					if (IsaEvidenciasRom::loadMultiple($modeloEvidencias,  Yii::$app->request->post() )) 
+					{	
+						
+						$idInstitucion 	= $_SESSION['instituciones'][0];
+						$institucion = Instituciones::findOne( $idInstitucion )->codigo_dane;
+						
+						//Si no existe la carpeta se crea
+						$carpeta = "../documentos/reporteOperativo/".$institucion;
+						if (!file_exists($carpeta)) 
+						{
+							mkdir($carpeta, 0777, true);
+						}
+						
+						$propiedades = array( "actas", "reportes", "listados", "plan_trabajo", "formato_seguimiento", "formato_evaluacion", "fotografias", "vidoes", "otros_productos");
+						
+						
+						
+						
+						
+						foreach( $modeloEvidencias as $key => $model) 
+						{
+							$key +=1;
+							
+							
+							
+							foreach($propiedades as $propiedad)
+							{
+								$arrayRutasFisicas = array();
+								// se guarda el archivo en file
+								
+								$files = UploadedFile::getInstances( $model, "[$key]$propiedad" );
+								// se sube el archivo y se obtiene la ruta en del archivo en el servidor
+								
+								if( $files )
+								{
+									foreach($files as $file)
+									{
+										//se usan microsegundos para evitar un nombre de archivo repetido
+										$t = microtime(true);
+										$micro = sprintf("%06d",($t - floor($t)) * 1000000);
+										$d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+										
+										// Construyo la ruta completa del archivo a guardar
+										$rutaFisicaDirectoriaUploads  = "../documentos/reporteOperativo/".$institucion."/".$file->baseName . $d->format("Y_m_d_H_i_s.u") . '.' . $file->extension;
+										$save = $file->saveAs( $rutaFisicaDirectoriaUploads );
+										$arrayRutasFisicas[] = $rutaFisicaDirectoriaUploads;
+									}
+									
+									// asignacion de la ruta al campo de la db
+									$model->$propiedad =  implode(",", $arrayRutasFisicas);
+									$arrayRutasFisicas = null;
+								}
+								else
+								{
+									echo "No hay archivo cargado";
+								}
+								
+							}
+							
+							
+							
+							
+							//se sube el archivo y se obtiene la ruta en del archivo en el servidor
+							
+							//asginacion del id del reporte 
+							$model->id_reporte_operativo_misional = $rom_id;
+							//Siempre activo
+							// $model->estado = 1;
+							//Se valida que todos los campos de todos los modelos sean correctos
+							if (!IsaEvidenciasRom::validateMultiple($modeloEvidencias)) 
+							{
+								Yii::$app->response->format = 'json';
+								 return \yii\widgets\ActiveForm::validateMultiple($modeloEvidencias);
+							}
+							
+							//Guardo todos los modelos
+							foreach( $modeloEvidencias as $key => $model) 
+							{
+								$model->save();
+							}
+						}
+						return $this->redirect(['index', 'guardado' => true ]);
+							
+					} 
+							 
+				}
+				
+				return $this->redirect(['index', 'guardado' => 1 ]);
 			}
+			// $idInstitucion = $_SESSION['instituciones'][0];
 			
-            return $this->redirect(['index', 'guardado' => 1 ]);
-        }
-		$idInstitucion = $_SESSION['instituciones'][0];
+		}	
+			$Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
+			$sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+
+			return $this->renderAjax('create', [
+				'model' => $model,
+				'sedes' => $sedes,
+				'institucion'=> $this->obtenerInstitucion(),
+				
+			]);
 		
-        $Sedes  = Sedes::find()->where( "id_instituciones = $idInstitucion" )->all();
-        $sedes	= ArrayHelper::map( $Sedes, 'id', 'descripcion' );
-
-        
-
-        return $this->renderAjax('create', [
-            'model' => $model,
-            'sedes' => $sedes,
-            'institucion'=> $this->obtenerInstitucion(),
-			
-        ]);
-    }
+	}
 
 	
 	public function obtenerInstitucion()

@@ -11,8 +11,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
 <div class="rom-reporte-operativo-misional-form">
 
-    <?php $form = ActiveForm::begin(); ?>
 
+	<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
     <?= $form->field($model, 'id_institucion')->dropDownList($institucion) ?>
 
     <?= $form->field($model, 'id_sedes')->dropDownList( $sedes, [ 'prompt' => 'Seleccione...' ] ) ?>
