@@ -68,19 +68,19 @@ $contenedores = [];
                 </div>
 
                 <div class="col-sm-2" style='padding:0px;'>
-                <?= $form->field($actividades, "[$index]actividad_1_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_1_porcentaje']) ? $datos[$index]['actividad_1_porcentaje'] : '' ])->label(false); ?>
+                <?= $form->field($actividades, "[$index]actividad_1_porcentaje")->textInput([ 'class' => "form-control avance-$index-sede", 'value' => isset($datos[$index]['actividad_1_porcentaje']) ? $datos[$index]['actividad_1_porcentaje'] : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
                     <?= $form->field($actividades, "[$index]actividad_2")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
                 </div>        
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$index]actividad_2_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_2_porcentaje']) ? $datos[$index]['actividad_2_porcentaje'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$index]actividad_2_porcentaje")->textInput([ 'class' => "form-control avance-$index-sede", 'value' => isset($datos[$index]['actividad_2_porcentaje']) ? $datos[$index]['actividad_2_porcentaje'] : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'> 
                     <?= $form->field($actividades, "[$index]actividad_3")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$index]actividad_3_porcentaje")->textInput([ 'value' => isset($datos[$index]['actividad_3_porcentaje']) ? $datos[$index]['actividad_3_porcentaje'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$index]actividad_3_porcentaje")->textInput([ 'class' => "form-control avance-$index-sede", 'value' => isset($datos[$index]['actividad_3_porcentaje']) ? $datos[$index]['actividad_3_porcentaje'] : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
                     <?= $form->field($actividades, "[$index]avance_sede")->textInput([ 'value' => isset($datos[$index]['avance_sede']) ? $datos[$index]['avance_sede'] : '' ])->label(false); ?>

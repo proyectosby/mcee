@@ -38,16 +38,19 @@ $('div[id *= ecactividadesise],[id *= actividad_1]').change(function()
 	{
         total += ($(this).val()*1);
 	});
+  
+    porentaje = calcularPorcentajeActividad(total+1);
+    $("#ecactividadesise-"+num[1]+"-actividad_1_porcentaje").val(porentaje);
+    //se asigna la suma total a la caja de texto correspondiente
     
-    setTimeout(function(){ 
-       
-        porentaje = calcularPorcentajeActividad(total+1);    
-        //se asigna la suma total a la caja de texto correspondiente
-        $("#ecactividadesise-"+num[1]+"-actividad_1_porcentaje").val(porentaje);
-        $("#ecactividadesise-"+num[1]+"-avance_sede").val(avenceSede+"%");
-        $("#ecactividadesise-"+num[1]+"-avance_ieo").val(avenceIeo+"%");
+    //
+    $("#ecactividadesise-"+num[1]+"-avance_sede").val(avenceSede+"%");
+    $("#ecactividadesise-"+num[1]+"-avance_ieo").val(avenceIeo+"%");
+    console.log(total);
+    console.log(porentaje);
+
     
-    }, 500);
+    
     
 
 });
