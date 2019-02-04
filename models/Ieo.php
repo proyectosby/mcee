@@ -83,7 +83,7 @@ class Ieo extends \yii\db\ActiveRecord
             'institucion_id' => 'Institución',
             'sede_id' => 'Sede ID',
             'estado' => 'Estado',
-            'persona_acargo' => 'Persona Acargo',
+            'persona_acargo' => 'Persona a cargo',
             'codigo_dane' => 'Código Dane',
             'comuna' => 'Comuna',
             'barrio' => 'Barrio',

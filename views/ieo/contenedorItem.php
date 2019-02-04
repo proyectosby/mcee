@@ -64,57 +64,135 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             <h3 style='background-color: #ccc;padding:5px;'>Docentes</h3>
                 
             <div class=row style='text-align:center;'>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px;'>Tiempo Libre</span>
-                </div>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px'>Edu derechos</span>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px'>Sexualidad</span>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px'>Ciudadanía</span>
-                </div>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px'>Medio Ambiente</span>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px'>Familia</span>
-                </div>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px'>Directivos</span>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <span total class='form-control' style='background-color:#ccc;height:70px'>Total</span>
-                </div>
+                
+                <?php
+                    if($numProyecto == 2){
+                        ?>
+                            <div class="col-sm-2" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Docentes</span>
+                            </div>
+                            <div class="col-sm-2" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Familia</span>
+                            </div>
+                            <div class="col-sm-2" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Directivos</span>
+                            </div>
+                            <div class="col-sm-1" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Total</span>
+                            </div>
+                        <?php
+                    }
+                    if($numProyecto == 3){
+                        ?>
+                            <div class="col-sm-2" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Docentes</span>
+                            </div>
+                            <div class="col-sm-2" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Psicoorientador</span>
+                            </div>
+                            <div class="col-sm-2" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Familia</span>
+                            </div>
+                            <div class="col-sm-2" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Directivos</span>
+                            </div>
+                            <div class="col-sm-1" style='padding:0px;'>
+                                <span total class='form-control' style='background-color:#ccc;height:70px'>Total</span>
+                            </div>
+                        <?php
+                    }if($numProyecto == 1){
+                        ?>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px;'>Tiempo Libre</span>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px'>Edu derechos</span>
+                        </div>
+                        <div class="col-sm-1" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px'>Sexualidad</span>
+                        </div>
+                        <div class="col-sm-1" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px'>Ciudadanía</span>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px'>Medio Ambiente</span>
+                        </div>
+                        <div class="col-sm-1" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px'>Familia</span>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px'>Directivos</span>
+                        </div>
+                        <div class="col-sm-1" style='padding:0px;'>
+                            <span total class='form-control' style='background-color:#ccc;height:70px'>Total</span>
+                        </div>
+                    <?php
+                        } 
+                    ?>
             </div>
             <div class=row>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]tiempo_libre", [ 'type' => 'number', 'class' => "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['tiempo_libre']) ? $datos[$index."".$numProyecto]['tiempo_libre'] : ''] ) ?>
+
+                <?php
+                    if($numProyecto == 2){
+                    ?>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]docentes", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['docentes']) ? $datos[$index."".$numProyecto]['docentes'] : ''] ) ?>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]familia", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['familia']) ? $datos[$index."".$numProyecto]['familia'] : ''] ) ?>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]directivos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['directivos']) ? $datos[$index."".$numProyecto]['directivos'] : ''] ) ?>
+                        </div>
+                    <?php
+                    }
+                    if($numProyecto == 3){
+                        ?>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]docentes", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['docentes']) ? $datos[$index."".$numProyecto]['docentes'] : ''] ) ?>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]psicoorientador", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['psicoorientador']) ? $datos[$index."".$numProyecto]['psicoorientador'] : ''] ) ?>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]familia", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['familia']) ? $datos[$index."".$numProyecto]['familia'] : ''] ) ?>
+                        </div>
+                        <div class="col-sm-2" style='padding:0px;'>
+                            <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]directivos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['directivos']) ? $datos[$index."".$numProyecto]['directivos'] : ''] ) ?>
+                        </div>
+                    
+                    <?php
+                    }if($numProyecto == 1){
+                        ?>
+                    <div class="col-sm-2" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]tiempo_libre", [ 'type' => 'number', 'class' => "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['tiempo_libre']) ? $datos[$index."".$numProyecto]['tiempo_libre'] : ''] ) ?>
+                    </div>
+                    <div class="col-sm-2" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]edu_derechos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['edu_derechos']) ? $datos[$index."".$numProyecto]['edu_derechos'] : ''] ) ?>
+                    </div>
+                    <div class="col-sm-1" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]sexualidad", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['sexualidad']) ? $datos[$index."".$numProyecto]['sexualidad'] : ''] ) ?>
+                    </div>
+                    <div class="col-sm-1" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]ciudadania", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['ciudadania']) ? $datos[$index."".$numProyecto]['ciudadania'] : ''] ) ?>
+                    </div>
+                    <div class="col-sm-2" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]medio_ambiente", [ 'type' => 'number', 'class' => "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['medio_ambiente']) ? $datos[$index."".$numProyecto]['medio_ambiente'] : ''] ) ?>
+                    </div>
+                    
+                    <div class="col-sm-1" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]familia", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['familia']) ? $datos[$index."".$numProyecto]['familia'] : ''] ) ?>
+                    </div>
+                    <div class="col-sm-2" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]directivos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['directivos']) ? $datos[$index."".$numProyecto]['directivos'] : ''] ) ?>
+                    </div>
+                    <?php
+                        } 
+                    ?>
+                    <div class="col-sm-1" style='padding:0px;'>
+                        <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]total", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['total']) ? $datos[$index."".$numProyecto]['total'] : ''] ) ?>
+                    </div>
                 </div>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]edu_derechos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['edu_derechos']) ? $datos[$index."".$numProyecto]['edu_derechos'] : ''] ) ?>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]sexualidad", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['sexualidad']) ? $datos[$index."".$numProyecto]['sexualidad'] : ''] ) ?>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]ciudadania", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['ciudadania']) ? $datos[$index."".$numProyecto]['ciudadania'] : ''] ) ?>
-                </div>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]medio_ambiente", [ 'type' => 'number', 'class' => "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['medio_ambiente']) ? $datos[$index."".$numProyecto]['medio_ambiente'] : ''] ) ?>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]familia", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['familia']) ? $datos[$index."".$numProyecto]['familia'] : ''] ) ?>
-                </div>
-                <div class="col-sm-2" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]directivos", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['directivos']) ? $datos[$index."".$numProyecto]['directivos'] : ''] ) ?>
-                </div>
-                <div class="col-sm-1" style='padding:0px;'>
-                    <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]total", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$index."".$numProyecto]['total']) ? $datos[$index."".$numProyecto]['total'] : ''] ) ?>
-                </div>
-            </div>
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]actividad_id")->hiddenInput(['value'=> $index])->label(false); ?>
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]proyecto_ieo_id")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
         

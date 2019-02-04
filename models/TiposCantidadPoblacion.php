@@ -20,10 +20,11 @@ use Yii;
  * @property string $fecha_creacion
  * @property int $proyecto_ieo_id
  * @property string $tipo_actividad
+ * @property string $docentes
+ * @property string $psicoorientador
  */
 class TiposCantidadPoblacion extends \yii\db\ActiveRecord
 {
-    public $total;
     /**
      * @inheritdoc
      */
@@ -39,8 +40,8 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
     {
         return [
             [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'default', 'value' => null],
-            [['actividad_id', 'ieo_id', 'proyecto_ieo_id', 'tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'integer'],
-            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'required'],
+            [['actividad_id', 'ieo_id', 'proyecto_ieo_id'], 'integer'],
+            [['tiempo_libre', 'edu_derechos', 'sexualidad', 'ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tipo_actividad', 'docentes', 'psicoorientador'], 'string'],
             [['fecha_creacion'], 'safe'],
         ];
     }
@@ -52,18 +53,20 @@ class TiposCantidadPoblacion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'actividad_id' => 'Actividad ID',
-            'ieo_id' => 'Ieo ID',
-            'tiempo_libre' => 'Tiempo Libre',
-            'edu_derechos' => 'Edu Derechos',
+            'actividad_id' => 'Actividad',
+            'ieo_id' => 'IeoD',
+            'tiempo_libre' => 'Tiempo libre',
+            'edu_derechos' => 'Edu derechos',
             'sexualidad' => 'Sexualidad',
             'ciudadania' => 'Ciudadanía',
-            'medio_ambiente' => 'Medio Ambiente',
+            'medio_ambiente' => 'Medio ambiente',
             'familia' => 'Familia',
             'directivos' => 'Directivos',
-            'fecha_creacion' => 'Fecha',
+            'fecha_creacion' => 'Fecha Creación',
             'proyecto_ieo_id' => 'Proyecto Ieo ID',
-            'tipo_actividad' => 'Tipo Actividad',
+            'tipo_actividad' => 'Tipo actividad',
+            'docentes' => 'Docentes',
+            'psicoorientador' => 'Psicoorientador',
         ];
     }
 }
