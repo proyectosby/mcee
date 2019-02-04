@@ -30,7 +30,7 @@ $procesos = ArrayHelper::map($procesos,'id','descripcion');
 														] 
 											),
 						'contentOptions'=> []
-					];			
+					];					
 		
 	}
 	

@@ -7,13 +7,13 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 use app\models\IsaActividadesRom;
-use app\models\RomEvidenciasRom;
+use app\models\IsaEvidenciasRom;
 use app\models\IsaTipoCantidadPoblacionRom;
 
 // echo "<pre>"; print_r($datos); echo "</pre>"; 
 // die;
 $actividades_rom = new IsaActividadesRom();
-$evidencias_rom = new RomEvidenciasRom();
+$evidencias_rom = new IsaEvidenciasRom();
 $tipo_poblacion_rom = new IsaTipoCantidadPoblacionRom();
  
  
@@ -57,41 +57,41 @@ $tipo_poblacion_rom = new IsaTipoCantidadPoblacionRom();
     <?= $form->field($actividades_rom, "[$idActividad]docente_orientador")->textInput(['value' => $datos['actividades'][$idActividad]['docente_orientador']]) ?>
     <?= $form->field($actividades_rom, "[$idActividad]nombre_actividad")->textInput(['value' => $datos['actividades'][$idActividad]['nombre_actividad']]) ?>
 
-     <h2 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h2>
-     <h3 style='background-color: #ccc;padding:5px;'>Número de participantes por actividad comunitaria por sede educativa (Se deben revisar los nombres y datos de  la lista de asistencia para no repetir personas): </h3>
-     <?= $form->field($tipo_poblacion_rom, "[$idActividad]vecinos")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['vecinos'] ]) ?>
-     <?= $form->field($tipo_poblacion_rom, "[$idActividad]lideres_comunitarios")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['lideres_comunitarios']]) ?>
-     <?= $form->field($tipo_poblacion_rom, "[$idActividad]empresarios_comerciantes")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['empresarios_comerciantes']]) ?>
-     <?= $form->field($tipo_poblacion_rom, "[$idActividad]organizaciones_locales")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['organizaciones_locales']]) ?>
-     <?= $form->field($tipo_poblacion_rom, "[$idActividad]grupos_comunitarios")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['grupos_comunitarios']]) ?>
-     <?= $form->field($tipo_poblacion_rom, "[$idActividad]otos_actores")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['otos_actores']]) ?>
-     <?= $form->field($tipo_poblacion_rom, "[$idActividad]total_participantes")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['total_participantes']]) ?>
-	 
-	  <?= $form->field($tipo_poblacion_rom, "[$idActividad]id_rom_actividad")->hiddenInput(['value' => $idActividad])->label(false) ?>
+	<h2 style='background-color: #ccc;padding:5px;'>Tipo y cantidad de población</h2>
+	<h3 style='background-color: #ccc;padding:5px;'>Número de participantes por actividad comunitaria por sede educativa (Se deben revisar los nombres y datos de  la lista de asistencia para no repetir personas): </h3>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]vecinos")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['vecinos'] ]) ?>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]lideres_comunitarios")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['lideres_comunitarios']]) ?>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]empresarios_comerciantes")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['empresarios_comerciantes']]) ?>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]organizaciones_locales")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['organizaciones_locales']]) ?>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]grupos_comunitarios")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['grupos_comunitarios']]) ?>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]otos_actores")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['otos_actores']]) ?>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]total_participantes")->textInput(['value' => $datos['tipoCantidadPoblacion'][$idActividad]['total_participantes']]) ?>
+	<?= $form->field($tipo_poblacion_rom, "[$idActividad]id_rom_actividad")->hiddenInput(['value' => $idActividad])->label(false) ?>
+
 	  
-	  
-     <h3 style='background-color: #ccc;padding:5px;'>Evidencias (Indique la cantidad y destino de evidencias que resultaron de la actividad, tales  como fotografías, videos, actas, trabajos de los participantes, etc )</h3>
-     <?= $form->field($evidencias_rom, "[$idActividad]actas")->label('ACTAS (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]reportes")->label('REPORTES  (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]listados")->label('LISTADOS  (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]plan_trabajo")->label('PLAN DE TRABAJO (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]formato_seguimiento")->label('FORMATOS DE SEGUIMIENTO (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]formato_evaluacion")->label('FORMATOS DE EVALUACIÓN (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]fotografias")->label('FOTOGRAFÍAS (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]vidoes")->label('VIDEOS (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]otros_productos")->label('Otros productos  de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]cantidad")->textInput() ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]archivos_enviados_entregados")->textInput() ?>
-     <?= $form->field($evidencias_rom, "[$idActividad]fecha_entrega_envio")->widget(
-        DatePicker::className(), [
-            // modify template for custom rendering
-            'template' => '{addon}{input}',
-            'language' => 'es',
-            'clientOptions' => [
-                'autoclose' => true,
-                'format'    => 'yyyy-mm-dd',
-        ],
-    ]);  ?>
+	<h3 style='background-color: #ccc;padding:5px;'>Evidencias (Indique la cantidad y destino de evidencias que resultaron de la actividad, tales  como fotografías, videos, actas, trabajos de los participantes, etc )</h3>
+	<?= $form->field($evidencias_rom, "[$idActividad]actas")->label('ACTAS (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]reportes")->label('REPORTES  (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]listados")->label('LISTADOS  (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]plan_trabajo")->label('PLAN DE TRABAJO (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]formato_seguimiento")->label('FORMATOS DE SEGUIMIENTO (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]formato_evaluacion")->label('FORMATOS DE EVALUACIÓN (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]fotografias")->label('FOTOGRAFÍAS (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]vidoes")->label('VIDEOS (Cantidad)')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]otros_productos")->label('Otros productos  de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]cantidad")->textInput() ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]archivos_enviados_entregados")->textInput() ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]id_rom_actividad")->hiddenInput(['value' => $idActividad])->label(false) ?>
+	<?= $form->field($evidencias_rom, "[$idActividad]fecha_entrega_envio")->widget(
+	DatePicker::className(), [
+		// modify template for custom rendering
+		'template' => '{addon}{input}',
+		'language' => 'es',
+		'clientOptions' => [
+			'autoclose' => true,
+			'format'    => 'yyyy-mm-dd',
+	],
+	]);  ?>
 
     <?= $form->field($actividades_rom, "[$idActividad]observaciones_generales")->textInput(['value' => $datos['actividades'][$idActividad]['observaciones_generales'] ]) ?>
     <?= $form->field($actividades_rom, "[$idActividad]duracion_sesion")->textInput(['value' => $datos['actividades'][$idActividad]['duracion_sesion'] ]) ?>

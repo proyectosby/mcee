@@ -10,10 +10,6 @@ use yii\bootstrap\Collapse;
 $actividades= IsaRomActividades::find()->where( "estado=1 and id_rom_procesos=$idProceso" )->all();
 $actividades = ArrayHelper::map($actividades,'id','descripcion');
        
-
-
-// foreach ($actividades as $porcentaje_avance => $dataProceso)
-// {
 	foreach( $actividades as $idActividad => $v )
 	{
 	 
@@ -33,8 +29,6 @@ $actividades = ArrayHelper::map($actividades,'id','descripcion');
 		
 	}
 	
-		
-// }
 
 				
 
