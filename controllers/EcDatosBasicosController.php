@@ -72,7 +72,7 @@ class EcDatosBasicosController extends Controller
      * Lists all EcDatosBasicos models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($guardado = 0, $idTipoInforme = 0)
     {
         $searchModel = new EcDatosBasicosBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -100,6 +100,8 @@ class EcDatosBasicosController extends Controller
             'searchModel' 	=> $searchModel,
             'dataProvider' 	=> $dataProvider,
             'urlVolver' 	=> $urlVolver,
+            'idTipoInforme' => $idTipoInforme,
+            'guardado' => $guardado,
         ]);
     }
 
@@ -143,7 +145,7 @@ class EcDatosBasicosController extends Controller
 		
 		$urlVolver = "";
 
-		switch( intval($_GET['idTipoInforme']) ){
+		switch( intval($_SESSION["idTipoInforme"]) ){
 			
 			case 1: 
 				$urlVolver = 'ec-competencias-basicas-proyectos/index';
@@ -163,7 +165,7 @@ class EcDatosBasicosController extends Controller
             $modelDatosBasico->id_institucion = $_SESSION['instituciones'][0];
             $modelDatosBasico->id_sede = $id_sede;
             $modelDatosBasico->estado = 1;
-            $modelDatosBasico->id_tipo_informe = intval($_GET['idTipoInforme']);
+            $modelDatosBasico->id_tipo_informe = intval($_SESSION["idTipoInforme"]);
 
             if($modelDatosBasico->save()){
             
@@ -210,7 +212,7 @@ class EcDatosBasicosController extends Controller
                 }
             }
             
-            return $this->redirect(['view', 'id' => $modelDatosBasico->id, 'guardado' => 1 , 'urlVolver' => $urlVolver ]);
+            return $this->redirect(['index', 'guardado' => 1 , 'idTipoInforme' => $_SESSION["idTipoInforme"] ]);
         }
 
 
@@ -236,7 +238,7 @@ class EcDatosBasicosController extends Controller
 		$sede = Sedes::findOne( $id_sede );
 		$institucion = Instituciones::findOne( $id_institucion );
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'modelDatosBasico' 	=> $modelDatosBasico,
             'modelPlaneacion' 	=> $modelPlaneacion,
             'modelVerificacion' => $modelVerificacion,
@@ -345,7 +347,7 @@ class EcDatosBasicosController extends Controller
 		$sede = Sedes::findOne( $id_sede );
 		$institucion = Instituciones::findOne( $id_institucion );
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'modelDatosBasico' 	=> $modelDatosBasico,
             'modelPlaneacion' 	=> $modelPlaneacion,
             'modelVerificacion' => $modelVerificacion,

@@ -7,20 +7,26 @@ use Yii;
 /**
  * This is the model class for table "ec.planeacion".
  *
- * @property string $id
- * @property string $id_datos_basicos
+ * @property int $id
+ * @property int $id_datos_basicos
  * @property string $tipo_actividad
  * @property string $fecha
- * @property string $tipo_actor
- * @property string $cantidad_asistentes
  * @property string $objetivo
  * @property string $responsable
  * @property string $rol
  * @property string $descripcion_actividad
- * @property string $estado
+ * @property int $estado
+ * @property int $estudiantes
+ * @property int $familias
+ * @property int $docentes
+ * @property int $directivos
+ * @property int $otros
  */
 class EcPlaneacion extends \yii\db\ActiveRecord
 {
+
+    public $tipo_actor;
+    public $cantidad_asistentes;
     /**
      * @inheritdoc
      */
@@ -35,13 +41,12 @@ class EcPlaneacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_datos_basicos', 'tipo_actividad', 'fecha','tipo_actor','cantidad_asistentes','objetivo','responsable','rol','descripcion_actividad'], 'required'],
-            [['id_datos_basicos', 'cantidad_asistentes', 'estado'], 'default', 'value' => null],
-            [['id_datos_basicos', 'cantidad_asistentes', 'estado'], 'integer'],
-            [['tipo_actividad', 'tipo_actor', 'objetivo', 'responsable', 'rol', 'descripcion_actividad'], 'string'],
+            [['id_datos_basicos', 'tipo_actividad', 'fecha'], 'required'],
+            [['id_datos_basicos', 'estado', 'estudiantes', 'familias', 'docentes', 'directivos', 'otros'], 'default', 'value' => null],
+            [['id_datos_basicos', 'estado', 'estudiantes', 'familias', 'docentes', 'directivos', 'otros'], 'integer'],
+            [['tipo_actividad', 'objetivo', 'responsable', 'rol', 'descripcion_actividad'], 'string'],
             [['fecha'], 'safe'],
             [['id_datos_basicos'], 'exist', 'skipOnError' => true, 'targetClass' => EcDatosBasicos::className(), 'targetAttribute' => ['id_datos_basicos' => 'id']],
-            //[['id'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['id' => 'id']],
         ];
     }
 
@@ -51,17 +56,20 @@ class EcPlaneacion extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' 					=> 'ID',
-            'id_datos_basicos' 		=> 'Id Datos Basicos',
-            'tipo_actividad' 		=> 'Tipo de Actividad',
-            'fecha' 				=> 'Fecha',
-            'tipo_actor' 			=> 'Tipo Actor',
-            'cantidad_asistentes' 	=> 'Cantidad de Asistentes',
-            'objetivo' 				=> 'Objetivo',
-            'responsable' 			=> 'Responsable',
-            'rol' 					=> 'Rol',
-            'descripcion_actividad' => 'Descripción de la Actividad',
-            'estado' 				=> 'Estado',
+            'id' => 'ID',
+            'id_datos_basicos' => 'Id Datos Basicos',
+            'tipo_actividad' => 'Tipo Actividad',
+            'fecha' => 'Fecha',
+            'objetivo' => 'Objetivo',
+            'responsable' => 'Responsable',
+            'rol' => 'Rol',
+            'descripcion_actividad' => 'Descripcion Actividad',
+            'estado' => 'Estado',
+            'estudiantes' => 'Estudiantes',
+            'familias' => 'Familias',
+            'docentes' => 'Docentes',
+            'directivos' => 'Directivos',
+            'otros' => 'Otros',
         ];
     }
 }

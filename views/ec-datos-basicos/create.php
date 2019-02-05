@@ -17,17 +17,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Datos Básicos', 'url' => ['index'
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 
-<div class="form-group">
-		
-		<?= Html::a('Volver', 
-									[
-										'index',
-										'idTipoInforme' => $_GET['idTipoInforme'],
-									], 
-									['class' => 'btn btn-info']) ?>
-				
-</div>
-
 <div class="ec-datos-basicos-create">
 
     <h1 style='background-color:#ccc;'><?= Html::encode($this->title) ?></h1>

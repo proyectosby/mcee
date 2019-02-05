@@ -15,6 +15,7 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Collapse;
 
 use dosamigos\datepicker\DatePicker;
+$this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EcDatosBasicos */
@@ -63,7 +64,7 @@ if( !$sede ){
 														'tiposVerificacion'	=> $tiposVerificacion,
 														'modelDatosBasico' => $modelDatosBasico,
 												] ),
-							'contentOptions'=> [],
+								'contentOptions' => ['class' => 'in']
 						]
 					] 
 				]); ?>

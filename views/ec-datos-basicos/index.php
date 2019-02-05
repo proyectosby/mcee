@@ -12,6 +12,8 @@ use app\models\EcPlaneacion;
 use app\models\EcVerificacion;
 
 use yii\helpers\Url;
+use yii\bootstrap\Modal;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EcDatosBasicosBuscar */
@@ -19,6 +21,17 @@ use yii\helpers\Url;
 
 $this->title = 'Datos Básicos';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+$_SESSION["idTipoInforme"] = isset($_GET['idTipoInforme']) ?  $_GET['idTipoInforme'] : 0; 
+
+
+if( isset($guardado) && $guardado == 1 ){
+	echo Html::hiddenInput( 'guardadoFormulario', '1' );
+}
+
 ?>
 <div class="ec-datos-basicos-index">
 
@@ -27,8 +40,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Volver', [ $urlVolver ], ['class' => 'btn btn-info']) ?>
-        <?= Html::a('Agregar', ['create', 'idTipoInforme' => $_GET['idTipoInforme'] ], ['class' => 'btn btn-success']) ?>
+       	
+		<?= Html::button('Agregar',['value'=>Url::to(['create']), 'class'=>'btn btn-success','id'=>'modalButton'])?>
+
     </p>
+
+	<?php 
+		
+		Modal::Begin([
+			'header'=>'<h3>Datos Básicos</h3>',
+			'id'=>'modal',
+			'size'=>'modal-lg',
+		
+		]);
+		echo "<div id='modalContent'></div>";
+		
+		Modal::end();
+
+	?>
 
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
@@ -103,8 +132,25 @@ $this->params['breadcrumbs'][] = $this->title;
 				//'estado',
 
 				[
-					'class' 	=> 'yii\grid\ActionColumn',
-					'template' 	=> '{view}{delete}',
+					//'class' 	=> 'yii\grid\ActionColumn',
+					//'template' 	=> '{view}{delete}',
+					'class' => 'yii\grid\ActionColumn',
+					'template'=>'{view}{update}{delete}',
+						'buttons' => [
+						'view' => function ($url, $model) {
+							return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+										'title' => Yii::t('app', 'lead-view'),
+							]);
+						},
+		
+						'update' => function ($url, $model) {
+							return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+										'title' => Yii::t('app', 'lead-update'),
+							]);
+						}
+		
+					  ],
+			
 				],
 			],
     ]); ?>

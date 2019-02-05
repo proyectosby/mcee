@@ -89,8 +89,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					'attributes' => [
 						'tipo_actividad',
 						'fecha',
-						'tipo_actor',
-						'cantidad_asistentes',
 						'objetivo',
 						'responsable',
 						'rol',

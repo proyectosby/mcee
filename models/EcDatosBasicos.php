@@ -50,7 +50,7 @@ class EcDatosBasicos extends \yii\db\ActiveRecord
     {
         return [
             'id' 					=> 'ID',
-            'profesional_campo' 	=> 'Profesional Campo',
+            'profesional_campo' 	=> 'Profesional campo',
             'id_institucion' 		=> 'Institución',
             'id_sede' 				=> 'Sede',
             'fecha_diligenciamiento'=> 'Fecha de Diligenciamiento',

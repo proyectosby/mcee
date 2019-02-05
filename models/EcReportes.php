@@ -7,14 +7,14 @@ use Yii;
 /**
  * This is the model class for table "ec.reportes".
  *
- * @property string $id
- * @property string $id_planeacion
+ * @property int $id
+ * @property int $id_planeacion
  * @property string $fecha_diligenciamiento
  * @property string $ejecutado
  * @property string $no_ejecutado
  * @property string $variaciones
  * @property string $observaciones
- * @property string $estado
+ * @property int $estado
  */
 class EcReportes extends \yii\db\ActiveRecord
 {
@@ -32,7 +32,7 @@ class EcReportes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_planeacion', 'estado','fecha_diligenciamiento','ejecutado','no_ejecutado','variaciones','observaciones'], 'required'],
+            [['id_planeacion', 'estado'], 'required'],
             [['id_planeacion', 'estado'], 'default', 'value' => null],
             [['id_planeacion', 'estado'], 'integer'],
             [['fecha_diligenciamiento'], 'safe'],
@@ -48,14 +48,14 @@ class EcReportes extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' 						=> 'ID',
-            'id_planeacion' 			=> 'Id Planeacion',
-            'fecha_diligenciamiento' 	=> 'Fecha de Diligenciamiento',
-            'ejecutado' 				=> 'Ejecutado',
-            'no_ejecutado' 				=> 'No Ejecutado',
-            'variaciones' 				=> 'Variaciones',
-            'observaciones' 			=> 'Observaciones',
-            'estado' 					=> 'Estado',
+            'id' => 'ID',
+            'id_planeacion' => 'Id Planeacion',
+            'fecha_diligenciamiento' => 'Fecha Diligenciamiento',
+            'ejecutado' => 'Ejecutado',
+            'no_ejecutado' => 'No Ejecutado',
+            'variaciones' => 'Variaciones',
+            'observaciones' => 'Observaciones',
+            'estado' => 'Estado',
         ];
     }
 }
