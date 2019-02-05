@@ -35,6 +35,8 @@ class EcDatosBasicos extends \yii\db\ActiveRecord
             [['profesional_campo'], 'string'],
             [['id_institucion', 'id_sede', 'estado', 'id_tipo_informe'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'estado', 'id_tipo_informe'], 'integer'],
+
+            [['id_institucion', 'id_sede', 'estado', 'id_tipo_informe', 'profesional_campo', 'fecha_diligenciamiento'], 'required'],
             [['fecha_diligenciamiento'], 'safe'],
             [['id_tipo_informe'], 'exist', 'skipOnError' => true, 'targetClass' => TipoInforme::className(), 'targetAttribute' => ['id_tipo_informe' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
@@ -53,7 +55,7 @@ class EcDatosBasicos extends \yii\db\ActiveRecord
             'profesional_campo' 	=> 'Profesional campo',
             'id_institucion' 		=> 'Institución',
             'id_sede' 				=> 'Sede',
-            'fecha_diligenciamiento'=> 'Fecha de Diligenciamiento',
+            'fecha_diligenciamiento'=> 'Fecha de diligenciamiento',
             'estado' 				=> 'Estado',
             'id_tipo_informe' 		=> 'Id Tipo Informe',
         ];

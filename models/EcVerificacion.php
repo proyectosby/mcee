@@ -47,7 +47,7 @@ class EcVerificacion extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_planeacion' => 'Id Planeacion',
-            'tipo_verificacion' => 'Tipo de Verificación',
+            'tipo_verificacion' => 'Tipo de verificación',
             'ruta_archivo' => 'Ruta del archivo',
             'estado' => 'Estado',
         ];

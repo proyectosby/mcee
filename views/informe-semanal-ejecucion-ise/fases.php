@@ -10,7 +10,27 @@ foreach( $fases as $keyFase => $fase ){
 					->andWhere( 'id_fase='.$fase->id )
 					->all();*/
 
-	if($keyFase == 0){
+	$items[] = 	[
+		'label' 		=>  $fase,
+		'content' 		=>  $this->render( 'faseItem', 
+										[ 
+											//'items' 	=> ["Tipo y cantidad de población"], 
+											'index' 	=> $keyFase,
+											'fase' 		=> $fase,
+											"tipo_poblacion" => $tipo_poblacion,
+											"estudiasntes" => $estudiasntes,
+											"actividades" => $actividades,
+											"visitas"  => $visitas,
+											"form" => $form,
+											"datos" => $datos,
+											"datos2" => $datos2,
+										] 
+							),
+		//'headerOptions' => ['class' => 'tab1', 'style' => 'background-color: #f2dedf;'],
+		'contentOptions'=> []
+	];
+
+	/*if($keyFase == 0){
 		$items[] = 	[
 			'label' 		=>  $fase,
 			'content' 		=>  $this->render( 'faseItem', 
@@ -72,7 +92,7 @@ foreach( $fases as $keyFase => $fase ){
 			'headerOptions' => ['style' => 'background-color: #95b3d7'],
 			'contentOptions'=> []
 		];
-	}
+	}*/
 	
 				
 	$index ++;
@@ -88,6 +108,10 @@ echo Tabs::widget([
 
 $this->registerJs("$('.tab1').removeClass('active');");
 
-$this->registerCss("li > a {
-						color: black;
+$this->registerCss(".nav-tabs > li {
+						width: 290px;
+					}
+
+					.row {
+						margin-left: 2px;
 					}");

@@ -55,7 +55,7 @@ class IeoController extends Controller
         ];
     }
 
-    function actionViewFases($model, $form, $datos, $persona){
+    function actionViewFases($model, $form, $datos, $persona, $idTipoInforme){
         
         $model = new Ieo();
         $documentosReconocimiento = new DocumentosReconocimiento();
@@ -74,15 +74,24 @@ class IeoController extends Controller
        
         //$nombres				= $nombres->nombres." ".$nombres->apellidos;
         
-        $proyectos = [ 
+        /*$proyectos = [ 
             1 => "Proyectos Pedagógicos Transversales",
             2 => "Proyectos de Servicio Social Estudiantil",
             3 => "Articulación Familiar"
+        ];*/
+
+        $actividades =[
+            1 =>    "Requerimientos extras I.E.O",
+            2 =>    "Reconocimiento previo y documentos a desarrollar por el profesional de apoyo",
+            3 =>    "Actividad 1.Mesa de trabajo para la presentación de resultados de la caracterización y mapeo (puntos de partida y llegada)",
+            4 =>    "Actividad 2. Acompañamiento en práctica",
+            5 =>    "Actividad 3. Mesa de trabajo: contrucción del plan de acción",
+            6 =>    "Productos"
         ];
 		
 		return $this->renderAjax('fases', [
 			'idPE' 	=> null,
-            'fases' => $proyectos,
+            'fases' => $actividades,
             'form' => $form,
             "model" => $model,
             "documentosReconocimiento" =>  $documentosReconocimiento,
@@ -94,6 +103,7 @@ class IeoController extends Controller
             "datos" => $datos,
             "persona" => $persona,
             "nombres" => $nombres,
+            "idTipoInforme" => $idTipoInforme
         ]);
 		
 	}
@@ -482,6 +492,15 @@ class IeoController extends Controller
 
         }
         
+
+        $proyecto = "";
+        if($_SESSION["idTipoInforme"] == 26){
+            $proyecto = 'Articulación Familiar';
+        }else if($_SESSION["idTipoInforme"] == 14){
+            $proyecto = 'Servicio Social Obligatorio';
+        }else if($_SESSION["idTipoInforme"] == 2){
+            $proyecto = 'Proyectos Pedagógicos Transversales';
+        }
       
         
         $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
@@ -491,6 +510,7 @@ class IeoController extends Controller
         return $this->renderAjax('create', [
             'model' => $ieo_model,
             'zonasEducativas' => $zonasEducativas,
+            'proyecto' => $proyecto
         ]);
     }
 

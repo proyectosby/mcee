@@ -20,7 +20,7 @@ use dosamigos\datepicker\DatePicker;
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
     $contador = $index +  $numProyecto;
     
-    if ($index == 1){
+    if ($numProyecto == 1){
     ?>
         <?= $form->field($requerimientoExtra, "[$index$numProyecto]socializacion_ruta")->label('Socialización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
         <?= $form->field($requerimientoExtra, "[$index$numProyecto]soporte_necesidad")->label('ANEXO SOPORTE DE NECESIDAD DE HACER SOCIALIZACIÓN SI APLICA')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
@@ -28,9 +28,9 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         <?= $form->field($requerimientoExtra, "[$index$numProyecto]actividad_id")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
     <?php
     }
-    if($index == 2){
+    if($numProyecto == 2){
     ?>
-        <div class=row style=''>
+        <div class="" style=''>
             <div class="col-sm-6" style='padding:0px;'>
                 <?= $form->field($documentosReconocimiento, "[$index$numProyecto]informe_caracterizacion")->label('Informe Caracterización')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                 <?= $form->field($documentosReconocimiento, "[$index$numProyecto]matriz_caracterizacion")->label('Matriz de Trazabilidad ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
@@ -49,7 +49,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
         <?= $form->field($documentosReconocimiento, "[$index$numProyecto]actividad_id")->hiddenInput(['value'=> $numProyecto])->label(false); ?>
     <?php
     }
-    if($index == 3 || $index == 4 || $index == 5){?>
+    if($numProyecto == 3 || $numProyecto == 4 || $numProyecto == 5){?>
         <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]fecha_creacion")->widget(
             DatePicker::className(), [
                 // modify template for custom rendering
@@ -63,10 +63,10 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             <?= $form->field($tiposCantidadPoblacion, "[$index$numProyecto]tipo_actividad")->textInput([ 'value' => isset($datos[$index."".$numProyecto]['tipo_actividad']) ? $datos[$index."".$numProyecto]['tipo_actividad'] : '' ]) ?>
             <h3 style='background-color: #ccc;padding:5px;'>Docentes</h3>
                 
-            <div class=row style='text-align:center;'>
+            <div class="row" style='text-align:center;'>
                 
                 <?php
-                    if($numProyecto == 2){
+                    if($idTipoInforme == 14){
                         ?>
                             <div class="col-sm-2" style='padding:0px;'>
                                 <span total class='form-control' style='background-color:#ccc;height:70px'>Docentes</span>
@@ -82,7 +82,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                             </div>
                         <?php
                     }
-                    if($numProyecto == 3){
+                    if($idTipoInforme == 26){
                         ?>
                             <div class="col-sm-2" style='padding:0px;'>
                                 <span total class='form-control' style='background-color:#ccc;height:70px'>Docentes</span>
@@ -100,7 +100,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                 <span total class='form-control' style='background-color:#ccc;height:70px'>Total</span>
                             </div>
                         <?php
-                    }if($numProyecto == 1){
+                    }if($idTipoInforme == 2){
                         ?>
                         <div class="col-sm-2" style='padding:0px;'>
                             <span total class='form-control' style='background-color:#ccc;height:70px;'>Tiempo Libre</span>
@@ -133,7 +133,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
             <div class=row>
 
                 <?php
-                    if($numProyecto == 2){
+                    if($idTipoInforme == 14){
                     ?>
                         <div class="col-sm-2" style='padding:0px;'>
                             <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]docentes", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['docentes']) ? $datos[$index."".$numProyecto]['docentes'] : ''] ) ?>
@@ -146,7 +146,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                         </div>
                     <?php
                     }
-                    if($numProyecto == 3){
+                    if($idTipoInforme == 26){
                         ?>
                         <div class="col-sm-2" style='padding:0px;'>
                             <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]docentes", [ 'type' => 'number', 'class' =>  "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['docentes']) ? $datos[$index."".$numProyecto]['docentes'] : ''] ) ?>
@@ -162,7 +162,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                         </div>
                     
                     <?php
-                    }if($numProyecto == 1){
+                    }if($idTipoInforme == 2){
                         ?>
                     <div class="col-sm-2" style='padding:0px;'>
                         <?=  Html::activeTextInput($tiposCantidadPoblacion, "[$index$numProyecto]tiempo_libre", [ 'type' => 'number', 'class' => "form-control docentes-$index$numProyecto-cantidad", 'value' => isset($datos[$index."".$numProyecto]['tiempo_libre']) ? $datos[$index."".$numProyecto]['tiempo_libre'] : ''] ) ?>
@@ -330,7 +330,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
            
             
     <?php
-    }if($index == 6){ ?>
+    }if($numProyecto == 6){ ?>
     
         <?= $form->field($producto, "[$index$numProyecto]imforme_ruta")->label('Informe de rutas de cualificación ')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
         <?= $form->field($producto, "[$index$numProyecto]plan_accion_ruta")->label('Plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>

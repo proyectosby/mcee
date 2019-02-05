@@ -78,7 +78,7 @@ if( !$sede ){
 			'modelDatosBasico' => $modelDatosBasico,
 	] ); ?>
 		
-    <div class="form-group">
+    <div class="form-group" style="text-align: -webkit-center;">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 

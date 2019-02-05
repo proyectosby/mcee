@@ -9,8 +9,35 @@ foreach( $fases as $keyFase => $fase ){
 	/*$sesiones = Sesiones::find()
 					->andWhere( 'id_fase='.$fase->id )
 					->all();*/
+	
 
-	if($keyFase  == 1){
+	$items[] = 	[
+		'label' 		=>  $fase,
+		'content' 		=>  $this->render( 'contenedorItem', 
+										[  
+											'form' => $form,
+											'numProyecto' 	=> $keyFase,
+											'index' 	=> $index,
+											'fase' 		=> $fase,
+											'documentosReconocimiento' => $documentosReconocimiento,
+											'tiposCantidadPoblacion' => $tiposCantidadPoblacion,
+											'evidencias' => $evidencias,
+											'producto' => $producto,
+											'requerimientoExtra' => $requerimientoExtra,
+											"model" => $model,
+											"estudiantesGrado" =>  $estudiantesGrado,
+											'datos'=> $datos,
+											"persona" => $persona,
+											"nombres" => $nombres,
+											"idTipoInforme" => $idTipoInforme,
+										] 
+							),
+		
+		//'headerOptions' => ['class' => 'tab1', 'style' => 'background-color: #f2dedf;'],
+		'contentOptions'=> []
+	];
+
+	/*if($keyFase  == 1){
 		$items[] = 	[
 			'label' 		=>  $fase,
 			'content' 		=>  $this->render( 'faseItem', 
@@ -29,6 +56,7 @@ foreach( $fases as $keyFase => $fase ){
 												'datos'=> $datos,
 												"persona" => $persona,
 												"nombres" => $nombres,
+												"idTipoInforme" => $idTipoInforme
 											] 
 								),
 			
@@ -55,6 +83,7 @@ foreach( $fases as $keyFase => $fase ){
 												'datos'=> $datos,
 												"persona" => $persona,
 												"nombres" => $nombres,
+												"idTipoInforme" => $idTipoInforme
 											] 
 								),
 			//'options' => ['style' => 'background-color: red;'],
@@ -81,6 +110,7 @@ foreach( $fases as $keyFase => $fase ){
 												'datos'=> $datos,
 												"persona" => $persona,
 												"nombres" => $nombres,
+												"idTipoInforme" => $idTipoInforme
 											] 
 								),
 			//'options' => ['style' => 'background-color: red;'],
@@ -88,7 +118,7 @@ foreach( $fases as $keyFase => $fase ){
 			'options' => ['style' => 'color: black;'],
 			'contentOptions'=> []
 		];
-	}
+	}*/
 	
 				
 	$index ++;
@@ -106,7 +136,12 @@ echo Tabs::widget([
 
 $this->registerJs("$('.tab1').removeClass('active');");
 
-$this->registerCss("li > a {
-						color: black;
+$this->registerCss(".nav-tabs > li {
+						
+						width: 290px;
+					}
+					
+					.row {
+						margin-left: 2px;
 					}");
 

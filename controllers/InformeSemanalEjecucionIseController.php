@@ -62,7 +62,7 @@ class InformeSemanalEjecucionIseController extends Controller
 
 		return $this->renderAjax('fases', [
 			'idPE' 	=> null,
-			'fases' => ["Proyectos Pedagógicos Transversales", "Ariculación Familiar", "Proyecto de Servicio Social"],
+			'fases' => ["Actividades", "Tipo y cantidad de población", "Visitas"],
             "tipo_poblacion" => $tipo_poblacion,
             "estudiasntes" => $estudiasntes,
             "actividades" => $actividades,

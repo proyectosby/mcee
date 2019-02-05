@@ -39,7 +39,7 @@ if( isset($guardado) && $guardado == 1 ){
 <div class="ieo-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+	
     <p>
 		<?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
 		
@@ -57,7 +57,7 @@ if( isset($guardado) && $guardado == 1 ){
 	<?php 
 		
 		Modal::Begin([
-			'header'=>'<h3>3.A Informe de avance Mensual I.E.O Fase Plan de acción - Ejecución</h3>',
+			'header'=>"<h3>3.A Informe de avance Mensual I.E.O Fase Plan de acción - Ejecución </h3>",
 			'id'=>'modal',
 			'size'=>'modal-lg',
 		

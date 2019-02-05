@@ -44,6 +44,8 @@ class EcPlaneacion extends \yii\db\ActiveRecord
             [['id_datos_basicos', 'tipo_actividad', 'fecha'], 'required'],
             [['id_datos_basicos', 'estado', 'estudiantes', 'familias', 'docentes', 'directivos', 'otros'], 'default', 'value' => null],
             [['id_datos_basicos', 'estado', 'estudiantes', 'familias', 'docentes', 'directivos', 'otros'], 'integer'],
+            
+            [['id_datos_basicos', 'estado', 'estudiantes', 'familias', 'docentes', 'directivos', 'otros', 'tipo_actividad', 'objetivo', 'responsable', 'rol', 'descripcion_actividad'], 'required'],
             [['tipo_actividad', 'objetivo', 'responsable', 'rol', 'descripcion_actividad'], 'string'],
             [['fecha'], 'safe'],
             [['id_datos_basicos'], 'exist', 'skipOnError' => true, 'targetClass' => EcDatosBasicos::className(), 'targetAttribute' => ['id_datos_basicos' => 'id']],
@@ -58,12 +60,12 @@ class EcPlaneacion extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_datos_basicos' => 'Id Datos Basicos',
-            'tipo_actividad' => 'Tipo Actividad',
+            'tipo_actividad' => 'Tipo actividad',
             'fecha' => 'Fecha',
             'objetivo' => 'Objetivo',
             'responsable' => 'Responsable',
             'rol' => 'Rol',
-            'descripcion_actividad' => 'Descripcion Actividad',
+            'descripcion_actividad' => 'Descripcion actividad',
             'estado' => 'Estado',
             'estudiantes' => 'Estudiantes',
             'familias' => 'Familias',

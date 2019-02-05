@@ -50,7 +50,7 @@ class EcReportes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_planeacion' => 'Id Planeacion',
-            'fecha_diligenciamiento' => 'Fecha Diligenciamiento',
+            'fecha_diligenciamiento' => 'Fecha diligenciamiento',
             'ejecutado' => 'Ejecutado',
             'no_ejecutado' => 'No Ejecutado',
             'variaciones' => 'Variaciones',
