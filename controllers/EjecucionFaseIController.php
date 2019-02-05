@@ -287,6 +287,7 @@ class EjecucionFaseIController extends Controller
 									if( $ejecFase )
 									{
 										$ejecFase->estado = 1;
+										$ejecFase->docente = explode( ",", $ejecFase->docente );
 										// $ejecFase->id_fase = $this->id_fase;
 										$ejecucionFase[] = $ejecFase;
 									}
@@ -409,6 +410,7 @@ class EjecucionFaseIController extends Controller
 									}
 
 									$ejecFase->load( $vEjecucionFase, '' );
+									$ejecFase->docente = implode( ",", $vEjecucionFase['docente'] );
 									$datosModelos[ $ds->id_sesion ]['ejecucionesFase'][] = $ejecFase;
 								}
 							}
@@ -506,6 +508,8 @@ class EjecucionFaseIController extends Controller
 										
 										$ejecFase->id_ciclo = $ciclo->id;
 										$ejecFase->save(false);
+										
+										$value['ejecucionesFase'][$key]->docente = explode( ",", $ejecFase->docente );
 									}
 									$primera = false;
 								}

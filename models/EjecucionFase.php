@@ -7,6 +7,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Modelo EjecucionFase
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-04
+Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
+			 y se dejan los campos select en español
+---------------------------------------
+Modificaciones:
 Fecha: 2018-11-06
 Descripción: Se valida que no se guarden la fecha de sesión vacio
 ---------------------------------------
@@ -60,7 +65,7 @@ class EjecucionFase extends \yii\db\ActiveRecord
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado', 'id_ciclo'], 'required'],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['id_fase', 'id_datos_sesiones', 'id_datos_ieo_profesional', 'estado'], 'integer'],
-            [['docente'], 'string', 'max' => 200],
+            // [['docente'], 'string', 'max' => 200],
             [['asignaturas', 'especiaidad', 'paricipacion_sesiones', 'numero_apps', 'seiones_empleadas', 'acciones_realiadas', 'temas_problama', 'tipo_conpetencias', 'observaciones', 'numero_sesiones_docente','nombre_aplicaciones_creadas'], 'string', 'max' => 500],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => DatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],

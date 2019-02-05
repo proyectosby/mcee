@@ -290,6 +290,8 @@ $( document ).ready(function(){
 			
 			$( "select", filaNueva ).each(function(x){
 				
+				this.multiple = true;
+				
 				$( this ).chosen({
 							"search_contains"			:true,
 							"single_backstroke_delete"	:false,
