@@ -1,5 +1,10 @@
 /**
 Modificaciones:
+Fecha: 2019-02-04
+Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
+			 y se dejan los campos select en español
+---------------------------------------
+Modificaciones:
 Fecha: 2018-10-16
 Descripción: Se premite insertar y modificar registros del formulario Ejecucion Fase I Docentes
 ---------------------------------------
@@ -289,9 +294,9 @@ $( document ).ready(function(){
 							"search_contains"			:true,
 							"single_backstroke_delete"	:false,
 							"disable_search_threshold"	:5,
-							"placeholder_text_single"	:"Select an option",
-							"placeholder_text_multiple"	:"Select some options",
-							"no_results_text"			:"No results match",
+							"placeholder_text_single"	:"Seleccione...",
+							"placeholder_text_multiple"	:"Seleccione...",
+							"no_results_text"			:"Sin resultados",
 						});
 			});
 			
