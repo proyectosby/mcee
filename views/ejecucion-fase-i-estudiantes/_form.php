@@ -106,7 +106,8 @@ if( $guardado ){
 			'clientOptions' => [
 				'search_contains' => true,
 				'single_backstroke_delete' => false,
-			]
+			],
+        'placeholder' => 'Seleccione algunas opciones',
 	])->label( 'Profesional A' ); ?>														
 	
 	<?= $form->field($profesional, 'curso_participantes')->dropDownList( $cursos, ['prompt' => 'Seleccione...'] )->label('Curso de los participantes') ?>

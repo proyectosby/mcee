@@ -99,7 +99,8 @@ if( $guardado ){
 				'clientOptions' => [
 					'search_contains' => true,
 					'single_backstroke_delete' => false,
-				]
+				],
+                'placeholder' => 'Seleccione algunas opciones',
 		]); ?>
 		
 		
@@ -111,7 +112,8 @@ if( $guardado ){
 				'clientOptions' => [
 					'search_contains' => true,
 					'single_backstroke_delete' => false,
-				]
+				],
+                'placeholder' => 'Seleccione algunas opciones',
 		]); ?>
 								
 	<?= $form->field($datosIEO, 'id')->hiddenInput()->label( null,[ 'style' => 'display:none' ] ) ?>
