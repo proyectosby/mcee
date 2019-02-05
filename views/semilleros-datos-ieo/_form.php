@@ -97,7 +97,8 @@ if( $guardado ){
 				'clientOptions' => [
 					'search_contains' => true,
 					'single_backstroke_delete' => false,
-				]
+				],
+                'placeholder' => 'Seleccione algunas opciones',
 		]); ?>
 		
 	<?= $form->field($datosIEO, 'docente_aliado')->widget(
@@ -108,7 +109,8 @@ if( $guardado ){
 				'clientOptions' => [
 					'search_contains' => true,
 					'single_backstroke_delete' => false,
-				]
+				],
+                'placeholder' => 'Seleccione algunas opciones',
 		]); ?>
     
 	<?= $form->field($datosIEO, 'id')->hiddenInput()->label( null,[ 'style' => 'display:none' ] ) ?>
@@ -141,3 +143,10 @@ if( $guardado ){
     <?php ActiveForm::end(); ?>
 
 </div>
+<script>
+    $( document ).ready(function() {
+        $('[id^="btnAgregar"]').click(function () {
+            $('[id^="acuerdosinstitucionalesestudiantes_"]').find('input').attr("placeholder", "Seleccione algunas opciones");
+        })
+    });
+</script>

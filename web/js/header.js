@@ -73,7 +73,7 @@ $( "#cambiarSede" ).click(function()
 {
 	
 	institucionJS = readCookie( "institucionJs" );
-		return fetch('index.php?r=sedes/sedes&idInstitucion='+55)
+		return fetch('index.php?r=sedes/sedes&idInstitucion='+institucionJS)
 			  .then(response => {
 				if (!response.ok) {
 				  throw new Error(response.statusText)

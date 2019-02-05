@@ -7,6 +7,11 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-04
+Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
+			 y se dejan los campos select en español
+---------------------------------------
+Modificaciones:
 Fecha: 2018-11-06
 Descripción: Se modifica los campos para que se vea las validaciones correctas de acuerdo a los colores
 ---------------------------------------
@@ -147,7 +152,7 @@ use nex\chosen\Chosen;
 								Chosen::className(), [
 									'items' => $docentes,
 									'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-									'multiple' => false,
+									'multiple' => true,
 									'clientOptions' => [
 										'search_contains' => true,
 										'single_backstroke_delete' => false,
