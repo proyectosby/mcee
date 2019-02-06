@@ -6,6 +6,11 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseController
 ---------------------------------------
+Modificaciones:
+Fecha: 2019-02-05
+Desarrollador: Edwin Molina Grisales
+Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
+---------------------------------------
 **********/
 
 
@@ -255,6 +260,9 @@ class EjecucionFaseIiController extends Controller
 						$accionRecurso = SemillerosTicAccionesRecursosFaseIi::findOne([ 'id_datos_sesion' => $ds->id ]);
 						
 						$datosModelos[ $ds->id_sesion ][ 'dataSesion' ] 		= $ds;
+						
+						$ejecucionFase->docentes = explode( ",", $ejecucionFase->docentes );
+						
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][] 	= $ejecucionFase;
 						
 						if( $accionRecurso )
@@ -322,19 +330,25 @@ class EjecucionFaseIiController extends Controller
 							{
 								$ef = new SemillerosTicEjecucionFaseIi();
 								$ef->load( $ejecucionFase, '' );
+
+								$ef->docentes = implode( ",", $ejecucionFase['docentes'] );
+								
 								$datosModelos[$sesion]['ejecucionesFase'][] = $ef;
 							}
 							else{
 								//Si tiene un id está la ejecución de fase está en dataModelos
 								//La primera posicion siempre debe estar vacía
 								$esPrimera = true;
-								foreach( $datosModelos[ $sesion ]['ejecucionesFase'] as $dmEjecucionFase )
+								foreach( $datosModelos[ $sesion ]['ejecucionesFase'] as $k => $dmEjecucionFase )
 								{
 									if( !$esPrimera )
 									{
 										if( $dmEjecucionFase->id == $ejecucionFase['id'] )
 										{
 											$dmEjecucionFase->load( $ejecucionFase, '' );
+											
+											$datosModelos[ $sesion ]['ejecucionesFase'][$k]->docentes = implode( ",", $ejecucionFase['docentes'] );
+											
 											break;
 										}
 									}
@@ -458,6 +472,8 @@ class EjecucionFaseIiController extends Controller
 									$ejecucionFase->estado 					= 1;
 									$ejecucionFase->id_ciclo 				= $ciclo->id;
 									$ejecucionFase->save(false);
+									
+									$modelos['ejecucionesFase'][$k]->docentes = explode( ",", $ejecucionFase->docentes );
 								}
 								$esPrimera = false;
 							}
@@ -481,60 +497,61 @@ class EjecucionFaseIiController extends Controller
 		
 		$fase  = Fases::findOne( $this->id_fase );
 		
-		// $dataPersonas 		= Personas::find()
-								// ->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
-								// ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
-								// ->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
-								// ->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
-								// ->where( 'personas.estado=1' )
-								// ->andWhere( 'id_institucion='.$id_institucion )
+		$dataPersonas 		= Personas::find()
+								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								->where( 'personas.estado=1' )
+								->andWhere( 'id_institucion='.$id_institucion )
+								->all();
+		
+		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		$profesionales  = $docentes;
+		
+		// $profesionales = [];
+		// $dataProfesionales = SemillerosDatosIeo::find()
+								// ->where( 'id_institucion='.$id_institucion )
+								// ->andWhere( 'sede='.$id_sede )
+								// ->andWhere( 'id_ciclo='.$ciclo->id )
+								// ->andWhere( 'estado=1' )
 								// ->all();
-		
-		// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
-		$profesionales = [];
-		$dataProfesionales = SemillerosDatosIeo::find()
-								->where( 'id_institucion='.$id_institucion )
-								->andWhere( 'sede='.$id_sede )
-								->andWhere( 'id_ciclo='.$ciclo->id )
-								->andWhere( 'estado=1' )
-								->all();
 								
-		foreach( $dataProfesionales as $value )
-		{
-			$pros = explode( ",", $value->personal_a );
+		// foreach( $dataProfesionales as $value )
+		// {
+			// $pros = explode( ",", $value->personal_a );
 			
-			foreach( $pros as $p )
-			{
-				$persona = Personas::findOne( $p );
-				if( empty($profesionales[ $value->id ]) )
-					$profesionales[ $value->id ] = $persona->nombres." ".$persona->apellidos;
-				else
-					$profesionales[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
-			}
-		}
+			// foreach( $pros as $p )
+			// {
+				// $persona = Personas::findOne( $p );
+				// if( empty($profesionales[ $value->id ]) )
+					// $profesionales[ $value->id ] = $persona->nombres." ".$persona->apellidos;
+				// else
+					// $profesionales[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
+			// }
+		// }
 		
 		
-		$docentes = [];
-		$dataDocentes = AcuerdosInstitucionales::find()
-								->where( 'id_fase='.$this->id_fase )
-								->andWhere( 'id_ciclo='.$ciclo->id )
-								->andWhere( 'estado=1' )
-								->all();
+		// $docentes = [];
+		// $dataDocentes = AcuerdosInstitucionales::find()
+								// ->where( 'id_fase='.$this->id_fase )
+								// ->andWhere( 'id_ciclo='.$ciclo->id )
+								// ->andWhere( 'estado=1' )
+								// ->all();
 								
-		foreach( $dataDocentes as $value )
-		{
-			$doces = explode( ",", $value->id_docente );
+		// foreach( $dataDocentes as $value )
+		// {
+			// $doces = explode( ",", $value->id_docente );
 			
-			foreach( $doces as $d )
-			{
-				$persona = Personas::findOne( $d );
-				if( empty( $docentes[ $value->id ] ) )
-					$docentes[ $value->id ] = $persona->nombres." ".$persona->apellidos;
-				else
-					$docentes[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
-			}
-		}
+			// foreach( $doces as $d )
+			// {
+				// $persona = Personas::findOne( $d );
+				// if( empty( $docentes[ $value->id ] ) )
+					// $docentes[ $value->id ] = $persona->nombres." ".$persona->apellidos;
+				// else
+					// $docentes[ $value->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
+			// }
+		// }
 		
 
         return $this->render('create', [

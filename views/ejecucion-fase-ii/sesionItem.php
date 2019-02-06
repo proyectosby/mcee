@@ -7,6 +7,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE II
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-05
+Descripción: El plugin chosen se deja multiple para poder seleccionar más de un docente y permita desagregarlos de la conformación de semilleros
+---------------------------------------
 Fecha: 2018-09-18
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
@@ -144,7 +147,7 @@ use dosamigos\datepicker\DatePicker;
 							Chosen::className(), [
 								'items' => $docentes,
 								'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-								'multiple' => false,
+								'multiple' => true,
 								'clientOptions' => [
 									'search_contains' => true,
 									'single_backstroke_delete' => false,

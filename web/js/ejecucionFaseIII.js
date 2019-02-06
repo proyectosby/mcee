@@ -5,6 +5,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE III
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-05
+Descripción: Se desagregan DATOS PROFESIONALES y docente creador con respecto a a la conformación de los semilleros
+---------------------------------------
 Fecha: 2018-09-18
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
@@ -174,9 +177,9 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 							"search_contains"			:true,
 							"single_backstroke_delete"	:false,
 							"disable_search_threshold"	:5,
-							"placeholder_text_single"	:"Select an option",
-							"placeholder_text_multiple"	:"Seleccione",
-							"no_results_text"			:"No results match",
+							"placeholder_text_single"	:"Seleccione...",
+							"placeholder_text_multiple"	:"Seleccione...",
+							"no_results_text"			:"Sin resultados",
 						});
 			});
 			
