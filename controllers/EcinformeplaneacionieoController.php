@@ -46,6 +46,7 @@ use yii\helpers\ArrayHelper;
 use app\models\Instituciones;
 use app\models\Sedes;
 use app\models\Parametro;
+use app\models\EcTipoInforme;
 use app\models\EcPorcentajeAvance;
 use yii\bootstrap\Collapse;
 
@@ -69,13 +70,28 @@ class EcinformeplaneacionieoController extends Controller
         ];
     }
 
-    function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0,$datoInformePlaneacionProyectos=0)
+    function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0,$datoInformePlaneacionProyectos=0,$idTipoInforme )
 	{
-        
-       $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
-       $numProyectos = count($ecProyectos);
+		$connection = Yii::$app->getDb();
+		$command = $connection->createCommand(
+		"
+			select p.descripcion,p.id
+			from ec.tipo_informe as ti, ec.componentes as c, ec.proyectos as p
+			where ti.id = $idTipoInforme
+			and ti.id_componente = c.id
+			and c.descripcion = p.descripcion
+			
+		");
+		$ecProyectos = $command->queryAll();
+		
+				
+		// $docentes	= ArrayHelper::map( $dataDocentes, 'id', 'nombres' );
+		
+		
+		// $ecProyectos = EcProyectos::find()->where( 'estado=1' )
+							// ->orderby('id ASC')->all();
 
-	   $modelProyectos = new EcProyectos();
+		$modelProyectos = new EcProyectos();
 		$estadoActual = [ 
 					1 => '1',
 					2 => '2',
@@ -83,16 +99,16 @@ class EcinformeplaneacionieoController extends Controller
 					4 => '4'
 				];
 		 
-		$ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
-		foreach ($ecProyectos as $idProyecto => $v)
+		// $ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
+		foreach ($ecProyectos as $proyecto)
 		{
 			
 			 $contenedores[] = 	
 				[
-					'label' 		=>  $v,
+					'label' 		=>  $proyecto['descripcion'],
 					'content' 		=>  $this->renderPartial( 'procesos', 
 													[  
-                                                        'idProyecto' => $idProyecto,
+                                                        'idProyecto' => $proyecto['id'],
 														'form' => $form,
 														'estadoActual' => $estadoActual,
 														'modelProyectos' =>  $modelProyectos,
@@ -101,7 +117,8 @@ class EcinformeplaneacionieoController extends Controller
 														'datoInformePlaneacionProyectos'=> $datoInformePlaneacionProyectos,
 													] 
 										),
-					'contentOptions'=> []
+					 'contentOptions' => ['class' => 'in'],
+					 'options' => ['class' => 'panel panel-info']
 				];
 	
 		}
