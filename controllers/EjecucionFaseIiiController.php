@@ -6,6 +6,11 @@ Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseIIIController
 ---------------------------------------
+Modificaciones:
+Fecha: 2019-02-05
+Descripción: Se desagregan DATOS PROFESIONALES y docente creador con respecto a a la conformación de los semilleros
+---------------------------------------
+**********/
 **********/
 
 
@@ -439,6 +444,17 @@ class EjecucionFaseIiiController extends Controller
 		$listaSesiones	= ArrayHelper::map( $dataSesionesFases, 'id', 'descripcion' );
 		
 		
+		$dataPersonas 		= Personas::find()
+								->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+								->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+								->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+								->where( 'personas.estado=1' )
+								->andWhere( 'id_institucion='.$id_institucion )
+								->all();
+		
+		$docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+		$profesionales  = $docentes;
 		
 
         return $this->render('create', [

@@ -5,6 +5,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE II
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-05
+Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
+---------------------------------------
 Fecha: 2018-09-18
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
@@ -340,11 +343,18 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 			$( "select,textarea,input:hidden", filaNueva ).each(function(x){
 				
 				var _campo = this;
+				// alert( _campo.name );
+				// alert( _campo.name.substr( 0, _campo.name.indexOf( '[', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+_campo.name.substr( _campo.name.lastIndexOf( "[" )-1 ) );
+				// $( _campo ).prop({
+					// id	: _campo.id.substr( 0, _campo.id.indexOf( '-', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+_campo.id.substr( _campo.id.lastIndexOf( "-" ) ),
+					// name: _campo.name.substr( 0, _campo.name.indexOf( '[', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+_campo.name.substr( _campo.name.lastIndexOf( "[" )-1 ),
+				// });
 				
 				$( _campo ).prop({
-					id	: _campo.id.substr( 0, _campo.id.indexOf( '-', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+_campo.id.substr( _campo.id.lastIndexOf( "-" ) ),
-					name: _campo.name.substr( 0, _campo.name.indexOf( '[', "semillerosticejecucionfaseii-".length )+1 )+consecutivo+_campo.name.substr( _campo.name.lastIndexOf( "[" )-1 ),
-				});
+						id		: _campo.id.replace( /-[0-9]+-[0-9]+-/gi, "-"+id+"-"+consecutivo+"-" ),
+						name	: _campo.name.replace( /\[[0-9]+\]\[[0-9]+\]/gi, "["+id+"]["+consecutivo+"]" ),
+					});
+				
 				
 				$( _campo ).parent()
 						// .removeClass( "field-"+this.id.replace( /-[0-9]+-[0-9]+-/gi, "-"+sesion+"-0-" ) )

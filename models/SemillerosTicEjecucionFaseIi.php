@@ -1,4 +1,11 @@
 <?php
+/*
+Modificaciones:
+Por: Edwin MG
+Fecha: 2019-02-05
+Descripción: La validación de docentes como string se quita
+---------------------------------------
+*/
 
 namespace app\models;
 
@@ -43,7 +50,7 @@ class SemillerosTicEjecucionFaseIi extends \yii\db\ActiveRecord
             [['id_datos_ieo_profesional','id_fase','estado','id_datos_sesiones','id_ciclo'], 'required'],
             [['id_datos_ieo_profesional', 'id_fase', 'estado'], 'default', 'value' => null],
             [['id_datos_ieo_profesional', 'id_fase', 'estado','id_ciclo'], 'integer'],
-            [['asignaturas', 'especialidad', 'numero_apps_desarrolladas', 'nombre_aplicaciones_desarrolladas', 'nombre_aplicaciones_creadas', 'numero', 'tipo_obra', 'temas_abordados', 'numero_pruebas', 'numero_disecciones', 'observaciones_generales','docentes'], 'string'],
+            [['asignaturas', 'especialidad', 'numero_apps_desarrolladas', 'nombre_aplicaciones_desarrolladas', 'nombre_aplicaciones_creadas', 'numero', 'tipo_obra', 'temas_abordados', 'numero_pruebas', 'numero_disecciones', 'observaciones_generales'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
