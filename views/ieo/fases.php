@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 $items = [];
 $index = 0;
-
+$colors = [];
 foreach( $fases as $keyFase => $fase ){
 	
 	/*$sesiones = Sesiones::find()
