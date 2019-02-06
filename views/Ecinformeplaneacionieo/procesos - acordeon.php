@@ -6,12 +6,8 @@ use app\models\EcInformePlaneacionProyectos;
 use nex\chosen\Chosen;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\Collapse;
-use yii\bootstrap\Tabs;
 
 $model = new EcInformePlaneacionProyectos();
-
-
-$arrayColores = array('LIGHTSALMON','THISTLE','PINK','PALEGOLDENROD','PALEGREEN','LIGHTCYAN');
 
 $ecProcesos = EcProcesos::find()->where( "estado=1 and id_proyecto=$idProyecto" )->all();
 $ecProcesos = ArrayHelper::map($ecProcesos,'id','descripcion','porcentaje_avance');
@@ -22,16 +18,15 @@ $items[] =
 			'content' 		=>  $form->field($model, "[$idProyecto]horario_de_trabajo_docentes")->textInput( [ 'value' => $datoInformePlaneacionProyectos[$idProyecto] ] )->label("Horario fijo de trabajo con docentes").
 								$form->field($model, "[$idProyecto]id_proyecto")->hiddenInput( [ 'value' => $idProyecto ] )->label( false).
 								$form->field($model, "[$idProyecto]estado")->hiddenInput( [ 'value' => '1' ] )->label( false),
-								'contentOptions' => ['class' => 'in'],
-								'headerOptions' => ['style' => 'background-color:LIGHTCYAN '],
+								'contentOptions' => ['class' => 'in']
 		];
 
-$contador = 0;
+
 foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 {
 	foreach( $dataProceso as $idProceso => $v )
 	{
-	
+	 
 		$items[] = 	[
 						'label' 		=>  $v,
 						'content' 		=>  $this->render( 'acciones', 
@@ -43,19 +38,22 @@ foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 															'datos'=>$datos,
 														] 
 											),
-						'contentOptions'=> [],
-						'headerOptions' => ["style" => "background-color: $arrayColores[$contador];"],
+						'contentOptions'=> []
 					];			
-		 $contador++;
-	}
-}
 		
+	}
+	
+	
+	
+}
+
+				
 $ecProductos = EcProductos::find()->where( "estado=1 and id_proyecto=$idProyecto" )->all();
 $ecProductos = ArrayHelper::map($ecProductos,'id','descripcion');
 
 foreach( $ecProductos as $idProductos => $v )
 {
-	$contador++;
+ 
 	$items[] = 	[
 					'label' 		=>  $v,
 					'content' 		=>  $this->render( 'estrategias', 
@@ -66,18 +64,12 @@ foreach( $ecProductos as $idProductos => $v )
 														'datoRespuesta'=> $datoRespuesta,
 													] 
 										),
-					'contentOptions'=> [],
-					'headerOptions' => ['style' => "background-color: $arrayColores[$contador]"],
-				];
-					
+					'contentOptions'=> []
+				];			
 	
 }
 
 
-// echo Collapse::widget([
-    // 'items' => $items, 
-// ]);
-
-echo Tabs::widget([
-    'items' => $items,
+echo Collapse::widget([
+    'items' => $items, 
 ]);
