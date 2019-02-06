@@ -11,7 +11,7 @@ use yii\bootstrap\Tabs;
 $model = new EcInformePlaneacionProyectos();
 
 
-$arrayColores = array('LIGHTSALMON','THISTLE','PINK','PALEGOLDENROD','PALEGREEN','LIGHTCYAN');
+$arrayColores = array('#F2F3F4','#EBDEF0','#F9EBEA','#FDF2E9','#F6DDCC','LIGHTCYAN');
 
 $ecProcesos = EcProcesos::find()->where( "estado=1 and id_proyecto=$idProyecto" )->all();
 $ecProcesos = ArrayHelper::map($ecProcesos,'id','descripcion','porcentaje_avance');
@@ -22,8 +22,10 @@ $items[] =
 			'content' 		=>  $form->field($model, "[$idProyecto]horario_de_trabajo_docentes")->textInput( [ 'value' => $datoInformePlaneacionProyectos[$idProyecto] ] )->label("Horario fijo de trabajo con docentes").
 								$form->field($model, "[$idProyecto]id_proyecto")->hiddenInput( [ 'value' => $idProyecto ] )->label( false).
 								$form->field($model, "[$idProyecto]estado")->hiddenInput( [ 'value' => '1' ] )->label( false),
-								'contentOptions' => ['class' => 'in'],
-								'headerOptions' => ['style' => 'background-color:LIGHTCYAN '],
+								// 'contentOptions' => ['class' => 'nav-tabs tab-content'],
+								'contentOptions' => [],
+								'headerOptions' => ['style' => 'background-color:LIGHTCYAN'],
+									
 		];
 
 $contador = 0;
@@ -44,7 +46,8 @@ foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 														] 
 											),
 						'contentOptions'=> [],
-						'headerOptions' => ["style" => "background-color: $arrayColores[$contador];"],
+						// 'headerOptions' => ['class' => 'nav-tabs'],
+						'headerOptions' => ['style' => "background-color: $arrayColores[$contador]"]
 					];			
 		 $contador++;
 	}

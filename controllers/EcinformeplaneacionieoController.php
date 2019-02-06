@@ -72,10 +72,6 @@ class EcinformeplaneacionieoController extends Controller
 
     function actionViewfases($model,$form,$datos = 0,$datoRespuesta=0,$datoInformePlaneacionProyectos=0,$idTipoInforme )
 	{
-        
-		
-		
-		
 		$connection = Yii::$app->getDb();
 		$command = $connection->createCommand(
 		"
@@ -121,7 +117,8 @@ class EcinformeplaneacionieoController extends Controller
 														'datoInformePlaneacionProyectos'=> $datoInformePlaneacionProyectos,
 													] 
 										),
-					 'contentOptions' => ['class' => 'in']
+					 'contentOptions' => ['class' => 'in'],
+					 'options' => ['class' => 'panel panel-info']
 				];
 	
 		}
