@@ -85,3 +85,13 @@ foreach( $ecProductos as $idProductos => $v )
 echo Tabs::widget([
     'items' => $items,
 ]);
+
+$this->registerCss(".nav-tabs > li 
+					{
+						
+						width: 50%;
+					}
+					
+					
+					
+					");
