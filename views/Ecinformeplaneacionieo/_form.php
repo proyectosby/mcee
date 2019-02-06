@@ -47,11 +47,6 @@ $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $m
 }
 
 
-.nav-tabs
-{
-	padding-bottom:0px;
-}
-
 </style>
 <!-- se coloca el jquery en esta parte ya que en el archivo ecinformeplaneacionieo.js externo por alguna razon no lo coje -->
 <script>

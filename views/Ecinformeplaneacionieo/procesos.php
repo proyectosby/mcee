@@ -24,7 +24,7 @@ $items[] =
 								$form->field($model, "[$idProyecto]estado")->hiddenInput( [ 'value' => '1' ] )->label( false),
 								// 'contentOptions' => ['class' => 'nav-tabs tab-content'],
 								'contentOptions' => [],
-								'headerOptions' => ['style' => 'background-color:LIGHTCYAN'],
+								'headerOptions' => ['style' => 'background-color:LIGHTCYAN;'],
 									
 		];
 
@@ -47,7 +47,8 @@ foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 											),
 						'contentOptions'=> [],
 						// 'headerOptions' => ['class' => 'nav-tabs'],
-						'headerOptions' => ['style' => "background-color: $arrayColores[$contador]"]
+						'headerOptions' => ['style' => "background-color: $arrayColores[$contador]"],
+						'navType'=> [],
 					];			
 		 $contador++;
 	}
