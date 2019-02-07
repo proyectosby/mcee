@@ -307,7 +307,7 @@ $( "#porcentajes" ).click(function()
 
 	    <h3 style='background-color: #ccc;padding:5px;'>I.E.O Misional</h3>
 
-	    <?= $this->context->actionViewFases($model,$form,$datos,$datoRespuesta,$datoInformePlaneacionProyectos);   ?>
+	    <?= $this->context->actionViewFases($model,$form,$datos,$datoRespuesta,$datoInformePlaneacionProyectos,$idTipoInforme);   ?>
 	   
 
 
