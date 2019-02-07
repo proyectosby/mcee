@@ -20,7 +20,7 @@ use yii\bootstrap\Progress;
 /* @var $model app\models\EcInformePlaneacionIeo */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecinformeplaneacionieo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecInformePlaneacionIeo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $model->id_tipo_informe;
 ?>
@@ -47,6 +47,7 @@ $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $m
 <!-- se coloca el jquery en esta parte ya que en el archivo ecinformeplaneacionieo.js externo por alguna razon no lo coje -->
 <script>
 
+idSedes = <?php echo $_SESSION['sede'][0]; ?>
 
 $("#divPorcentajes").hide();
 $.get( "index.php?r=ecinformeplaneacionieo/info-porcentajes",
