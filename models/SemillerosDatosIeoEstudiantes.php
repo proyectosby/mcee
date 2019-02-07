@@ -62,6 +62,7 @@ class SemillerosDatosIeoEstudiantes extends \yii\db\ActiveRecord
             'estado' 			=> 'Estado',
             'id_sede' 			=> 'Sede',
             'profecional_a' 	=> 'Profesional A',
+            'estudiantes_id' 	=> 'Estudiantes',
         ];
     }
 }

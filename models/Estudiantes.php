@@ -88,4 +88,18 @@ class Estudiantes extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Inasistencias::className(), ['id_perfiles_x_personas_estudiantes' => 'id_perfiles_x_personas']);
     }
+
+    static public function findByCurso($cursoId){
+        $estudiantes = self::find()->where(['id_paralelos' => $cursoId])->asArray()->all();
+        $arrayEstudiantes = [];
+        foreach ($estudiantes AS $key => $estudiante){
+            $perfil = PerfilesXPersonas::find()
+                ->where(['id' => $estudiante["id_perfiles_x_personas"]])->asArray()->all();
+            $personas = Personas::find()
+                ->where(['id' => $perfil[0]["id_personas"]])->asArray()->all();
+
+            $arrayEstudiantes[$personas[0]['id']] = $personas[0]['nombres'] .' '.$personas[0]['apellidos'];
+        }
+        return $arrayEstudiantes;
+    }
 }

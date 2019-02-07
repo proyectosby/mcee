@@ -17,7 +17,7 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 **********/
 
 $( document ).ready(function(){
-	
+
 	//Se agrega editables para los campos textarea de condiciones institucionales
 	$( "textarea" ).each(function(){
 		
@@ -192,20 +192,41 @@ $( document ).ready(function(){
 							);
 					}
 				});
-				
-				
+
+
 				$( "select[id$=curso]", filaClonada ).each(function(){
-					
+
 					$( this ).chosen({
 							"search_contains"			:true,
 							"single_backstroke_delete"	:false,
 							"disable_search_threshold"	:5,
-							"placeholder_text_single"	:"Select an option",
-							"placeholder_text_multiple"	:"Select some options",
-							"no_results_text"			:"No results match",
+							"placeholder_text_single"	:"Seleccione una opcion",
+							"placeholder_text_multiple"	:"Seleccione algunas opciones",
+							"no_results_text"			:"no se encontraron resultados",
 						});
+
+                    if (typeof $( "select[id$=curso]" ).change === "function") {
+
+                        $( "select[id$=curso]" ).change(function () {
+                            var  selectChange = $(this);
+                            var gradoEstudiantes = $( this ).val();
+                            var data = {
+                                id: gradoEstudiantes[gradoEstudiantes.length-1]
+                            };
+                            $.post( 'index?r=semilleros-datos-ieo-estudiantes%2Fget-estudiantes', data )
+                                .done(function( data ) {
+                                    selectChange.parent()
+                                        .after('<span style="margin-right: 80%;" id="span' + gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') + '">'+ $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text() +'</span>');
+                                    $.each(JSON.parse(data), function( index, value ) {
+                                        $('#span'+gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') )
+                                            .after('<input type="checkbox" name="vehicle" value="'+ index +'">'+ value +'<br>')
+                                    });
+                                });
+
+                        })
+                    }
 				});
-				
+
 				consecutivo++;
 			});
 		});
@@ -248,5 +269,25 @@ $( document ).ready(function(){
 				emptytext: '',
 			});
 	});
-	
+
+    if (typeof $( "select[id$=curso]" ).change === "function") {
+
+        $( "select[id$=curso]" ).change(function () {
+            var  selectChange = $(this);
+            var gradoEstudiantes = $( this ).val();
+            var data = {
+                id: gradoEstudiantes[gradoEstudiantes.length-1]
+            };
+            $.post( 'index?r=semilleros-datos-ieo-estudiantes%2Fget-estudiantes', data )
+                .done(function( data ) {
+                    selectChange.parent()
+                        .after('<span style="margin-right: 80%;" id="span' + gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') + '">'+ $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text() +'</span>');
+                    $.each(JSON.parse(data), function( index, value ) {
+                        $('#span'+gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') )
+                            .after('<input type="checkbox" name="vehicle" value="'+ index +'">'+ value +'<br>')
+                    });
+                });
+
+        })
+    }
 });
