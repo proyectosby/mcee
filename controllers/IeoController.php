@@ -175,10 +175,10 @@ class IeoController extends Controller
             $ieo_model->id_tipo_informe = $_SESSION["idTipoInforme"];   
             
             /**Registro de Modelo Base y todos los modelos realacionados con documentación */
-            if(/*$ieo_model->save()*/true){
+            if($ieo_model->save()){
                 //$status = true;  
-                //$ieo_id = $ieo_model->id;
-                $ieo_id = 56;
+                $ieo_id = $ieo_model->id;
+                //$ieo_id = 56;
                 
 
                 /*if(Yii::$app->request->post('RequerimientoExtraIeo')){

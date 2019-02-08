@@ -162,25 +162,25 @@
             if($numActividad != 3 && $numActividad != 5 && $numActividad != 9 && $numActividad != 11){ ?>
                 <div class=row style=''>
                     <div class="col-sm-6" style='padding:0px;'>
-                        <?= $form->field($evidencias, "[$numActividad]producto_acuerdo")->label('Producto: acta de acuerdos y compromisos')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]producto_acuerdo[]")->label('Producto: acta de acuerdos y compromisos')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                
             <?php
             }else{ ?>
                 <div class=row style=''>
                     <div class="col-sm-6" style='padding:0px;'>
-                        <?= $form->field($evidencias, "[$numActividad]producto_acuerdo")->label('Producto: avance a la trazabilidad del plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                        <?= $form->field($evidencias, "[$numActividad]avance_formula")->label('Avance de la formulación y sistematización de la iniciativa')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                        <?= $form->field($evidencias, "[$numActividad]avance_ruta_gestion")->label('Avance a la ruta de gestión')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]producto_acuerdo[]")->label('Producto: avance a la trazabilidad del plan de acción')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]avance_formula[]")->label('Avance de la formulación y sistematización de la iniciativa')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]avance_ruta_gestion[]")->label('Avance a la ruta de gestión')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 
                 <?php
             }?>
             
-                        <?= $form->field($evidencias, "[$numActividad]resultado_actividad")->label('Resultados de la actividad')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                        <?= $form->field($evidencias, "[$numActividad]acta")->label("ACTA")->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]resultado_actividad[]")->label('Resultados de la actividad')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]acta[]")->label("ACTA")->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                     </div>
                     <div class="col-sm-6" style='padding:0px;'>
-                        <?= $form->field($evidencias, "[$numActividad]listado")->label("LISTADO")->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                        <?= $form->field($evidencias, "[$numActividad]fotografias")->label('FOTOGRAFÍAS')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]listado[]")->label("LISTADO")->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                        <?= $form->field($evidencias, "[$numActividad]fotografias[]")->label('FOTOGRAFÍAS')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                     </div>
                 </div>
 
@@ -189,28 +189,40 @@
         
         if($numActividad == 16){ ?>
             <div style="display: none;">
-                <?= $form->field($producto, "[$numActividad]informe_acompanamiento")->label('Informe de acompañamiento')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                <?= $form->field($producto, "[$numActividad]trazabilidad_plan_accion")->label('Trazabilidad al plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                <?= $form->field($producto, "[$numActividad]formulacion")->label('Formulación y sistematización de la iniciativa')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                <?= $form->field($producto, "[$numActividad]ruta_gestion")->label('Ruta de gestión')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                <?= $form->field($producto, "[$numActividad]resultados_procesos")->label('Presentación de los resultados del proceso')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                <?= $form->field($producto, "[$numActividad]informe_acompanamiento[]")->label('Informe de acompañamiento')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                <?= $form->field($producto, "[$numActividad]trazabilidad_plan_accion[]")->label('Trazabilidad al plan de acción')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                <?= $form->field($producto, "[$numActividad]formulacion[]")->label('Formulación y sistematización de la iniciativa')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                <?= $form->field($producto, "[$numActividad]ruta_gestion[]")->label('Ruta de gestión')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                <?= $form->field($producto, "[$numActividad]resultados_procesos[]")->label('Presentación de los resultados del proceso')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
             </div>
         <?php
         }if($numActividad == 17){ ?>
             <div style="">
                 <div class=row style=''>
                         <div class="col-sm-6" style='padding:0px;'>
-                            <?= $form->field($producto, "[$numActividad]informe_acompanamiento")->label('Informe de acompañamiento')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                            <?= $form->field($producto, "[$numActividad]trazabilidad_plan_accion")->label('Trazabilidad al plan de acción')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                            <?= $form->field($producto, "[$numActividad]formulacion")->label('Formulación y sistematización de la iniciativa')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                            <?= $form->field($producto, "[$numActividad]informe_acompanamiento[]")->label('Informe de acompañamiento')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                            <?= $form->field($producto, "[$numActividad]trazabilidad_plan_accion[]")->label('Trazabilidad al plan de acción')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                            <?= $form->field($producto, "[$numActividad]formulacion[]")->label('Formulación y sistematización de la iniciativa')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                         </div>
                         <div class="col-sm-6" style='padding:0px;'>
-                            <?= $form->field($producto, "[$numActividad]ruta_gestion")->label('Ruta de gestión')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
-                            <?= $form->field($producto, "[$numActividad]resultados_procesos")->label('Presentación de los resultados del proceso')->fileInput([ 'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                            <?= $form->field($producto, "[$numActividad]ruta_gestion[]")->label('Ruta de gestión')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+                            <?= $form->field($producto, "[$numActividad]resultados_procesos[]")->label('Presentación de los resultados del proceso')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
                         </div>
                 </div>        
             </div>
         <?php
         }
         
+        $this->registerCss(".nav-tabs > li {
+						
+            width: 217px;
+            height: 80px;
+            }
+
+            .row {
+                margin-left: 2px;
+            }
+        ");
     ?>
+
+    

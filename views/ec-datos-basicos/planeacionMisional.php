@@ -85,7 +85,7 @@ use dosamigos\datepicker\DatePicker;
 				
 				<?= $form->field($modelVerificacion, 'tipo_verificacion')->dropDownList( $tiposVerificacion, ['prompt' => 'Seleccione...' ] ) ?>
 				
-				<?= $form->field($modelVerificacion, 'ruta_archivo')->fileInput() ?>
+				<?= $form->field($modelVerificacion, 'ruta_archivo[]')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 
 				
 			

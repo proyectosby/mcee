@@ -109,13 +109,13 @@ $this->params['breadcrumbs'][] = $this->title;
 								return $parametro ? $parametro->descripcion : '';
 							},
 						],
-						[ 
+						/*[ 
 							'attribute' => 'ruta archivo' ,
 							'format' 	=> 'raw' ,
 							'value'		=> function( $model ){
 								return Html::a( "Ver archivo", Url::to( "@web/".$model->ruta_archivo , true), [ "target"=>"_blank" ] );
 							},
-						],
+						],*/
 					],
 				]) ?>
 			

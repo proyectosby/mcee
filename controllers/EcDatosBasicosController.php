@@ -140,7 +140,7 @@ class EcDatosBasicosController extends Controller
 		
         $modelDatosBasico 	= new EcDatosBasicos();
         $modelPlaneacion	= new EcPlaneacion();
-        $modelVerificacion	= new EcVerificacion();
+
         $modelReportes		= new EcReportes();
 		
 		$urlVolver = "";
@@ -173,10 +173,27 @@ class EcDatosBasicosController extends Controller
                     
                     $modelPlaneacion->id_datos_basicos = $modelDatosBasico->id;
                     $modelPlaneacion->estado = 1;
+
+                    var_dump($modelPlaneacion->id_datos_basicos);
+                    var_dump($modelPlaneacion->tipo_actividad);
+                    var_dump($modelPlaneacion->fecha);
+                    var_dump($modelPlaneacion->objetivo);
+                    var_dump($modelPlaneacion->responsable);
+                    var_dump($modelPlaneacion->rol);
+                    var_dump($modelPlaneacion->descripcion_actividad);
+                    var_dump($modelPlaneacion->estado);
+                    var_dump($modelPlaneacion->estudiantes);
+                    var_dump($modelPlaneacion->familias);
+                    var_dump($modelPlaneacion->docentes);
+                    var_dump($modelPlaneacion->directivos);
+                    var_dump($modelPlaneacion->otros);
+                    die();
                     
+                    
+
                     if($modelPlaneacion->save()){
 
-                        if ($modelVerificacion->load(Yii::$app->request->post())){
+                        /*if ($modelVerificacion->load(Yii::$app->request->post())){
 
                             $ruta_archivo = UploadedFile::getInstance( $modelVerificacion, "ruta_archivo" );
             
@@ -201,6 +218,90 @@ class EcDatosBasicosController extends Controller
                                 }
             
                             }
+                        }*/
+                        
+                        if($arrayVerificacion = Yii::$app->request->post('EcVerificacion')){
+
+                            $modelVerificacion = [];
+
+                            for( $i = 0; $i < 6; $i++ ){
+                                $modelVerificacion[] = new EcVerificacion();
+                            }
+
+                            //var_dump(count());
+                            var_dump(count(Yii::$app->request->post()));
+                            die();
+
+                            if (EcVerificacion::loadMultiple($modelVerificacion, Yii::$app->request->post() )) {
+                                die();
+                                $idInstitucion 	= $_SESSION['instituciones'][0];
+                                $institucion = Instituciones::findOne( $idInstitucion )->codigo_dane;
+
+                                $carpeta = "../documentos/documentosPlaneacionReporteActividad/".$institucion;
+                                if (!file_exists($carpeta)) 
+                                {
+                                    mkdir($carpeta, 0777, true);
+                                }
+                                
+                                $propiedades = array("ruta_archivo");
+
+                                    foreach( $modelVerificacion as $key => $model) 
+                                    {
+                                        $key +=1;
+                                    
+                                        //recorre el array $propiedades, para subir los archivos y asigarles las rutas de las ubicaciones de los arhivos en el servidor
+                                        //para posteriormente guardar en la base de datos
+                                        foreach($propiedades as $propiedad)
+                                        {
+                                            $arrayRutasFisicas = array();
+                                            // se guarda el archivo en file
+                                            
+                                            // se obtiene la informacion del(los) archivo(s) nombre, tipo, etc.
+                                            $files = UploadedFile::getInstances( $model, "[$key]$propiedad" );
+                                            
+                                            if( $files )
+                                            {
+                                                //se suben todos los archivos uno por uno
+                                                foreach($files as $file)
+                                                {
+                                                    //se usan microsegundos para evitar un nombre de archivo repetido
+                                                    $t = microtime(true);
+                                                    $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+                                                    $d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+                                                    
+                                                    // Construyo la ruta completa del archivo a guardar
+                                                    $rutaFisicaDirectoriaUploads  = "../documentos/documentosPlaneacionReporteActividad/".$institucion."/".$file->baseName . $d->format("Y_m_d_H_i_s.u") . '.' . $file->extension;
+                                                    $save = $file->saveAs( $rutaFisicaDirectoriaUploads );
+                                                    //rutas de todos los archivos
+                                                    $arrayRutasFisicas[] = $rutaFisicaDirectoriaUploads;
+                                                }
+                                                
+                                            
+                                                // asignacion de la ruta al campo de la db
+                                                $model->$propiedad = implode(",", $arrayRutasFisicas);
+                                                
+                                                // $model->$propiedad =  $var;
+                                                $arrayRutasFisicas = null;
+                                            }
+                                            else
+                                            {
+                                                echo "No hay archivo cargado";
+                                            }
+                                    }
+                                    
+                                    $model->implementacion_ieo_id = $modelPlaneacion->id;
+                                    $model->estado = 1;
+
+                                    foreach( $modelVerificacion as $key => $model) 
+                                    {
+                                        if($model->ruta_archivo){
+
+                                            $model->save();
+                                        }								
+                                    }
+                                }
+
+                            }
                         }
 
                        if ($modelReportes->load(Yii::$app->request->post())){
@@ -216,7 +317,8 @@ class EcDatosBasicosController extends Controller
         }
 
 
-		
+        $modelVerificacion	= new EcVerificacion();
+        
 		$dataTiposVerificacion = Parametro::find()
 									->where( 'id_tipo_parametro=12' )
 									->andWhere( 'estado=1' )

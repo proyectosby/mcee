@@ -26,6 +26,7 @@ use app\models\PerfilesXPersonasInstitucion;
 use app\models\PerfilesXPersonas;
 use app\models\Personas;
 
+
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\data\ActiveDataProvider;
@@ -33,6 +34,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\bootstrap\Collapse;
+use yii\bootstrap\Tabs;
 
 
 /**
@@ -110,6 +112,7 @@ class ImplementacionIeoController extends Controller
         $evidencias = new EvidenciasImpIeo();
         $producto = new ProductoImplementacionIeo();
         
+        $colors = ["#cce5ff", "#d4edda", "#f8d7da", "#fff3cd", "#d1ecf1", "#d6d8d9", "#cce5ff", "#d6d8d9", "#d4edda", "#f8d7da", "#fff3cd", "#d1ecf1", "#d6d8d9", "#cce5ff", "#f8d7da", "#fff3cd", "#d1ecf1", "#d6d8d9", "#cce5ff"];
 
         foreach ($actividades as $actividad => $a)
 		{
@@ -127,14 +130,18 @@ class ImplementacionIeoController extends Controller
                                             'evidencias' => $evidencias,
                                             'datos' => $datos
                                         ] 
-                                    )
+                                        ),
+                    'headerOptions' => ['class' => 'tab1', 'style' => "background-color: $colors[$actividad];"],
                 ];
         }
 
-        echo Collapse::widget([
+        /*echo Collapse::widget([
+            'items' => $contenedores,
+        ]);*/
+
+        echo Tabs::widget([
             'items' => $contenedores,
         ]);
-
 
     }
 
@@ -175,7 +182,7 @@ class ImplementacionIeoController extends Controller
                 $ieo_id = $ieo_model->id;
                 //$ieo_id = 1;
 
-                if(Yii::$app->request->post('EvidenciasImpIeo')){
+                /*if(Yii::$app->request->post('EvidenciasImpIeo')){
 
                     $dataEvidencias = Yii::$app->request->post('EvidenciasImpIeo');
                     $countEvidencias = count( $dataEvidencias );
@@ -267,9 +274,92 @@ class ImplementacionIeoController extends Controller
                         }
                     }
 
+                }*/
+
+                if($arrayDatosEvidencias = Yii::$app->request->post('EvidenciasImpIeo')){
+
+                        $modelEvidencias = [];
+
+                        for( $i = 0; $i < 8; $i++ ){
+                            $modelEvidencias[] = new EvidenciasImpIeo();
+                        } 
+
+                        if (EvidenciasImpIeo::loadMultiple($modelEvidencias, Yii::$app->request->post() )) {
+                            
+                            $idInstitucion 	= $_SESSION['instituciones'][0];
+                            $institucion = Instituciones::findOne( $idInstitucion )->codigo_dane;
+
+                            $carpeta = "../documentos/documentosIeo/actividades/evidenciasImlementacionIeo/".$institucion;
+                            if (!file_exists($carpeta)) 
+                            {
+                                mkdir($carpeta, 0777, true);
+                            }
+                            
+                            $propiedades = array( "producto_acuerdo", "resultado_actividad", "acta", "listado", "fotografias", "avance_formula", "avance_ruta_gestion");
+                        
+                            foreach( $modelEvidencias as $key => $model) 
+                            {
+                                $key +=1;
+                                
+                                //recorre el array $propiedades, para subir los archivos y asigarles las rutas de las ubicaciones de los arhivos en el servidor
+                                //para posteriormente guardar en la base de datos
+                                foreach($propiedades as $propiedad)
+                                {
+                                    $arrayRutasFisicas = array();
+                                    // se guarda el archivo en file
+                                    
+                                    // se obtiene la informacion del(los) archivo(s) nombre, tipo, etc.
+                                    $files = UploadedFile::getInstances( $model, "[$key]$propiedad" );
+                                    
+                                    if( $files )
+                                    {
+                                        //se suben todos los archivos uno por uno
+                                        foreach($files as $file)
+                                        {
+                                            //se usan microsegundos para evitar un nombre de archivo repetido
+                                            $t = microtime(true);
+                                            $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+                                            $d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+                                            
+                                            // Construyo la ruta completa del archivo a guardar
+                                            $rutaFisicaDirectoriaUploads  = "../documentos/documentosIeo/actividades/evidenciasImlementacionIeo/".$institucion."/".$file->baseName . $d->format("Y_m_d_H_i_s.u") . '.' . $file->extension;
+                                            $save = $file->saveAs( $rutaFisicaDirectoriaUploads );
+                                            //rutas de todos los archivos
+                                            $arrayRutasFisicas[] = $rutaFisicaDirectoriaUploads;
+                                        }
+                                        
+                                    
+                                        // asignacion de la ruta al campo de la db
+                                        $model->$propiedad = implode(",", $arrayRutasFisicas);
+                                        
+                                        // $model->$propiedad =  $var;
+                                        $arrayRutasFisicas = null;
+                                    }
+                                    else
+                                    {
+                                        echo "No hay archivo cargado";
+                                    }
+                            }
+                            $model->implementacion_ieo_id = $ieo_id;
+                                                
+
+                            foreach( $modelEvidencias as $key => $model) 
+                            {
+                                if($model->producto_acuerdo){
+
+                                    $model->save();
+                                }								
+                            }
+                        
+                        }
+
+                    }
+
                 }
 
-                if(Yii::$app->request->post('ProductoImplementacionIeo')){
+
+
+                /*if(Yii::$app->request->post('ProductoImplementacionIeo')){
                     
                     $dataProductos = Yii::$app->request->post('ProductoImplementacionIeo');
                     $countProductos = count( $dataProductos );
@@ -350,7 +440,89 @@ class ImplementacionIeoController extends Controller
                     }
 
 
+                }*/
+
+                if($arrayDatosProductos = Yii::$app->request->post('ProductoImplementacionIeo')){
+                    
+                    $modelProductos = [];
+
+                    for( $i = 0; $i < 6; $i++ ){
+                        $modelProductos[] = new ProductoImplementacionIeo();
+                    }
+
+                    var_dump(count($modelProductos));
+                    var_dump(count(Yii::$app->request->post()));                
+                    
+                    if (ProductoImplementacionIeo::loadMultiple($modelProductos, Yii::$app->request->post() )) {
+                        die();
+                        $idInstitucion 	= $_SESSION['instituciones'][0];
+                        $institucion = Instituciones::findOne( $idInstitucion )->codigo_dane;
+
+                        $carpeta = "../documentos/documentosIeo/actividades/productosImlementacionIeo/".$institucion;
+						if (!file_exists($carpeta)) 
+						{
+							mkdir($carpeta, 0777, true);
+                        }
+
+                        $propiedades = array( "informe_acompanamiento", "trazabilidad_plan_accion", "formulacion", "ruta_gestion", "resultados_procesos");
+                        
+                        foreach( $modelProductos as $key => $model) 
+                        {
+                            $key +=1;
+                            
+                            //recorre el array $propiedades, para subir los archivos y asigarles las rutas de las ubicaciones de los arhivos en el servidor
+                            //para posteriormente guardar en la base de datos
+                            foreach($propiedades as $propiedad)
+                            {
+                                $arrayRutasFisicas = array();
+                                // se guarda el archivo en file
+                                
+                                // se obtiene la informacion del(los) archivo(s) nombre, tipo, etc.
+                                $files = UploadedFile::getInstances( $model, "[$key]$propiedad" );
+                                
+                                if( $files )
+                                {
+                                    //se suben todos los archivos uno por uno
+                                    foreach($files as $file)
+                                    {
+                                        //se usan microsegundos para evitar un nombre de archivo repetido
+                                        $t = microtime(true);
+                                        $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+                                        $d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+                                        
+                                        // Construyo la ruta completa del archivo a guardar
+                                        $rutaFisicaDirectoriaUploads  = "../documentos/documentosIeo/actividades/productosImlementacionIeo/".$institucion."/".$file->baseName . $d->format("Y_m_d_H_i_s.u") . '.' . $file->extension;
+                                        $save = $file->saveAs( $rutaFisicaDirectoriaUploads );
+                                        //rutas de todos los archivos
+                                        $arrayRutasFisicas[] = $rutaFisicaDirectoriaUploads;
+                                    }
+                                    
+                                
+                                    // asignacion de la ruta al campo de la db
+                                    $model->$propiedad = implode(",", $arrayRutasFisicas);
+                                    
+                                    // $model->$propiedad =  $var;
+                                    $arrayRutasFisicas = null;
+                                }
+                                else
+                                {
+                                    echo "No hay archivo cargado";
+                                }
+                        }
+                        $model->implementacion_ieo_id = $ieo_id;
+                        $model->estado = 1;
+
+                        foreach( $modelProductos as $key => $model) 
+                        {
+                            if($model->informe_acompanamiento){
+
+                                $model->save();
+                            }								
+                        }
+                    }
                 }
+            }
+
 
 
                 if (Yii::$app->request->post('CantidadPoblacionImpIeo')){
@@ -402,7 +574,7 @@ class ImplementacionIeoController extends Controller
                     }
                     
                 }
-                return $this->redirect(['index', 'guardado' => true ]);
+                //return $this->redirect(['index', 'guardado' => true ]);
             }
             
             
@@ -526,3 +698,4 @@ class ImplementacionIeoController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
+

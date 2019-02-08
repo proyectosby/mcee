@@ -119,7 +119,7 @@ if( isset($guardado) && $guardado == 1 ){
 					},
 				],
 				'fecha_diligenciamiento',
-				[ 
+				/*[ 
 					'label' 	=> 'Ruta del archivo' ,
 					'attribute' => 'ruta archivo' ,
 					'format' 	=> 'raw' ,
@@ -128,7 +128,7 @@ if( isset($guardado) && $guardado == 1 ){
 						$modelVerificacion	= EcVerificacion::findOne(['id_planeacion' => $modelPlaneacion->id ]);
 						return Html::a( "Ver archivo", Url::to( "@web/".$modelVerificacion->ruta_archivo , true), [ "target"=>"_blank" ] );
 					},
-				],
+				],*/
 				//'estado',
 
 				[
