@@ -139,9 +139,8 @@ class EcDatosBasicosController extends Controller
 		$id_institucion	= $_SESSION['instituciones'][0];
 		
         $modelDatosBasico 	= new EcDatosBasicos();
-        $modelPlaneacion	= new EcPlaneacion();
-
         $modelReportes		= new EcReportes();
+        $modelPlaneacion	= new EcPlaneacion();
 		
 		$urlVolver = "";
 
@@ -170,29 +169,13 @@ class EcDatosBasicosController extends Controller
             if($modelDatosBasico->save()){
             
                 if ($modelPlaneacion->load(Yii::$app->request->post())){
-                    
+                   
                     $modelPlaneacion->id_datos_basicos = $modelDatosBasico->id;
                     $modelPlaneacion->estado = 1;
-
-                    var_dump($modelPlaneacion->id_datos_basicos);
-                    var_dump($modelPlaneacion->tipo_actividad);
-                    var_dump($modelPlaneacion->fecha);
-                    var_dump($modelPlaneacion->objetivo);
-                    var_dump($modelPlaneacion->responsable);
-                    var_dump($modelPlaneacion->rol);
-                    var_dump($modelPlaneacion->descripcion_actividad);
-                    var_dump($modelPlaneacion->estado);
-                    var_dump($modelPlaneacion->estudiantes);
-                    var_dump($modelPlaneacion->familias);
-                    var_dump($modelPlaneacion->docentes);
-                    var_dump($modelPlaneacion->directivos);
-                    var_dump($modelPlaneacion->otros);
-                    die();
-                    
-                    
-
+                                        
                     if($modelPlaneacion->save()){
 
+                        
                         /*if ($modelVerificacion->load(Yii::$app->request->post())){
 
                             $ruta_archivo = UploadedFile::getInstance( $modelVerificacion, "ruta_archivo" );
@@ -220,20 +203,17 @@ class EcDatosBasicosController extends Controller
                             }
                         }*/
                         
+                        /**Registro multiple de archivos Verificación */
                         if($arrayVerificacion = Yii::$app->request->post('EcVerificacion')){
 
                             $modelVerificacion = [];
 
-                            for( $i = 0; $i < 6; $i++ ){
+                            for( $i = 0; $i < sizeof(Yii::$app->request->post()); $i++ ){
                                 $modelVerificacion[] = new EcVerificacion();
                             }
 
-                            //var_dump(count());
-                            var_dump(count(Yii::$app->request->post()));
-                            die();
-
                             if (EcVerificacion::loadMultiple($modelVerificacion, Yii::$app->request->post() )) {
-                                die();
+                                
                                 $idInstitucion 	= $_SESSION['instituciones'][0];
                                 $institucion = Instituciones::findOne( $idInstitucion )->codigo_dane;
 
@@ -261,6 +241,7 @@ class EcDatosBasicosController extends Controller
                                             
                                             if( $files )
                                             {
+                                                
                                                 //se suben todos los archivos uno por uno
                                                 foreach($files as $file)
                                                 {
@@ -279,7 +260,8 @@ class EcDatosBasicosController extends Controller
                                             
                                                 // asignacion de la ruta al campo de la db
                                                 $model->$propiedad = implode(",", $arrayRutasFisicas);
-                                                
+                                                //var_dump($model->$propiedad);
+                                                //die();
                                                 // $model->$propiedad =  $var;
                                                 $arrayRutasFisicas = null;
                                             }
@@ -289,16 +271,17 @@ class EcDatosBasicosController extends Controller
                                             }
                                     }
                                     
-                                    $model->implementacion_ieo_id = $modelPlaneacion->id;
+                                    $model->id_planeacion = $modelPlaneacion->id;
                                     $model->estado = 1;
+                                    $model->tipo_verificacion = isset($arrayVerificacion[$key]['tipo_verificacion']) ? $arrayVerificacion[$key]['tipo_verificacion'] : 0 ;
 
                                     foreach( $modelVerificacion as $key => $model) 
                                     {
                                         if($model->ruta_archivo){
-
-                                            $model->save();
+                                           $model->save();
                                         }								
                                     }
+                                    
                                 }
 
                             }

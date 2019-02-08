@@ -65,7 +65,7 @@ use dosamigos\datepicker\DatePicker;
 							<?=  Html::activeTextInput($modelPlaneacion, "estudiantes", [ 'type' => 'number', 'class' => "form-control", 'value' => isset($datos['estudiantes']) ? $datos['estudiantes'] : ''] ) ?>
 						</div>
 						<div class="col-sm-3" style='padding:0px;'>
-							<?=  Html::activeTextInput($modelPlaneacion, "familas", [ 'type' => 'number', 'class' => "form-control", 'value' => isset($datos['familas']) ? $datos['familas'] : ''] ) ?>
+							<?=  Html::activeTextInput($modelPlaneacion, "familias", [ 'type' => 'number', 'class' => "form-control", 'value' => isset($datos['familias']) ? $datos['familias'] : ''] ) ?>
 						</div>
 						<div class="col-sm-2" style='padding:0px;'>
 							<?=  Html::activeTextInput($modelPlaneacion, "docentes", [ 'type' => 'number', 'class' => "form-control", 'value' => isset($datos['docentes']) ? $datos['docentes'] : ''] ) ?>
@@ -83,9 +83,9 @@ use dosamigos\datepicker\DatePicker;
 				<h1 style='background-color:#ccc;'><?= Html::encode( "MEDIOS DE VERIFICACIÓN Y PRODUCTOS" ) ?></h1>
 				
 				
-				<?= $form->field($modelVerificacion, 'tipo_verificacion')->dropDownList( $tiposVerificacion, ['prompt' => 'Seleccione...' ] ) ?>
+				<?= $form->field($modelVerificacion, "[1]tipo_verificacion")->dropDownList( $tiposVerificacion, ['prompt' => 'Seleccione...' ] ) ?>
 				
-				<?= $form->field($modelVerificacion, 'ruta_archivo[]')->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
+				<?= $form->field($modelVerificacion, "[1]ruta_archivo[]")->fileInput(['multiple' => true,  'accept' => ".doc, .docx, .pdf, .xls" ]) ?>
 
 				
 			

@@ -446,15 +446,13 @@ class ImplementacionIeoController extends Controller
                     
                     $modelProductos = [];
 
-                    for( $i = 0; $i < 6; $i++ ){
+                    for( $i = 0; $i < count(Yii::$app->request->post()); $i++ ){
                         $modelProductos[] = new ProductoImplementacionIeo();
                     }
 
-                    var_dump(count($modelProductos));
-                    var_dump(count(Yii::$app->request->post()));                
                     
                     if (ProductoImplementacionIeo::loadMultiple($modelProductos, Yii::$app->request->post() )) {
-                        die();
+                       
                         $idInstitucion 	= $_SESSION['instituciones'][0];
                         $institucion = Instituciones::findOne( $idInstitucion )->codigo_dane;
 
@@ -574,7 +572,7 @@ class ImplementacionIeoController extends Controller
                     }
                     
                 }
-                //return $this->redirect(['index', 'guardado' => true ]);
+                return $this->redirect(['index', 'guardado' => true ]);
             }
             
             
