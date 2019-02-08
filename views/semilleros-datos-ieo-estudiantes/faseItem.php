@@ -93,7 +93,7 @@ use nex\chosen\Chosen;
 					])->label(null,['style'=>'display:none'])?>
 
                 <?= $form->field($acuerdo, "[$fase->id][$index]estudiantes_id")
-                    //->hiddenInput()
+                    ->hiddenInput()
                     ->label(null,['style'=>'display:none'])?>
 			</div>
 			
