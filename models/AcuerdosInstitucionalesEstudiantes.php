@@ -17,6 +17,7 @@ use Yii;
  * @property string $id
  * @property string $id_fase
  * @property string $curso
+ * @property string $estudiantes_id
  * @property string $cantidad_inscritos
  * @property string $frecuencia_sesiones
  * @property string $jornada

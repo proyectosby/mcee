@@ -35,7 +35,7 @@ class EcInformePlaneacionIeo extends \yii\db\ActiveRecord
         return [
             [['id_institucion', 'id_sede', 'codigo_dane'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'codigo_dane'], 'integer'],
-            [['id_institucion', 'fase','zona_educativa'], 'required'],
+            [['id_institucion', 'fase','zona_educativa','fecha_reporte'], 'required'],
             [['zona_educativa', 'fase'], 'string'],
             [['fecha_reporte'], 'safe'],
             [['id_sede','id_tipo_informe'], 'required'],

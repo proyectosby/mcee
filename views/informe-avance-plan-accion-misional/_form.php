@@ -47,6 +47,8 @@ $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $m
 <!-- se coloca el jquery en esta parte ya que en el archivo ecinformeplaneacionieo.js externo por alguna razon no lo coje -->
 <script>
 
+idSedes = <?php echo $_SESSION['sede'][0]; ?>
+
 
 $("#divPorcentajes").hide();
 $.get( "index.php?r=ecinformeplaneacionieo/info-porcentajes",
@@ -307,7 +309,7 @@ $( "#porcentajes" ).click(function()
 
 	    <h3 style='background-color: #ccc;padding:5px;'>I.E.O Misional</h3>
 
-	    <?= $this->context->actionViewFases($model,$form,$datos,$datoRespuesta,$datoInformePlaneacionProyectos);   ?>
+	    <?= $this->context->actionViewFases($model,$form,$datos,$datoRespuesta,$datoInformePlaneacionProyectos,$idTipoInforme);   ?>
 	   
 
 

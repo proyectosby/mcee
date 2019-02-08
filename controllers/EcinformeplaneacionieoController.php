@@ -98,7 +98,17 @@ class EcinformeplaneacionieoController extends Controller
 					3 => '3',
 					4 => '4'
 				];
-		 
+		
+		
+	
+		//colores del acordeon
+		$arrayColores = array(
+		"Proyectos Pedagógicos Transversales"=>"panel panel-danger",
+		"Articulación Familiar" =>"panel panel-info",
+		"Proyecto de Servicio Social Estudiantil"=>"panel panel-success"
+		);
+		
+		
 		// $ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
 		foreach ($ecProyectos as $proyecto)
 		{
@@ -118,7 +128,7 @@ class EcinformeplaneacionieoController extends Controller
 													] 
 										),
 					 'contentOptions' => ['class' => 'in'],
-					 'options' => ['class' => 'panel panel-info']
+					 'options' => ['class' => $arrayColores[$proyecto['descripcion']]]
 				];
 	
 		}

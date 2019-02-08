@@ -69,11 +69,20 @@ class InformeAvanceMisionalEjesMisionalController extends Controller
         ];
     }
 
-    function actionViewfases($model, $form, $datos = 0, $datoRespuesta=0, $datoInformePlaneacionProyectos=0)
+    function actionViewfases($model, $form, $datos = 0, $datoRespuesta=0, $datoInformePlaneacionProyectos=0,$idTipoInforme )
 	{
         
-       $ecProyectos = EcProyectos::find()->where( 'estado=1' )->orderby('id ASC')->all();
-       $numProyectos = count($ecProyectos);
+       $connection = Yii::$app->getDb();
+		$command = $connection->createCommand(
+		"
+			select p.descripcion,p.id
+			from ec.tipo_informe as ti, ec.componentes as c, ec.proyectos as p
+			where ti.id = $idTipoInforme
+			and ti.id_componente = c.id
+			and c.descripcion = p.descripcion
+			
+		");
+		$ecProyectos = $command->queryAll();
 
 	   $modelProyectos = new EcProyectos();
 		$estadoActual = [ 
@@ -83,16 +92,22 @@ class InformeAvanceMisionalEjesMisionalController extends Controller
 					4 => '4'
 				];
 		 
-		$ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
-		foreach ($ecProyectos as $idProyecto => $v)
+		//colores del acordeon
+		$arrayColores = array(
+		"Proyectos Pedagógicos Transversales"=>"panel panel-danger",
+		"Articulación Familiar" =>"panel panel-info",
+		"Proyecto de Servicio Social Estudiantil"=>"panel panel-success"
+		);
+		
+		foreach ($ecProyectos as $proyecto)
 		{
 			
 			 $contenedores[] = 	
 				[
-					'label' 		=>  $v,
+					'label' 		=>  $proyecto['descripcion'],
 					'content' 		=>  $this->renderPartial( 'procesos', 
 													[  
-                                                        'idProyecto' => $idProyecto,
+                                                        'idProyecto' => $proyecto['id'],
 														'form' => $form,
 														'estadoActual' => $estadoActual,
 														'modelProyectos' =>  $modelProyectos,
@@ -101,7 +116,8 @@ class InformeAvanceMisionalEjesMisionalController extends Controller
 														'datoInformePlaneacionProyectos'=> $datoInformePlaneacionProyectos,
 													] 
 										),
-					'contentOptions'=> []
+					'contentOptions' => ['class' => 'in'],
+					 'options' => ['class' => $arrayColores[$proyecto['descripcion']]]
 				];
 	
 		}

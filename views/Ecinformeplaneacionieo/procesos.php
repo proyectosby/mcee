@@ -48,7 +48,6 @@ foreach ($ecProcesos as $porcentaje_avance => $dataProceso)
 						'contentOptions'=> [],
 						// 'headerOptions' => ['class' => 'nav-tabs'],
 						'headerOptions' => ['style' => "background-color: $arrayColores[$contador]"],
-						'navType'=> [],
 					];			
 		 $contador++;
 	}
@@ -91,7 +90,4 @@ $this->registerCss(".nav-tabs > li
 						
 						width: 50%;
 					}
-					
-					
-					
 					");
