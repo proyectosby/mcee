@@ -208,6 +208,7 @@ $( document ).ready(function(){
                     if (typeof $( "select[id$=curso]" ).change === "function") {
 
                         $( "select[id$=curso]" ).change(function () {
+
                             var  selectChange = $(this);
                             var gradoEstudiantes = $( this ).val();
                             var data = {
@@ -215,15 +216,16 @@ $( document ).ready(function(){
                             };
                             $.post( 'index?r=semilleros-datos-ieo-estudiantes%2Fget-estudiantes', data )
                                 .done(function( data ) {
-                                    selectChange.parent()
-                                        .after('<span style="margin-right: 80%;" id="span' + gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') + '">'+ $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text() +'</span>');
+                                    var curso = $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text();
+                                    $('#ModalLabel').text('Estudiantes del Curso  ' + curso);
+                                    $('#listEstudiantes').empty();
                                     $.each(JSON.parse(data), function( index, value ) {
-                                        $('#span'+gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') )
-                                            .after('<input type="checkbox" name="vehicle" value="'+ index +'">'+ value +'<br>')
+                                        $('#listEstudiantes').append('<input onchange="agregarEstudiante($(this),\'' + selectChange.attr('id') +'\',\'' + curso +'\')" type="checkbox" name="selectChange" value="'+ index +'">'+ value +'<br>')
                                     });
                                 });
 
-                        })
+                            $('#exampleModal').modal({ show: true})
+                        });
                     }
 				});
 
@@ -273,6 +275,7 @@ $( document ).ready(function(){
     if (typeof $( "select[id$=curso]" ).change === "function") {
 
         $( "select[id$=curso]" ).change(function () {
+
             var  selectChange = $(this);
             var gradoEstudiantes = $( this ).val();
             var data = {
@@ -280,14 +283,42 @@ $( document ).ready(function(){
             };
             $.post( 'index?r=semilleros-datos-ieo-estudiantes%2Fget-estudiantes', data )
                 .done(function( data ) {
-                    selectChange.parent()
-                        .after('<span style="margin-right: 80%;" id="span' + gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') + '">'+ $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text() +'</span>');
+                    var curso = $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text();
+                    $('#ModalLabel').text('Estudiantes del Curso  ' + curso);
+                    $('#listEstudiantes').empty();
                     $.each(JSON.parse(data), function( index, value ) {
-                        $('#span'+gradoEstudiantes[gradoEstudiantes.length-1] + selectChange.attr('id') )
-                            .after('<input type="checkbox" name="vehicle" value="'+ index +'">'+ value +'<br>')
+                        $('#listEstudiantes').append('<input onchange="agregarEstudiante($(this),\'' + selectChange.attr('id') +'\',\'' + curso +'\')" type="checkbox" name="selectChange" value="'+ index +'">'+ value +'<br>')
                     });
                 });
 
-        })
+            $('#exampleModal').modal({ show: true})
+        });
     }
 });
+
+function agregarEstudiante(ischeck, buscarIn, curso) {
+    var estudiantes = $('[id^='+buscarIn.substring(0,buscarIn.length-5)+'estudiantes_id]');
+    var listEstudiante = estudiantes.val();
+    if (listEstudiante === ''){
+        listEstudiante = {};
+    }else{
+        listEstudiante = JSON.parse(listEstudiante)
+    }
+	if(ischeck.is(':checked')){
+	    if (listEstudiante[curso] !== undefined){
+            listEstudiante[curso][listEstudiante[curso].length] = ischeck.val();
+        }else{
+            listEstudiante[curso] = [];
+	        listEstudiante[curso][0] = ischeck.val();
+        }
+
+        estudiantes.val(JSON.stringify(listEstudiante));
+
+        console.log(listEstudiante);
+	}
+
+	if (!ischeck.is(':checked')){
+        estudiantes.val().replace(ischeck.val() + ',', '');
+        estudiantes.val(curso + ':{' + estudiantes.val().replace(ischeck.val() + ',', '') + '}');
+    }
+}

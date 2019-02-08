@@ -26,6 +26,7 @@ else
 	die;
 }
 
+use app\models\Estudiantes;
 use Yii;
 use app\models\SemillerosDatosIeoEstudiantes;
 use app\models\SemillerosDatosIeoEstudiantesBuscar;
@@ -158,6 +159,8 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 
 	public function actionCreate()
     {	//echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
+        //die();
+
 		$ciclo = new SemillerosTicCiclos();
 		$anio = new SemillerosTicAnio();
 		
@@ -225,7 +228,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 				
 				foreach( $acuerdos as $key => $acuerdo )
 				{
-					$acuerdo->curso = explode( ',', $acuerdo->curso );
+                    $acuerdo->curso = explode( ',', $acuerdo->curso );
 					$modelos[ $acuerdo->id_fase ][] = $acuerdo;
 				}
 			}
@@ -242,11 +245,13 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 					{
 						if( !empty( $acuerdo['id'] ) )
 						{
-							$ac = AcuerdosInstitucionalesEstudiantes::findOne( $acuerdo['id'] ); 
+							$ac = AcuerdosInstitucionalesEstudiantes::findOne( $acuerdo['id'] );
+							$ac->estudiantes_id = $acuerdo['estudiantes_id'];
+							$ac->save();
 						}
 						else
 						{
-							$ac = new AcuerdosInstitucionalesEstudiantes(); 
+							$ac = new AcuerdosInstitucionalesEstudiantes();
 						}
 						
 						$ac->load( $acuerdo, '');
@@ -291,14 +296,14 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 				$datosIEO->id_sede			= $id_sede;
 				$datosIEO->id_ciclo			= $ciclo->id;
 				$datosIEO->profecional_a	= implode( ',', $datosIEO->profecional_a );
-				$datosIEO->docente_aliado	= implode( ',', $datosIEO->docente_aliado );
+                $datosIEO->docente_aliado	= implode( ',', $datosIEO->docente_aliado );
 				$datosIEO->save( false );
 				
 				$datosIEO->profecional_a	= explode( ',', $datosIEO->profecional_a );
 				$datosIEO->docente_aliado	= explode( ',', $datosIEO->docente_aliado );
 				
 				foreach( $modelos as $id_fase => $modelo )
-				{	
+				{
 					$primera = true;
 					foreach( $modelo as $k => $value )
 					{
@@ -308,7 +313,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 							$value->id_fase 				= $id_fase;
 							$value->id_ciclo 				= $ciclo->id;
 							$value->estado 					= 1;
-							$value->curso 					= implode( ',', $value->curso );
+                            $value->curso 					= implode( ',', $value->curso );
 							$value->save( false );
 							
 							$value->curso 					= explode( ',', $value->curso );
@@ -468,5 +473,10 @@ class SemillerosDatosIeoEstudiantesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionGetEstudiantes(){
+        $curso = Yii::$app->request->post('id');
+        return json_encode(Estudiantes::findByCurso($curso));
     }
 }

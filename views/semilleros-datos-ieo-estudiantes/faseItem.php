@@ -23,7 +23,6 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 use nex\chosen\Chosen;
-
 ?>
 
 <div class="container-fluid" id='container-<?= $fase->id ?>' fase='<?= $fase->id ?>'>
@@ -70,7 +69,7 @@ use nex\chosen\Chosen;
 	</div>
 	
 	<?php foreach( $acuerdos as $key => $acuerdo ) :  ?>
-	
+
 		<div class=row id='dvFilas-<?= $fase->id."-".$index ?>' fase='<?= $fase->id ?>' >
 			
 			<div class="col-sm-2" style='padding:0px;display:none;'>
@@ -89,9 +88,13 @@ use nex\chosen\Chosen;
 							'clientOptions' => [
 								'search_contains' => true,
 								'single_backstroke_delete' => false,
-							]
-					])->label(null,['style'=>'display:none']) ?>
+							],
+                            'placeholder' => 'Seleccione algunos grupos',
+					])->label(null,['style'=>'display:none'])?>
 
+                <?= $form->field($acuerdo, "[$fase->id][$index]estudiantes_id")
+                    //->hiddenInput()
+                    ->label(null,['style'=>'display:none'])?>
 			</div>
 			
 			<div class="col-sm-1" style='padding:0px;'>
@@ -131,10 +134,8 @@ use nex\chosen\Chosen;
 		
 	<?php
 		$index++; 
-		endforeach; 
+		endforeach;
 	?>
-	
-	
 </div>
 
 
