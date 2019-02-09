@@ -125,7 +125,8 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		select 
 			ise.institucion_id, 
 			ise.sede_id, ise.id_tipo_informe,
-			ai.avance_sede
+			ai.avance_sede,
+			ai.avance_ieo
 		from 
 			ec.informe_semanal_ejecucion_ise as ise,
 			ec.actividades_ise as ai
@@ -136,9 +137,14 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		");
 		$result = $command->queryAll();
 		
+		// echo "<pre>"; print_r($result); echo "</pre>"; 
+		// die;
+		
 		foreach ($result as $r)
 		{
+			$datos[$r['institucion_id']]["i" . $r['id_tipo_informe']]['avance_ieo'] = $r['avance_ieo'];
 			$datos[$r['institucion_id']][$r['sede_id']][$r['id_tipo_informe']] = $r['avance_sede'];
+			
 		}
 		
 		$cantidaEjecutadaIEO  = 0;
@@ -150,13 +156,17 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		$cantidaTotalSedesXIEOPAF = 0;
 		$datosSedesxIEO = array();
 		$arrayTipoInforme= array(7,19,31);
-		
+	
 		foreach ($sedes as $idSede => $idInstitucion)
 		{
 			
 			$datosSedesxIEO[$idInstitucion][$idSede][7] = @$datos[$idInstitucion][$idSede][7] ;
 			$datosSedesxIEO[$idInstitucion][$idSede][19] = @$datos[$idInstitucion][$idSede][19] ;
 			$datosSedesxIEO[$idInstitucion][$idSede][31] = @$datos[$idInstitucion][$idSede][31] ;
+			
+			
+			
+			
 			// $cantidaTotalSedesXIEO += @$datos[$idInstitucion][$idSede][$tipo];
 			
 			//ppt
@@ -177,77 +187,43 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			{
 				$cantidaEjecutadaSedePAF++;
 			}
+			
+		}
 		
+		foreach ($datos as $dato )
+		{
+			
 			//ppt
-			if($cantidaEjecutadaSedePPT / count($datosSedesxIEO[$idInstitucion]) == 1)
+			if( @$dato['i7']['avance_ieo'] == 100)
 			{
 			
 				$cantidaTotalSedesXIEOPPT++;
 			}
 			
-			//PSSE
-			if($cantidaEjecutadaSedePSSE / count($datosSedesxIEO[$idInstitucion]) == 1)
+			// PSSE
+			if( @$dato['i19']['avance_ieo'] == 100)
 			{
-					// echo  count($datosSedesxIEO[$idInstitucion]);
 				$cantidaTotalSedesXIEOPSSE++;
 			}
 			
-			//PAF
-			if($cantidaEjecutadaSedePAF / count($datosSedesxIEO[$idInstitucion]) == 1)
+			// PAF
+			if( @$dato['i31']['avance_ieo'] == 100)
 			{
 				$cantidaTotalSedesXIEOPAF++;
 			}
-			
 		}
 		
-			// echo $cantidaEjecutadaSedePSSE;
-			// echo $cantidaTotalSedesXIEOPSSE;
-			echo "<pre>"; print_r($datos); echo "</pre>"; 
-			echo "<pre>"; print_r($datosSedesxIEO); echo "</pre>"; 
-			
-			die;
-		
-		echo "<pre>"; print_r($datosSedes); echo "</pre>"; 
-		die;
-		
-		
-		
-        // $data = EcInformeSemanalTotalEjecutivo::find()
-            // ->where('institucion_id = '.$idInstitucion)
-            // ->orderby( 'id' )
-            // ->all();
-        
-		// $tipo_poblacion = new EcTipoCantidadPoblacionIse;
-        // $estudiasntes =  new EcEstudiantesIse;
-        // $actividades =  new EcActividadesIse;
-        // $visitas = new EcVisitasIse;
-		
-        // $cantidad_ieo = ArrayHelper::map( $data, 'secuencia', 'cantidad_ieo' );
-        // $cantidad_sedes_ieo = ArrayHelper::map( $data, 'secuencia', 'cantidad_sedes' );
-        // $porcentaje_ieo = ArrayHelper::map( $data, 'secuencia', 'porcentaje_ieo' );
-        // $porcentaje_sedes = ArrayHelper::map( $data, 'secuencia', 'porcentaje_sedes' );
-        // $porcentaje_actividad_uno = ArrayHelper::map( $data, 'secuencia', 'porcentaje_actividad_uno' );
-        // $porcentaje_actividad_dos = ArrayHelper::map( $data, 'secuencia', 'porcentaje_actividad_dos' );
-        // $porcentaje_actividad_tres = ArrayHelper::map( $data, 'secuencia', 'porcentaje_actividad_tres' );
-        // $poblacion_beneficiada_directa = ArrayHelper::map( $data, 'secuencia', 'poblacion_beneficiada_directa' );
-        // $poblacion_beneficiada_indirecta = ArrayHelper::map( $data, 'secuencia', 'poblacion_beneficiada_indirecta' );
-        // $alarmas_generales = ArrayHelper::map( $data, 'secuencia', 'alarmas_generales' );        
-
         $model = new EcInformeSemanalTotalEjecutivo();
     
         return $this->render('create', [
             'model' => $model,
             'guardado' => 0,
-            // 'cantidad_ieo' => $cantidad_ieo,
-            // 'cantidad_sedes_ieo' => $cantidad_sedes_ieo,
-            // 'porcentaje_ieo' => $porcentaje_ieo,
-            // 'porcentaje_sedes' => $porcentaje_sedes,
-            // 'porcentaje_actividad_uno' => $porcentaje_actividad_uno,
-            // 'porcentaje_actividad_dos' => $porcentaje_actividad_dos,
-            // 'porcentaje_actividad_tres' => $porcentaje_actividad_tres,
-            // 'poblacion_beneficiada_directa' => $poblacion_beneficiada_directa,
-            // 'poblacion_beneficiada_indirecta' => $poblacion_beneficiada_indirecta,
-            // 'alarmas_generales' => $alarmas_generales,
+            'cantidaEjecutadaSedePPT' => $cantidaEjecutadaSedePPT,
+            'cantidaEjecutadaSedePSSE' => $cantidaEjecutadaSedePSSE,
+			'cantidaEjecutadaSedePAF' => $cantidaEjecutadaSedePAF,
+			'cantidaTotalSedesXIEOPPT'  => $cantidaTotalSedesXIEOPPT,
+			'cantidaTotalSedesXIEOPSSE' => $cantidaTotalSedesXIEOPSSE,
+			'cantidaTotalSedesXIEOPAF'  => $cantidaTotalSedesXIEOPAF,
         ]);
     }
 

@@ -17,16 +17,13 @@ $this->params['breadcrumbs'][] = "";
     <?= $this->render('_form', [
         'model' => $model,
         'guardado' => 0,
-        'cantidad_ieo' => $cantidad_ieo,
-        'cantidad_sedes_ieo' => $cantidad_sedes_ieo,
-        'porcentaje_ieo' => $porcentaje_ieo,
-        'porcentaje_sedes' => $porcentaje_sedes,
-        'porcentaje_actividad_uno' => $porcentaje_actividad_uno,
-        'porcentaje_actividad_dos' => $porcentaje_actividad_dos,
-        'porcentaje_actividad_tres' => $porcentaje_actividad_tres,
-        'poblacion_beneficiada_directa' => $poblacion_beneficiada_directa,
-        'poblacion_beneficiada_indirecta' => $poblacion_beneficiada_indirecta,
-        'alarmas_generales' => $alarmas_generales,        
+        'cantidaEjecutadaSedePPT' => $cantidaEjecutadaSedePPT,
+		'cantidaEjecutadaSedePSSE' => $cantidaEjecutadaSedePSSE,
+		'cantidaEjecutadaSedePAF' => $cantidaEjecutadaSedePAF,
+		'cantidaTotalSedesXIEOPPT'  => $cantidaTotalSedesXIEOPPT,
+		'cantidaTotalSedesXIEOPSSE' => $cantidaTotalSedesXIEOPSSE,
+		'cantidaTotalSedesXIEOPAF'  => $cantidaTotalSedesXIEOPAF,
+        
     ]) ?>
 
 </div>

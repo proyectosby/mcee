@@ -97,8 +97,8 @@ $this->registerJsFile(
 
             <tr>
                 <td rowspan='1' colspan='1'>PPT</td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => isset($cantidad_ieo[1]) ? $cantidad_ieo[1] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => isset($cantidad_sedes_ieo[1]) ? $cantidad_sedes_ieo[1] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => $cantidaTotalSedesXIEOPPT ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[0]cantidad_sedes')->textInput([ 'type' => 'number', 'value' =>  $cantidaEjecutadaSedePPT ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_ieo')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_ieo[1]) ? $porcentaje_ieo[1] : '' ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_sedes')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_sedes[1]) ? $porcentaje_sedes[1] : '' ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[0]porcentaje_actividad_uno')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_uno[1]) ? $porcentaje_actividad_uno[1] : '']) ?></td>
@@ -111,8 +111,8 @@ $this->registerJsFile(
 
             <tr>
                 <td rowspan='1' colspan='1'>PSSE</td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => isset($cantidad_ieo[2]) ? $cantidad_ieo[2] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => isset($cantidad_sedes_ieo[2]) ? $cantidad_sedes_ieo[2] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_ieo')->textInput([ 'type' => 'number', 'value' =>  $cantidaTotalSedesXIEOPSSE ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[1]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => $cantidaEjecutadaSedePSSE ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_ieo')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_ieo[2]) ? $porcentaje_ieo[2] : '' ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_sedes')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_sedes[2]) ? $porcentaje_sedes[2] : '' ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[1]porcentaje_actividad_uno')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_uno[2]) ? $porcentaje_actividad_uno[2] : '']) ?></td>
@@ -125,8 +125,8 @@ $this->registerJsFile(
 
             <tr>
                 <td rowspan='1' colspan='1'>PAF</td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => isset($cantidad_ieo[3]) ? $cantidad_ieo[3] : '' ]) ?></td>
-                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => isset($cantidad_sedes_ieo[3]) ? $cantidad_sedes_ieo[3] : '' ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_ieo')->textInput([ 'type' => 'number', 'value' => $cantidaTotalSedesXIEOPAF ]) ?></td>
+                <td rowspan='1' colspan='1'><?= $form->field($model, '[2]cantidad_sedes')->textInput([ 'type' => 'number', 'value' => $cantidaEjecutadaSedePAF ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_ieo')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_ieo[3]) ? $porcentaje_ieo[3] : '' ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_sedes')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_sedes[3]) ? $porcentaje_sedes[3] : '' ]) ?></td>
                 <td rowspan='1' colspan='1'><?= $form->field($model, '[2]porcentaje_actividad_uno')->textInput([ 'type' => 'number', 'value' => isset($porcentaje_actividad_uno[3]) ? $porcentaje_actividad_uno[3] : '']) ?></td>
