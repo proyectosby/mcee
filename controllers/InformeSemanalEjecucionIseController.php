@@ -51,7 +51,7 @@ class InformeSemanalEjecucionIseController extends Controller
     }
 
 
-    function actionViewFases($model, $form, $datos, $datos2){
+    function actionViewFases($model, $form, $datos, $datos2, $idTipoInforme){
         
         $idInstitucion = $_SESSION['instituciones'][0];
         $Sedes = Sedes::find()->where( "id_instituciones =  $idInstitucion" )->all();
@@ -73,7 +73,8 @@ class InformeSemanalEjecucionIseController extends Controller
             "form" => $form,
             "datos" => $datos,
             "datos2" => $datos2,
-            "sedes" => $sedes
+            "sedes" => $sedes,
+            "idTipoInforme" => $idTipoInforme
         ]);
 		
 	}
@@ -82,7 +83,7 @@ class InformeSemanalEjecucionIseController extends Controller
      * Lists all InformeSemanalEjecucionIse models.
      * @return mixed
      */
-    public function actionIndex($guardado = 0)
+    public function actionIndex($guardado = 0, $idTipoInforme = 0)
     {
         $query = InformeSemanalEjecucionIse::find()->where(['estado' => 1]);
 
@@ -95,6 +96,7 @@ class InformeSemanalEjecucionIseController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'guardado' => $guardado,
+            'idTipoInforme' => $idTipoInforme,
         ]);
     }
 
@@ -233,7 +235,7 @@ class InformeSemanalEjecucionIseController extends Controller
                 }    
             }
 
-            return $this->redirect(['index', "guardado" => 1]);
+            return $this->redirect(['index', "guardado" => 1, 'idTipoInforme' => $_SESSION["idTipoInforme"]]);
         }
        
         return $this->renderAjax('create', [

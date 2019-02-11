@@ -51,9 +51,9 @@ class InformeSemanalEjecucionIseEController extends Controller
     }
 
 
-    function actionViewFases($model, $form){
+    function actionViewFases($model, $form, $idTipoInforme){
         
-        
+      
         //$model = new InformeSemanalEjecucionIse();
         $tipo_poblacion = new EcTipoCantidadPoblacionIse;
         $estudiasntes =  new EcEstudiantesIse;
@@ -68,6 +68,7 @@ class InformeSemanalEjecucionIseEController extends Controller
             "actividades" => $actividades,
             "visitas"  => $visitas,
             "form" => $form,
+            "idTipoInforme" => $idTipoInforme
         ]);
 		
 	}
@@ -76,7 +77,7 @@ class InformeSemanalEjecucionIseEController extends Controller
      * Lists all InformeSemanalEjecucionIse models.
      * @return mixed
      */
-    public function actionIndex($guardado = 0)
+    public function actionIndex($guardado = 0, $idTipoInforme = 0)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => InformeSemanalEjecucionIseE::find(),
@@ -85,6 +86,7 @@ class InformeSemanalEjecucionIseEController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'guardado' => $guardado,
+            'idTipoInforme' => $idTipoInforme,
         ]);
     }
 
@@ -219,7 +221,7 @@ class InformeSemanalEjecucionIseEController extends Controller
                 }    
             }
 
-            return $this->redirect(['index', "guardado" => 1]);
+            return $this->redirect(['index', "guardado" => 1, 'idTipoInforme' => $_SESSION["idTipoInforme"]]);
         }
        
         return $this->renderAjax('create', [

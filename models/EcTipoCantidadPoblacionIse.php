@@ -18,10 +18,11 @@ use Yii;
  * @property int $estado
  * @property int $id_actividad_ise
  * @property int $id_sede
+ * @property string $docentes
+ * @property string $psicoorientador
  */
 class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
 {
-    public $total;
     /**
      * @inheritdoc
      */
@@ -36,7 +37,7 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['edu_derechos', 'sexualidad_ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tiempo_libre'], 'string'],
+            [['edu_derechos', 'sexualidad_ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tiempo_libre', 'docentes', 'psicoorientador'], 'string'],
             [['id_proyecto', 'estado', 'id_actividad_ise', 'id_sede'], 'default', 'value' => null],
             [['id_proyecto', 'estado', 'id_actividad_ise', 'id_sede'], 'integer'],
             [['id_actividad_ise'], 'exist', 'skipOnError' => true, 'targetClass' => EcActividadesIse::className(), 'targetAttribute' => ['id_actividad_ise' => 'id']],
@@ -62,6 +63,8 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
             'estado' => 'Estado',
             'id_actividad_ise' => 'Id Actividad Ise',
             'id_sede' => 'Id Sede',
+            'docentes' => 'Docentes',
+            'psicoorientador' => 'Psicoorientador',
         ];
     }
 }

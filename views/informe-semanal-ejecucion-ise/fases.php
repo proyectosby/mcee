@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 $items = [];
 $index = 0;
-
+$colors = ["#cce5ff", "#d4edda", "#f8d7da", "#fff3cd", "#d1ecf1", "#d6d8d9", "#cce5ff"];
 foreach( $fases as $keyFase => $fase ){
 	
 	/*$sesiones = Sesiones::find()
@@ -24,10 +24,11 @@ foreach( $fases as $keyFase => $fase ){
 											"form" => $form,
 											"datos" => $datos,
 											"datos2" => $datos2,
-											"sedes" => $sedes
+											"sedes" => $sedes,
+											"idTipoInforme" => $idTipoInforme
 										] 
 							),
-		//'headerOptions' => ['class' => 'tab1', 'style' => 'background-color: #f2dedf;'],
+		'headerOptions' => ['class' => 'tab1', 'style' => "background-color: $colors[$keyFase];"],
 		'contentOptions'=> []
 	];
 
