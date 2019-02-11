@@ -92,10 +92,10 @@ $contenedores = [];
                     <?= $form->field($actividades, "[$i]actividad_3_porcentaje")->textInput([ 'class' => "form-control avance-$i-sede", 'value' => isset($datos[$i]['actividad_3_porcentaje']) ? $datos[$i]['actividad_3_porcentaje'] : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]avance_sede")->textInput([ 'value' => isset($datos[$i]['avance_sede']) ? $datos[$i]['avance_sede'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$i]avance_sede")->textInput([ 'class' => "form-control avance-sede", 'value' => isset($datos[$i]['avance_sede']) ? $datos[$i]['avance_sede'] : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]avance_ieo")->textInput([ 'value' => isset($datos[$i]['avance_ieo']) ? $datos[$i]['avance_ieo'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$i]avance_ieo")->textInput(['class' => "form-control avance-ieo",  'value' => isset($datos[$i]['avance_ieo']) ? $datos[$i]['avance_ieo'] : '' ])->label(false); ?>
                 </div>
             </div>
 

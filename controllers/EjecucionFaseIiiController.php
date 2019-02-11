@@ -11,7 +11,7 @@ Fecha: 2019-02-05
 Descripción: Se desagregan DATOS PROFESIONALES y docente creador con respecto a a la conformación de los semilleros
 ---------------------------------------
 **********/
-**********/
+
 
 
 namespace app\controllers;

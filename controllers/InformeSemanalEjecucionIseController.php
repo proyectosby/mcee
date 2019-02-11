@@ -85,13 +85,15 @@ class InformeSemanalEjecucionIseController extends Controller
      */
     public function actionIndex($guardado = 0, $idTipoInforme = 0)
     {
-        $query = InformeSemanalEjecucionIse::find()->where(['estado' => 1]);
+        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : 0; 
+
+        $query = InformeSemanalEjecucionIse::find()->where(['estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query
         ]);
         
-        $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : 0; 
+        
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,

@@ -37,6 +37,7 @@ function calcularAvances(num){
     setTimeout(function(){
         
         total ="";
+        avance_sede ="";
         //numero del que identifica a la caja de texto Estudiantes Gra para saber a que total debe sumar
         
         $('[class *= avance-'+num+'-sede]').each(function( ) 
@@ -44,7 +45,6 @@ function calcularAvances(num){
             total += $(this).val();
         });
 
-        console.log(total);
         total = total.split("%");
 
         sum = 0;
@@ -52,8 +52,24 @@ function calcularAvances(num){
             sum+= numero != '' ? parseFloat(numero) : 0;
         });
 
+
+
         $("#ecactividadesise-"+num+"-avance_sede").val((sum/3).toFixed(1)+"%");
-        $("#ecactividadesise-"+num+"-avance_ieo").val((((sum/3)/500)*100).toFixed(1)+"%");
+       
+        $('[class *= avance-sede]').each(function( ) 
+        {
+            avance_sede += $(this).val();
+        });
+
+        avance_sede = avance_sede.split("%")
+
+        sum_avance = 0;
+        avance_sede.forEach(function(numero){
+            sum_avance += numero != '' ? parseFloat(numero) : 0;
+        });    
+
+        $(".avance-ieo").val((((sum_avance)/500)*100).toFixed(1)+"%");
+        console.log(sum_avance);
 
     }, 1000);  
 };
