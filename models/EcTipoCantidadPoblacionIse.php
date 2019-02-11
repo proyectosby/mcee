@@ -17,6 +17,7 @@ use Yii;
  * @property int $id_proyecto
  * @property int $estado
  * @property int $id_actividad_ise
+ * @property int $id_sede
  */
 class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
 {
@@ -36,8 +37,8 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
     {
         return [
             [['edu_derechos', 'sexualidad_ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tiempo_libre'], 'string'],
-            [['id_proyecto', 'estado', 'id_actividad_ise'], 'default', 'value' => null],
-            [['id_proyecto', 'estado', 'id_actividad_ise'], 'integer'],
+            [['id_proyecto', 'estado', 'id_actividad_ise', 'id_sede'], 'default', 'value' => null],
+            [['id_proyecto', 'estado', 'id_actividad_ise', 'id_sede'], 'integer'],
             [['id_actividad_ise'], 'exist', 'skipOnError' => true, 'targetClass' => EcActividadesIse::className(), 'targetAttribute' => ['id_actividad_ise' => 'id']],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
@@ -60,6 +61,7 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
             'id_proyecto' => 'Id Proyecto',
             'estado' => 'Estado',
             'id_actividad_ise' => 'Id Actividad Ise',
+            'id_sede' => 'Id Sede',
         ];
     }
 }

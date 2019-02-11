@@ -24,6 +24,7 @@ use Yii;
  * @property int $id_proyecto
  * @property int $estado
  * @property int $id_tipo_cantidad_poblacion
+ * @property int $id_sede
  */
 class EcEstudiantesIse extends \yii\db\ActiveRecord
 {
@@ -42,8 +43,8 @@ class EcEstudiantesIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_proyecto', 'estado', 'id_tipo_cantidad_poblacion'], 'default', 'value' => null],
-            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_proyecto', 'estado', 'id_tipo_cantidad_poblacion'], 'integer'],
+            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_proyecto', 'estado', 'id_tipo_cantidad_poblacion', 'id_sede'], 'default', 'value' => null],
+            [['grado_0', 'grado_1', 'grado_2', 'grado_3', 'grado_4', 'grado_5', 'grado_6', 'grado_7', 'grado_8', 'grado_9', 'grado_10', 'grado_11', 'total', 'id_proyecto', 'estado', 'id_tipo_cantidad_poblacion', 'id_sede'], 'integer'],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['id_tipo_cantidad_poblacion'], 'exist', 'skipOnError' => true, 'targetClass' => EcTipoCantidadPoblacionIse::className(), 'targetAttribute' => ['id_tipo_cantidad_poblacion' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
@@ -73,6 +74,7 @@ class EcEstudiantesIse extends \yii\db\ActiveRecord
             'id_proyecto' => 'Id Proyecto',
             'estado' => 'Estado',
             'id_tipo_cantidad_poblacion' => 'Id Tipo Cantidad Poblacion',
+            'id_sede' => 'Id Sede',
         ];
     }
 }

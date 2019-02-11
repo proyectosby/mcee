@@ -18,6 +18,7 @@ use Yii;
  * @property string $dificultades
  * @property int $id_proyecto
  * @property int $estado
+ * @property int $id_sede
  */
 class EcVisitasIse extends \yii\db\ActiveRecord
 {
@@ -35,8 +36,8 @@ class EcVisitasIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado'], 'default', 'value' => null],
-            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado'], 'integer'],
+            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado', 'id_sede'], 'default', 'value' => null],
+            [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado', 'id_sede'], 'integer'],
             [['observaciones_evidencias', 'alarmas', 'logros', 'dificultades'], 'string'],
             [['informe_semanal_ejecucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['informe_semanal_ejecucion_id' => 'id']],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
@@ -61,6 +62,7 @@ class EcVisitasIse extends \yii\db\ActiveRecord
             'dificultades' => 'Dificultades',
             'id_proyecto' => 'Id Proyecto',
             'estado' => 'Estado',
+            'id_sede' => 'Id Sede',
         ];
     }
 }

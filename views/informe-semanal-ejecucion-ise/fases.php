@@ -24,6 +24,7 @@ foreach( $fases as $keyFase => $fase ){
 											"form" => $form,
 											"datos" => $datos,
 											"datos2" => $datos2,
+											"sedes" => $sedes
 										] 
 							),
 		//'headerOptions' => ['class' => 'tab1', 'style' => 'background-color: #f2dedf;'],

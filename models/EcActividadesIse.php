@@ -20,6 +20,7 @@ use Yii;
  * @property int $avance_sede
  * @property int $avance_ieo
  * @property int $id_proyecto
+ * @property int $id_sede
  */
 class EcActividadesIse extends \yii\db\ActiveRecord
 {
@@ -37,11 +38,11 @@ class EcActividadesIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['informe_semanal_ejecucion_id', 'estado', 'actividad_1_porcentaje', 'actividad_2_porcentaje', 'actividad_3_porcentaje', 'avance_sede', 'avance_ieo', 'id_proyecto'], 'default', 'value' => null],
-            [['informe_semanal_ejecucion_id', 'estado', 'id_proyecto'], 'integer'],
+            [['informe_semanal_ejecucion_id', 'estado', 'actividad_1_porcentaje', 'actividad_2_porcentaje', 'actividad_3_porcentaje', 'avance_sede', 'avance_ieo', 'id_proyecto', 'id_sede'], 'default', 'value' => null],
+            //[['informe_semanal_ejecucion_id', 'estado', 'actividad_1_porcentaje', 'actividad_2_porcentaje', 'actividad_3_porcentaje', 'avance_sede', 'avance_ieo', 'id_proyecto', 'id_sede'], 'integer'],
             [['nombre', 'actividad_1', 'actividad_2', 'actividad_3'], 'string'],
             [['informe_semanal_ejecucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['informe_semanal_ejecucion_id' => 'id']],
-            //[['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
+            [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
@@ -65,6 +66,7 @@ class EcActividadesIse extends \yii\db\ActiveRecord
             'avance_sede' => 'Avance Sede %',
             'avance_ieo' => 'Avance Ieo %',
             'id_proyecto' => 'Id Proyecto',
+            'id_sede' => 'Id Sede',
         ];
     }
 }

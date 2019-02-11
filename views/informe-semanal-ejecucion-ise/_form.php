@@ -19,8 +19,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['de
 
     <?= $form->field($model, 'nombre_institucion')->textInput(['value' => $institucion]) ?>
     
-    <?= $form->field($model, 'sede_id')->dropDownList( $sedes, [ 'prompt' => 'Seleccione...' ] ) ?>
-
     <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0, isset($datos2) ? $datos2 : 0);   ?>
 
     <div class="form-group">

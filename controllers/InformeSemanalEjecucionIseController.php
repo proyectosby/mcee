@@ -53,6 +53,9 @@ class InformeSemanalEjecucionIseController extends Controller
 
     function actionViewFases($model, $form, $datos, $datos2){
         
+        $idInstitucion = $_SESSION['instituciones'][0];
+        $Sedes = Sedes::find()->where( "id_instituciones =  $idInstitucion" )->all();
+        $sedes = ArrayHelper::map( $Sedes, 'id', 'descripcion' );
         
         //$model = new InformeSemanalEjecucionIse();
         $tipo_poblacion = new EcTipoCantidadPoblacionIse;
@@ -70,6 +73,7 @@ class InformeSemanalEjecucionIseController extends Controller
             "form" => $form,
             "datos" => $datos,
             "datos2" => $datos2,
+            "sedes" => $sedes
         ]);
 		
 	}
@@ -118,11 +122,10 @@ class InformeSemanalEjecucionIseController extends Controller
         $idInstitucion = $_SESSION['instituciones'][0];
         $institucion = Instituciones::findOne( $idInstitucion );
 
-        $Sedes = Sedes::find()->where( "id_instituciones =  $idInstitucion" )->all();
-		$sedes = ArrayHelper::map( $Sedes, 'id', 'descripcion' );
-
+    
         if ($model->load(Yii::$app->request->post())) {
             $model->institucion_id =  $idInstitucion;
+            $model->sede_id =  49;
             //$model->sede_id = 55;
             $model->proyecto_id = 1;
             $model->estado = 1;
@@ -137,9 +140,10 @@ class InformeSemanalEjecucionIseController extends Controller
                 $dataActividades = Yii::$app->request->post('EcActividadesIse');
                 $modelsActividades = [];
 
-                for( $i = 0; $i < count($dataActividades); $i++ ){
+                for( $i = 0; $i < count(Yii::$app->request->post()); $i++ ){
                     $modelsActividades[] = new EcActividadesIse();
                 }
+
                 
                 if (EcActividadesIse::loadMultiple($modelsActividades, Yii::$app->request->post() )) {
                     foreach( $modelsActividades as $key => $model2) {
@@ -156,23 +160,25 @@ class InformeSemanalEjecucionIseController extends Controller
                             
                             if($model2->save()){
 
-                                $dataCantidadPoblacion = Yii::$app->request->post('EcTipoCantidadPoblacionIse')[$key];
+                                $dataCantidadPoblacion = isset(Yii::$app->request->post('EcTipoCantidadPoblacionIse')[$key]) ? Yii::$app->request->post('EcTipoCantidadPoblacionIse')[$key] : [];
                                 
-                                if($dataCantidadPoblacion["edu_derechos"]){
+                                if(isset($dataCantidadPoblacion["edu_derechos"])){
                                     $modelPoblacion = new EcTipoCantidadPoblacionIse();
                                     $modelPoblacion->edu_derechos = $dataCantidadPoblacion["edu_derechos"];
                                     $modelPoblacion->sexualidad_ciudadania = $dataCantidadPoblacion["sexualidad_ciudadania"];
                                     $modelPoblacion->familia = $dataCantidadPoblacion["familia"];
                                     $modelPoblacion->directivos = $dataCantidadPoblacion["directivos"];
                                     $modelPoblacion->tiempo_libre = $dataCantidadPoblacion["tiempo_libre"];
+                                    $modelPoblacion->medio_ambiente = $dataCantidadPoblacion["medio_ambiente"];
+                                    $modelPoblacion->id_sede = $dataCantidadPoblacion["id_sede"];
                                     $modelPoblacion->id_proyecto = $key+1;
                                     $modelPoblacion->estado = 1;
                                     $modelPoblacion->id_actividad_ise = $model2->id;
                                     
                                     if($modelPoblacion->save()){
-                                        $dataEstudiantes = Yii::$app->request->post('EcEstudiantesIse')[$key];
+                                        $dataEstudiantes = isset(Yii::$app->request->post('EcEstudiantesIse')[$key]) ? Yii::$app->request->post('EcEstudiantesIse')[$key] : [];
 
-                                        if($dataEstudiantes["grado_0"]){
+                                        if(isset($dataEstudiantes["grado_0"])){
                                             $modelEstudiantes = new EcEstudiantesIse();
                                             $modelEstudiantes->grado_0 = $dataEstudiantes["grado_0"];
                                             $modelEstudiantes->grado_1 = $dataEstudiantes["grado_1"];
@@ -187,6 +193,7 @@ class InformeSemanalEjecucionIseController extends Controller
                                             $modelEstudiantes->grado_10 = $dataEstudiantes["grado_10"];
                                             $modelEstudiantes->grado_11 = $dataEstudiantes["grado_11"];
                                             $modelEstudiantes->total = $dataEstudiantes["total"];
+                                            $modelEstudiantes->id_sede = $dataEstudiantes["id_sede"];
                                             $modelEstudiantes->id_proyecto = $key +1;
                                             $modelEstudiantes->estado = 1;
                                             $modelEstudiantes->id_tipo_cantidad_poblacion = $modelPoblacion->id;
@@ -201,13 +208,12 @@ class InformeSemanalEjecucionIseController extends Controller
                         }
                         
                     }
-
                 }
             
                 $dataVisitas = Yii::$app->request->post('EcVisitasIse');
                 $modelsVisitas = [];
 
-                for( $i = 0; $i < count($dataVisitas); $i++ ){
+                for( $i = 0; $i < count(Yii::$app->request->post()); $i++ ){
                     $modelsVisitas[] = new EcVisitasIse();
                 }
 
@@ -233,7 +239,6 @@ class InformeSemanalEjecucionIseController extends Controller
         return $this->renderAjax('create', [
             'model' => $model,
             'institucion' => $institucion->descripcion,
-            'sedes' => $sedes,
         ]);
     }
 
