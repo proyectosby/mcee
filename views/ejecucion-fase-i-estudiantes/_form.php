@@ -102,15 +102,25 @@ if( $guardado ){
 		Chosen::className(), [
 			'items' => $docentes,
 			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-			'multiple' => false,
-			'clientOptions' => [
-				'search_contains' => true,
-				'single_backstroke_delete' => false,
-			],
+            'multiple' => true,
+            'clientOptions' => [
+                'search_contains' => true,
+                'single_backstroke_delete' => false,
+            ],
         'placeholder' => 'Seleccione algunas opciones',
-	])->label( 'Profesional A' ); ?>														
-	
-	<?= $form->field($profesional, 'curso_participantes')->dropDownList( $cursos, ['prompt' => 'Seleccione...'] )->label('Curso de los participantes') ?>
+	])->label( 'Profesional A' ); ?>
+
+    <?= $form->field($profesional, 'curso_participantes')->widget(
+        Chosen::className(), [
+        'items' => $cursos,
+        'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+        'multiple' => true,
+        'clientOptions' => [
+            'search_contains' => true,
+            'single_backstroke_delete' => false,
+        ],
+        'placeholder' => 'Curso de los participantes',
+    ])->label( 'Profesional A' ); ?>
 	
 	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
 	
