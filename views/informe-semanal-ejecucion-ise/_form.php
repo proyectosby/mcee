@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\InformeSemanalEjecucionIse */
@@ -19,6 +20,28 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['de
 
     <?= $form->field($model, 'nombre_institucion')->textInput(['value' => $institucion]) ?>
     
+    <?= $form->field($model, 'fehca_inicio')->widget(
+        DatePicker::className(), [
+            // modify template for custom rendering
+            'template' => '{addon}{input}',
+            'language' => 'es',
+            'clientOptions' => [
+                'autoclose' => true,
+                'format'    => 'yyyy-mm-dd',
+            ],
+    ]);  ?>
+
+    <?= $form->field($model, 'fecha_fin')->widget(
+        DatePicker::className(), [
+            // modify template for custom rendering
+            'template' => '{addon}{input}',
+            'language' => 'es',
+            'clientOptions' => [
+                'autoclose' => true,
+                'format'    => 'yyyy-mm-dd',
+            ],
+    ]);  ?>
+
     <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0, isset($datos2) ? $datos2 : 0, $_SESSION["idTipoInforme"]);   ?>
 
     <div class="form-group">

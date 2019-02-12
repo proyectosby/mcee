@@ -38,6 +38,7 @@ class EcVisitasIse extends \yii\db\ActiveRecord
         return [
             [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado', 'id_sede'], 'default', 'value' => null],
             [['informe_semanal_ejecucion_id', 'cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'id_proyecto', 'estado', 'id_sede'], 'integer'],
+            [['cantidad_visitas_realizadas', 'canceladas', 'visitas_fallidas', 'observaciones_evidencias', 'alarmas', 'logros', 'dificultades'], 'required'],
             [['observaciones_evidencias', 'alarmas', 'logros', 'dificultades'], 'string'],
             [['informe_semanal_ejecucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['informe_semanal_ejecucion_id' => 'id']],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],

@@ -38,8 +38,10 @@ class EcTipoCantidadPoblacionIse extends \yii\db\ActiveRecord
     {
         return [
             [['edu_derechos', 'sexualidad_ciudadania', 'medio_ambiente', 'familia', 'directivos', 'tiempo_libre', 'docentes', 'psicoorientador'], 'string'],
+            [['familia', 'directivos'], 'required'],
             [['id_proyecto', 'estado', 'id_actividad_ise', 'id_sede'], 'default', 'value' => null],
             [['id_proyecto', 'estado', 'id_actividad_ise', 'id_sede'], 'integer'],
+
             [['id_actividad_ise'], 'exist', 'skipOnError' => true, 'targetClass' => EcActividadesIse::className(), 'targetAttribute' => ['id_actividad_ise' => 'id']],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],

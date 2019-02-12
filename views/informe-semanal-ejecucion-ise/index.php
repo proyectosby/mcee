@@ -122,8 +122,8 @@ if( isset($guardado) && $guardado == 1 ){
 					return $nombreSedes ? $nombreSedes->descripcion : '';  
 				}, //para buscar por el nombre
 			],
-            //'proyecto_id',
-            //'estado',
+            'fehca_inicio',
+            'fecha_fin',
 
             [
 			'class' => 'yii\grid\ActionColumn',

@@ -34,6 +34,7 @@ class EcDocentesIse extends \yii\db\ActiveRecord
             [['tipo_cantidad_poblacion_ise_id'], 'default', 'value' => null],
             [['tipo_cantidad_poblacion_ise_id'], 'integer'],
             [['edu_derechos', 'sexualidad_ciudadania', 'medio_ambiente', 'familia', 'directivos'], 'string'],
+            [['familia', 'directivos'], 'required'],
             [['tipo_cantidad_poblacion_ise_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcTipoCantidadPoblacionIse::className(), 'targetAttribute' => ['tipo_cantidad_poblacion_ise_id' => 'id']],
         ];
     }

@@ -41,6 +41,7 @@ class EcActividadesIse extends \yii\db\ActiveRecord
             [['informe_semanal_ejecucion_id', 'estado', 'actividad_1_porcentaje', 'actividad_2_porcentaje', 'actividad_3_porcentaje', 'avance_sede', 'avance_ieo', 'id_proyecto', 'id_sede'], 'default', 'value' => null],
             //[['informe_semanal_ejecucion_id', 'estado', 'actividad_1_porcentaje', 'actividad_2_porcentaje', 'actividad_3_porcentaje', 'avance_sede', 'avance_ieo', 'id_proyecto', 'id_sede'], 'integer'],
             [['nombre', 'actividad_1', 'actividad_2', 'actividad_3'], 'string'],
+            [['actividad_1', 'actividad_2', 'actividad_3', 'actividad_1_porcentaje', 'actividad_2_porcentaje', 'actividad_3_porcentaje', 'avance_sede', 'avance_ieo'], 'required'],
             [['informe_semanal_ejecucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => InformeSemanalEjecucionIse::className(), 'targetAttribute' => ['informe_semanal_ejecucion_id' => 'id']],
             [['id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => EcProyectos::className(), 'targetAttribute' => ['id_proyecto' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
