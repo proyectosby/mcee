@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Desarrollador: Edwin Molina Grisales
+Descripción: Se elimina campo ciclo y se por metodo get se envia el anio
+---------------------------------------
 Fecha: 2018-11-06
 Desarrollador: Edwin Molina Grisales
 Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
@@ -79,7 +83,12 @@ if( $guardado ){
 
 	<h3 style='background-color: #ccc;padding:5px;'>DATOS IEO</h3>
 	
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+							'action'=> Yii::$app->urlManager->createUrl([
+												'semilleros-datos-ieo/create', 
+												'anio' 	=> $anio, 
+											]) 
+						]); ?>
 
     <?= $form->field($datosIEO, 'id_institucion')->dropDownList([ $institucion->codigo_dane => $institucion->codigo_dane ])->label( 'Código DANE' ) ?>
     
@@ -116,8 +125,6 @@ if( $guardado ){
 	<?= $form->field($datosIEO, 'id')->hiddenInput()->label( null,[ 'style' => 'display:none' ] ) ?>
 	
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
-	
-	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
 	
 	<h3 style='background-color: #ccc;padding:5px;'>ACUERDOS INSTITUCIONES (CONFORMACIÓN)</h3>
 	

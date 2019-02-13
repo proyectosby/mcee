@@ -1,5 +1,13 @@
 <?php
 
+/**
+Modificaciones:
+Por: Edwin Molina Grisales
+Fecha: 2019-02-12
+Descripción: Se agrega atributo anio
+---------------------------------------
+*/
+
 namespace app\models;
 
 use Yii;
@@ -52,7 +60,7 @@ class SemillerosTicEjecucionFaseIii extends \yii\db\ActiveRecord
             [['id_fase', 'id_datos_ieo_profesional', 'estado'], 'required'],
             [['id_fase', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['total_aplicaciones_usadas'], 'default', 'value' => ''],
-            [['id_fase', 'id_datos_ieo_profesional', 'estado','docente_creador'], 'integer'],
+            [['id_fase', 'id_datos_ieo_profesional', 'estado','docente_creador','anio'], 'integer'],
             [['asignatura', 'docente_usuario', 'grado', 'numero_estudiantes', 'numero_apps_usadas', 'nombre_aplicaciones', 'tic', 'tipo_recurso_tic', 'digitales', 'tipo_recurso_digital', 'escolares_no_tic', 'tipo_recurso_no_tic', 'tiempo_uso_recurso_tic', 'observaciones', 'total_aplicaciones_usadas', 'numero', 'tipo_de_produccion', 'temas_escolares', 'indice_problematicas', 'fecha_uso_aplicaciones','estudiantes_cultivadores'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
@@ -94,6 +102,7 @@ class SemillerosTicEjecucionFaseIii extends \yii\db\ActiveRecord
             'fecha_uso_aplicaciones' 	=> 'Fecha Uso Aplicaciones',
             'estudiantes_cultivadores' 	=> 'Estudiantes cultivadores',
             'id_datos_sesion' 			=> 'Datos sesion',
+            'anio' 						=> 'Año',
         ];
     }
 }

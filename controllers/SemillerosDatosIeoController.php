@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Se hacen modificaciones varias para guardar varios profesionales A, docentes aliados y nombres de docentes
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Desarrollador: Edwin Molina Grisales
+Descripción: Ya no se pide el ciclo y el año viene por url y todas las realiciones con id_ciclo se cambian a año
+---------------------------------------
 Fecha: 2018-10-29
 Desarrollador: Edwin Molina Grisales
 Descripción: Se modifican el metodo actionCreate para que se guarden los datos suministrados por el usuarios o se modifiquen.
@@ -151,19 +155,21 @@ class SemillerosDatosIeoController extends Controller
      */
     public function actionCreate()
     {
-		$ciclo = new SemillerosTicCiclos();
-		$anio = new SemillerosTicAnio();
+		// $ciclo = new SemillerosTicCiclos();
+		// $anio = new SemillerosTicAnio();
 		
-		$ciclo->load( Yii::$app->request->post() );
+		// $ciclo->load( Yii::$app->request->post() );
 		
-		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
-		if( empty( $ciclo->id ) ){
-			return $this->actionCiclos();
-		}
-		else{
-			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
-			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
-		}
+		// //Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		// if( empty( $ciclo->id ) ){
+			// return $this->actionCiclos();
+		// }
+		// else{
+			// $ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			// $anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
+		// }
+		
+		$anio = Yii::$app->request->get('anio');
 		
 		$id_institucion	= $_SESSION['instituciones'][0];
 		$id_sede 		= $_SESSION['sede'][0];
@@ -173,7 +179,7 @@ class SemillerosDatosIeoController extends Controller
 		$datosIEO = SemillerosDatosIeo::findOne([
 							'id_institucion' 		=> $id_institucion,
 							'sede' 			 		=> $id_sede,
-							'id_ciclo' 			 	=> $ciclo->id,
+							'anio' 			 		=> $anio,
 						]);
 		
 		if( !$datosIEO )
@@ -210,7 +216,7 @@ class SemillerosDatosIeoController extends Controller
 			{ 
 				$acuerdos = AcuerdosInstitucionales::find()
 								->where( 'estado=1' )
-								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'anio='.$anio )
 								->andWhere( 'id_semilleros_datos_ieo='.$datosIEO->id )
 								->all();
 				
@@ -282,7 +288,7 @@ class SemillerosDatosIeoController extends Controller
 				$datosIEO->sede				= $id_sede;
 				$datosIEO->personal_a		= implode( ",", $datosIEO->personal_a );
 				$datosIEO->docente_aliado	= implode( ",", $datosIEO->docente_aliado );
-				$datosIEO->id_ciclo			= $ciclo->id;
+				$datosIEO->anio				= $anio;
 				
 				$datosIEO->save( false );
 				
@@ -298,7 +304,7 @@ class SemillerosDatosIeoController extends Controller
 						{
 							$value->id_semilleros_datos_ieo = $datosIEO->id;
 							$value->id_fase 				= $id_fase;
-							$value->id_ciclo 				= $ciclo->id;
+							$value->anio 					= $anio;
 							$value->estado 					= 1;
 							$value->id_docente 				= implode( ",", $value->id_docente );
 							
@@ -366,7 +372,7 @@ class SemillerosDatosIeoController extends Controller
 								->innerJoin( 'semilleros_tic.acuerdos_institucionales ai', 'ai.id_semilleros_datos_ieo=sdi.id' )
 								->where( 'sdi.estado=1' )
 								->where( 'ai.estado=1' )
-								->where( 'ai.id_ciclo='.$ciclo->id )
+								->where( 'ai.anio='.$anio )
 								->all();
 		
 		foreach( $dataProfesionales as $key => $value ){
@@ -387,7 +393,7 @@ class SemillerosDatosIeoController extends Controller
             'modelos'			=> $modelos,
             'profesionales'		=> $profesionales,
             'docentes_aliados'	=> $docentes_aliados,
-            'ciclo'				=> $ciclo,
+            // 'ciclo'				=> $ciclo,
             'guardado'			=> $guardado,
             'anio'				=> $anio,
         ]);

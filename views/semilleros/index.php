@@ -16,6 +16,10 @@ Fecha: 18-10-2018
 Desarrollador: Maria Viviana Rodas
 Descripción: Index donde van los botones se semilleros tic
 ---------------------------------------
+Fecha: 2019-02-12
+Desarrollador: Edwin Molina Grisales
+Descripción: Se pide selección de año y tipo al ingresar a este formulario
+---------------------------------------
 
 **********/
 
@@ -24,24 +28,86 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 
+use yii\bootstrap\Modal;
+
 use app\models\Sedes;
 use app\models\Instituciones;
 
 use yii\widgets\ActiveForm;
 
 use yii\bootstrap\Button;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AsginaturasBuscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
-
+$tag = [];
+$selectAnios = preg_replace('/\n+/', '', Html::dropDownList( "anio", null, $anios, ['id'=>'swal-anio','class'=>'swal2-input'] ) );
 
 $this->title = "Semilleros tic";
 $this->params['breadcrumbs'][] = $this->title;
+
+$displayEstudiante 	= "display:none;";
+$displayDocente 	= "display:none;";
+
+$url = Url::to("index.php?r=semilleros/index");
+
+$script = <<< JSSCRIPT
+	Swal.fire({
+		allowEscapeKey: false,
+		allowOutsideClick: false,
+		title: 'Seleccione año',
+		html:
+			'<label>Año</label>$selectAnios' +
+			'<label>Tipo Semillero</label><select id="swal-tipo" name="docente" class="swal2-input"><option value=""></option><option value="1">Docentes</option><option value="0">Estudiantes</option></select>',
+			focusConfirm: false,
+			preConfirm: () => {
+			  
+				if( !$('#swal-anio').val() || !$('#swal-tipo').val() )
+				{
+					return false;
+				}
+				else
+				{
+					window.location.href = "$url"+"&esDocente="+$('#swal-tipo').val()+"&anio="+$('#swal-anio').val();
+				}
+			}
+		});
+
+		
+JSSCRIPT;
+
+if( !isset( $esDocente ) )
+{
+	$this->registerJs($script);
+}
+else{
+
+	if( $esDocente ){
+		$displayDocente = '';
+	}
+	else{
+		$displayEstudiante = '';
+	}
+}
 ?>
 
+
+<div id="modal" class="fade modal" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header" style='background-color:#ccc'>
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h3>Ciclos</h3>
+</div>
+<div class="modal-body">
+<div id='modalContent'></div>
+</div>
+
+</div>
+</div>
+</div>
 
 
 <div class="asignaturas-index">
@@ -57,82 +123,93 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 	
-	<div class="panel panel-info">
+	<div class="panel panel-info" style='<?=$displayDocente?>'>
 		
 		<div class="panel-heading">
 			<h3 class="panel-title">Docentes</h3>
 		</div>
+		
 		<div class="panel-body">
 			
 			<div class="form-group">
-		   <?= Html::a('Creación Semilleros Tic docentes', 
-									[
-										'semilleros-datos-ieo/create',
-										// 'idReporte'	=> 1,
-									], 
-									['class' => 'btn btn-success'
-			]) ?>
-			
-			 <?= Html::a('Ejecución fase I', 
-									[
-										'ejecucion-fase-i/create',
-										// 'idReporte'		=> 2,
-									], 
-									['class' => 'btn btn-success'
-			]) ?> 
-			
-			<?= Html::a('Ejecución Fase II', 
-									[
-										
-										'ejecucion-fase-ii/create',
-										// 'idReporte'		=> 3, 
-									], 
-									['class' => 'btn btn-success'
-			]) ?>
-			
-			<?= Html::a('Ejecución fase III', 
-									[
-										'ejecucion-fase-iii/create',
-										// 'idReporte'		=> 4,
-									], 
-									['class' => 'btn btn-success'
-			]) ?>
-			
-			
-		</div>
-
-		<div class="form-group">
-			<?= Html::a('Diario de campo', 
+			   <?= Html::a('Creación Semilleros Tic docentes', 
 										[
-											'semilleros-tic-diario-de-campo/index',
-											// 'idReporte'		=> 5,
+											'semilleros-datos-ieo/create',
+											'anio'	=> $anio,
 										], 
-										['class' => 'btn btn-success']) ?>
-										
-										
-			<?= Html::a('Resumen Operativo', 
+										['class' => 'btn btn-success'
+				]) ?>
+				
+				 <?= Html::a('Ejecución fase I', 
 										[
-											'resumen-operativo-fases-docentes/index',
-											// 'idReporte'		=> 6,
+											'ejecucion-fase-i/create',
+											'anio'	=> $anio,
 										], 
-										['class' => 'btn btn-success']) ?>
-										
-			<?= Html::a('Población', 
+										['class' => 'btn btn-success'
+				]) ?> 
+				
+				<?= Html::a('Ejecución Fase II', 
 										[
-											'instrumento-poblacion-docentes/create',
-											// 'idReporte'		=> 16,
+											
+											'ejecucion-fase-ii/create',
+											'anio'	=> $anio,
 										], 
-										['class' => 'btn btn-success']) ?>
-										
+										['class' => 'btn btn-success'
+				]) ?>
+				
+				<?= Html::a('Ejecución fase III', 
+										[
+											'ejecucion-fase-iii/create',
+											'anio'	=> $anio,
+										], 
+										['class' => 'btn btn-success'
+				]) ?>
+				
+				
+			</div>
 
+			<div class="form-group">
+				<?= Html::a('Diario de campo', 
+											[
+												'semilleros-tic-diario-de-campo/index',
+												'anio'	=> $anio,
+											], 
+											['class' => 'btn btn-success']) ?>
+											
+											
+				<?= Html::a('Resumen Operativo', 
+											[
+												'resumen-operativo-fases-docentes/index',
+												'anio'	=> $anio,
+											], 
+											['class' => 'btn btn-success']) ?>
+											
+				<?= Html::a('Población', 
+											[
+												'instrumento-poblacion-docentes/create',
+												'anio'	=> $anio,
+											], 
+											['class' => 'btn btn-success']) ?>
 
-		</div>
+			</div>
 			
+			<div class='text-right'>
+				<?= Html::a('Cambiar a estudiantes', 
+						[
+							'semilleros/index',
+							'esDocente'	=>0,
+							'anio' 		=> $anio,
+						],
+						['class' => 'btn btn-warning']
+					) ?>
+
+			</div>
+		
 		</div>
 	
 	</div>
 	
-	<div class="panel panel-info">
+	<div class="panel panel-info" style='<?=$displayEstudiante?>'>
 		
 		<div class="panel-heading">
 			<h3 class="panel-title">Estudiantes</h3>
@@ -145,28 +222,28 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= Html::a('Creación semilleros tic estudiantes', 
 									[
 										'semilleros-datos-ieo-estudiantes/create',
-										// 'idReporte'		=> 7,
+										'anio'	=> $anio,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
 		 <?= Html::a('Ejecución fase I', 
 								[
 									'ejecucion-fase-i-estudiantes/create',
-									// 'idReporte'		=> 8,
+									'anio'	=> $anio,
 								], 
 								['class' => 'btn btn-success'
 		]) ?> 
 		<?= Html::a('Ejecución fase II', 
 										[
 											'ejecucion-fase-ii-estudiantes/create',
-											// 'idReporte'		=> 9,
+											'anio'	=> $anio,
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
 		<?= Html::a('Ejecución fase III', 
 										[
 											'ejecucion-fase-iii-estudiantes/create',
-											// 'idReporte'		=> 10,
+											'anio'	=> $anio,
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
@@ -177,7 +254,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= Html::a('Diario de campo', 
 									[
 										'semilleros-tic-diario-de-campo-estudiantes/index',
-										// 'idReporte'		=> 11,
+										'anio'	=> $anio,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
@@ -185,20 +262,31 @@ $this->params['breadcrumbs'][] = $this->title;
 		<?= Html::a('Resumen Operativo', 
 									[
 										'resumen-operativo-fases-estudiantes/index',
-										// 'idReporte'		=> 12,
+										'anio'	=> $anio,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
 		<?= Html::a('Población', 
 									[
 										'instrumento-poblacion-estudiantes/create',
-										// 'idReporte'		=> 13,
+										'anio'	=> $anio,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
 
 
 		</div>
+		
+		<div class='text-right'>
+				<?= Html::a('Cambiar a docentes', 
+							[
+								'semilleros/index',
+								'esDocente'	=>1, 
+								'anio' 		=> $anio,
+							],
+							['class' => 'btn btn-warning']
+						) ?>
+			</div>
 
 	</div>
 	

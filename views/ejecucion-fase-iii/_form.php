@@ -7,6 +7,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE III
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Descripción: Ya no se pide el ciclo y el año viene por url y todas las realiciones con id_ciclo se cambian a año
+---------------------------------------
 Fecha: 2018-09-18
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
@@ -89,15 +92,18 @@ $this->registerJs(
 
 <div class="ejecucion-fase-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+							'action'=> Yii::$app->urlManager->createUrl([
+												'ejecucion-fase-iii/create', 
+												'anio' 	=> $anio, 
+											]) 
+						]); ?>
 	
 	<div class="form-group">
 		
 		<?= Html::button('Agregar' , ['class' => 'btn btn-success', 'id' => 'btnAddFila1' ]) ?>
 		
 		<?= Html::button('Eliminar', ['class' => 'btn btn-danger', 'id' => 'btnRemoveFila1', "style" => "display:none" ]) ?>
-		
-		<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
 		
 		<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
 		

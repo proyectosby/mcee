@@ -2,6 +2,10 @@
 /*
 Modificaciones:
 Por: Edwin MG
+Fecha: 2019-02-12
+Descripción: Se elimina campo id_ciclo y se agrega anio
+---------------------------------------
+Por: Edwin MG
 Fecha: 2019-02-05
 Descripción: La validación de docentes como string se quita
 ---------------------------------------
@@ -54,7 +58,7 @@ class SemillerosTicEjecucionFaseIi extends \yii\db\ActiveRecord
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
-            [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
+            // [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
         ];
     }
 
@@ -81,7 +85,7 @@ class SemillerosTicEjecucionFaseIi extends \yii\db\ActiveRecord
             'id_fase' => 'Id Fase',
             'estado' => 'Estado',
             'id_datos_sesiones' => 'Datos Sesiones',
-            'id_ciclo' => 'Ciclo',
+            'anio' => 'Año',
         ];
     }
 }

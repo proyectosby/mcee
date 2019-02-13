@@ -7,6 +7,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseController
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Descripción: Ya no se pide el ciclo y el año viene por url y todas las realiciones con id_ciclo se cambian a año
+---------------------------------------
 Fecha: 2019-02-05
 Desarrollador: Edwin Molina Grisales
 Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
@@ -149,20 +152,22 @@ class EjecucionFaseIiController extends Controller
      */
     public function actionCreate()
     {
-		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>"; exit();
-		$ciclo = new SemillerosTicCiclos();
-		$anio = new SemillerosTicAnio();
+		// // echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>"; exit();
+		// $ciclo = new SemillerosTicCiclos();
+		// $anio = new SemillerosTicAnio();
 		
-		$ciclo->load( Yii::$app->request->post() );
+		// $ciclo->load( Yii::$app->request->post() );
 		
-		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
-		if( empty( $ciclo->id ) ){
-			return $this->actionCiclos();
-		}
-		else{
-			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
-			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
-		}
+		// //Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		// if( empty( $ciclo->id ) ){
+			// return $this->actionCiclos();
+		// }
+		// else{
+			// $ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			// $anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
+		// }
+		
+		$anio = Yii::$app->request->get('anio');
 		
 		//Indica si se guarda la fase
 		$guardado = false;
@@ -243,7 +248,7 @@ class EjecucionFaseIiController extends Controller
 				$ejecucionesFases = SemillerosTicEjecucionFaseIi::find()
 										->where( 'id_fase='.$this->id_fase )
 										->andWhere( 'id_datos_ieo_profesional='.$datosIeoProfesional->id )
-										->andWhere( 'id_ciclo='.$ciclo->id )
+										->andWhere( 'anio='.$anio )
 										->orderby(['id_datos_sesiones'=>SORT_DESC])
 										->all();
 										
@@ -275,7 +280,7 @@ class EjecucionFaseIiController extends Controller
 				$condicionesInstitucionales = CondicionesInstitucionales::findOne([ 
 													'id_datos_ieo_profesional' 	=> $datosIeoProfesional->id,
 													'id_fase'					=> $this->id_fase,
-													'id_ciclo'					=> $ciclo->id,
+													'anio'						=> $anio,
 												]);
 			}
 					
@@ -458,7 +463,7 @@ class EjecucionFaseIiController extends Controller
 							
 							$modelos['accionesRecursos']->estado = 1;
 							$modelos['accionesRecursos']->id_datos_sesion = $modelos['dataSesion']->id;
-							$modelos['accionesRecursos']->id_ciclo = $ciclo->id;
+							$modelos['accionesRecursos']->anio = $anio;
 							$modelos['accionesRecursos']->save(false);
 							
 							$esPrimera = true;
@@ -470,7 +475,7 @@ class EjecucionFaseIiController extends Controller
 									$ejecucionFase->id_datos_sesiones 		= $modelos['dataSesion']->id;
 									$ejecucionFase->id_fase 				= $this->id_fase;
 									$ejecucionFase->estado 					= 1;
-									$ejecucionFase->id_ciclo 				= $ciclo->id;
+									$ejecucionFase->anio 					= $anio;
 									$ejecucionFase->save(false);
 									
 									$modelos['ejecucionesFase'][$k]->docentes = explode( ",", $ejecucionFase->docentes );
@@ -483,7 +488,7 @@ class EjecucionFaseIiController extends Controller
 					$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
 					$condicionesInstitucionales->id_fase = $this->id_fase;
 					$condicionesInstitucionales->estado = 1;
-					$condicionesInstitucionales->id_ciclo = $ciclo->id;
+					$condicionesInstitucionales->anio = $anio;
 					$condicionesInstitucionales->save( false );
 					
 					$guardado = true;
@@ -565,7 +570,7 @@ class EjecucionFaseIiController extends Controller
             'datosIeoProfesional'	=> $datosIeoProfesional,
             'datosModelos'			=> $datosModelos,
             'guardado'				=> $guardado,
-            'ciclo'					=> $ciclo,
+            // 'ciclo'					=> $ciclo,
             'profesionales'			=> $profesionales,
 			'anio'					=> $anio,
         ]);

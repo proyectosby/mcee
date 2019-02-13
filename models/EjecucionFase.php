@@ -7,6 +7,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Modelo EjecucionFase
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Descripción: Se elimina atributo id_ciclo y se agrega anio
+---------------------------------------
 Fecha: 2019-02-04
 Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
 			 y se dejan los campos select en español
@@ -71,7 +74,7 @@ class EjecucionFase extends \yii\db\ActiveRecord
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => DatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_datos_sesiones'], 'exist', 'skipOnError' => true, 'targetClass' => DatosSesiones::className(), 'targetAttribute' => ['id_datos_sesiones' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => Fases::className(), 'targetAttribute' => ['id_fase' => 'id']],
-			[['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
+			// [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
         ];
     }
 
@@ -98,7 +101,7 @@ class EjecucionFase extends \yii\db\ActiveRecord
             'estado' => 'Estado',
             'numero_sesiones_docente' => 'Numero Sesiones Docente',
             'nombre_aplicaciones_creadas' => 'Nombre de las aplicaciones creadas',
-            'id_ciclo' => 'Ciclo',
+            'anio' => 'Año',
         ];
     }
 }

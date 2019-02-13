@@ -1,5 +1,13 @@
 <?php
 
+/*
+Modificaciones:
+Desarrollador: Ediwn Molina Grisales
+Fecha: 2019-02-12
+Descripción: No hay id_ciclo
+---------------------------------------
+*/
+
 namespace app\models;
 
 use Yii;
@@ -36,16 +44,16 @@ class AcuerdosInstitucionales extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'id_docente', 'asignatura', 'especialidad', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'total_docentes', 'id_semilleros_datos_ieo','id_ciclo'], 'required'],
+            [['id_fase', 'id_docente', 'asignatura', 'especialidad', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'total_docentes', 'id_semilleros_datos_ieo','anio'], 'required'],
             [['id_fase', 'id_docente', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_ieo', 'estado'], 'default', 'value' => null],
-            [['id_fase', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_ieo', 'estado','id_ciclo'], 'integer'],
+            [['id_fase', 'frecuencias_sesiones', 'jornada', 'recursos_requeridos', 'id_semilleros_datos_ieo', 'estado','anio'], 'integer'],
             [['asignatura', 'especialidad', 'total_docentes', 'observaciones'], 'string', 'max' => 500],
             [['frecuencias_sesiones'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['frecuencias_sesiones' => 'id']],
             [['jornada'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['jornada' => 'id']],
             [['recursos_requeridos'], 'exist', 'skipOnError' => true, 'targetClass' => Parametro::className(), 'targetAttribute' => ['recursos_requeridos' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => Fases::className(), 'targetAttribute' => ['id_fase' => 'id']],
             [['id_semilleros_datos_ieo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosDatosIeo::className(), 'targetAttribute' => ['id_semilleros_datos_ieo' => 'id']],
-            [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
+            // [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
 			['id_docente', 'each', 'rule' => ['integer']],
         ];
     }
@@ -68,7 +76,7 @@ class AcuerdosInstitucionales extends \yii\db\ActiveRecord
             'observaciones' => 'Observaciones',
             'id_semilleros_datos_ieo' => 'Id Semilleros Datos Ieo',
             'estado' => 'Estado',
-            'id_ciclo' => 'Ciclo',
+            'anio' => 'Año',
         ];
     }
 }

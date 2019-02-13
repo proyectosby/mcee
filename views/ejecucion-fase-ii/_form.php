@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE II
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Persona encargada: Edwin Molina Grisales
+Descripción: Ya no se pide el ciclo y el año viene por url y todas las realiciones con id_ciclo se cambian a año
+---------------------------------------
 Fecha: 2018-10-31
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se agrega el botón volver
@@ -95,7 +99,12 @@ if( $guardado ){
 
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+						'action'=> Yii::$app->urlManager->createUrl([
+												'ejecucion-fase-ii/create', 
+												'anio' 	=> $anio, 
+											]) 
+					]); ?>
 
     <?= $form->field($datosIeoProfesional, 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
 
@@ -111,10 +120,8 @@ if( $guardado ){
 				'single_backstroke_delete' => false,
 			]
 	]); ?>
-
-	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
 	
-	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
+	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
 	
 	<?= $this->render( 'sesiones', [ 
 										'idPE' 			=> null,

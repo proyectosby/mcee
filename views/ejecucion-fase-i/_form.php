@@ -7,6 +7,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE I
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Descripción: Ya no se pide el ciclo y el año viene por url
+---------------------------------------
 Fecha: 2018-11-06
 Descripción: Se usa en los select el plugin chosen y se modifica la función que calcula el total de sesiones
 ---------------------------------------
@@ -80,7 +83,12 @@ $this->registerJsFile(
 
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([ 
+							'action'=> Yii::$app->urlManager->createUrl([
+												'ejecucion-fase-i/create', 
+												'anio' 	=> $anio, 
+											]) 
+						]); ?>
 
     <?= $form->field($datosIeoProfesional, 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
 
@@ -90,8 +98,6 @@ $this->registerJsFile(
     
 	<?= $form->field($datosIeoProfesional, 'estado')->hiddenInput( [ 'value' => 1 ] )->label( null , [ 'style' => 'display:none' ] ); ?>
 	
-	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
-    
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
 	
 	<?= $this->render( 'sesiones', [ 
