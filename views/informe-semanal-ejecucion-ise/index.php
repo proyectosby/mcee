@@ -122,7 +122,7 @@ if( isset($guardado) && $guardado == 1 ){
 					return $nombreSedes ? $nombreSedes->descripcion : '';  
 				}, //para buscar por el nombre
 			],
-            'fehca_inicio',
+            'fecha_inicio',
             'fecha_fin',
 
             [

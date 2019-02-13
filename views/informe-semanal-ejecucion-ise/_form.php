@@ -20,7 +20,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['de
 
     <?= $form->field($model, 'nombre_institucion')->textInput(['value' => $institucion]) ?>
     
-    <?= $form->field($model, 'fehca_inicio')->widget(
+    <?= $form->field($model, 'fecha_inicio')->widget(
         DatePicker::className(), [
             // modify template for custom rendering
             'template' => '{addon}{input}',
