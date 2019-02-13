@@ -80,14 +80,14 @@ class SemillerosController extends Controller
     // public function actionIndex($idInstitucion = 0, $idSedes = 0)
     public function actionIndex()
     {
-		$se = Parametro::find()
-					->alias('p')
-					->innerJoin( 'tipo_parametro tp' , 'tp.id=p.id' )
-					->where( 'p.estado=1' )
-					->andWhere( 'tp.estado=1' )
-					->andWhere( ['tp.descripcion'=>"Smilleros TIC"] )
-					->andWhere( ['tp.descripcion'=>"Año inicial"] );
-		var_dump( $se );
+		// $se = Parametro::find()
+					// ->alias('p')
+					// ->innerJoin( 'tipo_parametro tp' , 'tp.id=p.id' )
+					// ->where( 'p.estado=1' )
+					// ->andWhere( 'tp.estado=1' )
+					// ->andWhere( ['tp.descripcion'=>"Smilleros TIC"] )
+					// ->andWhere( ['tp.descripcion'=>"Año inicial"] );
+		// var_dump( $se );
 		$anios	= [];
 		
 		for( $i = 2016; $i <= date("Y")+1; $i++ ){
