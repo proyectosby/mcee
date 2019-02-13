@@ -2,6 +2,9 @@
 
 /**
 Modificaciones:
+Fecha: 2019-02-12
+Descripción: Se elimina atributo id_ciclo y se cambia por anio
+---------------------------------------
 Fecha: 2018-10-16
 Descripción: Se agrega campo sesiones_por_docente
 ---------------------------------------
@@ -43,7 +46,7 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'id_datos_ieo_profesional', 'estado', 'total_sesiones_ieo', 'total_docentes_ieo','sesiones_por_docente','id_fase'], 'required'],
             [['id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['total_apps'], 'default', 'value' => 0 ],
-            [['id_datos_ieo_profesional', 'estado','total_apps'], 'integer'],
+            [['id_datos_ieo_profesional', 'estado','total_apps','anio'], 'integer'],
             [['parte_ieo', 'parte_univalle', 'parte_sem', 'otro', 'total_sesiones_ieo', 'total_docentes_ieo'], 'string', 'max' => 500],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
@@ -67,7 +70,7 @@ class CondicionesInstitucionales extends \yii\db\ActiveRecord
             'total_docentes_ieo' 		=> 'Total Docentes Ieo',
             'sesiones_por_docente' 		=> 'Sesiones por Docente',
             'id_fase' 					=> 'ID Fase',
-            'id_ciclo' 					=> 'Ciclo',
+            'anio' 						=> 'Año',
             'total_apps'				=> 'Total apps desarrolladas',
         ];
     }

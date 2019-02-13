@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Desarrollador: Edwin Molina Grisales
+Descripción: El plugin CHOSEN para docentes se deja de elección multiple
+---------------------------------------
 Fecha: 2019-02-04
 Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
 			 y se dejan los campos select en español
@@ -107,8 +111,8 @@ $total_docentes = 0;
 					Chosen::className(), [
 						'items' => $docentes,
 						'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-						'clientOptions' => [
 						'multiple' => true,
+						'clientOptions' => [
 							'search_contains' => true,
 							'single_backstroke_delete' => false,
 						]

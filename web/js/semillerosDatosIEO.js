@@ -5,6 +5,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario SEMILLEROS DATOS IEO
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Desarrollador: Edwin Molina Grisales
+Descripción: El campo select para docentes se deja de selección multiple
+---------------------------------------
 Fecha: 2019-02-05
 Desarrollador: Edwin Molina Grisales
 Descripción: El plugin chosen se deja en español
@@ -219,6 +223,8 @@ $( document ).ready(function(){
 				
 				//Todos los campos que terminan ralizan el calculo  del campo total docentes
 				$( "[id$=id_docente]", filaClonada ).on( "change", function() {
+					
+					$( this ).attr({multiple:true});
 					
 					var total = $( "option:selected", this ).length;
 					
