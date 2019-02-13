@@ -520,13 +520,15 @@ class EjecucionFaseIEstudiantesController extends Controller
 								// ->all();
 		
 		// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
-		
+
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-        foreach ($datosIeoProfesional->curso_participantes AS $curso){
-            if( !array_key_exists($curso, $cursos ) )
-                $datosIeoProfesional->curso_participantes = '';
+        if (isset($datosIeoProfesional->curso_participantes)){
+            foreach ($datosIeoProfesional->curso_participantes AS $curso){
+                if( !array_key_exists($curso, $cursos ) )
+                    $datosIeoProfesional->curso_participantes = '';
+            }
         }
-		
+
         return $this->render('create', [
             'datosModelos'	=> $datosModelos,
             'profesional'	=> $datosIeoProfesional,

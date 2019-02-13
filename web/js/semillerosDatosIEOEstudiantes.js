@@ -219,6 +219,7 @@ $( document ).ready(function(){
                                     var curso = $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text();
                                     $('#ModalLabel').text('Estudiantes del Curso  ' + curso);
                                     $('#listEstudiantes').empty();
+                                    console.log(JSON.parse(data));
                                     $.each(JSON.parse(data), function( index, value ) {
                                         $('#listEstudiantes').append('<input onchange="agregarEstudiante($(this),\'' + selectChange.attr('id') +'\',\'' + curso +'\')" type="checkbox" name="selectChange" value="'+ index +'">'+ value +'<br>')
                                     });
@@ -286,39 +287,64 @@ $( document ).ready(function(){
                     var curso = $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text();
                     $('#ModalLabel').text('Estudiantes del Curso  ' + curso);
                     $('#listEstudiantes').empty();
+                    var buscarCurso = selectChange.attr('id');
+                    var cursos = $('[id^='+buscarCurso.substring(0,buscarCurso.length-5)+'estudiantes_id]').val();
                     $.each(JSON.parse(data), function( index, value ) {
-                        $('#listEstudiantes').append('<input onchange="agregarEstudiante($(this),\'' + selectChange.attr('id') +'\',\'' + curso +'\')" type="checkbox" name="selectChange" value="'+ index +'">'+ value +'<br>')
+                        $('#listEstudiantes').append('<input onchange="agregarEstudiante($(this),\'' + selectChange.attr('id') +'\',\'' + curso +'\')" type="checkbox" name="selectChange" id="estudiante_'+curso+'_'+index+'" value="'+ index +'">'+ value +'<br>')
+                        $.each(JSON.parse(cursos), function( index, arraycurso ) {
+                            var idEstudiate = $('#estudiante_' + curso + '_' + arraycurso);
+                            if ($.inArray(idEstudiate.val(), arraycurso) === 0){
+                                idEstudiate.prop('checked', true)
+                            }
+                        });
                     });
                 });
 
-            $('#exampleModal').modal({ show: true})
+            $('#exampleModal').modal({ show: true});
         });
     }
 });
 
 function agregarEstudiante(ischeck, buscarIn, curso) {
     var estudiantes = $('[id^='+buscarIn.substring(0,buscarIn.length-5)+'estudiantes_id]');
+    var countEstudiantes = $('[id^='+buscarIn.substring(0,buscarIn.length-5)+'cantidad_inscritos]');
+    var countEstudiantesF = 0;
     var listEstudiante = estudiantes.val();
     if (listEstudiante === ''){
         listEstudiante = {};
     }else{
         listEstudiante = JSON.parse(listEstudiante)
     }
-	if(ischeck.is(':checked')){
+
+	if(ischeck.prop('checked') === true){
 	    if (listEstudiante[curso] !== undefined){
-            listEstudiante[curso][listEstudiante[curso].length] = ischeck.val();
+            if ($.inArray(ischeck.val(), listEstudiante[curso]) !== 0){
+                listEstudiante[curso][listEstudiante[curso].length] = ischeck.val();
+			}
         }else{
             listEstudiante[curso] = [];
 	        listEstudiante[curso][0] = ischeck.val();
         }
 
         estudiantes.val(JSON.stringify(listEstudiante));
-
-        console.log(listEstudiante);
 	}
 
-	if (!ischeck.is(':checked')){
-        estudiantes.val().replace(ischeck.val() + ',', '');
-        estudiantes.val(curso + ':{' + estudiantes.val().replace(ischeck.val() + ',', '') + '}');
+    if(ischeck.prop('checked') === false){
+        if (listEstudiante[curso] !== undefined){
+            if ($.inArray(ischeck.val(), listEstudiante[curso]) === 0){
+                var toDelete = listEstudiante[curso].indexOf(ischeck.val());
+                listEstudiante[curso].splice(toDelete, 1);
+            }
+        }
+        estudiantes.val(JSON.stringify(listEstudiante));
     }
+
+    $.each(listEstudiante, function( index, cursos ) {
+        $.each(cursos, function( index2, estudiantes ) {
+        	console.log(estudiantes);
+            countEstudiantesF++;
+        });
+    });
+
+    countEstudiantes.val(countEstudiantesF);
 }

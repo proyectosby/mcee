@@ -494,8 +494,10 @@ class EjecucionFaseIiEstudiantesController extends Controller
 		}
 		
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-		if( !array_key_exists( $datosIeoProfesional->curso_participantes, $cursos ) )
-			$datosIeoProfesional->curso_participantes = '';
+        foreach ($datosIeoProfesional->curso_participantes AS $curso){
+            if( !array_key_exists($curso, $cursos ) )
+                $datosIeoProfesional->curso_participantes = '';
+        }
 
         return $this->render('create', [
             'datosModelos'	=> $datosModelos,

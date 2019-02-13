@@ -61,9 +61,13 @@ if( $guardado ){
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="ModalLabel"></h5>
             </div>
             <div id="listEstudiantes" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar estudiantes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
