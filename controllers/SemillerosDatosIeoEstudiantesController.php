@@ -246,14 +246,14 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 						if( !empty( $acuerdo['id'] ) )
 						{
 							$ac = AcuerdosInstitucionalesEstudiantes::findOne( $acuerdo['id'] );
-							$ac->estudiantes_id = $acuerdo['estudiantes_id'];
-							$ac->save();
 						}
 						else
 						{
 							$ac = new AcuerdosInstitucionalesEstudiantes();
 						}
-						
+
+                        $ac->estudiantes_id = $acuerdo['estudiantes_id'];
+                        $ac->save();
 						$ac->load( $acuerdo, '');
 							
 						$modelos[ $id_fase ][] = $ac;

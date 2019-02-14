@@ -433,7 +433,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 		$fase  = Fases::findOne( $this->id_fase );
 		
 		$docentes = [];
-		$dataPersonas 	= SemillerosDatosIeoEstudiantes::find()
+		/*$dataPersonas 	= SemillerosDatosIeoEstudiantes::find()
 								->select( 'id, profecional_a' )
 								->alias( 'se' )
 								// ->innerJoin( 'semilleros_tic.acuerdos_institucionales_estudiantes ae', 'ae.id_semilleros_datos_estudiantes=se.id' )
@@ -458,16 +458,25 @@ class EjecucionFaseIiEstudiantesController extends Controller
 				else
 					$docentes[ $personas->id ] .= " - ".$persona->nombres." ".$persona->apellidos;
 			}
-		}
-		
-		
-		$cursos = [];
+		}*/
+        $dataPersonas = Personas::find()
+            ->select( "( nombres || ' ' || apellidos ) as nombres, personas.id" )
+            ->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+            ->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+            ->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+            ->where( 'personas.estado=1' )
+            ->andWhere( 'id_institucion='.$id_institucion )
+            ->all();
+
+        $docentes = ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
+
+        $cursos = [];
 		
 		$post_profesional_a = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes')['id_profesional_a'];
 		
 		if( $post_profesional_a )
 		{
-			$dataCursos = AcuerdosInstitucionalesEstudiantes::find()
+			/*$dataCursos = AcuerdosInstitucionalesEstudiantes::find()
 								->alias( 'ae' )
 								->innerJoin( 'semilleros_tic.semilleros_datos_ieo_estudiantes se', 'se.id=ae.id_semilleros_datos_estudiantes' )
 								->where( 'ae.id_fase='.$this->id_fase )
@@ -490,13 +499,31 @@ class EjecucionFaseIiEstudiantesController extends Controller
 						$cursos[ $dataCurso->id ] .= " , ".Paralelos::findOne( $value )->descripcion;
 					}
 				}
-			}
+			}*/
+			$dataCursos = 	Paralelos::find()
+            ->alias( 'p' )
+            ->innerJoin( 'sedes_jornadas as sj', 'sj.id=p.id_sedes_jornadas' )
+            ->innerJoin( 'sedes_niveles as sn', 'sn.id=p.id_sedes_niveles' )
+            ->innerJoin( 'jornadas as j', 'j.id=sj.id_jornadas' )
+            ->innerJoin( 'niveles as n', 'n.id=sn.id_niveles' )
+            ->innerJoin( 'sedes as s', 's.id=sn.id_sedes' )
+            ->where( 's.id='.$id_sede )
+            ->andWhere( 'sj.id_sedes = s.id' )
+            ->andWhere( 'j.estado=1' )
+            ->andWhere( 'n.estado=1' )
+            ->andWhere( 's.estado=1' )
+            ->orderby( 'descripcion' )
+            ->all();
+
+            $cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
 		}
 		
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-        foreach ($datosIeoProfesional->curso_participantes AS $curso){
-            if( !array_key_exists($curso, $cursos ) )
-                $datosIeoProfesional->curso_participantes = '';
+        if (!isset($datosIeoProfesional->curso_participantes)){
+            foreach ($datosIeoProfesional->curso_participantes AS $curso){
+                if( !array_key_exists($curso, $cursos ) )
+                    $datosIeoProfesional->curso_participantes = '';
+            }
         }
 
         return $this->render('create', [
