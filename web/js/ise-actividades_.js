@@ -69,8 +69,7 @@ function calcularAvances(num){
         });    
 
         $(".avance-ieo").val((((sum_avance)/500)*100).toFixed(1)+"%");
-        console.log(sum_avance);
-
+        
     }, 1000);  
 };
 
