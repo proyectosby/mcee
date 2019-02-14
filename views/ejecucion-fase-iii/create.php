@@ -32,6 +32,8 @@ $this->params['breadcrumbs'][] = "Agregar";
 		<?= Html::a('Volver', 
 									[
 										'semilleros/index',
+										'esDocente' => $esDocente,
+										'anio' => $anio,
 									], 
 									['class' => 'btn btn-info']) ?>
 				

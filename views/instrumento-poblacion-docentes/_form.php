@@ -39,6 +39,8 @@ $this->registerJsFile(
 		<?= Html::a('Volver', 
 									[
 										'semilleros/index',
+										'anio' 		=> $anio,
+										'esDocente' => $esDocente,
 									], 
 									['class' => 'btn btn-info']) ?>
 				
