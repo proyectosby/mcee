@@ -167,6 +167,7 @@ class EjecucionFaseIiiController extends Controller
 		// }
 		
 		$anio = Yii::$app->request->get('anio');
+		$esDocente = Yii::$app->request->get('esDocente');
 		
 		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
 		
@@ -476,6 +477,7 @@ class EjecucionFaseIiiController extends Controller
 			'cursos'		=> $cursos,
 			'listaSesiones'	=> $listaSesiones,
 			'anio'			=> $anio,
+			'esDocente'		=> $esDocente,
         ]);
     }
 
