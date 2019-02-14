@@ -168,6 +168,7 @@ class EjecucionFaseIController extends Controller
 		// }
 		
 		$anio = Yii::$app->request->get('anio');
+		$esDocente = Yii::$app->request->get('esDocente');
 	
 		//Indica si se guarda la fase
 		$guardado = false;
@@ -623,6 +624,7 @@ class EjecucionFaseIController extends Controller
 			// 'ciclo'					=> $ciclo,
             'profesionales'			=> $profesionales,
             'anio'					=> $anio,
+            'esDocente'				=> $esDocente,
         ]);
 	
 	}

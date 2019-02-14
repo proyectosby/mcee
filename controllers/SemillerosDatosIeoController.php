@@ -170,6 +170,7 @@ class SemillerosDatosIeoController extends Controller
 		// }
 		
 		$anio = Yii::$app->request->get('anio');
+		$esDocente = Yii::$app->request->get('esDocente');
 		
 		$id_institucion	= $_SESSION['instituciones'][0];
 		$id_sede 		= $_SESSION['sede'][0];
@@ -396,6 +397,7 @@ class SemillerosDatosIeoController extends Controller
             // 'ciclo'				=> $ciclo,
             'guardado'			=> $guardado,
             'anio'				=> $anio,
+            'esDocente'			=> $esDocente,
         ]);
     }
 

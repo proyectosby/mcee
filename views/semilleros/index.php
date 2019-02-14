@@ -44,6 +44,7 @@ use yii\helpers\Url;
 
 $tag = [];
 $selectAnios = preg_replace('/\n+/', '', Html::dropDownList( "anio", null, $anios, ['id'=>'swal-anio','class'=>'swal2-input'] ) );
+$selectTiposSemilleros = preg_replace('/\n+/', '', Html::dropDownList( "docente", null, $tiposSemilleros, ['id'=>'swal-tipo','class'=>'swal2-input'] ) );
 
 $this->title = "Semilleros tic";
 $this->params['breadcrumbs'][] = $this->title;
@@ -60,7 +61,7 @@ $script = <<< JSSCRIPT
 		title: 'Seleccione año',
 		html:
 			'<label>Año</label>$selectAnios' +
-			'<label>Tipo Semillero</label><select id="swal-tipo" name="docente" class="swal2-input"><option value=""></option><option value="1">Docentes</option><option value="0">Estudiantes</option></select>',
+			'<label>Tipo Semillero</label>$selectTiposSemilleros',
 			focusConfirm: false,
 			preConfirm: () => {
 			  
@@ -136,6 +137,8 @@ else{
 										[
 											'semilleros-datos-ieo/create',
 											'anio'	=> $anio,
+											'esDocente'	=> $esDocente,
+											
 										], 
 										['class' => 'btn btn-success'
 				]) ?>
@@ -144,6 +147,8 @@ else{
 										[
 											'ejecucion-fase-i/create',
 											'anio'	=> $anio,
+											'esDocente'	=> $esDocente,
+											
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
@@ -153,6 +158,7 @@ else{
 											
 											'ejecucion-fase-ii/create',
 											'anio'	=> $anio,
+											'esDocente'	=> $esDocente,
 										], 
 										['class' => 'btn btn-success'
 				]) ?>
@@ -161,6 +167,7 @@ else{
 										[
 											'ejecucion-fase-iii/create',
 											'anio'	=> $anio,
+											'esDocente'	=> $esDocente,
 										], 
 										['class' => 'btn btn-success'
 				]) ?>
@@ -173,6 +180,7 @@ else{
 											[
 												'semilleros-tic-diario-de-campo/index',
 												'anio'	=> $anio,
+												'esDocente'	=> $esDocente,
 											], 
 											['class' => 'btn btn-success']) ?>
 											
@@ -181,6 +189,8 @@ else{
 											[
 												'resumen-operativo-fases-docentes/index',
 												'anio'	=> $anio,
+												'esDocente'	=> $esDocente,
+												
 											], 
 											['class' => 'btn btn-success']) ?>
 											
@@ -188,6 +198,7 @@ else{
 											[
 												'instrumento-poblacion-docentes/create',
 												'anio'	=> $anio,
+												'esDocente'	=> $esDocente,
 											], 
 											['class' => 'btn btn-success']) ?>
 
@@ -197,7 +208,7 @@ else{
 				<?= Html::a('Cambiar a estudiantes', 
 						[
 							'semilleros/index',
-							'esDocente'	=>0,
+							'esDocente'	=> 0,
 							'anio' 		=> $anio,
 						],
 						['class' => 'btn btn-warning']

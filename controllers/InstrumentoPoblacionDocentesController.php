@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Modificaciones:
+ * Fecha: 22-10-2018
+ * Desarrollador: Edwin Molina Grisales
+ * Descripción: Se agrega variables enviadas por GET anio y esDocente para regresar al menu principal
+	------------------------------------------------------------
+ */
+
 namespace app\controllers;
 
 if(@$_SESSION['sesion']=="si")
@@ -471,6 +479,9 @@ class InstrumentoPoblacionDocentesController extends Controller
      */
     public function actionCreate()
     {
+		$anio = Yii::$app->request->get('anio');
+		$esDocente = Yii::$app->request->get('esDocente');
+		
 		$sede 			= $_SESSION['sede'][0];
 		$institucion	= $_SESSION['instituciones'][0];
 		
@@ -509,6 +520,8 @@ class InstrumentoPoblacionDocentesController extends Controller
             'sedes' 		=> [],
             'estudiantes'	=> [],
             'estados'		=> 1,
+			'anio' => $anio,
+            'esDocente' => $esDocente,
         ]);
     }
 

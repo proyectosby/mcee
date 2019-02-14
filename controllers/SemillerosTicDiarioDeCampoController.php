@@ -61,6 +61,9 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */
     public function actionIndex()
     {
+		$anio = Yii::$app->request->get('anio');
+		$esDocente = Yii::$app->request->get('esDocente');
+		
         $searchModel = new SemillerosTicDiarioDeCampoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere('estado=1');
@@ -68,6 +71,8 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'anio' => $anio,
+            'esDocente' => $esDocente,
         ]);
     }
 

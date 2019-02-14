@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 		'guardado'				=> $guardado,
 		'profesionales'			=> $profesionales,
 		'anio'					=> $anio,
+		'esDocente'				=> $esDocente,
     ]) ?>
 
 </div>
