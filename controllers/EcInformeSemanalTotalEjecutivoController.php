@@ -271,7 +271,9 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			tcpi.tiempo_libre, 
 			tcpi.edu_derechos, 
 			tcpi.sexualidad_ciudadania, 
-			tcpi.medio_ambiente
+			tcpi.medio_ambiente,
+			tcpi.familia,
+			tcpi.directivos
 		FROM 
 			ec.tipo_cantidad_poblacion_ise as tcpi, 
 			ec.informe_semanal_ejecucion_ise as ise
@@ -285,16 +287,23 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		
 		echo "<pre>"; print_r($result1); echo "</pre>"; 
 		
-		$poblacionBenficiada =  [];
+		$poblacionBenficiadaDirecta =  [];
 		foreach($result1 as $d )
 		{
-			@$poblacionBenficiada[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['tiempo_libre'];
-            @$poblacionBenficiada[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['edu_derechos'];
-            @$poblacionBenficiada[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['sexualidad_ciudadania'];
-            @$poblacionBenficiada[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['medio_ambiente'];
+			@$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['tiempo_libre'];
+            @$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['edu_derechos'];
+            @$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['sexualidad_ciudadania'];
+            @$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['medio_ambiente'];
 			
 		}
 		
+		
+		$poblacionBenficiadaIndirecta
+		foreach($result1 as $d )
+		{
+			@$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['familia'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['directivos'];
+		}
 		echo "<pre>"; print_r($poblacionBenficiada); echo "</pre>"; 
 		
 		//porcentaje sobre Sedes
