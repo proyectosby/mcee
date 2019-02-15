@@ -216,7 +216,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 			$datosIeoProfesional 		= SemillerosTicDatosIeoProfesionalEstudiantes::findOne([
 											'id_institucion'		=> $id_institucion,
 											'id_profesional_a'		=> $postDatosProfesional['id_profesional_a'],
-											'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
+											//'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
 										  ]);
 		}
 		
