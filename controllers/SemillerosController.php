@@ -80,24 +80,43 @@ class SemillerosController extends Controller
     // public function actionIndex($idInstitucion = 0, $idSedes = 0)
     public function actionIndex()
     {
-		// $se = Parametro::find()
-					// ->alias('p')
-					// ->innerJoin( 'tipo_parametro tp' , 'tp.id=p.id' )
-					// ->where( 'p.estado=1' )
-					// ->andWhere( 'tp.estado=1' )
-					// ->andWhere( ['tp.descripcion'=>"Smilleros TIC"] )
-					// ->andWhere( ['tp.descripcion'=>"Año inicial"] );
-		// var_dump( $se );
+		//Se busca el año inicial desde donde el usuario puede seleccionar
+		$anioInicial = Parametro::find()
+							->alias('p')
+							->innerJoin( 'tipo_parametro tp' , 'tp.id=p.id_tipo_parametro' )
+							->where( 'p.estado=1' )
+							->andWhere( 'tp.estado=1' )
+							->andWhere( ['tp.descripcion'=>'Semilleros TIC - Año Inicial'] )
+							->one();
+		
 		$anios	= [];
 		
-		for( $i = 2016; $i <= date("Y")+1; $i++ ){
+		for( $i = $anioInicial->descripcion; $i <= date("Y")+1; $i++ ){
 			$anios[ $i ] = $i;
 		}
+		
+		//Se busca el año inicial desde donde el usuario puede seleccionar
+		$dataTiposSemilleros = Parametro::find()
+								->alias('p')
+								->innerJoin( 'tipo_parametro tp' , 'tp.id=p.id_tipo_parametro' )
+								->where( 'p.estado=1' )
+								->andWhere( 'tp.estado=1' )
+								->andWhere( ['tp.descripcion'=>'Tipos Semilleros TIC'] )
+								->orderby( 'id' )
+								->all();
+		
+		$tiposSemilleros	= [];
+		
+		foreach( $dataTiposSemilleros as $key => $value ){
+			$tiposSemilleros[] = $value->descripcion;
+		}
+		
 
 		return $this->render('index', [
-			'esDocente' => Yii::$app->request->get('esDocente'),
-			'anios' 	=> [''=>'']+$anios,
-			'anio' 		=> Yii::$app->request->get('anio'),
+			'esDocente' 		=> Yii::$app->request->get('esDocente'),
+			'anios' 			=> [''=>'']+$anios,
+			'anio' 				=> Yii::$app->request->get('anio'),
+			'tiposSemilleros' 	=> [''=>'']+$tiposSemilleros,
 		]);
 		
     }

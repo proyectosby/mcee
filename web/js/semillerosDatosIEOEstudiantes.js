@@ -291,12 +291,15 @@ $( document ).ready(function(){
                     var cursos = $('[id^='+buscarCurso.substring(0,buscarCurso.length-5)+'estudiantes_id]').val();
                     $.each(JSON.parse(data), function( index, value ) {
                         $('#listEstudiantes').append('<input onchange="agregarEstudiante($(this),\'' + selectChange.attr('id') +'\',\'' + curso +'\')" type="checkbox" name="selectChange" id="estudiante_'+curso+'_'+index+'" value="'+ index +'">'+ value +'<br>')
-                        $.each(JSON.parse(cursos), function( index, arraycurso ) {
-                            var idEstudiate = $('#estudiante_' + curso + '_' + arraycurso);
-                            if ($.inArray(idEstudiate.val(), arraycurso) === 0){
-                                idEstudiate.prop('checked', true)
-                            }
-                        });
+						if (cursos !== ''){
+                            $.each(JSON.parse(cursos), function( index, arraycurso ) {
+                                console.log(arraycurso);
+                                var idEstudiate = $('#estudiante_' + curso + '_' + arraycurso);
+                                if ($.inArray(idEstudiate.val(), arraycurso) === 0){
+                                    idEstudiate.prop('checked', true)
+                                }
+                            });
+						}
                     });
                 });
 
