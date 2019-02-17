@@ -118,14 +118,29 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 
 		
 		
+		
+			
+        $model = new EcInformeSemanalTotalEjecutivo();
+    
+        return $this->render('create', [
+            'model' => $model,
+            'guardado' => 0,
+       
+			
+        ]);
+    }
+	
+	
+	public function actionReporteTotalEjecutivo()
+	{
+		
 		$sedes = Sedes::find()->andWhere(" estado =1 ")->orderby( 'id' )->all();
 		$sedes = ArrayHelper::map( $sedes, 'id', 'id_instituciones' );
 			
-		
 		$instituciones = Instituciones::find()->andWhere(" estado =1 ")->orderby( 'id' )->all();
 		$instituciones = ArrayHelper::map( $instituciones, 'id', 'descripcion' );		
 			
-			
+	
         $connection = Yii::$app->getDb();
 		$command = $connection->createCommand("
 		select 
@@ -150,7 +165,6 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		$result = $command->queryAll();
 		
 	
-		// echo "<pre>"; print_r($result); echo "</pre>"; 
 		foreach ($result as $r)
 		{	
 			$datos[$r['fecha_inicio']. " A " .$r['fecha_fin']][$r['institucion_id']][$r['sede_id']][$r['id_tipo_informe']]['avance_sede'] = $r['avance_sede'];
@@ -159,7 +173,7 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			$datos[$r['fecha_inicio']. " A " .$r['fecha_fin']][$r['institucion_id']][$r['sede_id']][$r['id_tipo_informe']]['actividad_3_porcentaje'] = $r['actividad_3_porcentaje'];	
 		}
 		
-		// echo "<pre>"; print_r($datos); echo "</pre>"; 
+	
 		
 		$avanceSede = [];
 		$avanceIEO = [];
@@ -198,10 +212,10 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 					@$activiadades[$key][31]['actividad_1_porcentaje'] += $sede[31]['actividad_1_porcentaje'];
 					@$activiadades[$key][31]['actividad_2_porcentaje'] += $sede[31]['actividad_2_porcentaje'];
 					@$activiadades[$key][31]['actividad_3_porcentaje'] += $sede[31]['actividad_3_porcentaje'];
-					
+						
 				}
 				
-					//Saber cuantas IEO estan al 100% en el rango de fecha (semana)
+				//Saber cuantas IEO estan al 100% en el rango de fecha (semana)
 				//PPT 7
 				if(@$avanceSede[$key][7] / count($ieo) == 1)
 				{
@@ -223,46 +237,47 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		}
 		
 	
-		
 		$porcentajeIEO = [];
 		$cantidadIEO = count($instituciones);
 
 		foreach($avanceIEO as $key => $aIEO) 
 		{
-			@$porcentajeIEO[$key][7] = round ( $aIEO[7] / 45  * 100) . "%";
-			@$porcentajeIEO[$key][19] = round ( $aIEO[19] / 45  * 100) . "%";
-			@$porcentajeIEO[$key][31] = round ( $aIEO[31] / 45 * 100) . "%";
+			@$porcentajeIEO[$key][7] = round ( $aIEO[7] / 45  * 100);
+			@$porcentajeIEO[$key][19] = round ( $aIEO[19] / 45  * 100);
+			@$porcentajeIEO[$key][31] = round ( $aIEO[31] / 45 * 100);
 		}
-		// echo "<pre>"; print_r($porcentajeIEO); echo "</pre>"; 		
-		
-		// echo "<pre>"; print_r($avanceIEO); echo "</pre>"; 
-		
+	
 		//porcentaje sobre la actividad 1 2 y 3
 		$cantidadSedes = count($sedes);
 		
 		foreach($activiadades as $key => $actividad )
 		{
-			@$activiadades[$key][7]['actividad_1_porcentaje'] = round ( $actividad[7]['actividad_1_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][7]['actividad_2_porcentaje'] = round ( $actividad[7]['actividad_2_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][7]['actividad_3_porcentaje'] = round ( $actividad[7]['actividad_3_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][19]['actividad_1_porcentaje'] = round ( $actividad[19]['actividad_1_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][19]['actividad_2_porcentaje'] = round ( $actividad[19]['actividad_2_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][19]['actividad_3_porcentaje'] = round ( $actividad[19]['actividad_3_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][31]['actividad_1_porcentaje'] = round ( $actividad[31]['actividad_1_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][31]['actividad_2_porcentaje'] = round ( $actividad[31]['actividad_2_porcentaje'] / $cantidadSedes * 100 ) . "%";
-			@$activiadades[$key][31]['actividad_3_porcentaje'] = round ( $actividad[31]['actividad_3_porcentaje'] / $cantidadSedes * 100 ) . "%";
+			
+		
+			@$activiadades[$key][7]['actividad_1_porcentaje'] = round ( $actividad[7]['actividad_1_porcentaje'] / $cantidadSedes  );
+			@$activiadades[$key][7]['actividad_2_porcentaje'] = round ( $actividad[7]['actividad_2_porcentaje'] / $cantidadSedes  );
+			@$activiadades[$key][7]['actividad_3_porcentaje'] = round ( $actividad[7]['actividad_3_porcentaje'] / $cantidadSedes  );
+			@$activiadades[$key][19]['actividad_1_porcentaje'] = round ( $actividad[19]['actividad_1_porcentaje'] / $cantidadSedes );
+			@$activiadades[$key][19]['actividad_2_porcentaje'] = round ( $actividad[19]['actividad_2_porcentaje'] / $cantidadSedes );
+			@$activiadades[$key][19]['actividad_3_porcentaje'] = round ( $actividad[19]['actividad_3_porcentaje'] / $cantidadSedes );
+			@$activiadades[$key][31]['actividad_1_porcentaje'] = round ( $actividad[31]['actividad_1_porcentaje'] / $cantidadSedes );
+			@$activiadades[$key][31]['actividad_2_porcentaje'] = round ( $actividad[31]['actividad_2_porcentaje'] / $cantidadSedes );
+			@$activiadades[$key][31]['actividad_3_porcentaje'] = round ( $actividad[31]['actividad_3_porcentaje'] / $cantidadSedes );
 		}
 	
+	
+	
+		// echo "<pre>"; print_r($activiadades); echo "</pre>"; 
+		// die;
 		$porcentajesSedes = [];
 		foreach ($avanceSede as $key => $aSedes )
 		{
-			@$porcentajesSedes[$key][7] = round ( $aSedes[7] / $cantidadSedes  * 100) . "%";
-			@$porcentajesSedes[$key][19] = round ( $aSedes[19] / 59  * 100) . "%";
-			@$porcentajesSedes[$key][31] = round ( $aSedes[31] / $cantidadSedes * 100) . "%";
+			@$porcentajesSedes[$key][7] = round ( $aSedes[7] / $cantidadSedes  * 100);
+			@$porcentajesSedes[$key][19] = round ( $aSedes[19] / 59  * 100);
+			@$porcentajesSedes[$key][31] = round ( $aSedes[31] / $cantidadSedes * 100);
 		}
 		
-			
-		$connection = Yii::$app->getDb();
+		
 		$command = $connection->createCommand("
 		SELECT 
 			ise.fecha_inicio,
@@ -279,13 +294,11 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			ec.informe_semanal_ejecucion_ise as ise
 		WHERE 
 			tcpi.id_informe_semanal_ejecucion_ise  = ise.id
+		AND
+			ise.estado = 1
 		");
 		$result1 = $command->queryAll();
 		
-		
-			
-		
-		echo "<pre>"; print_r($result1); echo "</pre>"; 
 		
 		$poblacionBenficiadaDirecta =  [];
 		foreach($result1 as $d )
@@ -298,32 +311,128 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		}
 		
 		
-		$poblacionBenficiadaIndirecta
+		$poblacionBenficiadaIndirecta = [];
 		foreach($result1 as $d )
 		{
 			@$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['familia'];
             @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['directivos'];
 		}
-		echo "<pre>"; print_r($poblacionBenficiada); echo "</pre>"; 
 		
-		//porcentaje sobre Sedes
-		die;
-	
-	
 		
-        $model = new EcInformeSemanalTotalEjecutivo();
-    
-        return $this->render('create', [
-            'model' => $model,
-            'guardado' => 0,
-       
+		$command = $connection->createCommand("
+		SELECT 
+			ise.fecha_inicio,
+			ise.fecha_fin,
+			ise.id_tipo_informe,
+			ei.grado_0, 
+			ei.grado_1, 
+			ei.grado_2, 
+			ei.grado_3, 
+			ei.grado_4, 
+			ei.grado_5, 
+			ei.grado_6, 
+			ei.grado_7, 
+			ei.grado_8,
+			ei.grado_9, 
+			ei.grado_10, 
+			ei.grado_11
+		FROM 
+			ec.estudiantes_ise as ei,
+			ec.informe_semanal_ejecucion_ise as ise
+		WHERE 	
+			ei.id_informe_semanal_ejecucion_ise  = ise.id
+		AND
+		ise.estado = 1
+		");
+		$result2 = $command->queryAll();
+		
+		foreach($result2 as $d )
+		{
+			@$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_0'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_1'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_2'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_3'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_4'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_5'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_6'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_7'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_8'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_9'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_10'];
+            @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['grado_11'];
+		}
+		
+		
+		
+		
+		$reporte = "
+		   <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Eje</th>
+                <th>Cnt. I.E.O sobre avance esperado</th>
+                <th>Cnt. De sedes sobre avance esperadoe</th>
+                <th>Porcentaje de I.E.O</th>
+                <th>Porcentaje sobre sedes</th>
+                <th>Porcentaje sobre actividad 1</th>
+                <th>Porcentaje sobre actividad 2</th>
+                <th>Porcentaje sobre actividad 3</th>
+                <th>Población Beneficiada Directamente</th>
+                <th>Población beneficiada de manera indirecta</th>
+            </tr>
+        </thead>
+        <tbody>";
+           
+
+     
+		
+		$arrayEjes = [7 => 'PPT', 19 =>'PSSE', 31 =>'PAF'];
+		foreach ($avanceIEO as $key => $avanceInstitucion)
+		{
+			foreach ($arrayEjes as $llave => $valor)
+			{
+				$reporte .= "<tr>";
+				$reporte .= "<td>" . $key . "</td>";
+				$reporte .= "<td>" . $valor . "</td>";
+				$reporte .= "<td>" . @$avanceInstitucion[$llave] . "</td>";
+				$reporte .= "<td>" . @$avanceSede[$key][$llave] . "</td>";
+				$reporte .= "<td>" . @$porcentajeIEO[$key][$llave] . "</td>";
+				$reporte .= "<td>" . @$porcentajesSedes[$key][$llave] . "</td>";
+				$reporte .= "<td>" . @$activiadades[$key][$llave]['actividad_1_porcentaje'] . "</td>";
+				$reporte .= "<td>" . @$activiadades[$key][$llave]['actividad_2_porcentaje'] . "</td>";
+				$reporte .= "<td>" . @$activiadades[$key][$llave]['actividad_3_porcentaje'] . "</td>";
+				$reporte .= "<td>" . @$poblacionBenficiadaDirecta[$key][$llave] . "</td>";
+				$reporte .= "<td>" . @$poblacionBenficiadaIndirecta[$key][$llave] . "</td>";
+				$reporte .= "</tr>";
+			}
+		}
+		$reporte .= "</tbody>";
+		$reporte .= "<tfoot>
+			<tr>
+				<th colspan='1' style='text-align:right'> </th>
+				<th colspan='1' style='text-align:right'>Total</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+				<th colspan='1' style='text-align:right'>Total:</th>
+			</tr>
 			
-        ]);
-    }
+         
+            
+        </tfoot>";
+		  
+		return json_encode($reporte);
+	}
+	
 	
 	public function porcentaje($valor , $porcentaje)
 	{
-		return  explode(".",$valor / $porcentaje * 100 )[0] . "%" ;
+		return  explode(".",$valor / $porcentaje * 100 )[0] ;
 	}
 
 
