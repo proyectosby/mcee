@@ -5,20 +5,20 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "gc.momento1".
+ * This is the model class for table "gc.dias_planeacion".
  *
  * @property string $id
- * @property string $id_semana
+ * @property string $descripcion
  * @property string $estado
  */
-class GcMomento1 extends \yii\db\ActiveRecord
+class GcDiasPlaneacion extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'gc.momento1';
+        return 'gc.dias_planeacion';
     }
 
     /**
@@ -27,10 +27,10 @@ class GcMomento1 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_semana', 'estado'], 'required'],
-            [['id_semana', 'estado'], 'default', 'value' => null],
-            [['id_semana', 'estado'], 'integer'],
-            [['id_semana'], 'exist', 'skipOnError' => true, 'targetClass' => GcSemanas::className(), 'targetAttribute' => ['id_semana' => 'id']],
+            [['descripcion', 'estado'], 'required'],
+            [['estado'], 'default', 'value' => null],
+            [['estado'], 'integer'],
+            [['descripcion'], 'string', 'max' => 100],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
@@ -42,7 +42,7 @@ class GcMomento1 extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_semana' => 'Id Semana',
+            'descripcion' => 'Descripcion',
             'estado' => 'Estado',
         ];
     }

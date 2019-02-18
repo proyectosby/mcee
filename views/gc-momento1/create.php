@@ -17,6 +17,9 @@ $this->params['breadcrumbs'][] = "Momento 1";
     <?= $this->render('_form', [
         'model' => $model,
 		'propositos' => $propositos,
+		'modelPlaneacionxdia' => $modelPlaneacionxdia,
+		'diasPlaneacion' => $diasPlaneacion,
+		'modelResultadosMomento1' => $modelResultadosMomento1,
     ]) ?>
 
 </div>
