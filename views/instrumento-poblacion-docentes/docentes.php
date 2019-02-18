@@ -55,8 +55,8 @@ $data = $query
 foreach( $data as $key => $value ){
 	$asignaturas[ $value['ida'] ] 	= $value['asignatura'];
 	$niveles[ $value['nivel'] ] 	= 1;
-	$jornadas[ $value['jornada'] ]	= 1;
-	$escalafon 						= $value['escalafon'];
+	// $jornadas[ $value['jornada'] ]	= 1;
+	// $escalafon 						= $value['escalafon'];
 }
 // var_dump( $niveles )					;
 // $jornada = Jornadas::find()
@@ -145,32 +145,6 @@ if( $persona->id_tipos_identificaciones && $persona->id_tipos_identificaciones!=
 		<?php
 			foreach( $asignaturas as $key => $value ){
 				?><h4><?= $value ?></h4><?php
-			}
-		?>
-		<?php
-			
-		?>
-		</span>
-	</div>
-	
-	<div class='row rowinf' style='text-align:center;background-color:#eee;' >
-		<span class='col-sm-6'>
-			<h4>Escalafón</h4>
-		</span>
-		<span class='col-sm-6'>
-			<h4><?=$escalafon?></h4>
-		</span>
-	</div>
-	
-	<div class='row rowinf' style='text-align:center;background-color:#eee;' >
-		<span class='col-sm-6'>
-			<h4>Jornadas en las que enseña</h4>
-		</span>
-		
-		<span class='col-sm-6'>
-		<?php
-			foreach( $jornadas as $key => $value ){
-				?><h4><?= $key ?></h4><?php
 			}
 		?>
 		<?php

@@ -109,7 +109,10 @@ $this->registerJsFile(
 						'single_backstroke_delete' => false,
 					],
 			]);?>
+		
+		</div>
 			
+		<div class='col-sm-4' style='display:none;'>
 			<?= $form->field($model, 'id_niveles')->widget(
 				Chosen::className(), [
 					'items' => $estudiantes,
@@ -148,7 +151,7 @@ $this->registerJsFile(
     <div id='dv-fases' class="form-group" style='padding:5px;'>
 	</div>
 	
-    <div class="form-group">
+    <div class="form-group" style='display:none;'>
 		<?= Html::buttonInput('Guardar', [ 'id'=>'bt-guardar', 'class'=>'btn btn-success']) ?>
     </div>
 

@@ -38,6 +38,10 @@ use app\models\PoblacionDocentesSesion;
 use app\models\Escalafones;
 use app\models\Docentes;
 use app\models\DistribucionesAcademicas;
+use app\models\AcuerdosInstitucionales;
+use app\models\EjecucionFase;
+use app\models\SemillerosTicEjecucionFaseIi;
+use app\models\SemillerosTicEjecucionFaseIii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
@@ -315,31 +319,83 @@ class InstrumentoPoblacionDocentesController extends Controller
 		return Json::encode( $data );
 	}
 	
-	function actionViewFases(){
-		
+	function actionViewFases()
+	{	
 		$institucion 	= Yii::$app->request->post()['institucion'];
 		$sede 			= Yii::$app->request->post()['sede'];
 		$docente		= Yii::$app->request->post()['docente'];
 		$asignatura		= Yii::$app->request->post()['asignatura'];
 		$nivel			= Yii::$app->request->post()['nivel'];
 		
-		$idPE = InstrumentoPoblacionDocentes::findOne([
-					'id_institucion' 				=> $institucion,
-					'id_sede' 		 				=> $sede,
-					'id_persona' 					=> $docente,
-					'id_asignaturas_niveles_sedes'	=> $asignatura,
-					'id_niveles' 					=> $nivel,
-					'estado' 						=> 1,
-				]);
+		/**
+		select * 
+from folder f
+  join uploads u ON u.id = f.folderId 
+where '8' = ANY (string_to_array(some_column,','))
+		*/
+		$datos = [];
+
+		$acuerdos = AcuerdosInstitucionales::find()
+							->where( 'estado=1' )
+							->andWhere( "'".$docente."' = ANY(string_to_array(id_docente,','))" )
+							->all();
+		
+		foreach( $acuerdos as $k => $v ){
+			$f = Fases::findOne( $v->id_fase );
+			$datos['Creación'][ $f->descripcion ][] = $v->anio;
+		}
+		
+		$acuerdos = EjecucionFase::find()
+							->where( 'estado=1' )
+							->andWhere( "'".$docente."' = ANY(string_to_array(docente,','))" )
+							->all();
+		
+		foreach( $acuerdos as $k => $v ){
+			$f = Fases::findOne( $v->id_fase );
+			$datos['Fases'][ $f->descripcion ][] = $v->anio;
+		}
+		
+		$acuerdos = SemillerosTicEjecucionFaseIi::find()
+							->where( 'estado=1' )
+							->andWhere( "'".$docente."' = ANY(string_to_array(docentes,','))" )
+							->all();
+		
+		foreach( $acuerdos as $k => $v ){
+			$f = Fases::findOne( $v->id_fase );
+			$datos['Fases'][ $f->descripcion ][] = $v->anio;
+		}
+		
+		$acuerdos = SemillerosTicEjecucionFaseIii::find()
+							->where( 'estado=1' )
+							->andWhere( "docente_creador = '".$docente."'" )
+							->all();
+		
+		foreach( $acuerdos as $k => $v ){
+			$f = EjecucionFase::findOne( $v->id_fase );
+			$datos['Fases'][ $f->descripcion ][] = $v->anio;
+		}
+		
+		// var_dump( $datos );
+		// exit();
+		
+		// $idPE = InstrumentoPoblacionDocentes::findOne([
+					// 'id_institucion' 				=> $institucion,
+					// 'id_sede' 		 				=> $sede,
+					// 'id_persona' 					=> $docente,
+					// 'id_asignaturas_niveles_sedes'	=> $asignatura,
+					// 'id_niveles' 					=> $nivel,
+					// 'estado' 						=> 1,
+				// ]);
 				
-		$fases	= Fases::find()
-					->where('estado=1')
-					->orderby( 'descripcion' )
-					->all();
+		// $fases	= Fases::find()
+					// ->where('estado=1')
+					// ->orderby( 'descripcion' )
+					// ->all();
 		
 		return $this->renderPartial('fases', [
-			'idPE' 	=> $idPE,
-			'fases' => $fases,
+			// 'idPE' 	=> $idPE,
+			// 'fases' => $fases,
+			'datos'	=> $datos,
         ]);
 		
 	}
