@@ -194,19 +194,19 @@
 				var cmp = $( "#"+this.id ).val();
 				
 				var hayCamposVacios = false;
-				$( "textarea[id^=semillerosticejecucionfaseiiestudiantes]", $( this.container ).parent() ).each(function(){
+				/*$( "textarea[id^=semillerosticejecucionfaseiiestudiantes]", $( this.container ).parent() ).each(function(){
 					if( $( this ).val() == '' ){
 						hayCamposVacios = true;
 					}
-				});
+				});*/
 				
 				
 				//Si no se ha ingresado fecha y mas de una fila (ejecucion de fase)
-				if( cmp == "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length == 0 ){
+				/*if( cmp == "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length == 0 ){
 					// alert(1);
 					return true;
-				}
-				else if( cmp != "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length > 0 && !hayCamposVacios ){
+				}*/
+				/*else if( cmp != "" && $( "[id^=dvFilaSesion]", $( this.container ).parent() ).length > 0 && !hayCamposVacios ){
 					// alert(1);
 					return true;
 				}
@@ -218,7 +218,7 @@
 						yii.validation.addMessage(messages,"Debe agregar por lo menos una ejecución de fase y llenar todos los campos", cmp );
 					 
 					return false;
-				}
+				}*/
 			}
 		});
 	 }, 5000 );
@@ -228,7 +228,7 @@
 	 * Si el usuario cambia el profesional o el curso de los participantes
 	 * se recarga la página con los nuevos datos y no se guarda nada
 	 ********************************************************************************/
-	$( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a,#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).change(function(){
+	$( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).change(function(){
 		
 		// if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
 		if( $( this ).val() != '' )
@@ -236,7 +236,78 @@
 			$( "#guardar" ).val(0)
 			this.form.submit();
 		}
-	})
+	});
+    $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).change(function(){
+
+        // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
+        if( $( this ).val() != '' )
+        {
+            var  selectChange = $(this);
+            var gradoEstudiantes = $( this ).val();
+            var data = {
+                id: gradoEstudiantes[gradoEstudiantes.length-1]
+            };
+            $.post( 'index?r=semilleros-datos-ieo-estudiantes%2Fget-estudiantes', data )
+                .done(function( data ) {
+                    var curso = $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text();
+                    $('#ModalLabel').text('Estudiantes del Curso  ' + curso);
+                    $('#listEstudiantes').empty();
+                    var buscarCurso = selectChange.attr('id');
+                    var cursos = $('[id^='+buscarCurso.substring(0,buscarCurso.length-5)+'estudiantes_id]').val();
+                    $.each(JSON.parse(data), function( index, value ) {
+                        $('#listEstudiantes').append('<input onchange="agregarEstudiante($(this),\'' + selectChange.attr('id') +'\',\'' + curso +'\')" type="checkbox" name="selectChange" id="estudiante_'+curso+'_'+index+'" value="'+ index +'">'+ value +'<br>')
+                        /*if (cursos !== ''){
+                            $.each(JSON.parse(cursos), function( index, arraycurso ) {
+                                console.log(arraycurso);
+                                var idEstudiate = $('#estudiante_' + curso + '_' + arraycurso);
+                                if ($.inArray(idEstudiate.val(), arraycurso) === 0){
+                                    idEstudiate.prop('checked', true)
+                                }
+                            });
+                        }*/
+                    });
+                });
+
+            $('#exampleModal').modal({ show: true});
+        }
+    });
+
+    function agregarEstudiante(ischeck, buscarIn, curso) {
+        var estudiantes = $('#semillerosticdatosieoprofesionalestudiantes-estudiantes_id');
+        var listEstudiante = estudiantes.val();
+        if (listEstudiante === ''){
+            listEstudiante = {};
+        }else{
+            listEstudiante = JSON.parse(listEstudiante)
+        }
+
+        if(ischeck.prop('checked') === true){
+            if (listEstudiante[curso] !== undefined){
+                if ($.inArray(ischeck.val(), listEstudiante[curso]) !== 0){
+                    listEstudiante[curso][listEstudiante[curso].length] = ischeck.val();
+                }
+            }else{
+                listEstudiante[curso] = [];
+                listEstudiante[curso][0] = ischeck.val();
+            }
+
+            estudiantes.val(JSON.stringify(listEstudiante));
+        }
+
+        if(ischeck.prop('checked') === false){
+            if (listEstudiante[curso] !== undefined){
+                if ($.inArray(ischeck.val(), listEstudiante[curso]) === 0){
+                    var toDelete = listEstudiante[curso].indexOf(ischeck.val());
+                    listEstudiante[curso].splice(toDelete, 1);
+                }
+            }
+            estudiantes.val(JSON.stringify(listEstudiante));
+        }
+
+        $('#guardarEstudiantes').click(function () {
+            this.form.submit();
+        });
+    }
 	
 	
 	$( "[id^=container]" ).each(function(){

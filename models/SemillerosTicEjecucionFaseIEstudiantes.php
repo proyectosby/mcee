@@ -22,6 +22,7 @@ use Yii;
  * @property string $competencias_inferidas
  * @property string $observaciones
  * @property string $id_ciclo
+ * @property string $estudiantes_id
  */
 class SemillerosTicEjecucionFaseIEstudiantes extends \yii\db\ActiveRecord
 {
@@ -72,6 +73,7 @@ class SemillerosTicEjecucionFaseIEstudiantes extends \yii\db\ActiveRecord
             'competencias_inferidas' => 'Competencias Inferidas',
             'observaciones' => 'Observaciones',
             'id_ciclo' => 'Id Ciclo',
+            'estudiantes_id' => 'Estudiantes Id',
         ];
     }
 }

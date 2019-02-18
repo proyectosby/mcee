@@ -220,7 +220,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 			$datosIeoProfesional 		= SemillerosTicDatosIeoProfesionalEstudiantes::findOne([
 											'id_institucion'		=> $id_institucion,
 											'id_profesional_a'		=> $postDatosProfesional['id_profesional_a'],
-											'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
+											//'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
 										  ]);
 		}
 		
@@ -252,6 +252,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 						$ds->fecha_sesion = Yii::$app->formatter->asDate($ds->fecha_sesion, "php:d-m-Y");
 						
 						$datosModelos[ $ds->id_sesion ][ 'datosSesion' ] 		= $ds;
+                        $ejecucionFase->docentes = explode( ",", $ejecucionFase->docentes );
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
 					}
 				}
@@ -519,7 +520,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 		}
 		
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-        if (!isset($datosIeoProfesional->curso_participantes)){
+        if (!isset($datosIeoProfesional->curso_participantes) && is_array($datosIeoProfesional->curso_participantes)){
             foreach ($datosIeoProfesional->curso_participantes AS $curso){
                 if( !array_key_exists($curso, $cursos ) )
                     $datosIeoProfesional->curso_participantes = '';
