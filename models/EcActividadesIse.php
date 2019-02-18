@@ -29,7 +29,7 @@ class EcActividadesIse extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'ec.actividades_ise';
+        return 'ec.actividades_ise_';
     }
 
     /**

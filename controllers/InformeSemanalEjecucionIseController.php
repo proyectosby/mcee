@@ -185,6 +185,7 @@ class InformeSemanalEjecucionIseController extends Controller
 
                                         if(isset($dataEstudiantes["grado_0"])){
                                             $modelEstudiantes = new EcEstudiantesIse();
+                                            
                                             $modelEstudiantes->grado_0 = $dataEstudiantes["grado_0"];
                                             $modelEstudiantes->grado_1 = $dataEstudiantes["grado_1"];
                                             $modelEstudiantes->grado_2 = $dataEstudiantes["grado_2"];
@@ -523,7 +524,7 @@ class InformeSemanalEjecucionIseController extends Controller
         $model->update(false);
         //$this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'idTipoInforme' => $_SESSION["idTipoInforme"]]);
     }
 
     /**
