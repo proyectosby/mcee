@@ -20,7 +20,8 @@ use app\models\EcDocentesIse;
 use app\models\EcEstudiantesIse;
 use app\models\EcActividadesIse;
 use app\models\EcVisitasIse;
-
+use app\models\ComunasCorregimientos;
+use app\models\BarriosVeredas;
 use app\models\Instituciones;
 use app\models\Sedes;
 
@@ -240,11 +241,43 @@ class InformeSemanalEjecucionIseController extends Controller
             return $this->redirect(['index', "guardado" => 1, 'idTipoInforme' => $_SESSION["idTipoInforme"]]);
         }
        
+
+        $comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+        $comunas	 = ArrayHelper::map( $comunas, 'id', 'descripcion' );
+
+
         return $this->renderAjax('create', [
             'model' => $model,
             'institucion' => $institucion->descripcion,
+            'comunas' => $comunas
         ]);
     }
+
+    public function actionLists($id)
+    {
+        
+        $countBarrios = BarriosVeredas::find()
+                ->where(['id_comunas_corregimientos' => $id, 'estado'  => '1'])
+                ->count();
+
+        $barrios = BarriosVeredas::find()
+                ->where(['id_comunas_corregimientos' => $id, 'estado'  => '1'])
+                ->orderBy('id DESC')
+                ->all();
+
+        if($countBarrios>0){
+            foreach($barrios as $barrio){
+                echo "<option value='".$barrio->id."'>".$barrio->descripcion."</option>";
+            }
+        }
+        else{
+            echo "<option>-</option>";
+        }
+        
+        //echo "<option>-</option>";
+
+    }
+
 
     /**
      * Updates an existing InformeSemanalEjecucionIse model.

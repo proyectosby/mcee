@@ -24,8 +24,6 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ieo-docentes.js',['depend
                     });' ] ) ?>
 
     <?= $form->field($model, 'barrio')->dropDownList( [], [ 'prompt' => 'Seleccione...',  ] ) ?>                 
-
-    <?= $form->field($model, 'barrio')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>  
     
     <?= $model->persona_acargo ?>
     
