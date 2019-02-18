@@ -102,21 +102,22 @@ class SemillerosController extends Controller
 								->where( 'p.estado=1' )
 								->andWhere( 'tp.estado=1' )
 								->andWhere( ['tp.descripcion'=>'Tipos Semilleros TIC'] )
-								->orderby( 'id' )
+								->orderby( 'p.descripcion' )
 								->all();
 		
 		$tiposSemilleros	= [];
 		
+		$i = 1;
 		foreach( $dataTiposSemilleros as $key => $value ){
-			$tiposSemilleros[] = $value->descripcion;
+			$tiposSemilleros[$i--] = $value->descripcion;
 		}
 		
 
 		return $this->render('index', [
 			'esDocente' 		=> Yii::$app->request->get('esDocente'),
-			'anios' 			=> [''=>'']+$anios,
+			'anios' 			=> $anios,
 			'anio' 				=> Yii::$app->request->get('anio'),
-			'tiposSemilleros' 	=> [''=>'']+$tiposSemilleros,
+			'tiposSemilleros' 	=> $tiposSemilleros,
 		]);
 		
     }
