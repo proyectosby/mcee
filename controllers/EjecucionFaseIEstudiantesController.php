@@ -248,6 +248,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 						$ds->fecha_sesion = Yii::$app->formatter->asDate($ds->fecha_sesion, "php:d-m-Y");
 						
 						$datosModelos[ $ds->id_sesion ][ 'datosSesion' ] 		= $ds;
+                        $ejecucionFase->id_datos_ieo_profesional_estudiantes = explode( ",", $ejecucionFase->id_datos_ieo_profesional_estudiantes );
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
 					}
 				}
@@ -522,7 +523,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 		// $docentes		= ArrayHelper::map( $dataPersonas, 'id', 'nombres' );
 
 		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-        if (isset($datosIeoProfesional->curso_participantes)){
+        if (isset($datosIeoProfesional->curso_participantes) && is_array($datosIeoProfesional->curso_participantes)){
             foreach ($datosIeoProfesional->curso_participantes AS $curso){
                 if( !array_key_exists($curso, $cursos ) )
                     $datosIeoProfesional->curso_participantes = '';

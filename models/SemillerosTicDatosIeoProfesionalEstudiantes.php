@@ -13,9 +13,11 @@ use Yii;
  * @property string $id_sede
  * @property string $id_profesional_a
  * @property string $curso_participantes
+ * @property string $estudiantes_id
  */
 class SemillerosTicDatosIeoProfesionalEstudiantes extends \yii\db\ActiveRecord
 {
+    var $estudiantes_id;
     /**
      * @inheritdoc
      */
@@ -51,6 +53,7 @@ class SemillerosTicDatosIeoProfesionalEstudiantes extends \yii\db\ActiveRecord
             'id_sede' => 'Id Sede',
             'id_profesional_a' => 'Id Profesional A',
             'curso_participantes' => 'Curso Participantes',
+            'estudiantes_id' => 'Estudiantes Id',
         ];
     }
 }

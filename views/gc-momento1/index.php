@@ -1,48 +1,19 @@
 <?php
 
-/**********
-Modificación: 
-Fecha: 23-10-2018
-Desarrollador: Maria Viviana Rodas
-Descripción: Se agrega boton de volver al index donde estan los botones de competencias basicas - proyecto
----------------------------------------
-
-**********/
-
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
-use app\models\Instituciones;
-use app\models\Sedes;
-use app\models\Parametro;
 
 
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EcInformePlaneacionIeoSearch */
+/* @var $searchModel app\models\GcMomento1Buscar */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '3.A Informe de avance Mensual I.E.O Fase Plan de acción - Misional';
+$this->title = 'Gc Momento1s';
 $this->params['breadcrumbs'][] = $this->title;
-$idTipoInforme =$_GET['idTipoInforme'];
-
-if( @$_GET['guardado'])
-{
-	
-	$this->registerJs( "
-	  swal({
-			text: 'Registro guardado',
-			icon: 'success',
-			button: 'Salir',
-		});" 
-	);
-}
-
-
-
 ?> 
 
 <h1></h1>
@@ -52,7 +23,7 @@ if( @$_GET['guardado'])
 <div class="modal-content">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h3><?php echo $this->title ?></h3>
+<h3>NombreCrud</h3>
 </div>
 <div class="modal-body">
 <div id='modalContent'></div>
@@ -61,20 +32,13 @@ if( @$_GET['guardado'])
 </div>
 </div>
 </div>
-<div class="ec-informe-planeacion-ieo-index">
+<div class="gc-momento1-index">
 
    
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=  Html::button('Agregar',['value'=>Url::to(['create','idTipoInforme'	=> $idTipoInforme]),'class'=>'btn btn-success','id'=>'modalButton']) ?>
-		<?= Html::a('Volver', 
-									[
-										'ec-competencias-basicas-proyectos/index',
-									], 
-									['class' => 'btn btn-info']) ?>
-				
-
+        <?=  Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton']) ?>
 		
     </p>
 
@@ -115,34 +79,11 @@ if( @$_GET['guardado'])
 	],
            'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-			[
-				'attribute'=>'id_institucion',
-				'value' => function( $model )
-				{
-					$institucion = Instituciones::findOne($model->id_institucion);
-					return $institucion ? $institucion->descripcion : '';
-				}, 
-			],
-            [
-				'attribute' => 'id_sede',
-				'value' 	=> function( $model ){
-					$sede = Sedes::findOne( $model->id_sede );
-					return $sede ? $sede->descripcion : '';
-				},
-			],
-            // 'codigo_dane',
-            // 'zona_educativa',
-            //'id_comuna',
-            //'id_barrio',
-            
-			[
-				'attribute' => 'fase',
-				'value' 	=> function( $model ){
-					$fase = Parametro::findOne( $model->fase );
-					return $fase ? $fase->descripcion : '';
-				},
-			],
-            //'fecha_reporte',
+
+            'id',
+            'id_semana',
+            'descripcion_proposito',
+            'estado',
 
             [
 			'class' => 'yii\grid\ActionColumn',

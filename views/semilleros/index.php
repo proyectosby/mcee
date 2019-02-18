@@ -43,8 +43,8 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $tag = [];
-$selectAnios = preg_replace('/\n+/', '', Html::dropDownList( "anio", null, $anios, ['id'=>'swal-anio','class'=>'swal2-input'] ) );
-$selectTiposSemilleros = preg_replace('/\n+/', '', Html::dropDownList( "docente", null, $tiposSemilleros, ['id'=>'swal-tipo','class'=>'swal2-input'] ) );
+$selectAnios = preg_replace('/\n+/', '', Html::dropDownList( "anio", null, $anios, ['id'=>'swal-anio','class'=>'swal2-input', 'prompt' => 'Seleccione...' ] ) );
+$selectTiposSemilleros = preg_replace('/\n+/', '', Html::dropDownList( "docente", null, $tiposSemilleros, ['id'=>'swal-tipo','class'=>'swal2-input', 'prompt' => 'Seleccione...'] ) );
 
 $this->title = "Semilleros tic";
 $this->params['breadcrumbs'][] = $this->title;
