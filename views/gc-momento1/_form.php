@@ -2,18 +2,21 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\GcResultadosMomento1Buscar;
+use fedemotta\datatables\DataTables;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GcMomento1 */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
-// $this->registerJsFile("@web/js/momentos.js");
+
 $this->registerCssFile("@web/css/momentos.css");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/momentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 //se captura el valor de la semana
-$id_semana= $_GET['id_bitacora'];
-$id_momento1= $_GET['id'];
+$id_bitacora= $_GET['id_bitacora'];
+$id_semana= $_GET['id'];
+$id_momento1= 1;
 ?>
     
 	
@@ -112,25 +115,116 @@ $id_momento1= $_GET['id'];
 	
 					<!-- Form Step 2 -->
                     <fieldset>
-						<div class="gc-resultados-momento1-form">
+				<div class="gc-resultados-momento1-form">
 
-						<?php $form1 = ActiveForm::begin(); ?>
+						<h4>Describa los resultados que se esperan obtener de las actividades que se adelantarán en la semana.</h4>
+						<hr>
+							
+					<div class="row">
+							<div class="col-md-6">
+								<label><h4>Registro de un nuevo resultado esperado</h4></label>	
+								
+								<?php $form1 = ActiveForm::begin(); ?>
 
-						<?= $form1->field($modelResultadosMomento1, 'nombre')->textInput(['maxlength' => true]) ?>
-						
-						<?= $form1->field($modelResultadosMomento1, 'descripcion')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50] )?>
+								<?= $form1->field($modelResultadosMomento1, 'nombre')->textInput(['maxlength' => true,'placeholder' => 'Nombre del resultado esperado'])->label('Nombre del resultado esperado') ?>
+								
+								<?= $form1->field($modelResultadosMomento1, 'descripcion')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50 ,'placeholder' => 'Descripción del resultado esperado'] )->label('Descripción del resultado esperado')?>
 
-						<?= $form1->field($modelResultadosMomento1, 'id_momento1')->hiddenInput(['value' => $id_momento1])->label(false) ?>
+								<?= $form1->field($modelResultadosMomento1, 'id_momento1')->hiddenInput(['value' => $id_momento1])->label(false) ?>
 
-						<?= $form1->field($modelResultadosMomento1, 'estado')->hiddenInput(['value'=> 1])->label(false) ?>
+								<?= $form1->field($modelResultadosMomento1, 'estado')->hiddenInput(['value'=> 1])->label(false) ?>
 
-						<div class="form-group">
-							<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
-						</div>
+								<div class="form-group">
+									<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+								</div>
+							</div>
 
 						<?php ActiveForm::end(); ?>
 
+						
+						
+						<!-- data table-->
+						<div class="col-md-6">
+							<div class="gc-resultados-momento1-index">
+
+   
+								<?php $searchModel = new GcResultadosMomento1Buscar();
+									  $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
+								?>
+
+								<h4>Listado de resultados esperados registrados</h4>
+
+								<?= DataTables::widget([
+									'dataProvider' => $dataProvider,
+									'clientOptions' => [
+									'language'=>[
+											'url' => '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json',
+										],
+									"lengthMenu"=> [[20,-1], [20,Yii::t('app',"All")]],
+									"info"=>false,
+									"responsive"=>true,
+									 "dom"=> 'lfTrtip',
+									 "tableTools"=>[
+										 "aButtons"=> [  
+												// [
+												// "sExtends"=> "copy",
+												// "sButtonText"=> Yii::t('app',"Copiar")
+												// ],
+												// [
+												// "sExtends"=> "csv",
+												// "sButtonText"=> Yii::t('app',"CSV")
+												// ],
+												[
+												"sExtends"=> "xls",
+												"oSelectorOpts"=> ["page"=> 'current']
+												],
+												[
+												"sExtends"=> "pdf",
+												"oSelectorOpts"=> ["page"=> 'current']
+												],
+												// [
+												// "sExtends"=> "print",
+												// "sButtonText"=> Yii::t('app',"Imprimir")
+												// ],
+											],
+										],
+								],
+									   'columns' => [
+										['class' => 'yii\grid\SerialColumn'],
+
+										// 'id',
+										'nombre',
+										// 'id_momento1',
+										// 'estado',
+										'descripcion',
+
+										[
+										'class' => 'yii\grid\ActionColumn',
+										'template'=>'{view}{update}{delete}',
+											'buttons' => [
+											'view' => function ($url, $model) {
+												return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+															'title' => Yii::t('app', 'lead-view'),
+												]);
+											},
+
+											'update' => function ($url, $model) {
+												return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+															'title' => Yii::t('app', 'lead-update'),
+												]);
+											}
+
+										  ],
+										
+										],
+
+									],
+								]); ?>
+							</div>
 						</div>
+					</div>
+				</div>
+						<!-- fin data table-->
 					
 					</fieldset>
 					<!-- Form Step 2 -->

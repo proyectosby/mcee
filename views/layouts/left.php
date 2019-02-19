@@ -301,6 +301,7 @@
 																
 																	// ],
 																],
+																['label' => 'Competencias transversalidad', 'icon' => 'circle-o','url' => ['ec-competencias-basicas-transversalidad/index'],],
 																['label' => 'Estrategia de financiamiento', 'icon' => 'circle-o','url' => '#',],
 																
 																],

@@ -44,9 +44,10 @@ class GcResultadosMomento1 extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
+		$descripcion = utf8_encode('Descripción');
         return [
             'id' => 'ID',
-            'descripcion' => 'DescripciÃ³n',
+            'descripcion' => $descripcion,
             'id_momento1' => 'Id Momento1',
             'estado' => 'Estado',
             'nombre' => 'Nombre',
