@@ -47,7 +47,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['de
             $.post( "index.php?r=ieo/lists&id="+$(this).val(), function( data ) {
             $( "select#informesemanalejecucionise-id_barrio" ).html( data );
             });' ] ) ?>
-    <?= $form->field($model, 'id_barrio')->dropDownList( [], [ 'prompt' => 'Seleccione...',  ] ) ?> 
+    <?= $form->field($model, 'id_barrio')->dropDownList(isset($barrio) ? $barrio : [], [ 'prompt' => 'Seleccione...',  ] ) ?> 
 
     <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0, isset($datos2) ? $datos2 : 0, $_SESSION["idTipoInforme"]);   ?>
 

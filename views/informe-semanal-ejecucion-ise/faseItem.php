@@ -73,29 +73,29 @@ $contenedores = [];
 
             <div class=row>
                 <div class="col-sm-1" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]actividad_1")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
+                    <?= $form->field($actividades, "[$i]actividad_1")->dropDownList( [ '0', '1', '2', '3', '4'],['options' => [$datos[$i]['actividad_1'] => ['selected'=>true]]] )->label(false); ?>
                 </div>
 
                 <div class="col-sm-2" style='padding:0px;'>
-                <?= $form->field($actividades, "[$i]actividad_1_porcentaje")->textInput([ 'class' => "form-control avance-$i-sede", 'value' => isset($datos[$i]['actividad_1_porcentaje']) ? $datos[$i]['actividad_1_porcentaje'] : '' ])->label(false); ?>
+                <?= $form->field($actividades, "[$i]actividad_1_porcentaje")->textInput([ 'class' => "form-control avance-$i-sede", 'value' => isset($datos[$i]['actividad_1_porcentaje']) ? $datos[$i]['actividad_1_porcentaje'].'%' : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]actividad_2")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
+                    <?= $form->field($actividades, "[$i]actividad_2")->dropDownList( [ '0', '1', '2', '3', '4' ], ['options' => [$datos[$i]['actividad_2'] => ['selected'=>true]]] )->label(false); ?>
                 </div>        
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]actividad_2_porcentaje")->textInput([ 'class' => "form-control avance-$i-sede", 'value' => isset($datos[$i]['actividad_2_porcentaje']) ? $datos[$i]['actividad_2_porcentaje'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$i]actividad_2_porcentaje")->textInput([ 'class' => "form-control avance-$i-sede", 'value' => isset($datos[$i]['actividad_2_porcentaje']) ? $datos[$i]['actividad_2_porcentaje'].'%' : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'> 
-                    <?= $form->field($actividades, "[$i]actividad_3")->dropDownList( [ 'prompt' => '0', '1', '2', '3', '4' ] )->label(false); ?>
+                    <?= $form->field($actividades, "[$i]actividad_3")->dropDownList( [ '0', '1', '2', '3', '4' ] , ['options' => [$datos[$i]['actividad_3'] => ['selected'=>true]]] )->label(false); ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]actividad_3_porcentaje")->textInput([ 'class' => "form-control avance-$i-sede", 'value' => isset($datos[$i]['actividad_3_porcentaje']) ? $datos[$i]['actividad_3_porcentaje'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$i]actividad_3_porcentaje")->textInput([ 'class' => "form-control avance-$i-sede", 'value' => isset($datos[$i]['actividad_3_porcentaje']) ? $datos[$i]['actividad_3_porcentaje'].'%' : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-2" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]avance_sede")->textInput([ 'class' => "form-control avance-sede", 'value' => isset($datos[$i]['avance_sede']) ? $datos[$i]['avance_sede'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$i]avance_sede")->textInput([ 'class' => "form-control avance-sede", 'value' => isset($datos[$i]['avance_sede']) ? $datos[$i]['avance_sede'].'%' : '' ])->label(false); ?>
                 </div>
                 <div class="col-sm-1" style='padding:0px;'>
-                    <?= $form->field($actividades, "[$i]avance_ieo")->textInput(['class' => "form-control avance-ieo",  'value' => isset($datos[$i]['avance_ieo']) ? $datos[$i]['avance_ieo'] : '' ])->label(false); ?>
+                    <?= $form->field($actividades, "[$i]avance_ieo")->textInput(['class' => "form-control avance-ieo",  'value' => isset($datos[$i]['avance_ieo']) ? $datos[$i]['avance_ieo'].'%' : '' ])->label(false); ?>
                 </div>
             </div>
 
@@ -276,7 +276,7 @@ $contenedores = [];
 
 
                     <div class="col-sm-1" style='padding:0px;'>
-                        <?=  Html::activeTextInput($tipo_poblacion, "[$i]total", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$i]['total']) ? $datos[$i]['total'] : ''] ) ?>
+                        <?=  Html::activeTextInput($tipo_poblacion, "[$i]total", [ 'type' => 'number', 'class' => 'form-control', 'value' => isset($datos[$i]['total_poblacion']) ? $datos[$i]['total_poblacion'] : ''] ) ?>
                     </div>
         </div>
 
@@ -359,7 +359,7 @@ $contenedores = [];
             <div class="col-sm-1" style='padding:0px;'>
                 <?=  Html::activeTextInput($estudiasntes, "[$i]grado_11", [ 'type' => 'number', 'class' => 'form-control','value' => isset($datos[$i]['grado_11']) ? $datos[$i]['grado_11'] : ''] ) ?>
             </div>
-            <?= $form->field($estudiasntes, "[$i]total")->textInput([ 'value' => isset($datos[$i]['total']) ? $datos[$i]['total'] : '' ]) ?>
+            <?= $form->field($estudiasntes, "[$i]total")->textInput([ 'value' => isset($datos[$i]['total_estudiantes']) ? $datos[$i]['total_estudiantes'] : '' ]) ?>
             <?= $form->field($estudiasntes, "[$i]est_id")->hiddenInput( [ 'value' => isset($datos[$i]['est_id']) ? $datos[$i]['est_id'] : ''  ] )->label(false ) ?>
         
             <div class=cell style='display:none'>

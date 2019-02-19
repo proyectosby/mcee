@@ -88,14 +88,18 @@ class InformeSemanalEjecucionIseController extends Controller
     {
         $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : 0; 
 
-        $query = InformeSemanalEjecucionIse::find()->where(['estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
+        //$query = InformeSemanalEjecucionIse::find()->where(['estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
+        
+        $query = InformeSemanalEjecucionIse::find(['ec.informe_semanal_ejecucion_ise.institucion_id', 'ec.actividades_ise.id_sede', 'ec.informe_semanal_ejecucion_ise.fecha_inicio', 'ec.informe_semanal_ejecucion_ise.fecha_fin'])
+                                            ->innerJoin('ec.actividades_ise','ec.actividades_ise.informe_semanal_ejecucion_id =  ec.informe_semanal_ejecucion_ise.id' )
+                                            ->where(['ec.informe_semanal_ejecucion_ise.estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
 
+       
         $dataProvider = new ActiveDataProvider([
             'query' => $query
         ]);
         
-        
-
+ 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'guardado' => $guardado,
@@ -129,8 +133,10 @@ class InformeSemanalEjecucionIseController extends Controller
 
     
         if ($model->load(Yii::$app->request->post())) {
+            
             $model->institucion_id =  $idInstitucion;
             $model->sede_id =  49;
+            $model->id_barrio = $model->id_barrio;
             //$model->sede_id = 55;
             $model->proyecto_id = 1;
             $model->estado = 1;
@@ -167,15 +173,18 @@ class InformeSemanalEjecucionIseController extends Controller
 
                                 $dataCantidadPoblacion = isset(Yii::$app->request->post('EcTipoCantidadPoblacionIse')[$key]) ? Yii::$app->request->post('EcTipoCantidadPoblacionIse')[$key] : [];
                                 
-                                if(isset($dataCantidadPoblacion["edu_derechos"])){
+                                if(isset($dataCantidadPoblacion["familia"])){
                                     $modelPoblacion = new EcTipoCantidadPoblacionIse();
-                                    $modelPoblacion->edu_derechos = $dataCantidadPoblacion["edu_derechos"];
-                                    $modelPoblacion->sexualidad_ciudadania = $dataCantidadPoblacion["sexualidad_ciudadania"];
-                                    $modelPoblacion->familia = $dataCantidadPoblacion["familia"];
-                                    $modelPoblacion->directivos = $dataCantidadPoblacion["directivos"];
-                                    $modelPoblacion->tiempo_libre = $dataCantidadPoblacion["tiempo_libre"];
-                                    $modelPoblacion->medio_ambiente = $dataCantidadPoblacion["medio_ambiente"];
-                                    $modelPoblacion->id_sede = $dataCantidadPoblacion["id_sede"];
+                                    
+                                    $modelPoblacion->edu_derechos = isset($dataCantidadPoblacion["edu_derechos"]) ? $dataCantidadPoblacion["edu_derechos"] : '' ;
+                                    $modelPoblacion->sexualidad_ciudadania = isset($dataCantidadPoblacion["sexualidad_ciudadania"]) ? $dataCantidadPoblacion["sexualidad_ciudadania"] : '';
+                                    $modelPoblacion->familia = isset($dataCantidadPoblacion["familia"]) ? $dataCantidadPoblacion["familia"] : '';
+                                    $modelPoblacion->directivos = isset($dataCantidadPoblacion["directivos"]) ? $dataCantidadPoblacion["directivos"] : '';
+                                    $modelPoblacion->tiempo_libre = isset($dataCantidadPoblacion["tiempo_libre"]) ? $dataCantidadPoblacion["tiempo_libre"] : '';
+                                    $modelPoblacion->medio_ambiente = isset($dataCantidadPoblacion["medio_ambiente"]) ? $dataCantidadPoblacion["medio_ambiente"] : '';
+                                    $modelPoblacion->docentes = isset($dataCantidadPoblacion["docentes"]) ? $dataCantidadPoblacion["docentes"] : '';
+                                    $modelPoblacion->psicoorientador = isset($dataCantidadPoblacion["psicoorientador"]) ? $dataCantidadPoblacion["psicoorientador"] : '';
+                                    $modelPoblacion->id_sede = isset($dataCantidadPoblacion["id_sede"]) ? $dataCantidadPoblacion["id_sede"] : '';
                                     $modelPoblacion->id_proyecto = $key+1;
                                     $modelPoblacion->estado = 1;
                                     $modelPoblacion->id_actividad_ise = $model2->id;
@@ -310,13 +319,13 @@ class InformeSemanalEjecucionIseController extends Controller
                     (" 
                         UPDATE ec.actividades_ise set 			
                         actividad_1 	='". $valores['actividad_1']."',
-                        actividad_1_porcentaje			='" .$valores['actividad_1_porcentaje']."',
+                        actividad_1_porcentaje			='" .explode("%",$valores['actividad_1_porcentaje'])[0]."',
                         actividad_2			='". $valores['actividad_2']."',
-                        actividad_2_porcentaje		='". $valores['actividad_2_porcentaje']."',
+                        actividad_2_porcentaje		='".explode("%",$valores['actividad_2_porcentaje'])[0]."',
                         actividad_3		='". $valores['actividad_3']."',
-                        actividad_3_porcentaje		='". $valores['actividad_3_porcentaje']."',
-                        avance_sede		='". $valores['avance_sede']."',
-                        avance_ieo		='". $valores['avance_ieo']."'
+                        actividad_3_porcentaje		='". explode("%",$valores['actividad_3_porcentaje'])[0]."',
+                        avance_sede		='". explode("%",$valores['avance_sede'])[0]."',
+                        avance_ieo		='". explode("%",$valores['avance_ieo'])[0]."'
                         WHERE informe_semanal_ejecucion_id = $idInforme and id_proyecto = $index
                     ");
                     $result = $command->queryAll();
@@ -329,22 +338,26 @@ class InformeSemanalEjecucionIseController extends Controller
 
             foreach($arrayDatosTipoPoblacion as $idAcciones => $valores)
 			{
-                if($valores['edu_derechos']){
+                
+                if($valores['familia']){
                     
-                    $index = $idAcciones +1;
+                    /*$index = $idAcciones +1;
                     $id =  $valores['id_tip'];
                     $command = $connection->createCommand
                     (" 
                         UPDATE ec.tipo_cantidad_poblacion_ise set 			
-                        edu_derechos 	='". $valores['edu_derechos']."',
-                        sexualidad_ciudadania			='" .$valores['sexualidad_ciudadania']."',
-                        medio_ambiente			='". $valores['medio_ambiente']."',
-                        familia		='". $valores['familia']."',
-                        directivos		='". $valores['directivos']."',
-                        tiempo_libre		='". $valores['tiempo_libre']."'
+                        edu_derechos 	='".  isset($valores['edu_derechos']) ? $valores['edu_derechos'] : '' ."',
+                        sexualidad_ciudadania			='" . isset($valores['sexualidad_ciudadania']) ? $valores['sexualidad_ciudadania'] : ''."',
+                        medio_ambiente			='". isset($valores['medio_ambiente']) ? $valores['medio_ambiente'] : '' ."',
+                        familia		='". isset($valores['familia']) ? $valores['familia'] : '' ."',
+                        directivos		='". isset($valores['directivos']) ? $valores['directivos'] : ''."',
+                        docentes		='". isset($valores['docentes']) ? $valores['docentes'] : ''."',
+                        psicoorientador		='". isset($valores['psicoorientador']) ? $valores['psicoorientador'] : ''."',
+                        tiempo_libre		='". isset($valores['tiempo_libre']) ? $valores['tiempo_libre'] : '' ."'
                         WHERE id =  $id
                     ");
-                    $result = $command->queryAll();
+                    
+                    $result = $command->queryAll();*/
                 }
             }
 
@@ -405,11 +418,11 @@ class InformeSemanalEjecucionIseController extends Controller
 
             
             
-            return $this->redirect(['index']);
+            return $this->redirect(['index', "guardado" => 1, 'idTipoInforme' => $_SESSION["idTipoInforme"]]);
         }
 
         $command = Yii::$app->db->createCommand("SELECT act.nombre, act.actividad_1, act.actividad_1_porcentaje, act.actividad_2, act.actividad_2_porcentaje, act.actividad_3, act.actividad_3_porcentaje, act.avance_sede, act.avance_ieo, act.id_proyecto,
-                                                        tip.edu_derechos, tip.sexualidad_ciudadania, tip.medio_ambiente, tip.familia, tip.directivos, tip.tiempo_libre, tip.id as id_tip,
+                                                        tip.docentes, tip.psicoorientador, tip.edu_derechos, tip.sexualidad_ciudadania, tip.medio_ambiente, tip.familia, tip.directivos, tip.tiempo_libre, tip.id as id_tip,
                                                         est.grado_0, est.grado_1, est.grado_2, est.grado_3, est.grado_4, est.grado_5, est.grado_6, est.grado_7, est.grado_8, est.grado_9, est.grado_10, est.grado_11, est.total, est.id as est_id
                                                 FROM ec.actividades_ise AS act
                                                 INNER JOIN ec.tipo_cantidad_poblacion_ise AS tip on act.id = tip.id_actividad_ise
@@ -430,12 +443,16 @@ class InformeSemanalEjecucionIseController extends Controller
             $dato[$index]['actividad_3_porcentaje']= $element['actividad_3_porcentaje'];
             $dato[$index]['avance_sede']= $element['avance_sede'];
             $dato[$index]['avance_ieo']= $element['avance_ieo'];
+            $dato[$index]['docentes']= $element['docentes'];
+            $dato[$index]['psicoorientador']= $element['psicoorientador'];
             $dato[$index]['edu_derechos']= $element['edu_derechos'];
             $dato[$index]['sexualidad_ciudadania']= $element['sexualidad_ciudadania'];
             $dato[$index]['medio_ambiente']= $element['medio_ambiente'];
             $dato[$index]['familia']= $element['familia'];
             $dato[$index]['directivos']= $element['directivos'];
             $dato[$index]['tiempo_libre']= $element['tiempo_libre'];
+            $dato[$index]['total_poblacion'] = intval($element['tiempo_libre']) + intval($element['directivos']) + intval($element['familia']) + intval($element['medio_ambiente']) + intval($element['sexualidad_ciudadania']) + intval($element['edu_derechos']) + intval($element['psicoorientador']) + intval($element['docentes']);
+
             $dato[$index]['id_tip']= $element['id_tip'];
             $dato[$index]['grado_0']= $element['grado_0'];
             $dato[$index]['grado_1']= $element['grado_1'];
@@ -449,7 +466,7 @@ class InformeSemanalEjecucionIseController extends Controller
             $dato[$index]['grado_9']= $element['grado_9'];
             $dato[$index]['grado_10']= $element['grado_10'];
             $dato[$index]['grado_11']= $element['grado_11'];
-            $dato[$index]['total']= $element['total'];
+            $dato[$index]['total_estudiantes']= intval($element['grado_0']) + intval($element['grado_1']) + intval($element['grado_2']) + intval($element['grado_3']) + intval($element['grado_4']) + intval($element['grado_5']) + intval($element['grado_6']) + intval($element['grado_7']) + intval($element['grado_8']) + intval($element['grado_9']) + intval($element['grado_10']) + intval($element['grado_11']) ;
             $dato[$index]['est_id']= $element['est_id'];
 
             return $dato;
@@ -498,7 +515,15 @@ class InformeSemanalEjecucionIseController extends Controller
         $institucion = Instituciones::findOne( $idInstitucion );
 
         $Sedes = Sedes::find()->where( "id_instituciones =  $idInstitucion" )->all();
-		$sedes = ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+        $sedes = ArrayHelper::map( $Sedes, 'id', 'descripcion' );
+        
+        $comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+        $comunas	 = ArrayHelper::map( $comunas, 'id', 'descripcion' );
+
+        
+        $barrio  = BarriosVeredas::find()->where( 'estado=1' )->all();
+        $barrio	 = ArrayHelper::map( $barrio, 'id', 'descripcion' );
+       
        
         return $this->renderAjax('update', [
             'model' => $model,
@@ -506,7 +531,8 @@ class InformeSemanalEjecucionIseController extends Controller
             'sedes' => $sedes,
             'datos'=> $datos,
             'datos2'=> $datos2,
-            
+            'comunas' => $comunas,
+            'barrio' =>  $barrio            
         ]);
     }
 
