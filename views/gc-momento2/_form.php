@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use fedemotta\datatables\DataTables;
+use app\models\GcMomento2Buscar;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\GcMomento2 */
@@ -23,32 +25,124 @@ $id_momento1= 2;
 
     <?php $form = ActiveForm::begin(); ?>
 	
-	<fieldset>
+				<fieldset>
 						<h4>Registre las evidencias desarrolladas durante cada día.</h4>
 						<hr>
-						<label><h4>Formulario de una visita</h4></label>
+						<div class="row">
+							<div class="col-md-4">
+								<label><h4>Formulario de una visita</h4></label>
 
-						<?= $form->field($model, 'id_semana')->hiddenInput(['value' => $id_semana])->label(false) ?>
+								<?= $form->field($model, 'id_semana')->hiddenInput(['value' => $id_semana])->label(false) ?>
 
-						<?= $form->field($model, 'realizo_visita')->checkbox() ?>
+								<?= $form->field($model, 'realizo_visita')->checkbox() ?>
+								
+								<?= $form->field($model, 'descripcion_visita')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50 ,'placeholder' => 'Descripción de las visitas'] )->label('Descripción de las visitas')?>
 
-						<?= $form->field($model, 'estudiantes')->textInput() ?>
+								<?= $form->field($model, 'estudiantes')->textInput(['type' => 'number','value'=> 0]) ?>
 
-						<?= $form->field($model, 'docentes')->textInput() ?>
+								<?= $form->field($model, 'docentes')->textInput(['type' => 'number','value'=> 0]) ?>
 
-						<?= $form->field($model, 'directivos')->textInput() ?>
+								<?= $form->field($model, 'directivos')->textInput(['type' => 'number','value'=> 0]) ?>
 
-						<?= $form->field($model, 'otro')->textInput() ?>
+								<?= $form->field($model, 'otro')->textInput(['type' => 'number','value'=> 0]) ?>
 
-						<?= $form->field($model, 'justificacion_no_visita')->textInput() ?>
+								<?= $form->field($model, 'justificacion_no_visita')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50 ,'placeholder' => 'Justificación no visita'] )->label('Justificación no visita')?>
 
-						<?= $form->field($model, "estado")->hiddenInput(['value'=> 1])->label(false) ?>
+								<?= $form->field($model, "estado")->hiddenInput(['value'=> 1])->label(false) ?>
 
-						<div class="form-group form-wizard-buttons">
-								<?= Html::submitButton('Guardar y continuar', ['class' => 'btn btn-success']) ?>	
+								<div class="form-group form-wizard-buttons">
+										<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>	
+								</div>
+							</div>
+							
+							<!-- Data table-->
+							
+							<div class="gc-momento2-index">
+
+   
+									<?php  $searchModel = new GcMomento2Buscar();
+										   $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
+									?>
+									<div class="col-md-8">
+									<h4>Listado de visitas registradas</h4>
+
+										<?= DataTables::widget([
+											'dataProvider' => $dataProvider,
+											'clientOptions' => [
+											'language'=>[
+													'url' => '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json',
+												],
+											"lengthMenu"=> [[20,-1], [20,Yii::t('app',"All")]],
+											"info"=>false,
+											"responsive"=>true,
+											 "dom"=> 'lfTrtip',
+											 "tableTools"=>[
+												 "aButtons"=> [  
+														// [
+														// "sExtends"=> "copy",
+														// "sButtonText"=> Yii::t('app',"Copiar")
+														// ],
+														// [
+														// "sExtends"=> "csv",
+														// "sButtonText"=> Yii::t('app',"CSV")
+														// ],
+														[
+														"sExtends"=> "xls",
+														"oSelectorOpts"=> ["page"=> 'current']
+														],
+														[
+														"sExtends"=> "pdf",
+														"oSelectorOpts"=> ["page"=> 'current']
+														],
+														// [
+														// "sExtends"=> "print",
+														// "sButtonText"=> Yii::t('app',"Imprimir")
+														// ],
+													],
+												],
+										],
+											   'columns' => [
+												['class' => 'yii\grid\SerialColumn'],
+
+												'id',
+												'id_semana',
+												'realizo_visita:boolean',
+												'estudiantes',
+												'docentes',
+												//'directivos',
+												//'otro',
+												//'justificacion_no_visita',
+												//'estado',
+
+												[
+												'class' => 'yii\grid\ActionColumn',
+												'template'=>'{view}{update}{delete}',
+													'buttons' => [
+													'view' => function ($url, $model) {
+														return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+																	'title' => Yii::t('app', 'lead-view'),
+														]);
+													},
+
+													'update' => function ($url, $model) {
+														return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+																	'title' => Yii::t('app', 'lead-update'),
+														]);
+													}
+
+												  ],
+												
+												],
+
+											],
+										]); ?>
+									</div>
+
+									<!-- Fin Data table-->
+							</div>		
 						</div>
-					</fieldset>
+				</fieldset>
 
-    <?php ActiveForm::end(); ?>
+									<?php ActiveForm::end(); ?>
 
-</div>
+								</div>
