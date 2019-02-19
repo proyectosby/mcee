@@ -84,7 +84,7 @@ class EcinformeplaneacionieoController extends Controller
 		");
 		$ecProyectos = $command->queryAll();
 		
-				
+		
 		// $docentes	= ArrayHelper::map( $dataDocentes, 'id', 'nombres' );
 		
 		
@@ -105,10 +105,11 @@ class EcinformeplaneacionieoController extends Controller
 		$arrayColores = array(
 		"Proyectos Pedagógicos Transversales"=>"panel panel-danger",
 		"Articulación Familiar" =>"panel panel-info",
-		"Proyecto de Servicio Social Estudiantil"=>"panel panel-success"
+		"Proyecto de Servicio Social Estudiantil"=>"panel panel-success",
+		"Proyecto Fortalecimiento de Competencias Básicas desde la Transversalidad"=>"panel-warning"
 		);
 		
-		
+		$contenedores = array();
 		// $ecProyectos = ArrayHelper::map($ecProyectos,'id','descripcion');
 		foreach ($ecProyectos as $proyecto)
 		{
