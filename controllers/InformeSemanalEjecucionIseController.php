@@ -341,23 +341,37 @@ class InformeSemanalEjecucionIseController extends Controller
                 
                 if($valores['familia']){
                     
-                    /*$index = $idAcciones +1;
+                    $index = $idAcciones +1;
                     $id =  $valores['id_tip'];
-                    $command = $connection->createCommand
-                    (" 
-                        UPDATE ec.tipo_cantidad_poblacion_ise set 			
-                        edu_derechos 	='".  isset($valores['edu_derechos']) ? $valores['edu_derechos'] : '' ."',
-                        sexualidad_ciudadania			='" . isset($valores['sexualidad_ciudadania']) ? $valores['sexualidad_ciudadania'] : ''."',
-                        medio_ambiente			='". isset($valores['medio_ambiente']) ? $valores['medio_ambiente'] : '' ."',
-                        familia		='". isset($valores['familia']) ? $valores['familia'] : '' ."',
-                        directivos		='". isset($valores['directivos']) ? $valores['directivos'] : ''."',
-                        docentes		='". isset($valores['docentes']) ? $valores['docentes'] : ''."',
-                        psicoorientador		='". isset($valores['psicoorientador']) ? $valores['psicoorientador'] : ''."',
-                        tiempo_libre		='". isset($valores['tiempo_libre']) ? $valores['tiempo_libre'] : '' ."'
-                        WHERE id =  $id
-                    ");
+                                       
+                    $query = "UPDATE ec.tipo_cantidad_poblacion_ise set ";
+                    if(isset($valores['edu_derechos'])){
+                        $query = $query." "."edu_derechos ='". $valores['edu_derechos']."', ";
+                    }
+                    if(isset($valores['sexualidad_ciudadania'])){
+                        $query = $query." "."sexualidad_ciudadania ='". $valores['sexualidad_ciudadania']."', ";
+                    }
+                    if(isset($valores['medio_ambiente'])){
+                        $query = $query." "."medio_ambiente ='". $valores['medio_ambiente']."', ";
+                    }                    
+                    if(isset($valores['directivos'])){
+                        $query = $query." "."directivos ='". $valores['directivos']."', ";
+                    }
+                    if(isset($valores['docentes'])){
+                        $query = $query." "."docentes ='". $valores['docentes']."', ";
+                    }
+                    if(isset($valores['psicoorientador'])){
+                        $query = $query." "."psicoorientador ='". $valores['psicoorientador']."', ";
+                    }
+                    if(isset($valores['tiempo_libre'])){
+                        $query = $query." "."tiempo_libre ='". $valores['tiempo_libre']."', ";
+                    }
+                    $query = $query." "."familia ='". intval($valores['familia'])."' ";
+                    $query = $query." "." WHERE id =  $id";
                     
-                    $result = $command->queryAll();*/
+                    $command = $connection->createCommand($query);
+                    
+                    $result = $command->queryAll();
                 }
             }
 
