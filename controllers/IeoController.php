@@ -25,6 +25,8 @@ use app\models\ZonasEducativas;
 use app\models\PerfilesXPersonasInstitucion;
 use app\models\PerfilesXPersonas;
 use app\models\Personas;
+use app\models\ComunasCorregimientos;
+use app\models\BarriosVeredas;
 
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
@@ -847,15 +849,45 @@ class IeoController extends Controller
         
         $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
         $zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
+
+        $comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+        $comunas	 = ArrayHelper::map( $comunas, 'id', 'descripcion' );
         
         
         return $this->renderAjax('create', [
             'model' => $ieo_model,
             'zonasEducativas' => $zonasEducativas,
-            'proyecto' => $proyecto
+            'proyecto' => $proyecto,
+            'comunas' => $comunas
         ]);
     }
 
+
+    public function actionLists($id)
+    {
+        
+        $countBarrios = BarriosVeredas::find()
+                ->where(['id_comunas_corregimientos' => $id, 'estado'  => '1'])
+                ->count();
+
+        $barrios = BarriosVeredas::find()
+                ->where(['id_comunas_corregimientos' => $id, 'estado'  => '1'])
+                ->orderBy('id DESC')
+                ->all();
+
+        if($countBarrios>0){
+            foreach($barrios as $barrio){
+                echo "<option value='".$barrio->id."'>".$barrio->descripcion."</option>";
+            }
+        }
+        else{
+            echo "<option>-</option>";
+        }
+        
+        //echo "<option>-</option>";
+
+    }
+    
     /**
      * Updates an existing Ieo model.
      * If update is successful, the browser will be redirected to the 'view' page.

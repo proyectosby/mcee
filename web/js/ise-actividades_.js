@@ -68,9 +68,9 @@ function calcularAvances(num){
             sum_avance += numero != '' ? parseFloat(numero) : 0;
         });    
 
-        $(".avance-ieo").val((((sum_avance)/500)*100).toFixed(1)+"%");
-        console.log(sum_avance);
-
+        numItems = $('.avance-sede').length;        
+        $(".avance-ieo").val(((sum_avance / (numItems*100) )*100).toFixed(1)+"%");
+        
     }, 1000);  
 };
 

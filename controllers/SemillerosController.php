@@ -39,6 +39,8 @@ use app\models\Paralelos;
 use app\models\SedesJornadas;
 use app\models\SemillerosDatosIeo;
 use app\models\Personas;
+use app\models\Parametro;
+use app\models\SemillerosTicAnio;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 
@@ -78,13 +80,45 @@ class SemillerosController extends Controller
     // public function actionIndex($idInstitucion = 0, $idSedes = 0)
     public function actionIndex()
     {
+		//Se busca el año inicial desde donde el usuario puede seleccionar
+		$anioInicial = Parametro::find()
+							->alias('p')
+							->innerJoin( 'tipo_parametro tp' , 'tp.id=p.id_tipo_parametro' )
+							->where( 'p.estado=1' )
+							->andWhere( 'tp.estado=1' )
+							->andWhere( ['tp.descripcion'=>'Semilleros TIC - Año Inicial'] )
+							->one();
 		
-	
-			return $this->render('index', [
-				
-			]);
+		$anios	= [];
+		
+		for( $i = $anioInicial->descripcion; $i <= date("Y")+1; $i++ ){
+			$anios[ $i ] = $i;
+		}
+		
+		//Se busca el año inicial desde donde el usuario puede seleccionar
+		$dataTiposSemilleros = Parametro::find()
+								->alias('p')
+								->innerJoin( 'tipo_parametro tp' , 'tp.id=p.id_tipo_parametro' )
+								->where( 'p.estado=1' )
+								->andWhere( 'tp.estado=1' )
+								->andWhere( ['tp.descripcion'=>'Tipos Semilleros TIC'] )
+								->orderby( 'p.descripcion' )
+								->all();
+		
+		$tiposSemilleros	= [];
+		
+		$i = 1;
+		foreach( $dataTiposSemilleros as $key => $value ){
+			$tiposSemilleros[$i--] = $value->descripcion;
+		}
+		
+
+		return $this->render('index', [
+			'esDocente' 		=> Yii::$app->request->get('esDocente'),
+			'anios' 			=> $anios,
+			'anio' 				=> Yii::$app->request->get('anio'),
+			'tiposSemilleros' 	=> $tiposSemilleros,
+		]);
 		
     }
-
-    
 }

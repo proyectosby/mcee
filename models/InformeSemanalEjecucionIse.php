@@ -13,13 +13,14 @@ use Yii;
  * @property int $proyecto_id
  * @property int $estado
  * @property int $id_tipo_informe
- * @property string $fehca_inicio
  * @property string $fecha_fin
+ * @property string $fecha_inicio
+ * @property int $id_comuna
+ * @property int $id_barrio
  */
 class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
 {
     public $nombre_institucion;
-
     /**
      * @inheritdoc
      */
@@ -34,10 +35,9 @@ class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['institucion_id', 'sede_id', 'proyecto_id', 'estado', 'id_tipo_informe'], 'default', 'value' => null],
-            [['institucion_id', 'sede_id', 'proyecto_id', 'estado', 'id_tipo_informe'], 'integer'],
-            [['fehca_inicio', 'fecha_fin'], 'safe'],
-            [['fehca_inicio', 'fecha_fin'], 'required'],
+            [['institucion_id', 'sede_id', 'proyecto_id', 'estado', 'id_tipo_informe', 'id_comuna', 'id_barrio'], 'default', 'value' => null],
+            [['institucion_id', 'sede_id', 'proyecto_id', 'estado', 'id_tipo_informe', 'id_comuna', 'id_barrio'], 'integer'],
+            [['fecha_fin', 'fecha_inicio'], 'safe'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
         ];
@@ -56,8 +56,10 @@ class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
             'proyecto_id' => 'Proyecto ID',
             'estado' => 'Estado',
             'id_tipo_informe' => 'Id Tipo Informe',
-            'fehca_inicio' => 'Fehca inicio',
             'fecha_fin' => 'Fecha fin',
+            'fecha_inicio' => 'Fecha inicio',
+            'id_comuna' => 'Id Comuna',
+            'id_barrio' => 'Id Barrio',
         ];
     }
 }

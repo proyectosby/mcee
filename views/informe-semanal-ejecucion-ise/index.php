@@ -34,6 +34,7 @@ $_SESSION["idTipoInforme"] = isset($_GET['idTipoInforme']) ?  $_GET['idTipoInfor
 if( isset($guardado) && $guardado == 1 ){
 	echo Html::hiddenInput( 'guardadoFormulario', '1' );
 }
+
 ?> 
 
 	
@@ -66,7 +67,7 @@ if( isset($guardado) && $guardado == 1 ){
 		Modal::end();
 
 	?>
-
+	
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
 		'clientOptions' => [
@@ -122,7 +123,7 @@ if( isset($guardado) && $guardado == 1 ){
 					return $nombreSedes ? $nombreSedes->descripcion : '';  
 				}, //para buscar por el nombre
 			],
-            'fehca_inicio',
+            'fecha_inicio',
             'fecha_fin',
 
             [

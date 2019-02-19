@@ -16,8 +16,14 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ieo-docentes.js',['depend
     <?php $form = ActiveForm::begin(); ?>
     
     <?= $form->field($model, 'zonas_educativas_id')->dropDownList( $zonasEducativas, [ 'prompt' => 'Seleccione...' ] ) ?>
-    <?= $form->field($model, 'comuna')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>
-    <?= $form->field($model, 'barrio')->textInput([ 'value' => 'No asignado' , 'readonly' => true]) ?>  
+
+    <?= $form->field($model, 'comuna')->dropDownList( $comunas, [ 'prompt' => 'Seleccione...',  
+                'onchange'=>'
+                    $.post( "index.php?r=ieo/lists&id="+$(this).val(), function( data ) {
+                    $( "select#ieo-barrio" ).html( data );
+                    });' ] ) ?>
+
+    <?= $form->field($model, 'barrio')->dropDownList( [], [ 'prompt' => 'Seleccione...',  ] ) ?>                 
     
     <?= $model->persona_acargo ?>
     

@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = "Agregar";
         'model' => $model,
         'zonasEducativas' => $zonasEducativas,
         "nombres" => $nombres,
+        'comunas' => $comunas
     ]) ?>
 
 </div>

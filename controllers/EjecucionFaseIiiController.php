@@ -1,17 +1,19 @@
 <?php
 
 /**********
-Versión: 001
+Versión: 001 
 Fecha: 2018-08-21
 Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseIIIController
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Descripción: Ya no se pide el ciclo y el año viene por url y todas las realiciones con id_ciclo se cambian a año
+---------------------------------------
 Fecha: 2019-02-05
 Descripción: Se desagregan DATOS PROFESIONALES y docente creador con respecto a a la conformación de los semilleros
 ---------------------------------------
 **********/
-
 
 
 namespace app\controllers;
@@ -149,20 +151,23 @@ class EjecucionFaseIiiController extends Controller
      */
     public function actionCreate()
     {
-		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
-		$ciclo = new SemillerosTicCiclos();
-		$anio = new SemillerosTicAnio();
+		// // echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
+		// $ciclo = new SemillerosTicCiclos();
+		// $anio = new SemillerosTicAnio();
 		
-		$ciclo->load( Yii::$app->request->post() );
+		// $ciclo->load( Yii::$app->request->post() );
 		
-		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
-		if( empty( $ciclo->id ) ){
-			return $this->actionCiclos();
-		}
-		else{
-			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
-			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
-		}
+		// //Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		// if( empty( $ciclo->id ) ){
+			// return $this->actionCiclos();
+		// }
+		// else{
+			// $ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			// $anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
+		// }
+		
+		$anio = Yii::$app->request->get('anio');
+		$esDocente = Yii::$app->request->get('esDocente');
 		
 		$guardar = Yii::$app->request->post('guardar') == 1 ? true: false;
 		
@@ -174,7 +179,7 @@ class EjecucionFaseIiiController extends Controller
 		//Solo hay una condicion por fase iii
 		$condiciones = SemillerosTicCondicionesInstitucionalesFaseIii::findOne([ 
 							'id_fase'	=> $this->id_fase,
-							'id_ciclo'	=> $ciclo->id,
+							'anio'		=> $anio,
 						]);
 		
 		//Si no existe se crea una vacia
@@ -195,7 +200,7 @@ class EjecucionFaseIiiController extends Controller
 			//Consultando las ejecuciones de fase
 			$ejecucionesFases = SemillerosTicEjecucionFaseIii::find()
 									->where( 'id_fase='.$this->id_fase )
-									->where( 'id_ciclo='.$ciclo->id )
+									->where( 'anio='.$anio )
 									->andWhere( 'estado=1' )
 									->all();
 									
@@ -349,13 +354,13 @@ class EjecucionFaseIiiController extends Controller
 						$value['ejecucionFase']->id_fase 					= $this->id_fase;
 						$value['ejecucionFase']->id_datos_ieo_profesional 	= $value['profesionales']->id;
 						$value['ejecucionFase']->estado 					= 1;
-						$value['ejecucionFase']->id_ciclo 					= $ciclo->id;
+						$value['ejecucionFase']->anio 						= $anio;
 						$value['ejecucionFase']->id_datos_sesion			= $value['datosSesion']->id;
 						$value['ejecucionFase']->save( false );
 												
 						$condiciones->estado 	= 1;
 						$condiciones->id_fase 	= $this->id_fase;
-						$condiciones->id_ciclo 	= $ciclo->id;
+						$condiciones->anio 		= $anio;
 						$condiciones->save( false );
 						
 						$guardado = true;
@@ -378,7 +383,7 @@ class EjecucionFaseIiiController extends Controller
 		$dataProfesionales = SemillerosDatosIeo::find()
 								->where( 'id_institucion='.$id_institucion )
 								->andWhere( 'sede='.$id_sede )
-								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'anio='.$anio )
 								->andWhere( 'estado=1' )
 								->all();
 								
@@ -400,7 +405,7 @@ class EjecucionFaseIiiController extends Controller
 		$docentes = [];
 		$dataDocentes = AcuerdosInstitucionales::find()
 								->where( 'id_fase='.$this->id_fase )
-								->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'anio='.$anio )
 								->andWhere( 'estado=1' )
 								->all();
 								
@@ -467,11 +472,12 @@ class EjecucionFaseIiiController extends Controller
             'profesional'	=> $profesional,
             'condiciones'	=> $condiciones,
             'guardado'		=> $guardado,
-            'ciclo'			=> $ciclo,
+            // 'ciclo'			=> $ciclo,
 			'profesionales'	=> $profesionales,
 			'cursos'		=> $cursos,
 			'listaSesiones'	=> $listaSesiones,
 			'anio'			=> $anio,
+			'esDocente'		=> $esDocente,
         ]);
     }
 

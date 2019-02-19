@@ -7,6 +7,9 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseController
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-12
+Descripción: Ya no se pide el ciclo y el año viene por url
+---------------------------------------
 Fecha: 2019-02-04
 Descripción: Se desagregan los campos Profesional A y docentes de cada sesión con respecto a a la conformación de los semilleros
 ---------------------------------------
@@ -150,19 +153,22 @@ class EjecucionFaseIController extends Controller
 	public function actionCreateAll()
 	{
 		// echo "<pre>"; var_dump( Yii::$app->request->post() ); echo "</pre>"; exit();
-		$ciclo = new SemillerosTicCiclos();
-		$anio = new SemillerosTicAnio();
+		// $ciclo = new SemillerosTicCiclos();
+		// $anio = new SemillerosTicAnio();
 		
-		$ciclo->load( Yii::$app->request->post() );
+		// $ciclo->load( Yii::$app->request->post() );
 		
-		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
-		if( empty( $ciclo->id ) ){
-			return $this->actionCiclos();
-		}
-		else{
-			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
-			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
-		}
+		// //Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		// if( empty( $ciclo->id ) ){
+			// return $this->actionCiclos();
+		// }
+		// else{
+			// $ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			// $anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
+		// }
+		
+		$anio = Yii::$app->request->get('anio');
+		$esDocente = Yii::$app->request->get('esDocente');
 	
 		//Indica si se guarda la fase
 		$guardado = false;
@@ -223,7 +229,7 @@ class EjecucionFaseIController extends Controller
 											->select( 'id_datos_sesiones' )
 											->where( 'id_fase='.$this->id_fase )
 											->andWhere( 'id_datos_ieo_profesional='.$datosIeoProfesional->id )
-											->andWhere( 'id_ciclo='.$ciclo->id )
+											->andWhere( 'anio='.$anio )
 											->groupby( 'id_datos_sesiones' )
 											->all();
 											
@@ -245,7 +251,7 @@ class EjecucionFaseIController extends Controller
 					$condicionesInstitucionales = CondicionesInstitucionales::findOne([ 
 														'id_datos_ieo_profesional'	=> $datosIeoProfesional->id,
 														'id_fase'					=> $this->id_fase,
-														'id_ciclo'					=> $ciclo->id,
+														'anio'						=> $anio,
 													]);
 					
 					if( !$condicionesInstitucionales )
@@ -278,7 +284,7 @@ class EjecucionFaseIController extends Controller
 														->where( 'id_datos_ieo_profesional='.$datosIeoProfesional->id )
 														->andWhere( 'id_datos_sesiones='.$datosSesion->id )
 														->andWhere( 'id_fase='.$this->id_fase )
-														->andWhere( 'id_ciclo='.$ciclo->id )
+														->andWhere( 'anio='.$anio )
 														->all();
 
 								foreach( $ejecucionesFase as $key => $ejecFase ){
@@ -506,7 +512,7 @@ class EjecucionFaseIController extends Controller
 											$ejecFase->id_datos_ieo_profesional = $datosIeoProfesional->id;
 										}
 										
-										$ejecFase->id_ciclo = $ciclo->id;
+										$ejecFase->anio = $anio;
 										$ejecFase->save(false);
 										
 										$value['ejecucionesFase'][$key]->docente = explode( ",", $ejecFase->docente );
@@ -518,7 +524,7 @@ class EjecucionFaseIController extends Controller
 						
 						$condicionesInstitucionales->id_datos_ieo_profesional = $datosIeoProfesional->id;
 						$condicionesInstitucionales->id_fase = $this->id_fase;
-						$condicionesInstitucionales->id_ciclo = $ciclo->id;
+						$condicionesInstitucionales->anio = $anio;
 						$condicionesInstitucionales->estado = 1;
 						
 						$condicionesInstitucionales->save(false);
@@ -615,9 +621,10 @@ class EjecucionFaseIController extends Controller
 			'condiciones'			=> $condicionesInstitucionales,
 			'datosModelos'			=> $datosModelos,
 			'guardado'				=> $guardado,
-			'ciclo'					=> $ciclo,
+			// 'ciclo'					=> $ciclo,
             'profesionales'			=> $profesionales,
             'anio'					=> $anio,
+            'esDocente'				=> $esDocente,
         ]);
 	
 	}

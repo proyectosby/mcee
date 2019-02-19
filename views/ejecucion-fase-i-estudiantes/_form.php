@@ -86,7 +86,24 @@ if( $guardado ){
 									], 
 									['class' => 'btn btn-info']) ?>
 				
-</div>	
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel"></h5>
+            </div>
+            <div id="listEstudiantes" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="guardarEstudiantes">Guardar estudiantes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="ejecucion-fase-form">
 
@@ -102,15 +119,32 @@ if( $guardado ){
 		Chosen::className(), [
 			'items' => $docentes,
 			'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-			'multiple' => false,
-			'clientOptions' => [
-				'search_contains' => true,
-				'single_backstroke_delete' => false,
-			],
+            'multiple' => true,
+            'clientOptions' => [
+                'search_contains' => true,
+                'single_backstroke_delete' => false,
+            ],
         'placeholder' => 'Seleccione algunas opciones',
-	])->label( 'Profesional A' ); ?>														
-	
-	<?= $form->field($profesional, 'curso_participantes')->dropDownList( $cursos, ['prompt' => 'Seleccione...'] )->label('Curso de los participantes') ?>
+	])->label( 'Profesional A' ); ?>
+
+    <?= $form->field($profesional, 'curso_participantes')->widget(
+        Chosen::className(), [
+        'items' => $cursos,
+        'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+        'multiple' => true,
+        'clientOptions' => [
+            'search_contains' => true,
+            'single_backstroke_delete' => false,
+        ],
+        'options' => [
+                //'onchange' => 'alert("ok")'
+        ],
+        'placeholder' => 'Curso de los participantes',
+    ])->label( 'Curso de los participantes' ); ?>
+
+    <?= $form->field($profesional, "estudiantes_id")
+        ->hiddenInput()
+        ->label(null,['style'=>'display:none'])?>
 	
 	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
 	

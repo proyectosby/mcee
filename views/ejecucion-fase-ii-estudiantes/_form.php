@@ -24,6 +24,7 @@ Descripción: Se agrega boton de volver a la vista de botones
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use nex\chosen\Chosen;
 
 if( !$sede ){
 	$this->registerJs( "$( cambiarSede ).click()" );
@@ -100,6 +101,23 @@ if( $guardado ){
 				
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel"></h5>
+            </div>
+            <div id="listEstudiantes" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="guardarEstudiantes">Guardar estudiantes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="ejecucion-fase-form">
 
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
@@ -110,12 +128,34 @@ if( $guardado ){
 
     <?= $form->field($profesional, 'id_sede')->dropDownList([ $sede->id => $sede->descripcion ])->label( 'Sede' ) ?>
 
-    <?= $form->field($profesional, 'id_profesional_a')->dropDownList( $docentes, [ 
-																'prompt' => 'Seleccione...', 
-															] )->label('Profesional A.') ?>
-	
-	<?= $form->field($profesional, 'curso_participantes')->dropDownList( $cursos, ['prompt' => 'Seleccione...'] )->label('Curso de los participantes') ?>
-	
+    <?= $form->field($profesional, 'id_profesional_a')->widget(
+        Chosen::className(), [
+        'items' => $docentes,
+        'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+        'multiple' => true,
+        'clientOptions' => [
+            'search_contains' => true,
+            'single_backstroke_delete' => false,
+        ],
+        'placeholder' => 'Seleccione algunas opciones',
+    ])->label( 'Profesional A' ); ?>
+
+    <?= $form->field($profesional, 'curso_participantes')->widget(
+        Chosen::className(), [
+        'items' => $cursos,
+        'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
+        'multiple' => true,
+        'clientOptions' => [
+            'search_contains' => true,
+            'single_backstroke_delete' => false,
+        ],
+        'placeholder' => 'Curso de los participantes',
+    ])->label( 'Curso de los participantes' ); ?>
+
+    <?= $form->field($profesional, "estudiantes_id")
+        ->hiddenInput()
+        ->label(null,['style'=>'display:none'])?>
+
 	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
 	
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>

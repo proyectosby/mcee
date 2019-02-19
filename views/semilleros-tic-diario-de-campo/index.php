@@ -8,6 +8,10 @@ Descripción: Formulario diario de campo
 ---------------------------------------
 Modificación: 
 Fecha: 22-10-2018
+Desarrollador: Edwin Molina Grisales
+Descripción: Se agrega variables enviadas por GET anio y esDocente para regresar al menu principal
+------------------------------------------------------------
+Fecha: 22-10-2018
 Desarrollador: Maria Viviana Rodas
 Descripción: Se agrega boton de volver a la vista de botones
 **********/
@@ -55,6 +59,8 @@ $this->params['breadcrumbs'][] =$nombre;
 		<?= Html::a('Volver', 
 									[
 										'semilleros/index',
+										'anio' 		=> $anio,
+										'esDocente' => $esDocente,
 									], 
 									['class' => 'btn btn-info']) ?>
 				

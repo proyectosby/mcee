@@ -20,7 +20,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['de
 
     <?= $form->field($model, 'nombre_institucion')->textInput(['value' => $institucion]) ?>
     
-    <?= $form->field($model, 'fehca_inicio')->widget(
+    <?= $form->field($model, 'fecha_inicio')->widget(
         DatePicker::className(), [
             // modify template for custom rendering
             'template' => '{addon}{input}',
@@ -41,6 +41,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['de
                 'format'    => 'yyyy-mm-dd',
             ],
     ]);  ?>
+
+     <?= $form->field($model, 'id_comuna')->dropDownList( $comunas, [ 'prompt' => 'Seleccione...',  
+        'onchange'=>'
+            $.post( "index.php?r=ieo/lists&id="+$(this).val(), function( data ) {
+            $( "select#informesemanalejecucionise-id_barrio" ).html( data );
+            });' ] ) ?>
+    <?= $form->field($model, 'id_barrio')->dropDownList(isset($barrio) ? $barrio : [], [ 'prompt' => 'Seleccione...',  ] ) ?> 
 
     <?= $this->context->actionViewFases($model, $form, isset($datos) ? $datos : 0, isset($datos2) ? $datos2 : 0, $_SESSION["idTipoInforme"]);   ?>
 

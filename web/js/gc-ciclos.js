@@ -12,8 +12,12 @@ Descripción: Ciclos
 	
 	//Máximo de semanas permitidas para agregar
 	var maxSemanasPermitidas = 6;
+	var minSemanasPermitidas = $( "[id^=dv-semana]" ).length-1;
 	
-	//
+	//Formato de fechas por defecto
+	$.fn.datepicker.defaults.language 	= "es";
+	$.fn.datepicker.defaults.format 	= "yyyy-mm-dd";
+	
 	var consecutivosSemana = totalSemanas;
 	
 	$( "#btn-guardar" ).addClass( 'disabled' ).attr({disabled:true});
@@ -75,6 +79,8 @@ Descripción: Ciclos
 						autoclose	: true,
 						format		: "yyyy-mm-dd",
 						language	: "es",
+						startDate	: $( "#gcciclos-fecha_inicio" ).datepicker( "getDate" ),
+						endDate		: $( "#gcciclos-fecha_finalizacion" ).datepicker( "getDate" ),
 					});
 				});
 			
@@ -129,11 +135,15 @@ Descripción: Ciclos
 			
 			//Deshabilito el boton agregar en caso de llegar al máximo
 			if( consecutivosSemana == maxSemanasPermitidas ){
-				$( ".btn-add-semanas" ).addClass( 'disabled' );
+				$( ".btn-add-semanas" ).addClass( 'disabled' ).attr({disabled:true});
 			}
 			
+			$( "gcsemanas-"+consecutivosSemana+"-fecha_inicio" ).parent().datepicker(function(){
+				
+			});
+			
 			//Habilito siempre boton eliminar
-			$( ".btn-remove-semanas" ).removeClass( 'disabled' );
+			$( ".btn-remove-semanas" ).removeClass( 'disabled' ).attr({disabled:false});
 			
 			$( "#btn-guardar" ).removeClass( 'disabled' ).attr({disabled:false});
 		}
@@ -144,12 +154,37 @@ Descripción: Ciclos
 		$( "[id^=dv-semana]" ).last().remove();
 		
 		//habilito siempre boton agregar
-		$( ".btn-add-semanas" ).removeClass( 'disabled' );
+		$( ".btn-add-semanas" ).removeClass( 'disabled' ).attr({disabled:false});
 		
 		//Deshabilito solo si no hay nada más que eliminar
-		if( $( "[id^=dv-semana]" ).length == 0 ){
-			$( ".btn-remove-semanas" ).addClass( 'disabled' );
+		if( $( "[id^=dv-semana]" ).length == minSemanasPermitidas ){
+			$( ".btn-remove-semanas" ).addClass( 'disabled' ).attr({disabled:true});
 			
 			$( "#btn-guardar" ).addClass( 'disabled' ).attr({disabled:true});
 		}
+	}).addClass( 'disabled' ).attr({disabled:true});
+
+	
+	//Al seleccionar la fecha la fecha de inicio es igual o mayor a fecha
+	$( "#gcciclos-fecha" ).change(function(){
+		$( "#gcciclos-fecha_inicio" )
+			.parent().datepicker( 'setStartDate', $( this ).parent().datepicker( 'getDate' ) );
+	});
+	
+	$( "#gcciclos-fecha_inicio" ).change(function(){
+		
+		$( "#gcciclos-fecha_finalizacion" )
+			.parent().datepicker( 'setStartDate', $( this ).parent().datepicker( 'getDate' ) );
+			
+		$( "#gcciclos-fecha_cierre" )
+			.parent().datepicker( 'setStartDate', $( this ).parent().datepicker( 'getDate' ) );
+	});
+	
+	$( "#gcciclos-fecha_finalizacion" ).change(function(){
+			
+		$( "#gcciclos-fecha_cierre" )
+			.parent().datepicker( 'setEndDate', $( this ).parent().datepicker( 'getDate' ) );
+		
+		$( "#gcciclos-fecha_maxima_acceso" )
+			.parent().datepicker( 'setEndDate', $( this ).parent().datepicker( 'getDate' ) );
 	});
