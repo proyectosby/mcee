@@ -32,3 +32,4 @@ tests/_support/_generated
 config/*
 vendor/almasaeed2010/adminlte/bower.json
 config/db.php
+config/db.php
