@@ -7,13 +7,15 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\GcMomento1 */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
-$this->registerJsFile("@web/js/momentos.js");
+// $this->registerJsFile("@web/js/momentos.js");
 $this->registerCssFile("@web/css/momentos.css");
+$this->registerJsFile(Yii::$app->request->baseUrl.'/js/momentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+
+//se captura el valor de la semana
+$id_semana= $_GET['id_bitacora'];
+$id_momento1= $_GET['id'];
 ?>
-
-<div class="gc-momento1-form">
-
-    <?php $form = ActiveForm::begin(); ?>
+    
 	
 	<section class="form-box" >
             <div class="container">
@@ -63,26 +65,76 @@ $this->registerCssFile("@web/css/momentos.css");
                     
 			</div>
     </section>	
-
-						<label><h6>Propósitos de acompañamiento</h6></label>
+					<!-- Form Step 1 -->
+					<div class="gc-momento1-form">
+					<?php $form = ActiveForm::begin(); ?>
+					
+                    <fieldset>
+						<h4>Seleccione los propósitos que se trabajarán a través de las actividades planteadas para esta semana</h4>
+						<hr>
+						<label><h4>Propósitos de acompañamiento</h4></label>
 						<h6>
-							<?=Html::checkboxList('list', '', $propositos,['separator' => "<br /><br/><br/>",'id' =>'checkboxMomento1Semana1']) ?>
+							<?=Html::checkboxList('list', '', $propositos,['separator' => "<br />",'id' =>'checkboxMomento1Semana1',
+							'itemOptions' => [
+							'labelOptions' => [
+								'style' => 'font-weight: normal',
+								// 'class' => 'some-custom-class',
+								],
+							],
+							]) ?>
 						</h6>
+						<hr>
+						<label><h4>Planeación por día</h4></label>
+						<div class="row">
+							<div class="col-md-6"><?= $form->field($modelPlaneacionxdia, 'descripcion_plan')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50] )?></div>
+							
+							<div class="col-md-6"><?= $form->field($modelPlaneacionxdia, 'id_dia')->dropDownList($diasPlaneacion,['prompt'=> 'Seleccione...']) ?></div>
+						</div>
+						<div class="form-group">
+							<?= Html::submitButton('Agregar día', ['class' => 'btn btn-primary btn-sm']) ?>
+						</div>
 						
-						<?= $form->field($model, 'id_semana')->textInput() ?>
+						<?= $form->field($model, 'id_semana')->hiddenInput(['value' => $id_semana])->label(false) ?>
 
-						<?= $form->field($model, 'descripcion_proposito')->textInput(['maxlength' => true]) ?>
+						<?= $form->field($model, "estado")->hiddenInput(['value'=> 1])->label(false) ?>
+						
+						
 
-						<?= $form->field($model, 'estado')->textInput() ?>
+						<div class="form-group form-wizard-buttons">
+							<?= Html::submitButton('Guardar y continuar', ['class' => 'btn btn-success']) ?>
+							<button type="button" class="btn btn-next">Next</button>
+						</div>
+					</fieldset>
+				</div>
+					
+					<?php ActiveForm::end(); ?>
+					<!-- Form Step 1 -->
+	
+					<!-- Form Step 2 -->
+                    <fieldset>
+						<div class="gc-resultados-momento1-form">
+
+						<?php $form1 = ActiveForm::begin(); ?>
+
+						<?= $form1->field($modelResultadosMomento1, 'nombre')->textInput(['maxlength' => true]) ?>
 						
-						
+						<?= $form1->field($modelResultadosMomento1, 'descripcion')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50] )?>
+
+						<?= $form1->field($modelResultadosMomento1, 'id_momento1')->hiddenInput(['value' => $id_momento1])->label(false) ?>
+
+						<?= $form1->field($modelResultadosMomento1, 'estado')->hiddenInput(['value'=> 1])->label(false) ?>
 
 						<div class="form-group">
 							<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
 						</div>
-	
+
+						<?php ActiveForm::end(); ?>
+
+						</div>
 					
+					</fieldset>
+					<!-- Form Step 2 -->
 
-    <?php ActiveForm::end(); ?>
+    
 
-</div>
+
