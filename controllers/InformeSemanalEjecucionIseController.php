@@ -90,7 +90,8 @@ class InformeSemanalEjecucionIseController extends Controller
 
         //$query = InformeSemanalEjecucionIse::find()->where(['estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
         
-        $query = InformeSemanalEjecucionIse::find(['ec.informe_semanal_ejecucion_ise.institucion_id', 'ec.actividades_ise.id_sede', 'ec.informe_semanal_ejecucion_ise.fecha_inicio', 'ec.informe_semanal_ejecucion_ise.fecha_fin'])
+        $query = InformeSemanalEjecucionIse::find()
+                                            ->select(['ec.informe_semanal_ejecucion_ise.id as id_ieo', 'ec.informe_semanal_ejecucion_ise.institucion_id', 'ec.actividades_ise.id_sede', 'ec.informe_semanal_ejecucion_ise.fecha_inicio', 'ec.informe_semanal_ejecucion_ise.fecha_fin'])
                                             ->innerJoin('ec.actividades_ise','ec.actividades_ise.informe_semanal_ejecucion_id =  ec.informe_semanal_ejecucion_ise.id' )
                                             ->where(['ec.informe_semanal_ejecucion_ise.estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
 
