@@ -18,11 +18,11 @@ use Yii;
  * @property string $aplicaciones_creadas
  * @property string $sesiones_empleadas
  * @property string $acciones_realizadas
+ * @property string $estudiantes_id
  * @property string $problemas_creacion
  * @property string $competencias_inferidas
  * @property string $observaciones
  * @property string $id_ciclo
- * @property string $estudiantes_id
  */
 class SemillerosTicEjecucionFaseIEstudiantes extends \yii\db\ActiveRecord
 {

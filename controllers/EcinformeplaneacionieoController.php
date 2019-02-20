@@ -586,23 +586,13 @@ class EcinformeplaneacionieoController extends Controller
 		$idSedesComunas = @$sedes->comuna; 
 		$idSedesBarrios = @$sedes->id_barrios_veredas;
 		$codigoDane = @$sedes->codigo_dane;
-		$comunas = @ComunasCorregimientos::findOne($idSedesComunas);
-		if ( @$comunas->descripcion != null)
-			$comunas = $comunas->descripcion;
-		else
-			$comunas ="No asignada";
-
-		$barrios = @BarriosVeredas::findOne($idSedesBarrios);
-		if ( @$barrios->descripcion != null)
-			$barrios = $barrios->descripcion;
-		else
-			$barrios ="No asignado";
 		
+		$comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+        $comunas	 = ArrayHelper::map( $comunas, 'id', 'descripcion' );
 		
         return $this->renderAjax('create', [
 			'model' => $model,           
 			'comunas' => $comunas,
-            'barrios' => $barrios,
 			'sedes'=> $this->obtenerSedes(),
 			'instituciones' => $this->obtenerInstituciones(),
 			'fases' =>$this->obtenerParametros(),
@@ -693,12 +683,8 @@ class EcinformeplaneacionieoController extends Controller
 				$modelPorcentajes->save();
 			}
 			
-			
-			
-			
-		    // echo "<pre>"; print_r($porcentajes); echo "</pre>"; 
+
 			$arrayDatosEcAvances = $post['EcAvances'];
-			
 			
 			//se agrega el id del informe despues de haber sido creado 
 			$connection = Yii::$app->getDb();
@@ -773,13 +759,11 @@ class EcinformeplaneacionieoController extends Controller
 				
 				$datos[$ids] = $valores;
 		}
-	
-		
+			
 		$ecRespuestas = new EcRespuestas();
 		$ecRespuestas = $ecRespuestas->find()->orderby("id")->andWhere("id_informe=$id")->all();
 		$datoRespuesta = ArrayHelper::map($ecRespuestas,'id_estrategia','respuesta');
-		
-		
+
 		$ecInformePlaneacionProyectos= new EcInformePlaneacionProyectos();
 		$ecInformePlaneacionProyectos = $ecInformePlaneacionProyectos->find()->orderby("id")->andWhere("id_informe_planeacion=$id")->all();
 		$datoInformePlaneacionProyectos = ArrayHelper::map($ecInformePlaneacionProyectos,'id_proyecto','horario_de_trabajo_docentes');
@@ -792,23 +776,14 @@ class EcinformeplaneacionieoController extends Controller
 		$idSedesComunas = @$sedes->comuna; 
 		$idSedesBarrios = @$sedes->id_barrios_veredas;
 		$codigoDane = @$sedes->codigo_dane;
-		$comunas = @ComunasCorregimientos::findOne($idSedesComunas);
-		if ( @$comunas->descripcion != null)
-			$comunas = $comunas->descripcion;
-		else
-			$comunas ="No asignada";
-
-		$barrios = @BarriosVeredas::findOne($idSedesBarrios);
-		if ( @$barrios->descripcion != null)
-			$barrios = $barrios->descripcion;
-		else
-			$barrios ="No asignado";
+		
+		$comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+        $comunas	 = ArrayHelper::map( $comunas, 'id', 'descripcion' );
 		
 		$informacoin;
         return $this->renderAjax('update', [
             'model' => $model,
 			'comunas' => $comunas,
-            'barrios' => $barrios,
 			'sedes'=> $this->obtenerSedes(),
 			'instituciones' => $this->obtenerInstituciones(),
 			'fases' =>$this->obtenerParametros(),

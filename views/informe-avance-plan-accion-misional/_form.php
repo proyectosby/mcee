@@ -283,13 +283,12 @@ $( "#porcentajes" ).click(function()
 
 	
 
-	
-	<label> Comuna </label>
-
-	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$comunas?></h6>
-
-	<label> Barrio</label>
-	<h6 style='border: 1px solid #ccc;padding:10px;border-radius:4px;'><?=$barrios?></h6>
+	 <?= $form->field($model, 'comuna')->dropDownList( $comunas, [ 'prompt' => 'Seleccione...',  
+        'onchange'=>'
+            $.post( "index.php?r=ieo/lists&id="+$(this).val(), function( data ) {
+            $( "select#ecinformeplaneacionieo-barrio" ).html( data );
+            });' ] ) ?>
+        <?= $form->field($model, 'barrio')->dropDownList( [], [ 'prompt' => 'Seleccione...',  ] ) ?>             
 	
 	<?= $form->field($model, 'fase')->DropDownList($fases,['prompt'=>'Seleccione...']) ?>
 	
