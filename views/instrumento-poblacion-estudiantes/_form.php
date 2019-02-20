@@ -118,7 +118,7 @@ $this->registerJsFile(
     <div id='dv-fases' class="form-group" style='padding:5px;'>
 	</div>
 	
-    <div class="form-group">
+    <div class="form-group" style='display:none;'>
 		<?= Html::buttonInput('Guardar', [ 'id'=>'bt-guardar', 'class'=>'btn btn-success']) ?>
     </div>
 
