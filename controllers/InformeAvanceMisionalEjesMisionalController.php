@@ -570,23 +570,13 @@ class InformeAvanceMisionalEjesMisionalController extends Controller
 		$idSedesComunas = @$sedes->comuna; 
 		$idSedesBarrios = @$sedes->id_barrios_veredas;
 		$codigoDane = @$sedes->codigo_dane;
-		$comunas = @ComunasCorregimientos::findOne($idSedesComunas);
-		if ( @$comunas->descripcion != null)
-			$comunas = $comunas->descripcion;
-		else
-			$comunas ="No asignada";
-
-		$barrios = @BarriosVeredas::findOne($idSedesBarrios);
-		if ( @$barrios->descripcion != null)
-			$barrios = $barrios->descripcion;
-		else
-			$barrios ="No asignado";
+		$comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+		$comunas  = ArrayHelper::map( $comunas, 'id', 'descripcion' );
 		
 		
         return $this->renderAjax('create', [
 			'model' => $model,           
 			'comunas' => $comunas,
-            'barrios' => $barrios,
 			'sedes'=> $this->obtenerSedes(),
 			'instituciones' => $this->obtenerInstituciones(),
 			'fases' =>$this->obtenerParametros(),
@@ -776,23 +766,12 @@ class InformeAvanceMisionalEjesMisionalController extends Controller
 		$idSedesComunas = @$sedes->comuna; 
 		$idSedesBarrios = @$sedes->id_barrios_veredas;
 		$codigoDane = @$sedes->codigo_dane;
-		$comunas = @ComunasCorregimientos::findOne($idSedesComunas);
-		if ( @$comunas->descripcion != null)
-			$comunas = $comunas->descripcion;
-		else
-			$comunas ="No asignada";
-
-		$barrios = @BarriosVeredas::findOne($idSedesBarrios);
-		if ( @$barrios->descripcion != null)
-			$barrios = $barrios->descripcion;
-		else
-			$barrios ="No asignado";
+		$comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+		$comunas  = ArrayHelper::map( $comunas, 'id', 'descripcion' );
 		
-		$informacoin;
         return $this->renderAjax('update', [
             'model' => $model,
 			'comunas' => $comunas,
-            'barrios' => $barrios,
 			'sedes'=> $this->obtenerSedes(),
 			'instituciones' => $this->obtenerInstituciones(),
 			'fases' =>$this->obtenerParametros(),

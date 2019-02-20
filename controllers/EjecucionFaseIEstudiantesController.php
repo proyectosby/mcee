@@ -149,20 +149,23 @@ class EjecucionFaseIEstudiantesController extends Controller
     public function actionCreate()
     {
 		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
-		$ciclo = new SemillerosTicCiclos();
-		$anio = new SemillerosTicAnio();
+		//$ciclo = new SemillerosTicCiclos();
+		//$anio = new SemillerosTicAnio();
 		
-		$ciclo->load( Yii::$app->request->post() );
+		//$ciclo->load( Yii::$app->request->post() );
 		
 		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
-		if( empty( $ciclo->id ) ){
-			return $this->actionCiclos();
-		}
-		else{
-			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
-			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
-		}
-		
+		//if( empty( $ciclo->id ) ){
+		//	return $this->actionCiclos();
+		//}
+		//else{
+		//	$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+		//	$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
+		//}
+
+        $anio = Yii::$app->request->get('anio');
+        $esDocente = Yii::$app->request->get('esDocente');
+
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
 		
@@ -209,7 +212,6 @@ class EjecucionFaseIEstudiantesController extends Controller
 		 * Si no existe creo modelo nuevo
 		 ************************************************************************************/
 		$postDatosProfesional = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes');
-		
 		$datosIeoProfesional = false;
 		if( $id_institucion && $postDatosProfesional['id_profesional_a'] )
 		{
@@ -225,40 +227,42 @@ class EjecucionFaseIEstudiantesController extends Controller
 			$datosIeoProfesional = new SemillerosTicDatosIeoProfesionalEstudiantes();
 			$datosIeoProfesional->load(Yii::$app->request->post());
 		}
-		
-		
-		if( $datosIeoProfesional )
+
+        if( $datosIeoProfesional )
 		{
 			//Si ya hay un modelo para datos profesional, procedo a consultar las ejecuciones de fase que halla por cada profesional
-			if( $datosIeoProfesional->id )
+			if( $datosIeoProfesional->id_profesional_a )
 			{
 				if( !$guardar )
 				{
+
 					$ejecucionesFases = SemillerosTicEjecucionFaseIEstudiantes::find()
 											->where( 'id_fase='.$this->id_fase )
-											->andWhere( 'id_ciclo='.$ciclo->id )
-											->andWhere( 'id_datos_ieo_profesional_estudiantes='.$datosIeoProfesional->id )
+											//->andWhere( 'id_ciclo='.$ciclo->id )
+											//->andWhere( 'id_datos_ieo_profesional_estudiantes='.(string)$datosIeoProfesional->id )
 											->andWhere( 'estado=1' )
 											->all();
-			
 					foreach( $ejecucionesFases as $key => $ejecucionFase )
 					{
 						$ds = DatosSesiones::findOne( $ejecucionFase->id_datos_sesion );
-						
+
 						$ds->fecha_sesion = Yii::$app->formatter->asDate($ds->fecha_sesion, "php:d-m-Y");
 						
 						$datosModelos[ $ds->id_sesion ][ 'datosSesion' ] 		= $ds;
-                        $ejecucionFase->id_datos_ieo_profesional_estudiantes = explode( ",", $ejecucionFase->id_datos_ieo_profesional_estudiantes );
+                        //$ejecucionFase->id_datos_ieo_profesional_estudiantes = explode( ",", $ejecucionFase->id_datos_ieo_profesional_estudiantes );
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
+
+                        $ejecucionFase->estudiantes_id = Yii::$app->request->post()["SemillerosTicDatosIeoProfesionalEstudiantes"]["estudiantes_id"];
+                        $ejecucionFase->save(false);
 					}
 				}
-				
-				$condiciones = SemillerosTicCondicionesInstitucionalesEstudiantes::findOne([ 
+
+				$condiciones = SemillerosTicCondicionesInstitucionalesEstudiantes::findOne([
 										'id_datos_ieo_profesional_estudiantes' 	=> $datosIeoProfesional->id,
 										'id_fase'								=> $this->id_fase,
-										'id_ciclo'								=> $ciclo->id,
+										//'id_ciclo'								=> $ciclo->id,
 									]);
-				
+
 			}
 			
 			//Si no hay condiciones institucionales significa que no se encontró nada en los registros y se crea uno nuevo
@@ -311,9 +315,8 @@ class EjecucionFaseIEstudiantesController extends Controller
 								else{
 									$ef = new SemillerosTicEjecucionFaseIEstudiantes();
 								}
-								
+
 								$ef->load( $ejecucionFase, '' );
-								
 								$datosModelos[ $sesion_id ][ 'ejecucionesFase' ][] = $ef;
 							}
 						}
@@ -328,7 +331,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 									'id_profesional_a',
 									'curso_participantes',
 								]) && $valido;
-				
+
 				foreach( $datosModelos as $key => $modelo )
 				{
 					if( !empty($modelo[ 'datosSesion' ]->fecha_sesion ) ){
@@ -375,6 +378,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 					$datosIeoProfesional->id_institucion = $id_institucion;
 					$datosIeoProfesional->id_sede = $id_sede;
 					$datosIeoProfesional->estado = 1;
+                    $datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
 					$datosIeoProfesional->save( false );
 					
 					foreach( $datosModelos as $sesion_id => $modelo )
@@ -393,7 +397,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 									$ejecucionFase->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 									$ejecucionFase->id_datos_sesion 						= $modelo[ 'datosSesion' ]->id;
 									$ejecucionFase->id_fase 								= $this->id_fase;
-									$ejecucionFase->id_ciclo 								= $ciclo->id;
+									//$ejecucionFase->id_ciclo 								= $ciclo->id;
 									$ejecucionFase->estado 									= 1;
 									$ejecucionFase->save(false);
 								}
@@ -401,10 +405,10 @@ class EjecucionFaseIEstudiantesController extends Controller
 							}
 						}
 					}
-					
+
 					$condiciones->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 					$condiciones->id_fase 								= $this->id_fase;
-					$condiciones->id_ciclo 								= $ciclo->id;
+					//$condiciones->id_ciclo 								= $ciclo->id;
 					$condiciones->estado 								= 1;
 					$condiciones->save(false);
 					
@@ -537,7 +541,7 @@ class EjecucionFaseIEstudiantesController extends Controller
             'institucion'	=> $institucion,
             'sede' 		 	=> $sede,
             'docentes' 		=> $docentes,
-			'ciclo'			=> $ciclo,
+			//'ciclo'			=> $ciclo,
 			'condiciones'	=> $condiciones,
 			'guardado'		=> $guardado,
 			'cursos'		=> $cursos,

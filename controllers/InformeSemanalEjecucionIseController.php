@@ -87,13 +87,13 @@ class InformeSemanalEjecucionIseController extends Controller
     public function actionIndex($guardado = 0, $idTipoInforme = 0)
     {
         $_SESSION["tipo_informe"] = isset(($_GET['idTipoInforme'])) ? intval($_GET['idTipoInforme']) : 0; 
-
+        $idInstitucion = $_SESSION['instituciones'][0];
         //$query = InformeSemanalEjecucionIse::find()->where(['estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
         
         $query = InformeSemanalEjecucionIse::find()
                                             ->select(['ec.informe_semanal_ejecucion_ise.id as id_ieo', 'ec.informe_semanal_ejecucion_ise.institucion_id', 'ec.actividades_ise.id_sede', 'ec.informe_semanal_ejecucion_ise.fecha_inicio', 'ec.informe_semanal_ejecucion_ise.fecha_fin'])
                                             ->innerJoin('ec.actividades_ise','ec.actividades_ise.informe_semanal_ejecucion_id =  ec.informe_semanal_ejecucion_ise.id' )
-                                            ->where(['ec.informe_semanal_ejecucion_ise.estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"]]);
+                                            ->where(['ec.informe_semanal_ejecucion_ise.estado' => 1, "id_tipo_informe" =>$_SESSION["tipo_informe"], 'ec.informe_semanal_ejecucion_ise.institucion_id' => $idInstitucion ]);
 
        
         $dataProvider = new ActiveDataProvider([
@@ -165,6 +165,8 @@ class InformeSemanalEjecucionIseController extends Controller
                             $model2->actividad_1_porcentaje = explode("%",$model2->actividad_1_porcentaje)[0];
                             $model2->actividad_2_porcentaje = explode("%",$model2->actividad_2_porcentaje)[0];
                             $model2->actividad_3_porcentaje = explode("%",$model2->actividad_3_porcentaje)[0];                            
+                            $model2->avance_sede = explode("%",$model2->avance_sede)[0];                            
+                            $model2->avance_ieo = explode("%",$model2->avance_ieo)[0];                            
 
                             $model2->informe_semanal_ejecucion_id = $id_informe;
                             $model2->nombre= "";

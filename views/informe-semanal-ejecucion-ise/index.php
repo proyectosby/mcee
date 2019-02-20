@@ -28,6 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/documentos.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
+
+
 $_SESSION["idTipoInforme"] = isset($_GET['idTipoInforme']) ?  $_GET['idTipoInforme'] : 0; 
 
 

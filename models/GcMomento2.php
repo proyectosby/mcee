@@ -16,6 +16,7 @@ use Yii;
  * @property int $otro
  * @property string $justificacion_no_visita
  * @property string $estado
+ * @property string $'descripcion_visita'
  */
 class GcMomento2 extends \yii\db\ActiveRecord
 {
@@ -33,11 +34,11 @@ class GcMomento2 extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_semana', 'estudiantes', 'docentes', 'directivos', 'otro', 'estado'], 'required'],
-            [['id_semana', 'estudiantes', 'docentes', 'directivos', 'otro', 'estado'], 'default', 'value' => null],
+            [['id_semana', 'estudiantes', 'docentes', 'directivos', 'otro', 'estado', 'descripcion_visita'], 'required'],
+            [['id_semana', 'estudiantes', 'docentes', 'directivos', 'otro', 'estado','descripcion_visita'], 'default', 'value' => null],
             [['id_semana', 'estudiantes', 'docentes', 'directivos', 'otro', 'estado'], 'integer'],
             [['realizo_visita'], 'boolean'],
-            [['justificacion_no_visita'], 'string'],
+            [['justificacion_no_visita','descripcion_visita'], 'string'],
             [['id_semana'], 'exist', 'skipOnError' => true, 'targetClass' => GcSemanas::className(), 'targetAttribute' => ['id_semana' => 'id']],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
@@ -51,13 +52,14 @@ class GcMomento2 extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_semana' => 'Id Semana',
-            'realizo_visita' => 'Realizo Visita',
+            'realizo_visita' => 'Realizó visita de acompañamiento.',
             'estudiantes' => 'Estudiantes',
             'docentes' => 'Docentes',
             'directivos' => 'Directivos',
             'otro' => 'Otro',
             'justificacion_no_visita' => 'Justificacion No Visita',
             'estado' => 'Estado',
+            'descripcion_visita' => 'Descripción visita',
         ];
     }
 }
