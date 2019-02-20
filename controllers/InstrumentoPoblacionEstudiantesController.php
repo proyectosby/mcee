@@ -36,6 +36,9 @@ use app\models\Paralelos;
 use app\models\Generos;
 use app\models\TiposIdentificaciones;
 use app\models\Jornadas;
+use app\models\AcuerdosInstitucionalesEstudiantes;
+use app\models\SemillerosTicCiclos;
+use app\models\SemillerosTicAnio;
 
 
 /**
@@ -104,24 +107,72 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 	
 	function actionViewFases(){
 		
-		$institucion 	= Yii::$app->request->post()['institucion'];
-		$sede 			= Yii::$app->request->post()['sede'];
-		$estudiante		= Yii::$app->request->post()['estudiante'];
+		// {"10-1":["10"],"4-1":["3","9"]}
 		
-		$idPE = InstrumentoPoblacionEstudiantes::findOne([
-					'id_institucion' 		=> $institucion,
-					'id_sede' 		 		=> $sede,
-					'id_persona_estudiante' => $estudiante,
-				]);
-				
+		$datos = [];
+
+		// $acuerdos = AcuerdosInstitucionalesEstudiantes::find()
+							// ->where( 'estado=1' )
+							// // ->andWhere( "'".$docente."' = ANY(string_to_array(id_docente,','))" )
+							// ->all();
+		
+		// foreach( $acuerdos as $k => $v ){
+			// $f = Fases::findOne( $v->id_fase );
+			// $ciclos = SemillerosTicCiclos::findOne( $v->id_ciclo );
+			// $anio = SemillerosTicAnio::findOne( $ciclos->id_anio );
+			// $datos['Creación'][ $f->descripcion ][] = $anio->descripcion;
+			// $datos['Fase'][ $f->descripcion ][] = $anio->descripcion;
+		// }
+		
+		
 		$fases	= Fases::find()
 					->where('estado=1')
 					->orderby( 'descripcion' )
 					->all();
+					
+					
+		foreach( $fases as $k => $f ){
+			
+			$fin = rand( 1,3);
+			$aniosrands = [];
+			for( $i = 0; $i < $fin; $i++){
+				$aniosrands[] = 2016+rand(0,3);
+			}
+			$aniosrands = array_unique($aniosrands);
+			sort($aniosrands);
+			$datos['Creación'][ $f->descripcion ][] = implode( " - ", $aniosrands );
+			
+			$fin = rand( 1,3 );
+			$aniosrands = [];
+			for( $i = 0; $i < $fin; $i++){
+				$aniosrands[] = 2016+rand(0,3);
+			}
+			$aniosrands = array_unique($aniosrands);
+			sort($aniosrands);
+			$datos['Fase'][ $f->descripcion ][] = implode( " - ", $aniosrands );
+		}
+		
+		
+		
+		// $institucion 	= Yii::$app->request->post()['institucion'];
+		// $sede 			= Yii::$app->request->post()['sede'];
+		// $estudiante		= Yii::$app->request->post()['estudiante'];
+		
+		// $idPE = InstrumentoPoblacionEstudiantes::findOne([
+					// 'id_institucion' 		=> $institucion,
+					// 'id_sede' 		 		=> $sede,
+					// 'id_persona_estudiante' => $estudiante,
+				// ]);
+				
+		// $fases	= Fases::find()
+					// ->where('estado=1')
+					// ->orderby( 'descripcion' )
+					// ->all();
 		
 		return $this->renderPartial('fases', [
-			'idPE' 	=> $idPE,
-			'fases' => $fases,
+			// 'idPE' 	=> $idPE,
+			// 'fases' => $fases,
+			'datos' => $datos,
         ]);
 		
 	}

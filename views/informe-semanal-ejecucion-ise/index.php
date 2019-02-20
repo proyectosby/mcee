@@ -34,6 +34,7 @@ $_SESSION["idTipoInforme"] = isset($_GET['idTipoInforme']) ?  $_GET['idTipoInfor
 if( isset($guardado) && $guardado == 1 ){
 	echo Html::hiddenInput( 'guardadoFormulario', '1' );
 }
+
 ?> 
 
 	
@@ -66,7 +67,7 @@ if( isset($guardado) && $guardado == 1 ){
 		Modal::end();
 
 	?>
-
+	
     <?= DataTables::widget([
         'dataProvider' => $dataProvider,
 		'clientOptions' => [
@@ -115,10 +116,10 @@ if( isset($guardado) && $guardado == 1 ){
 				}, //para buscar por el nombre
 			],
 			[
-			'attribute'=>'sede_id',
+			'attribute'=>'id_sede',
 			'value' => function( $model )
 				{
-					$nombreSedes = Sedes::findOne($model->sede_id);
+					$nombreSedes = Sedes::findOne($model->id_sede);
 					return $nombreSedes ? $nombreSedes->descripcion : '';  
 				}, //para buscar por el nombre
 			],
@@ -130,13 +131,13 @@ if( isset($guardado) && $guardado == 1 ){
 			'template'=>'{view}{update}{delete}',
 				'buttons' => [
 				'view' => function ($url, $model) {
-					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
+					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url."".$model->id_ieo.'" ></span>', $url."".$model->id_ieo, [
 								'title' => Yii::t('app', 'lead-view'),
 					]);
 				},
 
 				'update' => function ($url, $model) {
-					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
+					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url."".$model->id_ieo.'"></span>', $url."".$model->id_ieo, [
 								'title' => Yii::t('app', 'lead-update'),
 					]);
 				}

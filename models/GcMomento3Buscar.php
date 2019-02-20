@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\GcMomento1;
+use app\models\GcMomento3;
 
 /**
- * GcMomento1Buscar represents the model behind the search form of `app\models\GcMomento1`.
+ * GcMomento3Buscar represents the model behind the search form of `app\models\GcMomento3`.
  */
-class GcMomento1Buscar extends GcMomento1
+class GcMomento3Buscar extends GcMomento3
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class GcMomento1Buscar extends GcMomento1
     public function rules()
     {
         return [
-            [['id', 'id_semana', 'estado'], 'integer'],
-            // [['descripcion_proposito'], 'safe'],
+            [['id', 'id_semana', 'id_proposito_momento1', 'nivel_avance', 'estado'], 'integer'],
+            [['justificacion_avance', 'observaciones_prof'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class GcMomento1Buscar extends GcMomento1
      */
     public function search($params)
     {
-        $query = GcMomento1::find();
+        $query = GcMomento3::find();
 
         // add conditions that should always apply here
 
@@ -61,10 +61,13 @@ class GcMomento1Buscar extends GcMomento1
         $query->andFilterWhere([
             'id' => $this->id,
             'id_semana' => $this->id_semana,
+            'id_proposito_momento1' => $this->id_proposito_momento1,
+            'nivel_avance' => $this->nivel_avance,
             'estado' => $this->estado,
         ]);
 
-        // $query->andFilterWhere(['ilike', 'descripcion_proposito', $this->descripcion_proposito]);
+        $query->andFilterWhere(['ilike', 'justificacion_avance', $this->justificacion_avance])
+            ->andFilterWhere(['ilike', 'observaciones_prof', $this->observaciones_prof]);
 
         return $dataProvider;
     }

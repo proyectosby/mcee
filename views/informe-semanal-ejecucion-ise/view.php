@@ -40,14 +40,16 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                     return $nombreInstituciones ? $nombreInstituciones->descripcion : '';  
                 }, //para buscar por el nombre
             ],
-            [
+           /* [
             'attribute'=>'sede_id',
             'value' => function( $model )
                 {
                     $nombreSedes = Sedes::findOne($model->sede_id);
                     return $nombreSedes ? $nombreSedes->descripcion : '';  
                 }, //para buscar por el nombre
-            ],
+            ],*/
+            'fecha_inicio',
+            'fecha_fin',
             //'proyecto_id',
             //'estado',
         ],

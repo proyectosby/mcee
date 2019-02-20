@@ -21,6 +21,8 @@ use Yii;
 class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
 {
     public $nombre_institucion;
+    public $id_sede;
+    public $id_ieo;
     /**
      * @inheritdoc
      */
