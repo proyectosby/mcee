@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\GcMomento3 */
 
-$this->title = 'Agregar Gc Momento3';
-$this->params['breadcrumbs'][] = ['label' => 'Gc Momento3s', 'url' => ['index']];
+$this->title = 'Momento 3';
+$this->params['breadcrumbs'][] = ['label' => 'Momento 3', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
 <div class="gc-momento3-create">
