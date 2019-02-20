@@ -9,6 +9,7 @@ use yii\helpers\Html;
 $this->title = '5 y 6. Informe Semanal Ejecución - Informe de cierre de fase';
 $this->params['breadcrumbs'][] = ['label' => '5 y 6. Informe Semanal Ejecución - Informe de cierre de fase', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
+
 ?>
 <div class="informe-semanal-ejecucion-ise-create">
 
