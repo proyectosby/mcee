@@ -92,9 +92,9 @@ class SemillerosController extends Controller
 		$anios	= [];
         $anios[ 0 ] = '2017';
 		
-		/*for( $i = $anioInicial->descripcion; $i <= date("Y")+1; $i++ ){
+		for( $i = 2016; $i <= date("Y")+1; $i++ ){
 			$anios[ $i ] = $i;
-		}*/
+		}
 		
 		//Se busca el año inicial desde donde el usuario puede seleccionar
 		$dataTiposSemilleros = Parametro::find()
@@ -107,7 +107,7 @@ class SemillerosController extends Controller
 								->all();
 		
 		$tiposSemilleros	= [];
-        $tiposSemilleros[0] = 'estudiatens';
+        $tiposSemilleros[0] = 'estudiantes';
         $tiposSemilleros[1] = 'docentes';
 		
 		/*$i = 1;

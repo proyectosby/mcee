@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = "Agregar";
     <?= $this->render('_form', [
 	    'model' => $model,
 		'comunas' => $comunas,
-		'barrios' => $barrios,
 		'sedes'=> $sedes,
 		'instituciones' => $instituciones,
 		'fases' => $fases, 
