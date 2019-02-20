@@ -30,7 +30,7 @@ $id_momento1= 2;
 						<hr>
 						<div class="row">
 							<div class="col-md-4">
-								<label><h4>Formulario de una visita</h4></label>
+								<label><h4>Formulario de una visita</h4></label>								
 
 								<?= $form->field($model, 'id_semana')->hiddenInput(['value' => $id_semana])->label(false) ?>
 
@@ -38,20 +38,33 @@ $id_momento1= 2;
 								
 								<?= $form->field($model, 'descripcion_visita')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50 ,'placeholder' => 'Descripción de las visitas'] )->label('Descripción de las visitas')?>
 
-								<?= $form->field($model, 'estudiantes')->textInput(['type' => 'number','value'=> 0]) ?>
+								
+									<div class="col-md-8">
+										<label><h5>Atenciones realizadas</h5></label>
+									</div>
+								
+								<div class="col-xs-6"><?= $form->field($model, 'estudiantes')->textInput(['type' => 'number','value'=> 0]) ?></div>
 
-								<?= $form->field($model, 'docentes')->textInput(['type' => 'number','value'=> 0]) ?>
+								<div class="col-xs-6"><?= $form->field($model, 'docentes')->textInput(['type' => 'number','value'=> 0]) ?></div>
 
-								<?= $form->field($model, 'directivos')->textInput(['type' => 'number','value'=> 0]) ?>
+								<div class="col-xs-6"><?= $form->field($model, 'directivos')->textInput(['type' => 'number','value'=> 0]) ?></div>
 
-								<?= $form->field($model, 'otro')->textInput(['type' => 'number','value'=> 0]) ?>
+								<div class="col-xs-6"><?= $form->field($model, 'otro')->textInput(['type' => 'number','value'=> 0]) ?></div>
 
-								<?= $form->field($model, 'justificacion_no_visita')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50 ,'placeholder' => 'Justificación no visita'] )->label('Justificación no visita')?>
+								<div class="col-md-8">
+										<label><h5>Evidencia del acompañamiento ( .jpg, .jpeg o .png ).</h5></label>
+									</div>
+								
+								<div class="col-xs-8"><?php echo $form->field($modelEvidenciasMomento2, 'url[]')->fileInput(['multiple'=>'multiple'])->label('Dia 1') ?></div>
+	
+								
+								
+								<div class="col-md-8"><?= $form->field($model, 'justificacion_no_visita')->textArea(['maxlength' => 300, 'rows' => 6, 'cols' => 50 ,'placeholder' => 'Justificación no visita'] )->label('Justificación no visita')?></div>
 
 								<?= $form->field($model, "estado")->hiddenInput(['value'=> 1])->label(false) ?>
 
 								<div class="form-group form-wizard-buttons">
-										<?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>	
+										<?= Html::submitButton('Guardar visita', ['class' => 'btn btn-success']) ?>	
 								</div>
 							</div>
 							
@@ -64,6 +77,12 @@ $id_momento1= 2;
 										   $dataProvider = $searchModel->search(Yii::$app->request->queryParams); 
 									?>
 									<div class="col-md-8">
+									
+									<div class="alert alert-warning text-center" role="alert">
+										<h4 class="alert-heading">Tener en cuenta</h4>
+										<p>Al finalizar la semana, debe entregar en físico, las asistencias correspondientes a las <b>visitas</b> realizadas
+									durante la semana, a su profesional de acompañamiento.</p>
+									</div>
 									<h4>Listado de visitas registradas</h4>
 
 										<?= DataTables::widget([
@@ -104,13 +123,13 @@ $id_momento1= 2;
 											   'columns' => [
 												['class' => 'yii\grid\SerialColumn'],
 
-												'id',
-												'id_semana',
+												// 'id',
+												// 'id_semana',
 												'realizo_visita:boolean',
 												'estudiantes',
 												'docentes',
-												//'directivos',
-												//'otro',
+												'directivos',
+												'otro',
 												//'justificacion_no_visita',
 												//'estado',
 
