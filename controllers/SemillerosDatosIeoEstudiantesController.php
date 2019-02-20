@@ -168,7 +168,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 		
 		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
 		if( empty( $ciclo->id ) ){
-			return $this->actionCiclos();
+			//return $this->actionCiclos();
 		}
 		else{
 			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
@@ -222,7 +222,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 			{ 
 				$acuerdos = AcuerdosInstitucionalesEstudiantes::find()
 								->where( 'estado=1' )
-								->andWhere( 'id_ciclo='.$ciclo->id )
+								//->andWhere( 'id_ciclo='.$ciclo->id )
 								->andWhere( 'id_semilleros_datos_estudiantes='.$datosIEO->id )
 								->all();
 				
@@ -294,7 +294,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 			{
 				$datosIEO->estado 			= 1;
 				$datosIEO->id_sede			= $id_sede;
-				$datosIEO->id_ciclo			= $ciclo->id;
+				//$datosIEO->id_ciclo			= $ciclo->id;
 				$datosIEO->profecional_a	= implode( ',', $datosIEO->profecional_a );
                 $datosIEO->docente_aliado	= implode( ',', $datosIEO->docente_aliado );
 				$datosIEO->save( false );
@@ -378,7 +378,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 								->innerJoin( 'semilleros_tic.acuerdos_institucionales ai', 'ai.id_semilleros_datos_ieo=sdi.id' )
 								->where( 'sdi.estado=1' )
 								->where( 'ai.estado=1' )
-								->where( 'ai.id_ciclo='.$ciclo->id )
+								//->where( 'ai.id_ciclo='.$ciclo->id )
 								->all();
 		
 		foreach( $dataProfesionales as $key => $value ){
@@ -417,7 +417,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
             'modelos'			=> $modelos,
             'profesionales'		=> $profesionales,
             'docentes_aliados'	=> $docentes_aliados,
-            'ciclo'				=> $ciclo,
+            //'ciclo'				=> $ciclo,
             'guardado'			=> $guardado,
             'cursos'			=> $cursos,
 			'anio'				=> $anio,

@@ -206,7 +206,7 @@
         // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
         if( $( this ).val() != '' )
         {
-            $( "#guardar" ).val(0)
+            $( "#guardar" ).val(0);
             this.form.submit();
         }
     });
@@ -215,6 +215,7 @@
         // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
         if( $( this ).val() != '' )
         {
+            $( "#guardar" ).val(0);
             var  selectChange = $(this);
             var gradoEstudiantes = $( this ).val();
             var data = {
@@ -279,7 +280,7 @@
         }
 
         $('#guardarEstudiantes').click(function () {
-            this.form.submit();
+            $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).submit()
         });
     }
 
