@@ -24,48 +24,106 @@
 
 </style>
 
-<table>
+
+
+
+<table style='display:;'>
+
 	<thead>
+	
 		<tr>
-			<th colspan=2 style='font-size:14pt;'>Fases en que ha participado</th>
-			<th style='font-size:14pt;'>Años en los que participó</th>
+			<th rowspan=2>Docente</th>
+			<th rowspan=2>Identificación</th>
+			<th colspan=3> Creación Semilleros TIC </th>
+			<?php foreach( $fases as $key => $fase ) : ?>	
+				<th rowspan=2><?= $fase['descripcion'] ?></th>
+			<?php endforeach; ?>
+		</tr>
+		
+		<tr>
+			<?php foreach( $fases as $key => $fase ) : ?>	
+				<th><?= $fase['descripcion'] ?></th>
+			<?php endforeach; ?>
 		</tr>
 	</thead>
+	
 	<tbody>
-		<?php 
-			foreach( $datos as $key => $tipo ) : 
-				$style = 'display:;'
-		?>
-		
-			<?php foreach( $tipo as $fase => $anio ) : ?>
+	
+		<?php foreach( $datos as $key => $docenteDatos ) : ?>
 			
-				<tr>
-					<td rowspan=<?=count( $datos[ $key ] )?> style='<?=$style?>'><?=$key?></td>
-					<td><?=$fase?></td>
-					<td><?= implode( " - ", $anio ) ?></td>
-				</tr>
+			<tr rowspan=2>
 			
-			<?php 
-				$style = 'display:none;';
-				endforeach; 
-			?>
-		
+				<?php foreach( $docenteDatos as $key => $docente ) : ?>
+			
+						<td><?= $docente['info']['nombre'] ?></td>
+						
+						<td><?= "CC ".$docente['info']['numeroIdentificacion'] ?></td>
+						
+						<?php foreach( $fases as $key => $fase ) : ?>	
+							<td><?= !empty( $docente['Creación'][ $fase->id ] ) ? implode( " - ", $docente['Creación'][ $fase->id ] ) : '' ?></td>
+						<?php endforeach; ?>
+					
+
+						<?php foreach( $fases as $key => $fase ) : ?>	
+							<td><?= !empty( $docente['Fases'][ $fase->id ] ) ? implode( " - ", $docente['Fases'][ $fase->id ] ): '' ?></td>
+						<?php endforeach; ?>
+			
+				<?php endforeach; ?>
+				
+			</tr>
+			
 		<?php endforeach; ?>
 	
 	</tbody>
 
-	</table>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <?php
+/*
+// <table style='display:none;'>
+	// <thead>
+		// <tr>
+			// <th colspan=2 style='font-size:14pt;'>Fases en que ha participado</th>
+			// <th style='font-size:14pt;'>Años en los que participó</th>
+		// </tr>
+	// </thead>
+	// <tbody>
+		// <?php 
+			// foreach( $datos as $key => $tipo ) : 
+				// $style = 'display:;'
+		// ?>
+		
+			// <?php foreach( $tipo as $fase => $anio ) : ?>
+			
+				// <tr>
+					// <td rowspan=<?=count( $datos[ $key ] )?> style='<?=$style?>'><?=$key?></td>
+					// <td><?=$fase?></td>
+					// <td><?= implode( " - ", $anio ) ?></td>
+				// </tr>
+			
+			// <?php 
+				// $style = 'display:none;';
+				// endforeach; 
+			// ?>
+		
+		// <?php endforeach; ?>
+	
+	// </tbody>
 
-
-
-
-
-
-
-
-
-
+	// </table>*/
 
 
 
