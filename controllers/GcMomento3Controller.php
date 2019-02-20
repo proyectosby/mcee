@@ -81,7 +81,7 @@ class GcMomento3Controller extends Controller
             return $this->redirect(['index']);
         }
 
-        return $this->renderAjax('create', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
