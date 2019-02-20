@@ -38,7 +38,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                 'fecha_cierre',
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'template' => '{gc-momento1/create},{gc-momento2/create},{view3}',
+                    'template' => '{gc-momento1/create},{gc-momento2/create},{gc-momento3/create}',
                     'buttons' => [
                         'gc-momento1/create' => function ($url, $model) {
                             return Html::a( '<span class="btn btn-xs btn-primary m-t-5">Momento 1</span>', $url, [
@@ -48,7 +48,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                             return Html::a( '<span class="btn btn-xs btn-primary m-t-5">Momento 2</span>', $url, [
                             ]);
                         },
-                        'view3' => function ($url, $model) {
+                        'gc-momento3/create' => function ($url, $model) {
                             return Html::a( '<span class="btn btn-xs btn-primary m-t-5">Momento 3</span>', $url, [
                             ]);
                         },

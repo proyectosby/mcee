@@ -35,7 +35,7 @@ class EcInformePlaneacionIeo extends \yii\db\ActiveRecord
         return [
             [['id_institucion', 'id_sede', 'codigo_dane'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'codigo_dane'], 'integer'],
-            [['id_institucion', 'fase','zona_educativa','fecha_reporte'], 'required'],
+            [['id_institucion', 'fase','zona_educativa','fecha_reporte','comuna'], 'required'],
             [['zona_educativa', 'fase'], 'string'],
             [['fecha_reporte'], 'safe'],
             [['id_sede','id_tipo_informe'], 'required'],
@@ -58,6 +58,8 @@ class EcInformePlaneacionIeo extends \yii\db\ActiveRecord
             'zona_educativa' => 'Zona Educativa',
             'fase' => 'Fase',
             'fecha_reporte' => 'Fecha Reporte',
+            'comuna' => 'comuna',
+            'barrio' => 'barrio',
         ];
     }
 }
