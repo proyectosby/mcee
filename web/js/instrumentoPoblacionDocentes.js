@@ -242,6 +242,8 @@ $( document ).ready(function(){
 							
 							calcularTotal();
 						});
+						
+						$( "#tbInfo" ).dataTable();
 
 					},
 				);
@@ -354,6 +356,8 @@ $( document ).ready(function(){
 					
 					calcularTotal();
 				});
+				
+				$( "#tbInfo" ).dataTable();
 
 			},
 		);
@@ -505,6 +509,8 @@ $( document ).ready(function(){
 						
 						calcularTotal();
 					});
+					
+					$( "#tbInfo" ).dataTable();
 
 				},
 			);

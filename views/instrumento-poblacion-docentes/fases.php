@@ -27,7 +27,7 @@
 
 
 
-<table style='display:;'>
+<table id='tbInfo'>
 
 	<thead>
 	
