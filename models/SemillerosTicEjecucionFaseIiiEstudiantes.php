@@ -31,6 +31,8 @@ use Yii;
  * @property int $numero_asignaturas
  * @property string $asignaturas
  * @property string $observaciones
+ * @property string $estudiantes_id
+ *
  */
 class SemillerosTicEjecucionFaseIiiEstudiantes extends \yii\db\ActiveRecord
 {

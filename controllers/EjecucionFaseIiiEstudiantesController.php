@@ -252,7 +252,9 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 										'id_fase'								=> $this->id_fase,
 										//'id_ciclo'								=> $ciclo->id,
 									]);
-				
+
+                $ejecucionFase->estudiantes_id = Yii::$app->request->post()["SemillerosTicDatosIeoProfesionalEstudiantes"]["estudiantes_id"];
+                $ejecucionFase->save(false);
 			}
 			
 			//Si no hay condiciones institucionales significa que no se encontró nada en los registros y se crea uno nuevo

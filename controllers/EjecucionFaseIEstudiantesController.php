@@ -375,9 +375,12 @@ class EjecucionFaseIEstudiantesController extends Controller
 				
 				if( $valido )
 				{
+                    $datosIeoProfesional->curso_participantes = explode(",", $datosIeoProfesional->curso_participantes);
+
 					$datosIeoProfesional->id_institucion = $id_institucion;
 					$datosIeoProfesional->id_sede = $id_sede;
 					$datosIeoProfesional->estado = 1;
+
                     $datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
 					$datosIeoProfesional->save( false );
 					
