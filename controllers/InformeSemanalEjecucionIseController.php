@@ -165,6 +165,8 @@ class InformeSemanalEjecucionIseController extends Controller
                             $model2->actividad_1_porcentaje = explode("%",$model2->actividad_1_porcentaje)[0];
                             $model2->actividad_2_porcentaje = explode("%",$model2->actividad_2_porcentaje)[0];
                             $model2->actividad_3_porcentaje = explode("%",$model2->actividad_3_porcentaje)[0];                            
+                            $model2->avance_sede = explode("%",$model2->avance_sede)[0];                            
+                            $model2->avance_ieo = explode("%",$model2->avance_ieo)[0];                            
 
                             $model2->informe_semanal_ejecucion_id = $id_informe;
                             $model2->nombre= "";

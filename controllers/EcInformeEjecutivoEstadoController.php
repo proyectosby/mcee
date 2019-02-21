@@ -56,7 +56,7 @@ class EcInformeEjecutivoEstadoController extends Controller
     {
         $searchModel = new EcInformeEjecutivoEstadoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1" ); 
+		$dataProvider->query->andWhere( 'id_tipo_informe='.Yii::$app->request->get('idTipoInforme') )->andWhere( 'estado=1' );
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -162,7 +162,7 @@ class EcInformeEjecutivoEstadoController extends Controller
         $model = new EcInformeEjecutivoEstado();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index','guardado' => 1]);
+			return $this->redirect(['index','guardado' => 1,'idTipoInforme' => $model->id_tipo_informe ]);
         }
 
         return $this->renderAjax('create', [
@@ -187,7 +187,7 @@ class EcInformeEjecutivoEstadoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index','guardado' => 1]);
+            return $this->redirect(['index','guardado' => 1,'idTipoInforme' => $model->id_tipo_informe]);
         }
 
         return $this->renderAjax('update', [

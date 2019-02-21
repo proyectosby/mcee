@@ -31,7 +31,8 @@ class EcAvances extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado_actual', 'logros', 'retos', 'argumentos'], 'string','max' => 300],
+            [['estado_actual', 'retos', 'argumentos'], 'string','max' => 300],
+            [['logros'], 'string','max' => 500],
             [['estado_actual', 'logros', 'retos', 'argumentos'], 'required'],
             [['id_acciones'], 'default', 'value' => null],
             [['id_acciones'], 'integer'],
