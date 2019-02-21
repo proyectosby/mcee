@@ -132,6 +132,16 @@ if( isset($guardado) && $guardado == 1 ){
 			'class' => 'yii\grid\ActionColumn',
 			'template'=>'{view}{update}{delete}',
 				'buttons' => [
+					'delete' => function($url, $model){
+						return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id_ieo], [
+							'class' => '',
+							'data' => [
+								'confirm' => '¿Está seguro de eliminar este elemento?',
+								'method' => 'post',
+							],
+						]);
+					},
+					
 				'view' => function ($url, $model) {
 					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url."".$model->id_ieo.'" ></span>', $url."".$model->id_ieo, [
 								'title' => Yii::t('app', 'lead-view'),
