@@ -13,6 +13,11 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-docentes.js',['depend
 //$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
+<?php 
+//triger de la comuna cuando se este actualizando
+if( strpos($_GET['r'], 'update') > -1)
+	echo "<script> $('#ecinformeplaneacionieo-comuna').trigger('change'); </script>";
+?>
 
 <div class="informe-semanal-ejecucion-ise-form">
 

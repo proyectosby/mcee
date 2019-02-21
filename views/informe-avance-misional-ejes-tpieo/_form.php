@@ -24,6 +24,13 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecInformePlaneacionIeo.js
 
 $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $model->id_tipo_informe;
 ?>
+
+<?php 
+//triger de la comuna cuando se este actualizando
+if( strpos($_GET['r'], 'update') > -1)
+	echo "<script> $('#ecinformeplaneacionieo-comuna').trigger('change'); </script>";
+?>
+
   <?=  Html::button('Porcentajes de avance',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'porcentajes']) ?>
 <br>
 <br>
