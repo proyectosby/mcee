@@ -18,7 +18,13 @@ use nex\chosen\Chosen;
 $this->registerJsFile("https://unpkg.com/sweetalert/dist/sweetalert.min.js");
 $this->registerJsFile(
     '@web/js/instrumentoPoblacionEstudiantes.js',
-    ['depends' => [\yii\web\JqueryAsset::className()]]
+    [
+		'depends' => [
+						\yii\web\JqueryAsset::className(),
+						\fedemotta\datatables\DataTablesAsset::className(),
+						\fedemotta\datatables\DataTablesTableToolsAsset::className(),
+					]
+	]
 );
 
 /* @var $this yii\web\View */

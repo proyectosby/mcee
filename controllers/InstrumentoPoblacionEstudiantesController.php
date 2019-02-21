@@ -40,6 +40,12 @@ use app\models\AcuerdosInstitucionalesEstudiantes;
 use app\models\SemillerosTicCiclos;
 use app\models\SemillerosTicAnio;
 
+use app\models\SemillerosTicDatosIeoProfesionalEstudiantes;
+use app\models\SemillerosTicEjecucionFaseIEstudiantes;
+use app\models\SemillerosTicEjecucionFaseIiEstudiantes;
+use app\models\SemillerosTicEjecucionFaseIiiEstudiantes;
+
+
 
 /**
  * InstrumentoPoblacionEstudiantesController implements the CRUD actions for InstrumentoPoblacionEstudiantes model.
@@ -75,7 +81,9 @@ class InstrumentoPoblacionEstudiantesController extends Controller
         ]);
 	}
 	
-	function actionEstudiantes(){
+	function actionEstudiantes()
+	{
+		return;
 		
 		$estudiante = Yii::$app->request->post('estudiante');
 		
@@ -86,7 +94,8 @@ class InstrumentoPoblacionEstudiantesController extends Controller
         ]);
 	}
 	
-	function actionEstudiantesPorSede(){
+	function actionEstudiantesPorSede()
+	{	
 		
 		$sede = Yii::$app->request->get('sede');
 		
@@ -105,11 +114,16 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 		return Json::encode( $data );
 	}
 	
-	function actionViewFases(){
+	function actionViewFases()
+	{
+		$institucion 	= Yii::$app->request->post()['institucion'];
+		$sede 			= Yii::$app->request->post()['sede'];
+		$estudiante		= Yii::$app->request->post()['estudiante'];
 		
 		// {"10-1":["10"],"4-1":["3","9"]}
 		
 		$datos = [];
+		
 
 		// $acuerdos = AcuerdosInstitucionalesEstudiantes::find()
 							// ->where( 'estado=1' )
@@ -125,53 +139,128 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 		// }
 		
 		
+		if( !empty($estudiante) && is_numeric($estudiante) )
+		{	
+			$dataPersonas 		= Personas::find()
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+										->innerJoin( 'estudiantes e', 'e.id_perfiles_x_personas=pp.id' )
+										->innerJoin( 'paralelos p', 'p.id=e.id_paralelos' )
+										->innerJoin( 'sedes_niveles sn', 'sn.id=p.id_sedes_niveles' )
+										->where( 'sn.id_sedes='.$sede )
+										->andWhere( 'pp.estado=1' )
+										->andWhere( 'e.estado=1' )
+										->andWhere( 'p.estado=1' )
+										->andWhere( 'personas.estado=1' )
+										->andWhere( 'personas.id='.$estudiante )
+										->all();
+			
+		}
+		else
+		{	
+			$dataPersonas 		= Personas::find()
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+										->innerJoin( 'estudiantes e', 'e.id_perfiles_x_personas=pp.id' )
+										->innerJoin( 'paralelos p', 'p.id=e.id_paralelos' )
+										->innerJoin( 'sedes_niveles sn', 'sn.id=p.id_sedes_niveles' )
+										->where( 'sn.id_sedes='.$sede )
+										->andWhere( 'pp.estado=1' )
+										->andWhere( 'e.estado=1' )
+										->andWhere( 'p.estado=1' )
+										->andWhere( 'personas.estado=1' )
+										->all();
+			
+		}
+		
+		
+		foreach( $dataPersonas as $key => $estudiante )
+		{
+			$agregar = false;
+			
+			// var_dump( $docente['id'] ); exit();
+			$dato = [
+						"{$estudiante['id']}" 	=> 	[
+								'info'		=> 	[ 
+													'nombre' 				=> $estudiante['nombres'], 
+													'tipoIdentificacion' 	=> 'CC', 
+													'numeroIdentificacion' 	=> $estudiante['identificacion'],
+												],
+								'Creación'	=> 	[],
+								'Fases'		=> 	[],
+							],
+					];
+					
+					
+			// $acuerdos		AcuerdosInstitucionalesEstudiantes::find()
+						// ->where( 'estado=1' )
+						// ->all();
+			
+			$acuerdos = AcuerdosInstitucionalesEstudiantes::find()
+								->where( 'estado=1' )
+								->andWhere( "estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
+								->all();
+			
+			foreach( $acuerdos as $k => $v ){
+				$agregar = true;
+				$dato[ $estudiante->id ]['Creación'][ $v->id_fase ][] = $v->id_ciclo;
+			}			
+						
+			
+					
+			$fase1 = SemillerosTicEjecucionFaseIEstudiantes::find()
+								->alias( 'f1' )
+								->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f1.id_datos_ieo_profesional_estudiantes' )
+								->where( 'f1.estado=1' )
+								->andWhere( 'dpe.estado=1' )
+								->andWhere( "dpe.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
+								->all();
+								
+			foreach( $fase1 as $k => $v ){
+				$agregar = true;
+				$dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->id_ciclo;
+			}
+			
+			$fase2 = SemillerosTicEjecucionFaseIiEstudiantes::find()
+								->alias( 'f2' )
+								->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f2.id_datos_ieo_profesional_estudiantes' )
+								->where( 'f2.estado=1' )
+								->andWhere( 'dpe.estado=1' )
+								->andWhere( "dpe.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
+								->all();
+								
+			foreach( $fase2 as $k => $v ){
+				$agregar = true;
+				$dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->id_ciclo;
+			}
+			
+			$fase3 = SemillerosTicEjecucionFaseIiiEstudiantes::find()
+								->alias( 'f3' )
+								->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f3.id_datos_ieo_profesional_estudiantes' )
+								->where( 'f3.estado=1' )
+								->andWhere( 'dpe.estado=1' )
+								->andWhere( "dpe.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
+								->all();
+								
+			foreach( $fase2 as $k => $v ){
+				$agregar = true;
+				$dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->id_ciclo;
+			}
+			
+			if( $agregar )
+			{
+				$datos[] = $dato;
+			}
+		}
+		
 		$fases	= Fases::find()
 					->where('estado=1')
 					->orderby( 'descripcion' )
 					->all();
-					
-					
-		foreach( $fases as $k => $f ){
-			
-			$fin = rand( 1,3);
-			$aniosrands = [];
-			for( $i = 0; $i < $fin; $i++){
-				$aniosrands[] = 2016+rand(0,3);
-			}
-			$aniosrands = array_unique($aniosrands);
-			sort($aniosrands);
-			$datos['Creación'][ $f->descripcion ][] = implode( " - ", $aniosrands );
-			
-			$fin = rand( 1,3 );
-			$aniosrands = [];
-			for( $i = 0; $i < $fin; $i++){
-				$aniosrands[] = 2016+rand(0,3);
-			}
-			$aniosrands = array_unique($aniosrands);
-			sort($aniosrands);
-			$datos['Fase'][ $f->descripcion ][] = implode( " - ", $aniosrands );
-		}
-		
-		
-		
-		// $institucion 	= Yii::$app->request->post()['institucion'];
-		// $sede 			= Yii::$app->request->post()['sede'];
-		// $estudiante		= Yii::$app->request->post()['estudiante'];
-		
-		// $idPE = InstrumentoPoblacionEstudiantes::findOne([
-					// 'id_institucion' 		=> $institucion,
-					// 'id_sede' 		 		=> $sede,
-					// 'id_persona_estudiante' => $estudiante,
-				// ]);
-				
-		// $fases	= Fases::find()
-					// ->where('estado=1')
-					// ->orderby( 'descripcion' )
-					// ->all();
 		
 		return $this->renderPartial('fases', [
 			// 'idPE' 	=> $idPE,
-			// 'fases' => $fases,
+			'fases' => $fases,
 			'datos' => $datos,
         ]);
 		
