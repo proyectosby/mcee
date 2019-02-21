@@ -223,8 +223,13 @@ $( "#porcentajes" ).click(function()
 	$("#porcentajeAvance12").css({"width": ""+porcentajeAvanceProductos3+"%","background-color":""+colorBarra(porcentajeAvanceProductos3)}).text(porcentajeAvanceProductos3+"%");
 	
 });
-
 </script>	
+
+<?php 
+//triger de la comuna cuando se este actualizando
+if( strpos($_GET['r'], 'update') > -1)
+	echo "<script> $('#ecinformeplaneacionieo-comuna').trigger('change'); </script>";
+?>
 
  <?php // $this->context->actionInfoPorcentajes(); ?>
  

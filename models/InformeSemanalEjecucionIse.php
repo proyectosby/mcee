@@ -38,8 +38,9 @@ class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
     {
         return [
             [['institucion_id', 'sede_id', 'proyecto_id', 'estado', 'id_tipo_informe', 'id_comuna', 'id_barrio'], 'default', 'value' => null],
-            [['institucion_id', 'sede_id', 'proyecto_id', 'estado', 'id_tipo_informe', 'id_comuna', 'id_barrio'], 'integer'],
+            [['institucion_id', 'sede_id', 'proyecto_id', 'estado', 'id_tipo_informe', 'id_comuna'], 'integer'],
             [['fecha_fin', 'fecha_inicio'], 'safe'],
+            [['fecha_fin', 'fecha_inicio', 'id_comuna'], 'required'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['institucion_id'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['institucion_id' => 'id']],
         ];
@@ -52,16 +53,17 @@ class InformeSemanalEjecucionIse extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'institucion_id' => 'Institucion ID',
+            'institucion_id' => 'Institución',
             'nombre_institucion' => 'Institución',
-            'sede_id' => 'Sede ID',
-            'proyecto_id' => 'Proyecto ID',
+            'sede_id' => 'Sede',
+            'proyecto_id' => 'Proyecto',
             'estado' => 'Estado',
             'id_tipo_informe' => 'Id Tipo Informe',
             'fecha_fin' => 'Fecha fin',
             'fecha_inicio' => 'Fecha inicio',
             'id_comuna' => 'Id Comuna',
             'id_barrio' => 'Id Barrio',
+            'id_sede' => 'Sede'
         ];
     }
 }

@@ -18,7 +18,7 @@ class EcInformeEjecutivoEstadoBuscar extends EcInformeEjecutivoEstado
     public function rules()
     {
         return [
-            [['id', 'id_institucion', 'id_eje', 'id_persona', 'id_coordinador', 'id_secretaria', 'estado'], 'integer'],
+            [['id', 'id_institucion', 'id_eje', 'id_persona', 'id_coordinador', 'id_secretaria', 'estado','id_tipo_informe'], 'integer'],
             [['mision', 'descripcion', 'avance_producto', 'hallazgos', 'logros', 'fecha_creacion'], 'safe'],
         ];
     }

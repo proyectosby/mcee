@@ -289,7 +289,7 @@ class InstrumentoPoblacionDocentesController extends Controller
 	}
 	
 	function actionDocentes(){
-		
+		return;
 		$docente= Yii::$app->request->post('docente');
 		$sede 	= Yii::$app->request->post('sede');
 		$nivel 	= Yii::$app->request->post('nivel');
@@ -327,6 +327,35 @@ class InstrumentoPoblacionDocentesController extends Controller
 		$asignatura		= Yii::$app->request->post()['asignatura'];
 		$nivel			= Yii::$app->request->post()['nivel'];
 		
+		
+		
+								
+		if( !empty($docente) && is_numeric($docente) ){
+			
+			$dataPersonas 		= Personas::find()
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+										->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+										->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+										->where( 'personas.estado=1' )
+										->andWhere( 'id_institucion='.$institucion )
+										->andWhere( 'personas.id='.$docente )
+										->all();
+			
+		}
+		else{
+			
+			$dataPersonas 		= Personas::find()
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
+										->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
+										->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
+										->where( 'personas.estado=1' )
+										->andWhere( 'id_institucion='.$institucion )
+										->all();
+			
+		}
+		
 		/**
 		select * 
 from folder f
@@ -334,46 +363,109 @@ from folder f
 where '8' = ANY (string_to_array(some_column,','))
 		*/
 		$datos = [];
+		
+		foreach( $dataPersonas as $key => $docente ){
+			// var_dump( $docente['id'] ); exit();
+			$dato = [
+						"{$docente['id']}" 	=> 	[
+								'info'		=> 	[ 
+													'nombre' 				=> $docente['nombres'], 
+													'tipoIdentificacion' 	=> 'CC', 
+													'numeroIdentificacion' 	=> $docente['identificacion'],
+												],
+								'Creación'	=> 	[],
+								'Fases'		=> 	[],
+							],
+					];
+					
+			$acuerdos = AcuerdosInstitucionales::find()
+								->where( 'estado=1' )
+								->andWhere( "'".$docente['id']."' = ANY(string_to_array(id_docente,','))" )
+								->all();
+			
+			foreach( $acuerdos as $k => $v ){
+				$f = Fases::findOne( $v->id_fase );
+				
+				$dato[ $docente->id ]['Creación'][ $v->id_fase ][] = $v->anio;;
+			}
+			
+			$acuerdos = EjecucionFase::find()
+								->where( 'estado=1' )
+								->andWhere( "'".$docente['id']."' = ANY(string_to_array(docente,','))" )
+								->all();
+			
+			foreach( $acuerdos as $k => $v ){
+				$f = Fases::findOne( $v->id_fase );
+				
+				$dato[ $docente['id'] ]['Fases'][ $v->id_fase ][] = $v->anio;;
+			}
+			
+			$acuerdos = SemillerosTicEjecucionFaseIi::find()
+								->where( 'estado=1' )
+								->andWhere( "'".$docente['id']."' = ANY(string_to_array(docentes,','))" )
+								->all();
+			
+			foreach( $acuerdos as $k => $v ){
+				$f = Fases::findOne( $v->id_fase );
+				
+				$dato[ $docente['id'] ]['Fases'][ $v->id_fase ][] = $v->anio;;
+			}
+			
+			$acuerdos = SemillerosTicEjecucionFaseIii::find()
+								->where( 'estado=1' )
+								->andWhere( "docente_creador = '".$docente['id']."'" )
+								->all();
+			
+			foreach( $acuerdos as $k => $v ){
+				$f = EjecucionFase::findOne( $v->id_fase );
+				
+				$dato[ $docente['id'] ]['Fases'][ $v->id_fase ][] = $v->anio;
+			}
+			
+			$datos[] = $dato;
+		}
+		
+			// $datos = [];
 
-		$acuerdos = AcuerdosInstitucionales::find()
-							->where( 'estado=1' )
-							->andWhere( "'".$docente."' = ANY(string_to_array(id_docente,','))" )
-							->all();
-		
-		foreach( $acuerdos as $k => $v ){
-			$f = Fases::findOne( $v->id_fase );
-			$datos['Creación'][ $f->descripcion ][] = $v->anio;
-		}
-		
-		$acuerdos = EjecucionFase::find()
-							->where( 'estado=1' )
-							->andWhere( "'".$docente."' = ANY(string_to_array(docente,','))" )
-							->all();
-		
-		foreach( $acuerdos as $k => $v ){
-			$f = Fases::findOne( $v->id_fase );
-			$datos['Fases'][ $f->descripcion ][] = $v->anio;
-		}
-		
-		$acuerdos = SemillerosTicEjecucionFaseIi::find()
-							->where( 'estado=1' )
-							->andWhere( "'".$docente."' = ANY(string_to_array(docentes,','))" )
-							->all();
-		
-		foreach( $acuerdos as $k => $v ){
-			$f = Fases::findOne( $v->id_fase );
-			$datos['Fases'][ $f->descripcion ][] = $v->anio;
-		}
-		
-		$acuerdos = SemillerosTicEjecucionFaseIii::find()
-							->where( 'estado=1' )
-							->andWhere( "docente_creador = '".$docente."'" )
-							->all();
-		
-		foreach( $acuerdos as $k => $v ){
-			$f = EjecucionFase::findOne( $v->id_fase );
-			$datos['Fases'][ $f->descripcion ][] = $v->anio;
-		}
+			// $acuerdos = AcuerdosInstitucionales::find()
+								// ->where( 'estado=1' )
+								// ->andWhere( "'".$docente."' = ANY(string_to_array(id_docente,','))" )
+								// ->all();
+			
+			// foreach( $acuerdos as $k => $v ){
+				// $f = Fases::findOne( $v->id_fase );
+				// $datos['Creación'][ $f->descripcion ][] = $v->anio;
+			// }
+			
+			// $acuerdos = EjecucionFase::find()
+								// ->where( 'estado=1' )
+								// ->andWhere( "'".$docente."' = ANY(string_to_array(docente,','))" )
+								// ->all();
+			
+			// foreach( $acuerdos as $k => $v ){
+				// $f = Fases::findOne( $v->id_fase );
+				// $datos['Fases'][ $f->descripcion ][] = $v->anio;
+			// }
+			
+			// $acuerdos = SemillerosTicEjecucionFaseIi::find()
+								// ->where( 'estado=1' )
+								// ->andWhere( "'".$docente."' = ANY(string_to_array(docentes,','))" )
+								// ->all();
+			
+			// foreach( $acuerdos as $k => $v ){
+				// $f = Fases::findOne( $v->id_fase );
+				// $datos['Fases'][ $f->descripcion ][] = $v->anio;
+			// }
+			
+			// $acuerdos = SemillerosTicEjecucionFaseIii::find()
+								// ->where( 'estado=1' )
+								// ->andWhere( "docente_creador = '".$docente."'" )
+								// ->all();
+			
+			// foreach( $acuerdos as $k => $v ){
+				// $f = EjecucionFase::findOne( $v->id_fase );
+				// $datos['Fases'][ $f->descripcion ][] = $v->anio;
+			// }
 		
 		// var_dump( $datos );
 		// exit();
@@ -387,14 +479,14 @@ where '8' = ANY (string_to_array(some_column,','))
 					// 'estado' 						=> 1,
 				// ]);
 				
-		// $fases	= Fases::find()
-					// ->where('estado=1')
-					// ->orderby( 'descripcion' )
-					// ->all();
+		$fases	= Fases::find()
+					->where('estado=1')
+					->orderby( 'descripcion' )
+					->all();
 		
 		return $this->renderPartial('fases', [
 			// 'idPE' 	=> $idPE,
-			// 'fases' => $fases,
+			'fases' => $fases,
 			'datos'	=> $datos,
         ]);
 		

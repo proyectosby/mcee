@@ -56,7 +56,7 @@ class EcInformeEjecutivoEstadoController extends Controller
     {
         $searchModel = new EcInformeEjecutivoEstadoBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider->query->andWhere( "estado=1" ); 
+		$dataProvider->query->andWhere( 'id_tipo_informe='.Yii::$app->request->get('idTipoInforme') )->andWhere( 'estado=1' );
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -141,9 +141,23 @@ class EcInformeEjecutivoEstadoController extends Controller
 	
 	public function obtenerProyectosEjes()
 	{
+		$idTipoInforme = $_GET['idTipoInforme'];
 		
+		$connection = Yii::$app->getDb();
+		$command = $connection->createCommand(
+		"
+			select p.descripcion,p.id
+			from ec.tipo_informe as ti, ec.componentes as c, ec.proyectos as p
+			where ti.id = $idTipoInforme
+			and ti.id_componente = c.id
+			and c.descripcion = p.descripcion
+			
+		");
+		$ecProyectos = $command->queryAll();
+		
+		$descripcionProyecto = $ecProyectos[0]['descripcion'];
 		$ejes = new EcProyectos();
-		$ejes = $ejes->find()->orderby("id")->all();
+		$ejes = $ejes->find()->andWhere("descripcion ='$descripcionProyecto'" )->orderby("id")->all();
 		$ejes = ArrayHelper::map($ejes,'id','descripcion');
 		
 		return $ejes;
@@ -158,11 +172,11 @@ class EcInformeEjecutivoEstadoController extends Controller
     {
 		$idInstitucion 	= $_SESSION['instituciones'][0];
 		
-		
+	
         $model = new EcInformeEjecutivoEstado();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['index','guardado' => 1]);
+			return $this->redirect(['index','guardado' => 1,'idTipoInforme' => $model->id_tipo_informe ]);
         }
 
         return $this->renderAjax('create', [
@@ -171,7 +185,7 @@ class EcInformeEjecutivoEstadoController extends Controller
 			'coordinador' =>$this->obtenerNombresXPerfiles(23),
 			'secretario' =>$this->obtenerNombresXPerfiles(24),
 			'instituciones'=> $this->obtenerInstituciones(),
-			'ejes'=> $this->obtenerProyectosEjes(),
+			'ejes'=> $this->obtenerProyectosEjes(1),
         ]);
     }
 
@@ -187,7 +201,7 @@ class EcInformeEjecutivoEstadoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index','guardado' => 1]);
+            return $this->redirect(['index','guardado' => 1,'idTipoInforme' => $model->id_tipo_informe]);
         }
 
         return $this->renderAjax('update', [
