@@ -13,7 +13,8 @@ use yii\helpers\Html;
 use fedemotta\datatables\DataTables;
 use yii\grid\GridView;
 use app\models\ZonasEducativas;
-								
+use app\models\ComunasCorregimientos;		
+use app\models\BarriosVeredas;		
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
@@ -116,8 +117,21 @@ if( isset($guardado) && $guardado == 1 ){
 					return $zona ? $zona->descripcion : '';  
 				}, //para buscar por el nombre
 			],
-			'comuna',
-			'barrio',
+			[
+				'attribute' => 'comuna',
+				'value' 	=> function( $model ){
+					$comuna = ComunasCorregimientos::findOne( $model->comuna );
+					return $comuna ? $comuna->descripcion : '';
+				},
+			],
+			[
+				'attribute' => 'barrio',
+				'value' => function( $model )
+				{
+					$barriosVeredas = BarriosVeredas::findOne( $model->barrio );
+					return $barriosVeredas ? $barriosVeredas->descripcion : '';
+				},
+			],
 			[
 				'class' => 'yii\grid\ActionColumn',
 				'template'=>'{view}{update}{delete}',
