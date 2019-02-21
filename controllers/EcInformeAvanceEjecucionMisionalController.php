@@ -169,9 +169,23 @@ class EcInformeAvanceEjecucionMisionalController extends Controller
 	****/
 	public function obtenerProyectosEjes()
 	{
+		$idTipoInforme = $_GET['idTipoInforme'];
 		
+		$connection = Yii::$app->getDb();
+		$command = $connection->createCommand(
+		"
+			select p.descripcion,p.id
+			from ec.tipo_informe as ti, ec.componentes as c, ec.proyectos as p
+			where ti.id = $idTipoInforme
+			and ti.id_componente = c.id
+			and c.descripcion = p.descripcion
+			
+		");
+		$ecProyectos = $command->queryAll();
+		
+		$descripcionProyecto = $ecProyectos[0]['descripcion'];
 		$ejes = new EcProyectos();
-		$ejes = $ejes->find()->orderby("id")->all();
+		$ejes = $ejes->find()->andWhere("descripcion ='$descripcionProyecto'" )->orderby("id")->all();
 		$ejes = ArrayHelper::map($ejes,'id','descripcion');
 		
 		return $ejes;

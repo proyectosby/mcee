@@ -18,7 +18,7 @@ class EcInformeAvanceEjecucionMisionalBuscar extends EcInformeAvanceEjecucionMis
     public function rules()
     {
         return [
-            [['id', 'id_institucion', 'id_eje', 'id_coordinador', 'id_secretaria', 'estado'], 'integer'],
+            [['id', 'id_institucion', 'id_eje', 'id_coordinador', 'id_secretaria', 'estado','id_tipo_informe'], 'integer'],
             [['descripcion', 'presentacion', 'productos', 'presentacion_retos', 'alarmas', 'consolidad_avance', 'fecha_creacion'], 'safe'],
         ];
     }

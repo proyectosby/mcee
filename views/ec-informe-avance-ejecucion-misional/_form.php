@@ -7,6 +7,7 @@ use yii\bootstrap\Collapse;
 /* @var $model app\models\EcInformeAvanceEjecucionMisional */
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+$idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $model->id_tipo_informe;
 ?>
 
 <div class="ec-informe-avance-ejecucion-misional-form">
@@ -70,6 +71,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
 
    <?= $form->field($model, 'estado')->hiddenInput(['value'=> 1])->label(false); ?>
+   
+     <?= $form->field($model, 'id_tipo_informe')->hiddenInput(['value'=> $idTipoInforme])->label(false); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
