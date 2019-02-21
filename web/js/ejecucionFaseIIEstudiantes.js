@@ -242,6 +242,7 @@
         // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
         if( $( this ).val() != '' )
         {
+            $( "#guardar" ).val(0);
             var  selectChange = $(this);
             var gradoEstudiantes = $( this ).val();
             var data = {
@@ -271,6 +272,7 @@
             $('#exampleModal').modal({ show: true});
         }
     });
+
 
     function agregarEstudiante(ischeck, buscarIn, curso) {
         var estudiantes = $('#semillerosticdatosieoprofesionalestudiantes-estudiantes_id');
@@ -305,7 +307,7 @@
         }
 
         $('#guardarEstudiantes').click(function () {
-            this.form.submit();
+            $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).submit()
         });
     }
 	

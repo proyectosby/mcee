@@ -143,7 +143,7 @@ if( $guardado ){
     ])->label( 'Curso de los participantes' ); ?>
 
     <?= $form->field($profesional, "estudiantes_id")
-        //->hiddenInput()
+        ->hiddenInput()
         ->label(null,['style'=>'display:none'])?>
 
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>

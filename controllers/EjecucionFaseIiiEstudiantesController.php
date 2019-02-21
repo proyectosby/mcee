@@ -144,19 +144,19 @@ class EjecucionFaseIiiEstudiantesController extends Controller
     public function actionCreate()
     {
 		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
-		$ciclo = new SemillerosTicCiclos();
+		//$ciclo = new SemillerosTicCiclos();
 		$anio = new SemillerosTicAnio();
 		
-		$ciclo->load( Yii::$app->request->post() );
+		///$ciclo->load( Yii::$app->request->post() );
 		
 		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
-		if( empty( $ciclo->id ) ){
-			return $this->actionCiclos();
-		}
-		else{
-			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
-			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
-		}
+		//if( empty( $ciclo->id ) ){
+		///	return $this->actionCiclos();
+		//}
+		//else{
+		//	$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+		///	$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
+		///}
 		
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
@@ -231,7 +231,7 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 				{
 					$ejecucionesFases = SemillerosTicEjecucionFaseIiiEstudiantes::find()
 											->where( 'id_fase='.$this->id_fase )
-											->andWhere( 'id_ciclo='.$ciclo->id )
+											//->andWhere( 'id_ciclo='.$ciclo->id )
 											->andWhere( 'id_datos_ieo_profesional_estudiantes='.$datosIeoProfesional->id )
 											->andWhere( 'estado=1' )
 											->all();
@@ -250,7 +250,7 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 				$condiciones = SemillerosTicCondicionesInstitucionalesEstudiantes::findOne([ 
 										'id_datos_ieo_profesional_estudiantes' 	=> $datosIeoProfesional->id,
 										'id_fase'								=> $this->id_fase,
-										'id_ciclo'								=> $ciclo->id,
+										//'id_ciclo'								=> $ciclo->id,
 									]);
 				
 			}
@@ -396,7 +396,7 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 									$ejecucionFase->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 									$ejecucionFase->id_datos_sesion 						= $modelo[ 'datosSesion' ]->id;
 									$ejecucionFase->id_fase 								= $this->id_fase;
-									$ejecucionFase->id_ciclo 								= $ciclo->id;
+									//$ejecucionFase->id_ciclo 								= $ciclo->id;
 									$ejecucionFase->estado 									= 1;
 									$ejecucionFase->save(false);
 								}
@@ -407,7 +407,7 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 					
 					$condiciones->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 					$condiciones->id_fase 								= $this->id_fase;
-					$condiciones->id_ciclo 								= $ciclo->id;
+					//$condiciones->id_ciclo 								= $ciclo->id;
 					$condiciones->estado 								= 1;
 					$condiciones->save(false);
 					
@@ -529,12 +529,14 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 		}
 
         //Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-        if ($datosIeoProfesional->curso_participantes !== null){
+        //Si no existe el curso de los paarticipantes en el array cursos se deja vacío
+        if (!isset($datosIeoProfesional->curso_participantes) && is_array($datosIeoProfesional->curso_participantes)){
             foreach ($datosIeoProfesional->curso_participantes AS $curso){
                 if( !array_key_exists($curso, $cursos ) )
                     $datosIeoProfesional->curso_participantes = '';
             }
         }
+
 
         return $this->render('create', [
             'datosModelos'	=> $datosModelos,
@@ -543,7 +545,7 @@ class EjecucionFaseIiiEstudiantesController extends Controller
             'institucion'	=> $institucion,
             'sede' 		 	=> $sede,
             'docentes' 		=> $docentes,
-			'ciclo'			=> $ciclo,
+			//'ciclo'			=> $ciclo,
 			'condiciones'	=> $condiciones,
 			'guardado'		=> $guardado,
 			'cursos'		=> $cursos,

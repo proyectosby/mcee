@@ -158,8 +158,6 @@ if( $guardado ){
         ->hiddenInput()
         ->label(null,['style'=>'display:none'])?>
 
-	<?= $form->field($ciclo, 'id')->hiddenInput()->label( null , [ 'style' => 'display:none' ] ); ?>
-	
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
     
 	<?php 	
