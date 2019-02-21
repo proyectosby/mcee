@@ -939,7 +939,8 @@ class IeoController extends Controller
 
             return $dato;
         });
-
+		
+		$datos = array();
         foreach	($result as $r => $valor)
         {
             foreach	($valor as $ids => $valores)
@@ -950,10 +951,13 @@ class IeoController extends Controller
         $ZonasEducatibas  = ZonasEducativas::find()->where( 'estado=1' )->all();
 		$zonasEducativas	 = ArrayHelper::map( $ZonasEducatibas, 'id', 'descripcion' );
 
+		$comunas  = ComunasCorregimientos::find()->where( 'estado=1' )->all();
+        $comunas	 = ArrayHelper::map( $comunas, 'id', 'descripcion' );
         return $this->renderAjax('update', [
             'model' => $model,
             'zonasEducativas' => $zonasEducativas,
             'datos'=> $datos,
+            'comunas'=> $comunas,
         ]);
     }
 
@@ -969,9 +973,7 @@ class IeoController extends Controller
         $model = $this->findModel($id);
 		$model->estado = 2;
         $model->update(false);
-        
-        //$this->findModel($id)->delete();
-
+       
         return $this->redirect(['index', 'idTipoInforme' => $_SESSION["idTipoInforme"]]);
     }
 
