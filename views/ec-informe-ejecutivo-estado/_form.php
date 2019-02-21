@@ -16,7 +16,7 @@ $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $m
 
     <?= $form->field($model, 'id_institucion')->DropDownList($instituciones) ?>
 
-    <?= $form->field($model, 'id_eje')->DropDownList($ejes,['prompt'=>"Seleccione..."]) ?>
+    <?= $form->field($model, 'id_eje')->DropDownList($ejes) ?>
 	
     <?= $form->field($model, 'id_persona')->DropDownList($persona) ?>
 
