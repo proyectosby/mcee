@@ -63,9 +63,7 @@ $id_momento1= 2;
 
 								<?= $form->field($model, "estado")->hiddenInput(['value'=> 1])->label(false) ?>
 
-								<div class="form-group form-wizard-buttons">
-										<?= Html::submitButton('Guardar visita', ['class' => 'btn btn-success']) ?>	
-								</div>
+								
 							</div>
 							
 							<!-- Data table-->
@@ -160,8 +158,18 @@ $id_momento1= 2;
 									<!-- Fin Data table-->
 							</div>		
 						</div>
+						
+						<div class="row">
+						  <div class="col-xs-6 col-md-4">
+								<div class="form-group form-wizard-buttons">
+										<?= Html::submitButton('Guardar visita', ['class' => 'btn btn-success']) ?>	
+								</div>
+						  </div>
+						  <div class="col-xs-6 col-md-4"></div>
+						  <div class="col-xs-6 col-md-4"></div>
+						</div>
 				</fieldset>
 
 									<?php ActiveForm::end(); ?>
 
-								</div>
+</div>
