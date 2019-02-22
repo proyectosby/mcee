@@ -147,6 +147,7 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			ise.institucion_id, 
 			ise.sede_id,
 			ise.id_tipo_informe,
+			ai.id as id_actividad_ise,
 			ai.avance_sede,
 			ai.avance_ieo,
 			ai.actividad_1_porcentaje,
@@ -164,13 +165,14 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 		");
 		$result = $command->queryAll();
 		
-	
+		$arrayIdActividad = array();
 		foreach ($result as $r)
 		{	
 			$datos[$r['fecha_inicio']. " A " .$r['fecha_fin']][$r['institucion_id']][$r['sede_id']][$r['id_tipo_informe']]['avance_sede'] = $r['avance_sede'];
 			$datos[$r['fecha_inicio']. " A " .$r['fecha_fin']][$r['institucion_id']][$r['sede_id']][$r['id_tipo_informe']]['actividad_1_porcentaje'] = $r['actividad_1_porcentaje'];
 			$datos[$r['fecha_inicio']. " A " .$r['fecha_fin']][$r['institucion_id']][$r['sede_id']][$r['id_tipo_informe']]['actividad_2_porcentaje'] = $r['actividad_2_porcentaje'];
 			$datos[$r['fecha_inicio']. " A " .$r['fecha_fin']][$r['institucion_id']][$r['sede_id']][$r['id_tipo_informe']]['actividad_3_porcentaje'] = $r['actividad_3_porcentaje'];	
+			$arrayIdActividad[] = $r['id_actividad_ise'];
 		}
 		
 	
@@ -276,8 +278,29 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			@$porcentajesSedes[$key][19] = round ( $aSedes[19] / 59  * 100);
 			@$porcentajesSedes[$key][31] = round ( $aSedes[31] / $cantidadSedes * 100);
 		}
+				
+		// $command = $connection->createCommand("
+		// SELECT 
+			// ise.fecha_inicio,
+			// ise.fecha_fin,
+			// ise.id_tipo_informe,
+			// tcpi.tiempo_libre, 
+			// tcpi.edu_derechos, 
+			// tcpi.sexualidad_ciudadania, 
+			// tcpi.medio_ambiente,
+			// tcpi.familia,
+			// tcpi.directivos
+		// FROM 
+			// ec.tipo_cantidad_poblacion_ise as tcpi, 
+			// ec.informe_semanal_ejecucion_ise as ise
+		// WHERE 
+			// tcpi.id_informe_semanal_ejecucion_ise  = ise.id
+		// AND
+			// ise.estado = 1
+		// ");
+		// $result1 = $command->queryAll();
 		
-		
+		$arrayIdActividad  =  implode(",", $arrayIdActividad);
 		$command = $connection->createCommand("
 		SELECT 
 			ise.fecha_inicio,
@@ -288,26 +311,34 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			tcpi.sexualidad_ciudadania, 
 			tcpi.medio_ambiente,
 			tcpi.familia,
-			tcpi.directivos
+			tcpi.directivos,
+			tcpi.id as id_tipo_cantidad_poblacion_ise
 		FROM 
-			ec.tipo_cantidad_poblacion_ise as tcpi, 
-			ec.informe_semanal_ejecucion_ise as ise
+			ec.informe_semanal_ejecucion_ise as ise,
+			ec.actividades_ise as ai,
+			ec.tipo_cantidad_poblacion_ise as tcpi
 		WHERE 
-			tcpi.id_informe_semanal_ejecucion_ise  = ise.id
+			ai.informe_semanal_ejecucion_id  = ise.id
+		AND 
+			tcpi.id_actividad_ise = ai.id
+		AND 
+			ai.id in ($arrayIdActividad)
 		AND
-			ise.estado = 1
+			ise.estado = 1 
 		");
 		$result1 = $command->queryAll();
 		
 		
+
 		$poblacionBenficiadaDirecta =  [];
+		$arrayIdCantidadPoblacion = [];
 		foreach($result1 as $d )
 		{
 			@$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['tiempo_libre'];
             @$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['edu_derechos'];
             @$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['sexualidad_ciudadania'];
             @$poblacionBenficiadaDirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['medio_ambiente'];
-			
+			$arrayIdCantidadPoblacion[] = $d['id_tipo_cantidad_poblacion_ise'];
 		}
 		
 		
@@ -318,7 +349,36 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
             @$poblacionBenficiadaIndirecta[$d['fecha_inicio'] . " A " .$d['fecha_fin']][$d['id_tipo_informe']] += $d['directivos'];
 		}
 		
+	
 		
+		// $command = $connection->createCommand("
+		// SELECT 
+			// ise.fecha_inicio,
+			// ise.fecha_fin,
+			// ise.id_tipo_informe,
+			// ei.grado_0, 
+			// ei.grado_1, 
+			// ei.grado_2, 
+			// ei.grado_3, 
+			// ei.grado_4, 
+			// ei.grado_5, 
+			// ei.grado_6, 
+			// ei.grado_7, 
+			// ei.grado_8,
+			// ei.grado_9, 
+			// ei.grado_10, 
+			// ei.grado_11
+		// FROM 
+			// ec.estudiantes_ise as ei,
+			// ec.informe_semanal_ejecucion_ise as ise
+		// WHERE 	
+			// ei.id_informe_semanal_ejecucion_ise  = ise.id
+		// AND
+		// ise.estado = 1
+		// ");
+		// $result2 = $command->queryAll();
+		
+		$arrayIdCantidadPoblacion  = implode(",", $arrayIdCantidadPoblacion);
 		$command = $connection->createCommand("
 		SELECT 
 			ise.fecha_inicio,
@@ -336,13 +396,24 @@ class EcInformeSemanalTotalEjecutivoController extends Controller
 			ei.grado_9, 
 			ei.grado_10, 
 			ei.grado_11
+			
 		FROM 
-			ec.estudiantes_ise as ei,
-			ec.informe_semanal_ejecucion_ise as ise
-		WHERE 	
-			ei.id_informe_semanal_ejecucion_ise  = ise.id
+			ec.informe_semanal_ejecucion_ise as ise,
+			ec.actividades_ise as ai,
+			ec.tipo_cantidad_poblacion_ise as tcpi,
+			ec.estudiantes_ise as ei
+		WHERE 
+			ai.informe_semanal_ejecucion_id  = ise.id
+		AND 
+			tcpi.id_actividad_ise = ai.id
+		AND 
+			ai.id in ($arrayIdActividad)
+		AND 
+			ei.id_tipo_cantidad_poblacion = tcpi.id
+		AND 
+			tcpi.id in ($arrayIdCantidadPoblacion)
 		AND
-		ise.estado = 1
+			ise.estado = 1   
 		");
 		$result2 = $command->queryAll();
 		

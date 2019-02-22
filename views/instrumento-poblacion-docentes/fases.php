@@ -57,7 +57,7 @@
 			
 						<td><?= $docente['info']['nombre'] ?></td>
 						
-						<td><?= "CC ".$docente['info']['numeroIdentificacion'] ?></td>
+						<td><?= $docente['info']['tipoIdentificacion']." ".$docente['info']['numeroIdentificacion'] ?></td>
 						
 						<?php foreach( $fases as $key => $fase ) : ?>	
 							<td><?= !empty( $docente['Creación'][ $fase->id ] ) ? implode( " - ", $docente['Creación'][ $fase->id ] ) : '' ?></td>

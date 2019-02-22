@@ -33,6 +33,7 @@ use Yii;
  * @property int $numero_disecciones
  * @property string $observaciones
  * @property string $id_datos_sesion
+ * @property string $estudiantes_id
  */
 class SemillerosTicEjecucionFaseIiEstudiantes extends \yii\db\ActiveRecord
 {
