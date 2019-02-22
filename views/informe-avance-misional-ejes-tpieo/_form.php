@@ -23,12 +23,18 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ecInformePlaneacionIeo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 
 $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $model->id_tipo_informe;
+
+ // echo "<pre>"; print_r($model); echo "</pre>"; 
+// die; 
 ?>
 
 <?php 
 //triger de la comuna cuando se este actualizando
 if( strpos($_GET['r'], 'update') > -1)
-	echo "<script> $('#ecinformeplaneacionieo-comuna').trigger('change'); </script>";
+	echo "<script> 
+			var barrio = ". $model->barrio .";
+		$('#ecinformeplaneacionieo-comuna').trigger('change'); 	
+</script>";
 ?>
 
   <?=  Html::button('Porcentajes de avance',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'porcentajes']) ?>
@@ -53,6 +59,10 @@ if( strpos($_GET['r'], 'update') > -1)
 </style>
 <!-- se coloca el jquery en esta parte ya que en el archivo ecinformeplaneacionieo.js externo por alguna razon no lo coje -->
 <script>
+
+
+setTimeout(function(){ 
+$("#ecinformeplaneacionieo-barrio" ).val( barrio); }, 800);
 
 idSedes = <?php echo $_SESSION['sede'][0]; ?>
 
@@ -227,7 +237,7 @@ $( "#porcentajes" ).click(function()
 	$("#porcentajeAvance12").css({"width": ""+porcentajeAvanceProductos3+"%","background-color":""+colorBarra(porcentajeAvanceProductos3)}).text(porcentajeAvanceProductos3+"%");
 	
 });
-
+	
 </script>	
 
  <?php // $this->context->actionInfoPorcentajes(); ?>
@@ -235,8 +245,6 @@ $( "#porcentajes" ).click(function()
  <div id='divPorcentajes'>
  </div>
  
-
-	
   <div class="ec-informe-planeacion-ieo-form">
 	
     <?php 
@@ -254,14 +262,15 @@ $( "#porcentajes" ).click(function()
 	<?= $form->field($model, 'zona_educativa')->dropDownList($zonaEducativa,['prompt' => 'Seleccione...']) ?>
 
 	
-
-	
 	<?= $form->field($model, 'comuna')->dropDownList( $comunas, [ 'prompt' => 'Seleccione...',  
         'onchange'=>'
-            $.post( "index.php?r=ieo/lists&id="+$(this).val(), function( data ) {
-            $( "select#ecinformeplaneacionieo-barrio" ).html( data );
-            });' ] ) ?>
-        <?= $form->field($model, 'barrio')->dropDownList( [], [ 'prompt' => 'Seleccione...',  ] ) ?>            
+            $.post( "index.php?r=ieo/lists&id="+$(this).val(), function( data ) 
+			{
+				$( "select#ecinformeplaneacionieo-barrio" ).html( data );		
+            });
+			' ] ) ?>
+			
+    <?= $form->field($model, 'barrio')->dropDownList( [], [ 'prompt' => 'Seleccione...'] ) ?>            
 		
 	<?= $form->field($model, 'fase')->DropDownList($fases,['prompt'=>'Seleccione...']) ?>
 	

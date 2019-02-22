@@ -36,7 +36,7 @@ class EcInformePlaneacionIeo extends \yii\db\ActiveRecord
             [['id_institucion', 'id_sede', 'codigo_dane'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'codigo_dane'], 'integer'],
             [['id_institucion', 'fase','zona_educativa','fecha_reporte','comuna'], 'required'],
-            [['zona_educativa', 'fase'], 'string'],
+            [['zona_educativa', 'fase','barrio'], 'string'],
             [['fecha_reporte'], 'safe'],
             [['id_sede','id_tipo_informe'], 'required'],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],

@@ -27,8 +27,14 @@ $idTipoInforme = (isset($_GET['idTipoInforme'])) ?  $_GET['idTipoInforme'] :  $m
 <?php 
 //triger de la comuna cuando se este actualizando
 if( strpos($_GET['r'], 'update') > -1)
-	echo "<script> $('#ecinformeplaneacionieo-comuna').trigger('change'); </script>";
+	echo "<script> 
+			var barrio = ". $model->barrio .";
+		$('#ecinformeplaneacionieo-comuna').trigger('change'); 	
+</script>";
+
 ?>
+
+
   <?=  Html::button('Porcentajes de avance',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'porcentajes']) ?>
 <br>
 <br>
@@ -51,6 +57,10 @@ if( strpos($_GET['r'], 'update') > -1)
 </style>
 <!-- se coloca el jquery en esta parte ya que en el archivo ecinformeplaneacionieo.js externo por alguna razon no lo coje -->
 <script>
+setTimeout(function()
+{ 
+	$("#ecinformeplaneacionieo-barrio" ).val( barrio); 
+}, 800);
 
 idSedes = <?php echo $_SESSION['sede'][0]; ?>
 

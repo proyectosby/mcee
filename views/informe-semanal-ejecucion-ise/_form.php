@@ -16,8 +16,23 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ise-actividades_.js',['de
 <?php 
 //triger de la comuna cuando se este actualizando
 if( strpos($_GET['r'], 'update') > -1)
-	echo "<script> $('#ecinformeplaneacionieo-comuna').trigger('change'); </script>";
+	echo "<script> 
+			var barrio = ". $model->id_barrio .";
+		$('#ecinformeplaneacionieo-comuna').trigger('change'); 	
+</script>";
+
 ?>
+
+<script>
+setTimeout(function()
+{ 
+	$("#informesemanalejecucionise-id_barrio" ).val( barrio); 
+}, 800);
+
+
+</script>
+
+
 
 <div class="informe-semanal-ejecucion-ise-form">
 
