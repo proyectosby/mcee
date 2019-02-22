@@ -374,12 +374,18 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 				
 				if( $valido )
 				{
-                    $ejecucionFase->estudiantes_id = Yii::$app->request->post()["SemillerosTicDatosIeoProfesionalEstudiantes"]["estudiantes_id"];
-                    $ejecucionFase->save(false);
+
 					$datosIeoProfesional->id_institucion = $id_institucion;
 					$datosIeoProfesional->id_sede = $id_sede;
 					$datosIeoProfesional->estado = 1;
-					$datosIeoProfesional->save( false );
+
+                    $datosIeoProfesional->curso_participantes = explode(",", $datosIeoProfesional->curso_participantes);
+                    $datosIeoProfesional->id_profesional_a = explode(",", $datosIeoProfesional->id_profesional_a);
+
+
+                    $datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
+                    $datosIeoProfesional->id_profesional_a = implode(",", $datosIeoProfesional->id_profesional_a);
+                    $datosIeoProfesional->save( false );
 					
 					foreach( $datosModelos as $sesion_id => $modelo )
 					{
@@ -392,7 +398,9 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 							$primera = true;
 							foreach( $modelo[ 'ejecucionesFase' ] as $key => $ejecucionFase )
 							{
-								if( !$primera )
+							    $estudiantes_id = Yii::$app->request->post()["SemillerosTicDatosIeoProfesionalEstudiantes"];
+                                $ejecucionFase->estudiantes_id = isset($estudiantes_id["estudiantes_id"])? $estudiantes_id["estudiantes_id"] : '';
+                                if( !$primera )
 								{
 									$ejecucionFase->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 									$ejecucionFase->id_datos_sesion 						= $modelo[ 'datosSesion' ]->id;
@@ -401,6 +409,7 @@ class EjecucionFaseIiiEstudiantesController extends Controller
 									$ejecucionFase->estado 									= 1;
 									$ejecucionFase->save(false);
 								}
+
 								$primera = false;
 							}
 						}

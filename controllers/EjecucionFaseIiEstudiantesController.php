@@ -252,7 +252,6 @@ class EjecucionFaseIiEstudiantesController extends Controller
 						$ds->fecha_sesion = Yii::$app->formatter->asDate($ds->fecha_sesion, "php:d-m-Y");
 						
 						$datosModelos[ $ds->id_sesion ][ 'datosSesion' ] 		= $ds;
-                        $ejecucionFase->docentes = explode( ",", $ejecucionFase->docentes );
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
 					}
 				}
@@ -390,7 +389,15 @@ class EjecucionFaseIiEstudiantesController extends Controller
 					$datosIeoProfesional->id_institucion = $id_institucion;
 					$datosIeoProfesional->id_sede = $id_sede;
 					$datosIeoProfesional->estado = 1;
-					$datosIeoProfesional->save( false );
+
+					if (!is_array($datosIeoProfesional->curso_participantes)){
+                        $datosIeoProfesional->curso_participantes = explode(",", $datosIeoProfesional->curso_participantes);
+                        $datosIeoProfesional->id_profesional_a = explode(",", $datosIeoProfesional->id_profesional_a);
+                    }
+
+                    $datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
+                    $datosIeoProfesional->id_profesional_a = implode(",", $datosIeoProfesional->id_profesional_a);
+                    $datosIeoProfesional->save( false );
 					
 					foreach( $datosModelos as $sesion_id => $modelo )
 					{
@@ -518,14 +525,6 @@ class EjecucionFaseIiEstudiantesController extends Controller
 
             $cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
 		}
-		
-		//Si no existe el curso de los paarticipantes en el array cursos se deja vacío
-        if (!isset($datosIeoProfesional->curso_participantes) && is_array($datosIeoProfesional->curso_participantes)){
-            foreach ($datosIeoProfesional->curso_participantes AS $curso){
-                if( !array_key_exists($curso, $cursos ) )
-                    $datosIeoProfesional->curso_participantes = '';
-            }
-        }
 
         return $this->render('create', [
             'datosModelos'	=> $datosModelos,
