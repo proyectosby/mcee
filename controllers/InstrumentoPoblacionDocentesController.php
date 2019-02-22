@@ -333,7 +333,7 @@ class InstrumentoPoblacionDocentesController extends Controller
 		if( !empty($docente) && is_numeric($docente) ){
 			
 			$dataPersonas 		= Personas::find()
-										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion, personas.id_tipos_identificaciones" )
 										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
 										->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
 										->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
@@ -346,7 +346,7 @@ class InstrumentoPoblacionDocentesController extends Controller
 		else{
 			
 			$dataPersonas 		= Personas::find()
-										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion, personas.id_tipos_identificaciones" )
 										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
 										->innerJoin( 'docentes d', 'd.id_perfiles_x_personas=pp.id' )
 										->innerJoin( 'perfiles_x_personas_institucion ppi', 'ppi.id_perfiles_x_persona=pp.id' )
@@ -365,12 +365,14 @@ where '8' = ANY (string_to_array(some_column,','))
 		$datos = [];
 		
 		foreach( $dataPersonas as $key => $docente ){
-			// var_dump( $docente['id'] ); exit();
+			
+			$ti = TiposIdentificaciones::findOne( $docente['id_tipos_identificaciones'] );
+			
 			$dato = [
 						"{$docente['id']}" 	=> 	[
 								'info'		=> 	[ 
 													'nombre' 				=> $docente['nombres'], 
-													'tipoIdentificacion' 	=> 'CC', 
+													'tipoIdentificacion' 	=> $ti ? $ti->descripcion : 'Sin Identificación', 
 													'numeroIdentificacion' 	=> $docente['identificacion'],
 												],
 								'Creación'	=> 	[],
