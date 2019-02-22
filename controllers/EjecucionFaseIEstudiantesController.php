@@ -378,9 +378,10 @@ class EjecucionFaseIEstudiantesController extends Controller
 					$datosIeoProfesional->id_institucion = $id_institucion;
 					$datosIeoProfesional->id_sede = $id_sede;
 					$datosIeoProfesional->estado = 1;
-
-                    $datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
-                    $datosIeoProfesional->id_profesional_a = implode(",", $datosIeoProfesional->id_profesional_a);
+					if( is_array($datosIeoProfesional->curso_participantes) )
+						$datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
+					if( is_array($datosIeoProfesional->id_profesional_a) )
+						$datosIeoProfesional->id_profesional_a = implode(",", $datosIeoProfesional->id_profesional_a);
                     $datosIeoProfesional->save( false );
 
 
