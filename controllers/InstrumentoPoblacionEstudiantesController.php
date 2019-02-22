@@ -44,6 +44,7 @@ use app\models\SemillerosTicDatosIeoProfesionalEstudiantes;
 use app\models\SemillerosTicEjecucionFaseIEstudiantes;
 use app\models\SemillerosTicEjecucionFaseIiEstudiantes;
 use app\models\SemillerosTicEjecucionFaseIiiEstudiantes;
+// use app\models\TiposIdentificaciones;
 
 
 
@@ -142,7 +143,7 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 		if( !empty($estudiante) && is_numeric($estudiante) )
 		{	
 			$dataPersonas 		= Personas::find()
-										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion, personas.id_tipos_identificaciones" )
 										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
 										->innerJoin( 'estudiantes e', 'e.id_perfiles_x_personas=pp.id' )
 										->innerJoin( 'paralelos p', 'p.id=e.id_paralelos' )
@@ -159,7 +160,7 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 		else
 		{	
 			$dataPersonas 		= Personas::find()
-										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion" )
+										->select( "( nombres || ' ' || apellidos ) as nombres, personas.id, personas.identificacion, personas.id_tipos_identificaciones" )
 										->innerJoin( 'perfiles_x_personas pp', 'pp.id_personas=personas.id' )
 										->innerJoin( 'estudiantes e', 'e.id_perfiles_x_personas=pp.id' )
 										->innerJoin( 'paralelos p', 'p.id=e.id_paralelos' )
@@ -178,12 +179,14 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 		{
 			$agregar = false;
 			
+			$ti = TiposIdentificaciones::findOne( $estudiante['id_tipos_identificaciones'] );
+			
 			// var_dump( $docente['id'] ); exit();
 			$dato = [
 						"{$estudiante['id']}" 	=> 	[
 								'info'		=> 	[ 
 													'nombre' 				=> $estudiante['nombres'], 
-													'tipoIdentificacion' 	=> 'CC', 
+													'tipoIdentificacion' 	=> $ti ? $ti->descripcion : 'Sin Identificación', 
 													'numeroIdentificacion' 	=> $estudiante['identificacion'],
 												],
 								'Creación'	=> 	[],
