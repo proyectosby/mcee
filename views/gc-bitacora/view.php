@@ -6,18 +6,22 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\GcBitacora */
 
-$this->title = "Detalles";
-$this->params['breadcrumbs'][] = ['label' => 'Gc Bitacoras', 'url' => ['index']];
+$this->title = "Visualización de la bitácora";
+$this->params['breadcrumbs'][] = ['label' => 'Bitacora', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
+
 ?>
+
+<?= Html::a('Volver',['gc-bitacora/index',],['class' => 'btn btn-info']) ?>
+
 <div class="gc-bitacora-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
         <div class="col-md-12 ui-sortable">
-            <div class="panel panel-danger">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title">Información del docente tutor</h4>
                 </div>
@@ -58,7 +62,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
     </div>
     <div class="row">
         <div class="col-md-12 ui-sortable">
-            <div class="panel panel-danger">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title">Visualización de la bitácora</h4>
                 </div>
@@ -75,7 +79,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                     <thead>
                                     <tr>
                                         <th>Propósito</th>
-                                        <th>Nivel de avance</th>
+                                        <!--<th>Nivel de avance</th>-->
                                         <th>Justificación</th>
                                     </tr>
                                     </thead>
@@ -147,7 +151,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
                                     <hr>
 
-                                    <h4 class="text-center">Actividades planeadas</h4>
+                                    <h4 class="text-center">Planeación por día</h4>
 
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -155,20 +159,20 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                 <table class="table table-striped table-bordered ">
                                                     <thead>
                                                     <tr>
-                                                        <th class="ancho-50-pct">Nombre de la actividad</th>
-                                                        <th>Descripción</th>
+                                                        <th class="ancho-50-pct">Descripción plan</th>
+                                                        <th>Dia</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
 
                                                     <tr>
-                                                        <td>asdfadsf</td>
-                                                        <td>asdfasdf</td>
+                                                        <td>sfasdfs</td>
+                                                        <td>asdfsadf</td>
                                                     </tr>
 
                                                     <tr>
-                                                        <td>Robótica</td>
-                                                        <td>Robots y más cosas relacionadas con robots</td>
+                                                        <td>asfbgdsf</td>
+                                                        <td>asdfasdfesdfasdf</td>
                                                     </tr>
 
                                                     </tbody>
@@ -177,7 +181,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                         </div>
                                     </div>
 
-                                    <hr>
+									
+									<hr>
 
                                     <h4 class="text-center">Resultados esperados</h4>
 
@@ -211,48 +216,6 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
                                     <hr>
 
-                                    <h4 class="text-center">Productos esperados</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-50-pct">Nombre del producto</th>
-                                                        <th>Descripción</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    <tr>
-                                                        <td>El hombre del piano</td>
-                                                        <td>Esta es la historia de un sábado de no importa que mes y de un hombre sentado al piano de no importa que viejo café</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>eeeeeeeee</td>
-                                                        <td>eeeeeeeee</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>asdfeggrrgg</td>
-                                                        <td>asdfeadsagadsfs</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>asfasdfas</td>
-                                                        <td>asdfasdfas afa</td>
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
                                     <h4 class="text-center">Evidencias de visitas</h4>
 
                                     <div class="row">
@@ -261,13 +224,14 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                 <table class="table table-striped table-bordered ">
                                                     <thead>
                                                     <tr>
-                                                        <th>Nombre</th>
+                                                        <th>Descripción visitas</th>
+                                                        <th>Dia</th>
                                                         <th class="ancho-30-pct">¿Se realizó visita?</th>
                                                         <th>Evidencia / Justificación</th>
-                                                        <th>Número de estudiantes</th>
-                                                        <th>Número de docentes</th>
-                                                        <th>Número de directivos</th>
-                                                        <th>Otros</th>
+                                                        <th># estudiantes</th>
+                                                        <th># docentes</th>
+                                                        <th># directivos</th>
+                                                        <th># Otros</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -280,134 +244,9 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
                                     <hr>
 
-                                    <h4 class="text-center">Actividades ejecutadas</h4>
+                                   </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre de la actividad</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se ejecutó la actividad?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    <tr>
-                                                        <td>Robótica</td>
-                                                        <td>asadfasdfsaf dsfedafasd</td>
-                                                        <td class="text-center">Sí</td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>asdfadsf</td>
-                                                        <td></td>
-                                                        <td class="text-center">No</td>
-                                                        <td>ttttttttttttt</td>
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <hr>
-
-                                    <h4 class="text-center">Resultados obtenidos</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre del resultado</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se logró el resultado?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    <tr>
-                                                        <td>asfbgdsf</td>
-                                                        <td></td>
-                                                        <td class="text-center">No</td>
-                                                        <td>dfefsdafeasdf</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>sfasdfs</td>
-                                                        <td>sdasdfasfasdf</td>
-                                                        <td class="text-center">Sí</td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <h4 class="text-center">Productos obtenidos</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre del producto</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se logró el producto?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class="text-center">Parcialmente</td>
-                                                        <td>dfedfadsfeadsf</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class="text-center">No</td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class="text-center">No</td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class="text-center">No</td>
-                                                        <td></td>
-                                                    </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade " id="tab-semana-2">
+                                <div class="tab-pane fade" id="tab-semana-2">
                                     <h2 class="text-center">Semana 2</h2>
                                     <br>
                                     <h4 class="text-center">Propósitos seleccionados</h4>
@@ -423,6 +262,30 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                     </thead>
                                                     <tbody>
 
+                                                    <tr>
+                                                        <td>
+                                                            2. Identificar y promover prácticas pedagógicas en términos de experiencias, innovación e investigación pedagógica.
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            3. Identificar y orientar el desarrollo y la divulgación de recursos pedagógicos y didácticos que permitan el mejoramiento de las prácticas escolares.
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            5. Realizar ejercicios de escritura (individuales o colectivos) en relación con las prácticas pedagógicas identificadas en la Institución Educativa.
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            7. Gestionar los espacios, recursos y demás variables requeridas en el acompañamiento de la institución hacia nuevas y mejores prácticas pedagógicas.
+                                                        </td>
+                                                    </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -431,7 +294,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
                                     <hr>
 
-                                    <h4 class="text-center">Actividades planeadas</h4>
+                                    <h4 class="text-center">Planeación por día</h4>
 
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -439,11 +302,21 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                 <table class="table table-striped table-bordered ">
                                                     <thead>
                                                     <tr>
-                                                        <th class="ancho-50-pct">Nombre de la actividad</th>
-                                                        <th>Descripción</th>
+                                                        <th class="ancho-50-pct">Descripción plan</th>
+                                                        <th>Dia</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
+
+                                                    <tr>
+                                                        <td>sfasdfs</td>
+                                                        <td>asdfsadf</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>asfbgdsf</td>
+                                                        <td>asdfasdfesdfasdf</td>
+                                                    </tr>
 
                                                     </tbody>
                                                 </table>
@@ -451,7 +324,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                         </div>
                                     </div>
 
-                                    <hr>
+									
+									<hr>
 
                                     <h4 class="text-center">Resultados esperados</h4>
 
@@ -467,27 +341,15 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                     </thead>
                                                     <tbody>
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <h4 class="text-center">Productos esperados</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
                                                     <tr>
-                                                        <th class="ancho-50-pct">Nombre del producto</th>
-                                                        <th>Descripción</th>
+                                                        <td>sfasdfs</td>
+                                                        <td>asdfsadf</td>
                                                     </tr>
-                                                    </thead>
-                                                    <tbody>
+
+                                                    <tr>
+                                                        <td>asfbgdsf</td>
+                                                        <td>asdfasdfesdfasdf</td>
+                                                    </tr>
 
                                                     </tbody>
                                                 </table>
@@ -505,13 +367,14 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                 <table class="table table-striped table-bordered ">
                                                     <thead>
                                                     <tr>
-                                                        <th>Nombre</th>
+                                                        <th>Descripción visitas</th>
+                                                        <th>Dia</th>
                                                         <th class="ancho-30-pct">¿Se realizó visita?</th>
                                                         <th>Evidencia / Justificación</th>
-                                                        <th>Número de estudiantes</th>
-                                                        <th>Número de docentes</th>
-                                                        <th>Número de directivos</th>
-                                                        <th>Otros</th>
+                                                        <th># estudiantes</th>
+                                                        <th># docentes</th>
+                                                        <th># directivos</th>
+                                                        <th># Otros</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -524,78 +387,10 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
                                     <hr>
 
-                                    <h4 class="text-center">Actividades ejecutadas</h4>
+                                    </div> 
 
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre de la actividad</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se ejecutó la actividad?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <hr>
-
-                                    <h4 class="text-center">Resultados obtenidos</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre del resultado</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se logró el resultado?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <h4 class="text-center">Productos obtenidos</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre del producto</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se logró el producto?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade " id="tab-semana-3">
+                                
+                                 <div class="tab-pane fade" id="tab-semana-3">
                                     <h2 class="text-center">Semana 3</h2>
                                     <br>
                                     <h4 class="text-center">Propósitos seleccionados</h4>
@@ -611,6 +406,30 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                     </thead>
                                                     <tbody>
 
+                                                    <tr>
+                                                        <td>
+                                                            2. Identificar y promover prácticas pedagógicas en términos de experiencias, innovación e investigación pedagógica.
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            3. Identificar y orientar el desarrollo y la divulgación de recursos pedagógicos y didácticos que permitan el mejoramiento de las prácticas escolares.
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            5. Realizar ejercicios de escritura (individuales o colectivos) en relación con las prácticas pedagógicas identificadas en la Institución Educativa.
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>
+                                                            7. Gestionar los espacios, recursos y demás variables requeridas en el acompañamiento de la institución hacia nuevas y mejores prácticas pedagógicas.
+                                                        </td>
+                                                    </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -619,7 +438,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 
                                     <hr>
 
-                                    <h4 class="text-center">Actividades planeadas</h4>
+                                    <h4 class="text-center">Planeación por día</h4>
 
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -627,11 +446,21 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                 <table class="table table-striped table-bordered ">
                                                     <thead>
                                                     <tr>
-                                                        <th class="ancho-50-pct">Nombre de la actividad</th>
-                                                        <th>Descripción</th>
+                                                        <th class="ancho-50-pct">Descripción plan</th>
+                                                        <th>Dia</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
+
+                                                    <tr>
+                                                        <td>sfasdfs</td>
+                                                        <td>asdfsadf</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>asfbgdsf</td>
+                                                        <td>asdfasdfesdfasdf</td>
+                                                    </tr>
 
                                                     </tbody>
                                                 </table>
@@ -639,7 +468,8 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                         </div>
                                     </div>
 
-                                    <hr>
+									
+									<hr>
 
                                     <h4 class="text-center">Resultados esperados</h4>
 
@@ -655,27 +485,15 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                     </thead>
                                                     <tbody>
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <h4 class="text-center">Productos esperados</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
                                                     <tr>
-                                                        <th class="ancho-50-pct">Nombre del producto</th>
-                                                        <th>Descripción</th>
+                                                        <td>sfasdfs</td>
+                                                        <td>asdfsadf</td>
                                                     </tr>
-                                                    </thead>
-                                                    <tbody>
+
+                                                    <tr>
+                                                        <td>asfbgdsf</td>
+                                                        <td>asdfasdfesdfasdf</td>
+                                                    </tr>
 
                                                     </tbody>
                                                 </table>
@@ -693,13 +511,14 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                                 <table class="table table-striped table-bordered ">
                                                     <thead>
                                                     <tr>
-                                                        <th>Nombre</th>
+                                                        <th>Descripción visitas</th>
+                                                        <th>Dia</th>
                                                         <th class="ancho-30-pct">¿Se realizó visita?</th>
                                                         <th>Evidencia / Justificación</th>
-                                                        <th>Número de estudiantes</th>
-                                                        <th>Número de docentes</th>
-                                                        <th>Número de directivos</th>
-                                                        <th>Otros</th>
+                                                        <th># estudiantes</th>
+                                                        <th># docentes</th>
+                                                        <th># directivos</th>
+                                                        <th># Otros</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -710,81 +529,7 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
                                         </div>
                                     </div>
 
-                                    <hr>
-
-                                    <h4 class="text-center">Actividades ejecutadas</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre de la actividad</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se ejecutó la actividad?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <hr>
-
-                                    <h4 class="text-center">Resultados obtenidos</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre del resultado</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se logró el resultado?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <h4 class="text-center">Productos obtenidos</h4>
-
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table table-striped table-bordered ">
-                                                    <thead>
-                                                    <tr>
-                                                        <th class="ancho-25-pct">Nombre del producto</th>
-                                                        <th class="ancho-25-pct">Descripción</th>
-                                                        <th>¿Se logró el producto?</th>
-                                                        <th class="ancho-25-pct">Justificación</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+								</div>
 
 
                     </div>

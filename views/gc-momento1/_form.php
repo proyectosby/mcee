@@ -19,6 +19,7 @@ $id_semana= $_GET['id'];
 $id_momento1= 1;
 ?>
     
+	<?= Html::a('Volver',["gc-bitacora/view2&id=$id_semana",],['class' => 'btn btn-info']) ?>
 	
 	<section class="form-box" >
             <div class="container">
