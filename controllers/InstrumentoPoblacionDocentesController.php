@@ -178,7 +178,9 @@ class InstrumentoPoblacionDocentesController extends Controller
 		return Json::encode( $data );
 	}
 	
-	function actionNivelesPorSedesPorDocente(){
+	function actionNivelesPorSedesPorDocente()
+	{
+		return;
 		
 		$sede 		 = Yii::$app->request->get('sede');
 		$institucion = Yii::$app->request->get('institucion');
