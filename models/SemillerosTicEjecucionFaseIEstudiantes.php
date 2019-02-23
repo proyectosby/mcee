@@ -40,12 +40,12 @@ class SemillerosTicEjecucionFaseIEstudiantes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'id_ciclo'], 'required'],
-            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'id_ciclo'], 'default', 'value' => null],
-            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'id_ciclo', 'numero_estudiantes', 'apps_creadas', 'sesiones_empleadas','participacion_sesiones'], 'integer'],
+            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion'], 'required'],
+            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado'], 'default', 'value' => null],
+            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'numero_estudiantes', 'apps_creadas', 'sesiones_empleadas','participacion_sesiones'], 'integer'],
             [['aplicaciones_creadas', 'acciones_realizadas', 'problemas_creacion', 'competencias_inferidas', 'observaciones'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
-            [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
+            // [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
             [['id_datos_ieo_profesional_estudiantes'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesionalEstudiantes::className(), 'targetAttribute' => ['id_datos_ieo_profesional_estudiantes' => 'id']],
             [['id_datos_sesion'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosSesiones::className(), 'targetAttribute' => ['id_datos_sesion' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
@@ -73,6 +73,7 @@ class SemillerosTicEjecucionFaseIEstudiantes extends \yii\db\ActiveRecord
             'competencias_inferidas' => 'Competencias Inferidas',
             'observaciones' => 'Observaciones',
             'id_ciclo' => 'Id Ciclo',
+            'anio' => 'Año',
             'estudiantes_id' => 'Estudiantes Id',
         ];
     }

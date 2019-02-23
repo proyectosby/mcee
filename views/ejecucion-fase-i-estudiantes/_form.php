@@ -83,6 +83,8 @@ if( $guardado ){
 		<?= Html::a('Volver', 
 									[
 										'semilleros/index',
+										'esDocente' => $esDocente,
+										'anio' 		=> $anio,
 									], 
 									['class' => 'btn btn-info']) ?>
 				
@@ -109,7 +111,13 @@ if( $guardado ){
 
 	<h3 style='background-color:#ccc;padding:5px;'><?= Html::encode( 'DATOS IEO' ) ?></h3>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([ 
+							'action'=> Yii::$app->urlManager->createUrl([
+												'ejecucion-fase-i-estudiantes/create', 
+												'anio' 		=> $anio, 
+												'esDocente' => $esDocente, 
+											]) 
+						]); ?>
 
     <?= $form->field($profesional, 'id_institucion')->dropDownList([ $institucion->id => $institucion->descripcion ])->label( 'Institución educativa' )?>
 
@@ -143,13 +151,13 @@ if( $guardado ){
     ])->label( 'Curso de los participantes' ); ?>
 
     <?= $form->field($profesional, "estudiantes_id")
-        ->hiddenInput()
-        ->label(null,['style'=>'display:none'])?>
+			->hiddenInput()
+			->label(null,['style'=>'display:none'])?>
 
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
     
 	<?php 	
-		if(!empty( $profesional->id_profesional_a ) && !empty( $profesional->curso_participantes ))
+		if( true || !empty( $profesional->id_profesional_a ) && !empty( $profesional->curso_participantes ))
 		{	
 			echo $this->render( 'sesiones', [ 
 						'datosModelos' 	=> $datosModelos,

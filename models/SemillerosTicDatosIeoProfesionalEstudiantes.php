@@ -32,9 +32,9 @@ class SemillerosTicDatosIeoProfesionalEstudiantes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['estado', 'id_institucion', 'id_sede', 'id_profesional_a', 'curso_participantes'], 'required'],
+            [['estado', 'id_institucion', 'id_sede', 'id_profesional_a', 'curso_participantes','anio'], 'required'],
             [['estado', 'id_institucion', 'id_sede', 'id_profesional_a', 'curso_participantes'], 'default', 'value' => null],
-            [['estado', 'id_institucion', 'id_sede'], 'integer'],
+            [['estado', 'id_institucion', 'id_sede','anio'], 'integer'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
@@ -54,6 +54,7 @@ class SemillerosTicDatosIeoProfesionalEstudiantes extends \yii\db\ActiveRecord
             'id_profesional_a' => 'Id Profesional A',
             'curso_participantes' => 'Curso Participantes',
             'estudiantes_id' => 'Estudiantes Id',
+            'anio' => 'Año',
         ];
     }
 }
