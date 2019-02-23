@@ -224,25 +224,26 @@
 	 }, 5000 );
 	
 	
-	/********************************************************************************
-	 * Si el usuario cambia el profesional o el curso de los participantes
-	 * se recarga la página con los nuevos datos y no se guarda nada
-	 ********************************************************************************/
-	$( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).change(function(){
+	// /********************************************************************************
+	 // * Si el usuario cambia el profesional o el curso de los participantes
+	 // * se recarga la página con los nuevos datos y no se guarda nada
+	 // ********************************************************************************/
+	// $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).change(function(){
 		
-		// if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
-		if( $( this ).val() != '' )
-		{
-			$( "#guardar" ).val(0)
-			this.form.submit();
-		}
-	});
+		// // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
+		// if( $( this ).val() != '' )
+		// {
+			// $( "#guardar" ).val(0)
+			// this.form.submit();
+		// }
+	// });
+	
     $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).change(function(){
 
         // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
         if( $( this ).val() != '' )
         {
-            $( "#guardar" ).val(0);
+            // $( "#guardar" ).val(0);
             var  selectChange = $(this);
             var gradoEstudiantes = $( this ).val();
             var data = {
@@ -306,9 +307,9 @@
             estudiantes.val(JSON.stringify(listEstudiante));
         }
 
-        $('#guardarEstudiantes').click(function () {
-            $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).submit()
-        });
+        // $('#guardarEstudiantes').click(function () {
+            // $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).submit()
+        // });
     }
 	
 	

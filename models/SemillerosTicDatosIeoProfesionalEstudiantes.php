@@ -38,6 +38,7 @@ class SemillerosTicDatosIeoProfesionalEstudiantes extends \yii\db\ActiveRecord
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],
             [['id_sede'], 'exist', 'skipOnError' => true, 'targetClass' => Sedes::className(), 'targetAttribute' => ['id_sede' => 'id']],
+            [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => Fases::className(), 'targetAttribute' => ['id_fase' => 'id']],
         ];
     }
 
@@ -55,6 +56,7 @@ class SemillerosTicDatosIeoProfesionalEstudiantes extends \yii\db\ActiveRecord
             'curso_participantes' => 'Curso Participantes',
             'estudiantes_id' => 'Estudiantes Id',
             'anio' => 'Año',
+            'id_fase' => 'Fase',
         ];
     }
 }

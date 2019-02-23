@@ -154,7 +154,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
     {
 		// echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
 		//$ciclo = new SemillerosTicCiclos();
-		$anio = new SemillerosTicAnio();
+		// $anio = new SemillerosTicAnio();
 		
 		//$ciclo->load( Yii::$app->request->post() );
 		
@@ -166,6 +166,8 @@ class EjecucionFaseIiEstudiantesController extends Controller
 			//$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
 		//	$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
 		//}
+		$anio 		= Yii::$app->request->get('anio');
+		$esDocente 	= Yii::$app->request->get('esDocente');
 		
 		$id_sede 		= $_SESSION['sede'][0];
 		$id_institucion	= $_SESSION['instituciones'][0];
@@ -215,11 +217,14 @@ class EjecucionFaseIiEstudiantesController extends Controller
 		$postDatosProfesional = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes');
 		
 		$datosIeoProfesional = false;
-		if( $id_institucion && $postDatosProfesional['id_profesional_a'] )
+		if( $id_institucion && $id_sede && $anio )
 		{
 			$datosIeoProfesional 		= SemillerosTicDatosIeoProfesionalEstudiantes::findOne([
 											'id_institucion'		=> $id_institucion,
-											'id_profesional_a'		=> $postDatosProfesional['id_profesional_a'],
+											'id_sede'				=> $id_sede,
+											'id_fase'				=> $this->id_fase,
+											'anio'					=> $anio,
+											// 'id_profesional_a'		=> $postDatosProfesional['id_profesional_a'],
 											//'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
 										  ]);
 		}
@@ -227,6 +232,13 @@ class EjecucionFaseIiEstudiantesController extends Controller
 		if( !$datosIeoProfesional )
 		{
 			$datosIeoProfesional = new SemillerosTicDatosIeoProfesionalEstudiantes();
+			$datosIeoProfesional->load(Yii::$app->request->post());
+		}
+		else
+		{
+			$datosIeoProfesional->id_profesional_a = explode( ",", $datosIeoProfesional->id_profesional_a );
+			$datosIeoProfesional->curso_participantes = explode( ",", $datosIeoProfesional->curso_participantes );
+			
 			$datosIeoProfesional->load(Yii::$app->request->post());
 		}
 		
@@ -241,6 +253,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 					$ejecucionesFases = SemillerosTicEjecucionFaseIiEstudiantes::find()
 											->where( 'id_fase='.$this->id_fase )
 											//->andWhere( 'id_ciclo='.$ciclo->id )
+											->andWhere( 'anio='.$anio )
 											->andWhere( 'id_datos_ieo_profesional_estudiantes='.$datosIeoProfesional->id )
 											->andWhere( 'estado=1' )
 											->all();
@@ -253,12 +266,15 @@ class EjecucionFaseIiEstudiantesController extends Controller
 						
 						$datosModelos[ $ds->id_sesion ][ 'datosSesion' ] 		= $ds;
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
+						
+						$datosIeoProfesional->estudiantes_id = $ejecucionFase->estudiantes_id;
 					}
 				}
 				
 				$condiciones = SemillerosTicCondicionesInstitucionalesEstudiantes::findOne([ 
 										'id_datos_ieo_profesional_estudiantes' 	=> $datosIeoProfesional->id,
 										'id_fase'								=> $this->id_fase,
+										'anio'									=> $anio,
 										//'id_ciclo'								=> $ciclo->id,
 									]);
 				
@@ -318,6 +334,8 @@ class EjecucionFaseIiEstudiantesController extends Controller
 								$ef->load( $ejecucionFase, '' );
 								
 								$datosModelos[ $sesion_id ][ 'ejecucionesFase' ][] = $ef;
+								
+								$datosIeoProfesional->estudiantes_id = $ef->estudiantes_id;
 							}
 						}
 					}
@@ -386,17 +404,22 @@ class EjecucionFaseIiEstudiantesController extends Controller
 				
 				if( $valido )
 				{
-					$datosIeoProfesional->id_institucion = $id_institucion;
-					$datosIeoProfesional->id_sede = $id_sede;
-					$datosIeoProfesional->estado = 1;
+					$datosIeoProfesional->id_institucion 	= $id_institucion;
+					$datosIeoProfesional->id_sede 			= $id_sede;
+					$datosIeoProfesional->estado 			= 1;
+					$datosIeoProfesional->anio 				= $anio;
+					$datosIeoProfesional->id_fase 			= $this->id_fase;
+					
                     if( is_array($datosIeoProfesional->curso_participantes) )
                         $datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
-                    if( is_array($datosIeoProfesional->id_profesional_a) )
-                        $datosIeoProfesional->id_profesional_a = implode(",", $datosIeoProfesional->id_profesional_a);
-                    $datosIeoProfesional->save( false );
+                    
+					if( is_array($datosIeoProfesional->id_profesional_a) )
+                        $datosIeoProfesional->id_profesional_a	= implode(",", $datosIeoProfesional->id_profesional_a);
+					
+					$datosIeoProfesional->save( false );
 
-                    $datosIeoProfesional->curso_participantes = explode(",", $datosIeoProfesional->curso_participantes);
-
+                    $datosIeoProfesional->curso_participantes 	= explode(",", $datosIeoProfesional->curso_participantes);
+                    $datosIeoProfesional->id_profesional_a 		= explode(",", $datosIeoProfesional->id_profesional_a);
 
                     foreach( $datosModelos as $sesion_id => $modelo )
 					{
@@ -416,6 +439,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 									$ejecucionFase->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 									$ejecucionFase->id_datos_sesion 						= $modelo[ 'datosSesion' ]->id;
 									$ejecucionFase->id_fase 								= $this->id_fase;
+									$ejecucionFase->anio 									= $anio;
 									//$ejecucionFase->id_ciclo 								= $ciclo->id;
 									$ejecucionFase->estado 									= 1;
 									$ejecucionFase->save(false);
@@ -427,6 +451,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 					
 					$condiciones->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 					$condiciones->id_fase 								= $this->id_fase;
+					$condiciones->anio	 								= $anio;
 					//$condiciones->id_ciclo 								= $ciclo->id;
 					$condiciones->estado 								= 1;
 					$condiciones->save(false);
@@ -481,10 +506,10 @@ class EjecucionFaseIiEstudiantesController extends Controller
 
         $cursos = [];
 		
-		$post_profesional_a = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes')['id_profesional_a'];
+		// $post_profesional_a = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes')['id_profesional_a'];
 		
-		if( $post_profesional_a )
-		{
+		// if( $post_profesional_a )
+		// {
 			/*$dataCursos = AcuerdosInstitucionalesEstudiantes::find()
 								->alias( 'ae' )
 								->innerJoin( 'semilleros_tic.semilleros_datos_ieo_estudiantes se', 'se.id=ae.id_semilleros_datos_estudiantes' )
@@ -510,22 +535,22 @@ class EjecucionFaseIiEstudiantesController extends Controller
 				}
 			}*/
 			$dataCursos = 	Paralelos::find()
-            ->alias( 'p' )
-            ->innerJoin( 'sedes_jornadas as sj', 'sj.id=p.id_sedes_jornadas' )
-            ->innerJoin( 'sedes_niveles as sn', 'sn.id=p.id_sedes_niveles' )
-            ->innerJoin( 'jornadas as j', 'j.id=sj.id_jornadas' )
-            ->innerJoin( 'niveles as n', 'n.id=sn.id_niveles' )
-            ->innerJoin( 'sedes as s', 's.id=sn.id_sedes' )
-            ->where( 's.id='.$id_sede )
-            ->andWhere( 'sj.id_sedes = s.id' )
-            ->andWhere( 'j.estado=1' )
-            ->andWhere( 'n.estado=1' )
-            ->andWhere( 's.estado=1' )
-            ->orderby( 'descripcion' )
-            ->all();
+									->alias( 'p' )
+									->innerJoin( 'sedes_jornadas as sj', 'sj.id=p.id_sedes_jornadas' )
+									->innerJoin( 'sedes_niveles as sn', 'sn.id=p.id_sedes_niveles' )
+									->innerJoin( 'jornadas as j', 'j.id=sj.id_jornadas' )
+									->innerJoin( 'niveles as n', 'n.id=sn.id_niveles' )
+									->innerJoin( 'sedes as s', 's.id=sn.id_sedes' )
+									->where( 's.id='.$id_sede )
+									->andWhere( 'sj.id_sedes = s.id' )
+									->andWhere( 'j.estado=1' )
+									->andWhere( 'n.estado=1' )
+									->andWhere( 's.estado=1' )
+									->orderby( 'descripcion' )
+									->all();
 
             $cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
-		}
+		// }
 
         return $this->render('create', [
             'datosModelos'	=> $datosModelos,
@@ -539,6 +564,7 @@ class EjecucionFaseIiEstudiantesController extends Controller
 			'guardado'		=> $guardado,
 			'cursos'		=> $cursos,
 			'anio'			=> $anio,
+			'esDocente'		=> $esDocente,
         ]);
     }
 

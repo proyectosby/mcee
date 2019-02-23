@@ -219,6 +219,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 			$datosIeoProfesional 		= SemillerosTicDatosIeoProfesionalEstudiantes::findOne([
 											'id_institucion'		=> $id_institucion,
 											'id_sede'				=> $id_sede,
+											'id_fase'				=> $this->id_fase,
 											'anio'					=> $anio,
 											// 'id_profesional_a'		=> implode( $postDatosProfesional['id_profesional_a'] ),
 											//'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
@@ -389,9 +390,10 @@ class EjecucionFaseIEstudiantesController extends Controller
 				if( $valido )
 				{
 					$datosIeoProfesional->id_institucion = $id_institucion;
-					$datosIeoProfesional->id_sede = $id_sede;
-					$datosIeoProfesional->anio = $anio;
-					$datosIeoProfesional->estado = 1;
+					$datosIeoProfesional->id_sede 		= $id_sede;
+					$datosIeoProfesional->anio 			= $anio;
+					$datosIeoProfesional->id_fase 		= $this->id_fase;
+					$datosIeoProfesional->estado 		= 1;
 					
 					if( is_array($datosIeoProfesional->curso_participantes) )
 						$datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
