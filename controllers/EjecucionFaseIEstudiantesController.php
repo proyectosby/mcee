@@ -233,6 +233,8 @@ class EjecucionFaseIEstudiantesController extends Controller
 		else{
 			$datosIeoProfesional->id_profesional_a = explode( ",", $datosIeoProfesional->id_profesional_a );
 			$datosIeoProfesional->curso_participantes = explode( ",", $datosIeoProfesional->curso_participantes );
+			
+			$datosIeoProfesional->load(Yii::$app->request->post());
 		}
 
         if( $datosIeoProfesional )
@@ -260,6 +262,8 @@ class EjecucionFaseIEstudiantesController extends Controller
                         //$ejecucionFase->id_datos_ieo_profesional_estudiantes = explode( ",", $ejecucionFase->id_datos_ieo_profesional_estudiantes );
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
 
+						$datosIeoProfesional->estudiantes_id = $ejecucionFase->estudiantes_id;
+						
                         // $ejecucionFase->estudiantes_id = Yii::$app->request->post()["SemillerosTicDatosIeoProfesionalEstudiantes"]["estudiantes_id"];
                         // $ejecucionFase->save(false);
 					}
@@ -326,6 +330,8 @@ class EjecucionFaseIEstudiantesController extends Controller
 
 								$ef->load( $ejecucionFase, '' );
 								$datosModelos[ $sesion_id ][ 'ejecucionesFase' ][] = $ef;
+								
+								$datosIeoProfesional->estudiantes_id = $ef->estudiantes_id;
 							}
 						}
 					}
