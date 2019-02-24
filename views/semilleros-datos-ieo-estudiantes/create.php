@@ -18,7 +18,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\SemillerosDatosIeoEstudiantes */
 
-$this->title = 'CONFORMACIÓN SEMILLEROS TIC ESTUDIANTES '.$anio->descripcion;//." - ".$ciclo->descripcion;
+$this->title = 'CONFORMACIÓN SEMILLEROS TIC ESTUDIANTES '.$anio;//." - ".$ciclo->descripcion;
 $this->params['breadcrumbs'][] = ['label' => 'Conformación Semilleros TIC Estudiantes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
@@ -44,6 +44,8 @@ $this->params['breadcrumbs'][] = "Agregar";
 		//'ciclo'				=> $ciclo,
 		'guardado'			=> $guardado,
 		'cursos'			=> $cursos,
+		'esDocente'			=> $esDocente,
+		'anio'				=> $anio,
     ]) ?>
 
 </div>

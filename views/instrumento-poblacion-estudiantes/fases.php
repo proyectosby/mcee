@@ -33,6 +33,7 @@
 			<th rowspan=2>Estudiantes</th>
 			<th rowspan=2>Tipo de<br>Identificación</th>
 			<th rowspan=2>Número de<br>Identificación</th>
+			<th rowspan=2>Curso</th>
 			<th colspan=3> Creación Semilleros TIC </th>
 			<?php foreach( $fases as $key => $fase ) : ?>	
 				<th rowspan=2><?= $fase['descripcion'] ?></th>
@@ -59,6 +60,8 @@
 						<td><?= $docente['info']['tipoIdentificacion'] ?></td>
 						
 						<td><?= $docente['info']['numeroIdentificacion'] ?></td>
+						
+						<td><?= $docente['info']['curso'] ?></td>
 						
 						<?php foreach( $fases as $key => $fase ) : ?>	
 							<td><?= !empty( $docente['Creación'][ $fase->id ] ) ? implode( " - ", $docente['Creación'][ $fase->id ] ) : '' ?></td>

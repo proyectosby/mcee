@@ -177,9 +177,21 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 		
 		foreach( $dataPersonas as $key => $estudiante )
 		{
-			$agregar = true;
+			$agregar = false;
 			
 			$ti = TiposIdentificaciones::findOne( $estudiante['id_tipos_identificaciones'] );
+			
+			$paralelos = Paralelos::find()
+								->innerJoin( 'estudiantes e', 'e.id_paralelos=paralelos.id' )
+								->innerJoin( 'perfiles_x_personas pp', 'pp.id=e.id_perfiles_x_personas' )
+								->innerJoin( 'personas p', 'p.id=pp.id_personas' )
+								->innerJoin( 'sedes_niveles sn', 'sn.id=paralelos.id_sedes_niveles' )
+								->where( 'p.id='.$estudiante['id'] )
+								->andWhere( 'pp.estado=1' )
+								->andWhere( 'e.estado=1' )
+								->andWhere( 'paralelos.estado=1' )
+								->andWhere( 'p.estado=1' )
+								->one();
 			
 			// var_dump( $docente['id'] ); exit();
 			$dato = [
@@ -188,6 +200,7 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 													'nombre' 				=> $estudiante['nombres'], 
 													'tipoIdentificacion' 	=> $ti ? $ti->descripcion : 'Sin Identificación', 
 													'numeroIdentificacion' 	=> $estudiante['identificacion'],
+													'curso' 				=> $paralelos->descripcion,
 												],
 								'Creación'	=> 	[],
 								'Fases'		=> 	[],
@@ -206,57 +219,57 @@ class InstrumentoPoblacionEstudiantesController extends Controller
 			
 			foreach( $acuerdos as $k => $v ){
 				$agregar = true;
-				$dato[ $estudiante->id ]['Creación'][ $v->id_fase ][] = $v->id_ciclo;
+				$dato[ $estudiante->id ]['Creación'][ $v->id_fase ][] = $v->anio;
 			}			
 						
 			
 					
-			// $fase1 = SemillerosTicEjecucionFaseIEstudiantes::find()
-								// ->alias( 'f1' )
-								// // ->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f1.id_datos_ieo_profesional_estudiantes' )
-								// ->where( 'f1.estado=1' )
-								// // ->andWhere( 'dpe.estado=1' )
-								// ->andWhere( "f1.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
-								// ->all();
+			$fase1 = SemillerosTicEjecucionFaseIEstudiantes::find()
+								->alias( 'f1' )
+								// ->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f1.id_datos_ieo_profesional_estudiantes' )
+								->where( 'f1.estado=1' )
+								// ->andWhere( 'dpe.estado=1' )
+								->andWhere( "f1.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
+								->all();
 								
-			// foreach( $fase1 as $k => $v ){
-				// $agregar = true;
-				// $dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->id_ciclo;
-			// }
+			foreach( $fase1 as $k => $v ){
+				$agregar = true;
+				$dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->anio;
+			}
 			
-			// $fase2 = SemillerosTicEjecucionFaseIiEstudiantes::find()
-								// ->alias( 'f2' )
-								// // ->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f2.id_datos_ieo_profesional_estudiantes' )
-								// ->where( 'f2.estado=1' )
-								// // ->andWhere( 'dpe.estado=1' )
-								// ->andWhere( "f2.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
-								// ->all();
+			$fase2 = SemillerosTicEjecucionFaseIiEstudiantes::find()
+								->alias( 'f2' )
+								// ->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f2.id_datos_ieo_profesional_estudiantes' )
+								->where( 'f2.estado=1' )
+								// ->andWhere( 'dpe.estado=1' )
+								->andWhere( "f2.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
+								->all();
 								
-			// foreach( $fase2 as $k => $v ){
-				// $agregar = true;
-				// $dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->id_ciclo;
-			// }
+			foreach( $fase2 as $k => $v ){
+				$agregar = true;
+				$dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->anio;
+			}
 			
-			// $fase3 = SemillerosTicEjecucionFaseIiiEstudiantes::find()
-								// ->alias( 'f3' )
-								// // ->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f3.id_datos_ieo_profesional_estudiantes' )
-								// ->where( 'f3.estado=1' )
-								// // ->andWhere( 'dpe.estado=1' )
-								// ->andWhere( "f3.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
-								// ->all();
+			$fase3 = SemillerosTicEjecucionFaseIiiEstudiantes::find()
+								->alias( 'f3' )
+								// ->innerJoin( 'semilleros_tic.datos_ieo_profesional_estudiantes dpe', 'dpe.id=f3.id_datos_ieo_profesional_estudiantes' )
+								->where( 'f3.estado=1' )
+								// ->andWhere( 'dpe.estado=1' )
+								->andWhere( "f3.estudiantes_id LIKE '%\"".$estudiante['id']."\"%'" )
+								->all();
 								
-			// foreach( $fase2 as $k => $v ){
-				// $agregar = true;
-				// $dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->id_ciclo;
-			// }
+			foreach( $fase3 as $k => $v ){
+				$agregar = true;
+				$dato[ $estudiante->id ]['Fases'][ $v->id_fase ][] = $v->anio;
+			}
 			
-			$dato[ $estudiante->id ]['Fases'][ 1 ][] = rand(2016,2019);
-			$dato[ $estudiante->id ]['Fases'][ 2 ][] = rand(2016,2019);
-			$dato[ $estudiante->id ]['Fases'][ 3 ][] = rand(2016,2019);
+			// $dato[ $estudiante->id ]['Fases'][ 1 ][] = rand(2016,2019);
+			// $dato[ $estudiante->id ]['Fases'][ 2 ][] = rand(2016,2019);
+			// $dato[ $estudiante->id ]['Fases'][ 3 ][] = rand(2016,2019);
 			
-			$dato[ $estudiante->id ]['Creación'][ 1 ][] = rand(2016,2019);
-			$dato[ $estudiante->id ]['Creación'][ 2 ][] = rand(2016,2019);
-			$dato[ $estudiante->id ]['Creación'][ 3 ][] = rand(2016,2019);
+			// $dato[ $estudiante->id ]['Creación'][ 1 ][] = rand(2016,2019);
+			// $dato[ $estudiante->id ]['Creación'][ 2 ][] = rand(2016,2019);
+			// $dato[ $estudiante->id ]['Creación'][ 3 ][] = rand(2016,2019);
 			
 			if( $agregar )
 			{
