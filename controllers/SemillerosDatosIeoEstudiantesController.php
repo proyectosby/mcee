@@ -161,19 +161,22 @@ class SemillerosDatosIeoEstudiantesController extends Controller
     {	//echo "<pre>"; var_dump(Yii::$app->request->post()); echo "</pre>";
         //die();
 
-		$ciclo = new SemillerosTicCiclos();
-		$anio = new SemillerosTicAnio();
+		// $ciclo = new SemillerosTicCiclos();
+		// $anio = new SemillerosTicAnio();
 		
-		$ciclo->load( Yii::$app->request->post() );
+		// $ciclo->load( Yii::$app->request->post() );
 		
-		//Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
-		if( empty( $ciclo->id ) ){
-			//return $this->actionCiclos();
-		}
-		else{
-			$ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
-			$anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
-		}
+		// //Si no hay un ciclo se pide el ciclo, para ello se llama a la vista ciclos
+		// if( empty( $ciclo->id ) ){
+			// //return $this->actionCiclos();
+		// }
+		// else{
+			// $ciclo = SemillerosTicCiclos::findOne( $ciclo->id );
+			// $anio = SemillerosTicAnio::findOne( $ciclo->id_anio );
+		// }
+		
+		$anio 		= Yii::$app->request->get('anio');
+		$esDocente 	= Yii::$app->request->get('esDocente');
 		
 		$id_institucion	= $_SESSION['instituciones'][0];
 		$id_sede 		= $_SESSION['sede'][0];
@@ -183,7 +186,8 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 		$datosIEO = SemillerosDatosIeoEstudiantes::findOne([
 							'id_institucion' 		=> $id_institucion,
 							'id_sede' 		 		=> $id_sede,
-							'id_ciclo' 		 		=> $ciclo->id,
+							'anio' 		 			=> $anio,
+							// 'id_ciclo' 		 		=> $ciclo->id,
 						]);
 						
 		if( $datosIEO )
@@ -223,6 +227,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 				$acuerdos = AcuerdosInstitucionalesEstudiantes::find()
 								->where( 'estado=1' )
 								//->andWhere( 'id_ciclo='.$ciclo->id )
+								->andWhere( 'anio='.$anio )
 								->andWhere( 'id_semilleros_datos_estudiantes='.$datosIEO->id )
 								->all();
 				
@@ -294,6 +299,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 			{
 				$datosIEO->estado 			= 1;
 				$datosIEO->id_sede			= $id_sede;
+                $datosIEO->anio				= $anio;
 				//$datosIEO->id_ciclo			= $ciclo->id;
 				$datosIEO->profecional_a	= implode( ',', $datosIEO->profecional_a );
                 $datosIEO->docente_aliado	= implode( ',', $datosIEO->docente_aliado );
@@ -311,7 +317,8 @@ class SemillerosDatosIeoEstudiantesController extends Controller
 						{
 							$value->id_semilleros_datos_estudiantes = $datosIEO->id;
 							$value->id_fase 				= $id_fase;
-							$value->id_ciclo 				= $ciclo->id;
+							// $value->id_ciclo 				= $ciclo->id;
+							$value->anio 					= $anio;
 							$value->estado 					= 1;
                             $value->curso 					= implode( ',', $value->curso );
 							$value->save( false );
@@ -421,6 +428,7 @@ class SemillerosDatosIeoEstudiantesController extends Controller
             'guardado'			=> $guardado,
             'cursos'			=> $cursos,
 			'anio'				=> $anio,
+			'esDocente'			=> $esDocente,
         ]);
     }
 
