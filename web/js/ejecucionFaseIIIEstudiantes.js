@@ -219,7 +219,14 @@
         // }
     // });
     $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).change(function(){
+        var estudiantes_id = $('#semillerosticdatosieoprofesionalestudiantes-estudiantes_id').val();
+        var keysCursos = [];
 
+        if (estudiantes_id !== ''){
+            $.each(JSON.parse(estudiantes_id), function( index, value ) {
+                keysCursos[index] = index;
+            });
+        }
         // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
         if( $( this ).val() != '' )
         {
