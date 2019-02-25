@@ -211,19 +211,28 @@
         // }
     // });
     $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).change(function(){
-
+        var estudiantes_id = $('#semillerosticdatosieoprofesionalestudiantes-estudiantes_id').val();
+        var keysCursos = [];
+        
+        if (estudiantes_id !== ''){
+            $.each(JSON.parse(estudiantes_id), function( index, value ) {
+                keysCursos[index] = index;
+            });
+		}
         // if( $( "#semillerosticdatosieoprofesionalestudiantes-id_profesional_a" ).val() != '' && $( "#semillerosticdatosieoprofesionalestudiantes-curso_participantes" ).val() != '' )
         if( $( this ).val() != '' )
         {
             // $( "#guardar" ).val(0);
+            
             var  selectChange = $(this);
             var gradoEstudiantes = $( this ).val();
             var data = {
                 id: gradoEstudiantes[gradoEstudiantes.length-1]
             };
+            var curso = '';
             $.post( 'index?r=semilleros-datos-ieo-estudiantes%2Fget-estudiantes', data )
                 .done(function( data ) {
-                    var curso = $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text();
+                    curso = $('select option[value='+ gradoEstudiantes[gradoEstudiantes.length-1] +']').eq(0).text();
                     $('#ModalLabel').text('Estudiantes del Curso  ' + curso);
                     $('#listEstudiantes').empty();
                     var buscarCurso = selectChange.attr('id');
@@ -240,9 +249,36 @@
                             });
                         }*/
                     });
-                });
 
-            $('#exampleModal').modal({ show: true});
+                    var estudiantes = $('#semillerosticdatosieoprofesionalestudiantes-estudiantes_id');
+                    var listEstudiante = estudiantes.val();
+                    if (listEstudiante === ''){
+                        listEstudiante = {};
+                    }else{
+                        listEstudiante = JSON.parse(listEstudiante)
+                    }
+
+                    if (estudiantes_id !== ''){
+                        if(!(curso in JSON.parse(estudiantes_id))) {
+                            $('#exampleModal').modal({ show: true});
+                        }
+                    }else {
+                        $('#exampleModal').modal({ show: true});
+                    }
+
+					listEstudiante[curso] = [];
+					listEstudiante[curso][0] = '';
+
+                    $('.search-choice-close').click(function () {
+                        curso = $(this).parent().find('span').text();
+                        console.log(curso);
+                        delete listEstudiante[curso];
+
+                        estudiantes.val(JSON.stringify(listEstudiante));
+                    });
+
+					estudiantes.val(JSON.stringify(listEstudiante));
+                });
         }
     });
 

@@ -101,7 +101,7 @@ if( $guardado ){
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="guardarEstudiantes">Guardar estudiantes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" id="cerrarModal" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -144,14 +144,11 @@ if( $guardado ){
             'search_contains' => true,
             'single_backstroke_delete' => false,
         ],
-        'options' => [
-                //'onchange' => 'alert("ok")'
-        ],
         'placeholder' => 'Curso de los participantes',
     ])->label( 'Curso de los participantes' ); ?>
 
     <?= $form->field($profesional, "estudiantes_id")
-			->hiddenInput()
+			//->hiddenInput()
 			->label(null,['style'=>'display:none'])?>
 
 	<?= Html::hiddenInput( 'guardar', 1, [ 'id' => 'guardar', 'value' => 1 ]) ?>
