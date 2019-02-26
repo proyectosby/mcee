@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Formulario EJECUCION FASE III
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-25
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se quita campo número de estudiantes cultivadores y docentes creadores se deja como multiplo
+---------------------------------------
 Fecha: 2018-09-18
 Persona encargada: Edwin Molina Grisales
 Cambios realizados: Se cambia los campo input de cada sección por textarea, y se le agrega el plugin Textarea, para poderlos editar
@@ -94,14 +98,10 @@ use dosamigos\datepicker\DatePicker;
 			</div>
 			
 			<div class='col-sm-1'>
-				<span total class='form-control' style='background-color:#ccc;'>Número de estudiantes cultivadores</span>
-			</div>
-			
-			<div class='col-sm-1'>
 				<span total class='form-control' style='background-color:#ccc;'>Número de Apps 0.0 usadas</span>
 			</div>
 			
-			<div class='col-sm-2'>
+			<div class='col-sm-3'>
 				<span total class='form-control' style='background-color:#ccc;'>Nombre de las aplicaciones usadas</span>
 			</div>
 			
@@ -120,7 +120,7 @@ use dosamigos\datepicker\DatePicker;
 					Chosen::className(), [
 						'items' => $docentes,
 						'disableSearch' => 5, // Search input will be disabled while there are fewer than 5 items
-						'multiple' => false,
+						'multiple' => true,
 						'clientOptions' => [
 							'search_contains' => true,
 							'single_backstroke_delete' => false,
@@ -147,15 +147,11 @@ use dosamigos\datepicker\DatePicker;
 						])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
-			<div class='col-sm-1 estudiantes'>
-				<?= $form->field( $model, "[$index]numero_estudiantes" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,['style'=>'display:none']) ?>
-			</div>
-			
 			<div class='col-sm-1 apps'>
 				<?= $form->field( $model, "[$index]numero_apps_usadas" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'number'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
-			<div class='col-sm-2'>
+			<div class='col-sm-3'>
 				<?= $form->field( $model, "[$index]nombre_aplicaciones" )->textarea( [ 'class' => 'form-control', 'maxlength' => true, 'data-type' => 'textarea'])->label(null,['style'=>'display:none']) ?>
 			</div>
 			
@@ -314,7 +310,7 @@ use dosamigos\datepicker\DatePicker;
 		
 	<?php //echo $form->field( $model, "[$index]total_aplicaciones_usadas" )->textInput()->label( 'Total aplicaciones usadas' )?>
 
-    <?= $form->field( $model, "[$index]estudiantes_cultivadores" )->textInput([ 'readonly' => 'readonly' ])->label( 'Número de estudiantes cultivadores' ) ?>
+    <?= $form->field( $model, "[$index]estudiantes_cultivadores" )->textInput([ 'readonly' => 'readonly' ])->label( 'Número de docentes creadores' ) ?>
 		
 	</div>
 

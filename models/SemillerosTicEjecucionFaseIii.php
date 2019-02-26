@@ -57,11 +57,11 @@ class SemillerosTicEjecucionFaseIii extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'id_datos_ieo_profesional', 'estado'], 'required'],
+            [['id_fase', 'id_datos_ieo_profesional', 'estado','docente_creador'], 'required'],
             [['id_fase', 'id_datos_ieo_profesional', 'estado'], 'default', 'value' => null],
             [['total_aplicaciones_usadas'], 'default', 'value' => ''],
-            [['id_fase', 'id_datos_ieo_profesional', 'estado','docente_creador','anio'], 'integer'],
-            [['asignatura', 'docente_usuario', 'grado', 'numero_estudiantes', 'numero_apps_usadas', 'nombre_aplicaciones', 'tic', 'tipo_recurso_tic', 'digitales', 'tipo_recurso_digital', 'escolares_no_tic', 'tipo_recurso_no_tic', 'tiempo_uso_recurso_tic', 'observaciones', 'total_aplicaciones_usadas', 'numero', 'tipo_de_produccion', 'temas_escolares', 'indice_problematicas', 'fecha_uso_aplicaciones','estudiantes_cultivadores'], 'string'],
+            [['id_fase', 'id_datos_ieo_profesional', 'estado','anio'], 'integer'],
+            [['asignatura', 'docente_usuario', 'grado', 'numero_apps_usadas', 'nombre_aplicaciones', 'tic', 'tipo_recurso_tic', 'digitales', 'tipo_recurso_digital', 'escolares_no_tic', 'tipo_recurso_no_tic', 'tiempo_uso_recurso_tic', 'observaciones', 'total_aplicaciones_usadas', 'numero', 'tipo_de_produccion', 'temas_escolares', 'indice_problematicas', 'fecha_uso_aplicaciones','estudiantes_cultivadores'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
             [['id_datos_ieo_profesional'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesional::className(), 'targetAttribute' => ['id_datos_ieo_profesional' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
@@ -83,7 +83,6 @@ class SemillerosTicEjecucionFaseIii extends \yii\db\ActiveRecord
             'asignatura' 				=> 'Asignatura',
             'docente_usuario' 			=> 'Docente Usuario',
             'grado' 					=> 'Grado',
-            'numero_estudiantes' 		=> 'Numero Estudiantes',
             'numero_apps_usadas' 		=> 'Numero Apps Usadas',
             'nombre_aplicaciones' 		=> 'Nombre Aplicaciones',
             'tic' 						=> 'Tic',

@@ -72,11 +72,22 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 	});
 	
 	
-	$( "[id$=numero_estudiantes]" ).on( 'save', function( e, params ){
+	// $( "[id$=numero_estudiantes]" ).on( 'save', function( e, params ){
+		
+		// var _self = this;
+		
+		// var total = params.newValue*1;
+		
+		// var sesion = this.id.split("-")[1];
+		
+		// $( "#semillerosticejecucionfaseiii-"+sesion+"-estudiantes_cultivadores" ).val( total );
+	// });
+	
+	$( "[id$=docente_creador]" ).on( 'change', function( e, params ){
 		
 		var _self = this;
 		
-		var total = params.newValue*1;
+		var total = $( "option:selected" , _self ).length;
 		
 		var sesion = this.id.split("-")[1];
 		
@@ -171,6 +182,10 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 			
 			$( ".panel-group" ).append( cloneCollapse );
 			
+			$( "select[id^=semillerosticejecucionfaseiii]", cloneCollapse ).each(function(x){
+				$( this ).attr({multiple:true})
+			})
+				
 			$( "select[id^=datosieoprofesional],select[id^=semillerosticejecucionfaseiii]", cloneCollapse ).each(function(x){
 				
 				$( this ).chosen({
@@ -323,12 +338,24 @@ Cambios realizados: Se cambia los campo input de cada sección por textarea, y s
 				$( "#semillerosticcondicionesinstitucionalesfaseiii-total_aplicaciones_usadas" ).val( total );
 			});
 			
+			// //Calculo de estudaintes cultivadores, esto mismo está para los campos ya registrados al inicio del script
+			// $( "[id$=numero_estudiantes]", cloneCollapse  ).on( 'save', function( e, params ){
+		
+				// var _self = this;
+				
+				// var total = params.newValue*1;
+				
+				// var sesion = this.id.split("-")[1];
+				
+				// $( "#semillerosticejecucionfaseiii-"+sesion+"-estudiantes_cultivadores" ).val( total );
+			// });
+			
 			//Calculo de estudaintes cultivadores, esto mismo está para los campos ya registrados al inicio del script
-			$( "[id$=numero_estudiantes]", cloneCollapse  ).on( 'save', function( e, params ){
+			$( "[id$=docente_creador]", cloneCollapse  ).on( 'change', function( e, params ){
 		
 				var _self = this;
 				
-				var total = params.newValue*1;
+				var total = $( "option:selected" , _self ).length;
 				
 				var sesion = this.id.split("-")[1];
 				

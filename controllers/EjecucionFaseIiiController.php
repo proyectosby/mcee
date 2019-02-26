@@ -7,6 +7,10 @@ Desarrollador: Edwin Molina Grisales
 Descripción: Controlador EjecucionFaseIIIController
 ---------------------------------------
 Modificaciones:
+Fecha: 2019-02-25
+Persona encargada: Edwin Molina Grisales
+Cambios realizados: Se quita campo número de estudiantes cultivadores y docentes creadores se deja como multiplo
+---------------------------------------
 Fecha: 2019-02-12
 Descripción: Ya no se pide el ciclo y el año viene por url y todas las realiciones con id_ciclo se cambian a año
 ---------------------------------------
@@ -209,6 +213,8 @@ class EjecucionFaseIiiController extends Controller
 				$datoSesion = DatosSesiones::findOne( $vEjecucionesFases->id_datos_sesion );
 				$datoSesion->fecha_sesion = Yii::$app->formatter->asDate($datoSesion->fecha_sesion, "php:d-m-Y");
 				
+				$vEjecucionesFases->docente_creador = explode( ",", $vEjecucionesFases->docente_creador );
+				
 				$models[] = [
 								'profesionales' => DatosIeoProfesional::findOne( $vEjecucionesFases->id_datos_ieo_profesional ),
 								'datosSesion' 	=> $datoSesion,
@@ -299,13 +305,14 @@ class EjecucionFaseIiiController extends Controller
 										'id_institucion' => 'Institución',
 										'id_profesional_a' => 'Profesional A',
 									]) && $valido;
+									
+					$value['ejecucionFase']->docente_creador 			= implode( ",", $value['ejecucionFase']->docente_creador );
 					
 					$valido = $value['ejecucionFase']->validate([
 										'docente_creador',
 										'asignatura',
 										'docente_usuario',
 										'grado',
-										'numero_estudiantes',
 										'numero_apps_usadas',
 										'nombre_aplicaciones',
 										'tic',
@@ -324,6 +331,8 @@ class EjecucionFaseIiiController extends Controller
 										'fecha_uso_aplicaciones',
 										'estudiantes_cultivadores',
 									]) && $valido;
+									
+					$value['ejecucionFase']->docente_creador			= explode( ",", $value['ejecucionFase']->docente_creador );
 					
 				}
 				$esPrimera = false;
@@ -355,8 +364,11 @@ class EjecucionFaseIiiController extends Controller
 						$value['ejecucionFase']->id_datos_ieo_profesional 	= $value['profesionales']->id;
 						$value['ejecucionFase']->estado 					= 1;
 						$value['ejecucionFase']->anio 						= $anio;
+						$value['ejecucionFase']->docente_creador 			= implode( ",", $value['ejecucionFase']->docente_creador );
 						$value['ejecucionFase']->id_datos_sesion			= $value['datosSesion']->id;
 						$value['ejecucionFase']->save( false );
+						
+						$value['ejecucionFase']->docente_creador			= explode( ",", $value['ejecucionFase']->docente_creador );
 												
 						$condiciones->estado 	= 1;
 						$condiciones->id_fase 	= $this->id_fase;
