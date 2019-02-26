@@ -35,6 +35,8 @@ if (@$_GET['mensaje']==1)
 EOT_JS_CODE
 );	
 }
+
+
 ?>
 
 <div class="row">
@@ -62,6 +64,8 @@ EOT_JS_CODE
         ],
     ]); ?>
 
+	
+	
         <?= $form->field($model, 'username')->textInput(['autofocus' => true])->Label("Usuario") ?>
 
 

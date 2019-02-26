@@ -136,7 +136,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                         <li class="footer"><a id="cambiarSede">Cambiar sede</a></li>
                     </ul>
                 </li>
-                <li class="dropdown notifications-menu">
+               <!--   <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
                         <span class="label label-warning">10</span>
@@ -144,7 +144,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                     <ul class="dropdown-menu">
                         <li class="header">You have 10 notifications</li>
                         <li>
-                            <!-- inner menu: contains the actual data -->
+                           inner menu: contains the actual data
                             <ul class="menu">
                                 <li>
                                     <a href="#">
@@ -177,9 +177,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                         </li>
                         <li class="footer"><a href="#">View all</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <!-- Tasks: style can be found in dropdown.less -->
-                <li class="dropdown tasks-menu">
+                <!-- <li class="dropdown tasks-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-flag-o"></i>
                         <span class="label label-danger">9</span>
@@ -188,9 +188,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                         <li class="header">You have 9 tasks</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
-                            <ul class="menu">
+                             <!--<ul class="menu">
                                 <li><!-- Task item -->
-                                    <a href="#">
+                                   <!--  <a href="#">
                                         <h3>
                                             Design some buttons
                                             <small class="pull-right">20%</small>
@@ -205,8 +205,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                                     </a>
                                 </li>
                                 <!-- end task item -->
-                                <li><!-- Task item -->
-                                    <a href="#">
+                                <!-- <li><!-- Task item -->
+                                    <!-- <a href="#">
                                         <h3>
                                             Create a nice theme
                                             <small class="pull-right">40%</small>
@@ -221,8 +221,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                                     </a>
                                 </li>
                                 <!-- end task item -->
-                                <li><!-- Task item -->
-                                    <a href="#">
+                                 <!--<li><!-- Task item -->
+                                  <!--   <a href="#">
                                         <h3>
                                             Some task I need to do
                                             <small class="pull-right">60%</small>
@@ -237,8 +237,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                                     </a>
                                 </li>
                                 <!-- end task item -->
-                                <li><!-- Task item -->
-                                    <a href="#">
+                               <!--  <li><!-- Task item -->
+                                    <!-- <a href="#">
                                         <h3>
                                             Make beautiful transitions
                                             <small class="pull-right">80%</small>
@@ -253,8 +253,8 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                                     </a>
                                 </li>
                                 <!-- end task item -->
-                            </ul>
-                        </li>
+                           <!--  </ul>
+                        <!-- </li>
                         <li class="footer">
                             <a href="#">View all tasks</a>
                         </li>
@@ -309,9 +309,9 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/header.js',['depends' => 
                 </li>
 
                 <!-- User Account: style can be found in dropdown.less -->
-                <li>
+                 <!--<li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </nav>
