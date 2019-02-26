@@ -90,6 +90,8 @@ if( $guardado ){
 		<?= Html::a('Volver', 
 									[
 										'semilleros/index',
+										'esDocente' => $esDocente,
+										'anio' 		=> $anio,
 									], 
 									['class' => 'btn btn-info']) ?>
 				
@@ -99,7 +101,13 @@ if( $guardado ){
 
 	<h3 style='background-color: #ccc;padding:5px;'>DATOS IEO</h3>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([ 
+							'action'=> Yii::$app->urlManager->createUrl([
+												'semilleros-datos-ieo-estudiantes/create', 
+												'anio' 		=> $anio, 
+												'esDocente' => $esDocente, 
+											]) 
+						]); ?>
 
     <?= $form->field($institucion, 'codigo_dane')->dropDownList([ $institucion->codigo_dane => $institucion->codigo_dane ])->label( 'CÓDIGO DANE IEO' ) ?>
     

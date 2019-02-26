@@ -51,12 +51,12 @@ class SemillerosTicEjecucionFaseIiEstudiantes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_ciclo', 'estado', 'estudiantes_participantes', 'apps_desarrolladas', 'nombre_aplicaciones', 'tipo_accion', 'descripcion', 'responsable_accion', 'tiempo_desarrollo', 'tic', 'tipo_uso_tic', 'digitales', 'tipo_uso_digitales', 'no_tic', 'tipo_uso_no_tic', 'tiempo_uso_tic', 'numero_obras', 'tipo_obras', 'indice_temas', 'numero_pruebas', 'numero_disecciones', 'observaciones', 'id_datos_sesion'], 'required'],
-            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_ciclo', 'estado', 'estudiantes_participantes', 'apps_desarrolladas', 'numero_pruebas', 'numero_disecciones', 'id_datos_sesion'], 'default', 'value' => null],
-            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'id_ciclo', 'estado', 'estudiantes_participantes', 'apps_desarrolladas', 'numero_pruebas', 'numero_disecciones', 'id_datos_sesion'], 'integer'],
-            [['nombre_aplicaciones', 'tipo_accion', 'descripcion', 'responsable_accion', 'tiempo_desarrollo', 'tic', 'tipo_uso_tic', 'digitales', 'tipo_uso_digitales', 'no_tic', 'tipo_uso_no_tic', 'tiempo_uso_tic', 'numero_obras', 'tipo_obras', 'indice_temas', 'observaciones'], 'string'],
+            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'anio', 'estado', 'estudiantes_participantes', 'apps_desarrolladas', 'nombre_aplicaciones', 'tipo_accion', 'descripcion', 'responsable_accion', 'tiempo_desarrollo', 'tic', 'tipo_uso_tic', 'digitales', 'tipo_uso_digitales', 'no_tic', 'tipo_uso_no_tic', 'tiempo_uso_tic', 'numero_obras', 'tipo_obras', 'indice_temas', 'numero_pruebas', 'numero_disecciones', 'observaciones', 'id_datos_sesion'], 'required'],
+            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'anio', 'estado', 'estudiantes_participantes', 'apps_desarrolladas', 'numero_pruebas', 'numero_disecciones', 'id_datos_sesion'], 'default', 'value' => null],
+            [['id_fase', 'id_datos_ieo_profesional_estudiantes', 'anio', 'estado', 'estudiantes_participantes', 'apps_desarrolladas', 'numero_pruebas', 'numero_disecciones', 'id_datos_sesion'], 'integer'],
+            [['nombre_aplicaciones', 'tipo_accion', 'descripcion', 'responsable_accion', 'tiempo_desarrollo', 'tic', 'tipo_uso_tic', 'digitales', 'tipo_uso_digitales', 'no_tic', 'tipo_uso_no_tic', 'tiempo_uso_tic', 'numero_obras', 'tipo_obras', 'indice_temas', 'observaciones','estudiantes_id'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
-            [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
+            // [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
             [['id_datos_ieo_profesional_estudiantes'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesionalEstudiantes::className(), 'targetAttribute' => ['id_datos_ieo_profesional_estudiantes' => 'id']],
             [['id_datos_sesion'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosSesiones::className(), 'targetAttribute' => ['id_datos_sesion' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
@@ -72,7 +72,8 @@ class SemillerosTicEjecucionFaseIiEstudiantes extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_fase' => 'Id Fase',
             'id_datos_ieo_profesional_estudiantes' => 'Id Datos Ieo Profesional Estudiantes',
-            'id_ciclo' => 'Id Ciclo',
+            // 'id_ciclo' => 'Id Ciclo',
+            'anio' => 'Año',
             'estado' => 'Estado',
             'estudiantes_participantes' => 'Estudiantes Participantes',
             'apps_desarrolladas' => 'Apps Desarrolladas',
@@ -95,6 +96,7 @@ class SemillerosTicEjecucionFaseIiEstudiantes extends \yii\db\ActiveRecord
             'numero_disecciones' => 'Numero Disecciones',
             'observaciones' => 'Observaciones',
             'id_datos_sesion' => 'Id Datos Sesion',
+            'estudiantes_id' => 'Estudiantes',
         ];
     }
 }

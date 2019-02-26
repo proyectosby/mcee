@@ -213,11 +213,15 @@ class EjecucionFaseIEstudiantesController extends Controller
 		 ************************************************************************************/
 		$postDatosProfesional = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes');
 		$datosIeoProfesional = false;
-		if( $id_institucion && $postDatosProfesional['id_profesional_a'] )
+		// if( $id_institucion && $postDatosProfesional['id_profesional_a'] )
+		if( $id_institucion && $anio )
 		{
 			$datosIeoProfesional 		= SemillerosTicDatosIeoProfesionalEstudiantes::findOne([
 											'id_institucion'		=> $id_institucion,
-											'id_profesional_a'		=> $postDatosProfesional['id_profesional_a'],
+											'id_sede'				=> $id_sede,
+											'id_fase'				=> $this->id_fase,
+											'anio'					=> $anio,
+											// 'id_profesional_a'		=> implode( $postDatosProfesional['id_profesional_a'] ),
 											//'curso_participantes'	=> $postDatosProfesional['curso_participantes'],
 										  ]);
 		}
@@ -227,19 +231,26 @@ class EjecucionFaseIEstudiantesController extends Controller
 			$datosIeoProfesional = new SemillerosTicDatosIeoProfesionalEstudiantes();
 			$datosIeoProfesional->load(Yii::$app->request->post());
 		}
+		else{
+			$datosIeoProfesional->id_profesional_a = explode( ",", $datosIeoProfesional->id_profesional_a );
+			$datosIeoProfesional->curso_participantes = explode( ",", $datosIeoProfesional->curso_participantes );
+			
+			$datosIeoProfesional->load(Yii::$app->request->post());
+		}
 
         if( $datosIeoProfesional )
 		{
 			//Si ya hay un modelo para datos profesional, procedo a consultar las ejecuciones de fase que halla por cada profesional
-			if( $datosIeoProfesional->id_profesional_a )
+			// if( $datosIeoProfesional->id_profesional_a )
+			if( $datosIeoProfesional->id )
 			{
 				if( !$guardar )
 				{
 
 					$ejecucionesFases = SemillerosTicEjecucionFaseIEstudiantes::find()
 											->where( 'id_fase='.$this->id_fase )
-											//->andWhere( 'id_ciclo='.$ciclo->id )
-											//->andWhere( 'id_datos_ieo_profesional_estudiantes='.(string)$datosIeoProfesional->id )
+											->andWhere( 'anio='.$anio )
+											->andWhere( 'id_datos_ieo_profesional_estudiantes='.$datosIeoProfesional->id )
 											->andWhere( 'estado=1' )
 											->all();
 					foreach( $ejecucionesFases as $key => $ejecucionFase )
@@ -252,15 +263,17 @@ class EjecucionFaseIEstudiantesController extends Controller
                         //$ejecucionFase->id_datos_ieo_profesional_estudiantes = explode( ",", $ejecucionFase->id_datos_ieo_profesional_estudiantes );
 						$datosModelos[ $ds->id_sesion ][ 'ejecucionesFase' ][]	= $ejecucionFase;
 
-                        $ejecucionFase->estudiantes_id = Yii::$app->request->post()["SemillerosTicDatosIeoProfesionalEstudiantes"]["estudiantes_id"];
-                        $ejecucionFase->save(false);
+						$datosIeoProfesional->estudiantes_id = $ejecucionFase->estudiantes_id;
+						
+                        // $ejecucionFase->estudiantes_id = Yii::$app->request->post()["SemillerosTicDatosIeoProfesionalEstudiantes"]["estudiantes_id"];
+                        // $ejecucionFase->save(false);
 					}
 				}
 
 				$condiciones = SemillerosTicCondicionesInstitucionalesEstudiantes::findOne([
 										'id_datos_ieo_profesional_estudiantes' 	=> $datosIeoProfesional->id,
 										'id_fase'								=> $this->id_fase,
-										//'id_ciclo'								=> $ciclo->id,
+										'anio'									=> $anio,
 									]);
 
 			}
@@ -270,10 +283,10 @@ class EjecucionFaseIEstudiantesController extends Controller
 			{
 				$condiciones = new SemillerosTicCondicionesInstitucionalesEstudiantes();
 			}
-			
 			//esta variable solo es activa si el dan al boton guardar
 			if( $guardar )
 			{
+			
 				//Si es un pos procedo a cargar todos los datos de acuerdo a lo ingresado por el usuario
 				if( Yii::$app->request->post() ){
 					
@@ -318,6 +331,8 @@ class EjecucionFaseIEstudiantesController extends Controller
 
 								$ef->load( $ejecucionFase, '' );
 								$datosModelos[ $sesion_id ][ 'ejecucionesFase' ][] = $ef;
+								
+								$datosIeoProfesional->estudiantes_id = $ef->estudiantes_id;
 							}
 						}
 					}
@@ -363,28 +378,33 @@ class EjecucionFaseIEstudiantesController extends Controller
 				}
 				
 				$valido = $condiciones->validate([
-								'parte_ieo' 				=> 'Parte Ieo',
-								'parte_univalle' 			=> 'Parte Univalle',
-								'parte_sem' 				=> 'Parte Sem',
-								'otro' 						=> 'Otro',
-								'estado' 					=> 'Estado',
-								'total_sesiones_ieo' 		=> 'Total Sesiones Ieo',
-								'total_docentes_ieo' 		=> 'Total Docentes Ieo',
-								'sesiones_por_docente' 		=> 'Sesiones por Docente',
+								'parte_ieo',
+								'parte_univalle',
+								'parte_sem',
+								'otro',
+								'total_sesiones_ieo',
+								'total_docentes_ieo',
+								'sesiones_por_docente',
 							]) && $valido;
 				
 				if( $valido )
 				{
 					$datosIeoProfesional->id_institucion = $id_institucion;
-					$datosIeoProfesional->id_sede = $id_sede;
-					$datosIeoProfesional->estado = 1;
+					$datosIeoProfesional->id_sede 		= $id_sede;
+					$datosIeoProfesional->anio 			= $anio;
+					$datosIeoProfesional->id_fase 		= $this->id_fase;
+					$datosIeoProfesional->estado 		= 1;
+					
 					if( is_array($datosIeoProfesional->curso_participantes) )
 						$datosIeoProfesional->curso_participantes = implode(",", $datosIeoProfesional->curso_participantes);
+					
 					if( is_array($datosIeoProfesional->id_profesional_a) )
 						$datosIeoProfesional->id_profesional_a = implode(",", $datosIeoProfesional->id_profesional_a);
-                    $datosIeoProfesional->save( false );
+                    
+					$datosIeoProfesional->save( false );
 
 
+					$datosIeoProfesional->id_profesional_a = explode(",", $datosIeoProfesional->id_profesional_a);
                     $datosIeoProfesional->curso_participantes = explode(",", $datosIeoProfesional->curso_participantes);
 
 					foreach( $datosModelos as $sesion_id => $modelo )
@@ -403,7 +423,9 @@ class EjecucionFaseIEstudiantesController extends Controller
 									$ejecucionFase->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 									$ejecucionFase->id_datos_sesion 						= $modelo[ 'datosSesion' ]->id;
 									$ejecucionFase->id_fase 								= $this->id_fase;
+									$ejecucionFase->estudiantes_id 							= Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes')['estudiantes_id'];
 									//$ejecucionFase->id_ciclo 								= $ciclo->id;
+									$ejecucionFase->anio 									= $anio;
 									$ejecucionFase->estado 									= 1;
 									$ejecucionFase->save(false);
 								}
@@ -415,6 +437,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 					$condiciones->id_datos_ieo_profesional_estudiantes 	= $datosIeoProfesional->id;
 					$condiciones->id_fase 								= $this->id_fase;
 					//$condiciones->id_ciclo 								= $ciclo->id;
+					$condiciones->anio 									= $anio;
 					$condiciones->estado 								= 1;
 					$condiciones->save(false);
 					
@@ -471,10 +494,10 @@ class EjecucionFaseIEstudiantesController extends Controller
 		
 		$cursos = [];
 		
-		$post_profesional_a = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes')['id_profesional_a'];
+		// $post_profesional_a = Yii::$app->request->post('SemillerosTicDatosIeoProfesionalEstudiantes')['id_profesional_a'];
 		
-		if( $post_profesional_a )
-		{
+		// if( $post_profesional_a )
+		// {
 			/*$dataCursos = AcuerdosInstitucionalesEstudiantes::find()
 								->alias( 'ae' )
 								->innerJoin( 'semilleros_tic.semilleros_datos_ieo_estudiantes se', 'se.id=ae.id_semilleros_datos_estudiantes' )
@@ -516,7 +539,7 @@ class EjecucionFaseIEstudiantesController extends Controller
                 ->all();
 
             $cursos	= ArrayHelper::map( $dataCursos, 'id', 'descripcion' );
-		}
+		// }
 
 
 
@@ -552,6 +575,7 @@ class EjecucionFaseIEstudiantesController extends Controller
 			'guardado'		=> $guardado,
 			'cursos'		=> $cursos,
 			'anio'			=> $anio,
+			'esDocente'		=> $esDocente,
         ]);
     }
 

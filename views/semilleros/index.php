@@ -234,6 +234,7 @@ else{
 									[
 										'semilleros-datos-ieo-estudiantes/create',
 										'anio'	=> $anio,
+										'esDocente'	=> $esDocente,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
@@ -241,6 +242,7 @@ else{
 								[
 									'ejecucion-fase-i-estudiantes/create',
 									'anio'	=> $anio,
+									'esDocente'	=> $esDocente,
 								], 
 								['class' => 'btn btn-success'
 		]) ?> 
@@ -248,6 +250,7 @@ else{
 										[
 											'ejecucion-fase-ii-estudiantes/create',
 											'anio'	=> $anio,
+											'esDocente'	=> $esDocente,
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
@@ -255,6 +258,7 @@ else{
 										[
 											'ejecucion-fase-iii-estudiantes/create',
 											'anio'	=> $anio,
+											'esDocente'	=> $esDocente,
 										], 
 										['class' => 'btn btn-success'
 				]) ?> 
@@ -266,6 +270,7 @@ else{
 									[
 										'semilleros-tic-diario-de-campo-estudiantes/index',
 										'anio'	=> $anio,
+										'esDocente'	=> $esDocente,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
@@ -274,6 +279,7 @@ else{
 									[
 										'resumen-operativo-fases-estudiantes/index',
 										'anio'	=> $anio,
+										'esDocente'	=> $esDocente,
 									], 
 									['class' => 'btn btn-success']) ?>
 									
@@ -281,6 +287,7 @@ else{
 									[
 										'instrumento-poblacion-estudiantes/create',
 										'anio'	=> $anio,
+										'esDocente'	=> $esDocente,
 									], 
 									['class' => 'btn btn-success']) ?>
 									

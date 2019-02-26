@@ -30,7 +30,7 @@ class InstrumentoPoblacionEstudiantes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_institucion', 'id_sede', 'id_persona_estudiante', 'estado'], 'required'],
+            // [['id_institucion', 'id_sede', 'id_persona_estudiante', 'estado'], 'required'],
             [['id_institucion', 'id_sede', 'id_persona_estudiante', 'estado'], 'default', 'value' => null],
             [['id_institucion', 'id_sede', 'id_persona_estudiante', 'estado'], 'integer'],
             [['id_institucion'], 'exist', 'skipOnError' => true, 'targetClass' => Instituciones::className(), 'targetAttribute' => ['id_institucion' => 'id']],

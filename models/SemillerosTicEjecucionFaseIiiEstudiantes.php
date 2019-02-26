@@ -50,12 +50,12 @@ class SemillerosTicEjecucionFaseIiiEstudiantes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'id_ciclo', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'estudiantes_participantes', 'numero_apps', 'nombre_aplicaciones', 'tic', 'tipo_uso_tic', 'digitales', 'tipos_uso_digitales', 'no_tic', 'tipo_uso_no_tic', 'tiempo_uso_recursos', 'numero_obras', 'tipo_produccion', 'temas_abordados', 'problemas_abordados', 'fecha_aplicaciones', 'numero_asignaturas', 'asignaturas', 'observaciones'], 'required'],
-            [['id_fase', 'id_ciclo', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'estudiantes_participantes', 'numero_apps', 'numero_obras', 'numero_asignaturas'], 'default', 'value' => null],
-            [['id_fase', 'id_ciclo', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'estudiantes_participantes', 'numero_apps', 'numero_obras', 'numero_asignaturas'], 'integer'],
+            [['id_fase', 'anio', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'estudiantes_participantes', 'numero_apps', 'nombre_aplicaciones', 'tic', 'tipo_uso_tic', 'digitales', 'tipos_uso_digitales', 'no_tic', 'tipo_uso_no_tic', 'tiempo_uso_recursos', 'numero_obras', 'tipo_produccion', 'temas_abordados', 'problemas_abordados', 'fecha_aplicaciones', 'numero_asignaturas', 'asignaturas', 'observaciones'], 'required'],
+            [['id_fase', 'anio', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'estudiantes_participantes', 'numero_apps', 'numero_obras', 'numero_asignaturas'], 'default', 'value' => null],
+            [['id_fase', 'anio', 'id_datos_ieo_profesional_estudiantes', 'id_datos_sesion', 'estado', 'estudiantes_participantes', 'numero_apps', 'numero_obras', 'numero_asignaturas'], 'integer'],
             [['nombre_aplicaciones', 'tic', 'tipo_uso_tic', 'digitales', 'tipos_uso_digitales', 'no_tic', 'tipo_uso_no_tic', 'tiempo_uso_recursos', 'tipo_produccion', 'temas_abordados', 'problemas_abordados', 'fecha_aplicaciones', 'asignaturas', 'observaciones'], 'string'],
             [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::className(), 'targetAttribute' => ['estado' => 'id']],
-            [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
+            // [['id_ciclo'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicCiclos::className(), 'targetAttribute' => ['id_ciclo' => 'id']],
             [['id_datos_ieo_profesional_estudiantes'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosIeoProfesionalEstudiantes::className(), 'targetAttribute' => ['id_datos_ieo_profesional_estudiantes' => 'id']],
             [['id_datos_sesion'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicDatosSesiones::className(), 'targetAttribute' => ['id_datos_sesion' => 'id']],
             [['id_fase'], 'exist', 'skipOnError' => true, 'targetClass' => SemillerosTicFases::className(), 'targetAttribute' => ['id_fase' => 'id']],
@@ -70,7 +70,8 @@ class SemillerosTicEjecucionFaseIiiEstudiantes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_fase' => 'Id Fase',
-            'id_ciclo' => 'Id Ciclo',
+            // 'id_ciclo' => 'Id Ciclo',
+            'anio' => 'Año',
             'id_datos_ieo_profesional_estudiantes' => 'Id Datos Ieo Profesional Estudiantes',
             'id_datos_sesion' => 'Id Datos Sesion',
             'estado' => 'Estado',
