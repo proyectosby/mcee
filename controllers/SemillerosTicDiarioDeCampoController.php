@@ -305,10 +305,10 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			//se traen 6 datos para mostrar
 			
 			$command = $connection->createCommand("select ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
-			 from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
+			 from semilleros_tic.anio as a, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
 			 semilleros_tic.condiciones_institucionales as ci, semilleros_tic.datos_sesiones as ds
 			 where a.id = $idAnio
-			 and c.id = $idCiclo
+			 
 			 and f.id = $faseO
 			 and ef.id_fase = f.id
 			 and dip.id = ef.id_datos_ieo_profesional
