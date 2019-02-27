@@ -1,4 +1,14 @@
 $( document ).ready(function() {
+    $.get( "index.php?r=semilleros-tic-diario-de-campo-estudiantes/llenar-ciclos&idAnio="+1,
+        function( data )
+        {
+
+            $('#selCiclo').empty();
+            $('#selCiclo').html(data.html);
+            $('#selCiclo').val(cicloSelected);
+        },
+        "json");
+    $('#selCiclo').hide();
     // var url = window.location.href; 
 	// if (url.indexOf('update')!=-1) 
 	// {	
@@ -21,7 +31,7 @@ $( "#selFases" ).change(function()
 	
 	faseO = $( "#selFases" ).val();
 	anio = $( "#selAnio" ).val();
-	ciclo = $( "#selCiclo" ).val();
+	ciclo = $( "#selCiclo" ).val(1);
 	
 	 if(faseO != "" && anio != "" && ciclo != "" )
 	 {
@@ -85,32 +95,6 @@ $( "#selAnio" ).change(function()
 	 $("#contenido").hide();
 	 $("#encabezado1").hide();
 	 $("#contenido1").hide();
-		 
-	anio = $( "#selAnio" ).val();  
-	
-	if(anio != "")
-	{
-		$.get( "index.php?r=semilleros-tic-diario-de-campo-estudiantes/llenar-ciclos&idAnio="+anio,
-				function( data )
-					{	
-						
-						$('#selCiclo').empty();
-						$('#selCiclo').html(data.html);
-						$('#selCiclo').val(cicloSelected);
-					},
-			"json"); 
-			
-			
-	}
-	else{
-		$('#selCiclo').empty();
-		$('#selCiclo').append(
-		$('<option />')
-			.text('Seleccione...')
-			.val('')
-		);
-		
-	}
 });
 
 $( "#selCiclo" ).change(function() 

@@ -36,9 +36,9 @@ cicloSelected = <?php echo $cicloSelected; ?>;
 	<?= $form->field( $model, 'id_ciclo' )->dropDownList( $cicloslist, [ 
 												'prompt' => 'Seleccione...', 'id' =>'selCiclo'
 												
-											] )->label( 'Ciclo' ); ?>
-
-
+											] )
+        //->hiddenInput()
+        ->label(false); ?>
 
 		<?= $form->field($model, 'id_fase')->dropDownList($fases, ['prompt'=>'Seleccione...', 'id' =>'selFases'])->label("Fase") ?>
 	</div><br>
