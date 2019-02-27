@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = "Agregar";
 		'ciclos' => $ciclos,
 		'cicloslist' => $cicloslist,
 		'anios' => $anios,
-		'anioSelected' => "",
+		'anioSelected' => $anioSelected,
 		'cicloSelected' => '',
     ]) ?>
 

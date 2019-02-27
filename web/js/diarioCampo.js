@@ -6,7 +6,7 @@ $( document ).ready(function() {
 		
 	
 		// $("#principal").hide();
-		$('#selAnio').trigger('change');	
+		// $('#selAnio').trigger('change');	
 		// $('#selFases').trigger('change');	
 		
 		setTimeout(function(){$('#selFases').trigger('change');}, 600);
@@ -24,7 +24,7 @@ $( "#selFases" ).change(function()
 	anio = $( "#selAnio" ).val();
 	ciclo = $( "#selCiclo" ).val();
 	
-	 if(faseO != "" && anio != "" && ciclo != "" )
+	 if(faseO != "" && anio != "" )
 	 {
 		 if(faseO == 1){fase=14; titulo="BITACORA FASE I"; descripcion=17; hallazgo=20;}
 		 else if(faseO == 2){fase = 15; titulo="BITACORA FASE II"; descripcion=18; hallazgo=21;}
@@ -73,7 +73,7 @@ $( "#selFases" ).change(function()
 		 $("#contenido1").hide();
 		 $( "#selFases" ).val('');
 		 
-		 swal("Importante", "Debe seleccionar año, ciclo y fase", "error");
+		 swal("Importante", "Debe seleccionar año y fase", "error");
 		 }
 });
 

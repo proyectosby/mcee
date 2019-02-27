@@ -4,6 +4,10 @@ Versión: 001
 Fecha: Fecha en formato (15-08-2018)
 Desarrollador: Viviana Rodas
 Descripción: diario de campo semilleros tic
+----------------------------------------------------------------
+Fecha: 2019-02-26
+Desarrollador: Edwin Molina Grisales
+Descripción: Se elimina ciclos y se trabaja con el año de la url
 ******************/
 
 use yii\helpers\Html;
@@ -26,17 +30,11 @@ cicloSelected = <?php echo $cicloSelected; ?>;
 	<!-- Espacio para seleccionar la fase, ciclo y año-->
 	<div class="" style=''>
 
-	<?= $form->field( $ciclos, 'id_anio' )->dropDownList( $anios, [ 
-													'prompt' 	=> 'Seleccione...', 'id' =>'selAnio','value' => $anioSelected 
-													
+	<?= $form->field( $model, 'anio' )->dropDownList( $anios, [ 
+													'prompt' 	=> 'Seleccione...', 
+													'id' 		=> 'selAnio',
+													'value' 	=> $anioSelected 
 												] ) ?>
-
-	<?= $form->field( $model, 'id_ciclo' )->dropDownList( $cicloslist, [ 
-												'prompt' => 'Seleccione...', 'id' =>'selCiclo'
-												
-											] )->label( 'Ciclo' ); ?>
-
-
 
 		<?= $form->field($model, 'id_fase')->dropDownList($fases, ['prompt'=>'Seleccione...', 'id' =>'selFases'])->label("Fase") ?>
 	</div><br>

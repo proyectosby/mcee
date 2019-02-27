@@ -4,6 +4,10 @@ Versión: 001
 Fecha: Fecha en formato (15-08-2018)
 Desarrollador: Viviana Rodas
 Descripción: diario de campo semilleros tic
+----------------------------------------------------------------
+Fecha: 2019-02-26
+Desarrollador: Edwin Molina Grisales
+Descripción: Se elimina ciclos y se trabaja con el año de la url
 ******************/
 
 namespace app\controllers;
@@ -96,6 +100,9 @@ class SemillerosTicDiarioDeCampoController extends Controller
      */
     public function actionCreate()
     {
+		$anio 		= Yii::$app->request->get('anio');
+		$esDocente 	= Yii::$app->request->get('esDocente');
+		
 		$ciclos = new SemillerosTicCiclos();
 		
 		// $ciclos->load( Yii::$app->request->post() );
@@ -111,15 +118,20 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 
+									'anio' 		=> $anio,
+									'esDocente' => $esDocente,
+								]);
         }
 		
-		$dataAnios 	= SemillerosTicAnio::find()
-							->where( 'estado=1' )
-							->orderby( 'descripcion' )
-							->all();
+		// $dataAnios 	= SemillerosTicAnio::find()
+							// ->where( 'estado=1' )
+							// ->orderby( 'descripcion' )
+							// ->all();
 			
-		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		// $anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		
+		$anios[] = [ $anio => $anio ];
 		
 		$cicloslist = [];
 		
@@ -142,6 +154,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
             'ciclos' => $ciclos,
             'cicloslist' => $cicloslist,
             'anios' => $anios,
+            'anioSelected' => $anio,
         ]);
     }
 
@@ -171,17 +184,22 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index', 
+									'anio' 		=> $anio,
+									'esDocente' => $esDocente,
+								]);
         }
 		
-		$dataAnios 	= SemillerosTicAnio::find()
-							->where( 'estado=1' )
-							->all();
+		// $dataAnios 	= SemillerosTicAnio::find()
+							// ->where( 'estado=1' )
+							// ->all();
 			
-		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		// $anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		
+		$anios[] = [ $model->anio => $model->anio ];
 		
 		//Se saca la el id del anio
-		$anioSelected = SemillerosTicCiclos::findOne( $model->id_ciclo )->id_anio;
+		$anioSelected = $model->anio;
 		
 		
 		$cicloslist = [];
@@ -197,7 +215,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
             'cicloslist' => $cicloslist,
             'anios' => $anios,
 			'anioSelected' => $anioSelected,
-            'cicloSelected' => $model->id_ciclo,
+            // 'cicloSelected' => $model->id_ciclo,
         ]);
     }
 
@@ -214,7 +232,10 @@ class SemillerosTicDiarioDeCampoController extends Controller
 		$model->estado = 2;
 		$model->update(false);
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 
+									'anio' 		=> $model->anio,
+									'esDocente' => 1,
+							]);
     }
 
     /**
@@ -295,6 +316,18 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			 and dip.id_sede = ".$idSedes."
 			 group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
 			 ");
+			 
+			 // $command = $connection->createCommand("select ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
+													  // from 	semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
+															// semilleros_tic.condiciones_institucionales as ci, semilleros_tic.datos_sesiones as ds
+													 // where f.id = $faseO
+													   // and ef.id_fase = f.id
+													   // and dip.id = ef.id_datos_ieo_profesional
+													   // and dip.id_institucion = ".$idInstitucion."
+													   // and dip.id_sede = ".$idSedes."
+													   // and ef.anio = ".$idAnio."
+												  // group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
+													 // ");
 			$result1 = $command->queryAll();
 			;
 			//se llena el resultado de a consulta en un array

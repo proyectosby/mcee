@@ -6,7 +6,12 @@ Fecha: 18-08-2018
 Desarrollador: Maria Viviana Rodas
 Descripción: Formulario diario de campo
 ---------------------------------------
-Modificación: 
+Modificaciones: 
+----------------------------------------------------------------
+Fecha: 2019-02-26
+Desarrollador: Edwin Molina Grisales
+Descripción: Se elimina ciclos y se trabaja con el año de la url
+----------------------------------------------------------------
 Fecha: 22-10-2018
 Desarrollador: Edwin Molina Grisales
 Descripción: Se agrega variables enviadas por GET anio y esDocente para regresar al menu principal
@@ -53,7 +58,7 @@ $this->params['breadcrumbs'][] =$nombre;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+        <?= Html::button('Agregar',['value'=>Url::to(['create', 'anio' => $anio, 'esDocente' => $esDocente]),'class'=>'btn btn-success','id'=>'modalButton'])?>
 		
 		
 		<?= Html::a('Volver', 
