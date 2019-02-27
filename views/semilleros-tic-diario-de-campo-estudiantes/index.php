@@ -25,7 +25,7 @@ use app\models\Fases;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '';
-$nombre = 'Semilleros Tic Diario De Campo Estudiantes';
+$nombre = 'Semilleros TIC Diario De Campo Estudiantes';
 $this->params['breadcrumbs'][] = $nombre ;
 ?>
 
