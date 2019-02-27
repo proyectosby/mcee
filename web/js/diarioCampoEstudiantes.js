@@ -82,7 +82,7 @@ $( "#selFases" ).change(function()
 		 $("#contenido1").hide();
 		 $( "#selFases" ).val('');
 		 
-		 swal("Importante", "Debe seleccionar año, ciclo y fase", "error");
+		 swal("Importante", "Debe seleccionar año y fase", "error");
 		 }
 });
 
