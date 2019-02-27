@@ -67,25 +67,25 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                         i.id as id_institucion, 
                         s.id as id_sede, 
                         a.descripcion as anio, 
-                        c.descripcion as ciclos,
                         fa.descripcion as fase,
                         sdi.profecional_a,
                         sdi.id as id_semilleros,
                         dip.curso_participantes
         FROM 	semilleros_tic.datos_ieo_profesional_estudiantes as dip,public.sedes as s,public.instituciones as i, semilleros_tic.anio as a, 
-                semilleros_tic.fases as fa, semilleros_tic.ciclos as c,	semilleros_tic.ejecucion_fase_i_estudiantes as ef, semilleros_tic.semilleros_datos_ieo_estudiantes as sdi
+                semilleros_tic.fases as fa,	semilleros_tic.ejecucion_fase_i_estudiantes as ef, semilleros_tic.semilleros_datos_ieo_estudiantes as sdi
         WHERE 	dip.id_institucion = i.id
         AND		dip.id_sede = s.id
         AND 	dip.estado = 1
         AND 	ef.id_fase=fa.id 
-        AND 	ef.id_ciclo = c.id
-        AND 	c.id_anio = a.id
         AND 	sdi.id_institucion =dip.id_institucion
         AND 	sdi.id_sede = dip.id_sede 
-        AND 	sdi.id_ciclo =ef.id_ciclo
-        GROUP BY dip.id,i.codigo_dane,i.descripcion, 
-        s.codigo_dane, s.descripcion,i.id,s.id, a.descripcion,
-        c.descripcion,fa.descripcion,sdi.profecional_a, sdi.id
+        GROUP BY 
+			dip.id,
+			i.codigo_dane,
+			i.descripcion, 
+			s.codigo_dane, 
+			s.descripcion,i.id,s.id, a.descripcion,
+			fa.descripcion,sdi.profecional_a, sdi.id
         ORDER BY i.id,s.id
         
         ");
@@ -137,7 +137,7 @@ class ResumenOperativoFasesEstudiantesController extends Controller
 
                    
                     
-                    array_push($data, $dip[0]['codigo_dane_institucion'], $dip[0]['institucion'], $dip[0]['codigo_dane_sede'],$dip[0]['sede'],  $dip[0]['anio'], $dip[0]['ciclos'], $nomresPersonalA, @$fechas[0]['fecha_sesion']);
+                    array_push($data, $dip[0]['codigo_dane_institucion'], $dip[0]['institucion'], $dip[0]['codigo_dane_sede'],$dip[0]['sede'],  $dip[0]['anio'], $nomresPersonalA, @$fechas[0]['fecha_sesion']);
                     
                     
                 /**Inicio datos fases 1 */
@@ -407,12 +407,15 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 array_push($data, ($promedioParticipantes1 + $promedioParticipantes2 + $promedioParticipantes3) / 3 ,(count($datosEjeccionFaseiii) + count($datosEjeccionFaseii) + count($datosEjeccionFasei)));
 
                 array_push($totalDatos, $data);
+				
+				
+				
                 $contador++;
             }
         }
         
         
-       
+		echo "<pre>"; print_r($totalDatos); echo "</pre>"; 
         $searchModel = new EcDatosBasicosBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

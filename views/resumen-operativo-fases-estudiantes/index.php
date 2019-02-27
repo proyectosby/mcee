@@ -93,7 +93,6 @@ section.content {
 		<tr style='background-color:#ccc;text-align:center;'>
 			<th colspan='4' style='border: 1px solid black;'>Datos IEO</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Año</th>
-			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Ciclo</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Profesional A.</th>
 			<th colspan='1' rowspan='3' style='border: 1px solid black;'>Fecha de inicio del Semillero</th>
 			<th colspan='30' style='border: 1px solid black;'>Fase I Creaci&oacute;n y prueba</th>
@@ -326,7 +325,6 @@ section.content {
 						<td style='border: 1px solid black;'><?= isset($value[96]) ? $value[96] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[97]) ? $value[97] : '' ?></td>
 						<td style='border: 1px solid black;'><?= isset($value[98]) ? $value[98] : '' ?></td>
-						<td style='border: 1px solid black;'><?= isset($value[99]) ? $value[99] : '' ?></td>
 						
 
 					</tr>
