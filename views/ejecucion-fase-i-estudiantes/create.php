@@ -21,7 +21,7 @@ use yii\helpers\Html;
 /* @var $model app\models\EjecucionFase */
 
 
-$this->title = 'EJECUCION FASE I ESTUDIANTES '.$anio;
+$this->title = 'EJECUCIÓN FASE I ESTUDIANTES '.$anio;
 $this->params['breadcrumbs'][] = ['label' => 'Ejecucion Fase I Estudiantes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = "Agregar";
 ?>
