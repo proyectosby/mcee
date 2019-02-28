@@ -18,7 +18,7 @@ $this->registerJsFile(Yii::$app->request->baseUrl.'/js/diarioCampoEstudiantes.js
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 ?>
 <script>
-cicloSelected = <?php echo $cicloSelected; ?>;
+cicloSelected = <?php echo $cicloSelected ? $cicloSelected : "''"; ?>;
 </script>
 
 

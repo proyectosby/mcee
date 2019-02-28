@@ -323,7 +323,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 					   from semilleros_tic.ejecucion_fase_i_estudiantes ef, 
 							semilleros_tic.datos_ieo_profesional_estudiantes p,
 							semilleros_tic.datos_sesiones ds
-					  where ef.id_ciclo								= $idCiclo
+					  where ef.anio									= $idAnio
 						and ef.id_fase 								= $faseO
 						and ef.id_datos_sesion						= ds.id
 						and ef.id_datos_ieo_profesional_estudiantes	= p.id
@@ -374,40 +374,51 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 							
 							$acuerdo = AcuerdosInstitucionalesEstudiantes::findOne( $grado );
 							
-							//muestra la lista de cursos por id
-							$lista_cursos_id = explode( ",", $acuerdo->curso );
-							
-							foreach( $lista_cursos_id as $id_curso )
-							{
-								//Saco la descripcion del curso
-								$des = Paralelos::findOne( $id_curso )->descripcion;
+							if( $acuerdo )
+							{	
+								//muestra la lista de cursos por id
+								$lista_cursos_id = explode( ",", $acuerdo->curso );
 								
-								//Si el curso no esta en la lista la agrego
-								if( !in_array($des, $cursos) )
+								foreach( $lista_cursos_id as $id_curso )
 								{
-									$cursos[] = Paralelos::findOne( $id_curso )->descripcion;
+									//Saco la descripcion del curso
+									$des = Paralelos::findOne( $id_curso )->descripcion;
+									
+									//Si el curso no esta en la lista la agrego
+									if( !in_array($des, $cursos) )
+									{
+										$cursos[] = Paralelos::findOne( $id_curso )->descripcion;
+									}
 								}
 							}
 							
 							
 						}
 						
-						$frecuencias[] = Parametro::findOne( $acuerdo->frecuencia_sesiones )->descripcion;
+						$frecuencias = [];
+						if( $acuerdo )
+							$frecuencias[] = Parametro::findOne( $acuerdo->frecuencia_sesiones )->descripcion;
 					
 					//se formatea para mostrarlos separados por , cursos
+						$cursosDescripcion = [];
 						foreach($cursos as $key){
 							
 							$cursosDescripcion[]=$key;
 							
 							}
-						$cursosDescripcion = implode(",",$cursosDescripcion);
+						
+						if($cursosDescripcion)
+							$cursosDescripcion = implode(",",$cursosDescripcion);
 						
 						//se formatea para mostrarlos separados por , frecuencias
+						$frecuenciasDescripcion = [];
 						foreach($frecuencias as $key){
 							
 							$frecuenciasDescripcion[]=$key;
 							
 							}
+						
+						if($frecuenciasDescripcion)
 						$frecuenciasDescripcion = implode(",",$frecuenciasDescripcion);
 						
 						//se formatea para mostrarlos separados por , aplicaciones_creadas
@@ -442,7 +453,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 							from semilleros_tic.datos_sesiones as ds, 
 							semilleros_tic.ejecucion_fase_i_estudiantes as ef, semilleros_tic.datos_ieo_profesional_estudiantes as dip
 							where ds.id = ef.id_datos_sesion
-							and ef.id_ciclo = ".$idCiclo."
+							and ef.anio = ".$idAnio."
 							and ef.id_fase = ".$faseO."
 							and ef.estado = 1
 							and ds.estado = 1
@@ -480,7 +491,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 										break;
 									case 1:
 										$data['contenido'].="<div class='col-xs-3' >";
-										$data['contenido'].=$cursosDescripcion;
+										$data['contenido'].=implode( ",", $cursosDescripcion );
 										$data['contenido'].="</div>";
 										
 										break;
@@ -492,7 +503,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 										break;
 									case 3:
 										$data['contenido'].="<div class='col-xs-3' >";
-										$data['contenido'].=$frecuenciasDescripcion;
+										$data['contenido'].=implode( ",", $frecuenciasDescripcion );
 										$data['contenido'].="</div>";
 										
 										break;
@@ -568,7 +579,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 					   from semilleros_tic.$tabla ef, 
 							semilleros_tic.datos_ieo_profesional_estudiantes p,
 							semilleros_tic.datos_sesiones ds
-					  where ef.id_ciclo								= $idCiclo
+					  where ef.anio									= $idAnio
 						and ef.id_fase 								= $faseO
 						and ef.id_datos_sesion						= ds.id
 						and ef.id_datos_ieo_profesional_estudiantes	= p.id
@@ -687,7 +698,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 						from semilleros_tic.datos_sesiones as ds, 
 						semilleros_tic.$tabla as ef, semilleros_tic.datos_ieo_profesional_estudiantes as dip
 						where ds.id = ef.id_datos_sesion
-						and ef.id_ciclo = ".$idCiclo."
+						and ef.anio = ".$idAnio."
 						and ef.id_fase = ".$faseO."
 						and ef.estado = 1
 						and ds.estado = 1

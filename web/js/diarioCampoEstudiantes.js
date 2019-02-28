@@ -16,7 +16,7 @@ $( document ).ready(function() {
 	
 		// // $("#principal").hide();
 		// $('#selAnio').trigger('change');	
-		// // $('#selFases').trigger('change');	
+		$('#selFases').trigger('change');	
 		
 		// setTimeout(function(){$('#selFases').trigger('change');}, 600);
 			// // llenarPerfilesSelected();
@@ -46,7 +46,7 @@ $( "#selFases" ).change(function()
 								// if (typeof data.contenido === undefined || typeof data.contenido1 === undefined){
 								if (data.contenido =="" || data.contenido1 ==""){
 									
-									swal("Importante", data.mensaje, "info");
+									// swal("Importante", data.mensaje, "info");
 									
 								}
 								else{
