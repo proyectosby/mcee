@@ -627,38 +627,46 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 				{
 					foreach( $grados as $grado ){
 						
-						$acuerdo = AcuerdosInstitucionalesEstudiantes::findOne( $grado );
+						$acuerdo = AcuerdosInstitucionalesEstudiantes::findOne( explode( ",",$grado ) );
 						
-						//muestra la lista de cursos por id
-						$lista_cursos_id = explode( ",", $acuerdo->curso );
-						
-						foreach( $lista_cursos_id as $id_curso )
-						{
-							//Saco la descripcion del curso
-							$des = Paralelos::findOne( $id_curso )->descripcion;
+						if( $acuerdo ){
 							
-							//Si el curso no esta en la lista la agrego
-							if( !in_array($des, $cursos) )
+							//muestra la lista de cursos por id
+							$lista_cursos_id = explode( ",", $acuerdo->curso );
+							
+							foreach( $lista_cursos_id as $id_curso )
 							{
-								$cursos[] = Paralelos::findOne( $id_curso )->descripcion;
+								//Saco la descripcion del curso
+								$des = Paralelos::findOne( $id_curso )->descripcion;
+								
+								//Si el curso no esta en la lista la agrego
+								if( !in_array($des, $cursos) )
+								{
+									$cursos[] = Paralelos::findOne( $id_curso )->descripcion;
+								}
 							}
 						}
 						
 						
 					}
 					
-					$frecuencias[] = Parametro::findOne( $acuerdo->frecuencia_sesiones )->descripcion;
+					$frecuencias = [];
+					if($acuerdo)
+						$frecuencias[] = Parametro::findOne( $acuerdo->frecuencia_sesiones )->descripcion;
 					
 				
 				//se formatea para mostrarlos separados por , cursos
+				$cursosDescripcion = [];
 					foreach($cursos as $key){
 						
 						$cursosDescripcion[]=$key;
 						
 						}
+					
 					$cursosDescripcion = implode(",",$cursosDescripcion);
 					
 					//se formatea para mostrarlos separados por , frecuencias
+					$frecuenciasDescripcion = [];
 					foreach($frecuencias as $key){
 						
 						$frecuenciasDescripcion[]=$key;
