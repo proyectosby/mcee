@@ -33,6 +33,15 @@ $( "#selFases" ).change(function()
 	anio = $( "#selAnio" ).val();
 	ciclo = $( "#selCiclo" ).val(1);
 	
+	$("#contenido").hide();
+	$("#contenido1").hide(); 
+	$("#titulo").hide();
+	$("#encabezado").hide();
+	$("#encabezado1").hide();
+	
+	$("#descripcion").html("");
+	$("#hallazgos").html("");
+	
 	 if(faseO != "" && anio != "" && ciclo != "" )
 	 {
 		 if(faseO == 1){fase=14; titulo="BITACORA FASE I"; descripcion=17; hallazgo=20;}
