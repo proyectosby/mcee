@@ -104,7 +104,10 @@ class ResumenOperativoFasesEstudiantesController extends Controller
                 // array_push($data['49'], $dip);
             // }
         }
-
+		
+		// echo "<pre>"; print_r($data); echo "</pre>"; 
+		
+		
         $contador =0;
         $totalDatos = [];
 		foreach ($data as $dip)
