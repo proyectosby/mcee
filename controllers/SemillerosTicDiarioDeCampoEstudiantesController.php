@@ -240,7 +240,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 
         return $this->redirect(['index', 
 									'anio' 		=> $model->anio,
-									'esDocente' => 1,
+									'esDocente' => 0,
 							]);
     }
 
