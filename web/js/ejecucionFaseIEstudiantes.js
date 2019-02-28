@@ -33,7 +33,7 @@
 
 	//Copio los titulos y los dejo como arrary para que se más fácil usarlos en los popups
 	var arrayTitles = [
-		"Participación Sesiones (1 a 6)",
+		"Participación Sesiones (1 a 12)",
 		"Número de estudiantes participantes",
 		"Número de Apps 0.0 creadas",
 		"Nombre de las aplicaciones creadas",
