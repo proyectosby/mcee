@@ -64,6 +64,9 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
      */
     public function actionIndex()
     {
+		$anio 		= Yii::$app->request->get('anio');
+		$esDocente 	= Yii::$app->request->get('esDocente');
+		
         $searchModel = new SemillerosTicDiarioDeCampoEstudiantesBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere('estado=1');
@@ -71,6 +74,8 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+			'anio' => $anio,
+            'esDocente' => $esDocente,
         ]);
     }
 
@@ -94,6 +99,9 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
      */
     public function actionCreate()
     {
+		$anio 		= Yii::$app->request->get('anio');
+		$esDocente 	= Yii::$app->request->get('esDocente');
+		
 		$ciclos = new SemillerosTicCiclos();
 		
 		// $ciclos->load( Yii::$app->request->post() );
@@ -109,15 +117,21 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 		
 		// echo "<pre>"; print_r(Yii::$app->request->post()); echo "</pre>"; die();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           return $this->redirect(['index']);
+           return $this->redirect([
+									'index',
+									'anio' => $anio,
+									'esDocente' => $esDocente,
+								]);
         }
 		
-		$dataAnios 	= SemillerosTicAnio::find()
-							->where( 'estado=1' )
-							->orderby( 'descripcion' )
-							->all();
+		// $dataAnios 	= SemillerosTicAnio::find()
+							// ->where( 'estado=1' )
+							// ->orderby( 'descripcion' )
+							// ->all();
 			
-		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		// $anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		
+		$anios	= [ $anio => $anio ];
 		
 		$cicloslist = [];
 		
@@ -139,6 +153,8 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 			'ciclos' => $ciclos,
             'cicloslist' => $cicloslist,
             'anios' => $anios,
+            'anio' => $anio,
+            'esDocente' => $esDocente,
         ]);
     }
 
@@ -151,6 +167,9 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
      */
     public function actionUpdate($id)
     {
+		$anio 		= Yii::$app->request->get('anio');
+		$esDocente 	= Yii::$app->request->get('esDocente');
+		
         $ciclos = new SemillerosTicCiclos();
 		
 		// $ciclos->load( Yii::$app->request->post() );
@@ -168,17 +187,24 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 		
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['index',
+									'anio' 		=> $anio,
+									'esDocente' => $esDocente,
+								]);
         }
 		
-		$dataAnios 	= SemillerosTicAnio::find()
-							->where( 'estado=1' )
-							->all();
+		// $dataAnios 	= SemillerosTicAnio::find()
+							// ->where( 'estado=1' )
+							// ->all();
 			
-		$anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		// $anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+		
+		$anios[] = [ $model->anio => $model->anio ];
 		
 		//Se saca la el id del anio
-		$anioSelected = SemillerosTicCiclos::findOne( $model->id_ciclo )->id_anio;
+		// $anioSelected = SemillerosTicCiclos::findOne( $model->id_ciclo )->id_anio;
+		
+		$anioSelected = $model->anio;
 		
 		
 		$cicloslist = [];
@@ -194,7 +220,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
             'cicloslist' => $cicloslist,
             'anios' => $anios,
             'anioSelected' => $anioSelected,
-            'cicloSelected' => $model->id_ciclo,
+            'cicloSelected' => null,
 			
         ]);
     }
@@ -212,7 +238,10 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 		$model->estado = 2;
 		$model->update(false);
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 
+									'anio' 		=> $model->anio,
+									'esDocente' => 1,
+							]);
     }
 
     /**

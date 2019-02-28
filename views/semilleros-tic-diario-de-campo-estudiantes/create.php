@@ -23,6 +23,8 @@ $this->params['breadcrumbs'][] = "Agregar";
         'anios' => $anios,
 		'anioSelected' => "",
 		'cicloSelected' => '',
+		'anio' => $anio,
+		'esDocente' => $esDocente,
     ]) ?>
 
 </div>

@@ -48,12 +48,22 @@ $this->params['breadcrumbs'][] = $nombre ;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Agregar',['value'=>Url::to(['create']),'class'=>'btn btn-success','id'=>'modalButton'])?>
+        <?= Html::button('Agregar',[
+									'value'=>Url::to([
+									'create',
+									'anio' => $anio,
+									'esDocente' => $esDocente,
+							]),
+							'class'=>'btn btn-success',
+							'id'=>'modalButton'
+						])?>
 		
 		
 		<?= Html::a('Volver', 
 									[
 										'semilleros/index',
+										'anio' => $anio,
+										'esDocente' => $esDocente,
 									], 
 									['class' => 'btn btn-info']) ?>
 				

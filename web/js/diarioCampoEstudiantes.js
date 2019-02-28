@@ -1,26 +1,26 @@
 $( document ).ready(function() {
-    $.get( "index.php?r=semilleros-tic-diario-de-campo-estudiantes/llenar-ciclos&idAnio="+1,
-        function( data )
-        {
+    // $.get( "index.php?r=semilleros-tic-diario-de-campo-estudiantes/llenar-ciclos&idAnio="+1,
+        // function( data )
+        // {
 
-            $('#selCiclo').empty();
-            $('#selCiclo').html(data.html);
-            $('#selCiclo').val(cicloSelected);
-        },
-        "json");
-    $('#selCiclo').hide();
-    // var url = window.location.href; 
-	// if (url.indexOf('update')!=-1) 
-	// {	
+            // $('#selCiclo').empty();
+            // $('#selCiclo').html(data.html);
+            // $('#selCiclo').val(cicloSelected);
+        // },
+        // "json");
+    // $('#selCiclo').hide();
+    // // var url = window.location.href; 
+	// // if (url.indexOf('update')!=-1) 
+	// // {	
 		
 	
-		// $("#principal").hide();
-		$('#selAnio').trigger('change');	
-		// $('#selFases').trigger('change');	
+		// // $("#principal").hide();
+		// $('#selAnio').trigger('change');	
+		// // $('#selFases').trigger('change');	
 		
-		setTimeout(function(){$('#selFases').trigger('change');}, 600);
-			// llenarPerfilesSelected();
-	// }
+		// setTimeout(function(){$('#selFases').trigger('change');}, 600);
+			// // llenarPerfilesSelected();
+	// // }
 });
 
 

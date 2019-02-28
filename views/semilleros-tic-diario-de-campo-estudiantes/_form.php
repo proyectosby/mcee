@@ -28,9 +28,8 @@ cicloSelected = <?php echo $cicloSelected; ?>;
 	<!-- Espacio para seleccionar la fase, ciclo y año-->
 	<div class="" style=''>
 
-	<?= $form->field( $ciclos, 'id_anio' )->dropDownList( $anios, [ 
-													'prompt' 	=> 'Seleccione...', 'id' =>'selAnio','value' => $anioSelected 
-													
+	<?= $form->field( $model, 'anio' )->dropDownList( $anios, [ 
+													'id' =>'selAnio'
 												] ) ?>
 
 	<?PHP // $form->field( $model, 'id_ciclo' )->dropDownList( $cicloslist, [ 

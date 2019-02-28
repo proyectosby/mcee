@@ -155,6 +155,8 @@ class SemillerosTicDiarioDeCampoController extends Controller
             'cicloslist' => $cicloslist,
             'anios' => $anios,
             'anioSelected' => $anio,
+            'anio' => $anio,
+            'esDocente' => $esDocente,
         ]);
     }
 
