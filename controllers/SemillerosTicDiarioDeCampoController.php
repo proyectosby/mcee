@@ -263,7 +263,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
      * @return la lista de los campos
      * @throws no tiene excepciones
      */	
-	public function actionOpcionesEjecucionDiarioCampo($idFase, $idAnio, $idCiclo,$faseO)
+	public function actionOpcionesEjecucionDiarioCampo($idFase, $idAnio, $idCiclo, $faseO)
     {
 	   $data = array('mensaje'=>'','html'=>'','contenido'=>'','descripcion'=>'','hallazgos'=>'','html1'=>'','contenido1'=>'',);
 	   
@@ -309,8 +309,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			$command = $connection->createCommand("select ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
 			 from semilleros_tic.anio as a, semilleros_tic.fases as f, semilleros_tic.ejecucion_fase as ef, semilleros_tic.datos_ieo_profesional as dip, 
 			 semilleros_tic.condiciones_institucionales as ci, semilleros_tic.datos_sesiones as ds
-			 where a.id = $idAnio
-			 
+			 where a.descripcion = '$idAnio'
 			 and f.id = $faseO
 			 and ef.id_fase = f.id
 			 and dip.id = ef.id_datos_ieo_profesional
@@ -331,7 +330,8 @@ class SemillerosTicDiarioDeCampoController extends Controller
 												  // group by ef.id, ci.total_docentes_ieo, ef.asignaturas, ef.especiaidad, ef.seiones_empleadas, ef.numero_apps, ef.temas_problama
 													 // ");
 			$result1 = $command->queryAll();
-			;
+			
+			
 			//se llena el resultado de a consulta en un array
 			foreach($result1 as $key){
 				$datosEjecucionFase1[]=$key;
@@ -402,10 +402,10 @@ class SemillerosTicDiarioDeCampoController extends Controller
 				//para la fecuencia de las sesiones se trae de la conformacion de semilleros
 				$frecuenciaSesiones =array();
 				
-				$command = $connection->createCommand("select ai.frecuencias_sesiones
+				$command = $connection->createCommand("
+				select ai.frecuencias_sesiones
 				from semilleros_tic.acuerdos_institucionales as ai, semilleros_tic.fases as f, semilleros_tic.semilleros_datos_ieo as sdi,
-					semilleros_tic.datos_ieo_profesional as dip, semilleros_tic.ejecucion_fase as ef, semilleros_tic.anio as a,
-					semilleros_tic.ciclos as c
+					semilleros_tic.datos_ieo_profesional as dip, semilleros_tic.ejecucion_fase as ef, semilleros_tic.anio as a
 				where f.id = ".$faseO."
 				and ai.id_fase = f.id
 				and ai.id_semilleros_datos_ieo = sdi.id
@@ -413,20 +413,16 @@ class SemillerosTicDiarioDeCampoController extends Controller
 				and sdi.sede = dip.id_sede
 				and dip.id_institucion = ".$idInstitucion."
 				and dip.id_sede = ".$idSedes."
-				and c.id = ".$idCiclo."
-				and ai.id_ciclo = c.id 
-				and ef.id_ciclo = c.id
-				and a.id = ".$idAnio." 
-				and c.id_anio = a.id
+				and a.descripcion = '$idAnio' 
 				and dip.estado = 1
 				and ef.estado = 1
 				and sdi.estado = 1
 				and ai.estado = 1
 				and a.estado = 1
-				and c.estado =1
 				group by ai.frecuencias_sesiones");
 				$result2 = $command->queryAll();
 				
+			
 				//se llena el resultado de a consulta en un array
 						foreach($result2 as $key){
 							$frecuenciaSesiones[]=$key;
@@ -596,20 +592,24 @@ class SemillerosTicDiarioDeCampoController extends Controller
 			$datosEjecucionFase2 =array();
 				
 								
-				$command = $connection->createCommand("select ai.total_docentes, ef.asignaturas, ef.especialidad, ef.numero_apps_desarrolladas 
-				from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, 
+				$command = $connection->createCommand("
+				select 
+					ai.total_docentes, 
+					ef.asignaturas, 
+					ef.especialidad, 
+					ef.numero_apps_desarrolladas 
+				from 
+				semilleros_tic.anio as a, 
+				semilleros_tic.fases as f, 
 				semilleros_tic.ejecucion_fase_ii as ef, semilleros_tic.datos_ieo_profesional as dip, 
 				semilleros_tic.datos_sesiones as ds, semilleros_tic.acuerdos_institucionales as ai
-				where a.id = $idAnio 
-				and c.id = $idCiclo
-				and c.id_anio = a.id
+				where a.descripcion = '$idAnio' 
 				and f.id = $faseO 
 				and ef.id_fase = f.id 
 				and dip.id = ef.id_datos_ieo_profesional 
 				and dip.id_institucion = ".$idInstitucion." 
 				and dip.id_sede = ".$idSedes." 
 				and ai.id_fase = $faseO
-				and ai.id_ciclo = $idCiclo
 				group by ef.id, ai.total_docentes, ef.asignaturas, ef.especialidad, ef.numero_apps_desarrolladas
 				");
 				$result1 = $command->queryAll();
@@ -690,7 +690,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 					and c.id = ".$idCiclo."
 					and ai.id_ciclo = c.id 
 					and ef.id_ciclo = c.id
-					and a.id = ".$idAnio." 
+					and a.descripcion = '$idAnio' 
 					and c.id_anio = a.id
 					and dip.estado = 1
 					and ef.estado = 1
@@ -907,7 +907,7 @@ class SemillerosTicDiarioDeCampoController extends Controller
 				from semilleros_tic.anio as a, semilleros_tic.ciclos as c, semilleros_tic.fases as f, 
 				semilleros_tic.ejecucion_fase_iii as ef, semilleros_tic.datos_ieo_profesional as dip, 
 				semilleros_tic.datos_sesiones as ds, semilleros_tic.acuerdos_institucionales as ai
-				where a.id = $idAnio 
+				where a.descripcion = '$idAnio'
 				and c.id = $idCiclo
 				and c.id_anio = a.id
 				and f.id = $faseO 
