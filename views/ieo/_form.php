@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]]);
 $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ieo.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/ieo-docentes.js',['depends' => [\yii\web\JqueryAsset::className()]]);
+// $this->registerJsFile(Yii::$app->request->baseUrl.'/js/ieo-docentes.js',['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
 <div class="ieo-form">

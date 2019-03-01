@@ -880,8 +880,9 @@ class IeoController extends Controller
                 echo "<option value='".$barrio->id."'>".$barrio->descripcion."</option>";
             }
         }
-        else{
-            echo "<option>-</option>";
+        else
+		{
+            // echo "<option value ='0'>-</option>";
         }
         
         //echo "<option>-</option>";
