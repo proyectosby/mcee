@@ -20,7 +20,15 @@ function bar_progress(progress_line_object, direction) {
 }
 
 jQuery(document).ready(function() {
-    
+	var btnAddDay = $('#btnAddDay');
+	var newVal = parseInt(btnAddDay.val());
+    btnAddDay.click(function () {
+		if (newVal <= 6){
+            newVal = newVal+1;
+            $( "#addDay-1" ).clone().attr('id', 'addDay-' + newVal).appendTo("#contentDays");
+            btnAddDay.val((newVal))
+		}
+    });
     /*
         Form
     */
@@ -49,6 +57,18 @@ jQuery(document).ready(function() {
     		}
     	});
     	// fields validation
+
+		var data = {
+			test: 'dataaaa'
+		};
+
+        $.post( "index.php?r=gc-momento1%2Fproposito", data,function( data ) {
+            if(data){
+
+			}else{
+
+			}
+        });
     	
     	if( next_step ) {
     		parent_fieldset.fadeOut(400, function() {
