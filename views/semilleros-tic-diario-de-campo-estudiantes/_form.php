@@ -24,6 +24,10 @@ $this->registerCssFile("@web/css/modal.css", ['depends' => [\yii\bootstrap\Boots
 $this->registerJs( file_get_contents( '../web/js/diarioCampoEstudiantes.js' ) );
 
 $items = [];
+
+if( $dataResumen && ( empty( $dataResumen['contenido'] ) || empty( $dataResumen['contenido1'] ) ) ){
+	$this->registerJs( "swal('Importante', '".$dataResumen['mensaje']."', 'info');" );
+}
 ?>
 <script>
 cicloSelected = <?php echo $cicloSelected ? $cicloSelected : "''"; ?>;
@@ -54,7 +58,8 @@ cicloSelected = <?php echo $cicloSelected ? $cicloSelected : "''"; ?>;
 	<div id="principal">
 	 
 		<!-- Espacio para los datos que se cargan desde la base de datos-->
-		<div class="" id='titulo' style='padding:0px;background-color:#ccc;height:30px;text-align:center;display:none;font-weight: bold;'>
+		<div class="" id='titulo' style='padding:0px;background-color:#ccc;height:30px;text-align:center;display:<?= !empty( $dataResumen['titulo'] ) ? '' : 'none' ?>;font-weight: bold;'>
+			<?= !empty( $dataResumen['titulo'] ) ? $dataResumen['titulo'] : ''; ?>
 		</div>
 		
 		<br>

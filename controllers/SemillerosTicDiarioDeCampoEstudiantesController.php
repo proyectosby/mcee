@@ -150,12 +150,24 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 			//Consulto todas las Sesiones por ejecuciones de Fase
 			switch( $idFase )
 			{
-				case 1: $idFaseFase = 14; break;
-				case 2: $idFaseFase = 15; break;
-				case 3: $idFaseFase = 16; break;
+				case 1: 
+					$idFaseFase = 14; 
+					$titulo="BITACORA FASE I";
+					break;
+					
+				case 2: 
+					$idFaseFase = 15; 
+					$titulo="BITACORA FASE II";
+					break;
+					
+				case 3: 
+					$idFaseFase = 16; 
+					$titulo="BITACORA FASE III";
+					break;
 			}
 			
 			$dataResumen = $this->actionOpcionesEjecucionDiarioCampo( $idFaseFase, $anio, 1, $idFase );
+			$dataResumen['titulo'] = $titulo;
 			
 			
 			//Busco diario de campo según los datos suministrados
@@ -268,7 +280,7 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 								'id_sesion',
 							]) && $valido;
 			}
-			echo $valido ? 'true': 'false';
+			
 			//Si todo esta bien se guarda los datos
 			if( $valido )
 			{
