@@ -29,7 +29,7 @@ class SemillerosTicDiarioDeCampo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_fase', 'descripcion', 'hallazgos', 'estado', 'anio'], 'required'],
+            [['id_fase', 'anio'], 'required'],
             [['id_fase', 'estado', 'anio'], 'default', 'value' => null],
             [['id_fase', 'estado', 'anio'], 'integer'],
             [['descripcion', 'hallazgos'], 'string', 'max' => 5000],

@@ -35,6 +35,11 @@ use app\models\Fases;
 $this->title = '';
 $nombre = 'Semilleros TIC Diario De Campo';
 $this->params['breadcrumbs'][] =$nombre;
+
+if( !$sede || $sede < 0 ){
+	$this->registerJs( "$( cambiarSede ).click()" );
+	return;
+}
 ?>
 
 
@@ -113,6 +118,7 @@ $this->params['breadcrumbs'][] =$nombre;
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
+            'anio',
             [
 				'attribute'=>'id_fase',
 				/*
@@ -126,8 +132,8 @@ $this->params['breadcrumbs'][] =$nombre;
 					return  $fases ;	
 				},	
 			],
-            'descripcion',
-            'hallazgos',
+            // 'descripcion',
+            // 'hallazgos',
             // 'estado',
 
             [
@@ -135,12 +141,18 @@ $this->params['breadcrumbs'][] =$nombre;
 			'template'=>'{view}{update}{delete}',
 				'buttons' => [
 				'view' => function ($url, $model) {
+					
+					$url = $url."&anio=".$_GET['anio']."&esDocente=".$_GET['esDocente'];
+					
 					return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
 								'title' => Yii::t('app', 'lead-view'),
 					]);
 				},
 
 				'update' => function ($url, $model) {
+					
+					$url = $url."&anio=".$_GET['anio']."&esDocente=".$_GET['esDocente'];
+					
 					return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
 								'title' => Yii::t('app', 'lead-update'),
 					]);

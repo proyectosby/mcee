@@ -4,6 +4,11 @@ Versión: 001
 Fecha: Fecha en formato (30-08-2018)
 Desarrollador: Viviana Rodas
 Descripción: diario de campo semilleros tic
+---------------------------------------------------
+Modificaciones
+Fecha: Fecha en formato (30-08-2018)
+Desarrollador: Edwin Molina G
+Descripción: Por cada Sesión realizada en la ejecución de fase se muestra una descripción y fase a llenar
 ******************/
 
 namespace app\controllers;
@@ -37,6 +42,8 @@ use app\models\Fases;
 use app\models\Sesiones;
 use app\models\AcuerdosInstitucionalesEstudiantes;
 use app\models\Paralelos;
+use app\models\DatosSesiones;
+use app\models\SemillerosTicMovimientoDiarioCampoEstudiantes;
 
 /**
  * SemillerosTicDiarioDeCampoEstudiantesController implements the CRUD actions for SemillerosTicDiarioDeCampoEstudiantes model.
@@ -58,6 +65,20 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
         ];
     }
 
+	public function actionSesiones( $id_fase )
+	{
+		 return $this->renderAjax('sesiones ', [
+            'model' => $model,
+			'fases' => $fases,
+            'fasesModel' => $fasesModel,
+			'ciclos' => $ciclos,
+            'cicloslist' => $cicloslist,
+            'anios' => $anios,
+            'anio' => $anio,
+            'esDocente' => $esDocente,
+        ]);
+	}
+	
     /**
      * Lists all SemillerosTicDiarioDeCampoEstudiantes models.
      * @return mixed
@@ -67,15 +88,19 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 		$anio 		= Yii::$app->request->get('anio');
 		$esDocente 	= Yii::$app->request->get('esDocente');
 		
+		$idInstitucion 	= $_SESSION['instituciones'][0];
+	    $idSedes 		= $_SESSION['sede'][0];
+		
         $searchModel = new SemillerosTicDiarioDeCampoEstudiantesBuscar();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$dataProvider->query->andWhere('estado=1');
 		
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-			'anio' => $anio,
-            'esDocente' => $esDocente,
+            'searchModel' 	=> $searchModel,
+            'dataProvider' 	=> $dataProvider,
+			'anio' 			=> $anio,
+            'esDocente' 	=> $esDocente,
+            'sede' 			=> $idSedes,
         ]);
     }
 
@@ -99,15 +124,189 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
      */
     public function actionCreate()
     {
+		$idFase 	= Yii::$app->request->get('idFase');
+		
 		$anio 		= Yii::$app->request->get('anio');
 		$esDocente 	= Yii::$app->request->get('esDocente');
 		
 		$ciclos = new SemillerosTicCiclos();
 		
-		// $ciclos->load( Yii::$app->request->post() );
+		$dataResumen = [];
 		
-        $model = new SemillerosTicDiarioDeCampoEstudiantes();
-
+		/**
+		 * Estructura de datos
+		 * Aquí formo como están estructurados los datos para guardar
+		 *
+		 * Un diario de campo tiene muchos movimientos
+		 */
+		$diarioCampo 	= null;
+		$movimientos	= [];
+		/**/
+		
+		//Si hay un idFase, significa que se debe buscar los datos guardados
+		//Se hace por que significa que el usuario cambio la fase en el select de la vista _form
+		if( $idFase && !Yii::$app->request->post() )
+		{
+			//Consulto todas las Sesiones por ejecuciones de Fase
+			switch( $idFase )
+			{
+				case 1: 
+					$idFaseFase = 14; 
+					$titulo="BITACORA FASE I";
+					break;
+					
+				case 2: 
+					$idFaseFase = 15; 
+					$titulo="BITACORA FASE II";
+					break;
+					
+				case 3: 
+					$idFaseFase = 16; 
+					$titulo="BITACORA FASE III";
+					break;
+			}
+			
+			$dataResumen = $this->actionOpcionesEjecucionDiarioCampo( $idFaseFase, $anio, 1, $idFase );
+			$dataResumen['titulo'] = $titulo;
+			
+			
+			//Busco diario de campo según los datos suministrados
+			$diarioCampo 	= SemillerosTicDiarioDeCampoEstudiantes::findOne([
+										'id_fase' 	=> $idFase,
+										'anio' 		=> $anio,
+										'estado' 	=> 1,
+									]);
+			
+			//Si no encuentra significa que es un registro nuevo
+			if( !$diarioCampo )
+			{
+				$diarioCampo 	= new SemillerosTicDiarioDeCampoEstudiantes();
+				$diarioCampo->id_fase = $idFase;
+			}
+			
+			//Consulto todas las Sesiones por ejecuciones de Fase
+			switch( $idFase )
+			{
+				case 1: $tabla = "i"; break;
+				case 2: $tabla = "ii"; break;
+				case 3: $tabla = "iii"; break;
+			}
+			
+			$datosSesiones	= DatosSesiones::find()
+									->alias('ds')
+									->select( 'id_sesion' )
+									->innerJoin( 'semilleros_tic.ejecucion_fase_'.$tabla.'_estudiantes ef', 'ef.id_datos_sesion=ds.id' )
+									->where( 'ds.estado=1' )
+									->andWhere( 'ef.estado=1' )
+									->andWhere( 'ef.anio='.$anio )
+									->andWhere( 'ef.id_fase='.$idFase )
+									->groupby( 'id_sesion' )
+									->all();
+			
+			$sesiones = [];
+			
+			foreach( $datosSesiones as $key => $value )
+			{
+				$sesiones[] =  $value->id_sesion;
+				
+				$mov = SemillerosTicMovimientoDiarioCampoEstudiantes::findOne([
+											'id_diario_de_campo_estudiantes' 	=> $diarioCampo->id,
+											'id_sesion' 						=> $value->id_sesion,
+										]);
+										
+				if( !$mov )
+				{
+					$mov = new SemillerosTicMovimientoDiarioCampoEstudiantes();
+					$mov->id_sesion = $value->id_sesion;
+				}
+										
+				$movimientos[] = $mov;
+			}
+		}
+		
+		//Si existen datos post, signfica que se pretende guardar los datos ingresados por el usuario
+		if( Yii::$app->request->post() )
+		{
+			//Si no existe un id Fase significa que se procede a guardar los datos
+			//Busco diario de campo según los datos suministrados
+			$diarioCampo 	= SemillerosTicDiarioDeCampoEstudiantes::findOne([
+										'id_fase' 	=> Yii::$app->request->post('SemillerosTicDiarioDeCampoEstudiantes')['id_fase'],
+										'anio' 		=> $anio,
+										'estado'	=> 1,
+									]);
+									
+			if( !$diarioCampo )
+			{
+				$diarioCampo 	= new SemillerosTicDiarioDeCampoEstudiantes();
+				$diarioCampo->load(Yii::$app->request->post());
+			}
+			
+			
+			$postMovimientos = Yii::$app->request->post('SemillerosTicMovimientoDiarioCampoEstudiantes');
+			
+			foreach( $postMovimientos as $key => $mov )
+			{
+				// echo "<pre>"; var_dump( $postMovimientos ); echo "</pre>";
+				// var_dump( $mov ); exit();
+				$modelMov = null;
+				
+				if( $mov['id'] )
+				{
+					$modelMov = SemillerosTicMovimientoDiarioCampoEstudiantes::findOne($mov['id']);
+				}
+				else{
+					$modelMov = new SemillerosTicMovimientoDiarioCampoEstudiantes();
+				}
+				
+				$modelMov->load( $mov, '' );
+				
+				$movimientos[] = $modelMov;
+			}
+			
+			//Desde aquí se procede a guardar los datos
+			
+			$valido = true;
+			
+			$valido = $diarioCampo->validate([
+								'id_fase',
+								'anio',
+							]) && $valido;
+			
+			foreach( $movimientos as $key => $mov )
+			{
+				$valido = $mov->validate([
+								'descripcion',
+								'hallazgos',
+								'id_sesion',
+							]) && $valido;
+			}
+			
+			//Si todo esta bien se guarda los datos
+			if( $valido )
+			{
+				$diarioCampo->estado = 1;
+				$diarioCampo->save( false );
+				
+				foreach( $movimientos as $key => $mov )
+				{
+					$mov->id_diario_de_campo_estudiantes = $diarioCampo->id;
+					$mov->anio 							 = $anio;
+					$mov->estado 						 = 1;
+					$mov->save(false);
+				}
+				
+				return $this->redirect(['index',
+									'anio' 		=> $anio,
+									'esDocente' => 0,
+								]);
+			}
+		}
+		
+		if( !$diarioCampo )
+		{
+			$diarioCampo 	= new SemillerosTicDiarioDeCampoEstudiantes();
+		}
+		
 		//se crea una instancia del modelo fases
 		$fasesModel 		 	= new Fases();
 		//se traen los datos de fases
@@ -115,46 +314,21 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
 		//se guardan los datos en un array
 		$fases	 	 	 	= ArrayHelper::map( $dataFases, 'id', 'descripcion' );
 		
-		// echo "<pre>"; print_r(Yii::$app->request->post()); echo "</pre>"; die();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-           return $this->redirect([
-									'index',
-									'anio' => $anio,
-									'esDocente' => $esDocente,
-								]);
-        }
-		
-		// $dataAnios 	= SemillerosTicAnio::find()
-							// ->where( 'estado=1' )
-							// ->orderby( 'descripcion' )
-							// ->all();
-			
-		// $anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
-		
 		$anios	= [ $anio => $anio ];
 		
 		$cicloslist = [];
 		
-		// // if( $ciclos->id_anio ){
-			
-			// $dataCiclos = SemillerosTicCiclos::find()
-							// ->where( 'estado=1' )
-							// ->where( 'id_anio=1' )
-							// ->orderby( 'descripcion' )
-							// ->all();
-			
-			// $cicloslist	= ArrayHelper::map( $dataCiclos, 'id', 'descripcion' );
-		// // }
-
-        return $this->renderAjax('create', [
-            'model' => $model,
-			'fases' => $fases,
-            'fasesModel' => $fasesModel,
-			'ciclos' => $ciclos,
-            'cicloslist' => $cicloslist,
-            'anios' => $anios,
-            'anio' => $anio,
-            'esDocente' => $esDocente,
+		return $this->renderAjax('create', [
+            'diarioCampo' 	=> $diarioCampo,
+            'movimientos' 	=> $movimientos,
+			'fases' 		=> $fases,
+            'fasesModel'	=> $fasesModel,
+			'ciclos' 		=> $ciclos,
+            'cicloslist'	=> $cicloslist,
+            'anios' 		=> $anios,
+            'anio' 			=> $anio,
+            'esDocente' 	=> $esDocente,
+            'dataResumen' 	=> $dataResumen,
         ]);
     }
 
@@ -167,61 +341,116 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
      */
     public function actionUpdate($id)
     {
+		$idFase 	= Yii::$app->request->get('idFase');
+		
 		$anio 		= Yii::$app->request->get('anio');
 		$esDocente 	= Yii::$app->request->get('esDocente');
 		
-        $ciclos = new SemillerosTicCiclos();
+		$ciclos = new SemillerosTicCiclos();
 		
-		// $ciclos->load( Yii::$app->request->post() );
+		$dataResumen = [];
 		
-		// $model = new SemillerosTicDiarioDeCampoEstudiantes();
+		/**
+		 * Estructura de datos
+		 * Aquí formo como están estructurados los datos para guardar
+		 *
+		 * Un diario de campo tiene muchos movimientos
+		 */
+		$diarioCampo 	= null;
+		$movimientos	= [];
+		/**/
 		
-		$model = $this->findModel($id);
-
-		//se crea una instancia del modelo fases
-		$fasesModel 		 	= new SemillerosTicFases();
-		//se traen los datos de fases
-		$dataFases		 	= $fasesModel->find()->all();
-		//se guardan los datos en un array
-		$fases	 	 	 	= ArrayHelper::map( $dataFases, 'id', 'descripcion' );
-		
-		
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index',
-									'anio' 		=> $anio,
-									'esDocente' => $esDocente,
-								]);
-        }
-		
-		// $dataAnios 	= SemillerosTicAnio::find()
-							// ->where( 'estado=1' )
-							// ->all();
+		//Si hay un idFase, significa que se debe buscar los datos guardados
+		//Se hace por que significa que el usuario cambio la fase en el select de la vista _form
+		if( $id )
+		{
+			//Busco diario de campo según los datos suministrados
+			$diarioCampo 	= SemillerosTicDiarioDeCampoEstudiantes::findOne($id);
+			$diarioCampo->isNewRecord =true;
+			var_dump( $diarioCampo->isNewRecord );
 			
-		// $anios	= ArrayHelper::map( $dataAnios, 'id', 'descripcion' );
+			$idFase = $diarioCampo->id_fase;
+			
+			//Consulto todas las Sesiones por ejecuciones de Fase
+			switch( $idFase )
+			{
+				case 1: $idFaseFase = 14; break;
+				case 2: $idFaseFase = 15; break;
+				case 3: $idFaseFase = 16; break;
+			}
+			
+			$dataResumen = $this->actionOpcionesEjecucionDiarioCampo( $idFaseFase, $anio, 1, $idFase );
+			
+			
+			//Si no encuentra significa que es un registro nuevo
+			if( !$diarioCampo )
+			{
+				$diarioCampo 	= new SemillerosTicDiarioDeCampoEstudiantes();
+				$diarioCampo->id_fase = $idFase;
+			}
+			
+			//Consulto todas las Sesiones por ejecuciones de Fase
+			switch( $idFase )
+			{
+				case 1: $tabla = "i"; break;
+				case 2: $tabla = "ii"; break;
+				case 3: $tabla = "iii"; break;
+			}
+			
+			$datosSesiones	= DatosSesiones::find()
+									->alias('ds')
+									->select( 'id_sesion' )
+									->innerJoin( 'semilleros_tic.ejecucion_fase_'.$tabla.'_estudiantes ef', 'ef.id_datos_sesion=ds.id' )
+									->where( 'ds.estado=1' )
+									->andWhere( 'ef.estado=1' )
+									->andWhere( 'ef.anio='.$anio )
+									->andWhere( 'ef.id_fase='.$idFase )
+									->groupby( 'id_sesion' )
+									->all();
+			
+			$sesiones = [];
+			
+			foreach( $datosSesiones as $key => $value )
+			{
+				$sesiones[] =  $value->id_sesion;
+				
+				$mov = SemillerosTicMovimientoDiarioCampoEstudiantes::findOne([
+											'id_diario_de_campo_estudiantes' 	=> $diarioCampo->id,
+											'id_sesion' 						=> $value->id_sesion,
+										]);
+										
+				if( !$mov )
+				{
+					$mov = new SemillerosTicMovimientoDiarioCampoEstudiantes();
+					$mov->id_sesion = $value->id_sesion;
+				}
+										
+				$movimientos[] = $mov;
+			}
+		}
 		
-		$anios[] = [ $model->anio => $model->anio ];
+		//se crea una instancia del modelo fases
+		$fasesModel 		 	= Fases::findOne( $diarioCampo->id_fase );
 		
-		//Se saca la el id del anio
-		// $anioSelected = SemillerosTicCiclos::findOne( $model->id_ciclo )->id_anio;
+		//se guardan los datos en un array
+		$fases	 	 	 	= [ $fasesModel->id => $fasesModel->descripcion ];
 		
-		$anioSelected = $model->anio;
-		
+		$anios	= [ $anio => $anio ];
 		
 		$cicloslist = [];
-		
-		
 			
 
-        return $this->renderAjax('update', [
-            'model' => $model,
-			'fases' => $fases,
-            'fasesModel' => $fasesModel,
-			'ciclos' => $ciclos,
-            'cicloslist' => $cicloslist,
-            'anios' => $anios,
-            'anioSelected' => $anioSelected,
-            'cicloSelected' => null,
-			
+        return $this->renderAjax('create', [
+            'diarioCampo' 	=> $diarioCampo,
+            'movimientos' 	=> $movimientos,
+			'fases' 		=> $fases,
+            'fasesModel'	=> $fasesModel,
+			'ciclos' 		=> $ciclos,
+            'cicloslist'	=> $cicloslist,
+            'anios' 		=> $anios,
+            'anio' 			=> $anio,
+            'esDocente' 	=> $esDocente,
+            'dataResumen' 	=> $dataResumen,
         ]);
     }
 
@@ -845,7 +1074,9 @@ class SemillerosTicDiarioDeCampoEstudiantesController extends Controller
         
 		 // echo "<pre>"; print_r($data); echo "</pre>";
 		
-		echo json_encode( $data ); 
+		return $data;
+		
+		// echo json_encode( $data ); 
 	   
     }
 	
