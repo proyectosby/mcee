@@ -85,9 +85,10 @@ $id_momento1= 1;
                         </h6>
                         <hr>
                         <div id="contentDays">
+                            <input type="hidden" value="<?php echo $_GET['id'] ?>" id="id"/>
                             <div class="form-group" id="addDay-1">
                                 <label class="control-label" for="gcplaneacionpordia-id_dia">Día</label>
-                                <select id="gcplaneacionpordia-id_dia" class="form-control" name="GcPlaneacionPorDia[id_dia]" aria-required="true">
+                                <select id="gcplaneacionpordia-id_dia-1" class="form-control required" name="GcPlaneacionPorDia[id_dia]" aria-required="true" disabled>
                                     <option value="">Seleccione...</option>
                                     <option value="1">Dia 1</option>
                                     <option value="2">Dia 2</option>
@@ -98,7 +99,7 @@ $id_momento1= 1;
                                     <option value="7">Dia 7</option>
                                 </select>
                                 <label class="control-label" for="gcplaneacionpordia-descripcion_plan">Descripción Plan</label>
-                                <textarea id="gcplaneacionpordia-descripcion_plan" class="form-control" name="GcPlaneacionPorDia[descripcion_plan]" maxlength="300" rows="6" cols="50" aria-required="true"></textarea>
+                                <textarea id="gcplaneacionpordia-descripcion_plan" class="form-control required" name="GcPlaneacionPorDia[descripcion_plan]" maxlength="300" rows="6" cols="50" aria-required="true"></textarea>
                             </div>
                         </div>
 
@@ -106,7 +107,7 @@ $id_momento1= 1;
                             <button value="1" id="btnAddDay" type="button" class="btn btn-primary btn-sm">Agregar día</button>
                         </div>
                         <div class="form-group form-wizard-buttons">
-                            <button type="button" class="btn btn-next">Guardar y continuar</button>
+                            <button id="saveMoment1" type="button" class="btn btn-next">Guardar y continuar</button>
                         </div>
                         <?php ActiveForm::end(); ?>
                     </fieldset>
