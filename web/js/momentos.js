@@ -34,16 +34,10 @@ jQuery(document).ready(function() {
             btnAddDay.val((newVal));
             $("#addDay-"+ newVal +" #gcplaneacionpordia-id_dia-1").attr('id', 'gcplaneacionpordia-id_dia-' + newVal);
             $("#gcplaneacionpordia-id_dia-"+newVal).val(newVal);
-            $("#addDay-"+ newVal +" #gcplaneacionpordia-descripcion_plan-1").attr('id', 'gcplaneacionpordia-descripcion_plan-' + newVal);
-            $("#gcplaneacionpordia-descripcion_plan-"+newVal).val("");
 		}
     });
 
     saveMoment1.click(function () {
-        var parent_fieldset = $(this).parents('fieldset');
-        // navigation steps / progress steps
-        var current_active_step = $(this).parents('.form-wizard').find('.form-wizard-step.active');
-        var progress_line = $(this).parents('.form-wizard').find('.form-wizard-progress-line');
         var checkProposito = $('#checkboxMomento1Semana1').find('input');
         var dayText = $('#contentDays').find('textarea');
         var arrayCheckPropositos = [];
@@ -70,69 +64,14 @@ jQuery(document).ready(function() {
             arrayDay: arrayDays
         };
 
-        // fields validation
-        next_step = true;
-        parent_fieldset.find('.required').each(function() {
-            if( $(this).val() === "") {
-                $(this).addClass('input-error');
+        $.post( "index.php?r=gc-momento1%2Fadd-object", data, function( data ) {
+            if(data){
+                next_step = true;
+            }else{
                 next_step = false;
             }
         });
 
-        if (next_step) {
-            $.post( "index.php?r=gc-momento1%2Fadd-object", data, function( data ) {
-                if(data){
-                    $('#modalSaveData').modal('show');
-                    parent_fieldset.fadeOut(400, function() {
-                        // change icons
-                        current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-                        // progress bar
-                        bar_progress(progress_line, 'right');
-                        // show next step
-                        $(this).next().fadeIn();
-                        // scroll window to beginning of the form
-                        scroll_to_class( $('.form-wizard'), 20 );
-                    });
-                    setTimeout(function(){
-                        $('#modalSaveData').modal("hide");
-                    }, 1500)
-                }
-            });
-        }
-    });
-
-    var listPaso2 = $('#listPaso2');
-    var counter = 1;
-    var nombre = $('#gcresultadosmomento1-nombre');
-    var description = $('#gcresultadosmomento1-descripcion');
-    var dataPaso2 = {};
-    dataPaso2.resultados = [];
-
-    listPaso2.click(function () {
-        var t = $('#datatables_w2').DataTable();
-        if (nombre.val() !== "" && description.val() !== ""){
-            t.row.add( [
-                counter,
-                nombre.val(),
-                description.val()
-            ] ).draw( false );
-            dataPaso2.resultados.push([nombre.val(), description.val()]);
-            counter++;
-            nombre.val("");
-            $('#gcresultadosmomento1-descripcion').val("");
-        }
-    });
-
-    $('#finalizar_momneto1').click(function () {
-        var data = {
-            resultados: dataPaso2
-        };
-
-        $.post( "index.php?r=gc-momento1%2Fadd-object2", data, function( data ) {
-            if (data){
-
-            }
-        });
     });
     
     /*
@@ -150,10 +89,10 @@ jQuery(document).ready(function() {
     	// navigation steps / progress steps
     	var current_active_step = $(this).parents('.form-wizard').find('.form-wizard-step.active');
     	var progress_line = $(this).parents('.form-wizard').find('.form-wizard-progress-line');
-
+    	
     	// fields validation
     	parent_fieldset.find('.required').each(function() {
-    		if( $(this).val() == "") {
+    		if( $(this).val() == "" ) {
     			$(this).addClass('input-error');
     			next_step = false;
     		}
@@ -162,7 +101,7 @@ jQuery(document).ready(function() {
     		}
     	});
     	// fields validation
-
+    	
     	if( next_step ) {
     		parent_fieldset.fadeOut(400, function() {
     			// change icons
@@ -175,7 +114,7 @@ jQuery(document).ready(function() {
     			scroll_to_class( $('.form-wizard'), 20 );
 	    	});
     	}
-
+    	
     });
     
     // previous step
