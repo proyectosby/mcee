@@ -5,17 +5,18 @@ return [
 	 'username' 	=> 'usr_aprender',
 	 'password' 	=> 'A123456a',
 	 'charset' 	=> 'utf8',*/
-	'class' 	=> 'yii\db\Connection',
-	'dsn' 		=> 'pgsql:host=localhost;port=5432;dbname=sga_aprender',
-	'username' 	=> 'postgres',
-    'password' 	=> 'root',
-	'charset' 	=> 'utf8',
-	 /*'schemaMap' => [
-					   'pgsql'=> [
-									 'class'=>'yii\db\pgsql\Schema',
-									 'defaultSchema' => 'gestion_curricular' //specify your schema here
-								   ]
-					 ], // PostgreSQL*/
+
+    'class' 	=> 'yii\db\Connection',
+    'dsn' 		=> 'pgsql:host=localhost;port=5432;dbname=colegio',
+    'username' 	=> 'postgres',
+    'password' 	=> '123456',
+    'charset' 	=> 'utf8',
+	// 'schemaMap' => [
+					  // 'pgsql'=> [
+									// 'class'=>'yii\db\pgsql\Schema',
+									// 'defaultSchema' => 'semilleros_tic' //specify your schema here
+								  // ]
+					// ], // PostgreSQL
 	
 	
 	
