@@ -86,6 +86,9 @@ class GcMomento1Controller extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
+
+        //verificar si tiene datos el momento 1
+
 		
 		 //se crea una instancia del modelo propositos
 		$propositosTable 		 	= new GcPropositos();
@@ -122,7 +125,7 @@ class GcMomento1Controller extends Controller
             'propositos' => $propositos,
             'modelPlaneacionxdia' => $modelPlaneacionxdia,
             'diasPlaneacion' => $diasPlaneacion,
-            'modelResultadosMomento1' => $modelResultadosMomento1,
+            'modelResultadosMomento1' => $modelResultadosMomento1
         ]);
     }
 
@@ -180,12 +183,15 @@ class GcMomento1Controller extends Controller
         $id = Yii::$app->request->post("id");
         $arrayCheckPropositos = Yii::$app->request->post("arrayCheckPropositos");
         $arrayDay = Yii::$app->request->post("arrayDay");
+        $saveMomento1 = false;
 
         foreach ($arrayCheckPropositos AS $proposito){
             $propositoMomento = new GcPropositosMomento1();
             $propositoMomento->id_proposito = $proposito;
             $propositoMomento->id_momento1 = $id;
-            $propositoMomento->save();
+            if ($propositoMomento->save()){
+                $saveMomento1 = true;
+            }
         }
 
         foreach ($arrayDay AS $key => $day){
@@ -193,7 +199,27 @@ class GcMomento1Controller extends Controller
             $textoMomento->id_momento1_planeacion = $id;
             $textoMomento->id_dia = $key;
             $textoMomento->descripcion_plan = $day;
-            $textoMomento->save();
+            if ($textoMomento->save()){
+                $saveMomento1 = true;
+            }
         }
+
+        return $saveMomento1;
+    }
+
+    public function actionAddObject2(){
+        $arrayResultados = Yii::$app->request->post("resultados");
+        foreach ($arrayResultados AS $resultado){
+            foreach ($resultado AS $item) {
+                $resultados = new GcResultadosMomento1();
+                $resultados->descripcion = $item[1];
+                $resultados->id_momento1 = 1;
+                $resultados->estado = 1;
+                $resultados->nombre = $item[0];
+                $resultados->save();
+            }
+        }
+
+        return 'ok';
     }
 }

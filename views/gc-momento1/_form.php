@@ -19,8 +19,16 @@ $id_semana= $_GET['id'];
 $id_momento1= 1;
 ?>
     
-	<?= Html::a('Volver',['gc-bitacora/view2',],['class' => 'btn btn-info']) ?>
-
+	<?= Html::a('Volver',['gc-bitacora/view2','id'=>$id_momento1],['class' => 'btn btn-info']) ?>
+<div class="modal fade" id="modalSaveData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                Guardado con exito
+            </div>
+        </div>
+    </div>
+</div>
 <section class="form-box" >
     <div class="container">
 
@@ -87,7 +95,7 @@ $id_momento1= 1;
                         <div id="contentDays">
                             <input type="hidden" value="<?php echo $_GET['id'] ?>" id="id"/>
                             <div class="form-group" id="addDay-1">
-                                <label class="control-label" for="gcplaneacionpordia-id_dia">Día</label>
+                                <label class="control-label" for="gcplaneacionpordia-id_dia-1">Día</label>
                                 <select id="gcplaneacionpordia-id_dia-1" class="form-control required" name="GcPlaneacionPorDia[id_dia]" aria-required="true" disabled>
                                     <option value="">Seleccione...</option>
                                     <option value="1">Dia 1</option>
@@ -98,8 +106,8 @@ $id_momento1= 1;
                                     <option value="6">Dia 6</option>
                                     <option value="7">Dia 7</option>
                                 </select>
-                                <label class="control-label" for="gcplaneacionpordia-descripcion_plan">Descripción Plan</label>
-                                <textarea id="gcplaneacionpordia-descripcion_plan" class="form-control required" name="GcPlaneacionPorDia[descripcion_plan]" maxlength="300" rows="6" cols="50" aria-required="true"></textarea>
+                                <label class="control-label" for="gcplaneacionpordia-descripcion_plan-1">Descripción Plan</label>
+                                <textarea id="gcplaneacionpordia-descripcion_plan-1" class="form-control required" name="GcPlaneacionPorDia[descripcion_plan]" maxlength="300" rows="6" cols="50" aria-required="true"></textarea>
                             </div>
                         </div>
 
@@ -135,13 +143,11 @@ $id_momento1= 1;
                                     <?= $form1->field($modelResultadosMomento1, 'estado')->hiddenInput(['value'=> 1])->label(false) ?>
 
                                     <div class="form-group">
-                                        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
+                                        <button id="listPaso2" type="button" class="btn btn-success">Guardar</button>
                                     </div>
                                 </div>
 
                                 <?php ActiveForm::end(); ?>
-
-
 
                                 <!-- data table-->
                                 <div class="col-md-6">
@@ -160,64 +166,13 @@ $id_momento1= 1;
                                                 'language'=>[
                                                     'url' => '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json',
                                                 ],
-                                                "lengthMenu"=> [[20,-1], [20,Yii::t('app',"All")]],
-                                                "info"=>false,
-                                                "responsive"=>true,
-                                                "dom"=> 'lfTrtip',
-                                                "tableTools"=>[
-                                                    "aButtons"=> [
-                                                        // [
-                                                        // "sExtends"=> "copy",
-                                                        // "sButtonText"=> Yii::t('app',"Copiar")
-                                                        // ],
-                                                        // [
-                                                        // "sExtends"=> "csv",
-                                                        // "sButtonText"=> Yii::t('app',"CSV")
-                                                        // ],
-                                                        [
-                                                            "sExtends"=> "xls",
-                                                            "oSelectorOpts"=> ["page"=> 'current']
-                                                        ],
-                                                        [
-                                                            "sExtends"=> "pdf",
-                                                            "oSelectorOpts"=> ["page"=> 'current']
-                                                        ],
-                                                        // [
-                                                        // "sExtends"=> "print",
-                                                        // "sButtonText"=> Yii::t('app',"Imprimir")
-                                                        // ],
-                                                    ],
-                                                ],
                                             ],
                                             'columns' => [
-                                                ['class' => 'yii\grid\SerialColumn'],
-
-                                                // 'id',
+                                                'id',
                                                 'nombre',
                                                 // 'id_momento1',
                                                 // 'estado',
-                                                'descripcion',
-
-                                                [
-                                                    'class' => 'yii\grid\ActionColumn',
-                                                    'template'=>'{view}{update}{delete}',
-                                                    'buttons' => [
-                                                        'view' => function ($url, $model) {
-                                                            return Html::a('<span name="detalle" class="glyphicon glyphicon-eye-open" value ="'.$url.'" ></span>', $url, [
-                                                                'title' => Yii::t('app', 'lead-view'),
-                                                            ]);
-                                                        },
-
-                                                        'update' => function ($url, $model) {
-                                                            return Html::a('<span name="actualizar" class="glyphicon glyphicon-pencil" value ="'.$url.'"></span>', $url, [
-                                                                'title' => Yii::t('app', 'lead-update'),
-                                                            ]);
-                                                        }
-
-                                                    ],
-
-                                                ],
-
+                                                'descripcion'
                                             ],
                                         ]); ?>
                                     </div>
@@ -227,7 +182,7 @@ $id_momento1= 1;
 
                         <div class="form-wizard-buttons">
                             <button type="button" class="btn btn-previous">Previous</button>
-                            <button type="button" class="btn btn-next">Finalizar</button>
+                            <?= Html::a('Finalizar',['gc-bitacora/view2','id'=>$id_momento1],['class' => 'btn btn-info', 'id'=>'finalizar_momneto1']) ?>
                         </div>
                     </fieldset>
                     <!-- Form Step 2 -->
