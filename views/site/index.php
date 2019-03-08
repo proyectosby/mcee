@@ -39,7 +39,9 @@ if (@$_GET['instituciones'])
 	$nombreInstitucion = @$nombreInstitucion->descripcion;
 	$_SESSION['sede'][0]=-1;
     die("$nombreInstitucion - <label id='nameSede'>SEDE NO ASIGNADA</label>");
+
 }
+
 if (@$_GET['sede'])
 {
 	$_SESSION['sede'][0]=$_GET['sede'];
@@ -77,7 +79,7 @@ foreach($result as $r)
 	$datos.= "'$id':'$descripcion'";
 }
 
-
+if (!isset($_SESSION['instituciones'][0]) || (isset($_GET['institucion']) && $_GET['institucion'])){
 
 if (!isset($_SESSION['institucionSeleccionada']) || (isset($_GET['institucion']) && $_GET['institucion'])){
 	
