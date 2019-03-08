@@ -284,5 +284,4 @@ $('.image_title input').blur(function() {
         $droptarget.removeClass('dropped');
     }
 });
-
 // image uploader scripts
