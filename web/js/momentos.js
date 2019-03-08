@@ -232,7 +232,6 @@ $dropzone.on('dragover', function() {
     $droptarget.addClass('dropping');
     return false;
 });
-
 $dropzone.on('dragend dragleave', function() {
     $droptarget.removeClass('dropping');
     return false;
